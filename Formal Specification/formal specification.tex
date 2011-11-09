@@ -1,0 +1,248 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[vmargin=3cm, hmargin=2cm]{geometry}
+\usepackage[T1]{fontenc} 
+\usepackage[ngerman]{babel}
+
+\title{Pflichtenheft}
+\author{Simon Bischof\\
+Jan Haag\\
+Adrian Herrmann\\
+Lin Jin\\
+Tobias Schlumberger\\
+Matthias Schnetz}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Produktübersicht}
+
+Das Produkt ist ein Werkzeug zur Analyse und Korrektheitsprüfung von Programmen.
+Der Benutzer hat die Möglichkeit, in eine grafische Oberfläche ein Programm mit
+der im Anhang spezifizierten While-Sprache zu laden und mit Annotationen zu
+versehen, die als Vor- und Nachbedingungen geprüft werden.
+
+\section{Zielbestimmung}
+
+\subsection{Musskriterien}
+\begin{itemize}
+  \item schrittweise Ausführung eines Programms
+  \item Inspektion des aktuellen Programmzustands durch den Benutzer
+  \item Prüfung von Zusicherungen in Programmen zur Laufzeit; Rückmeldung im
+  Fehlerfall über die grafische Benutzeroberfläche
+  \item grafische Benutzeroberfläche in englischer Sprache zur Steuerung der
+  einzelnen Komponenten des Systems
+  \item Programmiersprache mit Zuweisungen, Bedingten Anweisungen und Schleifen
+  \item Ausdrücke in Annotationen gleich wie in der Programmiersprache
+  \item Zusicherungen erlauben Aussagen der Prädikatenlogik
+  \item Annotationen assert und assume
+\end{itemize}
+
+\subsection{Sollkriterien}
+\begin{itemize}
+  \item Auswertung von Formeln mit Quantoren über eingeschränkten Bereich
+  \item syntactic sugar für Vor- und Nachbedingungen, (In)Varianten und globale
+  Annahmen
+\end{itemize}
+
+\subsection{Kannkriterien}
+\begin{itemize}
+  \item Auswertung von benutzerdefinierten Ausdrücken über Programmzustand
+  \item Auswertung von Formeln mit Quantoren mit Hilfe eines Beweisers
+  \item Programmiersprache unterstützt Methodenaufrufe
+\end{itemize}
+
+\subsection{Abgrenzungskriterien}
+\begin{itemize}
+  \item nur Optionen in der grafischen Oberfläche, die einen echten Mehrwert
+  bieten
+  \item Programmiersprache unterstützt nur die Typen Ganzzahl, Boolean und
+  Arrays
+  \item Programmiersprache unterstützt keinen Heap
+  \item Programmiersprache unterstützt keine Nebenläufigkeit
+\end{itemize}
+
+\section{Produkteinsatz}
+
+\subsection{Anwendungsbereiche}
+PC
+
+\subsection{Zielgruppen}
+Informatiker
+
+\section{Produktumgebung}
+\subsection{Software}
+\begin{itemize}
+  \item Java Runtime Environment SE 6 oder höher
+  \item Windows NT 4.0 oder neuer oder Betriebssystem mit Wine
+\end{itemize}
+
+\subsection{Hardware}
+\begin{itemize}
+  \item mindestens 128 MB Arbeitsspeicher
+\end{itemize}
+
+\subsection{Schnittstellen}
+\begin{itemize}
+  \item Das Produkt erzeugt Dateien im SMT-LIB 2.0 Format als Schnittstelle zu Z3
+\end{itemize}
+
+\section{Funktionale Anforderungen}
+\begin{description}
+\item[/F10/] Anzeige von Quelltext\\
+Der Benutzer sieht den Quelltext des aktuellen Programms in der grafischen Oberfläche.
+\item[/F20/] Syntax Highlighting\\
+Teile des angezeigten Quelltextes werden abhängig von ihrer Bedeutung in unterschiedlichen Farben angezeigt.
+\item[/F30/] Veränderung des Quelltextes\\
+Der Benutzer kann den angezeigten Quelltext verändern oder einen neuen Quelltext eingeben.
+\item[/F40/] Speichern des Quelltextes in eine Datei\\
+Der Benutzer kann den eingegebenen Quelltext ($\to$/F30/) in eine Datei speichern. Dabei gibt der Benutzer den gewünschten Speicherort und den Dateinamen über eine grafische Oberfläche an.
+\item[/F50/] Laden eines Programms aus einer Datei\\
+Der Benutzer kann ein Quellcode eines Programms aus einer Datei laden. Hierbei gibt der Benutzer die zu ladende Datei über eine grafische Oberfläche an.
+\item[/F60/] Erkennen und Anzeigen von Syntaxfehlern\\
+Falls der aktuell angezeigte Quelltext Syntaxfehler enthält, wird dies dem Benutzer angezeigt.
+\item[/F70/] Erkennen und Anzeigen von Typfehlern\\
+Falls der aktuell angezeigte Quelltext Typfehler enthält, wird dies dem Benutzer angezeigt.
+\item[/F80/] Ausführen eines Programms\\
+Die Anweisungen im aktuell angezeigten Quelltext können ausgeführt werden. Dabei sind folgende Ausführungsmodi möglich:
+\begin{itemize}
+  \leftskip=4cm
+  \item[Single Step] Es wird auf eine Interaktion des Benutzers nur eine Anweisung ausgeführt.
+  \item[Run until Breakpoint] Es werden sequentiell alle Anweisungen ausgeführt, bis das Programm beendet ist oder ein Breakpoint ($\to$/F90/) erreicht wird.
+\end{itemize}
+\item[/F90/] Setzen und Entfernen von Breakpoints\\
+Der Benutzer kann Breakpoints zur Pausierung eines Programmdurchlaufs an Stellen des angezeigten Quellcodes setzen und wieder entfernen.
+\item[/F100/] Programmabbruch bei Fehler mit Anzeige des Fehlers\\
+Tritt ein Fehler zur Laufzeit des Programms auf, wird die Ausführung abgebrochen und der Fehler dem Benutzer angezeigt.
+\item[/F110/] Anzeige des Programmzustands\\
+Der Benutzer sieht während der Ausführung eines Programms den aktuellen Inhalt aller globalen und lokalen Variablen.
+\item[/F120/] Auswertung von benutzerdefinierten Ausdrücken\\
+Der Benutzer kann Ausdrücke über den aktuellen Programmzustand auswerten lassen.
+\item[/F130/] Auswertung der Annotationssprache\\
+Während der Programmausführung werden die Bedingungen der Annotationssprache ausgewertet. Schlägt eine Überprüfung fehl, so wird die Ausführung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
+\item[/F140/] Anzeige der Beweisereinstellungen\\
+Der Benutzer kann die aktuellen Einstellungen ($\to$/P10/) für die Ausführung des Beweisers ($\to$/F170/) anzeigen lassen. Diese werden vor der Anzeige aus einer Datei geladen ($\to$/F150/) und bei einer Veränderung wieder in eine Datei geschrieben ($\to$/F160/).
+\item[/F150/] Laden der Einstellungen aus einer Datei\\
+Die Einstellungen für die Ausführung des Beweisers werden automatisch aus einer Datei gelesen.
+\item[/F160/] Speichern der Einstellungen in eine Datei\\
+Die Einstellungen ($\to$/P10/) werden in eine Datei gespeichert.
+\item[/F170/] Beweiser starten und Ergebnis anzeigen\\
+Der Benutzer kann den Beweiser für das aktuelle Programm starten. Das Ergebnis des Beweisers wird dem Benutzer nach Beendigung des Beweisvorgangs angezeigt.
+\end{description}
+
+\section{Produktdaten}
+Es sind folgende Daten des Benutzers zu Speichern:
+\begin{description}
+\item[/D10/] Benutzereinstellungen
+\begin{itemize}
+  \item Timeout in Sekunden für den Beweiser
+  \item Speicherbegrenzung in Megabyte für den Beweiser
+\end{itemize}
+\end{description}
+
+\section{Produktleistungen}
+\begin{itemize}
+  \item zu einem gegebenen Programm soll die Rückmeldung des Beweisers immer
+  korrekt sein
+\end{itemize}
+
+\section{Weitere nichtfunktionale Anforderungen}
+Die Lizenz von Z3 erlaubt ausschließlich eine nicht-kommerzielle Benutzung.
+
+\section{Qualitätsanforderungen}
+\begin{itemize}
+  \item Programmiersprache muss erweiterbar sein
+  \item unter Normalbedingungen stürzt das Programm nicht ab
+  \item jede Aktion gibt in jedem Fall eine Rückmeldung an den Benutzer
+\end{itemize}
+
+\section{Globale Testfälle und Testszenarien}
+Folgende Funktionssequenzen sind zu Überprüfen:
+\begin{description}
+\item[/T10/] Eingabe des leeren Programms $\to$ keine Syntaxfehler
+\item[/T20/] Eingabe des leeren Programms, Annotation \texttt{\_(ensure false)}, Programmausführung $\to$ Annotationsbedingung schlägt fehl
+\item[/T30/] Eingabe des leeren Programms, Annotation \texttt{\_(ensure true)}, Programmausführung $\to$ Annotationsbedingung schlägt nicht fehl
+\item[/T40/] Eingabe eines beliebigen Programms, Annotation \texttt{\_require false}, Programmausführung $\to$ Annotationsbedingung schlägt fehl, Programmausführung wird abgebrochen
+\item[/T50/] Eingabe eines Programms mit Zuweisung \texttt{x = 1}, Annotation \texttt{\_(require x>0)}, Programmausführung $\to$ Annotationsbedingung schlägt nicht fehl
+\item[/T60/] Eingabe eines Programms mit Syntaxfehler $\to$ Anzeige des Syntaxfehlers
+\item[/T70/] Eingabe eines Programms mit while-Schleife oder if-Konstrukt, deren Bedingung kein boolean ist $\to$ Anzeige des Typfehlers
+\item[/T80/] Eingabe eines Programms mit einem Operator, der nur auf Ganzzahlen definiert ist und auf einen boolean angewendet wird $\to$ Anzeige des Typfehlers
+\item[/T90/] Eingabe eines Programms mit einem Operator, der nur auf booleans definiert ist und auf Ganzzahlen angewendet wird $\to$ Anzeige des Typfehlers
+\item[/T100/] Eingabe eines Programms mit einer Zuweisung eines boolean an eine Ganzzahl $\to$ Anzeige des Typfehlers
+\item[/T110/] Eingabe eines Programms mit einer Zuweisung einer Ganzzahl an einen boolean $\to$ Anzeige des Typfehlers
+\item[/T120/] Eingabe eines Programms mit einer Zuweisung einer Ganzzahl oder eines boolean an ein Array $\to$ Anzeige des Typfehlers
+\item[/T130/] Eingabe eines Programms mit einem Vergleichsoperator, der auf zwei unterschiedliche Typen ausgeführt wird $\to$ Anzeige des Typfehlers
+\item[/T140/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{\_ensure(y==2x)}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T150/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{\_ensure(y\%2==0)}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T160/] Eingabe eines längeren Programms ohne Schleifen und ohne if-Konstrukt, Eingabe korrekter Annotationen, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T170/] Eingabe eines längeren Programms ohne Schleifen und mit if-Konstrukt, Eingabe korrekter Annotationen, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T180/] Eingabe eines längeren Programms mit Schleifen, Eingabe korrekter Annotationen, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T190/] Eingabe eines Programms mit Annotation \texttt{\_(ensure x!=x)}, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
+\item[/T200/] Eingabe eines längeren Programms mit Schleife, Eingabe falscher Annotationen, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
+\item[/T210/] Eingabe eines Programms mit Annotation \texttt{\_(require x\%2==0)}, Zuweisung \texttt{y = 2*(x/2)} und Annotation \texttt{\_ensure(x==y)}, Beweisvorgang starten $\to$ Verifikation durch den Beweiser
+\end{description}
+
+\section{Systemmodelle}
+
+%\includegraphics{systemmodelle.pdf}
+
+\section{Benutzungsoberfläche}
+
+\section{Spezielle Anforderungen an die Entwicklungsumgebung}
+\begin{itemize}
+  \item Versionsverwaltung Git
+  \item Wiki und Bugtracker von GitHub
+\end{itemize}
+
+\section{Zeit- und Ressourcenplanung}
+\subsection{Phasenverantwortliche}
+\begin{tabular}[h]{| l | r |}
+\hline
+\textbf{Phase} & \textbf{Verantwortliche(r)}\\
+\hline
+Pflichtenheft & Tobias\\
+\hline
+Entwurf & Adrian\\
+\hline
+Implementierung & Simon, Jan\\
+\hline
+Validierung & Lin\\
+\hline
+Abschlusspräsentation & Matthias\\
+\hline
+\end{tabular}
+
+
+\section{Ergänzungen}
+\subsection{While-Sprache}
+\subsubsection{Variablentypen}
+\begin{description}
+\item[Ganzzahl] positive und negative ganze Zahl beliebiger Genauigkeit
+\item[Boolean] Wahrheitswert, entweder wahr oder falsch
+\item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl möglicher Variablen in einem Array ist nach erster Festlegung konstant.
+\end{description}
+\subsubsection{Sprachkonstrukte}
+\begin{tabular}[h]{| l | l | l |}
+\hline
+\textbf{Konstrukt} & \textbf{Syntax} & \textbf{Bedeutung}\\
+\hline
+if-else & \texttt{if(<Bedingung>) \{<Anweisung1>\} else \{<Anweisung2>\}} & \texttt{Anweisung1} wird ausgeführt, wenn \texttt{Bedingung} wahr ist, sonst wird \texttt{Anweisung2 ausgeführt} \\
+\hline
+while & \texttt{while(<Bedingung>) \{<Anweisung>\}} & Solange \texttt{Bedingung} wahr ist, wird \texttt{Anweisung} ausgeführt\\
+\hline
+\end{tabular}
+\subsubsection{Operatoren}
+\begin{tabular}[h]{| l | l | l |}
+\hline
+\textbf{Operator} & \textbf{Syntax} & \textbf{Funktion}\\
+\hline
+\end{tabular}
+
+\section{Glossar}
+
+\end{document}
