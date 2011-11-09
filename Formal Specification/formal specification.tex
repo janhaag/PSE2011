@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{tabularx}
 \usepackage[vmargin=3cm, hmargin=2cm]{geometry}
 \usepackage[T1]{fontenc} 
 \usepackage[ngerman]{babel}
@@ -227,21 +228,40 @@ Abschlusspräsentation & Matthias\\
 \item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl möglicher Variablen in einem Array ist nach erster Festlegung konstant.
 \end{description}
 \subsubsection{Sprachkonstrukte}
-\begin{tabular}[h]{| l | l | l |}
+\begin{tabularx}{\textwidth}{| l | l | X |}
 \hline
 \textbf{Konstrukt} & \textbf{Syntax} & \textbf{Bedeutung}\\
 \hline
-if-else & \texttt{if(<Bedingung>) \{<Anweisung1>\} else \{<Anweisung2>\}} & \texttt{Anweisung1} wird ausgeführt, wenn \texttt{Bedingung} wahr ist, sonst wird \texttt{Anweisung2 ausgeführt} \\
+if-else & \texttt{if(<Bedingung>) \{<Anweisung1>\} else \{<Anweisung2>\}} & \texttt{Anweisung1} wird ausgeführt, wenn \texttt{Bedingung} wahr ist, sonst wird \texttt{Anweisung2} ausgeführt \\
 \hline
 while & \texttt{while(<Bedingung>) \{<Anweisung>\}} & Solange \texttt{Bedingung} wahr ist, wird \texttt{Anweisung} ausgeführt\\
 \hline
-\end{tabular}
+\end{tabularx}
 \subsubsection{Operatoren}
-\begin{tabular}[h]{| l | l | l |}
+\begin{tabularx}{\textwidth}{| l | l | l | X |}
 \hline
-\textbf{Operator} & \textbf{Syntax} & \textbf{Funktion}\\
+\textbf{Operator} & \textbf{Syntax} & \textbf{Ergebnistyp} & \textbf{Funktion}\\
 \hline
-\end{tabular}
+== & \texttt{<T1> == <T2>} & Boolean & Prüft \texttt{T1} und \texttt{T2} auf Gleichheit, falls sie vom selben Variablentyp sind. Bei Arrays wird auf elementweise Gleichheit geprüft.\\
+!= & \texttt{<T1> != <T2>} & Boolean & Prüft \texttt{T1} und \texttt{T2} auf Ungleichheit, falls sie vom selben Variablentyp sind. Bei Arrays wird auf elementweise Ungleichheit geprüft.\\
+\hline
+< & \texttt{<Ganzzahl1> < <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} kleiner als \texttt{Ganzzahl2} ist.\\
+> & \texttt{<Ganzzahl1> > <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} größer als \texttt{Ganzzahl2} ist.\\
+<= & \texttt{<Ganzzahl1> <= <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} kleiner oder gleich \texttt{Ganzzahl2} ist.\\
+>= & \texttt{<Ganzzahl1> >= <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} größer oder gleich \texttt{Ganzzahl2} ist.\\
++ & \texttt{+<Ganzzahl>} & Ganzzahl & Gibt \texttt{Ganzzahl} zurück.\\
+- & \texttt{-<Ganzzahl>} & Ganzzahl & Gibt -\texttt{Ganzzahl} zurück.\\
++ & \texttt{<Ganzzahl1> + <Ganzzahl2>} & Ganzzahl & Addiert \texttt{Ganzzahl1} und \texttt{Ganzzahl2}.\\
+- & \texttt{<Ganzzahl1> - <Ganzzahl2>} & Ganzzahl & Subtrahiert \texttt{Ganzzahl2} von \texttt{Ganzzahl1}.\\
+* & \texttt{<Ganzzahl1> * <Ganzzahl2>} & Ganzzahl & Multipliziert \texttt{Ganzzahl1} mit \texttt{Ganzzahl2}.\\
+/ & \texttt{<Ganzzahl1> / <Ganzzahl2>} & Ganzzahl & Dividiert \texttt{Ganzzahl1} durch \texttt{Ganzzahl2}. Das Ergebnis wird zur Null hin gerundet.\\
+\% & \texttt{<Ganzzahl1> \% <Ganzzahl2>} & Ganzzahl & Liefert den Rest der Ganzzahldivision von \texttt{Ganzzahl1} durch \texttt{Ganzzahl2}.\\
+\hline
+! & \texttt{!<Boolean1>} & Boolean & Negiert \texttt{Boolean1}.\\
+\& & \texttt{<Boolean1> \& <Boolean2>} & Boolean & Liefert die Konjunktion von \texttt{Boolean1} und \texttt{Boolean2}.\\
+| & \texttt{<Boolean1> | <Boolean2>} & Boolean & Liefert die Disjunktion von \texttt{Boolean1} und \texttt{Boolean2}.\\
+\hline
+\end{tabularx}
 
 \section{Glossar}
 
