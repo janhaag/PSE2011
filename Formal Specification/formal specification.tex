@@ -23,10 +23,7 @@ Matthias Schnetz}
 
 \section{Produktübersicht}
 
-Das Produkt ist ein Werkzeug zur Analyse und Korrektheitsprüfung von Programmen.
-Der Benutzer hat die Möglichkeit, in eine grafische Oberfläche ein Programm mit
-der im Anhang spezifizierten While-Sprache zu laden und mit Annotationen zu
-versehen, die als Vor- und Nachbedingungen geprüft werden.
+Das Produkt ist ein Werkzeug zur Analyse und Korrektheitsprüfung von Programmen. Der Benutzer hat die Möglichkeit, in eine grafische Oberfläche ein Programm mit der im Anhang spezifizierten While-Sprache zu laden und mit Annotationen zu versehen, die als Vor- und Nachbedingungen geprüft werden.
 
 \section{Zielbestimmung}
 
@@ -34,10 +31,8 @@ versehen, die als Vor- und Nachbedingungen geprüft werden.
 \begin{itemize}
   \item schrittweise Ausführung eines Programms
   \item Inspektion des aktuellen Programmzustands durch den Benutzer
-  \item Prüfung von Zusicherungen in Programmen zur Laufzeit; Rückmeldung im
-  Fehlerfall über die grafische Benutzeroberfläche
-  \item grafische Benutzeroberfläche in englischer Sprache zur Steuerung der
-  einzelnen Komponenten des Systems
+  \item Prüfung von Zusicherungen in Programmen zur Laufzeit; Rückmeldung im  Fehlerfall über die grafische Benutzeroberfläche
+  \item grafische Benutzeroberfläche in englischer Sprache zur Steuerung der einzelnen Komponenten des Systems
   \item Programmiersprache mit Zuweisungen, Bedingten Anweisungen und Schleifen
   \item Ausdrücke in Annotationen gleich wie in der Programmiersprache
   \item Zusicherungen erlauben Aussagen der Prädikatenlogik
@@ -47,8 +42,7 @@ versehen, die als Vor- und Nachbedingungen geprüft werden.
 \subsection{Sollkriterien}
 \begin{itemize}
   \item Auswertung von Formeln mit Quantoren über eingeschränkten Bereich
-  \item syntactic sugar für Vor- und Nachbedingungen, (In)Varianten und globale
-  Annahmen
+  \item syntactic sugar für Vor- und Nachbedingungen, (In)Varianten und globale Annahmen
 \end{itemize}
 
 \subsection{Kannkriterien}
@@ -60,21 +54,25 @@ versehen, die als Vor- und Nachbedingungen geprüft werden.
 
 \subsection{Abgrenzungskriterien}
 \begin{itemize}
-  \item nur Optionen in der grafischen Oberfläche, die einen echten Mehrwert
-  bieten
-  \item Programmiersprache unterstützt nur die Typen Ganzzahl, Boolean und
-  Arrays
+  \item nur Optionen in der grafischen Oberfläche, die einen echten Mehrwert bieten
+  \item Programmiersprache unterstützt nur die Typen Ganzzahl, Boolean und Arrays
   \item Programmiersprache unterstützt keinen Heap
   \item Programmiersprache unterstützt keine Nebenläufigkeit
 \end{itemize}
 
 \section{Produkteinsatz}
+Das Produkt ermöglicht dem Benutzer die Analyse eines Programmes, das in der im Anhang beschriebenen While-Sprache geschrieben ist. Dabei ist es sowohl möglich, die Anweisungen des Programms schrittweise oder komplett zu durchlaufen und dabei zur Laufzeit auf im Programmcode durch Annotationen eingebettete Zusicherungen zu überprüfen, als auch die formale Verifikation des Programms mithilfe des automatischen Theorembeweisers Z3 von Microsoft. 
 
 \subsection{Anwendungsbereiche}
-PC
+\begin{itemize}
+  \item Formale Verifikation von Programmen
+  \item Testen von Programmen der While-Sprache
+\end{itemize}
 
 \subsection{Zielgruppen}
-Informatiker
+\begin{itemize}
+  \item Informatiker
+\end{itemize}
 
 \section{Produktumgebung}
 \subsection{Software}
@@ -94,6 +92,28 @@ Informatiker
 \end{itemize}
 
 \section{Funktionale Anforderungen}
+\subsection{Übersicht}
+\begin{tabular}{| l | l |}
+\hline
+/F10/ & Anzeige von Quelltext\\
+/F20/ & Syntax Highlighting\\
+/F30/ & Veränderung des Quelltextes\\
+/F40/ & Speichern des Quelltextes in eine Datei\\
+/F50/ & Laden eines Programms aus einer Datei\\
+/F60/ & Erkennen und Anzeigen von Syntaxfehlern\\
+/F70/ & Erkennen und Anzeigen von Typfehlern\\
+/F80/ & Ausführen eines Programms\\
+/F90/ & Setzen und Entfernen von Breakpoints\\
+/F100/ & Programmabbruch bei Fehler mit Anzeige des Fehlers\\
+/F110/ & Anzeige des Programmzustands\\
+/F120/ & Auswertung von benutzerdefinierten Ausdrücken\\
+/F130/ & Auswertung der Annotationssprache\\
+/F140/ & Anzeige der Beweisereinstellungen\\
+/F150/ & Laden der Beweisereinstellungen aus einer Datei\\
+/F160/ & Speichern der Beweisereinstellungen in eine Datei\\
+/F170/ & Beweiser starten und Ergebnis anzeigen\\
+\hline
+\end{tabular}
 \begin{description}
 \item[/F10/] Anzeige von Quelltext\\
 Der Benutzer sieht den Quelltext des aktuellen Programms in der grafischen Oberfläche.
@@ -110,12 +130,12 @@ Falls der aktuell angezeigte Quelltext Syntaxfehler enthält, wird dies dem Benu
 \item[/F70/] Erkennen und Anzeigen von Typfehlern\\
 Falls der aktuell angezeigte Quelltext Typfehler enthält, wird dies dem Benutzer angezeigt.
 \item[/F80/] Ausführen eines Programms\\
-Die Anweisungen im aktuell angezeigten Quelltext können ausgeführt werden. Dabei sind folgende Ausführungsmodi möglich:
-\begin{itemize}
-  \leftskip=4cm
-  \item[Single Step] Es wird auf eine Interaktion des Benutzers nur eine Anweisung ausgeführt.
-  \item[Run until Breakpoint] Es werden sequentiell alle Anweisungen ausgeführt, bis das Programm beendet ist oder ein Breakpoint ($\to$/F90/) erreicht wird.
-\end{itemize}
+Die Anweisungen im aktuell angezeigten Quelltext können ausgeführt werden. Dabei sind folgende Ausführungsmodi möglich:\\
+\begin{tabularx}{\textwidth}{lX}
+\leftskip=4cm
+Single Step & Es wird auf eine Interaktion des Benutzers nur eine Anweisung ausgeführt.\\
+Run until Breakpoint & Es werden sequentiell alle Anweisungen ausgeführt, bis das Programm beendet ist oder ein Breakpoint ($\to$/F90/) erreicht wird.\\
+\end{tabularx}
 \item[/F90/] Setzen und Entfernen von Breakpoints\\
 Der Benutzer kann Breakpoints zur Pausierung eines Programmdurchlaufs an Stellen des angezeigten Quellcodes setzen und wieder entfernen.
 \item[/F100/] Programmabbruch bei Fehler mit Anzeige des Fehlers\\
@@ -128,9 +148,9 @@ Der Benutzer kann Ausdrücke über den aktuellen Programmzustand auswerten lasse
 Während der Programmausführung werden die Bedingungen der Annotationssprache ausgewertet. Schlägt eine Überprüfung fehl, so wird die Ausführung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
 \item[/F140/] Anzeige der Beweisereinstellungen\\
 Der Benutzer kann die aktuellen Einstellungen ($\to$/P10/) für die Ausführung des Beweisers ($\to$/F170/) anzeigen lassen. Diese werden vor der Anzeige aus einer Datei geladen ($\to$/F150/) und bei einer Veränderung wieder in eine Datei geschrieben ($\to$/F160/).
-\item[/F150/] Laden der Einstellungen aus einer Datei\\
-Die Einstellungen für die Ausführung des Beweisers werden automatisch aus einer Datei gelesen.
-\item[/F160/] Speichern der Einstellungen in eine Datei\\
+\item[/F150/] Laden der Beweisereinstellungen aus einer Datei\\
+Die Einstellungen für die Ausführung des Beweisers ($\to$/P10/) werden automatisch aus einer Datei gelesen.
+\item[/F160/] Speichern der Beweisereinstellungen in eine Datei\\
 Die Einstellungen ($\to$/P10/) werden in eine Datei gespeichert.
 \item[/F170/] Beweiser starten und Ergebnis anzeigen\\
 Der Benutzer kann den Beweiser für das aktuelle Programm starten. Das Ergebnis des Beweisers wird dem Benutzer nach Beendigung des Beweisvorgangs angezeigt.
@@ -148,8 +168,7 @@ Es sind folgende Daten des Benutzers zu Speichern:
 
 \section{Produktleistungen}
 \begin{itemize}
-  \item zu einem gegebenen Programm soll die Rückmeldung des Beweisers immer
-  korrekt sein
+  \item zu einem gegebenen Programm soll die Rückmeldung des Beweisers immer korrekt sein
 \end{itemize}
 
 \section{Weitere nichtfunktionale Anforderungen}
@@ -189,16 +208,16 @@ Folgende Funktionssequenzen sind zu Überprüfen:
 \end{description}
 
 \section{Systemmodelle}
-
+\subsection{Übersicht}
 \includegraphics{systemmodelle.pdf}
 
 \section{Benutzungsoberfläche}
 
 \section{Spezielle Anforderungen an die Entwicklungsumgebung}
-\begin{itemize}
-  \item Versionsverwaltung Git
-  \item Wiki und Bugtracker von GitHub
-\end{itemize}
+\begin{description}
+  \item[Versionsverwaltung] Versionsverwaltung Git
+  \item[Kommunikation] E-Mail, Wiki
+\end{description}
 
 \section{Zeit- und Ressourcenplanung}
 \subsection{Phasenverantwortliche}
