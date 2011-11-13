@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage[section]{placeins}
 \usepackage{tabularx}
 \usepackage[vmargin=3cm, hmargin=2cm]{geometry}
 \usepackage[T1]{fontenc} 
@@ -21,40 +22,70 @@
 Das Produkt ist ein Werkzeug zur Analyse und Korrektheitsprüfung von Programmen. Der Benutzer hat die Möglichkeit, in eine grafische Oberfläche ein Programm mit der im Anhang spezifizierten While-Sprache zu laden und mit Annotationen zu versehen, die als Vor- und Nachbedingungen geprüft werden.
 
 \section{Zielbestimmung}
-
-\subsection{Musskriterien}
+\subsection{Interpreter / Run-time Checker}
+\subsubsection{Musskriterien}
 \begin{itemize}
   \item schrittweise Ausführung eines Programms
   \item Inspektion des aktuellen Programmzustands durch den Benutzer
-  \item Prüfung von Zusicherungen in Programmen zur Laufzeit; Rückmeldung im  Fehlerfall über die grafische Benutzeroberfläche
-  \item formale Verifikation eines Programms durch einen automatischen Beweiser
-  \item grafische Benutzeroberfläche in englischer Sprache zur Steuerung der einzelnen Komponenten des Systems
-  \item Programmiersprache mit Zuweisungen, Bedingten Anweisungen und Schleifen
+  \item Prüfung von Zusicherungen in Programmen zur Laufzeit
+\end{itemize}
+\subsubsection{Sollkriterien}
+\begin{itemize}
+  \item Auswertung von Formeln mit Quantoren über eingeschränkten Bereich
+\end{itemize}
+\subsubsection{Kannkriterien}
+\begin{itemize}
+  \item Auswertung von benutzerdefinierten Ausdrücken über Programmzustand
+  \item Auswertung von Formeln mit Quantoren mit Hilfe eines Beweisers
+\end{itemize}
+
+\subsection{Grafische Benutzeroberfläche}
+\subsubsection{Musskriterien}
+\begin{itemize}
+  \item englische Sprache
+  \item Steuerung der einzelnen Komponenten des Systems
+  \item Anzeige von fehlgeschlagenen Laufzeitprüfungen
+\end{itemize}
+\subsubsection{Kannkriterien}
+\begin{itemize}
+  \item Syntax Highlighting
+\end{itemize}
+\subsubsection{Abgrenzungskriterien}
+\begin{itemize}
+  \item nur Optionen in der grafischen Oberfläche, die einen echten Mehrwert bieten
+\end{itemize}
+
+\subsection{Verifikation}
+\subsubsection{Musskriterien}
+\begin{itemize}
+  \item formale Verifikation eines Programms mit Hilfe eines Beweisers
+\end{itemize}
+
+\subsection{While-Sprache}
+\subsubsection{Musskriterien}
+\begin{itemize}
+  \item Zuweisungen, Bedingten Anweisungen und Schleifen
+  \item Nur die Typen Ganzzahl, Boolean und Arrays
+  \item Keinen Heap
+  \item Keine Nebenläufigkeit
+\end{itemize}
+\subsubsection{Kannkriterien}
+\begin{itemize}
+  \item Programmiersprache unterstützt Methodenaufrufe
+\end{itemize}
+
+\subsection{Annotationssprache}
+\subsubsection{Musskriterien}
+\begin{itemize}
   \item Ausdrücke in Annotationen ähnlich wie in der Programmiersprache, zusätzlich Quantoren
   \item Zusicherungen erlauben Aussagen der Prädikatenlogik
   \item Annotationen assert und assume
 \end{itemize}
-
-\subsection{Sollkriterien}
+\subsubsection{Sollkriterien}
 \begin{itemize}
-  \item Auswertung von Formeln mit Quantoren über eingeschränkten Bereich
   \item syntactic sugar für Vor- und Nachbedingungen, (In)Varianten und globale Annahmen
 \end{itemize}
 
-\subsection{Kannkriterien}
-\begin{itemize}
-  \item Auswertung von benutzerdefinierten Ausdrücken über Programmzustand
-  \item Auswertung von Formeln mit Quantoren mit Hilfe eines Beweisers
-  \item Programmiersprache unterstützt Methodenaufrufe
-\end{itemize}
-
-\subsection{Abgrenzungskriterien}
-\begin{itemize}
-  \item nur Optionen in der grafischen Oberfläche, die einen echten Mehrwert bieten
-  \item Programmiersprache unterstützt nur die Typen Ganzzahl, Boolean und Arrays
-  \item Programmiersprache unterstützt keinen Heap
-  \item Programmiersprache unterstützt keine Nebenläufigkeit
-\end{itemize}
 
 \section{Produkteinsatz}
 Das Produkt ermöglicht dem Benutzer die Analyse eines Programmes, das in der im Anhang beschriebenen While-Sprache geschrieben ist. Dabei ist es sowohl möglich, die Anweisungen des Programms schrittweise oder komplett zu durchlaufen und dabei zur Laufzeit auf im Programmcode durch Annotationen eingebettete Zusicherungen zu überprüfen, als auch die formale Verifikation des Programms mithilfe des automatischen Theorembeweisers Z3 von Microsoft. 
@@ -214,9 +245,15 @@ Folgende Funktionssequenzen sind zu überprüfen:
 \includegraphics{systemmodelle.pdf}
 
 \section{Benutzungsoberfläche}
-\includegraphics{images/mockup1.jpg}
-\includegraphics{images/mockup2.jpg}
-\includegraphics{images/mockup3.jpg}
+\begin{figure}
+\includegraphics[width=\textwidth]{images/mockup1.jpg}
+\end{figure}
+\begin{figure}
+\includegraphics[width=\textwidth]{images/mockup2.jpg}
+\end{figure}
+\begin{figure}
+\includegraphics[width=\textwidth]{images/mockup3.jpg}
+\end{figure}
 
 \section{Spezielle Anforderungen an die Entwicklungsumgebung}
 \begin{description}
@@ -307,6 +344,7 @@ Die Annotationssprache besteht aus Ausdrücken der While-Sprache mit Quantoren u
 \texttt{require} & Stellt eine Vorbedingung vor Schleifen oder Methoden dar.\\
 \texttt{ensure} & Stellt eine Nachbedingung nach Schleifen oder Methoden dar.\\
 \texttt{assert} & Stellt eine Bedingung an der aktuellen Stelle im Programmablauf dar.\\
+\texttt{assume} & Stellt eine globale, als wahr angenommene Aussage dar.\\
 \hline
 \end{tabularx}
 
