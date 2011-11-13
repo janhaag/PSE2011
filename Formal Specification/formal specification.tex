@@ -7,12 +7,7 @@
 \usepackage[ngerman]{babel}
 
 \title{Pflichtenheft}
-\author{Simon Bischof\\
-Jan Haag\\
-Adrian Herrmann\\
-Lin Jin\\
-Tobias Schlumberger\\
-Matthias Schnetz}
+\author{Simon Bischof \and Jan Haag \and Adrian Herrmann \and Lin Jin \and Tobias Schlumberger \and Matthias Schnetz}
 
 \begin{document}
 
@@ -32,9 +27,10 @@ Das Produkt ist ein Werkzeug zur Analyse und Korrektheitsprüfung von Programmen
   \item schrittweise Ausführung eines Programms
   \item Inspektion des aktuellen Programmzustands durch den Benutzer
   \item Prüfung von Zusicherungen in Programmen zur Laufzeit; Rückmeldung im  Fehlerfall über die grafische Benutzeroberfläche
+  \item formale Verifikation eines Programms durch einen automatischen Beweiser
   \item grafische Benutzeroberfläche in englischer Sprache zur Steuerung der einzelnen Komponenten des Systems
   \item Programmiersprache mit Zuweisungen, Bedingten Anweisungen und Schleifen
-  \item Ausdrücke in Annotationen gleich wie in der Programmiersprache
+  \item Ausdrücke in Annotationen ähnlich wie in der Programmiersprache, zusätzlich Quantoren
   \item Zusicherungen erlauben Aussagen der Prädikatenlogik
   \item Annotationen assert und assume
 \end{itemize}
@@ -83,7 +79,7 @@ Das Produkt ermöglicht dem Benutzer die Analyse eines Programmes, das in der im
 
 \subsection{Hardware}
 \begin{itemize}
-  \item mindestens 128 MB Arbeitsspeicher
+  \item mindestens 512 MB Arbeitsspeicher
 \end{itemize}
 
 \subsection{Schnittstellen}
@@ -114,6 +110,7 @@ Das Produkt ermöglicht dem Benutzer die Analyse eines Programmes, das in der im
 /F170/ & Beweiser starten und Ergebnis anzeigen\\
 \hline
 \end{tabular}
+\subsection{Details}
 \begin{description}
 \item[/F10/] Anzeige von Quelltext\\
 Der Benutzer sieht den Quelltext des aktuellen Programms in der grafischen Oberfläche.
@@ -126,9 +123,9 @@ Der Benutzer kann den eingegebenen Quelltext ($\to$/F30/) in eine Datei speicher
 \item[/F50/] Laden eines Programms aus einer Datei\\
 Der Benutzer kann ein Quellcode eines Programms aus einer Datei laden. Hierbei gibt der Benutzer die zu ladende Datei über eine grafische Oberfläche an.
 \item[/F60/] Erkennen und Anzeigen von Syntaxfehlern\\
-Falls der aktuell angezeigte Quelltext Syntaxfehler enthält, wird dies dem Benutzer angezeigt.
+Falls der aktuell angezeigte Quelltext Syntaxfehler enthält, wird dies dem Benutzer angezeigt, wenn er die Programmausführung oder die Beweisführung anfordert.
 \item[/F70/] Erkennen und Anzeigen von Typfehlern\\
-Falls der aktuell angezeigte Quelltext Typfehler enthält, wird dies dem Benutzer angezeigt.
+Falls der aktuell angezeigte Quelltext Typfehler enthält, wird dies dem Benutzer angezeigt, wenn er die Programmausführung oder die Beweisführung anfordert.
 \item[/F80/] Ausführen eines Programms\\
 Die Anweisungen im aktuell angezeigten Quelltext können ausgeführt werden. Dabei sind folgende Ausführungsmodi möglich:\\
 \begin{tabularx}{\textwidth}{lX}
@@ -141,7 +138,7 @@ Der Benutzer kann Breakpoints zur Pausierung eines Programmdurchlaufs an Stellen
 \item[/F100/] Programmabbruch bei Fehler mit Anzeige des Fehlers\\
 Tritt ein Fehler zur Laufzeit des Programms auf, wird die Ausführung abgebrochen und der Fehler dem Benutzer angezeigt.
 \item[/F110/] Anzeige des Programmzustands\\
-Der Benutzer sieht während der Ausführung eines Programms den aktuellen Inhalt aller globalen und lokalen Variablen.
+Der Benutzer sieht während der Ausführung eines Programms den aktuellen Inhalt aller globalen und lokalen Variablen. Die Anzeige wird nur aktualisiert, wenn das Programm die Ausführung pausiert.
 \item[/F120/] Auswertung von benutzerdefinierten Ausdrücken\\
 Der Benutzer kann Ausdrücke über den aktuellen Programmzustand auswerten lassen.
 \item[/F130/] Auswertung der Annotationssprache\\
@@ -168,7 +165,7 @@ Es sind folgende Daten des Benutzers zu Speichern:
 
 \section{Produktleistungen}
 \begin{itemize}
-  \item zu einem gegebenen Programm soll die Rückmeldung des Beweisers immer korrekt sein
+  \item Verifikation- und Falsifikationsrückmeldungen vom Beweiser müssen korrekt sein, in anderen Fällen soll dem Benutzer mitgeteilt werden, dass der Beweiser das Problem nicht lösen kann
 \end{itemize}
 
 \section{Weitere nichtfunktionale Anforderungen}
@@ -177,34 +174,39 @@ Die Lizenz von Z3 erlaubt ausschließlich eine nicht-kommerzielle Benutzung.
 \section{Qualitätsanforderungen}
 \begin{itemize}
   \item Programmiersprache muss erweiterbar sein
-  \item unter Normalbedingungen stürzt das Programm nicht ab
+  \item mögliche Anbindung anderer Beweiser, die das SMT-LIB 2.0 Format unterstützen
+  \item unter (durch benutzerdefinierte Einstellungen vorgegebene, $\to$/F140/) Normalbedingungen stürzt das Programm nicht ab
   \item jede Aktion gibt in jedem Fall eine Rückmeldung an den Benutzer
 \end{itemize}
 
 \section{Globale Testfälle und Testszenarien}
-Folgende Funktionssequenzen sind zu Überprüfen:
+Folgende Funktionssequenzen sind zu überprüfen:
 \begin{description}
 \item[/T10/] Eingabe des leeren Programms $\to$ keine Syntaxfehler
-\item[/T20/] Eingabe des leeren Programms, Annotation \texttt{\_(ensure false)}, Programmausführung $\to$ Annotationsbedingung schlägt fehl
-\item[/T30/] Eingabe des leeren Programms, Annotation \texttt{\_(ensure true)}, Programmausführung $\to$ Annotationsbedingung schlägt nicht fehl
-\item[/T40/] Eingabe eines beliebigen Programms, Annotation \texttt{\_require false}, Programmausführung $\to$ Annotationsbedingung schlägt fehl, Programmausführung wird abgebrochen
-\item[/T50/] Eingabe eines Programms mit Zuweisung \texttt{x = 1}, Annotation \texttt{\_(require x>0)}, Programmausführung $\to$ Annotationsbedingung schlägt nicht fehl
-\item[/T60/] Eingabe eines Programms mit Syntaxfehler $\to$ Anzeige des Syntaxfehlers
-\item[/T70/] Eingabe eines Programms mit while-Schleife oder if-Konstrukt, deren Bedingung kein boolean ist $\to$ Anzeige des Typfehlers
-\item[/T80/] Eingabe eines Programms mit einem Operator, der nur auf Ganzzahlen definiert ist und auf einen boolean angewendet wird $\to$ Anzeige des Typfehlers
-\item[/T90/] Eingabe eines Programms mit einem Operator, der nur auf booleans definiert ist und auf Ganzzahlen angewendet wird $\to$ Anzeige des Typfehlers
-\item[/T100/] Eingabe eines Programms mit einer Zuweisung eines boolean an eine Ganzzahl $\to$ Anzeige des Typfehlers
-\item[/T110/] Eingabe eines Programms mit einer Zuweisung einer Ganzzahl an einen boolean $\to$ Anzeige des Typfehlers
-\item[/T120/] Eingabe eines Programms mit einer Zuweisung einer Ganzzahl oder eines boolean an ein Array $\to$ Anzeige des Typfehlers
-\item[/T130/] Eingabe eines Programms mit einem Vergleichsoperator, der auf zwei unterschiedliche Typen ausgeführt wird $\to$ Anzeige des Typfehlers
-\item[/T140/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{\_ensure(y==2x)}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
-\item[/T150/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{\_ensure(y\%2==0)}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
-\item[/T160/] Eingabe eines längeren Programms ohne Schleifen und ohne if-Konstrukt, Eingabe korrekter Annotationen, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
-\item[/T170/] Eingabe eines längeren Programms ohne Schleifen und mit if-Konstrukt, Eingabe korrekter Annotationen, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
-\item[/T180/] Eingabe eines längeren Programms mit Schleifen, Eingabe korrekter Annotationen, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
-\item[/T190/] Eingabe eines Programms mit Annotation \texttt{\_(ensure x!=x)}, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
-\item[/T200/] Eingabe eines längeren Programms mit Schleife, Eingabe falscher Annotationen, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
-\item[/T210/] Eingabe eines Programms mit Annotation \texttt{\_(require x\%2==0)}, Zuweisung \texttt{y = 2*(x/2)} und Annotation \texttt{\_ensure(x==y)}, Beweisvorgang starten $\to$ Verifikation durch den Beweiser
+\item[/T20/] Eingabe des leeren Programms, Beweisvorgang starten $\to$ Verifikation durch den Beweiser
+\item[/T30/] Eingabe des leeren Programms, Annotation \texttt{\_(ensure false)}, Programmausführung $\to$ Annotationsbedingung schlägt fehl
+\item[/T40/] Eingabe des leeren Programms, Annotation \texttt{\_(ensure true)}, Programmausführung $\to$ Annotationsbedingung schlägt nicht fehl
+\item[/T50/] Eingabe eines beliebigen Programms, Annotation \texttt{\_require false}, Programmausführung $\to$ Annotationsbedingung schlägt fehl, Programmausführung wird abgebrochen
+\item[/T60/] Eingabe eines Programms mit Zuweisung \texttt{x = 1}, Annotation \texttt{\_(require x>0)}, Programmausführung $\to$ Annotationsbedingung schlägt nicht fehl
+\item[/T70/] Eingabe eines Programms mit Syntaxfehler $\to$ Anzeige des Syntaxfehlers
+\item[/T80/] Eingabe eines Programms mit while-Schleife oder if-Konstrukt, deren Bedingung kein boolean ist $\to$ Anzeige des Typfehlers
+\item[/T90/] Eingabe eines Programms mit einem Operator, der nur auf Ganzzahlen definiert ist und auf einen boolean angewendet wird $\to$ Anzeige des Typfehlers
+\item[/T100/] Eingabe eines Programms mit einem Operator, der nur auf booleans definiert ist und auf Ganzzahlen angewendet wird $\to$ Anzeige des Typfehlers
+\item[/T110/] Eingabe eines Programms mit einer Zuweisung eines boolean an eine Ganzzahl $\to$ Anzeige des Typfehlers
+\item[/T120/] Eingabe eines Programms mit einer Zuweisung einer Ganzzahl an einen boolean $\to$ Anzeige des Typfehlers
+\item[/T130/] Eingabe eines Programms mit einer Zuweisung einer Ganzzahl oder eines boolean an ein Array $\to$ Anzeige des Typfehlers
+\item[/T140/] Eingabe eines Programms mit einem Vergleichsoperator, der auf zwei unterschiedliche Typen ausgeführt wird $\to$ Anzeige des Typfehlers
+\item[/T150/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{\_ensure(y==2x)}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T160/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{\_ensure(y\%2==0)}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T170/] Eingabe eines längeren Programms ohne Schleifen und ohne if-Konstrukt, Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T180/] Eingabe eines längeren Programms ohne Schleifen und mit if-Konstrukt, Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T190/] Eingabe eines längeren Programms mit Schleifen, Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T200/] Eingabe eines Programms mit Annotation \texttt{\_(ensure x!=x)}, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
+\item[/T210/] Eingabe eines längeren Programms mit Schleife (z.B. russische Multiplikation, Maximum der Zahlen in einem Array), Eingabe von Annotationen, die in mindestens einem Fall falsch sind, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
+\item[/T220/] Eingabe eines Programms mit Annotation \texttt{\_(require x\%2==0)}, Zuweisung \texttt{y = 2*(x/2)} und Annotation \texttt{\_ensure(x==y)}, Beweisvorgang starten $\to$ Verifikation durch den Beweiser
+\item[/T230/] Eingabe eines Programms ohne Annotation, Beweisvorgang starten $\to$ Beweisvorgang wird nicht gestartet
+\item[/T240/] Eingabe eines Programms mit Division durch 0, Ausführung des Programms $\to$ Anzeige des Laufzeitfehlers
+\item[/T250/] Eingabe eines Programms mit Deklaration und Initialisierung eines Arrays, fehlerhafter Arrayzugriff, Ausführung des Programms$\to$ Anzeige des Laufzeitfehlers
 \end{description}
 
 \section{Systemmodelle}
@@ -212,11 +214,16 @@ Folgende Funktionssequenzen sind zu Überprüfen:
 \includegraphics{systemmodelle.pdf}
 
 \section{Benutzungsoberfläche}
+\includegraphics{images/mockup1.jpg}
+\includegraphics{images/mockup2.jpg}
+\includegraphics{images/mockup3.jpg}
 
 \section{Spezielle Anforderungen an die Entwicklungsumgebung}
 \begin{description}
-  \item[Versionsverwaltung] Versionsverwaltung Git
+  \item[Versionsverwaltung] Git
   \item[Kommunikation] E-Mail, Wiki
+  \item[Dokumente] \LaTeX
+  \item[Programmiersprache] Java
 \end{description}
 
 \section{Zeit- und Ressourcenplanung}
@@ -242,46 +249,77 @@ Abschlusspräsentation & Matthias\\
 \subsection{While-Sprache}
 \subsubsection{Variablentypen}
 \begin{description}
-\item[Ganzzahl] positive und negative ganze Zahl beliebiger Genauigkeit
-\item[Boolean] Wahrheitswert, entweder wahr oder falsch
+\item[Ganzzahl] ganze Zahl beliebiger Genauigkeit.
+\item[Boolean] Wahrheitswert, entweder wahr oder falsch.
 \item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl möglicher Variablen in einem Array ist nach erster Festlegung konstant.
 \end{description}
 \subsubsection{Sprachkonstrukte}
-\begin{tabularx}{\textwidth}{| l | l | X |}
+\begin{tabularx}{\textwidth}{| l | X |}
 \hline
-\textbf{Konstrukt} & \textbf{Syntax} & \textbf{Bedeutung}\\
+\textbf{Konstrukt} & \textbf{Bedeutung}\\
 \hline
-if-else & \texttt{if(<Bedingung>) \{<Anweisung1>\} else \{<Anweisung2>\}} & \texttt{Anweisung1} wird ausgeführt, wenn \texttt{Bedingung} wahr ist, sonst wird \texttt{Anweisung2} ausgeführt \\
+if-else & Ausführung bestimmter Anweisungen, falls eine Bedingung erfüllt ist. Ausführung anderer Anweisungen, falls die Bedingung nicht erfüllt ist.\\
 \hline
-while & \texttt{while(<Bedingung>) \{<Anweisung>\}} & Solange \texttt{Bedingung} wahr ist, wird \texttt{Anweisung} ausgeführt\\
+while & Wiederholte Ausführung von bestimmten Anweisungen, wenn eine Bedingung erfüllt ist.\\
+\hline
+Methoden & Definition einer Folge von Anweisungen mit Parametern, die zu einem anderen Zeitpunkt im Programmablauf aufgerufen werden können, und einen Wert zurückgeben.\\
+\hline
+einzeilige Kommentare & Annotation, die keinen Einfluss auf die Quelltextverarbeitung haben.\\
 \hline
 \end{tabularx}
 \subsubsection{Operatoren}
-\begin{tabularx}{\textwidth}{| l | l | l | X |}
+\begin{tabularx}{\textwidth}{| l | X | l | X |}
 \hline
-\textbf{Operator} & \textbf{Syntax} & \textbf{Ergebnistyp} & \textbf{Funktion}\\
+\textbf{Operator} & \textbf{Eingabetypen} & \textbf{Ergebnistyp} & \textbf{Funktion}\\
 \hline
-== & \texttt{<T1> == <T2>} & Boolean & Prüft \texttt{T1} und \texttt{T2} auf Gleichheit, falls sie vom selben Variablentyp sind. Bei Arrays wird auf elementweise Gleichheit geprüft.\\
-!= & \texttt{<T1> != <T2>} & Boolean & Prüft \texttt{T1} und \texttt{T2} auf Ungleichheit, falls sie vom selben Variablentyp sind. Bei Arrays wird auf elementweise Ungleichheit geprüft.\\
+\texttt{==} & 2 Variablen desselben Typs & Boolean & Prüft \texttt{T1} und \texttt{T2} auf Gleichheit, falls sie vom selben Variablentyp sind. Arrays sind gleich, wenn alle Elemente der tiefsten Ebene des Arrays gleich sind.\\
+\texttt{!=} & 2 Variablen desselben Typs & Boolean & Prüft \texttt{T1} und \texttt{T2} auf Ungleichheit, falls sie vom selben Variablentyp sind. Liefert denselben Wert wie die Negation von \texttt{==}.\\
+\texttt{=} & 1 Variable und ein Ausdruck & ? & Weist der Variable den Wert des Ausdrucks zu, wenn dieser Wert vom selben Variablentyp ist, wie die Variable.\\
 \hline
-< & \texttt{<Ganzzahl1> < <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} kleiner als \texttt{Ganzzahl2} ist.\\
-> & \texttt{<Ganzzahl1> > <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} größer als \texttt{Ganzzahl2} ist.\\
-<= & \texttt{<Ganzzahl1> <= <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} kleiner oder gleich \texttt{Ganzzahl2} ist.\\
->= & \texttt{<Ganzzahl1> >= <Ganzzahl2>} & Boolean & Prüft, ob \texttt{Ganzzahl1} größer oder gleich \texttt{Ganzzahl2} ist.\\
-+ & \texttt{+<Ganzzahl>} & Ganzzahl & Gibt \texttt{Ganzzahl} zurück.\\
-- & \texttt{-<Ganzzahl>} & Ganzzahl & Gibt -\texttt{Ganzzahl} zurück.\\
-+ & \texttt{<Ganzzahl1> + <Ganzzahl2>} & Ganzzahl & Addiert \texttt{Ganzzahl1} und \texttt{Ganzzahl2}.\\
-- & \texttt{<Ganzzahl1> - <Ganzzahl2>} & Ganzzahl & Subtrahiert \texttt{Ganzzahl2} von \texttt{Ganzzahl1}.\\
-* & \texttt{<Ganzzahl1> * <Ganzzahl2>} & Ganzzahl & Multipliziert \texttt{Ganzzahl1} mit \texttt{Ganzzahl2}.\\
-/ & \texttt{<Ganzzahl1> / <Ganzzahl2>} & Ganzzahl & Dividiert \texttt{Ganzzahl1} durch \texttt{Ganzzahl2}. Das Ergebnis wird zur Null hin gerundet.\\
-\% & \texttt{<Ganzzahl1> \% <Ganzzahl2>} & Ganzzahl & Liefert den Rest der Ganzzahldivision von \texttt{Ganzzahl1} durch \texttt{Ganzzahl2}.\\
+\texttt{<} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Prüft, ob \texttt{Ganzzahl1} kleiner als \texttt{Ganzzahl2} ist.\\
+\texttt{>} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Prüft, ob \texttt{Ganzzahl1} größer als \texttt{Ganzzahl2} ist.\\
+\texttt{<=} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Prüft, ob \texttt{Ganzzahl1} kleiner oder gleich \texttt{Ganzzahl2} ist.\\
+\texttt{>=} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Prüft, ob \texttt{Ganzzahl1} größer oder gleich \texttt{Ganzzahl2} ist.\\
+\texttt{+} & 1 Ganzzahl, \texttt{Ganzzahl} & Ganzzahl & Gibt \texttt{Ganzzahl} zurück.\\
+\texttt{-} & 1 Ganzzahl, \texttt{Ganzzahl} & Ganzzahl & Gibt -\texttt{Ganzzahl} zurück.\\
+\texttt{+} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Ganzzahl & Addiert \texttt{Ganzzahl1} und \texttt{Ganzzahl2}.\\
+\texttt{-} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Ganzzahl & Subtrahiert \texttt{Ganzzahl2} von \texttt{Ganzzahl1}.\\
+\texttt{*} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Ganzzahl & Multipliziert \texttt{Ganzzahl1} mit \texttt{Ganzzahl2}.\\
+\texttt{/} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Ganzzahl & Dividiert \texttt{Ganzzahl1} durch \texttt{Ganzzahl2}. Das Ergebnis wird zur Null hin gerundet.\\
+\texttt{\%} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Ganzzahl & Liefert den Rest der Ganzzahldivision von \texttt{Ganzzahl1} durch \texttt{Ganzzahl2}.\\
 \hline
-! & \texttt{!<Boolean1>} & Boolean & Negiert \texttt{Boolean1}.\\
-\& & \texttt{<Boolean1> \& <Boolean2>} & Boolean & Liefert die Konjunktion von \texttt{Boolean1} und \texttt{Boolean2}.\\
-| & \texttt{<Boolean1> | <Boolean2>} & Boolean & Liefert die Disjunktion von \texttt{Boolean1} und \texttt{Boolean2}.\\
+\texttt{!} & 1 Boolean, \texttt{Boolean} & Boolean & Negiert den Wert von \texttt{Boolean}.\\
+\texttt{\&} & 2 Boolean, \texttt{Boolean1} und \texttt{Boolean2} & Boolean & Liefert die Konjunktion von \texttt{Boolean1} und \texttt{Boolean2}.\\
+\texttt{|} & 2 Boolean, \texttt{Boolean1} und \texttt{Boolean2} & Boolean & Liefert die Disjunktion von \texttt{Boolean1} und \texttt{Boolean2}.\\
+\hline
+\end{tabularx}
+\subsubsection{Sonstige Spracheigenschaften}
+\begin{itemize}
+  \item Lexical Scoping
+  \item sequentelle Komposition
+  \item Kurzauswertung von logischen Operatoren
+\end{itemize}
+
+\subsection{Annotationssprache}
+Die Annotationssprache besteht aus Ausdrücken der While-Sprache mit Quantoren und zusätzlich den folgenden Konstrukten:\\
+\begin{tabularx}{\textwidth}{| l | X |}
+\hline
+\texttt{require} & Stellt eine Vorbedingung vor Schleifen oder Methoden dar.\\
+\texttt{ensure} & Stellt eine Nachbedingung nach Schleifen oder Methoden dar.\\
+\texttt{assert} & Stellt eine Bedingung an der aktuellen Stelle im Programmablauf dar.\\
 \hline
 \end{tabularx}
 
+
 \section{Glossar}
+\begin{description}
+\item[Anweisung (Programm)] Eine syntaktisch korrekte Vorschrift, die bei der Abarbeitung des Programms auszuführen ist.
+\item[Beweiser] Ein Programm, das versucht die Gültigkeit eines Theorems zu überprüfen. Ein Beispiel für ein solches Programm ist $\to$Z3.
+\item[Kurzauswertung] Die Auswertung eines Ausdrucks wird abgebrochen, sobald der Wert des Ausdrucks bekannt ist.
+\item[Lexical Scoping] Auf eine lokale Variable kann nur in ihrem lexikalischen Sichtbarkeitsbereich Bezug genommen werden.
+\item[sequentielle Komposition] Hintereinanderausführung von mehreren Anweisungen.
+\item[SMT-LIB 2.0] Ein Standardformat zur Beschreibung von Satisfiability Modulo Theories Problemen, d.h. Formeln der Prädikatenlogik erster Stufe.
+\item[Z3] Ein $\to$Beweiser von Microsoft.
+\end{description}
 
 \end{document}
