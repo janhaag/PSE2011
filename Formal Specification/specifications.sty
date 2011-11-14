@@ -1,0 +1,32 @@
+\ProvidesPackage{specifications}
+\RequirePackage{smartref}
+\RequirePackage{index}
+
+% Params: longname counter idx shortdesc ref
+\def\specification#1#2#3#4#5{%
+    \noindent\ignorespaces%
+    \index[#3]{#5}%
+    \textbf{#1 \arabic{#2}}%
+    \label{#4}%
+    \refstepcounter{#2}%
+    \vspace{-0.5\baselineskip}%
+    \quote%
+}
+
+\def\endspecification{%
+    \endquote%
+    \vspace{1\baselineskip}%
+    \ignorespacesafterend%
+}
+
+% Params: longname shortname tag
+\def\newspec#1#2#3{
+    \newcounter{#2}
+    \stepcounter{#2}
+    \addtoreflist{#2}
+    \newindex{#2}{#3nd}{#3dx}{#1}
+    \expandafter\def\csname#2\endcsname##1##2{%
+        \specification{#1}{#2}{#2}{##1}{##2}
+    }
+    \expandafter\def\csname end#2\endcsname{\endspecification}
+}
