@@ -210,20 +210,21 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 /F1200/ & Starten des Beweisvorgangs\\
 /F1210/ & Anzeige des Ergebnis des Beweisers\\
 \hline
-\multicolumn{2}{| l |}{Interpreter}\\
+\multicolumn{2}{| l |}{Parser / Interpreter}\\
 \hline
-/F2010/ & Erkennen von Syntaxfehlern\\
-/F2020/ & Erkennen von Typfehlern\\
-/F2030/ & Ausf\"{u}hren eines Programms\\
-/F2040/ & Anhalten der Ausf\"{u}hrung eines Programms\\
-/F2050/ & Fortsetzung der Ausf\"{u}hrung eines Programms\\
-/F2060/ & Abbrechen der Ausf\"{u}hrung eines Programms\\
-/F2070/ & Ausf\"{u}hren einer einzelner Anweisung (Single Step)\\
-/F2080/ & Anhalten des Programmablaufs bei einem Breakpoint\\
-/F2090/ & Ausf\"{u}hrung eines Programms mit verschiedenen Belegungen f\"{u}r Eingabeparameter\\
-/F2100/ & Anhalten des Programmablaufs bei einem Fehler\\
-/F2110/ & Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
-/F2120/ & Auswertung der Ausdr\"{u}cke der Annotationssprache\\
+/F2010/ & Parsen des Quelltextes und Erzeugung eines AST\\
+/F2020/ & Erkennen von Syntaxfehlern\\
+/F2030/ & Erkennen von Typfehlern\\
+/F2040/ & Ausf\"{u}hren eines Programms\\
+/F2050/ & Anhalten der Ausf\"{u}hrung eines Programms\\
+/F2060/ & Fortsetzung der Ausf\"{u}hrung eines Programms\\
+/F2070/ & Abbrechen der Ausf\"{u}hrung eines Programms\\
+/F2080/ & Ausf\"{u}hren einer einzelner Anweisung (Single Step)\\
+/F2090/ & Anhalten des Programmablaufs bei einem Breakpoint\\
+/F2100/ & Ausf\"{u}hrung eines Programms mit verschiedenen Belegungen f\"{u}r Eingabeparameter\\
+/F2110/ & Anhalten des Programmablaufs bei einem Fehler\\
+/F2120/ & Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
+/F2130/ & Auswertung der Ausdr\"{u}cke der Annotationssprache\\
 \hline
 \multicolumn{2}{| l |}{Beweiserschnittstelle}\\
 \hline
@@ -246,11 +247,11 @@ Der Benutzer kann den eingegebenen Quelltext in eine Datei speichern. Dabei gibt
 \item[/F1050/] Laden eines Programms aus einer Datei\\
 Der Benutzer kann ein Quellcode eines Programms aus einer Datei laden. Hierbei gibt der Benutzer die zu ladende Datei \"{u}ber eine grafische Oberfl\"{a}che an.
 \item[/F1060/] Anzeigen von Syntaxfehlern\\
-Wenn der Interpreter Syntaxfehler erkannt hat ($\to$/F2010/), wird dies dem Benutzer angezeigt, wenn er die Programmausf\"{u}hrung oder die Beweisf\"{u}hrung anfordert.
+Wenn der Interpreter Syntaxfehler erkannt hat ($\to$/F2020/), wird dies dem Benutzer angezeigt, wenn er die Programmausf\"{u}hrung oder die Beweisf\"{u}hrung anfordert.
 \item[/F1070/] Anzeigen von Typfehlern\\
-Wenn der Interpreter Typfehler erkannt hat ($\to$/F2020/), wird dies dem Benutzer angezeigt, wenn er die Programmausf\"{u}hrung oder die Beweisf\"{u}hrung anfordert.
+Wenn der Interpreter Typfehler erkannt hat ($\to$/F2030/), wird dies dem Benutzer angezeigt, wenn er die Programmausf\"{u}hrung oder die Beweisf\"{u}hrung anfordert.
 \item[/F1080/] Anzeigen von Laufzeitfehlern\\
-Wenn bei der Ausf\"{u}hrung eines Programmes durch den Interpreter ein Fehler auftritt ($\to$/F2040/), wird dies dem Benutzer angezeigt.
+Wenn bei der Ausf\"{u}hrung eines Programmes durch den Interpreter ein Fehler auftritt ($\to$/F2050/), wird dies dem Benutzer angezeigt.
 \item[/F1090/] Setzen und Entfernen von Breakpoints\\
 Der Benutzer kann Breakpoints zur Pausierung eines Programmdurchlaufs an Stellen des angezeigten Quellcodes setzen und wieder entfernen.
 \item[/F1100/] Anzeige des Programmzustands\\
@@ -262,9 +263,9 @@ Hat der Benutzer das Programm angehalten ($\to$/F1110/), so kann er die Ausf\"{u
 \item[/F1130/] Abbrechen des Programmablaufs\\
 Der Benutzer kann die Ausf\"{u}hrung eines Programms abbrechen. Dabei wird der Programmzustand verworfen.
 \item[/F1140/] Eingabe verschiedener Eingangskonfigurationen f\"{u}r Eingabeparameter
-Der Benutzer kann einen Zahlenbereich sowie eine Anzahl an Konfigurationen angeben. Das Programm wird anschlie\ss{}end mit diesen Konfigurationen automatisch mehrfach ausgef\"{u}hrt ($\to$/F2060/). Bei fehlerfreier Ausf\"{u}hrung wird dem Benutzer eine Auswertung der Durchl\"{a}ufe angezeigt, tritt bei einer Ausf\"{u}hrung ein Fehler auf, so wird die Ausf\"{u}hrung angehalten.
+Der Benutzer kann einen Zahlenbereich sowie eine Anzahl an Konfigurationen angeben. Das Programm wird anschlie\ss{}end mit diesen Konfigurationen automatisch mehrfach ausgef\"{u}hrt ($\to$/F2070/). Bei fehlerfreier Ausf\"{u}hrung wird dem Benutzer eine Auswertung der Durchl\"{a}ufe angezeigt, tritt bei einer Ausf\"{u}hrung ein Fehler auf, so wird die Ausf\"{u}hrung angehalten.
 \item[/F1150/] Anzeige von fehlgeschlagenen Annotationsbedingungen\\
-Meldet der Interpreter eine fehlgeschlagene Annotationsbedingung ($\to$/F2050/), so wird dies dem Benutzer angezeigt.
+Meldet der Interpreter eine fehlgeschlagene Annotationsbedingung ($\to$/F2060/), so wird dies dem Benutzer angezeigt.
 \item[/F1160/] Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
 Der Benutzer kann w\"{a}hrend der angehaltenen Ausf\"{u}hrung eines Programms Ausdr\"{u}cke eingeben, die vom Interpreter ausgewertet werden und deren Ergebnis dem Benutzer angezeigt wird.
 \item[/F1170/] Anzeige der Beweisereinstellungen\\
@@ -279,31 +280,33 @@ Der Benutzer kann den Beweisvorgang mit Hilfe des Beweisers unter den eingegeben
 Nach dem Durchlauf des Beweisers wird dem Benutzer das Ergebnis des Beweisvorgangs angezeigt.
 \end{description}
 
-\subsubsection{Interpreter}
+\subsubsection{Parser / Interpreter}
 \begin{description}
-\item[/F2010/] Erkennen von Syntaxfehlern\\
+\item[/F2010/] Parsen des Quelltextes und Erzeugung eines AST\\
+Der Parser analysiert den eingegebenen Quelltext und erzeugt daraus einen abstrakten Syntaxbaum zur Weiterverwendung f\"{u}r andere Programmkomponenten.
+\item[/F2020/] Erkennen von Syntaxfehlern\\
 Der Interpreter erkennt Syntaxfehler des eingegebenen Quelltextes.
-\item[/F2020/] Erkennen von Typfehlern\\
+\item[/F2030/] Erkennen von Typfehlern\\
 Der Interpreter erkennt Typfehler des eingegebenen Quelltextes.
-\item[/F2030/] Ausf\"{u}hren eines Programms\\
-Ist der Quellcode frei von Syntaxfehlern ($\to$/F2010/) und von Typfehlern ($\to$/F2020/) Anweisungen im aktuell angezeigten Quelltext werden sequentiell ausgef\"{u}hrt.
-\item[/F2040/] Anhalten der Ausf\"{u}hrung eines Programms\\
+\item[/F2040/] Ausf\"{u}hren eines Programms\\
+Ist der Quellcode frei von Syntaxfehlern ($\to$/F2020/) und von Typfehlern ($\to$/F2030/) Anweisungen im aktuell angezeigten Quelltext werden sequentiell ausgef\"{u}hrt.
+\item[/F2050/] Anhalten der Ausf\"{u}hrung eines Programms\\
 Die laufende Ausf\"{u}hrung eines Programms kann angehalten werden ($\to$/F1110/), wobei keine Anweisungen mehr ausgef\"{u}hrt werden und die Ausf\"{u}hrung im aktuellen Zustand stehen bleibt.
-\item[/F2050/] Fortsetzung der Ausf\"{u}hrung eines Programms\\
-Wurde ein Programm angehalten ($\to$/F2040/), so kann die Ausf\"{u}hrung mit dem Zustand zum Zeitpunkt der Pausierung fortgesetzt werden.
-\item[/F2060/] Abbrechen der Ausf\"{u}hrung eines Programms\\
+\item[/F2060/] Fortsetzung der Ausf\"{u}hrung eines Programms\\
+Wurde ein Programm angehalten ($\to$/F2050/), so kann die Ausf\"{u}hrung mit dem Zustand zum Zeitpunkt der Pausierung fortgesetzt werden.
+\item[/F2070/] Abbrechen der Ausf\"{u}hrung eines Programms\\
 Die Ausf\"{u}hrung eines Programms kann angehalten werden ($\to$/F1120/), wobei der aktuelle Programmzustand verworfen wird.
-\item[/F2070/] Ausf\"{u}hren einer einzelner Anweisung (Single Step)\\
-Ist das Programm gestartet und angehalten, so wird die n\"{a}chste Anweisung ausgef\"{u}hrt. Ist das Programm nicht gestartet, so wird es gestartet ($\to$/F2030/).
-\item[/F2080/] Anhalten des Programmablaufs bei einem Breakpoint\\
-Wird bei der Ausf\"{u}hrung eines Programms ($\to$/F2030/) ein Breakpoint ($\to$/F1090/) erreicht, h\"{a}lt die Ausf\"{u}hrung an und der aktuelle Zustand wird zur\"{u}ckgegeben.
-\item[/F2090/] Ausf\"{u}hrung eines Programms mit verschiedenen Belegungen f\"{u}r Eingabeparameter\\
+\item[/F2080/] Ausf\"{u}hren einer einzelner Anweisung (Single Step)\\
+Ist das Programm gestartet und angehalten, so wird die n\"{a}chste Anweisung ausgef\"{u}hrt. Ist das Programm nicht gestartet, so wird es gestartet ($\to$/F2040/).
+\item[/F2090/] Anhalten des Programmablaufs bei einem Breakpoint\\
+Wird bei der Ausf\"{u}hrung eines Programms ($\to$/F2040/) ein Breakpoint ($\to$/F1090/) erreicht, h\"{a}lt die Ausf\"{u}hrung an und der aktuelle Zustand wird zur\"{u}ckgegeben.
+\item[/F2100/] Ausf\"{u}hrung eines Programms mit verschiedenen Belegungen f\"{u}r Eingabeparameter\\
 Das Programm wird mehrmals nacheinander mit den Werten f\"{u}r die Eingabeparameter ausgef\"{u}hrt. Bei diesen Ausf\"{u}hrungen werden Breakpoints ($\to$/F1090/) ignoriert. Tritt bei einer Ausf\"{u}hrung ein Fehler auf, so wird die weitere Ausf\"{u}hrung angehalten. Tritt kein Fehler auf, so wird eine Auswertung der Ausf\"{u}hrungen erstellt.
-\item[/F2100/] Anhalten des Programmablaufs bei einem Fehler\\
+\item[/F2110/] Anhalten des Programmablaufs bei einem Fehler\\
 Tritt ein Fehler zur Laufzeit des Programms auf, wird die Ausf\"{u}hrung abgebrochen und der Fehler dem Benutzer angezeigt.
-\item[/F2110/] Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
+\item[/F2120/] Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
 Der Benutzer kann Ausdr\"{u}cke \"{u}ber den aktuellen Programmzustand auswerten lassen ($\to$/F1140/).
-\item[/F2120/] Auswertung der Ausdr\"{u}cke der Annotationssprache\\
+\item[/F2130/] Auswertung der Ausdr\"{u}cke der Annotationssprache\\
 W\"{a}hrend der Programmausf\"{u}hrung werden die Bedingungen der Annotationssprache (einschlie\ss{}lich eventueller Quantoren) ausgewertet. Schl\"{a}gt eine \"{U}berpr\"{u}fung fehl, so wird die Ausf\"{u}hrung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
 \end{description}
 
@@ -320,17 +323,17 @@ Nach der Umwandlung des Quellcodes in das Eingabeformat des Beweisers ($\to$/F30
 
 \section{Produktdaten}
 Es sind folgende Daten des Benutzers zu Speichern:\\
-\begin{PD}{Benutzereinstellungen}{Benutzereinstellungen}{Benutzereinstellungen}
+\begin{description}
+\item[/D10/] Benutzereinstellungen
 \begin{itemize}
   \item Timeout in Sekunden f\"{u}r den Beweiser
   \item Speicherbegrenzung in Megabyte f\"{u}r den Beweiser
 \end{itemize}
-\end{PD}
-\begin{PD}{Zuletzt ge\"{o}ffnetes Verzeichnis}{Zuletzt ge\"{o}ffnetes Verzeichnis}{Zuletzt ge\"{o}ffnetes Verzeichnis}
+\item[/D20/] Zuletzt ge\"{o}ffnetes Verzeichnis
 \begin{itemize}
   \item Das zuletzt durch /F1050/ ge\"{o}ffnete Verzeichnis.
 \end{itemize}
-\end{PD}
+\end{description}
 
 
 \section{Produktleistungen}
@@ -343,7 +346,7 @@ Es sind folgende Daten des Benutzers zu Speichern:\\
 
 \section{Weitere nichtfunktionale Anforderungen}
 Die Lizenz von Z3 erlaubt ausschlie\ss{}lich eine nicht-kommerzielle Benutzung.
-Die Benutzung von Z3 als Beweiser schränkt die Plattformunabhängigkeit auf Windows NT 4.0 und höher und Betriebssysteme mit Wine ein. Durch Anbindung eines anderen Beweisers reicht unabhängig von den Anforderungen des neuen Beweisers eine aktuelle Java Runtime Environment.
+Die Benutzung von Z3 als Beweiser schr\"{a}nkt die Plattformunabh\"{a}ngigkeit auf Windows NT 4.0 und h\"{o}her und Betriebssysteme mit Wine ein. Durch Anbindung eines anderen Beweisers reicht unabh\"{a}ngig von den Anforderungen des neuen Beweisers eine aktuelle Java Runtime Environment.
 
 \section{Qualit\"{a}tsanforderungen}
 \begin{itemize}
@@ -521,7 +524,7 @@ Deklaration & Festlegung von Eigenschaften (Variablentyp, Bezeichner, \ldots) vo
   \item Kurzauswertung von logischen Operatoren
 \end{itemize}
 
-
+\newpage
 \subsection{Annotationssprache}
 Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantoren und zus\"{a}tzlich den folgenden Konstrukten:\\
 \begin{tabularx}{\textwidth}{| l | X |}
