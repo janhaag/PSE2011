@@ -233,6 +233,7 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 /F3030/ & Beweiservorgang durchf\"{u}hren\\
 \hline
 \end{tabular}
+
 \subsection{Details}
 \subsubsection{GUI}
 \begin{description}
@@ -240,6 +241,7 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 Der Benutzer sieht den Quelltext des aktuellen Programms in der grafischen Oberfl\"{a}che.
 \item[/F1020/] Syntax Highlighting\\
 Teile des angezeigten Quelltextes werden abh\"{a}ngig von ihrer Bedeutung in unterschiedlichen Farben angezeigt.
+\newpage
 \item[/F1030/] Ver\"{a}nderung des Quelltextes\\
 Der Benutzer kann den angezeigten Quelltext ver\"{a}ndern oder einen neuen Quelltext eingeben.
 \item[/F1040/] Speichern des Quelltextes in eine Datei\\
@@ -407,10 +409,11 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \scalegraphics{images/mockupf.png}
 \end{figure}
 
-\newpage
 \subsection{Men\"{u}punkte}
 \begin{figure}[h!]
-\scalegraphics{images/menu1.png}
+\begin{center}
+\includegraphics[height=5.5cm]{images/menu1.png}
+\end{center}
 \end{figure}
 \begin{figure}[h!]
 \scalegraphics{images/menu2.png}
@@ -422,6 +425,7 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \scalegraphics{images/menu4.png}
 \end{figure}
 
+\clearpage
 \section{Spezielle Anforderungen an die Entwicklungsumgebung}
 \begin{description}
   \item[Versionsverwaltung] Git (GitHub)
@@ -434,7 +438,21 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
   \item[Bildbearbeitung] Paint.NET
 \end{description}
 
+
 \section{Zeit- und Ressourcenplanung}
+\subsection{Phasenplan}
+\begin{tabular}[h]{| l | l |}
+\hline
+\textbf{Phase} & \textbf{Zeit pro Person}\\
+\hline
+Pflichtenheft & 30 Stunden\\
+Entwurf & 60 Stunden\\
+Implementierung & 75 Stunden\\
+Validierung & 45 Stunden\\
+Abschlusspr\"{a}sentation & 30 Stunden\\
+\hline
+\end{tabular}
+
 \subsection{Projektplan}
 \begin{tabular}[h]{| l | l |}
 \hline
@@ -465,7 +483,7 @@ Abschlusspr\"{a}sentation & Matthias\\
 \hline
 \end{tabular}
 
-
+\newpage
 \section{Erg\"{a}nzungen}
 \subsection{While-Sprache}
 \subsubsection{Variablentypen}
@@ -501,6 +519,12 @@ Deklaration & Festlegung von Eigenschaften (Variablentyp, Bezeichner, \ldots) vo
 \texttt{!=} & 2 Variablen desselben Typs & Boolean & Pr\"{u}ft \texttt{T1} und \texttt{T2} auf Ungleichheit, falls sie vom selben Variablentyp sind. Liefert denselben Wert wie die Negation von \texttt{==}.\\
 \texttt{=} & 1 Variable und ein Ausdruck & ? & Weist der Variable den Wert des Ausdrucks zu, wenn dieser Wert vom selben Variablentyp ist, wie die Variable.\\
 \hline
+\end{tabularx}
+\clearpage
+\begin{tabularx}{\textwidth}{| l | X | l | X |}
+\hline
+\textbf{Operator} & \textbf{Eingabetypen} & \textbf{Ergebnistyp} & \textbf{Funktion}\\
+\hline
 \texttt{<} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Pr\"{u}ft, ob \texttt{Ganzzahl1} kleiner als \texttt{Ganzzahl2} ist.\\
 \texttt{>} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Pr\"{u}ft, ob \texttt{Ganzzahl1} gr\"{o}\ss{}er als \texttt{Ganzzahl2} ist.\\
 \texttt{<=} & 2 Ganzzahlen, \texttt{Ganzzahl1} und \texttt{Ganzzahl2} & Boolean & Pr\"{u}ft, ob \texttt{Ganzzahl1} kleiner oder gleich \texttt{Ganzzahl2} ist.\\
@@ -524,7 +548,7 @@ Deklaration & Festlegung von Eigenschaften (Variablentyp, Bezeichner, \ldots) vo
   \item Kurzauswertung von logischen Operatoren
 \end{itemize}
 
-\newpage
+
 \subsection{Annotationssprache}
 Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantoren und zus\"{a}tzlich den folgenden Konstrukten:\\
 \begin{tabularx}{\textwidth}{| l | X |}
@@ -540,7 +564,7 @@ Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantore
 \hline
 \end{tabularx}
 
-
+\newpage
 \section{Glossar}
 \begin{description}
 \item[Anweisung (Programm)] Eine syntaktisch korrekte Vorschrift, die bei der Abarbeitung des Programms auszuf\"{u}hren ist.
