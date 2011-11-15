@@ -130,7 +130,7 @@ Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korre
   \item Variablentypen au\ss{}er Ganzzahl, Boolean und Arrays
   \item Implementierung eines Heaps
   \item Implementierung von Nebenl\"{a}ufigkeit
-  \item \"{u}berladen von Methoden
+  \item \"{U}berladen von Methoden
 \end{itemize}
 
 \subsection{Annotationssprache}
@@ -416,18 +416,26 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \end{center}
 \end{figure}
 \begin{figure}[h!]
+\begin{center}
 \scalegraphics{images/menu2.png}
+\end{center}
 \end{figure}
 \begin{figure}[h!]
+\begin{center}
 \scalegraphics{images/menu3.png}
+\end{center}
 \end{figure}
 \begin{figure}[h!]
+\begin{center}
 \scalegraphics{images/menu4.png}
+\end{center}
 \end{figure}
 \clearpage
 \subsection{Eingabe von benutzerdefinierten Ausdr\"{u}cken}
 \begin{figure}[h!]
+\begin{center}
 \scalegraphics{images/mockupf2.png}
+\end{center}
 \end{figure}
 
 \section{Spezielle Anforderungen an die Entwicklungsumgebung}
@@ -437,7 +445,7 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
   \item[Dokumente] \LaTeXe
   \item[Programmiersprache] Java
   \item[UML-Diagramme] Dia, SD Edit (f\"{u}r Sequenzdiagramme)
-  \item[Entwicklungsumgebung] keine einheitliche, Ausschluss entwicklungsumgebungsspezifischer Dateien durch .gitignore
+  \item[Entwicklungsumgebung] keine einheitliche Entwicklungsumgebung, Ausschluss entwicklungsumgebungsspezifischer Dateien durch .gitignore
   \item[Office-Paket] Microsoft Office
   \item[Bildbearbeitung] Paint.NET
 \end{description}
@@ -456,17 +464,17 @@ Abschlusspr\"{a}sentation & 30 Stunden\\
 \hline
 \end{tabular}
 
-\subsection{Projektplan}
+\subsection{Implementierungsplan}
 \begin{tabular}[h]{| l | l |}
 \hline
 \textbf{Komponente} & \textbf{Zeit}\\
 \hline
-GUI & 70 Stunden\\
-Parser & 50 Stunden\\
-Interpreter & 80 Stunden\\
-Run-time Checker & 30 Stunden\\
-Typchecker & 50 Stunden\\
-Beweiseranbindung & 75 Stunden\\
+GUI & 90 Stunden\\
+Parser & 60 Stunden\\
+Interpreter & 100 Stunden\\
+Run-time Checker & 40 Stunden\\
+Typchecker & 60 Stunden\\
+Beweiseranbindung & 100 Stunden\\
 \hline
 \end{tabular}
 \subsection{Phasenverantwortliche}
@@ -545,36 +553,39 @@ Deklaration & Festlegung von Eigenschaften (Variablentyp, Bezeichner, \ldots) vo
 \end{itemize}
 
 \subsection{Annotationssprache}
-Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantoren und zus\"{a}tzlich den folgenden Konstrukten:\\
+Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantoren und zus\"{a}tzlich den folgenden Konstrukten:\\[0.25cm]
 \begin{tabularx}{\textwidth}{| l | X |}
 \hline
 \texttt{require} & Stellt eine Vorbedingung vor Schleifen oder Methoden dar.\\
 \texttt{ensure} & Stellt eine Nachbedingung nach Schleifen oder Methoden dar.\\
 \texttt{assert} & Stellt eine Bedingung an der aktuellen Stelle im Programmablauf dar.\\
 \texttt{assume} & Stellt eine als wahr angenommene Aussage dar, die ab dem Punkt der Programmausf\"{u}hrung gilt, an der die Annotation steht.\\
-\texttt{invariant} & Stellt eine Invariante einer Schleife dar.\\
+\texttt{invariant} & Stellt eine Schleifeninvariante dar.\\
 \hline
 \texttt{thereis} & Existenzquantor $\exists$\\
 \texttt{forall} & Allquantor $\forall$\\
 \hline
 \end{tabularx}
 
+\newpage
 \section{Glossar}
 \begin{description}
 \item[Anweisung (Programm)] Eine syntaktisch korrekte Vorschrift, die bei der Abarbeitung des Programms auszuf\"{u}hren ist.
 \item[AST] Abstract Syntax Tree, eine Datenstruktur zur Darstellung der syntaktischen Struktur eines Programmcodes.
 \item[Beweiser] Ein Programm, das versucht die G\"{u}ltigkeit eines Theorems zu \"{u}berpr\"{u}fen. Ein Beispiel f\"{u}r ein solches Programm ist $\to$Z3.
 \item[Breakpoint] Ein Haltepunkt im Programm, bei der die Ausf\"{u}hrung eines Programms angehalten wird, sobald diese Stelle erreicht wird.
-\item[GUI] Graphical User Interface, grafische Benutzeroberfl\"{a}che.
+\item[GUI] Graphical User Interface, grafische Benutzeroberfl\"{a}che. Fenster über das der Benutzer mit dem Produkt interagiert ($\to$12), d.h. Eingaben vornehmen kann und Rückmeldung zum aktuellen Zustand erhält.
 \item[Interpreter] Ein Programm, das Quellcode ausf\"{u}hren kann.
 \item[Kurzauswertung] Die Auswertung eines Ausdrucks wird abgebrochen, sobald der Wert des Ausdrucks bekannt ist.
-\item[Lexical Scoping] Auf eine lokale Variable kann nur in ihrem lexikalischen Sichtbarkeitsbereich Bezug genommen werden.
+\item[Lexical Scoping] Auf eine lokale Variable kann nur in ihrem $\to$lexikalischen Sichtbarkeitsbereich Bezug genommen werden.
+\item[Lexikalischer Sichtbarkeitsbereich] Eine Variable ist nur in ihrem umgebenden Programmtext gültig und nur dort kann auf sie zugegriffen werden. Dieser ist häufig beschränkt durch geklammerte Blöcke.
 \item[Parser] Ein Programm, das einen Quelltext in eine f\"{u}r die Weiterverarbeitung g\"{u}nstiges Format (z.B. $\to$AST) umwandelt.
 \item[Pr\"{a}dikatenlogik] Ein logisches System, das es erm\"{o}glicht Argumente zu formalisieren und auf ihre G\"{u}ltigkeit zu pr\"{u}fen.
 \item[Run-time checker] Programmkomponente, die Bedingungen zur Laufzeit eines Programms \"{u}berpr\"{u}ft.
+\item[Schleifeninvariante] Eine Bedingung, die zu einem bestimmten Punkt innerhalb einer Schleife bei jedem Schleifendurchgang wahr ist.
 \item[sequentielle Komposition] Hintereinanderausf\"{u}hrung von mehreren Anweisungen.
 \item[SMT-LIB 2.0] Ein Standardformat zur Beschreibung von Satisfiability Modulo Theories Problemen, d.h. Formeln der Pr\"{a}dikatenlogik erster Stufe.
-\item[syntactic sugar] Syntaxelemente einer Programmiersprache, die nur der Komfortabilit\"{a}t dienen. Diese Syntaxelemente k\"{o}nnen aus der Sprache entfernt werden, ohne die Funktionalit\"{a}t einzuschr\"{a}nken.
+\item[syntactic sugar] Syntaxelemente einer Programmiersprache, die nur der Komfortabilit\"{a}t dienen, also z.B. den Schreibaufwand verringern oder die Lesbarkeit erhöhen. Diese Syntaxelemente k\"{o}nnen aus der Sprache entfernt werden, ohne die Funktionalit\"{a}t einzuschr\"{a}nken.
 \item[While-Sprache] Eine Programmiersprache, die sich durch einfache und wenige Kontrollstrukturen auszeichnet.
 \item[Z3] Ein $\to$Beweiser von Microsoft.
 \end{description}
