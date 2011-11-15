@@ -100,7 +100,8 @@ Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korre
 \end{itemize}
 \subsubsection{Abgrenzungskriterien}
 \begin{itemize}
-  \item Optionen, die keinen echten Mehrwert bieten
+  \item Einstellungen bezüglich Schriftart, Schriftfarbe und Schriftgröße
+  \item Projektmanagement
 \end{itemize}
 
 \subsection{Verifikation}
@@ -112,12 +113,12 @@ Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korre
 \subsection{While-Sprache}
 \subsubsection{Musskriterien}
 \begin{itemize}
-  \item Zuweisungen, Bedingten Anweisungen und Schleifen
+  \item Zuweisungen, Bedingte Anweisungen und Schleifen
   \item Turing-Vollst\"{a}ndigkeit
 \end{itemize}
 \subsubsection{Kannkriterien}
 \begin{itemize}
-  \item Programmiersprache unterst\"{u}tzt Methodenaufrufe
+  \item Unterst\"{u}tzung von Methodenaufrufen
 \end{itemize}
 \subsubsection{Abgrenzungskriterien}
 \begin{itemize}
@@ -146,7 +147,7 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 \subsection{Anwendungsbereiche}
 \begin{itemize}
   \item Formale Verifikation von Programmen
-  \item Testen von Programmen der While-Sprache
+  \item Testen und Ausführen von Programmen der While-Sprache
 \end{itemize}
 
 \subsection{Zielgruppen}
@@ -193,27 +194,37 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 /F1090/ & Setzen und Entfernen von Breakpoints\\
 /F1100/ & Anzeige des Programmzustands\\
 /F1110/ & Anhalten des Programmablaufs\\
-/F1120/ & Abbrechen des Programmablaufs\\
-/F1130/ & Anzeige von fehlgeschlagenen Annotationsbedingungen\\
-/F1140/ & Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
-/F1150/ & Anzeige der Beweisereinstellungen\\
-/F1160/ & Laden der Beweisereinstellungen aus einer Datei\\
-/F1170/ & Speichern der Beweisereinstellungen in eine Datei\\
-/F1180/ & Starten des Beweisvorgangs\\
-/F1190/ & Anzeige des Ergebnis des Beweisers\\
+/F1120/ & Fortsetzen des Programmablaufs\\
+/F1130/ & Abbrechen des Programmablaufs\\
+/F1140/ & Eingabe verschiedener Eingangskonfigurationen für Eingabeparameter\\
+/F1150/ & Anzeige von fehlgeschlagenen Annotationsbedingungen\\
+/F1160/ & Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
+/F1170/ & Anzeige der Beweisereinstellungen\\
+/F1180/ & Laden der Beweisereinstellungen aus einer Datei\\
+/F1190/ & Speichern der Beweisereinstellungen in eine Datei\\
+/F1200/ & Starten des Beweisvorgangs\\
+/F1210/ & Anzeige des Ergebnis des Beweisers\\
 \hline
 \multicolumn{2}{| l |}{Interpreter}\\
 \hline
 /F2010/ & Erkennen von Syntaxfehlern\\
 /F2020/ & Erkennen von Typfehlern\\
 /F2030/ & Ausf\"{u}hren eines Programms\\
-/F2040/ & Anhalten des Programmablaufs bei einem Fehler\\
-/F2050/ & Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
-/F2060/ & Auswertung der Ausdr\"{u}cke der Annotationssprache\\
+/F2040/ & Anhalten der Ausführung eines Programms\\
+/F2050/ & Fortsetzung der Ausführung eines Programms\\
+/F2060/ & Abbrechen der Ausführung eines Programms\\
+/F2070/ & Ausführen einer einzelner Anweisung (Single Step)\\
+/F2080/ & Anhalten des Programmablaufs bei einem Breakpoint\\
+/F2090/ & Ausführung eines Programms mit verschiedenen Belegungen für Eingabeparameter\\
+/F2100/ & Anhalten des Programmablaufs bei einem Fehler\\
+/F2110/ & Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
+/F2120/ & Auswertung der Ausdr\"{u}cke der Annotationssprache\\
 \hline
-\multicolumn{2}{| l |}{Beweiser}\\
+\multicolumn{2}{| l |}{Beweiserschnittstelle}\\
 \hline
-/F3010/ & Beweiservorgang durchf\"{u}hren\\
+/F3010/ & Quellcode in SMT-LIB 2.0 Format umwandeln\\
+/F3020/ & Übergabe der benutzerdefinierten Einstellungen\\
+/F3030/ & Beweiservorgang durchf\"{u}hren\\
 \hline
 \end{tabular}
 \subsection{Details}
@@ -241,25 +252,28 @@ Der Benutzer kann Breakpoints zur Pausierung eines Programmdurchlaufs an Stellen
 Der Benutzer sieht w\"{a}hrend der Ausf\"{u}hrung eines Programms den aktuellen Inhalt aller globalen und lokalen Variablen. Die Anzeige wird nur aktualisiert, wenn das Programm die Ausf\"{u}hrung pausiert.
 \item[/F1110/] Anhalten des Programmablaufs\\
 Der Benutzer kann die Ausf\"{u}hrung eines Programms anhalten. Dabei wird der aktuelle Programmzustand beibehalten.
-\item[/F1120/] Abbrechen des Programmablaufs\\
+\item[/F1120/] Fortsetzen des Programmablaufs\\
+Hat der Benutzer das Programm angehalten ($\to$/F1110/), so kann er die Ausführung des Programms wieder aufnehmen.
+\item[/F1130/] Abbrechen des Programmablaufs\\
 Der Benutzer kann die Ausf\"{u}hrung eines Programms abbrechen. Dabei wird der Programmzustand verworfen.
-\item[/F1130/] Anzeige von fehlgeschlagenen Annotationsbedingungen\\
+\item[/F1140/] Eingabe verschiedener Eingangskonfigurationen für Eingabeparameter
+Der Benutzer kann einen Zahlenbereich sowie eine Anzahl an Konfigurationen angeben. Das Programm wird anschließend mit diesen Konfigurationen automatisch mehrfach ausgeführt ($\to$/F2060/). Bei fehlerfreier Ausführung wird dem Benutzer eine Auswertung der Durchläufe angezeigt, tritt bei einer Ausführung ein Fehler auf, so wird die Ausführung angehalten.
+\item[/F1150/] Anzeige von fehlgeschlagenen Annotationsbedingungen\\
 Meldet der Interpreter eine fehlgeschlagene Annotationsbedingung ($\to$/F2050/), so wird dies dem Benutzer angezeigt.
-\item[/F1140/] Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
+\item[/F1160/] Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
 Der Benutzer kann w\"{a}hrend der angehaltenen Ausf\"{u}hrung eines Programms Ausdr\"{u}cke eingeben, die vom Interpreter ausgewertet werden und deren Ergebnis dem Benutzer angezeigt wird.
-\item[/F1150/] Anzeige der Beweisereinstellungen\\
+\item[/F1170/] Anzeige der Beweisereinstellungen\\
 Der Benutzer kann die aktuellen Einstellungen ($\to$/D10/) f\"{u}r die Ausf\"{u}hrung des Beweisers ($\to$/F1180/) anzeigen lassen. Diese werden vor der Anzeige aus einer Datei geladen ($\to$/F1160/) und bei einer Ver\"{a}nderung wieder in eine Datei geschrieben ($\to$/F1170/).
-\item[/F1160/] Laden der Beweisereinstellungen aus einer Datei\\
+\item[/F1180/] Laden der Beweisereinstellungen aus einer Datei\\
 Die Einstellungen f\"{u}r die Ausf\"{u}hrung des Beweisers ($\to$/D10/) werden automatisch aus einer Datei gelesen.
-\item[/F1170/] Speichern der Beweisereinstellungen in eine Datei\\
+\item[/F1190/] Speichern der Beweisereinstellungen in eine Datei\\
 Die Einstellungen ($\to$/D10/) werden in eine Datei gespeichert.
-\item[/F1180/] Starten des Beweisvorgangs\\
+\item[/F1200/] Starten des Beweisvorgangs\\
 Der Benutzer kann den Beweisvorgang mit Hilfe des Beweisers unter den eingegebenen Einstellungen starten.
-\item[/F1190/] Anzeige des Ergebnis des Beweisers\\
+\item[/F1210/] Anzeige des Ergebnis des Beweisers\\
 Nach dem Durchlauf des Beweisers wird dem Benutzer das Ergebnis des Beweisvorgangs angezeigt.
 \end{description}
 
-\newpage
 \subsubsection{Interpreter}
 \begin{description}
 \item[/F2010/] Erkennen von Syntaxfehlern\\
@@ -267,24 +281,35 @@ Der Interpreter erkennt Syntaxfehler des eingegebenen Quelltextes.
 \item[/F2020/] Erkennen von Typfehlern\\
 Der Interpreter erkennt Typfehler des eingegebenen Quelltextes.
 \item[/F2030/] Ausf\"{u}hren eines Programms\\
-Die Anweisungen im aktuell angezeigten Quelltext k\"{o}nnen (optional mit Eingabe von Parametern) ausgef\"{u}hrt werden. Dabei sind folgende Ausf\"{u}hrungsmodi m\"{o}glich:\\
-\begin{tabularx}{0.85\textwidth}{lX}
-\leftskip=0.1\textwidth
-Single Step & Es wird auf eine Interaktion des Benutzers nur eine Anweisung ausgef\"{u}hrt.\\
-Run until Breakpoint & Es werden sequentiell alle Anweisungen ausgef\"{u}hrt, bis das Programm beendet ist oder ein Breakpoint ($\to$/F1090/) erreicht wird.\\
-\end{tabularx}
-\item[/F2040/] Anhalten des Programmablaufs bei einem Fehler\\
+Ist der Quellcode frei von Syntaxfehlern ($\to$/F2010/) und von Typfehlern ($\to$/F2020/) Anweisungen im aktuell angezeigten Quelltext werden sequentiell ausgef\"{u}hrt.
+\item[/F2040/] Anhalten der Ausführung eines Programms\\
+Die laufende Ausführung eines Programms kann angehalten werden ($\to$/F1110/), wobei keine Anweisungen mehr ausgeführt werden und die Ausführung im aktuellen Zustand stehen bleibt.
+\item[/F2050/] Fortsetzung der Ausführung eines Programms\\
+Wurde ein Programm angehalten ($\to$/F2040/), so kann die Ausführung mit dem Zustand zum Zeitpunkt der Pausierung fortgesetzt werden.
+\item[/F2060/] Abbrechen der Ausführung eines Programms\\
+Die Ausführung eines Programms kann angehalten werden ($\to$/F1120/), wobei der aktuelle Programmzustand verworfen wird.
+\item[/F2070/] Ausführen einer einzelner Anweisung (Single Step)\\
+Ist das Programm gestartet und angehalten, so wird die nächste Anweisung ausgeführt. Ist das Programm nicht gestartet, so wird es gestartet ($\to$/F2030/).
+\item[/F2080/] Anhalten des Programmablaufs bei einem Breakpoint\\
+Wird bei der Ausführung eines Programms ($\to$/F2030/) ein Breakpoint ($\to$/F1090/) erreicht, hält die Ausführung an und der aktuelle Zustand wird zurückgegeben.
+\item[/F2090/] Ausführung eines Programms mit verschiedenen Belegungen für Eingabeparameter\\
+Das Programm wird mehrmals nacheinander mit den Werten für die Eingabeparameter ausgeführt. Bei diesen Ausführungen werden Breakpoints ($\to$/F1090/) ignoriert. Tritt bei einer Ausführung ein Fehler auf, so wird die weitere Ausführung angehalten. Tritt kein Fehler auf, so wird eine Auswertung der Ausführungen erstellt.
+\item[/F2100/] Anhalten des Programmablaufs bei einem Fehler\\
 Tritt ein Fehler zur Laufzeit des Programms auf, wird die Ausf\"{u}hrung abgebrochen und der Fehler dem Benutzer angezeigt.
-\item[/F2050/] Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
+\item[/F2110/] Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
 Der Benutzer kann Ausdr\"{u}cke \"{u}ber den aktuellen Programmzustand auswerten lassen ($\to$/F1140/).
-\item[/F2060/] Auswertung der Ausdr\"{u}cke der Annotationssprache\\
-W\"{a}hrend der Programmausf\"{u}hrung werden die Bedingungen der Annotationssprache ausgewertet. Schl\"{a}gt eine \"{U}berpr\"{u}fung fehl, so wird die Ausf\"{u}hrung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
+\item[/F2120/] Auswertung der Ausdr\"{u}cke der Annotationssprache\\
+W\"{a}hrend der Programmausf\"{u}hrung werden die Bedingungen der Annotationssprache (einschließlich eventueller Quantoren) ausgewertet. Schl\"{a}gt eine \"{U}berpr\"{u}fung fehl, so wird die Ausf\"{u}hrung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
 \end{description}
 
-\subsubsection{Beweiser}
+\subsubsection{Beweiserschnittstelle}
 \begin{description}
-\item[/F3010/] Beweiservorgang durchf\"{u}hren\\
-Der Beweisvorgang f\"{u}r das aktuelle Programm wird durchgef\"{u}hrt.
+\item[/F3010/] Quellcode in SMT-LIB 2.0 Format umwandeln\\
+Das Produkt wandelt den aktuellen Quellcode zur Eingabe in den Beweiser in das SMT-LIB 2.0 Format um. Dies geschieht implizit durch das Starten des Beweisvorgangs in der grafischen Oberfläche ($\to$/F1180/).
+\item[/F3020/] Übergabe der benutzerdefinierten Einstellungen\\
+Die vom Benutzer eingegebenen Einstellungen für den Beweisvorgang ($\to$/F1170/) werden dem Beweiser übergeben.
+\item[/F3030/] Beweiservorgang durchf\"{u}hren\\
+Nach der Umwandlung des Quellcodes in das Eingabeformat des Beweisers ($\to$/F3010/) wird der Beweisvorgang f\"{u}r das aktuelle Programm wird durchgef\"{u}hrt.
 \end{description}
 
 
@@ -302,7 +327,7 @@ Es sind folgende Daten des Benutzers zu Speichern:\\
 \end{itemize}
 \end{PD}
 
-\newpage
+
 \section{Produktleistungen}
 \begin{itemize}
   \item Verifikation- und Falsifikationsr\"{u}ckmeldungen vom Beweiser bez\"{u}glich der Spezifikation m\"{u}ssen korrekt sein, in anderen F\"{a}llen soll dem Benutzer mitgeteilt werden, dass der Beweiser das Problem nicht l\"{o}sen kann
@@ -343,7 +368,7 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \item[/T160/] Eingabe eines Programms mit Zuweisung \texttt{y = 2x}, Annotation \texttt{ensure y\%2==0}, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
 \item[/T170/] Eingabe eines l\"{a}ngeren Programms ohne Schleifen und ohne if-Konstrukt, Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
 \item[/T180/] Eingabe eines l\"{a}ngeren Programms ohne Schleifen und mit if-Konstrukt, Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
-\item[/T190/] Eingabe eines l\"{a}ngeren Programms mit Schleifen, Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
+\item[/T190/] Eingabe eines l\"{a}ngeren Programms mit Schleifen (z.B. russische Multiplikation, Maximum der Zahlen in einem Array), Eingabe von Annotationen, die in jedem Fall wahr sind, Beweisvorgang starten $\to$ Verifizierung durch den Beweiser
 \item[/T200/] Eingabe eines Programms mit Annotation \texttt{ensure x!=x}, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
 \item[/T210/] Eingabe eines l\"{a}ngeren Programms mit Schleife (z.B. russische Multiplikation, Maximum der Zahlen in einem Array), Eingabe von Annotationen, die in mindestens einem Fall falsch sind, Beweisvorgang starten $\to$ Falsifikation durch den Beweiser
 \item[/T220/] Eingabe eines Programms mit Annotation \texttt{require x\%2==0}, Zuweisung \texttt{y = 2*(x/2)} und Annotation \texttt{ensure (x==y)}, Beweisvorgang starten $\to$ Verifikation durch den Beweiser
@@ -351,25 +376,25 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \item[/T240/] Eingabe eines Programms mit Deklaration und Initialisierung eines Arrays, fehlerhafter Arrayzugriff, Ausf\"{u}hrung des Programms$\to$ Anzeige des Laufzeitfehlers
 \end{description}
 
-\newpage
+
 \section{Systemmodelle}
 \subsection{Komponenten\"{u}bersicht}
 \begin{figure}[h!]
 \scalegraphics{images/overview.png}
 \end{figure}
-\newpage
+
 \subsection{Workflow}
 \begin{figure}[h!]
 \scalegraphics{images/process.png}
 \end{figure}
 
-\newpage
+
 \section{Benutzeroberfl\"{a}che}
 \subsection{\"{Ü}bersicht}
 \begin{figure}[h!]
 \scalegraphics{images/mockupf.png}
 \end{figure}
-\newpage
+
 \subsection{Men\"{u}punkte}
 \begin{figure}[h!]
 \scalegraphics{images/menu1.png}
@@ -392,6 +417,8 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
   \item[Programmiersprache] Java
   \item[UML-Diagramme] Dia, SD Edit (f\"{u}r Sequenzdiagramme)
   \item[Entwicklungsumgebung] keine einheitliche, Ausschluss entwicklungsumgebungsspezifischer Dateien durch .gitignore
+  \item[Office-Paket] Microsoft Office
+  \item[Bildbearbeitung] Paint.NET
 \end{description}
 
 \section{Zeit- und Ressourcenplanung}
@@ -400,12 +427,12 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \hline
 \textbf{Komponente} & \textbf{Zeit}\\
 \hline
-GUI & 75 Stunden\\
-Parser & 75 Stunden\\
-Interpreter & 75 Stunden\\
-Run-time Checker & 100 Stunden\\
-Typchecker & 75 Stunden\\
-Beweiseranbindung & 100 Stunden\\
+GUI & 70 Stunden\\
+Parser & 50 Stunden\\
+Interpreter & 80 Stunden\\
+Run-time Checker & 30 Stunden\\
+Typchecker & 50 Stunden\\
+Beweiseranbindung & 75 Stunden\\
 \hline
 \end{tabular}
 \subsection{Phasenverantwortliche}
@@ -425,7 +452,7 @@ Abschlusspr\"{a}sentation & Matthias\\
 \hline
 \end{tabular}
 
-\newpage
+
 \section{Erg\"{a}nzungen}
 \subsection{While-Sprache}
 \subsubsection{Variablentypen}
@@ -484,7 +511,7 @@ Deklaration & Festlegung von Eigenschaften (Variablentyp, Bezeichner, \ldots) vo
   \item Kurzauswertung von logischen Operatoren
 \end{itemize}
 
-\newpage
+
 \subsection{Annotationssprache}
 Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantoren und zus\"{a}tzlich den folgenden Konstrukten:\\
 \begin{tabularx}{\textwidth}{| l | X |}
@@ -492,7 +519,7 @@ Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantore
 \texttt{require} & Stellt eine Vorbedingung vor Schleifen oder Methoden dar.\\
 \texttt{ensure} & Stellt eine Nachbedingung nach Schleifen oder Methoden dar.\\
 \texttt{assert} & Stellt eine Bedingung an der aktuellen Stelle im Programmablauf dar.\\
-\texttt{assume} & Stellt eine globale, als wahr angenommene Aussage dar.\\
+\texttt{assume} & Stellt eine als wahr angenommene Aussage dar, die ab dem Punkt der Programmausführung gilt, an der die Annotation steht.\\
 \texttt{invariant} & Stellt eine Invariante einer Schleife dar.\\
 \hline
 \texttt{thereis} & Existenzquantor $\exists$\\
@@ -500,12 +527,13 @@ Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantore
 \hline
 \end{tabularx}
 
-\newpage
+
 \section{Glossar}
 \begin{description}
 \item[Anweisung (Programm)] Eine syntaktisch korrekte Vorschrift, die bei der Abarbeitung des Programms auszuf\"{u}hren ist.
 \item[AST] Abstract Syntax Tree, eine Datenstruktur zur Darstellung der syntaktischen Struktur eines Programmcodes.
 \item[Beweiser] Ein Programm, das versucht die G\"{u}ltigkeit eines Theorems zu \"{u}berpr\"{u}fen. Ein Beispiel f\"{u}r ein solches Programm ist $\to$Z3.
+\item[Breakpoint] Ein Haltepunkt im Programm, bei der die Ausführung eines Programms angehalten wird, sobald diese Stelle erreicht wird.
 \item[GUI] Graphical User Interface, grafische Benutzeroberfl\"{a}che.
 \item[Interpreter] Ein Programm, das Quellcode ausf\"{u}hren kann.
 \item[Kurzauswertung] Die Auswertung eines Ausdrucks wird abgebrochen, sobald der Wert des Ausdrucks bekannt ist.
