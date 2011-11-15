@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{calc}
 \usepackage[section]{placeins}
 \usepackage{tabularx}
 \usepackage[vmargin=3cm, hmargin=2cm]{geometry}
@@ -9,6 +10,12 @@
 \usepackage[ngerman]{babel}
 
 \setlength{\parskip}{2pt}
+\newlength{\imgwidth}
+\newcommand\scalegraphics[1]{
+  \settowidth{\imgwidth}{\includegraphics{#1}}
+  \setlength{\imgwidth}{\minof{\imgwidth}{\textwidth}}
+  \includegraphics[width=\imgwidth]{#1}
+}
 
 \newspec{Funktionale Anforderung}{FA}{f}
 \newspec{Nicht-Funktionale Anforderungen}{NFA}{n}
@@ -32,15 +39,15 @@
 %Das Produkt ist ein Werkzeug zur Analyse und Korrektheitspr\"{u}fung von Programmen. Der Benutzer hat die M\"{o}glichkeit, in eine grafische Oberfl\"{a}che ein Programm mit der im Anhang spezifizierten While-Sprache zu laden und mit Annotationen zu versehen, die als Vor- und Nachbedingungen gepr\"{u}ft werden.
 Das Produkt ist ein Werkzeug zur Analyse und Korrektheitspr\"{u}fung von Programmen.
 
-Der Benutzer interagiert \"{u}ber eine grafische Oberfläche, die neben einem Editor f\"{u}r die Erstellung und Bearbeitung von Programmen auch detaillierte R\"{u}ckmeldungen zum aktuellen Programmzustand sowie weiterf\"{u}hrende Hilfen zur Verf\"{u}gung stellt.
+Der Benutzer interagiert \"{u}ber eine grafische Oberfl\"{a}che, die neben einem Editor f\"{u}r die Erstellung und Bearbeitung von Programmen auch detaillierte R\"{u}ckmeldungen zum aktuellen Programmzustand sowie weiterf\"{u}hrende Hilfen zur Verf\"{u}gung stellt.
 
-Nach dem Erstellen eines Programms mit der im Anhang spezifizierten While-Sprache wird dieses zunächst \"{u}bersetzt. \"{u}ber das Ergebnis dieser Analyse sowie eventuelle Fehler wird der Benutzer \"{u}ber die grafische Oberfläche informiert.
+Nach dem Erstellen eines Programms mit der im Anhang spezifizierten While-Sprache wird dieses zun\"{a}chst \"{u}bersetzt. \"{U}ber das Ergebnis dieser Analyse sowie eventuelle Fehler wird der Benutzer \"{u}ber die grafische Oberfl\"{a}che informiert.
 
 Im Anschluss entsteht nach einer Erweiterung des Quelltextes um Annahmen in Form einer definierten Annotationssprache durch den Benutzer ein beweisbares Programm, welches mit den zur Verf\"{u}gung stehenden Methoden zur Analyse des Programms untersucht werden kann.
 
-F\"{u}r diese Zwecke bietet das Produkt sowohl eine statische als auch dynamische Pr\"{u}fung des Programmes an. Bei der dynamischen Pr\"{u}fung kann der Benutzer Eingabeparameter frei wählen und das Programm mit diesen starten. Während der Ausf\"{u}hrung werden die angegebenen Annotationen \"{u}berpr\"{u}ft. Im Fehlerfall wird das Programm im Fehlerzustand eingefroren und der Benutzer \"{u}ber die grafische Oberfläche informiert.
+F\"{u}r diese Zwecke bietet das Produkt sowohl eine statische als auch dynamische Pr\"{u}fung des Programmes an. Bei der dynamischen Pr\"{u}fung kann der Benutzer Eingabeparameter frei w\"{a}hlen und das Programm mit diesen starten. W\"{a}hrend der Ausf\"{u}hrung werden die angegebenen Annotationen \"{u}berpr\"{u}ft. Im Fehlerfall wird das Programm im Fehlerzustand eingefroren und der Benutzer \"{u}ber die grafische Oberfl\"{a}che informiert.
 
-Bei der statischen \"{u}berpr\"{u}fung wird versucht, die Annotationen als korrekt zu beweisen. Wenn der Beweis gelingt, gibt das Programm dem Benutzer dies \"{u}ber die grafische Oberfläche bekannt; anderenfalls liefert das Programm ein Gegenbeispiel oder signalisiert, dass es keine Entscheidung treffen kann.
+Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korrekt zu beweisen. Wenn der Beweis gelingt, gibt das Programm dem Benutzer dies \"{u}ber die grafische Oberfl\"{a}che bekannt; anderenfalls liefert das Programm ein Gegenbeispiel oder signalisiert, dass es keine Entscheidung treffen kann.
 
 \section{Zielbestimmung}
 \subsection{Interpreter / Run-time Checker}
@@ -91,7 +98,7 @@ Bei der statischen \"{u}berpr\"{u}fung wird versucht, die Annotationen als korre
 \subsubsection{Musskriterien}
 \begin{itemize}
   \item Zuweisungen, Bedingten Anweisungen und Schleifen
-  \item Turing-Vollständigkeit
+  \item Turing-Vollst\"{a}ndigkeit
 \end{itemize}
 \subsubsection{Kannkriterien}
 \begin{itemize}
@@ -158,6 +165,8 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 \subsection{\"{U}bersicht}
 \begin{tabular}{| l | l |}
 \hline
+\multicolumn{2}{| l |}{GUI}\\
+\hline
 /F1010/ & Anzeige von Quelltext\\
 /F1020/ & Syntax Highlighting\\
 /F1030/ & Ver\"{a}nderung des Quelltextes\\
@@ -178,12 +187,16 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 /F1180/ & Starten des Beweisvorgangs\\
 /F1190/ & Anzeige des Ergebnis des Beweisers\\
 \hline
+\multicolumn{2}{| l |}{Interpreter}\\
+\hline
 /F2010/ & Erkennen von Syntaxfehlern\\
 /F2020/ & Erkennen von Typfehlern\\
 /F2030/ & Ausf\"{u}hren eines Programms\\
 /F2040/ & Anhalten des Programmablaufs bei einem Fehler\\
 /F2050/ & Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
 /F2060/ & Auswertung der Ausdr\"{u}cke der Annotationssprache\\
+\hline
+\multicolumn{2}{| l |}{Beweiser}\\
 \hline
 /F3010/ & Beweiservorgang durchf\"{u}hren\\
 \hline
@@ -218,7 +231,7 @@ Der Benutzer kann die Ausf\"{u}hrung eines Programms abbrechen. Dabei wird der P
 \item[/F1130/] Anzeige von fehlgeschlagenen Annotationsbedingungen\\
 Meldet der Interpreter eine fehlgeschlagene Annotationsbedingung ($\to$/F2050/), so wird dies dem Benutzer angezeigt.
 \item[/F1140/] Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
-Der Benutzer kann während der angehaltenen Ausf\"{u}hrung eines Programms Ausdr\"{u}cke eingeben, die vom Interpreter ausgewertet werden und deren Ergebnis dem Benutzer angezeigt wird.
+Der Benutzer kann w\"{a}hrend der angehaltenen Ausf\"{u}hrung eines Programms Ausdr\"{u}cke eingeben, die vom Interpreter ausgewertet werden und deren Ergebnis dem Benutzer angezeigt wird.
 \item[/F1150/] Anzeige der Beweisereinstellungen\\
 Der Benutzer kann die aktuellen Einstellungen ($\to$/D10/) f\"{u}r die Ausf\"{u}hrung des Beweisers ($\to$/F1180/) anzeigen lassen. Diese werden vor der Anzeige aus einer Datei geladen ($\to$/F1160/) und bei einer Ver\"{a}nderung wieder in eine Datei geschrieben ($\to$/F1170/).
 \item[/F1160/] Laden der Beweisereinstellungen aus einer Datei\\
@@ -231,6 +244,7 @@ Der Benutzer kann den Beweisvorgang mit Hilfe des Beweisers unter den eingegeben
 Nach dem Durchlauf des Beweisers wird dem Benutzer das Ergebnis des Beweisvorgangs angezeigt.
 \end{description}
 
+\newpage
 \subsubsection{Interpreter}
 \begin{description}
 \item[/F2010/] Erkennen von Syntaxfehlern\\
@@ -238,7 +252,7 @@ Der Interpreter erkennt Syntaxfehler des eingegebenen Quelltextes.
 \item[/F2020/] Erkennen von Typfehlern\\
 Der Interpreter erkennt Typfehler des eingegebenen Quelltextes.
 \item[/F2030/] Ausf\"{u}hren eines Programms\\
-Die Anweisungen im aktuell angezeigten Quelltext k\"{o}nnen ausgef\"{u}hrt werden. Dabei sind folgende Ausf\"{u}hrungsmodi m\"{o}glich:\\
+Die Anweisungen im aktuell angezeigten Quelltext k\"{o}nnen (optional mit Eingabe von Parametern) ausgef\"{u}hrt werden. Dabei sind folgende Ausf\"{u}hrungsmodi m\"{o}glich:\\
 \begin{tabularx}{0.85\textwidth}{lX}
 \leftskip=0.1\textwidth
 Single Step & Es wird auf eine Interaktion des Benutzers nur eine Anweisung ausgef\"{u}hrt.\\
@@ -273,12 +287,13 @@ Es sind folgende Daten des Benutzers zu Speichern:\\
 \end{itemize}
 \end{PD}
 
+\newpage
 \section{Produktleistungen}
 \begin{itemize}
-  \item Verifikation- und Falsifikationsr\"{u}ckmeldungen vom Beweiser bezüglich der Spezifikation m\"{u}ssen korrekt sein, in anderen F\"{a}llen soll dem Benutzer mitgeteilt werden, dass der Beweiser das Problem nicht l\"{o}sen kann
-  \item Interpreter: Anweisungen mit weniger als 50 Operatoren werden in weniger als 0,1 Sekunde ausgeführt
+  \item Verifikation- und Falsifikationsr\"{u}ckmeldungen vom Beweiser bez\"{u}glich der Spezifikation m\"{u}ssen korrekt sein, in anderen F\"{a}llen soll dem Benutzer mitgeteilt werden, dass der Beweiser das Problem nicht l\"{o}sen kann
+  \item Interpreter: Anweisungen mit weniger als 50 Operatoren werden in weniger als 0,1 Sekunde ausgef\"{u}hrt
   \item Parser: Programme mit 10.000 Zeilen werden in weniger als 1 Sekunde geparst
-  \item vollständige Dokumentation der Syntax der While- und Annotationssprache
+  \item vollst\"{a}ndige Dokumentation der Syntax der While- und Annotationssprache
 \end{itemize}
 
 \section{Weitere nichtfunktionale Anforderungen}
@@ -321,29 +336,37 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \item[/T240/] Eingabe eines Programms mit Deklaration und Initialisierung eines Arrays, fehlerhafter Arrayzugriff, Ausf\"{u}hrung des Programms$\to$ Anzeige des Laufzeitfehlers
 \end{description}
 
+\newpage
 \section{Systemmodelle}
 \subsection{Komponenten\"{u}bersicht}
-\includegraphics[width=\textwidth]{images/overview.png}
+\begin{figure}[h!]
+\scalegraphics{images/overview.png}
+\end{figure}
+\newpage
 \subsection{Workflow}
-\includegraphics[width=\textwidth]{images/process.png}
+\begin{figure}[h!]
+\scalegraphics{images/process.png}
+\end{figure}
 
+\newpage
 \section{Benutzeroberfl\"{a}che}
-\subsection{Übersicht}
+\subsection{\"{Ü}bersicht}
 \begin{figure}[h!]
-\includegraphics[width=\textwidth]{images/mockupf.png}
+\scalegraphics{images/mockupf.png}
 \end{figure}
-\subsection{Menüpunkte}
+\newpage
+\subsection{Men\"{u}punkte}
 \begin{figure}[h!]
-\includegraphics[width=\textwidth]{images/menu4.png}
-\end{figure}
-\begin{figure}[h!]
-\includegraphics[width=\textwidth]{images/menu1.png}
+\scalegraphics{images/menu1.png}
 \end{figure}
 \begin{figure}[h!]
-\includegraphics[width=\textwidth]{images/menu2.png}
+\scalegraphics{images/menu2.png}
 \end{figure}
 \begin{figure}[h!]
-\includegraphics[width=\textwidth]{images/menu3.png}
+\scalegraphics{images/menu3.png}
+\end{figure}
+\begin{figure}[h!]
+\scalegraphics{images/menu4.png}
 \end{figure}
 
 \section{Spezielle Anforderungen an die Entwicklungsumgebung}
@@ -352,7 +375,7 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
   \item[Kommunikation] E-Mail, GitHub Wiki
   \item[Dokumente] \LaTeXe
   \item[Programmiersprache] Java
-  \item[UML-Diagramme] Dia, SD Edit (für Sequenzdiagramme)
+  \item[UML-Diagramme] Dia, SD Edit (f\"{u}r Sequenzdiagramme)
   \item[Entwicklungsumgebung] keine einheitliche, Ausschluss entwicklungsumgebungsspezifischer Dateien durch .gitignore
 \end{description}
 
@@ -385,21 +408,21 @@ Abschlusspr\"{a}sentation & Matthias\\
 \hline
 \end{tabular}
 
-
+\newpage
 \section{Erg\"{a}nzungen}
 \subsection{While-Sprache}
 \subsubsection{Variablentypen}
 \begin{description}
 \item[Ganzzahl] ganze Zahl beliebiger Genauigkeit.
 \item[Boolean] Wahrheitswert, entweder wahr oder falsch.
-\item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl m\"{o}glicher Variablen in einem Array ist nach erster Festlegung konstant. Ein Array kann mehrdimensional sein, dann ist die Größe jeder Dimension nach erster Festlegung konstant.
+\item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl m\"{o}glicher Variablen in einem Array ist nach erster Festlegung konstant. Ein Array kann mehrdimensional sein, dann ist die Gr\"{ö}ße jeder Dimension nach erster Festlegung konstant.
 \end{description}
 \subsubsection{Sprachkonstrukte}
 \begin{tabularx}{\textwidth}{| l | X |}
 \hline
 \textbf{Konstrukt} & \textbf{Bedeutung}\\
 \hline
-sequentelle Komposition & Hintereinanderausführung von Anweisungen.\\
+sequentelle Komposition & Hintereinanderausf\"{u}hrung von Anweisungen.\\
 \hline
 if-else & Ausf\"{u}hrung bestimmter Anweisungen, falls eine Bedingung erf\"{u}llt ist. Ausf\"{u}hrung anderer Anweisungen, falls die Bedingung nicht erf\"{u}llt ist.\\
 \hline
@@ -444,6 +467,7 @@ Deklaration & Festlegung von Eigenschaften (Variablentyp, Bezeichner, \ldots) vo
   \item Kurzauswertung von logischen Operatoren
 \end{itemize}
 
+\newpage
 \subsection{Annotationssprache}
 Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantoren und zus\"{a}tzlich den folgenden Konstrukten:\\
 \begin{tabularx}{\textwidth}{| l | X |}
@@ -465,11 +489,12 @@ Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantore
 \item[Anweisung (Programm)] Eine syntaktisch korrekte Vorschrift, die bei der Abarbeitung des Programms auszuf\"{u}hren ist.
 \item[AST] Abstract Syntax Tree, eine Datenstruktur zur Darstellung der syntaktischen Struktur eines Programmcodes.
 \item[Beweiser] Ein Programm, das versucht die G\"{u}ltigkeit eines Theorems zu \"{u}berpr\"{u}fen. Ein Beispiel f\"{u}r ein solches Programm ist $\to$Z3.
-\item[GUI] Graphical User Interface, grafische Benutzeroberfläche.
-\item[Interpreter] Ein Programm, das Quellcode ausführen kann.
+\item[GUI] Graphical User Interface, grafische Benutzeroberfl\"{a}che.
+\item[Interpreter] Ein Programm, das Quellcode ausf\"{u}hren kann.
 \item[Kurzauswertung] Die Auswertung eines Ausdrucks wird abgebrochen, sobald der Wert des Ausdrucks bekannt ist.
 \item[Lexical Scoping] Auf eine lokale Variable kann nur in ihrem lexikalischen Sichtbarkeitsbereich Bezug genommen werden.
-\item[Run-time checker] Programmkomponente, die Bedingungen zur Laufzeit eines Programms überprüft.
+\item[Parser] Ein Programm, das einen Quelltext in eine für die Weiterverarbeitung günstiges Format (z.B. $\to$AST) umwandelt.
+\item[Run-time checker] Programmkomponente, die Bedingungen zur Laufzeit eines Programms \"{u}berpr\"{u}ft.
 \item[sequentielle Komposition] Hintereinanderausf\"{u}hrung von mehreren Anweisungen.
 \item[SMT-LIB 2.0] Ein Standardformat zur Beschreibung von Satisfiability Modulo Theories Problemen, d.h. Formeln der Pr\"{a}dikatenlogik erster Stufe.
 \item[Z3] Ein $\to$Beweiser von Microsoft.
