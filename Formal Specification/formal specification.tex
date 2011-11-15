@@ -28,6 +28,8 @@
 \makeindex
 
 \begin{document}
+
+\thispagestyle {empty}
 \vspace*{4cm}
 \begin{center}
 \begin {huge}
@@ -37,7 +39,10 @@ Simon Bischof, Jan Haag, Adrian Herrmann, Lin Jin, Tobias Schlumberger, Matthias
 \vspace{3cm}
 \begin{huge}
 Praxis der Softwareentwicklung \\
+Projekt 4:\\
 Automatisches Pr\"{u}fen der Korrektheit von Programmen\\
+Gruppe 1\\
+\vspace{2cm}
 \includegraphics[height=2cm]{images/Kitlogo_de_rgb.pdf}\\[0.5cm]
 \end{huge}
 \begin{huge}
@@ -68,7 +73,7 @@ Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korre
 \subsection{Interpreter / Run-time Checker}
 \subsubsection{Musskriterien}
 \begin{itemize}
-  \item schrittweise Ausf\"{u}hrung eines Programms
+  \item (schrittweise) Ausf\"{u}hrung eines Programms
   \item Inspektion des aktuellen Programmzustands durch den Benutzer
   \item Pr\"{u}fung von Zusicherungen in Programmen zur Laufzeit
 \end{itemize}
@@ -100,7 +105,7 @@ Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korre
 \end{itemize}
 \subsubsection{Abgrenzungskriterien}
 \begin{itemize}
-  \item Einstellungen bezüglich Schriftart, Schriftfarbe und Schriftgröße
+  \item Einstellungen bez\"{u}glich Schriftart, Schriftfarbe und Schriftgr\"{o}\ss{}e
   \item Projektmanagement
 \end{itemize}
 
@@ -122,7 +127,7 @@ Bei der statischen \"{U}berpr\"{u}fung wird versucht, die Annotationen als korre
 \end{itemize}
 \subsubsection{Abgrenzungskriterien}
 \begin{itemize}
-  \item Variablentypen außer Ganzzahl, Boolean und Arrays
+  \item Variablentypen au\ss{}er Ganzzahl, Boolean und Arrays
   \item Implementierung eines Heaps
   \item Implementierung von Nebenl\"{a}ufigkeit
   \item \"{u}berladen von Methoden
@@ -147,7 +152,7 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 \subsection{Anwendungsbereiche}
 \begin{itemize}
   \item Formale Verifikation von Programmen
-  \item Testen und Ausführen von Programmen der While-Sprache
+  \item Testen und Ausf\"{u}hren von Programmen der While-Sprache
 \end{itemize}
 
 \subsection{Zielgruppen}
@@ -196,7 +201,7 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 /F1110/ & Anhalten des Programmablaufs\\
 /F1120/ & Fortsetzen des Programmablaufs\\
 /F1130/ & Abbrechen des Programmablaufs\\
-/F1140/ & Eingabe verschiedener Eingangskonfigurationen für Eingabeparameter\\
+/F1140/ & Eingabe verschiedener Eingangskonfigurationen f\"{u}r Eingabeparameter\\
 /F1150/ & Anzeige von fehlgeschlagenen Annotationsbedingungen\\
 /F1160/ & Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
 /F1170/ & Anzeige der Beweisereinstellungen\\
@@ -210,12 +215,12 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 /F2010/ & Erkennen von Syntaxfehlern\\
 /F2020/ & Erkennen von Typfehlern\\
 /F2030/ & Ausf\"{u}hren eines Programms\\
-/F2040/ & Anhalten der Ausführung eines Programms\\
-/F2050/ & Fortsetzung der Ausführung eines Programms\\
-/F2060/ & Abbrechen der Ausführung eines Programms\\
-/F2070/ & Ausführen einer einzelner Anweisung (Single Step)\\
+/F2040/ & Anhalten der Ausf\"{u}hrung eines Programms\\
+/F2050/ & Fortsetzung der Ausf\"{u}hrung eines Programms\\
+/F2060/ & Abbrechen der Ausf\"{u}hrung eines Programms\\
+/F2070/ & Ausf\"{u}hren einer einzelner Anweisung (Single Step)\\
 /F2080/ & Anhalten des Programmablaufs bei einem Breakpoint\\
-/F2090/ & Ausführung eines Programms mit verschiedenen Belegungen für Eingabeparameter\\
+/F2090/ & Ausf\"{u}hrung eines Programms mit verschiedenen Belegungen f\"{u}r Eingabeparameter\\
 /F2100/ & Anhalten des Programmablaufs bei einem Fehler\\
 /F2110/ & Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
 /F2120/ & Auswertung der Ausdr\"{u}cke der Annotationssprache\\
@@ -223,7 +228,7 @@ Das Produkt erm\"{o}glicht dem Benutzer die Analyse eines Programmes, das in der
 \multicolumn{2}{| l |}{Beweiserschnittstelle}\\
 \hline
 /F3010/ & Quellcode in SMT-LIB 2.0 Format umwandeln\\
-/F3020/ & Übergabe der benutzerdefinierten Einstellungen\\
+/F3020/ & \"{U}bergabe der benutzerdefinierten Einstellungen\\
 /F3030/ & Beweiservorgang durchf\"{u}hren\\
 \hline
 \end{tabular}
@@ -253,11 +258,11 @@ Der Benutzer sieht w\"{a}hrend der Ausf\"{u}hrung eines Programms den aktuellen 
 \item[/F1110/] Anhalten des Programmablaufs\\
 Der Benutzer kann die Ausf\"{u}hrung eines Programms anhalten. Dabei wird der aktuelle Programmzustand beibehalten.
 \item[/F1120/] Fortsetzen des Programmablaufs\\
-Hat der Benutzer das Programm angehalten ($\to$/F1110/), so kann er die Ausführung des Programms wieder aufnehmen.
+Hat der Benutzer das Programm angehalten ($\to$/F1110/), so kann er die Ausf\"{u}hrung des Programms wieder aufnehmen.
 \item[/F1130/] Abbrechen des Programmablaufs\\
 Der Benutzer kann die Ausf\"{u}hrung eines Programms abbrechen. Dabei wird der Programmzustand verworfen.
-\item[/F1140/] Eingabe verschiedener Eingangskonfigurationen für Eingabeparameter
-Der Benutzer kann einen Zahlenbereich sowie eine Anzahl an Konfigurationen angeben. Das Programm wird anschließend mit diesen Konfigurationen automatisch mehrfach ausgeführt ($\to$/F2060/). Bei fehlerfreier Ausführung wird dem Benutzer eine Auswertung der Durchläufe angezeigt, tritt bei einer Ausführung ein Fehler auf, so wird die Ausführung angehalten.
+\item[/F1140/] Eingabe verschiedener Eingangskonfigurationen f\"{u}r Eingabeparameter
+Der Benutzer kann einen Zahlenbereich sowie eine Anzahl an Konfigurationen angeben. Das Programm wird anschlie\ss{}end mit diesen Konfigurationen automatisch mehrfach ausgef\"{u}hrt ($\to$/F2060/). Bei fehlerfreier Ausf\"{u}hrung wird dem Benutzer eine Auswertung der Durchl\"{a}ufe angezeigt, tritt bei einer Ausf\"{u}hrung ein Fehler auf, so wird die Ausf\"{u}hrung angehalten.
 \item[/F1150/] Anzeige von fehlgeschlagenen Annotationsbedingungen\\
 Meldet der Interpreter eine fehlgeschlagene Annotationsbedingung ($\to$/F2050/), so wird dies dem Benutzer angezeigt.
 \item[/F1160/] Eingabe von benutzerdefinierten Ausdr\"{u}cken\\
@@ -282,34 +287,34 @@ Der Interpreter erkennt Syntaxfehler des eingegebenen Quelltextes.
 Der Interpreter erkennt Typfehler des eingegebenen Quelltextes.
 \item[/F2030/] Ausf\"{u}hren eines Programms\\
 Ist der Quellcode frei von Syntaxfehlern ($\to$/F2010/) und von Typfehlern ($\to$/F2020/) Anweisungen im aktuell angezeigten Quelltext werden sequentiell ausgef\"{u}hrt.
-\item[/F2040/] Anhalten der Ausführung eines Programms\\
-Die laufende Ausführung eines Programms kann angehalten werden ($\to$/F1110/), wobei keine Anweisungen mehr ausgeführt werden und die Ausführung im aktuellen Zustand stehen bleibt.
-\item[/F2050/] Fortsetzung der Ausführung eines Programms\\
-Wurde ein Programm angehalten ($\to$/F2040/), so kann die Ausführung mit dem Zustand zum Zeitpunkt der Pausierung fortgesetzt werden.
-\item[/F2060/] Abbrechen der Ausführung eines Programms\\
-Die Ausführung eines Programms kann angehalten werden ($\to$/F1120/), wobei der aktuelle Programmzustand verworfen wird.
-\item[/F2070/] Ausführen einer einzelner Anweisung (Single Step)\\
-Ist das Programm gestartet und angehalten, so wird die nächste Anweisung ausgeführt. Ist das Programm nicht gestartet, so wird es gestartet ($\to$/F2030/).
+\item[/F2040/] Anhalten der Ausf\"{u}hrung eines Programms\\
+Die laufende Ausf\"{u}hrung eines Programms kann angehalten werden ($\to$/F1110/), wobei keine Anweisungen mehr ausgef\"{u}hrt werden und die Ausf\"{u}hrung im aktuellen Zustand stehen bleibt.
+\item[/F2050/] Fortsetzung der Ausf\"{u}hrung eines Programms\\
+Wurde ein Programm angehalten ($\to$/F2040/), so kann die Ausf\"{u}hrung mit dem Zustand zum Zeitpunkt der Pausierung fortgesetzt werden.
+\item[/F2060/] Abbrechen der Ausf\"{u}hrung eines Programms\\
+Die Ausf\"{u}hrung eines Programms kann angehalten werden ($\to$/F1120/), wobei der aktuelle Programmzustand verworfen wird.
+\item[/F2070/] Ausf\"{u}hren einer einzelner Anweisung (Single Step)\\
+Ist das Programm gestartet und angehalten, so wird die n\"{a}chste Anweisung ausgef\"{u}hrt. Ist das Programm nicht gestartet, so wird es gestartet ($\to$/F2030/).
 \item[/F2080/] Anhalten des Programmablaufs bei einem Breakpoint\\
-Wird bei der Ausführung eines Programms ($\to$/F2030/) ein Breakpoint ($\to$/F1090/) erreicht, hält die Ausführung an und der aktuelle Zustand wird zurückgegeben.
-\item[/F2090/] Ausführung eines Programms mit verschiedenen Belegungen für Eingabeparameter\\
-Das Programm wird mehrmals nacheinander mit den Werten für die Eingabeparameter ausgeführt. Bei diesen Ausführungen werden Breakpoints ($\to$/F1090/) ignoriert. Tritt bei einer Ausführung ein Fehler auf, so wird die weitere Ausführung angehalten. Tritt kein Fehler auf, so wird eine Auswertung der Ausführungen erstellt.
+Wird bei der Ausf\"{u}hrung eines Programms ($\to$/F2030/) ein Breakpoint ($\to$/F1090/) erreicht, h\"{a}lt die Ausf\"{u}hrung an und der aktuelle Zustand wird zur\"{u}ckgegeben.
+\item[/F2090/] Ausf\"{u}hrung eines Programms mit verschiedenen Belegungen f\"{u}r Eingabeparameter\\
+Das Programm wird mehrmals nacheinander mit den Werten f\"{u}r die Eingabeparameter ausgef\"{u}hrt. Bei diesen Ausf\"{u}hrungen werden Breakpoints ($\to$/F1090/) ignoriert. Tritt bei einer Ausf\"{u}hrung ein Fehler auf, so wird die weitere Ausf\"{u}hrung angehalten. Tritt kein Fehler auf, so wird eine Auswertung der Ausf\"{u}hrungen erstellt.
 \item[/F2100/] Anhalten des Programmablaufs bei einem Fehler\\
 Tritt ein Fehler zur Laufzeit des Programms auf, wird die Ausf\"{u}hrung abgebrochen und der Fehler dem Benutzer angezeigt.
 \item[/F2110/] Auswertung von benutzerdefinierten Ausdr\"{u}cken\\
 Der Benutzer kann Ausdr\"{u}cke \"{u}ber den aktuellen Programmzustand auswerten lassen ($\to$/F1140/).
 \item[/F2120/] Auswertung der Ausdr\"{u}cke der Annotationssprache\\
-W\"{a}hrend der Programmausf\"{u}hrung werden die Bedingungen der Annotationssprache (einschließlich eventueller Quantoren) ausgewertet. Schl\"{a}gt eine \"{U}berpr\"{u}fung fehl, so wird die Ausf\"{u}hrung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
+W\"{a}hrend der Programmausf\"{u}hrung werden die Bedingungen der Annotationssprache (einschlie\ss{}lich eventueller Quantoren) ausgewertet. Schl\"{a}gt eine \"{U}berpr\"{u}fung fehl, so wird die Ausf\"{u}hrung des Programms angehalten und dem Benutzer angezeigt, welche Bedingung falsch ist.
 \end{description}
 
 \subsubsection{Beweiserschnittstelle}
 \begin{description}
 \item[/F3010/] Quellcode in SMT-LIB 2.0 Format umwandeln\\
-Das Produkt wandelt den aktuellen Quellcode zur Eingabe in den Beweiser in das SMT-LIB 2.0 Format um. Dies geschieht implizit durch das Starten des Beweisvorgangs in der grafischen Oberfläche ($\to$/F1180/).
-\item[/F3020/] Übergabe der benutzerdefinierten Einstellungen\\
-Die vom Benutzer eingegebenen Einstellungen für den Beweisvorgang ($\to$/F1170/) werden dem Beweiser übergeben.
+Das Produkt wandelt den aktuellen Quellcode zur Eingabe in den Beweiser in das SMT-LIB 2.0 Format um. Dies geschieht implizit durch das Starten des Beweisvorgangs in der grafischen Oberfl\"{a}che ($\to$/F1180/).
+\item[/F3020/] \"{U}bergabe der benutzerdefinierten Einstellungen\\
+Die vom Benutzer eingegebenen Einstellungen f\"{u}r den Beweisvorgang ($\to$/F1170/) werden dem Beweiser \"{u}bergeben.
 \item[/F3030/] Beweiservorgang durchf\"{u}hren\\
-Nach der Umwandlung des Quellcodes in das Eingabeformat des Beweisers ($\to$/F3010/) wird der Beweisvorgang f\"{u}r das aktuelle Programm wird durchgef\"{u}hrt und nach Abschluss das Ergebnis zurückgemeldet.
+Nach der Umwandlung des Quellcodes in das Eingabeformat des Beweisers ($\to$/F3010/) wird der Beweisvorgang f\"{u}r das aktuelle Programm wird durchgef\"{u}hrt und nach Abschluss das Ergebnis zur\"{u}ckgemeldet.
 \end{description}
 
 
@@ -338,6 +343,7 @@ Es sind folgende Daten des Benutzers zu Speichern:\\
 
 \section{Weitere nichtfunktionale Anforderungen}
 Die Lizenz von Z3 erlaubt ausschlie\ss{}lich eine nicht-kommerzielle Benutzung.
+Die Benutzung von Z3 als Beweiser schränkt die Plattformunabhängigkeit auf Windows NT 4.0 und höher und Betriebssysteme mit Wine ein. Durch Anbindung eines anderen Beweisers reicht unabhängig von den Anforderungen des neuen Beweisers eine aktuelle Java Runtime Environment.
 
 \section{Qualit\"{a}tsanforderungen}
 \begin{itemize}
@@ -386,12 +392,14 @@ Folgende Funktionssequenzen sind zu \"{u}berpr\"{u}fen:\\
 \newpage
 \subsection{Workflow}
 \begin{figure}[h!]
+\begin{center}
 \scalegraphics{images/process.png}
+\end{center}
 \end{figure}
 
 
 \section{Benutzeroberfl\"{a}che}
-\subsection{\"{Ü}bersicht}
+\subsection{\"{U}bersicht}
 \begin{figure}[h!]
 \scalegraphics{images/mockupf.png}
 \end{figure}
@@ -461,7 +469,7 @@ Abschlusspr\"{a}sentation & Matthias\\
 \begin{description}
 \item[Ganzzahl] ganze Zahl beliebiger Genauigkeit.
 \item[Boolean] Wahrheitswert, entweder wahr oder falsch.
-\item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl m\"{o}glicher Variablen in einem Array ist nach erster Festlegung konstant. Ein Array kann mehrdimensional sein, dann ist die Gr\"{ö}ße jeder Dimension nach erster Festlegung konstant.
+\item[Array] eine Zusammenfassung mehrerer Variablen eines Variablentyps. Die maximale Anzahl m\"{o}glicher Variablen in einem Array ist nach erster Festlegung konstant. Ein Array kann mehrdimensional sein, dann ist die Gr\"{\"{o}}\ss{}e jeder Dimension nach erster Festlegung konstant.
 \end{description}
 \subsubsection{Sprachkonstrukte}
 \begin{tabularx}{\textwidth}{| l | X |}
@@ -521,7 +529,7 @@ Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantore
 \texttt{require} & Stellt eine Vorbedingung vor Schleifen oder Methoden dar.\\
 \texttt{ensure} & Stellt eine Nachbedingung nach Schleifen oder Methoden dar.\\
 \texttt{assert} & Stellt eine Bedingung an der aktuellen Stelle im Programmablauf dar.\\
-\texttt{assume} & Stellt eine als wahr angenommene Aussage dar, die ab dem Punkt der Programmausführung gilt, an der die Annotation steht.\\
+\texttt{assume} & Stellt eine als wahr angenommene Aussage dar, die ab dem Punkt der Programmausf\"{u}hrung gilt, an der die Annotation steht.\\
 \texttt{invariant} & Stellt eine Invariante einer Schleife dar.\\
 \hline
 \texttt{thereis} & Existenzquantor $\exists$\\
@@ -535,15 +543,18 @@ Die Annotationssprache besteht aus Ausdr\"{u}cken der While-Sprache mit Quantore
 \item[Anweisung (Programm)] Eine syntaktisch korrekte Vorschrift, die bei der Abarbeitung des Programms auszuf\"{u}hren ist.
 \item[AST] Abstract Syntax Tree, eine Datenstruktur zur Darstellung der syntaktischen Struktur eines Programmcodes.
 \item[Beweiser] Ein Programm, das versucht die G\"{u}ltigkeit eines Theorems zu \"{u}berpr\"{u}fen. Ein Beispiel f\"{u}r ein solches Programm ist $\to$Z3.
-\item[Breakpoint] Ein Haltepunkt im Programm, bei der die Ausführung eines Programms angehalten wird, sobald diese Stelle erreicht wird.
+\item[Breakpoint] Ein Haltepunkt im Programm, bei der die Ausf\"{u}hrung eines Programms angehalten wird, sobald diese Stelle erreicht wird.
 \item[GUI] Graphical User Interface, grafische Benutzeroberfl\"{a}che.
 \item[Interpreter] Ein Programm, das Quellcode ausf\"{u}hren kann.
 \item[Kurzauswertung] Die Auswertung eines Ausdrucks wird abgebrochen, sobald der Wert des Ausdrucks bekannt ist.
 \item[Lexical Scoping] Auf eine lokale Variable kann nur in ihrem lexikalischen Sichtbarkeitsbereich Bezug genommen werden.
-\item[Parser] Ein Programm, das einen Quelltext in eine für die Weiterverarbeitung günstiges Format (z.B. $\to$AST) umwandelt.
+\item[Parser] Ein Programm, das einen Quelltext in eine f\"{u}r die Weiterverarbeitung g\"{u}nstiges Format (z.B. $\to$AST) umwandelt.
+\item[Pr\"{a}dikatenlogik] Ein logisches System, das es erm\"{o}glicht Argumente zu formalisieren und auf ihre G\"{u}ltigkeit zu pr\"{u}fen.
 \item[Run-time checker] Programmkomponente, die Bedingungen zur Laufzeit eines Programms \"{u}berpr\"{u}ft.
 \item[sequentielle Komposition] Hintereinanderausf\"{u}hrung von mehreren Anweisungen.
 \item[SMT-LIB 2.0] Ein Standardformat zur Beschreibung von Satisfiability Modulo Theories Problemen, d.h. Formeln der Pr\"{a}dikatenlogik erster Stufe.
+\item[syntactic sugar] Syntaxelemente einer Programmiersprache, die nur der Komfortabilit\"{a}t dienen. Diese Syntaxelemente k\"{o}nnen aus der Sprache entfernt werden, ohne die Funktionalit\"{a}t einzuschr\"{a}nken.
+\item[While-Sprache] Eine Programmiersprache, die sich durch einfache und wenige Kontrollstrukturen auszeichnet.
 \item[Z3] Ein $\to$Beweiser von Microsoft.
 \end{description}
 
