@@ -4,34 +4,68 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage[ngerman]{babel}
-\usepackage{graphicx}
+\usepackage[pdftex]{graphicx}
 \usepackage[vmargin=3cm, hmargin=2cm]{geometry}
 \usepackage{tabularx}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2pt}
-\title{Entwurf}
+
+\title{Entwurfsdokument}
 \author{Simon Bischof \and Jan Haag \and Adrian Herrmann \and Lin Jin \and Tobias Schlumberger \and Matthias Schnetz}
+
+\makeindex
+
 \begin{document}
-\maketitle
+
+\thispagestyle {empty}
+\vspace*{4cm}
+\begin{center}
+\begin {huge}
+Entwurfsdokument\\
+\end{huge}
+Simon Bischof, Jan Haag, Adrian Herrmann, Lin Jin, Tobias Schlumberger, Matthias Schnetz\\
+\vspace{3cm}
+\begin{huge}
+Praxis der Softwareentwicklung \\
+Projekt 3:\\
+Automatisches Pr\"{u}fen der Korrektheit von Programmen\\
+Gruppe 1\\
+\vspace{2cm}
+\includegraphics[height=2cm]{images/Logo.pdf}\\[0.5cm]
+\end{huge}
+\begin{huge}
+WS 2011/2012
+\end{huge}
+\end{center}
+\newpage
 \tableofcontents
 \newpage
+
 \section{Klassendiagramme}
+\subsection{"Ubersicht}
+\includegraphics[scale=0.8]{images/ClassOverview.pdf}
+\subsection{Feinstruktur der Komponenten}
+\subsubsection{Parser}
+\includegraphics[angle=90, scale=0.6]{images/ClassParser.pdf}
+\subsubsection{Interpreter}
+\includegraphics[angle=90, scale=0.6]{images/ClassInterpreter.pdf}
+\subsubsection{Beweiser}
+\includegraphics[angle=90, scale=0.6]{images/ClassVerifier.pdf}
+\subsubsection{GUI}
+\includegraphics[angle=90, scale=0.6]{images/ClassGui.pdf}
+
+\section{Verhaltensdiagramme}
+\subsection{Aktivit"atsdiagramme}
+\subsubsection{Parser/Type-Checker}
+\includegraphics[angle=90, scale=0.45]{images/AktivitaetParser.pdf}
+\subsection{Zustandsdiagramm}
+\includegraphics[angle=90, scale=0.6]{images/Zustandsdiagramm.pdf}
+
 \newpage
-\includegraphics[scale=0.45]{ClassDiagram}
-\newpage
-\includegraphics[scale=1.1]{ClassDiagram_alternative}
-\newpage
-\section{Zustandsdiagramme}
-\newpage
-\includegraphics[scale=0.75]{Zustandsdiagramm}
-\newpage
-\section{Aktivtätsdiagramme}
-\newpage
-\includegraphics[scale=0.65]{Aktivitaet}
-\newpage
+
 \section{Syntax der While-Sprache}
-\subsection{\"{U}bersicht der Schl\"{u}sselw\"{o}rter und Sonderzeichen}
+\subsection{"Ubersicht der Schl"usselw"orter und Sonderzeichen}
 \begin{ttfamily}
 \begin{tabular}{| l  l |}
 \hline
@@ -85,97 +119,92 @@
 \hspace*{1cm}\# & $\to$ comment\\\hline
 \end{tabular}
 \end{ttfamily}
+
 \subsection{Startsymbol}
 \texttt{compilation\_unit}
 \subsection{Produktionsregeln}
-\begin{verbatim}
-arglist ::=  expression { "," expression }
+\begin{ttfamily}
+\shorthandoff{"}
+arglist ::=  expression \{ "," expression \}\\
 
-comment ::= "#" "... text ..."
+comment ::= "\#" "... text ..."\\
 
-compilation_unit ::= { field_declaration }
+compilation\_unit ::= \{ field\_declaration \}\\
 
-expression ::= numeric_expression
-\end{verbatim} 
+expression ::= numeric\_expression \\
 		\hspace*{3cm}$\mid$ testing\_expression\\
 		\hspace*{3cm}$\mid$ literal\_expression\\
 		\hspace*{3cm}$\mid$ logical\_expression\\
 		\hspace*{3cm}$\mid$ identifier\\
 		\hspace*{3cm}$\mid$ ( "(" expression ")" )\\
 		\hspace*{3cm}$\mid$ ( expression ( ( "(" $[$ arglist $]$ ")" )\\
-					\hspace*{6.3cm}$\mid$ ( "[" expression "]" ) ) )
-\begin{verbatim}
+					\hspace*{6.3cm}$\mid$ ( "[" expression "]" ) ) )\\
+					
+field\_declaration ::= ( $[$ comment $]$ ( method\_declaration \\
+					\hspace*{7cm}$\mid$ variable\_declaration ) )\\
 
-field_declaration ::= ( $[$ comment $]$ ( method_declaration 
-\end{verbatim}
-					\hspace*{7cm}$\mid$ variable\_declaration ) )
-\begin{verbatim}
-			
-identifier ::= "a..z,A..Z,_" { "a..z,A..Z,_,0..9" }
+identifier ::= "a..z,A..Z,\_" \{ "a..z,A..Z,\_,0..9" \}\\
 
-if_statement ::= "if" "(" expression ")" statement_block [ "else" statement_block ]
+if\_statement ::= "if" "(" expression ")" statement\_block $[$ "else" statement\_block $]$\\
 
-integer_literal ::= ( "0..9" { "0..9" } )
+integer\_literal ::= ( "0..9" \{ "0..9" \} )\\
 
-literal_expression ::= integer_literal
+literal\_expression ::= integer\_literal\\
 
-logical_expression ::= ( "!" expression )
-\end{verbatim}
+logical\_expression ::= ( "!" expression )\\
 		\hspace*{4.5cm}$\mid$ ( expression ( "\&" \\
 				\hspace*{7.5cm}$\mid$ "|" \\
-				\hspace*{7.5cm}$\mid$ ( "\&" "\&" )\\
+				\hspace*{7.5cm}$\mid$ ( "\&" "\&" )\\ 
 				\hspace*{7.5cm}$\mid$ ( "|" "|" ) ) expression )\\
-		\hspace*{4.5cm}$\mid$ "true"\\
-		\hspace*{4.5cm}$\mid$ "false"
-\begin{verbatim}
-method_declaration ::= type identifier "(" [ parameter_list ] ")" ( statement_block )
+		\hspace*{4.5cm}$\mid$ "true" \\
+		\hspace*{4.5cm}$\mid$ "false" \\
+		
+method\_declaration ::= type identifier "(" $[$ parameter\_list $]$ ")" ( statement\_block )\\
 
-numeric_expression ::= ( ( "+" 
-\end{verbatim}
+numeric\_expression ::= ( ( "+" \\
 			\hspace*{5.3cm}$\mid$ "-" ) expression ) \\
 			\hspace*{4.5cm}$\mid$ ( expression ( "+" \\
 				\hspace*{7.7cm}$\mid$ "-" \\
 				\hspace*{7.7cm}$\mid$ "*" \\
 				\hspace*{7.7cm}$\mid$ "/" \\
-				\hspace*{7.7cm}$\mid$ "\%" ) expression ) 
-\begin{verbatim}					
-parameter ::= type identifier
+				\hspace*{7.7cm}$\mid$ "\%" ) expression ) \\
+								
+parameter ::= type identifier \\
 
-parameter_list ::= parameter { "," parameter } 
+parameter\_list ::= parameter \{ "," parameter \} \\
 
-statement ::= variable_declaration
-\end{verbatim}
+statement ::= variable\_declaration \\
 		\hspace*{3cm}$\mid$ ( expression ";" ) \\
-		\hspace*{3cm}$\mid$ ( statemen\_block )\\ 
+		\hspace*{3cm}$\mid$ ( statement\_block ) \\
 		\hspace*{3cm}$\mid$ ( if\_statement ) \\
-		\hspace*{3cm}$\mid$ ( while\_statement )\\
-		\hspace*{3cm}$\mid$ ( "return" $[$ expression $]$ ";" )\\
-		\hspace*{3cm}$\mid$ ( ";" ) 
-\begin{verbatim}
-statement_block ::= "{" { statement } "}" 
+		\hspace*{3cm}$\mid$ ( while\_statement ) \\
+		\hspace*{3cm}$\mid$ ( "return" $[$ expression $]$ ";" ) \\
+		\hspace*{3cm}$\mid$ ( ";" ) \\
+		
+statement\_block ::= "\{" \{ statement \} "\}" \\
 
-testing_expression ::= ( expression ( ">"
-\end{verbatim} 
+testing\_expression ::= ( expression ( ">" \\
 					\hspace*{7cm}$\mid$ "<" \\
 					\hspace*{7cm}$\mid$ ">=" \\
 					\hspace*{7cm}$\mid$ "<=" \\
 					\hspace*{7cm}$\mid$ "==" \\
-					\hspace*{7cm}$\mid$ "!=" ) expression ) 
-\begin{verbatim}
-type ::= type_specifier { "[" "]" } 
+					\hspace*{7cm}$\mid$ "!=" ) expression ) \\
 
-type_specifier ::= "boolean" 
-\end{verbatim}
-		\hspace*{3.8cm}$\mid$ "int" 
-\begin{verbatim}
-variable_declaration ::= type variable_declarator { "," variable_declarator } ";" 
+type ::= type\_specifier \{ "[" "]" \} \\
 
-variable_declarator ::= identifier [ "=" variable_initializer ] 
+type\_specifier ::= "boolean" \\
+		\hspace*{3.8cm}$\mid$ "int" \\
 
-variable_initializer ::= expression
-\end{verbatim}
-		\hspace*{4.8cm}$\mid$ ( \{" $[$ variable\_initializer \{ "," variable\_initializer \} $]$ "\}" ) 
-\begin{verbatim}
-while_statement ::= "while" "(" expression ")" statement_block 
-\end{verbatim}
+variable\_declaration ::= type variable\_declarator \{ "," variable\_declarator \} ";" \\
+
+variable\_declarator ::= identifier $[$ "=" variable\_initializer $]$ \\
+
+variable\_initializer ::= expression \\
+		\hspace*{4.8cm}$\mid$ ( "\{" $[$ variable\_initializer \{ "," variable\_initializer \} $]$ "\}" ) \\
+
+while\_statement ::= "while" "(" expression ")" statement\_block \\
+\shorthandon{"}
+\end{ttfamily}
+
 \end{document}
+
