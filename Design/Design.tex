@@ -58,10 +58,19 @@ WS 2011/2012
 \section{Verhaltensdiagramme}
 \subsection{Aktivit"atsdiagramme}
 \subsubsection{Parser/Type-Checker}
-\includegraphics[angle=90, scale=0.45]{images/AktivitaetParser.pdf}
+\includegraphics[angle=90, scale=0.45]{images/AktivitaetParser.pdf}\newline
+Beim Aufruf des Interpreters wird das Programm in mehreren Schritten geparst.\newline
+Der Programmtext wird als einzelner String dem Tokenizer übergeben, welcher den String an den wichtigen Stellen trennt und ein Array von Tokens zurückgibt. Der Parser generiert bei syntaktisch korrekte n Programmen daraus einen abstrakten Syntaxbaum (AST). Bei Syntaxfehlern bricht der Parser mit einem Fehler ab.\newline
+Im Erfolgsfall überprüft der Typechecker die Korrektheit der Typen; sind die Typen korrekt, gibt dieser den vom Parser generierten AST zurück, sonst beendet er sich mit einem Fehler.
 \subsection{Zustandsdiagramm}
-\includegraphics[angle=90, scale=0.6]{images/Zustandsdiagramm.pdf}
-
+\includegraphics[angle=90, scale=0.6]{images/Zustandsdiagramm.pdf}\newline
+\shorthandoff{"}
+Beim Starten des Programms geht dieses in den "idle"-Zustand. Hier läuft der Interpreter nicht, und es ist kein Programmzustand gespeichert. Falls einer vorhanden ist, wird dieser beim Eintritt in den "idle"-Zustand gelöscht.\newline
+Beim Auswählen von "single step" wird das Userprogramm geparst und ein Statement wird ausgeführt, nachdem der Zustand "single step" betreten worden ist. Ist kein Statement mehr vorhanden, so beendet sich der Interpreter, das Programm geht zurück in den Zustand "idle". Sonst wird nach Ausführen des Statements das Programm pausiert, der Zustand "paused" wird eingenommen. Beim Eintritt in diesen Zustand wird der Zustand des Userprogramms ausgegeben. Während der Pausierung läuft der Interpreter nicht. In diesem Zustand stehen die gleichen Möglichkeiten wie im "idle"-Zustand zu Verfügung, das Parsen bei Verlassen des Zustands entfällt aber.\newline
+Wenn im "idle"-Zustand "run to breakpoint" aufgerufen wird, wird das Userprogramm geparst und das Programm geht in den Zustand "run". Das Userprogramm wird solange ausgeführt, bis es zu Ende ist (neuer Zustand: "idle") oder der Interpreter pausiert, ein Breakpoint getroffen oder eine Assertion falsifiziert wird. In diesen Fällen ist der neue Zustand "paused".\newline
+In jedem Zustand außer "idle" ist es zusätzlich möglich, das Userprogramm abzubrechen, wobei der Interpreter beendet wird und alle vorhandenen Variablen-Informationen gelöscht werden. Das Programm geht danach in den Zustand "idle".\newline
+In jedem Zustand kann das Programm durck einen Klick auf den Exit-Button beendet werden.
+\shorthandon{"}
 \newpage
 
 \section{Syntax der While-Sprache}
