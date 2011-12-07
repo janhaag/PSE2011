@@ -78,54 +78,58 @@ In jedem Zustand kann das Programm durck einen Klick auf den Exit-Button beendet
 \begin{ttfamily}
 \begin{tabular}{| l  l |}
 \hline
-\hspace*{1cm}boolean & $\to$ type\_specifier\hspace*{2cm}\\\hline
-\hspace*{1cm}else & $\to$ if\_statement\hspace*{2cm}\\\hline
-\hspace*{1cm}false & $\to$ logical\_expression\\\hline
-\hspace*{1cm}if & $\to$ if\_statement\\\hline
-\hspace*{1cm}int & $\to$ type\_specifier\\\hline
-\hspace*{1cm}return & $\to$ statement\\\hline
-\hspace*{1cm}true & $\to$ logical\_expression\\\hline
-\hspace*{1cm}while & $\to$ while\_statement\\\hline
-\hspace*{1cm}0..9 & $\to$ integer\_literal\\\hline
-\hspace*{1cm}a..z,A..Z,\_\hspace*{0.5cm} & $\to$ identifier\\\hline
-\hspace*{1cm}\& & $\to$ logical\_expression\\\hline
-\hspace*{1cm}| & $\to$ logical\_expression\\\hline
-\hspace*{1cm}! & $\to$ logical\_expression\\\hline
-\hspace*{1cm}!= & $\to$ testing\_expression\\\hline
-\hspace*{1cm}== & $\to$ testing\_expression\\\hline
-\hspace*{1cm}< & $\to$ testing\_expression\\\hline
-\hspace*{1cm}<= & $\to$ testing\_expression\\\hline
-\hspace*{1cm}> & $\to$ testing\_expression\\\hline
-\hspace*{1cm}>= & $\to$ testing\_expression\\\hline
-\hspace*{1cm}+ & $\to$ numeric\_expression\\\hline
-\hspace*{1cm}- & $\to$ numeric\_expression\\\hline
-\hspace*{1cm}* & $\to$ numeric\_expression\\\hline
-\hspace*{1cm}/ & $\to$ numeric\_expression\\\hline
-\hspace*{1cm}\% & $\to$ numeric\_expression\\\hline
-\hspace*{1cm}, & $\to$ arglist \\
+\hspace*{1.5cm}boolean & $\to$ type\_specifier\hspace*{2cm}\\\hline
+\hspace*{1.5cm}else & $\to$ if\_statement\hspace*{2cm}\\\hline
+\hspace*{1.5cm}false & $\to$ logical\_literal\\\hline
+\hspace*{1.5cm}if & $\to$ if\_statement\\\hline
+\hspace*{1.5cm}int & $\to$ type\_specifier\\\hline
+\hspace*{1.5cm}return & $\to$ statement\\\hline
+\hspace*{1.5cm}true & $\to$ logical\_literal\\\hline
+\hspace*{1.5cm}while & $\to$ while\_statement\\\hline
+\hspace*{1.5cm}0..9 & $\to$ integer\_literal\\\hline
+\hspace*{1.5cm}a..z,A..Z,\_\hspace*{1cm} & $\to$ identifier\\\hline
+\hspace*{1.5cm}\& & $\to$ mul\_expression\\\hline
+\hspace*{1.5cm}| & $\to$ add\_expression\\\hline
+\hspace*{1.5cm}! & $\to$ unary\_expression\\\hline
+\hspace*{1.5cm}!= & $\to$ expression\\\hline
+\hspace*{1.5cm}== & $\to$ expression\\\hline
+\hspace*{1.5cm}< & $\to$ rel\_expression\\\hline
+\hspace*{1.5cm}<= & $\to$ rel\_expression\\\hline
+\hspace*{1.5cm}> & $\to$ rel\_expression\\\hline
+\hspace*{1.5cm}>= & $\to$ rel\_expression\\\hline
+\hspace*{1.5cm}+ & $\to$ add\_expression\\
+ & $\to$ unary\_expression \\\hline
+\hspace*{1.5cm}- & $\to$ add\_expression\\
+ & $\to$ unary\_expression \\\hline
+\hspace*{1.5cm}* & $\to$ mul\_expression\\\hline
+\hspace*{1.5cm}/ & $\to$ mul\_expression\\\hline
+\hspace*{1.5cm}\% & $\to$ mul\_expression\\\hline
+\hspace*{1.5cm}, & $\to$ arglist \\
  & $\to$ parameter\_list \\
  & $\to$ variable\_declaration \\
  & $\to$ variable\_initializer\\\hline
-\hspace*{1cm}; & $\to$ statement \\
- & $\to$ variable\_declaration\\\hline
-\hspace*{1cm}= & $\to$ variable\_declarator\\\hline
-\hspace*{1cm}( & $\to$ expression \\
+\hspace*{1.5cm}; & $\to$ statement \\\hline
+\hspace*{1.5cm}= & $\to$ variable\_declarator\\
+ & $\to$ statement \\\hline
+\hspace*{1.5cm}( & $\to$ bracket\_expression \\
  & $\to$ if\_statement \\
- & $\to$ methode\_declaration \\
- & $\to$ while\_statement\\\hline
-\hspace*{1cm}) & $\to$ expression \\
+ & $\to$ while\_statement\\
+ & $\to$ methode\_call \\
+ & $\to$ methode\_declaration \hspace*{5cm}\\\hline
+\hspace*{1.5cm}) & $\to$ bracket\_expression \\
  & $\to$ if\_statement \\
- & $\to$ methode\_declaration \hspace*{5cm}\\
- & $\to$ while\_statement\\\hline
-\hspace*{1cm}[ & $\to$ expression \\
+ & $\to$ while\_statement\\
+ & $\to$ methode\_call \\
+ & $\to$ methode\_declaration \\\hline
+\hspace*{1.5cm}[ & $\to$ array\_access \\
  & $\to$ type \\\hline
-\hspace*{1cm}] & $\to$ expression \\
+\hspace*{1.5cm}] & $\to$ array\_access \\
  & $\to$ type \\\hline
-\hspace*{1cm}\{ & $\to$ statement\_block \\
+\hspace*{1.5cm}\{ & $\to$ statement\_block \\
  & $\to$ variable\_initializer\\\hline
-\hspace*{1cm}\} & $\to$ statement\_block \\
+\hspace*{1.5cm}\} & $\to$ statement\_block \\
  & $\to$ variable\_initializer\\\hline
-\hspace*{1cm}\# & $\to$ comment\\\hline
+\hspace*{1.5cm}\# & $\to$ comment\\\hline
 \end{tabular}
 \end{ttfamily}
 
@@ -134,86 +138,49 @@ In jedem Zustand kann das Programm durck einen Klick auf den Exit-Button beendet
 \subsection{Produktionsregeln}
 \begin{ttfamily}
 \shorthandoff{"}
-arglist ::=  expression \{ "," expression \}\\
-
-comment ::= "\#" "... text ..."\\
-
-compilation\_unit ::= \{ field\_declaration \}\\
-
-expression ::= numeric\_expression \\
-		\hspace*{3cm}$\mid$ testing\_expression\\
-		\hspace*{3cm}$\mid$ literal\_expression\\
-		\hspace*{3cm}$\mid$ logical\_expression\\
-		\hspace*{3cm}$\mid$ identifier\\
-		\hspace*{3cm}$\mid$ ( "(" expression ")" )\\
-		\hspace*{3cm}$\mid$ ( expression ( ( "(" $[$ arglist $]$ ")" )\\
-					\hspace*{6.3cm}$\mid$ ( "[" expression "]" ) ) )\\
-					
+add\_expression ::= mul\_expression  \{ ( "|" $\mid$ "+" $\mid$ "-" ) mul\_expression \} \\\\
+arglist ::=  expression \{ "," expression \}\\\\
+array\_access ::= identifier "$[$" expression "$]$" \{ "$[$" expression "$]$" \} \\\\
+bracket\_expression ::= "(" expression ")" \\
+\hspace*{4.5cm}$\mid$ method\_call \\
+\hspace*{4.5cm}$\mid$ array\_access \\
+\hspace*{4.5cm}$\mid$ identifier \\
+\hspace*{4.5cm}$\mid$ literal\_expression \\\\
+comment ::= "\#" .* ( "\textbackslash n" $\mid$ "\textbackslash r" ) \\\\
+compilation\_unit ::= \{ field\_declaration \}\\\\
+expression ::= rel\_expression \{ ( "==" $\mid$ "!=" ) rel\_expression \}\\\\
 field\_declaration ::= ( $[$ comment $]$ ( method\_declaration \\
-					\hspace*{7cm}$\mid$ variable\_declaration ) )\\
-
-identifier ::= "a..z,A..Z,\_" \{ "a..z,A..Z,\_,0..9" \}\\
-
-if\_statement ::= "if" "(" expression ")" statement\_block $[$ "else" statement\_block $]$\\
-
-integer\_literal ::= ( "0..9" \{ "0..9" \} )\\
-
+\hspace*{7cm}$\mid$ statement ) )\\\\
+identifier ::= "a..z,A..Z,\_" \{ "a..z,A..Z,\_,0..9" \}\\\\
+if\_statement ::= "if" "(" expression ")" statement\_block $[$ "else" statement\_block $]$\\\\
+integer\_literal ::= ( "0..9" \{ "0..9" \} )\\\\
 literal\_expression ::= integer\_literal\\
-
-logical\_expression ::= ( "!" expression )\\
-		\hspace*{4.5cm}$\mid$ ( expression ( "\&" \\
-				\hspace*{7.5cm}$\mid$ "|" \\
-				\hspace*{7.5cm}$\mid$ ( "\&" "\&" )\\ 
-				\hspace*{7.5cm}$\mid$ ( "|" "|" ) ) expression )\\
-		\hspace*{4.5cm}$\mid$ "true" \\
-		\hspace*{4.5cm}$\mid$ "false" \\
-		
-method\_declaration ::= type identifier "(" $[$ parameter\_list $]$ ")" ( statement\_block )\\
-
-numeric\_expression ::= ( ( "+" \\
-			\hspace*{5.3cm}$\mid$ "-" ) expression ) \\
-			\hspace*{4.5cm}$\mid$ ( expression ( "+" \\
-				\hspace*{7.7cm}$\mid$ "-" \\
-				\hspace*{7.7cm}$\mid$ "*" \\
-				\hspace*{7.7cm}$\mid$ "/" \\
-				\hspace*{7.7cm}$\mid$ "\%" ) expression ) \\
-								
-parameter ::= type identifier \\
-
-parameter\_list ::= parameter \{ "," parameter \} \\
-
-statement ::= variable\_declaration \\
-		\hspace*{3cm}$\mid$ ( expression ";" ) \\
-		\hspace*{3cm}$\mid$ ( statement\_block ) \\
-		\hspace*{3cm}$\mid$ ( if\_statement ) \\
-		\hspace*{3cm}$\mid$ ( while\_statement ) \\
-		\hspace*{3cm}$\mid$ ( "return" $[$ expression $]$ ";" ) \\
-		\hspace*{3cm}$\mid$ ( ";" ) \\
-		
-statement\_block ::= "\{" \{ statement \} "\}" \\
-
-testing\_expression ::= ( expression ( ">" \\
-					\hspace*{7cm}$\mid$ "<" \\
-					\hspace*{7cm}$\mid$ ">=" \\
-					\hspace*{7cm}$\mid$ "<=" \\
-					\hspace*{7cm}$\mid$ "==" \\
-					\hspace*{7cm}$\mid$ "!=" ) expression ) \\
-
-type ::= type\_specifier \{ "[" "]" \} \\
-
-type\_specifier ::= "boolean" \\
-		\hspace*{3.8cm}$\mid$ "int" \\
-
-variable\_declaration ::= type variable\_declarator \{ "," variable\_declarator \} ";" \\
-
-variable\_declarator ::= identifier $[$ "=" variable\_initializer $]$ \\
-
+\hspace*{4.5cm}$\mid$ logical\_literal \\\\
+logical\_literal ::= "true" $\mid$ "false" \\\\
+method\_call ::= identifier ( "(" $[$ arglist $]$ ")" )\\\\
+method\_declaration ::= type identifier "(" $[$ parameter\_list $]$ ")" ( statement\_block )\\\\
+mul\_expression ::= unary\_expression \{ ( "\&" $\mid$ "*" $\mid$ "/" $\mid$ "\%" ) 
+unary\_expression \} \\\\
+parameter ::= type identifier \\\\
+parameter\_list ::= parameter \{ "," parameter \} \\\\
+rel\_expression ::= add\_expression $[$ ( "<" $\mid$ "<=" $\mid$ ">" $\mid$ ">=" ) add\_expression $]$ \\\\
+statement ::= variable\_declaration ";"\\
+\hspace*{3cm}$\mid$ identifier "=" variable\_initializer ";"\\
+\hspace*{3cm}$\mid$ ( expression ";" ) \\
+\hspace*{3cm}$\mid$ ( if\_statement ) \\
+\hspace*{3cm}$\mid$ ( while\_statement ) \\
+\hspace*{3cm}$\mid$ ( "return" $[$ expression $]$ ";" ) \\\\
+statement\_block ::= "\{" \{ statement \} "\}" \\\\
+type ::= type\_specifier \{ "[" "]" \} \\\\
+type\_specifier ::= "boolean" $\mid$ "int" \\\\
+unary\_expression ::= $[$ ( "!" $\mid$ "+" $\mid$ "-" ) $]$ bracket\_expression \\\\
+variable\_declaration ::= type identifier \{ "," identifier \} $[$ "=" variable\_initializer $]$ \\\\
 variable\_initializer ::= expression \\
-		\hspace*{4.8cm}$\mid$ ( "\{" $[$ variable\_initializer \{ "," variable\_initializer \} $]$ "\}" ) \\
-
+\hspace*{4.8cm}$\mid$ ( "\{" $[$ variable\_initializer \{ "," variable\_initializer \} $]$ "\}" ) \\\\
 while\_statement ::= "while" "(" expression ")" statement\_block \\
 \shorthandon{"}
 \end{ttfamily}
+\includegraphics[scale=0.73]{images/Grammar.pdf}
 
 \end{document}
 
