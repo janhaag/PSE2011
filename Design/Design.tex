@@ -62,6 +62,11 @@ WS 2011/2012
 Beim Aufruf des Interpreters wird das Programm in mehreren Schritten geparst.\newline
 Der Programmtext wird als einzelner String dem Tokenizer übergeben, welcher den String an den wichtigen Stellen trennt und ein Array von Tokens zurückgibt. Der Parser generiert bei syntaktisch korrekte n Programmen daraus einen abstrakten Syntaxbaum (AST). Bei Syntaxfehlern bricht der Parser mit einem Fehler ab.\newline
 Im Erfolgsfall überprüft der Typechecker die Korrektheit der Typen; sind die Typen korrekt, gibt dieser den vom Parser generierten AST zurück, sonst beendet er sich mit einem Fehler.
+\subsubsection{Z3-Anbindung}
+\includegraphics[scale=0.45]{images/AktivitaetSMTTranslator.png}\newline
+Zur Überprüfung der Korrektheit des Programms wird Z3 benutzt. \newline
+Zuerst wird das Programm geparst (siehe Aktivitätsdiagramm Parser/Type-Checker). Im Fehlerfall ist keine Überprüfung durch Z3 möglich. Im Erfolgsfall wird der durch den Parser generierte AST an den SMTLib-Translator gegeben. Dieser übersetzt das Programm inklusive Spezifikation ins SMTLib-2.0-Format. Dieses bildet die Eingabe für Z3.\newline
+Die von Z3 zurückgegebene Antwort wird vom Result-Parser analysiert. Meldet der Beweiser die Korrektheit des Programms oder konnte er keine Entscheidung treffen, wird dieses Ergebnis dem Benutzer bekannt gegeben. Falls der Beweiser das Programm falsifizieren konnte, wird dem Benutzer das Ergebnis zusammen mit einem möglichen Gegenbeispiel angezeigt.
 \subsection{Zustandsdiagramm}
 \includegraphics[angle=90, scale=0.6]{images/Zustandsdiagramm.pdf}\newline
 \shorthandoff{"}
