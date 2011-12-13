@@ -44,38 +44,106 @@ WS 2011/2012
 
 \section{Klassendiagramme}
 \subsection{"Ubersicht}
-\includegraphics[scale=0.8]{images/ClassOverview.pdf}
+Dieses Klassendiagramm zeigt die Grobstruktur der Anwendung. \\
+\includegraphics[scale=0.8]{images/ClassOverview.pdf} \\
+Die gesamte Architektur basiert auf dem Entwurfsmuster Model-View-Controller. Dies erm"oglicht uns einen flexiblen Programmentwurf, der eine sp"atere "Anderung oder Erweiterung erleichtert und eine Wiederverwendbarkeit der einzelnen Komponenten erm"oglicht. 
+\begin{itemize}
+\item Das \textbf{Modell} enth"alt die darzustellenden Daten, z.B die Zust"ande der Variablen w"ahrend der Programmausf"uhrung und die vom Benutzer gesetzten Breakpoints
+\item Die \textbf{Pr"asentation/View} stellt die Daten aus dem Modell auf der Benutzeroberfl"ache dar und nimmt Benutzerinteraktionen entgegen
+\item Um die Zusammenarbeit der ersten zwei Komponenten k"ummert sich die \textbf{Steuerung}. Au"serdem f"uhrt sie die Hauptaktionen (Parsen, Interpretieren, usw.) aus und bearbeitet die Eingaben des Benutzers \\\\
+\end{itemize} 
 \subsection{Feinstruktur der Komponenten}
+\subsubsection{Programmstruktur} 
+Dieses Klassendiagramm stellt mithilfe des Kompositum-Musters die Struktur des AST dar. \\\\
+\includegraphics[scale=0.85]{images/AST.pdf}
+\begin{itemize}
+\item \textbf{Program} \\
+Die Klasse \textbf{Program} stellt eine Funktion im Quelltext dar. \\\\
+Attribute: \\
+\textbf{program} \\
+eine Instanz von sich selbst. Diese sind Unterprogramme, die aufgerufen werden k"onnen.\\
+\textbf{statement} \\
+eine Liste von Instanzen der Klasse \textbf{Statement}
+\item \textbf{Statement} \\
+Die abstrakte Klasse \textbf{Statement} steht f"ur eine Anweisung des Programms. Die Anweisungen sind eingeteilt in f"unf Klassen: \textbf{Conditional, Loop, Specification, Assignment} und \textbf{Expression}. \\\\
+Attribut:\\
+\textbf{line} \\
+Zeile im Quelltext, in der sich die Instanz befindet\\\\
+Methoden: \\
+\textbf{getLine()} \\
+gibt das Attribut \textbf{line} zur"uck \\
+\textbf{\textit{accept(visitor: ProgramVisitor)}}\\
+abstrakte Methode, die von den Unterklassen implementiert wird 
+\item \textbf{Conditional} \\
+Die Klasse \textbf{Conditional} steht f"ur eine bedingte Anweisung. \\\\
+Attribut: \\
+\textbf{program} \\
+Unterprogramme, die bedingt ausgef"uhrt werden \\
+\textbf{condition} \\
+Bedingung, die "uberpr"uft wird 
+\item \textbf{Loop} \\
+Die Klasse \textbf{Loop} steht f"ur eine while-Anweisung. \\\\
+Attribute: \\
+\textbf{program} \\
+Unterprogramme, die bedingt ausgef"uhrt werden \\
+\textbf{condition} \\
+Bedingung, die "uberpr"uft wird
+\item \textbf{Specification} \\
+Attribut: \\
+\textbf{spec} \\
+Ausdruck, der "uberpr"uft wird
+\item \textbf{Assignment} \\
+Die Klasse \textbf{Assignment} steht f"ur eine Zuweisung von Variablen. \\\\
+Attribute: \\
+\textbf{value} \\
+der Wert, der zugewiesen wird\\
+\textbf{identifier} \\
+die Variable, der \textbf{value} zugewiesen wird 
+\item \textbf{Expression} \\
+Die abstrakte Klasse \textbf{Expression} steht f"ur einen beliebigen Ausdruck. \textbf{QuantifiedExpression, ArithmeticExpression, LogicalExpression, FunctionCall} und \textbf{VariableAccess} sind Unterklassen dieser Klasse.
+\end{itemize}
+\subsubsection{Besucherklassen}
+\includegraphics[scale=0.7]{images/Besucher.pdf}
 \subsubsection{Parser}
-\includegraphics[angle=90, scale=0.6]{images/ClassParser.pdf}
-\subsubsection{Interpreter}
-\includegraphics[angle=90, scale=0.6]{images/ClassInterpreter.pdf}
-\subsubsection{Beweiser}
-\includegraphics[angle=90, scale=0.6]{images/ClassVerifier.pdf}
-\subsubsection{GUI}
-\includegraphics[angle=90, scale=0.6]{images/ClassGui.pdf}
+\includegraphics[scale=0.6]{images/Parser.pdf}
+\subsubsection{Modell}
+\includegraphics[scale=0.8]{images/Modell.pdf}
+\subsubsection{Benutzeroberfl"ache}
+\includegraphics[scale=0.85]{images/Gui.pdf}
 
 \section{Verhaltensdiagramme}
 \subsection{Aktivit"atsdiagramme}
 \subsubsection{Parser/Type-Checker}
-\includegraphics[angle=90, scale=0.45]{images/AktivitaetParser.pdf}\newline
-Beim Aufruf des Interpreters wird das Programm in mehreren Schritten geparst.\newline
-Der Programmtext wird als einzelner String dem Tokenizer übergeben, welcher den String an den wichtigen Stellen trennt und ein Array von Tokens zurückgibt. Der Parser generiert bei syntaktisch korrekte n Programmen daraus einen abstrakten Syntaxbaum (AST). Bei Syntaxfehlern bricht der Parser mit einem Fehler ab.\newline
-Im Erfolgsfall überprüft der Typechecker die Korrektheit der Typen; sind die Typen korrekt, gibt dieser den vom Parser generierten AST zurück, sonst beendet er sich mit einem Fehler.
+\includegraphics[scale=0.8]{images/AktivitaetParser.pdf}\newline
+Beim Aufruf des Interpreters wird das Programm in mehreren Schritten geparst.
+\begin{enumerate}
+\item Der Programmtext wird als einzelner String dem Tokenizer "ubergeben.
+\item Der Tokenizer trennt den String an den wichtigen Stellen und gibt ein Array von Tokens zur"uck.
+\item Der Parser generiert bei syntaktisch korrekten Programmen daraus einen abstrakten Syntaxbaum (AST).
+\item Bei Syntaxfehlern bricht der Parser mit einem Fehler ab.
+\item Im Erfolgsfall "uberpr"uft der Typechecker die Korrektheit der Typen: Sind die Typen korrekt, gibt dieser den vom Parser generierten AST zur"uck, sonst beendet er sich mit einem Fehler.
+\end{enumerate}
 \subsubsection{Z3-Anbindung}
-\includegraphics[scale=0.45]{images/AktivitaetSMTTranslator.png}\newline
-Zur Überprüfung der Korrektheit des Programms wird Z3 benutzt. \newline
-Zuerst wird das Programm geparst (siehe Aktivitätsdiagramm Parser/Type-Checker). Im Fehlerfall ist keine Überprüfung durch Z3 möglich. Im Erfolgsfall wird der durch den Parser generierte AST an den SMTLib-Translator gegeben. Dieser übersetzt das Programm inklusive Spezifikation ins SMTLib-2.0-Format. Dieses bildet die Eingabe für Z3.\newline
-Die von Z3 zurückgegebene Antwort wird vom Result-Parser analysiert. Meldet der Beweiser die Korrektheit des Programms oder konnte er keine Entscheidung treffen, wird dieses Ergebnis dem Benutzer bekannt gegeben. Falls der Beweiser das Programm falsifizieren konnte, wird dem Benutzer das Ergebnis zusammen mit einem möglichen Gegenbeispiel angezeigt.
+\includegraphics[scale=0.6]{images/AktivitaetSMTTranslator.pdf}\\
+Zur "uberpr"ufung der Korrektheit des Programms wird Z3 benutzt. \\
+\begin{enumerate}
+\item Zuerst wird das Programm geparst (siehe Aktivit"atsdiagramm Parser/Type-Checker). 
+\item Im Fehlerfall ist keine "Uberpr"ufung durch Z3 m"oglich. Im Erfolgsfall wird der durch den Parser generierte AST an den SMTLib-Translator gegeben. 
+\item Der SMTLib-Translator "ubersetzt das Programm inklusive Spezifikation ins SMTLib-2.0-Format. Dieses bildet die Eingabe f"ur Z3.
+\item Die von Z3 zur"uckgegebene Antwort wird vom Result-Parser analysiert. 
+\item Meldet der Beweiser die Korrektheit des Programms oder konnte er keine Entscheidung treffen, wird dieses Ergebnis dem Benutzer bekannt gegeben. Falls der Beweiser das Programm falsifizieren konnte, wird dem Benutzer das Ergebnis zusammen mit einem m"oglichen Gegenbeispiel angezeigt.
+\end{enumerate}
 \subsection{Zustandsdiagramm}
-\includegraphics[angle=90, scale=0.6]{images/Zustandsdiagramm.pdf}\newline
-\shorthandoff{"}
-Beim Starten des Programms geht dieses in den "idle"-Zustand. Hier läuft der Interpreter nicht, und es ist kein Programmzustand gespeichert. Falls einer vorhanden ist, wird dieser beim Eintritt in den "idle"-Zustand gelöscht.\newline
-Beim Auswählen von "single step" wird das Userprogramm geparst und ein Statement wird ausgeführt, nachdem der Zustand "single step" betreten worden ist. Ist kein Statement mehr vorhanden, so beendet sich der Interpreter, das Programm geht zurück in den Zustand "idle". Sonst wird nach Ausführen des Statements das Programm pausiert, der Zustand "paused" wird eingenommen. Beim Eintritt in diesen Zustand wird der Zustand des Userprogramms ausgegeben. Während der Pausierung läuft der Interpreter nicht. In diesem Zustand stehen die gleichen Möglichkeiten wie im "idle"-Zustand zu Verfügung, das Parsen bei Verlassen des Zustands entfällt aber.\newline
-Wenn im "idle"-Zustand "run to breakpoint" aufgerufen wird, wird das Userprogramm geparst und das Programm geht in den Zustand "run". Das Userprogramm wird solange ausgeführt, bis es zu Ende ist (neuer Zustand: "idle") oder der Interpreter pausiert, ein Breakpoint getroffen oder eine Assertion falsifiziert wird. In diesen Fällen ist der neue Zustand "paused".\newline
-In jedem Zustand außer "idle" ist es zusätzlich möglich, das Userprogramm abzubrechen, wobei der Interpreter beendet wird und alle vorhandenen Variablen-Informationen gelöscht werden. Das Programm geht danach in den Zustand "idle".\newline
-In jedem Zustand kann das Programm durck einen Klick auf den Exit-Button beendet werden.
-\shorthandon{"}
+Das folgende Zustandsdiagramm zeigt das Verhalten des Systems bei Benutzeraktionen. \\
+\includegraphics[scale=0.9]{images/Zustand.pdf}\\
+\begin{itemize}
+\item Beim Starten des Programms geht dieses in den "`idle"'-Zustand. Hier l"auft der Interpreter nicht, und es ist kein Programmzustand gespeichert. Falls einer vorhanden ist, wird dieser beim Eintritt in den "`idle"'-Zustand gel"oscht.
+\item Beim Ausw"ahlen von "`single step"' wird das Userprogramm geparst und ein Statement wird ausgef"uhrt, nachdem der Zustand "`single step"' betreten worden ist. Ist kein Statement mehr vorhanden, so beendet sich der Interpreter, das Programm geht zur"uck in den Zustand "`idle"'. Sonst wird nach Ausf"uhren des Statements das Programm pausiert, der Zustand "`paused"' wird eingenommen. 
+\item Beim Eintritt in den "`paused"'-Zustand wird der Zustand des Userprogramms ausgegeben. W"ahrend der Pausierung l"auft der Interpreter nicht. In diesem Zustand stehen die gleichen M"oglichkeiten wie im "`idle"'-Zustand zu Verf"ugung, das Parsen bei Verlassen des Zustands entf"allt aber.
+\item Wenn im "`idle"'-Zustand "`run to breakpoint"' aufgerufen wird, wird das Userprogramm geparst und das Programm geht in den Zustand "`run"'. Das Userprogramm wird solange ausgef"uhrt, bis es zu Ende ist (neuer Zustand: "`idle"') oder der Interpreter pausiert, ein Breakpoint getroffen oder eine Assertion falsifiziert wird. In diesen F"allen ist der neue Zustand "`paused"'.
+\item In jedem Zustand au"ser "`idle"' ist es zus"atzlich m"oglich, das Userprogramm abzubrechen, wobei der Interpreter beendet wird und alle vorhandenen Variablen-Informationen gel"oscht werden. Das Programm geht danach in den Zustand "`idle"'.
+\item In jedem Zustand kann das Programm durck einen Klick auf den Exit-Button beendet werden.
+\end{itemize}
 \newpage
 
 \section{Syntax der While-Sprache}
