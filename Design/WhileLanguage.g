@@ -1,6 +1,6 @@
 grammar WhileLanguage;
 
-progam
+program
 	: assume_statement* method_declaration* main_method
 	;
 
@@ -59,7 +59,7 @@ variable_declaration
 	;
 	
 array_declaration
-	: type IDENT ( '[' ']' )+
+	: type IDENT ( '[' ']' )+ ';'
 	;
 	
 if_statement 
@@ -121,16 +121,15 @@ array_access
 
 literal_expression 
 	: INT_LITERAL
-	| 'true'
-	| 'false'
+	| BOOL_LITERAL
 	;
 
 type 
-	: ('int' | 'bool') ( '[' ']')?
+	: ('int' | 'bool') ( '[' ']')*
 	;
 	
-
+INT_LITERAL 	: ('0'..'9' )+;
+BOOL_LITERAL : 'true' | 'false';
 COMMENT 	: '#' .* ( '\n' | '\r' ) {skip();};
 WS		: ('\n' | '\r' | ' ' | '\t')+ {skip();};
 IDENT 		: ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
-INT_LITERAL 	: '0'..'9' ( '0'..'9' )*;
