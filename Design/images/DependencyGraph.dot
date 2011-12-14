@@ -1,5 +1,7 @@
 digraph {
-progam -> assume_statement;
+    rotate=90
+    size="8.26,11.69"
+program -> assume_statement;
 assume_statement -> expression;
 expression -> rel_expression;
 rel_expression -> add_expression;
@@ -17,7 +19,7 @@ array_access -> expression;
 parenthesized_expression -> IDENT;
 parenthesized_expression -> literal_expression;
 literal_expression -> INT_LITERAL;
-progam -> method_declaration;
+program -> method_declaration;
 method_declaration -> type;
 method_declaration -> IDENT;
 method_declaration -> parameter_list;
@@ -53,7 +55,7 @@ loop_body -> ensure_statement;
 ensure_statement -> expression;
 statement -> expression;
 method_body -> ensure_statement;
-progam -> main_method;
+program -> main_method;
 main_method -> parameter_list;
 main_method -> method_body;
 }
