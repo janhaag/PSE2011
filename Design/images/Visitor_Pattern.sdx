@@ -2,25 +2,25 @@
 <diagram>
 <source><![CDATA[interpreter:Interpreter[a]
 prog:Program[a]
-block:StatementBlock[a]
+block:Function[a]
 assign1:Assignment[a]
+expr:LogicalExpression[a]
 varAcc:VariableAccess[a]
-assign2:Assignment[a]
 true:BooleanLiteral[a]
 
 
-interpreter:prog.acceptVisitor(this)
+interpreter:prog.accept(this)
 prog:interpreter.visit(this)
-interpreter:block.acceptVisitor(this)
+interpreter:block.accept(this)
 block:interpreter.visit(this)
-interpreter:assign1.acceptVisitor(this)
+interpreter:assign1.accept(this)
 assign1:interpreter.visit(this)
-interpreter:varAcc.acceptVisitor(this)
-varAcc:interpreter.visit(this)
+interpreter:expr.accept(this)
+expr:interpreter.visit(this)
 
-interpreter[2]:assign2.acceptVisitor(this)
-assign2:interpreter.visit(this)
-interpreter:true.acceptVisitor(this)
+interpreter:varAcc.accept(this)
+varAcc:interpreter.visit(this)
+interpreter[1]:true.accept(this)
 true:interpreter.visit(this)]]></source>
 <configuration>
 <property name="activationBarBorderThickness" value="1"/>

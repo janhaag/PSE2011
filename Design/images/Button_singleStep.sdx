@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
 <source><![CDATA[al:ActionListener[a]
-controller:Controller[a]
+controller:ExecutionController[a]
+context:ProgramExecution[a]
 interpreter:Interpreter[a]
-context:ExecutionContext[a]
 
 al:controller.singleStep()
 [c:alt state == idle]
@@ -12,6 +12,7 @@ al:controller.singleStep()
 [c:alt state == paused]
 	controller[1]:state=context.getState()
 	controller:newState=interpreter.step(state)
+	controller:context.setState(state)
 [/c]]]></source>
 <configuration>
 <property name="activationBarBorderThickness" value="1"/>

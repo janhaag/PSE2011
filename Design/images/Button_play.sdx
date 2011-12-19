@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
 <source><![CDATA[al:ActionListener[a]
-controller:Controller[a]
-/parser:Parser[a]
-/interpreter:Interpreter[a]
-/context:ExecutionContext[a]
-/state:State[a]
+controller:ExecutionController[a]
+context:ProgramExecution[a]
 
 al:controller.startInterpreter()
 [c:alt state == idle]
 	controller:controller.init()
 [/c]
 [c:loop while state == running]
-	controller[1]:controller.singleStep()
+	controller[1]:hitBeakpoint=context.checkBreakpoint()
+	controller:controller.singleStep()
 [/c]
 ]]></source>
 <configuration>

@@ -347,6 +347,45 @@ Das folgende Zustandsdiagramm zeigt das Verhalten des Systems bei Benutzeraktion
 \end{itemize}
 \newpage
 
+\section{Sequenzdiagramme}
+\subsection{Besucher-Muster}
+\includegraphics[scale=0.9]{images/Visitor_Pattern.pdf} \newline
+Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beispiel.
+
+\subsection{Breakpoints}
+\includegraphics[scale=0.6]{images/Breakpoints.pdf} \newline
+\begin{itemize}
+\item Dieses Sequenzdiagramm zeigt, wie die Breakpoints ausgewertet werden. Dafür wird angenommen, dass zwei Statement-Breakpoints und ein globaler Breakpoint aktiv sind.
+\item Zuerst wird für jeden einem Statement zugeordneten Breakpoint die Position abgefragt und mit der aktuellen Programmversion verglichen.
+\item Danach wird für jeden globalen Breakpoint die ihm zugeordnete Bedingung vom Interpreter ausgewertet.
+\item Der Rückgabewert von checkBreakpoint() ist genau dann ja, falls mindestens ein Breakpoint getroffen wurde.
+\end{itemize}
+
+\subsection{Interpreter-Initialisierung}
+\includegraphics[scale=0.9]{images/interpreter_init.pdf} \newline
+\begin{itemize}
+\item Dieses Sequenzdiagramm zeigt die Initialisierung des Interpreters bei Programmstart.
+\item Der ExecutionController erzeugt jeweils eine neue Instanz von Interpreter und ProgramExecution, wobei letztere eine neue State-Instanz erzeugt.
+\item Dann wird das Parserinterface aufgerufen, welches Instanzen von Lexer und Parser für diesen Parse-Vorgang erzeugt und einen AST zurückgibt.
+\end{itemize}
+
+\subsection{Start-Button}
+\includegraphics[scale=0.9]{images/Button_play.pdf} \newline
+\begin{itemize}
+\item Beim Drücken auf den Play-Button wird der entsprechende ActionListener ausgeführt, welcher die startInterpreter-Methode des ExecutionController ausführt.
+\item Ist das Programm noch nicht geparst worden, wird der Interpreter initialisiert (s. letztes Diagramm).
+\item Danach wird das Programm solange schrittweise (s. nächstes Diagramm) ausgeführt, bis ein Breakpoint getroffen wird, das Programm pausiert wird oder eine Assertion fehlschlägt.
+\end{itemize}
+
+\subsection{Single-Step-Button}
+\includegraphics[scale=0.9]{images/Button_Singlestep.pdf} \newline
+\begin{itemize}
+\item Beim Drücken auf den SingleStep-Button wird der entsprechende ActionListener ausgeführt, welcher die singleStep-Methode des ExecutionController ausführt.
+\item Ist das Programm noch nicht geparst worden, wird der Interpreter initialisiert (s. entsprechendes Diagramm).
+\item Danach wird ein Einzelschritt des Programms ausgeführt. Dafür wird der im ProgramExecution gekapselte Progammzustand abgefragt und an den Interpreter gegeben; der neue Zustand wird dann wieder zurückgespeichert.
+\end{itemize}
+
+
 \section{Struktur der While-Sprache}
 \includegraphics[scale=1]{images/DependencyGraph.pdf}
 

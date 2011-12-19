@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
-<source><![CDATA[controller:Controller[a]
-context:ExecutionContext[a]
+<source><![CDATA[controller:ExecutionController[a]
+context:ProgramExecution[a]
 interpreter:Interpreter[a]
-stmtBp:StatementBreakpoint[a]
+stmtBp1:StatementBreakpoint[a]
+stmtBp2:StatementBreakpoint[a]
+currentPosition:Position
 glblBp:GlobalBreakpoint[a]
 
-controller:hitBreakpoint=context.checkBreakpoints()
-context:line=stmtBp.getLine()
+controller:hitBreakpoint=context.checkBreakpoint()
+context:position=stmtBp1.getPosition()
+context:currentPosition.equals(position)
+context:position=stmtBp2.getPosition()
+context:currentPosition.equals(position)
 context:expr=glblBp.getExpression()
 context:interpreter.visit(expr)
 ]]></source>

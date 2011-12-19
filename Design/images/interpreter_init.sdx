@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
-<source><![CDATA[controller:Controller[a]
-/parser:Parser[a]
+<source><![CDATA[controller:ExecutionController[a]
 /interpreter:Interpreter[a]
-/context:ExecutionContext[a]
+/context:ProgramExecution[a]
 /state:State[a]
+parserInterface:ParserInterface[a]
+/lexer:Lexer[a]
+/parser:Parser[a]
 
-controller:parser.new()
 controller:interpreter.new()
 controller:context.new()
 context:state.new()
+controller:ast=parserInterface.parse(text)
+parserInterface:lexer.new(text)
+parserInterface:parser.new()
 ]]></source>
 <configuration>
 <property name="activationBarBorderThickness" value="1"/>
