@@ -8,6 +8,7 @@
 \usepackage[vmargin=3cm, hmargin=2cm]{geometry}
 \usepackage{tabularx}
 \usepackage{fancyvrb}
+\usepackage{pdflscape}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2pt}
@@ -393,5 +394,16 @@ Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beisp
 
 \section{Syntax der While-Sprache}
 \VerbatimInput{WhileLanguage.g}
-\end{document}
 
+\begin{landscape}
+\section{Implementierungsplan}
+\subsection{Vorgangsliste}
+\includegraphics[scale=0.7]{images/Implementierung_Vorgangsliste_1.pdf}
+\newpage
+\includegraphics[scale=0.7]{images/Implementierung_Vorgangsliste_2.pdf}
+\newpage
+\subsection{Gantt-Diagramm}
+\includegraphics[scale=0.7]{images/Implementierung_Gantt.pdf}
+\end{landscape}
+
+\end{document}
