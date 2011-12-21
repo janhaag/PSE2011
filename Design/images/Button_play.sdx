@@ -10,7 +10,8 @@ al:controller.startInterpreter()
 [/c]
 [c:loop while state == running]
 	controller[1]:hitBeakpoint=context.checkBreakpoint()
-	controller:controller.singleStep()
+	controller:controller.refresh()
+	controller[1]:controller.singleStep()
 [/c]
 ]]></source>
 <configuration>

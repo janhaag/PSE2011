@@ -5,16 +5,19 @@ context:ProgramExecution[a]
 interpreter:Interpreter[a]
 stmtBp1:StatementBreakpoint[a]
 stmtBp2:StatementBreakpoint[a]
-currentPosition:Position
+state:State[a]
+command:Statement[a]
 glblBp:GlobalBreakpoint[a]
 
 controller:hitBreakpoint=context.checkBreakpoint()
-context:position=stmtBp1.getPosition()
-context:currentPosition.equals(position)
-context:position=stmtBp2.getPosition()
-context:currentPosition.equals(position)
+context:command=state.getCommand()
+context:statement=stmtBp1.getStatement()
+context:isEqual=command.equals(statement)
+context:statement=stmtBp2.getStatement()
+context:isEqual=command.equals(statement)
 context:expr=glblBp.getExpression()
-context:interpreter.visit(expr)
+context:clonedState=state.clone()
+context:interpreter.visit(clonedState)
 ]]></source>
 <configuration>
 <property name="activationBarBorderThickness" value="1"/>

@@ -6,14 +6,16 @@
 /state:State[a]
 parserInterface:ParserInterface[a]
 /lexer:Lexer[a]
-/parser:Parser[a]
+parser:Parser[a]
+typeChecker:TypeChecker[a]
 
 controller:interpreter.new()
-controller:context.new()
+controller:context.new(interpreter)
 context:state.new()
 controller:ast=parserInterface.parse(text)
 parserInterface:lexer.new(text)
-parserInterface:parser.new()
+parserInterface:ast=parser.parse()
+parserInterface:typeChecker.checkTypes(ast)
 ]]></source>
 <configuration>
 <property name="activationBarBorderThickness" value="1"/>

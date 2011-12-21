@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram>
-<source><![CDATA[interpreter:Interpreter[a]
-prog:Program[a]
-block:Function[a]
+<source><![CDATA[controller:ExecutionController[a]
+interpreter:Interpreter[a]
+state:State[a]
 assign1:Assignment[a]
 expr:LogicalExpression[a]
-varAcc:VariableAccess[a]
 true:BooleanLiteral[a]
+false:BooleanLiteral[a]
+var:Identifier[a]
 
-
-interpreter:prog.accept(this)
-prog:interpreter.visit(this)
-interpreter:block.accept(this)
-block:interpreter.visit(this)
+controller:newState=interpreter.step(state)
+interpreter:state.getCommand()
 interpreter:assign1.accept(this)
 assign1:interpreter.visit(this)
-interpreter:expr.accept(this)
+interpreter:expr=assign1.getValue()
+interpreter:result=expr.accept(this)
 expr:interpreter.visit(this)
 
-interpreter:varAcc.accept(this)
-varAcc:interpreter.visit(this)
-interpreter[1]:true.accept(this)
-true:interpreter.visit(this)]]></source>
+interpreter:expr=expr.getSubExpression1()
+interpreter:true.accept(this)
+true:interpreter.visit(this)
+interpreter[1]:operand=expr.getOperand()
+interpreter:expr=expr.getSubExpression2()
+interpreter:false.accept(this)
+false:interpreter.visit(this)
+interpreter[2]:var=assign1.getVar()
+interpreter:identifier=var.getName()
+interpreter:state.setVar(identifier, result)]]></source>
 <configuration>
 <property name="activationBarBorderThickness" value="1"/>
 <property name="actorWidth" value="25"/>

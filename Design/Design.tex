@@ -133,7 +133,7 @@ Name der Methode \\
 Liste von Parametern, die der Methode "ubergeben werden
 \end{itemize}
 \item \texttt{VariableAccess} \\
-Die Klasse \texttt{VariableAccess} stellt einen Zugriff auf eine vorhandene Variable dar. Von dieser Klasse erbt die Unterklsse \texttt{ArrayAccess}. 
+Die Klasse \texttt{VariableAccess} stellt einen Zugriff auf eine vorhandene Variable dar. Von dieser Klasse erbt die Unterklasse \texttt{ArrayAccess}. 
 \begin{itemize}
 \item Attribut: \\
 \texttt{identifier} \\
@@ -223,7 +223,7 @@ erzeugt f"ur eine Variable die entsprechende \texttt{Scope}-Instanz \\
 zerst"ort eine \texttt{Scope}-Instanz \\
 \texttt{setVar(name:String,value:String)}  \\
 setzt eine Variable und ihren Wert mithilfe eines Stringinputs \\
-\texttt{createVar(name:String,type:String,content:String} \\
+\texttt{createVar(name:String,type:String,content:String)} \\
 erstellt eine Variable mit Typ und Inhalt mithilfe eines Stringinputs 
 \end{itemize}
 \item \texttt{Breakpoint} \\
@@ -351,14 +351,23 @@ Das folgende Zustandsdiagramm zeigt das Verhalten des Systems bei Benutzeraktion
 \section{Sequenzdiagramme}
 \subsection{Besucher-Muster}
 \includegraphics[scale=0.9]{images/Visitor_Pattern.pdf} \newline
-Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beispiel.
+Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beispiel. Dies ist zum Beispiel das Statement "flag = true | false".
+\begin{itemize}
+\item Der Interpreter wird mit dem momentanen Programmzustand aufgerufen und ruft den Getter für das aktuelle Statement auf.
+\item Der Besucher ruft die accept-Methode darauf auf, welche ihrerseits die richtige visit-Methode aufruft.
+\item Bei visit(Assignment) wird zuerst der hintere Ausdruck ausgewertet (hier: "true | false").
+\item Für diese Expression wird eine neue visit-Methode aufgerufen. Diese besucht zuerst die erste Subexpression, überprüft den Operanden, ob er unär oder binär ist. Da er binär ist, wird auch die zweite Subexpression besucht.
+\item Nachdem der Ausdruck ausgewertet worden ist, wird der letzte Bearbeitungsschritt der Zuweisung durchgeführt. Dazu wird der Variablenname gebraucht (assignment.getVar().getName()). Dann wird die Variable im State neu gesetzt.
+\item Der neue Zustand wird zurückgegeben.
+\end{itemize}
 
 \subsection{Breakpoints}
-\includegraphics[scale=0.6]{images/Breakpoints.pdf} \newline
+\includegraphics[scale=0.9]{images/Breakpoints.pdf} \newline
 \begin{itemize}
 \item Dieses Sequenzdiagramm zeigt, wie die Breakpoints ausgewertet werden. Dafür wird angenommen, dass zwei Statement-Breakpoints und ein globaler Breakpoint aktiv sind.
-\item Zuerst wird für jeden einem Statement zugeordneten Breakpoint die Position abgefragt und mit der aktuellen Programmversion verglichen.
-\item Danach wird für jeden globalen Breakpoint die ihm zugeordnete Bedingung vom Interpreter ausgewertet.
+\item Zuerst ruft die Instanz von ProgramExecution die Methode getCommand von State auf, um das aktuelle Statement zu bekommen.
+\item Für jeden einem Statement zugeordneten Breakpoint wird dieses Statement abgefragt und mit dem aktuell auszuführenden verglichen.
+\item Danach wird für jeden globalen Breakpoint die ihm zugeordnete Bedingung angefordert. State wird geklont, und die Bedingung wird mit der geklonten State-Instanz vom Interpreter ausgewertet.
 \item Der Rückgabewert von checkBreakpoint() ist genau dann ja, falls mindestens ein Breakpoint getroffen wurde.
 \end{itemize}
 
@@ -367,7 +376,8 @@ Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beisp
 \begin{itemize}
 \item Dieses Sequenzdiagramm zeigt die Initialisierung des Interpreters bei Programmstart.
 \item Der ExecutionController erzeugt jeweils eine neue Instanz von Interpreter und ProgramExecution, wobei letztere eine neue State-Instanz erzeugt.
-\item Dann wird das Parserinterface aufgerufen, welches Instanzen von Lexer und Parser für diesen Parse-Vorgang erzeugt und einen AST zurückgibt.
+\item Dann wird das Parserinterface aufgerufen, welches eine Instanz des Lexers für diesen Parse-Vorgang erzeugt. Der Parser erzeugt daraus einen AST.
+\item Dieser wird vom TypeChecker auf Typkorrektheit überprüft.
 \end{itemize}
 
 \subsection{Start-Button}
@@ -375,7 +385,7 @@ Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beisp
 \begin{itemize}
 \item Beim Drücken auf den Play-Button wird der entsprechende ActionListener ausgeführt, welcher die startInterpreter-Methode des ExecutionController ausführt.
 \item Ist das Programm noch nicht geparst worden, wird der Interpreter initialisiert (s. letztes Diagramm).
-\item Danach wird das Programm solange schrittweise (s. nächstes Diagramm) ausgeführt, bis ein Breakpoint getroffen wird, das Programm pausiert wird oder eine Assertion fehlschlägt.
+\item Danach wird das Programm schrittweise (s. nächstes Diagramm) ausgeführt, wobei vor jedem Einzelschritt geprüft wird, ob ein Breakpoint getroffen oder das Programm pausiert wurde. Letzteres wird über das Beobachter-Muster realisiert.
 \end{itemize}
 
 \subsection{Single-Step-Button}
