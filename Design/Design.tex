@@ -44,135 +44,250 @@ WS 2011/2012
 \tableofcontents
 \newpage
 
-\section{Einleitung}
-
 \section{Klassendiagramme}
 
 \subsection{"Ubersicht}
 
-Das folgende Klassendiagramm zeigt die Grobstruktur der Anwendung. \\
-\includegraphics[scale=0.8]{images/ClassOverview.pdf} \\
+Das folgende Klassendiagramm zeigt die Interaktionen zwischen den Komponenten des Systems. \\
+\includegraphics[scale=0.85]{images/ClassOverview.pdf} \\
 Die gesamte Architektur basiert auf dem Entwurfsmuster Model-View-Controller. Dies erm"oglicht uns einen flexiblen Programmentwurf, der eine sp"atere "Anderung oder Erweiterung erleichtert und eine Wiederverwendbarkeit der einzelnen Komponenten erm"oglicht.
 \begin{itemize}
-\item Das \textbf{Modell} enth"alt die darzustellenden Daten, z.B die Zust"ande der Variablen w"ahrend der Programmausf"uhrung und die vom Benutzer gesetzten Breakpoints
-\item Die \textbf{Pr"asentation/View} stellt die Daten aus dem Modell auf der Benutzeroberfl"ache dar und nimmt Benutzerinteraktionen entgegen
-\item Um die Zusammenarbeit der ersten zwei Komponenten k"ummert sich die \textbf{Steuerung}. Au"serdem f"uhrt sie die Hauptaktionen (Parsen, Interpretieren, usw.) aus und bearbeitet die Eingaben des Benutzers \\\\
+\item Das \textbf{Modell} enth"alt die darzustellenden Daten, z.B die Zust"ande der Variablen w"ahrend der Programmausf"uhrung und die vom Benutzer gesetzten Breakpoints. Aber auch die Komponenten AST und Miscellaneous sind Bestandteile des Modells. Diese Speichern jeweils den Syntaxbaum des Benutzerprogramms und wichtige Daten der Benutzeroberfl"ache. 
+\item Die \textbf{Sicht} stellt die Daten, die sie vom Modell bekommt, auf der Benutzeroberfl"ache dar und nimmt Benutzerinteraktionen entgegen. Dabei wird sie unterteilt in verschiedenen Views, wie zum Beispiel die VariableView und BreakpointView. 
+\item Um die Zusammenarbeit der ersten zwei Komponenten k"ummert sich die \textbf{Steuerung}. Da wir mehrere Views haben, gibt es dementsprechend auch mehrere Controller. Diese steuern alle Komponenten des Systems und geben Daten weiter. Wichtige Aufgaben der Steuerung sind beispielsweise das Aufrufen des Parsers und des Interpreters. \\
 \end{itemize}
 
 \subsection{Feinstruktur der Komponenten}
 
-\subsubsection{Programmstruktur}
+\subsubsection{AST}
 
-\includegraphics[scale=0.85]{images/AST.pdf} \\
-F"ur die Struktur des AST verwenden wir das Composite-Muster. Damit wird die Teil-Ganzes-Hierachie der While-Grammatik repr"asentiert, indem Objekte zu Baumstrukturen zusammengef"ugt werden. Au"sdem erm"oglicht uns das Muster, Objekte und Kompositionen einheitlich zu behandeln. 
+%\includegraphics[scale=0.55]{images/AST.pdf} \\
+F"ur die Struktur des AST verwenden wir das Composite-Muster. Damit wird die Teil-Ganzes-Hierachie der While-Grammatik repr"asentiert, indem Objekte zu Baumstrukturen zusammengef"ugt werden. Au"serdem erm"oglicht uns das Muster, Objekte und Kompositionen einheitlich zu behandeln. Um die Methoden des Interpreters, des Type-Checkers und des Beweisers zu kapseln, verwenden wir hier auch das Visitor-Muster. Somit k"onnen diese Methoden leicht f"ur alle konkreten Klassen implementiert werden und auch einfacher modifiziert werden. 
 \begin{itemize}
+\item \texttt{ASTRoot} \\
+Die Klasse ASTRoot bildet die Wurzel des Baumes. Sie wird direkt vom Parser erzeugt und wird zum Verifizieren an den Beweiser "ubergeben. 
+\begin{itemize}
+\item Attribut: \\
+\texttt{position} \\
+eine bestimmte Position im Quelltext
+\item Methoden: \\
+\texttt{getPosition()} \\
+gibt \texttt{position} zur"uck \\
+\texttt{acceptVisitor(visitor: ASTVisitor)} \\
+nimmt einen konkreten Visitor entgegen
+\end{itemize}
 \item \texttt{Program} \\
-Die Klasse \texttt{Program} stellt eine Funktion im Quelltext dar. 
+Die Klasse \texttt{Program} ist eine Ansammlung von Funktionen. 
 \begin{itemize}
 \item Attribute: \\
-\texttt{program} \\
-eine Instanz von sich selbst. Diese sind Unterprogramme, die aufgerufen werden k"onnen.\\
-\texttt{statement} \\
-eine Liste von Instanzen der Klasse \texttt{Statement}
+\texttt{functions} \\
+\texttt{Program} besteht aus einer oder mehreren Funktionen\\
+\texttt{mainFunction} \\
+\texttt{Program} muss aus genau einer Main-Funktion besthen \\
+\texttt{axioms} \\
+\texttt{Program} kann auch Axiome enthalten
+\item Methoden: \\
+\texttt{getFunctions()} \\
+gibt die Menge der Funktionen zur"uck \\
+\texttt{getMainFunction()} \\
+gibt \texttt{mainFunction} zur"uck \\
+\texttt{getGlobalAxioms()} \\
+gibt die Menge der globalen Axiomen zur"uck
+\end{itemize}
+\item \texttt{Function} \\
+Die Klasse \texttt{Function} stellt eine Funktion im Programmcode dar. 
+\begin{itemize}
+\item Attribute: \\
+\texttt{name} \\
+der Name der Funktion \\
+\texttt{parameters} \\
+beliebig viele Parameter \\
+\texttt{returnType} \\
+R"uckgabetyp der Funktion \\
+\texttt{statements} \\
+eine Funktion besteht aus mehreren Statements
+\item Methoden: \\
+\texttt{getFunctionBlock()} \\
+gibt den K"orper der Funktion zur"uck, der aus Statements besteht \\
+\texttt{getParameters()} \\
+gibt die Menge der Parameter zur"uck \\
+\texttt{getName()} \\
+gibt \texttt{name} zur"uck \\
+\texttt{getReturnType()} \\
+gibt \texttt{returnType} zur"uck 
+\end{itemize}
+\item \texttt{FunctionParameter}
+\begin{itemize}
+\item Attribute: \\
+\texttt{identifier} \\
+der Name des Parameters 
+\texttt{type} \\
+\texttt{Parameter} muss einen Typ haben
+\item Methoden: \\
+\texttt{getName()} \\
+gibt \texttt{identifier} zur"uck \\
+\texttt{getType} \\
+gibt \texttt{type} zur"uck
 \end{itemize}
 \item \texttt{Statement} \\
-Die abstrakte Klasse \texttt{Statement} steht f"ur eine Anweisung des Programms. Die Anweisungen sind eingeteilt in f"unf Klassen: \texttt{Conditional, Loop, Specification, Assignment} und \texttt{Expression}. 
-\begin{itemize}
-\item Attribut:\\
-\texttt{line} \\
-Zeile im Quelltext, in der sich die Instanz befindet
-\item Methoden: \\
-\texttt{getLine()} \\
-gibt das Attribut \texttt{line} zur"uck \\
-\texttt{\textit{accept(visitor: ProgramVisitor)}}\\
-abstrakte Methode, die von den Unterklassen implementiert wird
-\end{itemize}
+Die Klasse \texttt{Statement} steht f"ur eine Anweisung im Programmcode. 
 \item \texttt{Conditional} \\
-Die Klasse \texttt{Conditional} steht f"ur eine bedingte Anweisung. 
+Die Klasse \texttt{Conditional} ist eine Unterklasse von \texttt{Statement} und steht f"ur eine bedingte Anweisung. 
 \begin{itemize}
 \item Attribute: \\
-\texttt{program} \\
-Unterprogramme, die bedingt ausgef"uhrt werden \\
+\texttt{trueStatements} \\
+es muss mind. eine Anweisung geben, die bei Erf"ullung der Bedingung ausgef"uhrt wird \\
+\texttt{falseStatements} \\
+es kann Anweisungen geben, die bei Nichterf"ullung der Bedingung ausgef"uhrt werden \\
 \texttt{condition} \\
 Bedingung, die "uberpr"uft wird
+\item Methoden: \\
+\texttt{getCondition()} \\
+gibt \texttt{condition} zur"uck \\
+\texttt{getTrueConditionBody()} \\
+gibt \texttt{trueStatements} zur"uck \\
+\texttt{getFalseConditionBody()} \\
+gibt \texttt{falseStatements} zur"uck
 \end{itemize}
 \item \texttt{Loop} \\
-Die Klasse \texttt{Loop} steht f"ur eine while-Anweisung. 
+Die Klasse \texttt{Loop} ist eine Unterklasse von \texttt{Statement} und steht f"ur eine while-Anweisung. 
 \begin{itemize}
 \item Attribute: \\
-\texttt{program} \\
-Unterprogramme, die bedingt ausgef"uhrt werden \\
+\texttt{body} \\
+Schleifenk"orper, der bedingt ausgef"uhrt werden \\
 \texttt{condition} \\
-Bedingung, die "uberpr"uft wird
+Bedingung, die "uberpr"uft wird \\
+\texttt{invariant} \\
+f"ur die Schleife ist es m"oglich, eine oder mehrere Schleifeninvarianten anzugeben 
 \end{itemize}
 \item \texttt{Specification}
 \begin{itemize}
 \item Attribut: \\
-\texttt{spec} \\
+\texttt{expression} \\
 Ausdruck, der "uberpr"uft wird
 \end{itemize}
+\item \texttt{ReturnStatement} \\
+Die Klasse \texttt{ReturnStatement} stellt eine return-Anweisung dar. 
+\begin{itemize}
+\item Attribut: \\
+\texttt{returnValue} \\
+Ausdruck, dessen Wert zur"uckgegeben wird 
+\item Methode: \\
+\texttt{getReturnValue} \\
+gibt \texttt{returnValue} zur"uck
+\end{itemize}
 \item \texttt{Assignment} \\
-Die Klasse \texttt{Assignment} steht f"ur eine Zuweisung von Variablen. Die Klasse \texttt{ArrayAssignment} ist eine Subklasse, die stattdessen f"ur Zuweisung von Arrays steht.
+Die Klasse \texttt{Assignment} steht f"ur eine Zuweisung von Variablen.
 \begin{itemize}
 \item Attribute: \\
 \texttt{value} \\
-der Wert, der zugewiesen wird\\
+der Wert der zugewiesen werden soll \\
 \texttt{identifier} \\
-die Variable, der \texttt{value} zugewiesen wird
+Variable, der \texttt{value} zugewiesen wird
+\item Methoden: \\
+\texttt{getValue()} \\
+gibt \texttt{value} zur"uck \\
+\texttt{getVariable()} \\
+gibt \texttt{identifier} zur"uck
+\end{itemize}
+\item \texttt{VariableDeclaration}
+\begin{itemize}
+\item Attribute: \\
+\texttt{name} \\
+Name der Variable \\
+\texttt{value} \\
+bei der Deklaration muss genau ein Wert eines Ausdrucks zugewiesen werden \\
+\texttt{type} \\
+Typ der Variable 
+\item Methoden: \\
+\texttt{getName()} \\
+gibt \texttt{name} zur"uck \\
+\texttt{getValue()} \\
+gibt \texttt{value} zur"uck \\
+\texttt{getType()} \\
+gibt \texttt{type} zur"uck
 \end{itemize}
 \item \texttt{Expression} \\
-Die abstrakte Klasse \texttt{Expression} steht f"ur einen beliebigen Ausdruck. \texttt{QuantifiedExpression}, \\
-\texttt{ArithmeticExpression, LogicalExpression, FunctionCall} und \texttt{VariableAccess} sind Unterklassen dieser Klasse.
+Die Klasse \texttt{Expression} steht f"ur einen Ausdruck im Programmcode. 
+\item \texttt{LogicalExpression} \\
+Die Klasse \texttt{LogicalExpression} steht f"ur einen un"aren oder bin"aren Ausdruck, der einen Booleanwert zur"uckgibt.
+\begin{itemize}
+\item Attribute: \\
+\texttt{subExpression} \\
+ein logischer Ausdruck kann als Operanden wieder Ausdr"ucken haben \\
+\texttt{quantifier} \\
+ein logischer Ausdruck kann einen forall- oder exists-Quantor haben \\
+\texttt{logicalOperator} \\
+ein logischer Ausdruck muss einen Operator aus \texttt{\{!, |, \&, >, >=, <, <=, !=, ==\}} besitzen 
+\end{itemize}
+\item \texttt{ArithmeticExpression} \\
+Die Klasse \texttt{ArithmeticExpression} steht f"ur einen un"aren oder bin"aren Ausdruck, der einen Zahlenwert zur"uckgibt.
+\begin{itemize}
+\item Attribute: \\
+\texttt{subExpression} \\
+ein arithmetischer Ausdruck kann als Operanden wieder Ausdr"ucken haben \\
+\texttt{arithmeticOperator} \\
+ein arithmetischer Ausdruck muss einen Operator aus \texttt{\{+, -, *, /, \%\}} besitzen 
+\end{itemize}
 \item \texttt{FunctionCall} \\
 Die Klasse \texttt{FunctionCall} modelliert einen Methodenaufruf. 
 \begin{itemize}
 \item Attribute: \\
-\texttt{identifier} \\
-Name der Methode \\
-\texttt{paralist} \\
-Liste von Parametern, die der Methode "ubergeben werden
+\texttt{function} \\
+Funktion, die aufgerufen wird \\
+\texttt{parameters} \\
+Menge von Ausdr"ucken, die als Parameter der Methode "ubergeben werden
 \end{itemize}
-\item \texttt{VariableAccess} \\
-Die Klasse \texttt{VariableAccess} stellt einen Zugriff auf eine vorhandene Variable dar. Von dieser Klasse erbt die Unterklasse \texttt{ArrayAccess}. 
+\item \texttt{VariableRead} \\
+Die Klasse \texttt{VariableRead} stellt einen Zugriff auf eine Variable dar.
 \begin{itemize}
 \item Attribut: \\
 \texttt{identifier} \\
-Name der Variable 
+Variable, die gelesen wird
+\item Methode: \\
+\texttt{getVariable()} \\
+gibt \texttt{identifier} zur"uck
 \end{itemize}
-\item \texttt{Type} \\
-Die Klasse \texttt{Type} bildet eine Oberklasse der verschiedenen Typen, die eine Variable haben kann. Dazu geh"oren \texttt{BooleanType}, \texttt{IntegerType} und \texttt{ArrayType}.
-\item \texttt{ArrayType} \\
-Die Klasse \texttt{ArrayType} definiert einen eigenen Typ der Array-Objekte. 
+\item \texttt{Identifier} \\
+Die Klasse \texttt{Identifier} steht f"ur eine Variable. 
+\begin{itemize}
+\item Attribut: \\
+\texttt{name} \\
+Name der Variable 
+\item Methode: \\
+\texttt{getName()} \\
+gibt \texttt{name} zur"uck  
+\end{itemize}
+\item \texttt{Position} \\
+Die Klasse \texttt{Position} stellt eine Position im Programmcode dar. 
 \begin{itemize}
 \item Attribute: \\
-\texttt{dimension} \\
-Dimension des Arrays \\
-\texttt{type} \\
-Arrayelemente haben "`normale"' Typen \\
-\end{itemize}
-\end{itemize}
-
-\subsubsection{Besucherklassen}
-
-\includegraphics[scale=0.7]{images/Besucher.pdf} \\
-F"ur die Integration der verschiedenen Methoden, wie zum Beispiel die des Interpreters, verwenden wir das Visitor-Muster. Es kapselt die Operationen, die auf Elemente des AST ausgef"uhrt werden. Das Muster erm"oglicht uns, Operationen zu ver"andern oder neue Funktionen hinzuf"ugen, ohne die Elementklassen zu modifizieren. 
-\begin{itemize}
-\item \texttt{ProgramVisitor} \\
-Das Interface \texttt{ProgramVisitor} deklariert f"ur jede Klasse konkreter Elemente eine Besuchsfunktion.
-\item \texttt{Interpreter} \\
-Die Klasse \texttt{Interpreter} ist ein konkreter Besucher und implementiert die Aufgaben des Interpretierens als Besuchsfunktionen. 
-\begin{itemize}
-\item Methode: \\
-\texttt{step(state:State)} \\
-schrittweise Ausf"uhrung des Programms. Dabei wird der Funktion der aktuellen Zustand \texttt{state} "ubergeben und diese gibt wieder eine Instanz der Klasse \texttt{State} zur"uck. \\
+\texttt{line} \\
+Zeile im Code \\
+\texttt{column} \\
+Spalte im Code \\
 \end{itemize}
 \end{itemize}
 
 \subsubsection{Parser}
 
-\includegraphics[scale=0.5]{images/Parser.pdf} \\
-Die Klassen der Komponente Parser werden vom Parsergenerator ANTLR erstellt. Der Parser liefert die Struktur des AST. 
+%\includegraphics[scale=0.3]{images/Parser.pdf} \\
+Der Parser liefert die AST-Struktur f"ur den Interpreter und Beweiser. Einige Klassen dieser Komponente werden vom Parsergenerator ANTLR erstellt. 
 \begin{itemize}
+\item \texttt{ParserInterface} \\
+Die Klasse \texttt{ParserInterface} dient als Schnittstelle zwischen der Komponente Parser und dem restlichen System. Sie wird vom Main-Controller der GUI initialisiert. 
+\begin{itemize}
+\item Attribute: \\
+\texttt{parser} \\
+Parser f"ur den Programmcode \\
+\texttt{lexer} \\
+Lexer f"ur den Programmcode 
+\item Methode: \\
+\texttt{parse(text: String)} \\
+Initialisiert Parser und Lexer, "uber gibt ihnen den Quelltext
+\end{itemize}
+\item \texttt{Parser} \\
+Die Klasse \texttt{Parser} ist f"ur die Erzeugung des AST zust"andig. Es wird eine \texttt{ParseException} geworfen, falls kein AST erzeugt werden kann. 
 \item \texttt{Lexer} \\
 Die Klasse \texttt{Lexer} zerlegt den Quelltext in Tokens. 
 \begin{itemize}
@@ -187,19 +302,58 @@ gibt den Quelltext zur"uck \\
 \end{itemize}
 \end{itemize}
 
-\subsubsection{Modell}
+\subsubsection{Interpreter}
 
-\includegraphics[scale=0.8]{images/Modell.pdf} \\
-Die Komponente Modell speichert alle Daten der Anwendung. Diese erh"alt sie von den Komponenten View (z.B. Benutzereingaben) und Controller (z.B. Zustand der Programmausf"uhrung). Au"serdem ist es ihre Aufgabe, Daten auf Anforderung der anderen Komponenten bereit zustellen. 
+%\includegraphics[scale=0.21]{images/Interpreter.pdf} \\
+F"ur die Integration des Interpreters verwenden wir das Visitor-Muster. Es kapselt die Operationen, die auf Elementen des AST ausgef"uhrt werden. Das Muster erm"oglicht uns, Operationen zu ver"andern oder neue Funktionen hinzuf"ugen, ohne die Elementklassen zu modifizieren. Im obigen Klassendiagramm ist auch ein Teil des Modells dargestellt. Diese speichern wichtige Daten bez"uglich der Programmausf"uhrung. 
 \begin{itemize}
+\item \texttt{ASTVisitor} \\
+Das Interface \texttt{ASTVisitor} deklariert f"ur jede Klasse konkreter Elemente eine Besuchsfunktion.
+\item \texttt{TypeChecker} \\
+Die Klasse \texttt{TypeChecker} ist ein konkreter Besucher und implementiert die Aufgabe, die Korrektheit der Typen zu "uberpr"ufen. Wenn ein Typfehler gefunden wird, so wird man durch eine \texttt{IllegalTypeException} benachrichtigt. 
+\begin{itemize}
+\item Methode: \\
+\texttt{checkTypes()} \\
+startet den Vorgang des Type-Checks 
+\end{itemize}
+\item \texttt{Interpreter} \\
+Die Klasse \texttt{Interpreter} ist ein konkreter Besucher und implementiert die Aufgaben des Interpretierens. Ist die Bedingung einer Assert-Anweisung nicht erf"ullt, so wird eine \texttt{AssertFailureException} geworfen.
+\begin{itemize}
+\item Methode: \\
+\texttt{step(state:State)} \\
+schrittweise Ausf"uhrung des Programms. Dabei wird der Funktion der aktuellen Zustand \texttt{state} "ubergeben und diese gibt wieder eine Instanz der Klasse \texttt{State} zur"uck. 
+\end{itemize}
+\item \texttt{SMTLibTranslator} \\
+Die Klasse \texttt{SMTLibTranslator} ist ein konkreter Besucher und implementiert die Aufgabe, den AST in die von Z3 ben"otigte Sprache zu "ubersetzen.
+\begin{itemize}
+\item Methode: \\
+\texttt{getWPTree(ast: ASTRoot)} \\
+"ubersetzt den AST in ein \texttt{WPProgram}
+\end{itemize}
+\item \texttt{State} \\
+Die Klasse \texttt{State} speichert den aktuellen Zustand der Programmausf"uhrung, wie z.B. Werte von Variablen.
+\begin{itemize}
+\item Attribute: \\
+\texttt{statement} \\
+jedem Zustand ist ein Statement zugeordnet \\
+\texttt{currentScope} \\
+die erste Scope-Instanz, die instanziert wurde
+\item Methoden: \\
+\texttt{createScope()} \\
+erzeugt f"ur eine Variable die entsprechende \texttt{Scope}-Instanz \\
+\texttt{destroyScope()} \\
+zerst"ort eine \texttt{Scope}-Instanz \\
+\texttt{setVar(name: String,value:String)}  \\
+setzt eine Variable und ihren Wert \\
+\texttt{createVar(name: String,value:String,type: TypeOfValue)} \\
+erstellt eine Variable mit einem Typ und Wert
+\end{itemize}
 \item \texttt{Scope} \\
 Die Klasse \texttt{Scope} bildet eine Hierachie der Sichtbarkeit von Variablen des Programms. Je weiter unten sich eine \texttt{Scope}-Instanz befindet, desto lokaler ist die damit verbundenen Variable. In der obersten Ebene befinden sich also die globalen Variablen. Bei einem Variablenzugriff wird zun"achst die unterste Ebene "uberpr"uft, ob diese die gesuchte Variable enth"alt. Wenn dies nicht der Fall ist, so sucht man in der n"achst h"oheren Ebene weiter. Wenn man bereits die oberste Ebene erfolglos durchsucht hat, ist die Variable nicht vorhanden und eine Exception wird geworfen. 
 \begin{itemize}
-\item Attribute: \\
+\item Attribut: \\
 \texttt{upScope} \\
-eine andere Instanz der Klasse, die in der Hierachie "uber diese Instanze liegt \\
-\texttt{identifier} \\
-Name der Variable, deren Sichtbarkeit durch diese Instanz dargestellt wird
+nur die erste Scope-Instanze wird von \texttt{State} instantiert, alle weiteren werden von der Klasse selbst erstellt \\
 \item Methode: \\
 \texttt{getParent()} \\
 gibt die "`Eltern"'-Instanz \texttt{upScope} zur"uck
@@ -208,101 +362,256 @@ gibt die "`Eltern"'-Instanz \texttt{upScope} zur"uck
 Die Klasse \texttt{Value} speichert den Wert einer zugeh"origen Variable. 
 \begin{itemize}
 \item Attribute: \\
-\texttt{value} \\
-Attribut mit einem generischen Typ, der BooleanType, IntegerType oder ArrayType sein kann. 
+\texttt{type} \\
+Typ des Wertes \\
 \texttt{identifier} \\
-Name der Variable, die den Wert \texttt{value} besitzt
+Name der Variable 
+\item Methode: \\
+\texttt{getType()} \\
+gibt \texttt{type} zur"uck 
 \end{itemize}
-\item \texttt{State} \\
-Die Klasse \texttt{State} speichert den aktuellen Zustand der Programmausf"uhrung, wie z.B. Werte von Variablen. Au"serdem ordnet sie den Variable ihre Sichtbarkeit zu.
-\begin{itemize}
-\item Methoden: \\
-\texttt{createScope()} \\
-erzeugt f"ur eine Variable die entsprechende \texttt{Scope}-Instanz \\
-\texttt{destroyScope()} \\
-zerst"ort eine \texttt{Scope}-Instanz \\
-\texttt{setVar(name:String,value:String)}  \\
-setzt eine Variable und ihren Wert mithilfe eines Stringinputs \\
-\texttt{createVar(name:String,type:String,content:String)} \\
-erstellt eine Variable mit Typ und Inhalt mithilfe eines Stringinputs 
-\end{itemize}
-\item \texttt{Breakpoint} \\
-Die abstrakte Klasse \texttt{Breakpoint} hat zwei Subklassen: \texttt{StatementBreakpoint} und \texttt{GlobalBreakpoint}. 
+\item \texttt{Breakpoint}
 \begin{itemize}
 \item Attribut: \\
 \texttt{active} \\
-boolsche Variable, die anzeigt, ob die \texttt{Breakpoint}-Instanz aktiviert ist 
+boolsche Variable, die anzeigt, ob der Breakpoint aktiviert ist \\
 \item Methoden: \\
 \texttt{setActive(active:boolean)} \\
-aktiviert oder deaktiviert diese \texttt{Breakpoint}-Instanz \\
+aktiviert oder deaktiviert den Breakpoint \\
 \texttt{isActive()} \\
 gibt \texttt{active} zur"uck
 \end{itemize}
 \item \texttt{StatementBreakpoint} \\
-Die Klasse \texttt{StatementBreakpoint} stellt einen an einer Zeile gebundenen Breakpoint dar. 
+Die Klasse \texttt{StatementBreakpoint} ist eine Unterklasse von \texttt{Breakpoint} und stellt einen Breakpoint dar, der an einer bestimmten Stelle im Quellcode steht. 
 \begin{itemize}
 \item Attribut: \\
-\texttt{startLine} \\
-Zeile, in der sich der Breakpoint befindet
+\texttt{statement} \\
+Anweisung, an der der Breakpoint gebunden ist
 \item Methode: \\
-\texttt{getLine()} \\
-gibt \texttt{startLine} zur"uck
+\texttt{getStatemen()} \\
+gibt \texttt{statement} zur"uck
 \end{itemize}
-\item \texttt{GlobalBreakpoint}
-Die Klasse \texttt{GlobalBreakpoint} stellt einen globalen Breakpoint dar, der an einem Ausdruck gebunden ist. 
+\item \texttt{GlobalBreakpoint} \\
+Die Klasse \texttt{GlobalBreakpoint} ist eine Unterklasse von \texttt{Breakpoint} und stellt einen globalen Breakpoint dar, der an einem Ausdruck gebunden ist und nicht an einer bestimmten Stelle im Programmcode. 
 \begin{itemize}
 \item Attribut: \\
 \texttt{expression} \\
-Ausdruck, an dem die Instanz gebunden ist \\
+logischer Ausdruck, an dem der globale Breakpoint gebunden ist
+\item Methode: \\
+\texttt{getExpression()} \\
+gibt \texttt{expression} zur"uck 
+\end{itemize}
+\item \texttt{ProgramExecution} \\
+Die Klasse \texttt{ProgramExecution} modelliert die Programmausf"uhrung.
+\begin{itemize}
+\item Attribute: \\
+\texttt{breakpoints} \\
+\texttt{ProgramExecution} ist f"ur die "Uberpr"ufung der Breakpoints zust"andig \\
+\texttt{position} \\
+\texttt{ProgramExecution} hat zu einem Zeitpunkt eine bestimmte Position im Quellcode 
+\item Methoden: \\
+\texttt{ProgramExecution(interpreter: Interpreter)} \\
+Konstruktor, der Interpreter wird dabei "ubergeben \\
+\texttt{checkBreakpoint()} \\
+"uberpr"uft, ob ein Breakpoint getroffen wurde \\
+\texttt{setBreakpoint(active: Boolean, pos: Position)} \\
+setzt einen aktiven oder inaktiven Breakpoint an die Position pos \\
+\texttt{getVariables()} \\
+gibt alle Variablen und ihren Werten zur"uck
+\end{itemize}
+\item \texttt{MessageSystem} \\
+Die Klasse \texttt{MessageSystem} leitet R"uckmeldungen (z.B. Fehlermeldungen) an die GUI weiter. 
+\begin{itemize}
+\item Attribut: \\
+\texttt{consoles} \\
+Das Message-System hat bestimmte Konsolen gespeichert, denen es Nachrichten "ubermitteln soll 
+\item Methoden: \\
+\texttt{addConsole(console: Console)} \\
+f"ugt console zur Liste der zu benachrichtigenden Konsolen hinzu \\
+\texttt{removeConsole(console: Console)} \\
+entfert console aus der Liste \\
+\texttt{sendUpdate()} \\
+benachrichtigt Konsolen "uber Ver"anderungen \\
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Beweiser}
+
+%\includegraphics[scale=0.3]{images/Verifier.pdf} \\
+Die Komponente Verifier "ubersetzt den AST in eine Struktur, die die Weakest-Precondition generiert. ANTLR hilft uns auch hier, die ben"otigten Lexer- und Parserklassen zu erzeugen. 
+\begin{itemize}
+\item \texttt{VerifierInterface} \\
+Die Klasse \texttt{VerifierInterface} stellt die Schnittstelle zwischen der Komponente Verifier und dem restlichen System dar. Sie wird vom Main-Controller initialisiert und startet die "Ubersetzung des SMTLibTranslators. 
+\begin{itemize}
+\item Attribute: \\
+\texttt{smtlibTranslator} \\
+"Ubersetzer, der den AST "ubersetzen soll \\
+\texttt{program} \\
+Programm in der wp-Struktur \\
+\texttt{z3lexer} \\
+Lexer f"ur wp-Struktur \\
+\texttt{z3parser} \\
+Parser f"ur wp-Struktur 
+\item Methoden: \\
+\texttt{notifyConsole()} \\
+benachrichtigt Konsolen "uber Beweisergebnisse \\
+\texttt{verify(ast: ASTRoot)} \\
+startet die "Ubersetzung
+\end{itemize}
+\item \texttt{S-Expression} \\
+Die Klasse \texttt{S-Expression} stellt einen beliebigen Ausdruck dar. 
+\begin{itemize}
+\item Attribute: \\
+\texttt{op} \\
+Operator des Ausdrucks \\
+\texttt{subexpression} \\
+Operanden sind wieder S-Expressions 
+\item Methode: \\
+\texttt{toString()} \\
+gibt eine Strinrepr"asentation zur"uck als R"uck"ubersetzung 
+\end{itemize}
+\item \texttt{Constant} \\
+Die Klasse \texttt{Constant} ist eine Unterklasse von \texttt{S-Expressions} und bildet das Blatt des Composite-Musters. 
+\begin{itemize}
+\item Attribut: \\
+\texttt{stringRepr"asentation} \\
+die Konstante als String \\
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Misc}
+
+%\includegraphics[scale=0.27]{images/Misc.pdf}\\
+In dieser Komponente werden Daten, die der Benutzeroberfl"ache betreffen, gespeichert. 
+\begin{itemize}
+\item \texttt{FileManagement} \\
+Die Klasse \texttt{FileManagement} k"ummert sich um das Speichern von Benutzerdateien. 
+\begin{itemize}
+\item Methoden: \\
+\texttt{loadFile(dir: String)} \\
+l"adt eine Datei \\
+\texttt{saveFile(text: String, dir: String)} \\
+speichert Programm in eine Datei 
+\end{itemize}
+\item \texttt{About} \\
+Die Klasse \texttt{About} speichert n"utzliche Informationen zu unserem Produkt. 
+\begin{itemize}
+\item Attribut: \\
+\texttt{text} \\
+wichtiger Text \\
+\texttt{singleton} \\
+Singleton-Muster, da der Text nicht mehrmals erzeugt werden muss 
+\item Methoden: \\
+\texttt{getInstance()} \\
+gibt \texttt{singleton} zur"uck \\
+\texttt{getText()} \\
+gibt \texttt{text} zur"uck
+\end{itemize}
+\item \texttt{Settings} \\
+Die Klasse \texttt{Settings} speichert Einstellungen f"ur den Beweiser. 
+\begin{itemize}
+\item Attribute: \\
+\texttt{timeout} \\
+Zeitlimit f"ur einen Beweisvorgang \\
+\texttt{memorylimit} \\
+Speicherlimit f"ur einen Beweisvorgang 
 \end{itemize}
 \end{itemize}
 
 \subsubsection{Benutzeroberfl"ache}
 
-\includegraphics[scale=0.85]{images/GUI.pdf} \\
-Die Benutzeroberfl"ache bietet dem Benutzer eine leicht zu bedienende Schnittstelle und nimmt dessen Eingaben entgegen. Um eine flexible Struktur zu gestalten, verwenden wir hier das Facade-Muster in Form der \texttt{Controller}-Klasse. Diese vereinfacht die Schnittstelle zu den restlichen Komponenten und f"ordert die lose Kopplung. "Uber sie geschehen alle Interaktionen mit anderen Komponenten, z.B. reicht sie Benutzereingaben weiter, damit diese verarbeitet werden k"onnen. Der \texttt{Controller} stellt der GUI auch die von ihr ben"otigten Informationen zur Verf"ugung. 
+%\includegraphics[scale=0.27]{images/GUI.pdf} \\
+Die Benutzeroberfl"ache bietet dem Benutzer eine leicht zu bedienende Schnittstelle und nimmt dessen Eingaben entgegen. Um die verschiedenen Sichten zu steuern, gibt es f"ur jede Sicht einen eigenen Controller. "Uber diese Controllers geschehen alle Interaktionen mit anderen Komponenten, z.B. reichen sie Benutzereingaben weiter, damit diese verarbeitet werden k"onnen. Die Controllers stellen der Views auch die von ihr ben"otigten Informationen zur Verf"ugung. 
 \begin{itemize}
-\item \texttt{Controller} \\
-Die Klasse \texttt{Controller} stellt eine Verbindung zwischen dem Modell und der View her. 
+\item \texttt{MainController} \\
+Die Klasse \texttt{MainController} ist zust"andig f"ur die Initialisierung des Parsers, des TypeCheckers, des Beweisers und des Message-Systems zust"andig. Sie erzeugt au"serdem auch noch die Main-Frame.
 \begin{itemize}
 \item Attribute: \\
-\texttt{state} \\
-Zustand des Programms \\
-\texttt{interpreter} \\
-die \texttt{Interpreter}-Instanz, die das aktuelle Programm ausf"uhrt 
+\texttt{parser} \\
+der initialisierte Parser \\
+\texttt{typechecker} \\
+der initialisierte TypeChecker \\
+\texttt{verifier} \\
+der initialisierte Beweiser \\
+\texttt{reportsystem} \\
+das initialisierte MessageSystem \\
+\texttt{execController} \\
+der MainController muss den ExecutionController kennen
 \item Methoden: \\
-\texttt{interpreterStep()} \\
-schrittweise Ausf"uhrung des Programms \\
+\texttt{initMainFrame()} \\
+erzeugt die MainFrame \\
+\texttt{initVerifier()} \\
+erzeugt den Beweiser \\
+\texttt{initParser()} \\
+erzeugt den Parser 
+\end{itemize}
+\item \texttt{ExecutionController} \\
+Die Klasse \texttt{ExecutionController} ist f"ur die Initialisierung der Objekte zust"andig, die an der Programmausf"uhrung beteiligt sind, also Interpreter und ProgramExecution.
+\begin{itemize}
+\item Attribute: \\
+\texttt{interpreter} \\
+der initialisierte Interpreter \\
+\texttt{programexec} \\
+die initialisierte Programmausf"uhrung 
+\item Methoden: \\
 \texttt{startInterpreter()} \\
-Ausf"uhrung des gesamten Programms \\
+startet den Interpreter \\
 \texttt{stopInterpreter()} \\
-Ausf"uhrung abbrechen \\
+stopt den Interpreter \\
+\texttt{singleStep()} \\
+geht in den Single-Step-Zustand \\
 \texttt{pauseInterpreter()} \\
-Ausf"uhrung pausieren \\
-\texttt{getVariables()} \\
-gibt die aktuellen Variablen und deren Werte zur"uck 
+pausiert den Interpreter \\
+\texttt{actionPerformed(e: ActionEvent)} \\
+beobachtet Aktionen des Benutzers und f"uhrt das entsprechende Event aus
 \end{itemize}
-\item \texttt{Frame} \\
-Die abstrakte Klasse \texttt{Frame} stellt alle Fenster dar, die vom Benutzer ge"offnet werden k"onnen. Sie ist Oberklasse der folgenen Klassen: \texttt{HelpFrame, FileFrame, OptionFrame, RandomTestFrame, AboutFrame, EvaluationFrame} und \texttt{MainFrame}.
-\item \texttt{HelpFrame} \\
-Die Klasse \texttt{HelpFrame} erleichtert die Bedienung der Anwendung. 
-\begin{itemize}
-\item \texttt{help} \\
-Inhalt der Hilfe 
-\end{itemize}
-\item \texttt{OptionFrame} \\
-Die Klasse \texttt{OptionFrame} speichert Benutzereinstellungen f"ur den Beweiser. 
+\item \texttt{VariableViewController} \\
+Die Klasse \texttt{VariableViewController} ist zust"andig f"ur die Steuerung der VariableView, die den Zustand der Variablen anzeigt. 
 \begin{itemize}
 \item Attribut: \\
-\texttt{settings} \\
-in der \texttt{Settings}-Instanz sind die vom Benutzer festgelegte Werte f"ur \texttt{timeout} und \texttt{memorylimit} gespeichert
+\texttt{varview} \\
+erzeugte View f"ur die Variablen 
+\item Methode :\\
+\texttt{actionPerformed(e: ActionEvent)} \\
+beobachtet Aktionen des Benutzers und f"uhrt das entsprechende Event aus
 \end{itemize}
-\item \texttt{MainFrame} \\
-Die Klasse \texttt{MainFrame} ist das Hauptfenster der Benutzeroberfl"ache. Sie besteht aus einem \texttt{Editor}, einer \texttt{MenuBar}, einer \texttt{BreakpointView}, einer \texttt{TreeView}, mehreren \texttt{Console}s und einem \texttt{Help}-Fenster. 
+\item \texttt{BreakpointViewController} \\
+Die Klasse \texttt{BreakpointViewController} ist zust"andig f"ur die Steuerung der BreakpointView, die den Zustand der Breakpoints anzeigt.
 \begin{itemize}
 \item Attribut: \\
-\texttt{controller} \\
-vereinfachte Schnittstelle, leitet Funktionalit"aten weiter \\
+\texttt{brview} \\
+erzeugte View f"ur die Breakpoints
+\item Methode :\\
+\texttt{itemStateChanged(e: ItemEvent)} \\
+beobachtet Aktionen des Benutzers und f"uhrt das entsprechende Event aus
+\end{itemize}
+\item \texttt{EditorController} \\
+Die Klasse \texttt{EditorController} is zust"andig f"ur die Steuerung des Editors, der den Quellcode mit Syntaxhighlighting anzeigt und das "Andern des Codes erm"oglicht.
+\begin{itemize}
+\item Attribut: \\
+\texttt{editor} \\
+erzeugter Editor \\
+\texttt{keywords} \\
+Keyw"orter der While-Sprache f"ur Syntax-Highlighting \\
+\texttt{memento} \\
+gespeicherte Aktionen des Benutzers am Quellcode, f"ur die Undo- und Redo-Funktionen
+\item Methoden:\\
+\texttt{keyPressed(e: KeyEvent)} \\
+\texttt{keyTyped(e: KeyEvent)} \\
+\texttt{keyReleased(e: KeyEvent)} \\
+beobachtet Aktionen des Benutzers und f"uhrt das entsprechende Event aus
+\end{itemize}
+\item \texttt{MiscController} \\
+Die Klasse \texttt{MiscController} ist zust"andig f"ur die Initialisierung der Misc-Klassen. 
+\begin{itemize}
+\item Attribute: \\
+\texttt{filemanagement} \\
+\texttt{help} \\
+\texttt{about} \\
+\texttt{settings}
+\item Methode: \\
+\texttt{actionPerformed(e: ActionEvent)} \\
+beobachtet Aktionen des Benutzers und f"uhrt das entsprechende Event aus
 \end{itemize}
 \end{itemize}
 
@@ -351,24 +660,24 @@ Das folgende Zustandsdiagramm zeigt das Verhalten des Systems bei Benutzeraktion
 \section{Sequenzdiagramme}
 \subsection{Besucher-Muster}
 \includegraphics[scale=0.9]{images/Visitor_Pattern.pdf} \newline
-Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beispiel. Dies ist zum Beispiel das Statement "flag = true | false".
+Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beispiel. Dies ist zum Beispiel das Statement "`flag = true | false"'.
 \begin{itemize}
-\item Der Interpreter wird mit dem momentanen Programmzustand aufgerufen und ruft den Getter für das aktuelle Statement auf.
+\item Der Interpreter wird mit dem momentanen Programmzustand aufgerufen und ruft den Getter f"ur das aktuelle Statement auf.
 \item Der Besucher ruft die accept-Methode darauf auf, welche ihrerseits die richtige visit-Methode aufruft.
-\item Bei visit(Assignment) wird zuerst der hintere Ausdruck ausgewertet (hier: "true | false").
-\item Für diese Expression wird eine neue visit-Methode aufgerufen. Diese besucht zuerst die erste Subexpression, überprüft den Operanden, ob er unär oder binär ist. Da er binär ist, wird auch die zweite Subexpression besucht.
-\item Nachdem der Ausdruck ausgewertet worden ist, wird der letzte Bearbeitungsschritt der Zuweisung durchgeführt. Dazu wird der Variablenname gebraucht (assignment.getVar().getName()). Dann wird die Variable im State neu gesetzt.
-\item Der neue Zustand wird zurückgegeben.
+\item Bei visit(Assignment) wird zuerst der hintere Ausdruck ausgewertet (hier: "`true | false"').
+\item F"ur diese Expression wird eine neue visit-Methode aufgerufen. Diese besucht zuerst die erste Subexpression, "uberpr"uft den Operanden, ob er un"ar oder bin"ar ist. Da er binär ist, wird auch die zweite Subexpression besucht.
+\item Nachdem der Ausdruck ausgewertet worden ist, wird der letzte Bearbeitungsschritt der Zuweisung durchgef"uhrt. Dazu wird der Variablenname gebraucht (assignment.getVar().getName()). Dann wird die Variable im State neu gesetzt.
+\item Der neue Zustand wird zur"uckgegeben.
 \end{itemize}
 
 \subsection{Breakpoints}
 \includegraphics[scale=0.9]{images/Breakpoints.pdf} \newline
 \begin{itemize}
-\item Dieses Sequenzdiagramm zeigt, wie die Breakpoints ausgewertet werden. Dafür wird angenommen, dass zwei Statement-Breakpoints und ein globaler Breakpoint aktiv sind.
+\item Dieses Sequenzdiagramm zeigt, wie die Breakpoints ausgewertet werden. Daf"ur wird angenommen, dass zwei Statement-Breakpoints und ein globaler Breakpoint aktiv sind.
 \item Zuerst ruft die Instanz von ProgramExecution die Methode getCommand von State auf, um das aktuelle Statement zu bekommen.
-\item Für jeden einem Statement zugeordneten Breakpoint wird dieses Statement abgefragt und mit dem aktuell auszuführenden verglichen.
-\item Danach wird für jeden globalen Breakpoint die ihm zugeordnete Bedingung angefordert. State wird geklont, und die Bedingung wird mit der geklonten State-Instanz vom Interpreter ausgewertet.
-\item Der Rückgabewert von checkBreakpoint() ist genau dann ja, falls mindestens ein Breakpoint getroffen wurde.
+\item F"ur jeden einem Statement zugeordneten Breakpoint wird dieses Statement abgefragt und mit dem aktuell auszuf"uhrenden verglichen.
+\item Danach wird f"ur jeden globalen Breakpoint die ihm zugeordnete Bedingung angefordert. State wird geklont, und die Bedingung wird mit der geklonten State-Instanz vom Interpreter ausgewertet.
+\item Der R"uckgabewert von checkBreakpoint() ist genau dann ja, falls mindestens ein Breakpoint getroffen wurde.
 \end{itemize}
 
 \subsection{Interpreter-Initialisierung}
@@ -376,26 +685,27 @@ Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beisp
 \begin{itemize}
 \item Dieses Sequenzdiagramm zeigt die Initialisierung des Interpreters bei Programmstart.
 \item Der ExecutionController erzeugt jeweils eine neue Instanz von Interpreter und ProgramExecution, wobei letztere eine neue State-Instanz erzeugt.
-\item Dann wird das Parserinterface aufgerufen, welches eine Instanz des Lexers für diesen Parse-Vorgang erzeugt. Der Parser erzeugt daraus einen AST.
-\item Dieser wird vom TypeChecker auf Typkorrektheit überprüft.
+\item Dann wird das Parserinterface aufgerufen, welches eine Instanz des Lexers f"ur diesen Parse-Vorgang erzeugt. Der Parser erzeugt daraus einen AST.
+\item Dieser wird vom TypeChecker auf Typkorrektheit "berpr"uft.
 \end{itemize}
 
 \subsection{Start-Button}
 \includegraphics[scale=0.9]{images/Button_play.pdf} \newline
 \begin{itemize}
-\item Beim Drücken auf den Play-Button wird der entsprechende ActionListener ausgeführt, welcher die startInterpreter-Methode des ExecutionController ausführt.
+\item Beim Dr"ucken auf den Play-Button wird der entsprechende ActionListener ausgef"uhrt, welcher die startInterpreter-Methode des ExecutionController ausf"uhrt.
 \item Ist das Programm noch nicht geparst worden, wird der Interpreter initialisiert (s. letztes Diagramm).
-\item Danach wird das Programm schrittweise (s. nächstes Diagramm) ausgeführt, wobei vor jedem Einzelschritt geprüft wird, ob ein Breakpoint getroffen oder das Programm pausiert wurde. Letzteres wird über das Beobachter-Muster realisiert.
+\item Danach wird das Programm schrittweise (s. n"achstes Diagramm) ausgef"uhrt, wobei vor jedem Einzelschritt gepr"uft wird, ob ein Breakpoint getroffen oder das Programm pausiert wurde. Letzteres wird "uber das Beobachter-Muster realisiert.
 \end{itemize}
 
 \subsection{Single-Step-Button}
 \includegraphics[scale=0.9]{images/Button_Singlestep.pdf} \newline
 \begin{itemize}
-\item Beim Drücken auf den SingleStep-Button wird der entsprechende ActionListener ausgeführt, welcher die singleStep-Methode des ExecutionController ausführt.
+\item Beim Dr"ucken auf den SingleStep-Button wird der entsprechende ActionListener ausgef"uhrt, welcher die singleStep-Methode des ExecutionController ausf"uhrt.
 \item Ist das Programm noch nicht geparst worden, wird der Interpreter initialisiert (s. entsprechendes Diagramm).
-\item Danach wird ein Einzelschritt des Programms ausgeführt. Dafür wird der im ProgramExecution gekapselte Progammzustand abgefragt und an den Interpreter gegeben; der neue Zustand wird dann wieder zurückgespeichert.
+\item Danach wird ein Einzelschritt des Programms ausgef"uhrt. Daf"ur wird der im ProgramExecution gekapselte Progammzustand abgefragt und an den Interpreter gegeben; der neue Zustand wird dann wieder zur"uckgespeichert.
 \end{itemize}
 
+\newpage
 \section{Erweiterbarkeit}
 \input{Erweiterbarkeit}
 
