@@ -104,11 +104,11 @@ der Name der Funktion \\
 beliebig viele Parameter \\
 \texttt{returnType} \\
 R"uckgabetyp der Funktion \\
-\texttt{functionBody} \\
-eine Funktion besteht einem \texttt{StatementBlock} \\
+\texttt{statements} \\
+eine Funktion besteht aus mehreren Statements
 \item Methoden: \\
 \texttt{getFunctionBlock()} \\
-gibt den K"orper der Funktion als \texttt{StatementBlock} zur"uck \\
+gibt den K"orper der Funktion zur"uck, der aus Statements besteht \\
 \texttt{getParameters()} \\
 gibt die Menge der Parameter zur"uck \\
 \texttt{getName()} \\
@@ -129,16 +129,6 @@ gibt \texttt{identifier} zur"uck \\
 \texttt{getType} \\
 gibt \texttt{type} zur"uck
 \end{itemize}
-\item \texttt{StatementBlock} \\
-Die Klasse \texttt{StatementBlock} kapselt eine logische zusammengehörende Liste von \texttt{Statements}.
-\begin{itemize}
-\item Attribute: \\
-\texttt{statements} \\
-eine geordnete Liste von \texttt{Statements} \\
-\item Methoden: \\
-\texttt{getNextStatement()} \\
-gibt das nächste Statement zurück, oder NULL, falls das Ende des Blocks erreicht wurde.
-\end{itemize}
 \item \texttt{Statement} \\
 Die Klasse \texttt{Statement} steht f"ur eine Anweisung im Programmcode. 
 \item \texttt{Conditional} \\
@@ -146,9 +136,9 @@ Die Klasse \texttt{Conditional} ist eine Unterklasse von \texttt{Statement} und 
 \begin{itemize}
 \item Attribute: \\
 \texttt{trueStatements} \\
-es gibt einen \texttt{StatementBlock}, der bei Erf"ullung der Bedingung ausgef"uhrt wird \\
+es muss mind. eine Anweisung geben, die bei Erf"ullung der Bedingung ausgef"uhrt wird \\
 \texttt{falseStatements} \\
-es gibt einen \texttt{StatementBlock}, der bei Nichterf"ullung der Bedingung ausgef"uhrt wird \\
+es kann Anweisungen geben, die bei Nichterf"ullung der Bedingung ausgef"uhrt werden \\
 \texttt{condition} \\
 Bedingung, die "uberpr"uft wird
 \item Methoden: \\
@@ -164,7 +154,7 @@ Die Klasse \texttt{Loop} ist eine Unterklasse von \texttt{Statement} und steht f
 \begin{itemize}
 \item Attribute: \\
 \texttt{body} \\
-Schleifenk"orper, der bedingt ausgef"uhrt wird, solange \texttt{condition} wahr ist \\
+Schleifenk"orper, der bedingt ausgef"uhrt werden \\
 \texttt{condition} \\
 Bedingung, die "uberpr"uft wird \\
 \texttt{invariant} \\
@@ -230,8 +220,6 @@ ein logischer Ausdruck kann einen forall- oder exists-Quantor haben \\
 \texttt{logicalOperator} \\
 ein logischer Ausdruck muss einen Operator aus \texttt{\{!, |, \&, >, >=, <, <=, !=, ==\}} besitzen 
 \end{itemize}
-\item \texttt{QuantifiedExpression} \\
-Die Klasse \texttt{QuantifiedExpression} steht f"ur einen Ausdruck, der einen Quantifier enth"alt.
 \item \texttt{ArithmeticExpression} \\
 Die Klasse \texttt{ArithmeticExpression} steht f"ur einen un"aren oder bin"aren Ausdruck, der einen Zahlenwert zur"uckgibt.
 \begin{itemize}
@@ -365,14 +353,10 @@ Die Klasse \texttt{Scope} bildet eine Hierachie der Sichtbarkeit von Variablen d
 \begin{itemize}
 \item Attribut: \\
 \texttt{upScope} \\
-nur die erste Scope-Instanz wird von \texttt{State}, alle weiteren werden von der Klasse selbst verwaltet \\
+nur die erste Scope-Instanze wird von \texttt{State} instantiert, alle weiteren werden von der Klasse selbst erstellt \\
 \item Methode: \\
 \texttt{getParent()} \\
-gibt die "`Eltern"'-Instanz \texttt{upScope} zur"uck \\
-\texttt{getNextStatement()} \\
-gibt das n"achste \texttt{Statement} zur"uck \\
-\texttt{addVars(<Identifier, Value>*)} \\
-f"ugt im untersten Scope alle Variablen hinzu, in den dar"uberliegenden Scopes nur noch die nicht vorhandenen \\
+gibt die "`Eltern"'-Instanz \texttt{upScope} zur"uck
 \end{itemize}
 \item \texttt{Value} \\
 Die Klasse \texttt{Value} speichert den Wert einer zugeh"origen Variable. 
@@ -404,7 +388,7 @@ Die Klasse \texttt{StatementBreakpoint} ist eine Unterklasse von \texttt{Breakpo
 \texttt{statement} \\
 Anweisung, an der der Breakpoint gebunden ist
 \item Methode: \\
-\texttt{getStatement()} \\
+\texttt{getStatemen()} \\
 gibt \texttt{statement} zur"uck
 \end{itemize}
 \item \texttt{GlobalBreakpoint} \\
@@ -465,9 +449,9 @@ Die Klasse \texttt{VerifierInterface} stellt die Schnittstelle zwischen der Komp
 \texttt{program} \\
 Programm in der wp-Struktur \\
 \texttt{z3lexer} \\
-Lexer f"ur Z3-Ergebnis \\
+Lexer f"ur wp-Struktur \\
 \texttt{z3parser} \\
-Parser f"ur Z3-Ergebnis \\
+Parser f"ur wp-Struktur 
 \item Methoden: \\
 \texttt{notifyConsole()} \\
 benachrichtigt Konsolen "uber Beweisergebnisse \\
@@ -565,8 +549,6 @@ erzeugt den Parser
 Die Klasse \texttt{ExecutionController} ist f"ur die Initialisierung der Objekte zust"andig, die an der Programmausf"uhrung beteiligt sind, also Interpreter und ProgramExecution.
 \begin{itemize}
 \item Attribute: \\
-\texttt{state} \\
-gibt den Zustand des Interpreters an, entweder idle, paused oder running
 \texttt{interpreter} \\
 der initialisierte Interpreter \\
 \texttt{programexec} \\
@@ -704,7 +686,7 @@ Dieses Sequenzdiagramm zeigt die Arbeitsweise des Besuchermusters an einem Beisp
 \item Dieses Sequenzdiagramm zeigt die Initialisierung des Interpreters bei Programmstart.
 \item Der ExecutionController erzeugt jeweils eine neue Instanz von Interpreter und ProgramExecution, wobei letztere eine neue State-Instanz erzeugt.
 \item Dann wird das Parserinterface aufgerufen, welches eine Instanz des Lexers f"ur diesen Parse-Vorgang erzeugt. Der Parser erzeugt daraus einen AST.
-\item Dieser wird vom TypeChecker auf Typkorrektheit "uberpr"uft.
+\item Dieser wird vom TypeChecker auf Typkorrektheit "berpr"uft.
 \end{itemize}
 
 \subsection{Start-Button}

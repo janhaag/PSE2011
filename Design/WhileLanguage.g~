@@ -35,19 +35,19 @@ statement
         ;
 
 invariant_statement
-        : 'invariant' quantified_expression ';'
+        : 'invariant' expression ';'
         ;
 
 assert_statement
-        : 'assert' quantified_expression ';'
+        : 'assert' expression ';'
         ;
 
 assume_statement
-        : 'assume' quantified_expression ';'
+        : 'assume' expression ';'
         ;
 
 ensure_statement
-        : 'ensure' quantified_expression ';'
+        : 'ensure' expression ';'
         ;
 
 assignment
@@ -77,19 +77,6 @@ while_statement
 loop_body
         : '{' invariant_statement* statement* ensure_statement* '}'
         ;
-
-quantified_expression
-        : quantifier IDENT '(' range? ')' quantified_expression
-        | expression
-        ;
-
-quantifier
-        : 'forall'
-        | 'exists'
-        ;
-
-range
-        : expression ',' expression
 
 expression
         : rel_expression ( ( '==' | '!=' ) rel_expression )*
