@@ -1,0 +1,13 @@
+output
+*.aux
+*.idx
+*.bib
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.class
+.*
+*~
