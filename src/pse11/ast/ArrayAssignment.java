@@ -16,7 +16,7 @@ public class ArrayAssignment extends Assignment {
     /**
      * Constructor.
      *
-     * @param position indicates the position of this expression
+     * @param position indicates the position of this element
      *                 in the original source code
      * @param value the value which is stored into the array
      * @param identifier name of the array to which the value is assigned

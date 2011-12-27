@@ -5,8 +5,6 @@ import interpreter.ASTVisitor;
 /**
  *  This class symbolizes an expression in the user program which result
  *  is from type IntegerType.
- *
- *
  */
 public class ArithmeticExpression extends Expression {
     /**
@@ -29,7 +27,7 @@ public class ArithmeticExpression extends Expression {
     /**
      * Constructor.
      *
-     * @param position indicates the position of this expression
+     * @param position indicates the position of this element
      *                 in the original source code
      * @param subexpression1 the first operand
      * @param subexpression2 the second operand

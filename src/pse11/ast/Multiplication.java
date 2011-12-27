@@ -1,7 +1,8 @@
 package ast;
 
 /**
- *  This class encapsulates the multiplication ('*') operator in @see{ArithmeticExpressions}.
+ *  This class encapsulates the multiplication ('*') operator
+ *  in @see{ArithmeticExpressions}.
  */
 public class Multiplication extends ArithmeticOperator {
     @Override

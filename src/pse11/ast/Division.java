@@ -1,7 +1,8 @@
 package ast;
 
 /**
- *  This class encapsulates the division ('/') operator in @see{ArithmeticExpressions}.
+ *  This class encapsulates the division ('/') operator
+ *  in @see{ArithmeticExpressions}.
  */
 public class Division extends ArithmeticOperator {
     @Override

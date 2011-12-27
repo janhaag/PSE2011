@@ -17,7 +17,7 @@ public class ArrayRead extends VariableRead {
     /**
      * Constructor.
      *
-     * @param position indicates the position of this expression
+     * @param position indicates the position of this element
      *                 in the original source code
      * @param variable name of the array that is read
      * @param indexes position from which the element is read

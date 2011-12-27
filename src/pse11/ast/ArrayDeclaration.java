@@ -18,7 +18,7 @@ public class ArrayDeclaration extends VariableDeclaration {
     /**
      * Constructor.
      *
-     * @param position indicates the position of this expression
+     * @param position indicates the position of this element
      *                 in the original source code
      * @param name name of the array identifier
      * @param type type of the array declared

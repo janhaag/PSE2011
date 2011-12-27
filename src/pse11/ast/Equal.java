@@ -1,7 +1,8 @@
 package ast;
 
 /**
- *
+ * This class encapsulates the equal ('==') operator
+ * in @see{LogicalExpressions}.
  */
 public class Equal extends LogicalOperator {
     @Override
