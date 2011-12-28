@@ -6,7 +6,7 @@ package ast;
  * belonging to a type all elements have in common,
  * which is called the base type of this array.
  */
-public class ArrayType {
+public class ArrayType extends Type {
     /**
      * base type of the array
      */

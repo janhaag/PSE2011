@@ -1,4 +1,4 @@
-package Verifier;
+package verifier;
 
 
 /**
@@ -11,13 +11,13 @@ public class S_Expression {
      */
     private String op;
     /**
-     * Its operants.
+     * Its operands.
      */
     private S_Expression[] subexpressions;
     /**
      * Constructor
      * @param op The operator.
-     * @param subexpressions The operants.
+     * @param subexpressions The operands.
      */
     public S_Expression(String op, S_Expression[] subexpressions) {
         this.op = op;
@@ -25,7 +25,7 @@ public class S_Expression {
     }
 /**
  * To String method.
- * @return Operator and operants in brackets.
+ * @return Operator and operands in brackets.
  */
     @Override
     public String toString() {

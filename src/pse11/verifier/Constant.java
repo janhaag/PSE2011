@@ -1,4 +1,4 @@
-package Verifier;
+package verifier;
 
 /**
  * This class represents a Constant,

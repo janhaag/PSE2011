@@ -1,4 +1,4 @@
-package Verifier;
+package verifier;
 
 /**
  * This class represents the Program for the theorem prover.
@@ -10,7 +10,7 @@ public class WPProgram {
      */
     private S_Expression expression;
     /**
-     * Constuctor.
+     * Constructor.
      * @param expression The S-Expression
      */
     public WPProgram(S_Expression expression) {
@@ -18,7 +18,7 @@ public class WPProgram {
     }
     /**
      * To String Method.
-     * @see S_Expression.toString()
+     * @see S_Expression#toString()
      * @return the String of the S-Expression.
      */
     @Override

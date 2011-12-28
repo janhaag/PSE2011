@@ -6,7 +6,7 @@ import ast.Position;
  * This exception is thrown by the type checker if
  * the type of the user program are not correct.
  */
-public class IllegalTypeException extends Exception {
+public class IllegalTypeException extends RuntimeException {
     private Position errorPosition;
 
     public IllegalTypeException(String message, Position errorPosition) {

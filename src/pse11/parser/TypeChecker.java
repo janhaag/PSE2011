@@ -8,6 +8,7 @@ import interpreter.ASTVisitor;
  */
 public class TypeChecker implements ASTVisitor {
     private boolean isMain;
+    private Type currentReturnType;
     
     public void checkTypes(ASTRoot ast) throws IllegalTypeException {
         ast.accept(this);
@@ -15,15 +16,33 @@ public class TypeChecker implements ASTVisitor {
     
     //TODO: fill in stubs
     public void visit(Conditional conditional) {
+        conditional.getCondition().accept(this);
+        //TODO: new scope
+        conditional.getTrueConditionBody().accept(this);
+        conditional.getFalseConditionBody().accept(this);
     }
 
     public void visit(Loop loop) {
+        loop.getCondition().accept(this);
+        Invariant[] invariants = loop.getInvariants();
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+        }
+        //TODO: new scope
+        loop.getLoopBody().accept(this);
     }
 
     public void visit(ArrayAssignment arrayAssignment) {
+        ArithmeticExpression[] indexes = arrayAssignment.getIndexes();
+        for (ArithmeticExpression index : indexes) {
+            index.accept(this);
+        }
+        arrayAssignment.getValue().accept(this);
+        //TODO: check types of array and expression
     }
 
     public void visit(ArithmeticException arithmeticExpression) {
+        //TODO: fill in
     }
 
     public void visit(NumericLiteral number) {
@@ -31,7 +50,7 @@ public class TypeChecker implements ASTVisitor {
     }
 
     public void visit(LogicalExpression logicalExpression) {
-
+        //TODO: fill in
     }
 
     public void visit(BooleanLiteral bool) {
@@ -39,15 +58,36 @@ public class TypeChecker implements ASTVisitor {
     }
 
     public void visit(FunctionCall functionCall) {
+        //TODO
     }
 
     public void visit(VariableRead variableRead) {
+        //TODO:ensure identifier exists
     }
 
     public void visit(ArrayRead arrayRead) {
+        ArithmeticExpression[] indexes = arrayRead.getIndexes();
+        for (ArithmeticExpression index : indexes) {
+            index.accept(this);
+        }
+        //TODO:ensure identifier exists
     }
 
     public void visit(Function function) {
+        currentReturnType = function.getReturnType();
+        if (currentReturnType instanceof ArrayType) {
+            throw new IllegalTypeException("Functions must not return arrays.",
+                                           function.getPosition());
+        }
+        Assumption[] assumptions = function.getAssumptions();
+        for (Assumption assumption : assumptions) {
+            assumption.accept(this);
+        }
+        Ensure[] ensures = function.getEnsures();
+        for (Ensure ensure : ensures) {
+            ensure.accept(this);
+        }
+        function.getFunctionBlock().accept(this);
     }
 
     public void visit(Program program) {
@@ -61,6 +101,7 @@ public class TypeChecker implements ASTVisitor {
     }
 
     public void visit(Assignment assignment) {
+        assignment.getValue().accept(this);
     }
 
     public void visit(Assertion assertion) {
@@ -90,6 +131,10 @@ public class TypeChecker implements ASTVisitor {
     }
 
     public void visit(ArrayDeclaration arrDec) {
+        ArithmeticExpression[] indexes = arrDec.getIndexes();
+        for (ArithmeticExpression index : indexes) {
+            index.accept(this);
+        }
     }
 
     public void visit(ExistsQuantifier existsQuantifier) {
