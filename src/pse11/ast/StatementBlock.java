@@ -5,14 +5,30 @@ import interpreter.ASTVisitor;
 import java.util.ArrayList;
 
 /**
- *
+ * This class symbolizes a statement block in a user program.
+ * This is an ordered list of statements with its own scope.
  */
 public class StatementBlock extends ASTRoot {
+    /**
+     * The list of statements this block contains
+     */
     private ArrayList<Statement>  statements;
-
+    /**
+     * Indicates the number of the next statement.
+     */
+    private int noOfNextStatement;
+    
+    /**
+     * Constructor.
+     * 
+     * @param statements statements this block contains
+     * @param position indicates the position of this element
+     *                 in the original source code
+     */
     public StatementBlock(ArrayList<Statement> statements, Position position) {
         super(position);
         this.statements = statements;
+        noOfNextStatement = 0;
     }
 
     @Override
@@ -20,7 +36,15 @@ public class StatementBlock extends ASTRoot {
         visitor.visit(this);
     }
 
+    /**
+     * Returns the next statement of this statement block.
+     * @return next statement of this statement block
+     */
     public Statement getNextStatement() {
-        return statements.get(0);
+        if (noOfNextStatement >= statements.size()) {
+            noOfNextStatement = 0;
+            return null;
+        }
+        return statements.get(noOfNextStatement);
     }
 }

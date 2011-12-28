@@ -1,7 +1,8 @@
 package ast;
 
 /**
- *  This class encapsulates the minus (unary '-') operator in @see{ArithmeticExpressions}.
+ *  This class encapsulates the minus (unary '-') operator
+ *  in @see{ArithmeticExpressions}.
  */
 public class UnaryMinus extends ArithmeticOperator {
     @Override
