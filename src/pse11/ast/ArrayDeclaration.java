@@ -2,8 +2,6 @@ package ast;
 
 import interpreter.ASTVisitor;
 
-import java.util.ArrayList;
-
 /**
  * This class symbolizes a declaration of a new array
  * with specified dimensions.
@@ -13,7 +11,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * List of the lengths of the different array dimensions.
      * The length of this list is the dimension of the array.
      */
-    private ArrayList<ArithmeticExpression> indexes;
+    private ArithmeticExpression[] indexes;
 
     /**
      * Constructor.
@@ -25,7 +23,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * @param indexes length of the array dimensions
      */
     public ArrayDeclaration(Position position, String name, Type type,
-                            ArrayList<ArithmeticExpression> indexes) {
+                            ArithmeticExpression[] indexes) {
         super(position, name, null, type);
         this.indexes = indexes;
     }
@@ -34,7 +32,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * Returns the list of the array lengths.
      * @return list of array lengths
      */
-    public ArrayList<ArithmeticExpression> getIndexes() {
+    public ArithmeticExpression[] getIndexes() {
         return indexes;
     }
 

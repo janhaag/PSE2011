@@ -2,8 +2,6 @@ package ast;
 
 import interpreter.ASTVisitor;
 
-import java.util.ArrayList;
-
 /**
  *  This class symbolizes the assignment of a value to an array.
  */
@@ -11,7 +9,7 @@ public class ArrayAssignment extends Assignment {
     /**
      * Indexes used to determine the position of the assigned array element.
      */
-    private ArrayList<ArithmeticExpression> indexes;
+    private ArithmeticExpression[] indexes;
 
     /**
      * Constructor.
@@ -24,7 +22,7 @@ public class ArrayAssignment extends Assignment {
      */
     public ArrayAssignment(Position position, Expression value,
                            Identifier identifier,
-                           ArrayList<ArithmeticExpression> indexes) {
+                           ArithmeticExpression[] indexes) {
         super(position, value, identifier);
         this.indexes = indexes;
     }
@@ -33,7 +31,7 @@ public class ArrayAssignment extends Assignment {
      * Returns the list of indexes for this assignment.
      * @return the indexes for this assignment
      */
-    public ArrayList<ArithmeticExpression> getIndexes() {
+    public ArithmeticExpression[] getIndexes() {
         return indexes;
     }
 

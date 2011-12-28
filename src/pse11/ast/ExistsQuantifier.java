@@ -12,15 +12,16 @@ public class ExistsQuantifier extends QuantifiedExpression {
      *
      * @param position indicates the position of this element
      *                 in the original source code
+     * @param identifier identifier that is varied in the formula
      * @param subexpression quantified subexpression to be satisfied
      *                      (if not null)
      * @param expression quantifier-free expression to be satisfied
      *                   (if not null)
      */
-    public ExistsQuantifier(Position position,
+    public ExistsQuantifier(Position position, Identifier identifier,
                             QuantifiedExpression subexpression,
                             LogicalExpression expression) {
-        super(position, subexpression, expression);
+        super(position, identifier, subexpression, expression);
     }
 
     @Override

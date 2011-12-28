@@ -2,8 +2,6 @@ package ast;
 
 import interpreter.ASTVisitor;
 
-import java.util.ArrayList;
-
 /**
  * This class represents a function; it may be the main function.
  */
@@ -19,15 +17,15 @@ public class Function extends ASTRoot {
     /**
      * list of function parameters
      */
-    private ArrayList<FunctionParameter> parameters;
+    private FunctionParameter[] parameters;
     /**
      * list of assumptions about parameter values
      */
-    private ArrayList<Assumption> assumptions;
+    private Assumption[] assumptions;
     /**
      * list of assurances for the value of variables
      */
-    private ArrayList<Ensure> ensures;
+    private Ensure[] ensures;
     /**
      * type of return value. returnType is null iff this is the main function.
      */
@@ -50,10 +48,10 @@ public class Function extends ASTRoot {
      * @param ensures list of assurances for this functions
      */
     public Function(Position position, Type returnType, String name,
-                    ArrayList<FunctionParameter> parameters,
+                    FunctionParameter[] parameters,
                     StatementBlock functionBody,
-                    ArrayList<Assumption> assumptions,
-                    ArrayList<Ensure> ensures) {
+                    Assumption[] assumptions,
+                    Ensure[] ensures) {
         super(position);
         this.returnType = returnType;
         this.name = name;
@@ -83,7 +81,7 @@ public class Function extends ASTRoot {
      * Returns the list of parameters.
      * @return list of parameters
      */
-    public ArrayList<FunctionParameter> getParameters() {
+    public FunctionParameter[] getParameters() {
         return parameters;
     }
 
@@ -99,7 +97,7 @@ public class Function extends ASTRoot {
      * Returns the list of assumptions.
      * @return list of assumptions
      */
-    public ArrayList<Assumption> getAssumptions() {
+    public Assumption[] getAssumptions() {
         return assumptions;
     }
 
@@ -107,7 +105,7 @@ public class Function extends ASTRoot {
      * Returns the list of assurances.
      * @return list of assurances
      */
-    public ArrayList<Ensure> getEnsures() {
+    public Ensure[] getEnsures() {
         return ensures;
     }
 }

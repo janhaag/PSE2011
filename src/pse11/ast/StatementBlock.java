@@ -2,8 +2,6 @@ package ast;
 
 import interpreter.ASTVisitor;
 
-import java.util.ArrayList;
-
 /**
  * This class symbolizes a statement block in a user program.
  * This is an ordered list of statements with its own scope.
@@ -12,7 +10,7 @@ public class StatementBlock extends ASTRoot {
     /**
      * The list of statements this block contains
      */
-    private ArrayList<Statement>  statements;
+    private Statement[]  statements;
     /**
      * Indicates the number of the next statement.
      */
@@ -25,7 +23,7 @@ public class StatementBlock extends ASTRoot {
      * @param position indicates the position of this element
      *                 in the original source code
      */
-    public StatementBlock(ArrayList<Statement> statements, Position position) {
+    public StatementBlock(Statement[] statements, Position position) {
         super(position);
         this.statements = statements;
         noOfNextStatement = 0;
@@ -41,10 +39,12 @@ public class StatementBlock extends ASTRoot {
      * @return next statement of this statement block
      */
     public Statement getNextStatement() {
-        if (noOfNextStatement >= statements.size()) {
+        if (noOfNextStatement >= statements.length) {
             noOfNextStatement = 0;
             return null;
         }
-        return statements.get(noOfNextStatement);
+        Statement returnedStatement = statements[noOfNextStatement];
+        noOfNextStatement += 1;
+        return returnedStatement;
     }
 }

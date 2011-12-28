@@ -15,6 +15,10 @@ public abstract class QuantifiedExpression extends Expression {
      * quantifier-free expression to be satisfied (if not null)
      */
     LogicalExpression expression;
+    /**
+     * identifier that is varied in the quantified expression
+     */
+    private Identifier identifier;
 
     /**
      * Constructor.
@@ -22,15 +26,17 @@ public abstract class QuantifiedExpression extends Expression {
      *
      * @param position indicates the position of this element
      *                 in the original source code
+     * @param identifier identifier that is varied in the formula
      * @param subexpression quantified subexpression to be satisfied
      *                      (if not null)
      * @param expression quantifier-free expression to be satisfied
      *                   (if not null)
      */
-    public QuantifiedExpression(Position position,
+    public QuantifiedExpression(Position position, Identifier identifier,
                                 QuantifiedExpression subexpression,
                                 LogicalExpression expression) {
         super(position);
+        this.identifier = identifier;
         this.subexpression = subexpression;
         this.expression = expression;
     }
@@ -49,5 +55,13 @@ public abstract class QuantifiedExpression extends Expression {
      */
     public LogicalExpression getExpression() {
         return expression;
+    }
+
+    /**
+     * Returns the identifier that is varied in the formula.
+     * @return identifier that is varied in the formula
+     */
+    public Identifier getIdentifier() {
+        return identifier;
     }
 }

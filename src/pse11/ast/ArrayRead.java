@@ -2,8 +2,6 @@ package ast;
 
 import interpreter.ASTVisitor;
 
-import java.util.ArrayList;
-
 /**
  * This class symbolizes a reading access to an array element
  * with the provided position.
@@ -12,7 +10,7 @@ public class ArrayRead extends VariableRead {
     /**
      * Indexes used to determine the position of the read array element.
      */
-    private ArrayList<ArithmeticExpression> indexes;
+    private ArithmeticExpression[] indexes;
 
     /**
      * Constructor.
@@ -23,7 +21,7 @@ public class ArrayRead extends VariableRead {
      * @param indexes position from which the element is read
      */
     public ArrayRead(Position position, Identifier variable,
-                     ArrayList<ArithmeticExpression> indexes) {
+                     ArithmeticExpression[] indexes) {
         super(position, variable);
         this.indexes = indexes;
     }
@@ -32,7 +30,7 @@ public class ArrayRead extends VariableRead {
      * Returns the list of array indexes for the element to be read
      * @return list of array indexes
      */
-    public ArrayList<ArithmeticExpression> getIndexes() {
+    public ArithmeticExpression[] getIndexes() {
         return indexes;
     }
 

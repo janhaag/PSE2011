@@ -2,8 +2,6 @@ package ast;
 
 import interpreter.ASTVisitor;
 
-import java.util.ArrayList;
-
 /**
  * This class represents a while-statement.
  */
@@ -19,7 +17,7 @@ public class Loop extends Statement {
     /**
      * list of loop invariants
      */
-    private ArrayList<Invariant> invariants;
+    private Invariant[] invariants;
 
     /**
      * Constructor.
@@ -31,7 +29,7 @@ public class Loop extends Statement {
      * @param invariants list of loop invariants
      */
     public Loop(Position position, LogicalExpression condition,
-                StatementBlock body, ArrayList<Invariant> invariants) {
+                StatementBlock body, Invariant[] invariants) {
         super(position);
         this.condition = condition;
         this.body = body;
@@ -42,7 +40,7 @@ public class Loop extends Statement {
      * Returns the list of loop invariants.
      * @return loop invariants
      */
-    public ArrayList<Invariant> getInvariants() {
+    public Invariant[] getInvariants() {
         return invariants;
     }
 
