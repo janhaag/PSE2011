@@ -7,12 +7,42 @@ import java.util.StringTokenizer;
 
 import gui.EditorView;
 
+/**
+ * This class provides an instance of an editor with several features:<ul>
+ * <li>undo/redo function</li>
+ * <li>Syntax HL</li>
+ * <li>interface for one view</li>
+ * </ul>
+ * 
+ * @version 1.0
+ */
 public class Editor {
+	/**
+	 * the source the editor is working with
+	 */
 	private String source;
+	/**
+	 * the of the editor
+	 */
 	private EditorView editorview;
+	/**
+	 * a list of keywords
+	 */
 	private ArrayList<Keyword> colorArray;
+	/**
+	 * a list of past versions which have been changed trough user action or through
+	 * the redo function
+	 */
 	private Stack<EditorMemento> undoMemento;
+	/**
+	 * a list of past versions which have been changed trough the undo function
+	 */
 	private Stack<EditorMemento> redoMemento;
+	/**
+	 * Constructs a new instance of Editor.
+	 * 
+	 * The source will be initialized to an empty String.
+	 */
 	public Editor() {
 		this.source = "";
 		this.colorArray = new ArrayList<Keyword>();
@@ -33,6 +63,12 @@ public class Editor {
 		findKeywords(source);
 		this.editorview.updateView();
 	}
+	/**
+	 * Find the keywords in the given source and add them to the list of keywords
+	 * (@see {@link Editor#colorArray}).
+	 * 
+	 * @param source the text which should be searched
+	 */
 	private void findKeywords(String source) {
 		this.colorArray.clear();
 		int position = 0;

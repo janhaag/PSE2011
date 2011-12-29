@@ -2,6 +2,7 @@ package gui;
 
 import gui.controller.MainController;
 
+import misc.Editor;
 import misc.MessageSystem;
 
 import org.eclipse.swt.SWT;
@@ -23,7 +24,9 @@ public class MainFrame extends Frame {
 		//Adding menu bar
 		menubar = new MenuBar(controller, shell);
 		//Adding editor
-		editor = new EditorView(shell, SWT.BORDER);
+		Editor editor = new Editor();
+		this.editor = new EditorView(shell, SWT.BORDER, editor);
+		this.editor.setBounds(0,0,200,200);
 		
 		//Adding consoles
 		MessageSystem messagesystem = new MessageSystem();
@@ -41,6 +44,10 @@ public class MainFrame extends Frame {
 		ti3.setControl(console[2] = new MiscConsole(tf, SWT.BORDER, messagesystem));
 		//TODO WEG!
 		messagesystem.notifyConsoles();
+		
+		//Adding help box
+		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);
+		help.setBounds(520,320,300,300);
 	}
 	public Shell getShell() {
 		return this.shell;

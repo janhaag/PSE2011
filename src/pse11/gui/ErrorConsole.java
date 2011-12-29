@@ -2,7 +2,7 @@ package gui;
 
 import java.util.ArrayList;
 
-import misc.Categories;
+import misc.MessageCategories;
 import misc.Message;
 import misc.MessageSystem;
 
@@ -40,7 +40,7 @@ public class ErrorConsole extends Console {
 		int i = 0;
 		for(Message message : messages) {
 			System.out.println("inhalt");
-			if(message.getCategory() == Categories.ERROR) {
+			if(message.getCategory() == MessageCategories.ERROR) {
 				System.out.println("here");
 				assert this.table != null;
 				TableItem tableitem = new TableItem(this.table, SWT.NONE);
