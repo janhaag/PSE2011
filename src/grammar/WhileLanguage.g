@@ -1,30 +1,44 @@
 grammar WhileLanguage;
 
+@header {
+	package pse2011.parser;
+	import pse2011.ast.*
+	import java.util.LinkedList;
+}
+
+@lexer::header {
+	package pse2011.parser;
+}
+
 program
         : assume_statement* method_declaration* main_method
         ;
 
-method_declaration
+single_expression returns [ ASTRoot ast ]
+	: expression
+	;
+
+method_declaration returns [ ASTRoot ast ]
         : type IDENT '(' parameter_list? ')' method_body
         ;
 
-main_method
+main_method returns [ ASTRoot ast ]
         : 'main' '(' parameter_list? ')' method_body
         ;
 
-parameter_list
+parameter_list returns [ ASTRoot ast ]
         : parameter ( ',' parameter )*
         ;
 
-parameter
+parameter returns [ ASTRoot ast ]
         : type IDENT
         ;
 
-method_body
+method_body returns [ ASTRoot ast ]
         : '{' assume_statement* statement* ensure_statement* '}'
         ;
 
-statement
+statement returns [ ASTRoot ast ]
         : assert_statement
         | variable_declaration
         | array_declaration
@@ -34,111 +48,120 @@ statement
         | 'return' expression ';'
         ;
 
-invariant_statement
+invariant_statement returns [ ASTRoot ast ]
         : 'invariant' quantified_expression ';'
         ;
 
-assert_statement
+assert_statement returns [ ASTRoot ast ]
         : 'assert' quantified_expression ';'
         ;
 
-assume_statement
+assume_statement returns [ ASTRoot ast ]
         : 'assume' quantified_expression ';'
         ;
 
-ensure_statement
+ensure_statement returns [ ASTRoot ast ]
         : 'ensure' quantified_expression ';'
         ;
 
-assignment
+assignment returns [ ASTRoot ast ]
         : IDENT ( '[' expression ']' )* '=' expression ';'
         ;
 
-variable_declaration
+variable_declaration returns [ ASTRoot ast ]
         : type IDENT ( '=' expression )? ';'
         ;
 
-array_declaration
+array_declaration returns [ ASTRoot ast ]
         : type IDENT ( '[' ']' )+ ';'
         ;
 
-if_statement
+if_statement returns [ ASTRoot ast ]
         : 'if' '(' expression ')' statement_block ( 'else' statement_block )?
         ;
 
-statement_block
+statement_block returns [ ASTRoot ast ]
         : '{' statement* '}'
         ;
 
-while_statement
+while_statement returns [ ASTRoot ast ]
         : 'while' '(' expression ')' loop_body
         ;
 
-loop_body
+loop_body returns [ ASTRoot ast ]
         : '{' invariant_statement* statement* ensure_statement* '}'
         ;
 
-quantified_expression
+quantified_expression returns [ ASTRoot ast ]
         : quantifier IDENT '(' range? ')' quantified_expression
         | expression
         ;
 
-quantifier
+quantifier returns [ ASTRoot ast ]
         : 'forall'
         | 'exists'
         ;
 
-range
-        : expression ',' expression
+range returns [ ASTRoot ast ]
+        : expression ',' expression;
 
-expression
+expression returns [ ASTRoot ast ]
         : rel_expression ( ( '==' | '!=' ) rel_expression )*
         ;
 
 
-rel_expression
+rel_expression returns [ ASTRoot ast ]
         : add_expression ( ( '<' | '<=' | '>' | '>=' ) add_expression )*
         ;
 
-add_expression
+add_expression returns [ ASTRoot ast ]
         : mul_expression ( ( '|' | '+' | '-' ) mul_expression )*
         ;
 
-mul_expression
+mul_expression returns [ ASTRoot ast ]
         : unary_expression ( ('&' | '*' | '/' | '%') unary_expression )*
         ;
 
-unary_expression
+unary_expression returns [ ASTRoot ast ]
         : ( '!' | '+' | '-' )? parenthesized_expression
         ;
 
-parenthesized_expression
-        : '(' expression ')'
-        | method_call
-        | array_access
-        | IDENT
-        | literal_expression
+parenthesized_expression returns [ ASTRoot ast ]
+        : '(' expression ')' {$ast = $expression.ast;}
+        | function_call {$ast = $function_call.ast;}
+        | array_read {$ast = $array_read.ast;}
+        | IDENT {$ast = new VariableRead(new Position(), new Identifier($IDENT.text));}
+        | literal_expression {$ast = $literal_expression.ast;}
         ;
 
-method_call
-        : IDENT '(' arglist? ')'
+function_call returns [ ASTRoot ast ]
+        : IDENT '(' arglist? ')' {
+        	Expression[] params = new Expression[0]
+        	if ($arglist.params != null) params = $arglist.params.toArray(new Expression[arglist.size()]);
+        	$ast = new FuntionCall($IDENT.text, params , new Position()}
         ;
 
-arglist
-        : expression ( ',' expression )*
+arglist returns [ LinkedList<Expression> params ]
+	@init {params = new LinkedList<Expression>();}
+        : e1=expression {params.add((Expression) e1);} ( ',' e2=expression {params.add((Expression) e2);} )*
         ;
 
-array_access
-        : IDENT '[' expression ']' ( '[' expression ']' )*
+array_read returns [ ASTRoot ast ]
+	@init {LinkedList<ArithmeticExpression> l = LinkedList<ArithmeticExpression>();}
+        : IDENT '[' e1=expression {if ($e1.ast isinstance ArithmeticExpression) l.add((ArithmeticExpression)e1);
+        				else throw new RuntimeException("TODO");} ']' 
+        	( '[' e2=expression {if ($e2.ast isinstance ArithmeticExpression) l.add((ArithmeticExpression)e2);
+        				else throw new RuntimeException("TODO");} ']' )* 
+        {$ast = new ArrayRead(new Position(), new Identifier($IDENT), l.toArray(new ArithmeticExpression[l.size()]));}
         ;
 
-literal_expression
-        : INT_LITERAL
-        | BOOL_LITERAL
+literal_expression returns [ ASTRoot ast ]
+        : INT_LITERAL {$ast = new NumericLiteral($INT_LITERAL.text, new Position());}
+        | BOOL_LITERAL {$ast = new BooleanLiteral($BOOL_LITERAL.text, new Position());}
         ;
 
-type
-        : ('int' | 'bool') ( '[' ']')*
+type returns [ ASTRoot ast ]
+        : ('int' {$ast = new IntegerType();} | 'bool'{$ast = new BooleanType();}) ( '[' ']' {$ast = new ArrayType(ast);})*
         ;
 
 INT_LITERAL  : ('0'..'9' )+;
