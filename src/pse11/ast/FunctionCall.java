@@ -13,7 +13,7 @@ public class FunctionCall extends Expression {
     /**
      * function to be called
      */
-    private Function function;
+    private Identifier function;
 
     /**
      * Constructor.
@@ -23,7 +23,7 @@ public class FunctionCall extends Expression {
      * @param position indicates the position of this element
      *                 in the original source code
      */
-    public FunctionCall(Function function, Expression[] parameters,
+    public FunctionCall(Identifier function, Expression[] parameters,
                            Position position) {
         super(position);
         this.parameters = parameters;
