@@ -16,7 +16,7 @@ public class Position {
 
     /**
      * Constructor.
-     * 
+     *
      * @param line line the element begins
      * @param column column the element begins
      */
@@ -24,6 +24,9 @@ public class Position {
         this.line = line;
         this.column = column;
     }
+     public Position() {
+         this(0, 0);
+     }
 
     /**
      * Returns the line of the element.
