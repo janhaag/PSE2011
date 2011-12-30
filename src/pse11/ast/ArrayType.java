@@ -14,17 +14,15 @@ public class ArrayType extends Type {
     /**
      * length of the array
      */
-    int length;
-    
+
     /**
      * Constructor.
      *
      * @param type base type of the array
      * @param length length of the array
      */
-    public ArrayType(Type type, int length) {
+    public ArrayType(Type type) {
         this.type = type;
-        this.length = length;
     }
 
     /**
@@ -33,13 +31,5 @@ public class ArrayType extends Type {
      */
     public Type getType() {
         return type;
-    }
-
-    /**
-     * Returns the length of the array.
-     * @return length of the array
-     */
-    public int getLength() {
-        return length;
     }
 }
