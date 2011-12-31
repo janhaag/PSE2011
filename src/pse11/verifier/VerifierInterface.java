@@ -1,4 +1,4 @@
-package Verifier;
+package verifier;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,16 +34,16 @@ public class VerifierInterface {
         BufferedReader bReader = new BufferedReader(reader);
         try {
             verifierProcess.waitFor();
-        }   catch (InterruptedException ex) {
+        } catch (InterruptedException ex) {
             System.out.println("Beweiser wurde unerwartet beendet.");
         }
         StringBuilder output = new StringBuilder("");
         int lastRead = 0;
         while(lastRead != -1) {
             lastRead = bReader.read();
-                if (lastRead != -1) {
-                   output.append(Character.toChars(lastRead));
-                }
+            if (lastRead != -1) {
+               output.append(Character.toChars(lastRead));
+            }
         }
         verifierout.close();
         //Schicke Ergebniss von Z3 an Lexer und dessen an Parser.

@@ -11,15 +11,11 @@ public class ArrayType extends Type {
      * base type of the array
      */
     Type type;
-    /**
-     * length of the array
-     */
 
     /**
      * Constructor.
      *
      * @param type base type of the array
-     * @param length length of the array
      */
     public ArrayType(Type type) {
         this.type = type;
