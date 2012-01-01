@@ -89,9 +89,13 @@ public class Editor {
 				this.colorArray.add(new Keyword(position,token.length(),"0000FF"));
 			} else if(token.equals("boolean")) {
 				this.colorArray.add(new Keyword(position,token.length(),"0000FF"));
+			} else if(token.equals("while")) {
+				this.colorArray.add(new Keyword(position,token.length(),"0000FF"));
+			} else if(token.equals("else")) {
+				this.colorArray.add(new Keyword(position,token.length(),"0000FF"));
 			}
-			position += (token.length() + 1);
-			System.out.println(position);
+			position += (token.length());
+//			System.out.println(position);
 		}
 	}
 }
