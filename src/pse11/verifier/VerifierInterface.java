@@ -1,5 +1,6 @@
-package Verifier;
+package verifier;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,11 +14,11 @@ import java.io.InputStreamReader;
 public class VerifierInterface {
     private WPProgram program;
     private interpreter.SMTLibTranslator smtLibTranslator;
-    private Verifier verifier;
+    private String verifier;
 
-    public VerifierInterface(interpreter.SMTLibTranslator smtLibTranslator) {
+    public VerifierInterface(interpreter.SMTLibTranslator smtLibTranslator, String verifier) {
         this.smtLibTranslator = smtLibTranslator;
-        verifier = Verifier.Z3;
+        this.verifier = verifier;
     }
 
     public void notifyConsole() {
@@ -27,32 +28,26 @@ public class VerifierInterface {
     public String verify(ast.ASTRoot ast) throws IOException {
         program = interpreter.SMTLibTranslator.getWPTree(ast);
         File file = saveInSMTFile(program.toString());
-        switch(verifier) {
-            case Z3:
-                Process z3 = Runtime.getRuntime().exec("z3 text.smt2"); //"cmd /c"?
-                try {
-                    InputStream z3out = z3.getInputStream();
-                    InputStreamReader reader = new InputStreamReader(z3out);
-                    z3.waitFor();
-                    StringBuilder output = new StringBuilder("");
-                    int lastRead = 0;
-                    while(lastRead != -1) {
-                        lastRead = reader.read();
-                        if (lastRead != -1) {
-                            output.append(Character.toChars(lastRead));
-                        }
-                    }
-                    z3out.close();
-                } catch (InterruptedException ex) {
-                      //Was soll hier rein?
-			//Try Block noch zu groß
-                }
-                //Schicke Ergebniss von Z3 an Lexer und dessen an Parser.
-                notifyConsole();
-                break;
-            default:
-                System.out.println("Unknown Verifier.");
+        Process verifierProcess = Runtime.getRuntime().exec(verifier + " text.smt2");
+        InputStream verifierout = verifierProcess.getInputStream();
+        InputStreamReader reader = new InputStreamReader(verifierout);
+        BufferedReader bReader = new BufferedReader(reader);
+        try {
+            verifierProcess.waitFor();
+        } catch (InterruptedException ex) {
+            System.out.println("Beweiser wurde unerwartet beendet.");
         }
+        StringBuilder output = new StringBuilder("");
+        int lastRead = 0;
+        while(lastRead != -1) {
+            lastRead = bReader.read();
+            if (lastRead != -1) {
+               output.append(Character.toChars(lastRead));
+            }
+        }
+        verifierout.close();
+        //Schicke Ergebniss von Z3 an Lexer und dessen an Parser.
+        notifyConsole();
         if (file.exists()) {
             file.delete();
         }

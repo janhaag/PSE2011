@@ -1,5 +1,6 @@
 package gui;
 
+import gui.controller.EditorController;
 import gui.controller.MainController;
 
 import misc.Editor;
@@ -27,6 +28,7 @@ public class MainFrame extends Frame {
 		Editor editor = new Editor();
 		this.editor = new EditorView(shell, SWT.BORDER, editor);
 		this.editor.setBounds(0,0,200,200);
+		EditorController editorcontroller = new EditorController(editor, this.editor);
 		
 		//Adding consoles
 		MessageSystem messagesystem = new MessageSystem();

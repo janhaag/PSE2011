@@ -9,9 +9,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 
-import gui.controller.EditorController;
 import misc.Editor;
 import misc.Keyword;
 
@@ -19,7 +17,7 @@ public class EditorView extends Composite {
 	private Editor editor;
 	private Display parentdisplay;
 	private StyledText textfield;
-	private Text linenumbers;
+	private StyledText linenumbers;
 	public EditorView(Composite parent, int def, Editor editor) {
 		super(parent, def);
 		this.editor = editor; 
@@ -32,12 +30,14 @@ public class EditorView extends Composite {
 		
 		//Initialize editor components
 		this.parentdisplay = parent.getDisplay();
-		this.linenumbers = new Text(this, SWT.BORDER | SWT.MULTI | SWT.WRAP);
-		this.linenumbers.setText("1 \n\r2 \n\r");
+		this.linenumbers = new StyledText(this, SWT.BORDER | SWT.MULTI | SWT.WRAP);
+		this.linenumbers.setText(" 1 \n 2 \n 3 \n 4 \n");
 		this.linenumbers.setEditable(false);
+		this.linenumbers.setBackground(new Color(this.getDisplay(), 211, 211, 211));
 		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
 		this.textfield = new StyledText(this, SWT.BORDER | SWT.V_SCROLL);
-		this.textfield.addModifyListener(new EditorController(this, editor));
+		this.textfield.setLeftMargin(20);
+		////this.textfield.getVerticalBar().add
 		//this.linenumbers.setBounds(0,0,20,300);
 		
 		//Position the text fields
@@ -52,7 +52,8 @@ public class EditorView extends Composite {
 		textfield.setStyleRange(null);
 		for(Keyword word : this.editor.getColorArray()) {
 			StyleRange stylerange = new StyleRange();
-			stylerange.start = word.getStart();
+			System.out.println(word.getStart() + " ## " + this.textfield.getLineAtOffset(word.getStart()));
+			stylerange.start = word.getStart();// + this.textfield.getLineAtOffset(word.getStart());
 			stylerange.length = word.getLength();
 			stylerange.fontStyle = SWT.BOLD;
 			stylerange.foreground = new Color(this.textfield.getDisplay(), word.getColor());
@@ -61,5 +62,11 @@ public class EditorView extends Composite {
 	}
 	public String getText() {
 		return this.textfield.getText();
+	}
+	public StyledText getTextField() {
+		return this.textfield;
+	}
+	public StyledText getLineNumbers() {
+		return this.linenumbers;
 	}
 }

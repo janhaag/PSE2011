@@ -7,6 +7,8 @@ import misc.Message;
 import misc.MessageSystem;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -19,15 +21,16 @@ public class ErrorConsole extends Console {
 	public ErrorConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
 		this.tableitems = new ArrayList<TableItem>();
-		
+		FillLayout fLayout = new FillLayout();
+		this.setLayout(fLayout);
 		this.table = new Table(this, SWT.BORDER);
 		this.positionColumn = new TableColumn(this.table, SWT.CENTER);
 		this.positionColumn.setText("Position");
-		this.positionColumn.setWidth(20);
+		this.positionColumn.setWidth(100);
 		this.errormessageColumn = new TableColumn(this.table, SWT.CENTER);
 		this.errormessageColumn.setText("Message");
-		this.errormessageColumn.setWidth(200);
-		this.table.setBounds(0,0,250,100);
+		this.errormessageColumn.setWidth(300);
+		//this.table.setBounds(0,0,250,100);
 		this.table.setHeaderVisible(true);
 		// TODO Auto-generated constructor stub
 		TableItem ti1 = new TableItem(this.table, SWT.NONE);
