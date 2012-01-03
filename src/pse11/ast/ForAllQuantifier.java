@@ -12,16 +12,18 @@ public class ForAllQuantifier extends QuantifiedExpression {
      *
      * @param position indicates the position of this element
      *                 in the original source code
+     * @param range the range for bounded quantification
      * @param identifier identifier that is varied in the formula
      * @param subexpression quantified subexpression to be satisfied
      *                      (if not null)
      * @param expression quantifier-free expression to be satisfied
      *                   (if not null)
      */
-    public ForAllQuantifier(Position position, Identifier identifier,
+    public ForAllQuantifier(Position position, Range range,
+                            Identifier identifier,
                             QuantifiedExpression subexpression,
                             LogicalExpression expression) {
-        super(position, identifier, subexpression, expression);
+        super(position, range, identifier, subexpression, expression);
     }
 
     @Override

@@ -8,6 +8,11 @@ package ast;
  */
 public abstract class QuantifiedExpression extends Expression {
     /**
+     * The range of this quantifier (null if unbounded)
+     */
+    private Range range;
+
+    /**
      * quantified subexpression to be satisfied (if not null)
      */
     QuantifiedExpression subexpression;
@@ -26,6 +31,8 @@ public abstract class QuantifiedExpression extends Expression {
      *
      * @param position indicates the position of this element
      *                 in the original source code
+     * @param range The range for bounded quantification
+     *              (null if this quantifier is unbounded)
      * @param identifier identifier that is varied in the formula
      * @param subexpression quantified subexpression to be satisfied
      *                      (if not null)
@@ -33,6 +40,7 @@ public abstract class QuantifiedExpression extends Expression {
      *                   (if not null)
      */
     public QuantifiedExpression(Position position, Identifier identifier,
+                                Range range,
                                 QuantifiedExpression subexpression,
                                 LogicalExpression expression) {
         super(position);
@@ -42,6 +50,7 @@ public abstract class QuantifiedExpression extends Expression {
             );
         }
         this.identifier = identifier;
+        this.range = range;
         this.subexpression = subexpression;
         this.expression = expression;
     }
@@ -68,5 +77,13 @@ public abstract class QuantifiedExpression extends Expression {
      */
     public Identifier getIdentifier() {
         return identifier;
+    }
+
+    /**
+     * Get the range for this quantifier.
+     * @return the range
+     */
+    public Range getRange() {
+        return range;
     }
 }
