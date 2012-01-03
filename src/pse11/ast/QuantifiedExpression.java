@@ -36,6 +36,11 @@ public abstract class QuantifiedExpression extends Expression {
                                 QuantifiedExpression subexpression,
                                 LogicalExpression expression) {
         super(position);
+        if (!(expression == null ^ subexpression == null)) {
+            throw new IllegalArgumentException(
+                    "Either expresion or subexpressuion must be null."
+            );
+        }
         this.identifier = identifier;
         this.subexpression = subexpression;
         this.expression = expression;
