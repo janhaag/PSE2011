@@ -15,10 +15,10 @@ import java.io.InputStreamReader;
  */
 public class VerifierInterface {
     private WPProgram program;
-    private interpreter.SMTLibTranslator smtLibTranslator;
+    private SMTLibTranslator smtLibTranslator;
     private String verifier;
 
-    public VerifierInterface(interpreter.SMTLibTranslator smtLibTranslator, String verifier) {
+    public VerifierInterface(SMTLibTranslator smtLibTranslator, String verifier) {
         this.smtLibTranslator = smtLibTranslator;
         this.verifier = verifier;
     }
@@ -28,7 +28,7 @@ public class VerifierInterface {
     }
 
     public String verify(ASTRoot ast) throws IOException {
-        program = interpreter.SMTLibTranslator.getWPTree(ast);
+        program = smtLibTranslator.getWPTree(ast);
         File file = saveInSMTFile(program.toString());
         Process verifierProcess = Runtime.getRuntime().exec(verifier + " text.smt2");
         InputStream verifierout = verifierProcess.getInputStream();
@@ -37,7 +37,7 @@ public class VerifierInterface {
         try {
             verifierProcess.waitFor();
         } catch (InterruptedException ex) {
-            System.out.println("Beweiser wurde unerwartet beendet.");
+            System.out.println("Verifier was interrupted unexpectedly.");
         }
         StringBuilder output = new StringBuilder("");
         int lastRead = 0;
