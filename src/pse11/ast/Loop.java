@@ -9,15 +9,15 @@ public class Loop extends Statement {
     /**
      * condition to be checked
      */
-    private LogicalExpression condition;
+    private final LogicalExpression condition;
     /**
      * statement block executed while condition holds true
      */
-    private StatementBlock body;
+    private final StatementBlock body;
     /**
      * list of loop invariants
      */
-    private Invariant[] invariants;
+    private final Invariant[] invariants;
 
     /**
      * Constructor.

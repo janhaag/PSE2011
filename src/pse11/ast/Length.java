@@ -10,7 +10,7 @@ public class Length extends Expression {
     /**
      * array which length should be calculated
      */
-    private VariableRead array;
+    private final VariableRead array;
 
     /**
      * Constructor.

@@ -10,15 +10,15 @@ public abstract class QuantifiedExpression extends Expression {
     /**
      * quantified subexpression to be satisfied (if not null)
      */
-    QuantifiedExpression subexpression;
+    private final QuantifiedExpression subexpression;
     /**
      * quantifier-free expression to be satisfied (if not null)
      */
-    LogicalExpression expression;
+    private final LogicalExpression expression;
     /**
      * identifier that is varied in the quantified expression
      */
-    private Identifier identifier;
+    private final Identifier identifier;
 
     /**
      * Constructor.
@@ -32,13 +32,13 @@ public abstract class QuantifiedExpression extends Expression {
      * @param expression quantifier-free expression to be satisfied
      *                   (if not null)
      */
-    public QuantifiedExpression(Position position, Identifier identifier,
+    protected QuantifiedExpression(Position position, Identifier identifier,
                                 QuantifiedExpression subexpression,
                                 LogicalExpression expression) {
         super(position);
         if (!(expression == null ^ subexpression == null)) {
             throw new IllegalArgumentException(
-                    "Either expresion or subexpressuion must be null."
+                    "Either expression or subexpression must be null."
             );
         }
         this.identifier = identifier;

@@ -8,11 +8,11 @@ public class Position {
     /**
      * the line in which the element begins
      */
-    private int line;
+    private final int line;
     /**
      * the column in which the element begins
      */
-    private int column;
+    private final int column;
 
     /**
      * Constructor.

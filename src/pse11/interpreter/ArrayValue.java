@@ -5,13 +5,11 @@ import ast.BooleanType;
 import ast.IntegerType;
 import ast.Type;
 
-import java.util.ArrayList;
-
 /**
  *
  */
 public class ArrayValue extends Value {
-    private Value[] values;
+    private final Value[] values;
     
     public ArrayValue(ArrayType type, int[] lengths, int pos) {
         super(type);

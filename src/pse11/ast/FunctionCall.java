@@ -9,11 +9,11 @@ public class FunctionCall extends Expression {
     /**
      * function parameters
      */
-    private Expression[] parameters;
+    private final Expression[] parameters;
     /**
      * function to be called
      */
-    private Identifier function;
+    private final Identifier functionIdentifier;
 
     /**
      * Constructor.
@@ -27,7 +27,7 @@ public class FunctionCall extends Expression {
                            Position position) {
         super(position);
         this.parameters = parameters;
-        this.function = function;
+        this.functionIdentifier = function;
 
     }
 
@@ -45,10 +45,10 @@ public class FunctionCall extends Expression {
     }
 
     /**
-     * Returns the function to be called.
-     * @return function to be called
+     * Returns the identifier of the function to be called.
+     * @return identifier of the function to be called
      */
-    public Function getFunction() {
-        return function;
+    public Identifier getFunctionIdentifier() {
+        return functionIdentifier;
     }
 }

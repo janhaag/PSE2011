@@ -11,18 +11,18 @@ public class ArithmeticExpression extends Expression {
      *  The first operand of the expression (may only be null if
      *  this instanceof NumericLiteral), which may be an expression itself.
      */
-    private Expression subexpression1;
+    private final Expression subexpression1;
     /**
      *  The second operand of the expression (may only be null if
      *  this instanceof NumericLiteral or in case of a unary operator),
      *  which may be an expression itself.
      */
-    private Expression subexpression2;
+    private final Expression subexpression2;
     /**
      *  The operator of this calculation (may only be null if
      *  this instanceof NumericLiteral).
      */
-    private ArithmeticOperator arithmeticOperator;
+    private final ArithmeticOperator arithmeticOperator;
 
     /**
      * Constructor.

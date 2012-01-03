@@ -1,5 +1,7 @@
 package verifier;
 
+import ast.ASTRoot;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,7 +27,7 @@ public class VerifierInterface {
         //An welchen Controller und was genau?
     }
 
-    public String verify(ast.ASTRoot ast) throws IOException {
+    public String verify(ASTRoot ast) throws IOException {
         program = interpreter.SMTLibTranslator.getWPTree(ast);
         File file = saveInSMTFile(program.toString());
         Process verifierProcess = Runtime.getRuntime().exec(verifier + " text.smt2");

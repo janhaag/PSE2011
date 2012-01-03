@@ -10,7 +10,7 @@ public class StatementBlock extends ASTRoot {
     /**
      * The list of statements this block contains
      */
-    private Statement[]  statements;
+    private final Statement[]  statements;
     /**
      * Indicates the number of the next statement.
      */

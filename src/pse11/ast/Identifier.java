@@ -7,7 +7,7 @@ public class Identifier {
     /**
      * String to identify the identifier
      */
-    private String name;
+    private final String name;
 
     /**
      * Constructor.

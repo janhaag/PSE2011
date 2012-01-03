@@ -7,11 +7,11 @@ public class FunctionParameter {
     /**
      * parameter name
      */
-    private String name;
+    private final String name;
     /**
      * parameter type
      */
-    private Type type;
+    private final Type type;
 
     /**
      * Constructor.

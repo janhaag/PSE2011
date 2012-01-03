@@ -25,7 +25,7 @@ public interface ASTVisitor {
      * Visits an arithmetic expression.
      * @param arithmeticExpression expression to visit
      */
-    public void visit(ArithmeticException arithmeticExpression);
+    public void visit(ArithmeticExpression arithmeticExpression);
     /**
      * Visits a numeric literal.
      * @param number literal to visit

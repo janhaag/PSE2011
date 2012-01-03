@@ -9,27 +9,27 @@ public class Function extends ASTRoot {
     /**
      * Function name. 'main' is reserved for main method.
      */
-    private String name;
+    private final String name;
     /**
      * the function body
      */
-    private StatementBlock functionBody;
+    private final StatementBlock functionBody;
     /**
      * list of function parameters
      */
-    private FunctionParameter[] parameters;
+    private final FunctionParameter[] parameters;
     /**
      * list of assumptions about parameter values
      */
-    private Assumption[] assumptions;
+    private final Assumption[] assumptions;
     /**
      * list of assurances for the value of variables
      */
-    private Ensure[] ensures;
+    private final Ensure[] ensures;
     /**
      * type of return value. returnType is null iff this is the main function.
      */
-    private Type returnType;
+    private final Type returnType;
     
     @Override
     public void accept(ASTVisitor visitor) {

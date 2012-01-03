@@ -10,15 +10,15 @@ public class VariableDeclaration extends Statement {
     /**
      * Type of the new variable
      */
-    private Type type;
+    private final Type type;
     /**
      * Value to initialize the variable with
      */
-    private Expression value;
+    private final Expression value;
     /**
      * name of the new variable
      */
-    private String name;
+    private final String name;
 
     /**
      * Constructor.

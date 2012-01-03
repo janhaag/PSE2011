@@ -9,7 +9,7 @@ public abstract class Specification extends Statement {
     /**
      * expression to be evaluated
      */
-    private LogicalExpression expression;
+    private final LogicalExpression expression;
 
     /**
      * Constructor.

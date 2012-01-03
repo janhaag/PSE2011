@@ -15,7 +15,7 @@ public class TypeChecker implements ASTVisitor {
     private Type tempType;
     private Scope currentScope;
     
-    public void checkTypes(ASTRoot ast) throws IllegalTypeException {
+    public void checkTypes(ASTRoot ast) {
         ast.accept(this);
     }
     
@@ -64,22 +64,79 @@ public class TypeChecker implements ASTVisitor {
                                            arrayAssignment.getPosition());
         }
     }
-    
-    //TODO: fill in stubs
-    public void visit(ArithmeticException arithmeticExpression) {
-        //TODO: fill in
+
+    public void visit(ArithmeticExpression arithmeticExpression) {
+        arithmeticExpression.getSubexpression1().accept(this);
+        ArithmeticOperator operator =
+                arithmeticExpression.getArithmeticOperator();
+        if (operator.isBinary()) {
+            Type tempType1 = tempType;
+            arithmeticExpression.getSubexpression2().accept(this);
+            if (!(tempType instanceof IntegerType)
+               || !(tempType1 instanceof IntegerType)) {
+                throw new IllegalTypeException("Operands must be arithmetic "
+                                               + "expressions!",
+                                            arithmeticExpression.getPosition());
+            }
+        } else {
+            //UnaryMinus
+            if (!(tempType instanceof BooleanType)) {
+                throw new
+                  IllegalTypeException("Operand must be a logical expression!",
+                                       arithmeticExpression.getPosition());
+            }
+        }
+        tempType = new IntegerType();
     }
 
     public void visit(NumericLiteral number) {
-        //no-op
+        tempType = new IntegerType();
     }
 
     public void visit(LogicalExpression logicalExpression) {
-        //TODO: fill in
+        Position position = logicalExpression.getPosition();
+        logicalExpression.getSubexpression1().accept(this);
+        LogicalOperator operator = logicalExpression.getLogicalOperator();
+        if (operator.isBinary()) {
+            Type tempType1 = tempType;
+            logicalExpression.getSubexpression2().accept(this);
+            if (operator instanceof Conjunction
+                    || operator instanceof Disjunction) {
+                if (!(tempType instanceof IntegerType)
+                        || !(tempType1 instanceof IntegerType)) {
+                    throw new IllegalTypeException("Operands must be "
+                                                    + "integer expressions!",
+                                                    position);
+                }
+            } else if (operator instanceof Equal
+                       || operator instanceof NotEqual) {
+                if (!tempType.equals(tempType1)) {
+                    throw new IllegalTypeException("Operands must be of "
+                                                    + "equal types!",
+                                                    position);
+                }
+            } else {
+                //greater, greater equal, less, less equal
+                if(!(tempType instanceof IntegerType)
+                        || !(tempType1 instanceof IntegerType)) {
+                    throw new IllegalTypeException("Operands must be "
+                                                   + "integer expressions!",
+                                                    position);
+                }
+            }
+        } else {
+            //Negation
+            if (!(tempType instanceof BooleanType)) {
+                throw new
+                  IllegalTypeException("Operand must be a logical expression!",
+                                       position);
+            }
+        }
+        tempType = new BooleanType();
     }
 
     public void visit(BooleanLiteral bool) {
-        //no-op
+        tempType = new BooleanType();
     }
 
     public void visit(FunctionCall functionCall) {
@@ -146,6 +203,11 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = assignment.getIdentifier();
         Value value = vars.get(identifier);
+        if (value.getType() instanceof ArrayType) {
+            throw new IllegalTypeException("Cannot assign a value to an array "
+                                           + "that is not fully indexed!",
+                                           assignment.getPosition());
+        }
         if (!value.getType().equals(tempType)) {
             throw new IllegalTypeException("Type of variable does not "
                                            + "match the type of assigned value",
@@ -209,9 +271,17 @@ public class TypeChecker implements ASTVisitor {
     }
 
     public void visit(ExistsQuantifier existsQuantifier) {
+        currentScope = new Scope(currentScope, null, false);
+        if (existsQuantifier.getExpression() != null) {
+
+        } else {
+            //existsQuantifier.getSubexpression() != null
+        }
+        //TODO
     }
 
     public void visit(ForAllQuantifier forAllQuantifier) {
+        //TODO
     }
 
     public void visit(StatementBlock statementBlock) {
@@ -223,6 +293,12 @@ public class TypeChecker implements ASTVisitor {
     }
 
     public void visit(Length length) {
+        length.getArray().accept(this);
+        if (!(tempType instanceof ArrayType)) {
+            throw new IllegalTypeException("Parameter of 'length' must be an "
+                                           + "array!", length.getPosition());
+        }
+        tempType = new IntegerType();
     }
 
     /**
@@ -238,7 +314,7 @@ public class TypeChecker implements ASTVisitor {
      * @param position position for the IllegalTypeException
      * @return type of the array in the specified depth
      */
-    private Type baseType(Type arrayType, int depth, Position position) {
+    private static Type baseType(Type arrayType, int depth, Position position) {
         Type type = arrayType;
         for (int i = 0; i < depth; i++) {
             if (!(type instanceof ArrayType)) {

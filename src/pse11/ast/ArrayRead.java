@@ -10,7 +10,7 @@ public class ArrayRead extends VariableRead {
     /**
      * Indexes used to determine the position of the read array element.
      */
-    private ArithmeticExpression[] indexes;
+    private final ArithmeticExpression[] indexes;
 
     /**
      * Constructor.
