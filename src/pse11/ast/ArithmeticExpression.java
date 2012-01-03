@@ -33,10 +33,16 @@ public class ArithmeticExpression extends Expression {
      * @param subexpression2 the second operand
      * @param arithmeticOperator the operator
      */
-    public ArithmeticExpression(Position position, Expression subexpression1,
+    public ArithmeticExpression(Position position,
+                                Expression subexpression1,
                                 Expression subexpression2,
                                 ArithmeticOperator arithmeticOperator) {
         super(position);
+        if (subexpression1 instanceof LogicalExpression ||
+            subexpression2 instanceof LogicalExpression) {
+                throw new IllegalArgumentException(
+                        "No use doing Arithmetic with logical expressions.");
+            }
         this.subexpression1 = subexpression1;
         this.subexpression2 = subexpression2;
         this.arithmeticOperator = arithmeticOperator;
@@ -46,7 +52,7 @@ public class ArithmeticExpression extends Expression {
      * Returns the first operand of this expression.
      * @return the first operand
      */
-    public Expression getSubexpression1() {
+    public ArithmeticExpression getSubexpression1() {
         return subexpression1;
     }
 
@@ -54,7 +60,7 @@ public class ArithmeticExpression extends Expression {
      * Returns the second operand of this expression.
      * @return the second operand
      */
-    public Expression getSubexpression2() {
+    public ArithmeticExpression getSubexpression2() {
         return subexpression2;
     }
 
