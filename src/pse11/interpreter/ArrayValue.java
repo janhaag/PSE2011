@@ -5,20 +5,23 @@ import ast.BooleanType;
 import ast.IntegerType;
 import ast.Type;
 
+import java.util.ArrayList;
+
 /**
  *
  */
 public class ArrayValue extends Value {
     private Value[] values;
     
-    public ArrayValue(ArrayType type) {
+    public ArrayValue(ArrayType type, int[] lengths, int pos) {
         super(type);
         Type baseType = type.getType();
-        int length = type.getLength();
+        int length = lengths[pos];
         values = new Value[length];
         if (baseType instanceof ArrayType) {
             for (int i = 0; i < length; i++) {
-                values[i] = new ArrayValue((ArrayType) baseType);
+                values[i] = new ArrayValue((ArrayType) baseType,
+                                            lengths, pos + 1);
             }
         }
         if (baseType instanceof BooleanType) {

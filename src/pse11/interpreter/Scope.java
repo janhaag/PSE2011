@@ -1,9 +1,6 @@
 package interpreter;
 
-import ast.Identifier;
-import ast.Statement;
-import ast.StatementBlock;
-import ast.Type;
+import ast.*;
 
 import java.util.HashMap;
 
@@ -21,7 +18,7 @@ public class Scope {
         this.upScope = upScope;
         this.currentBlock = currentBlock;
         variables = new HashMap<Identifier, Value>();
-        variableSearch = isFunctionScope;
+        variableSearch = !isFunctionScope && upScope == null;
     }
 
     public Scope getParent() {
@@ -35,7 +32,7 @@ public class Scope {
     }
 
     private void addVars(HashMap<Identifier, Value> vars) {
-        //TODO: add vars
+        vars.putAll(variables);
         if (variableSearch) {
             upScope.addVars(vars);
         }
@@ -46,10 +43,23 @@ public class Scope {
     }
 
     public void setVar(String name, String value) {
-        //TODO:
+        //TODO: fill stub (not needed for type checker
     }
 
     public void createVar(String name, String value, Type typeOfValue) {
+        Identifier identifier = new Identifier(name);
+        Value newValue;
+        if (typeOfValue instanceof BooleanType) {
+            newValue = new BooleanValue(value);
+        } else {
+            newValue = new IntegerValue(value);
+        }
+        variables.put(identifier, newValue);
+    }
 
+    public void createArray(String name, Type typeOfValue, int[] lengths) {
+        Identifier identifier = new Identifier(name);
+        Value newValue = new ArrayValue((ArrayType) typeOfValue, lengths, 0);
+        variables.put(identifier, newValue);
     }
 }

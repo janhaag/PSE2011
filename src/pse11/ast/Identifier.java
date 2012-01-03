@@ -15,6 +15,10 @@ public class Identifier {
      * @param name identifier name
      */
     public Identifier(String name) {
+        if (name == null) {
+            throw new
+                 IllegalArgumentException("Parameter name must not be null!");
+        }
         this.name = name;
     }
 
@@ -24,5 +28,21 @@ public class Identifier {
      */
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return name.equals(((Identifier) o).name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
