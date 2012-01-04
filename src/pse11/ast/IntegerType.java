@@ -5,4 +5,8 @@ package ast;
  * of arbitrary absolute value.
  */
 public class IntegerType extends Type {
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof IntegerType;
+    }
 }

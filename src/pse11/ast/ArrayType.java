@@ -10,7 +10,7 @@ public class ArrayType extends Type {
     /**
      * base type of the array
      */
-    Type type;
+    private final Type type;
 
     /**
      * Constructor.
@@ -18,6 +18,9 @@ public class ArrayType extends Type {
      * @param type base type of the array
      */
     public ArrayType(Type type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Type must not be null!");
+        }
         this.type = type;
     }
 
@@ -27,5 +30,17 @@ public class ArrayType extends Type {
      */
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        return type.equals(((ArrayType) o).type);
     }
 }

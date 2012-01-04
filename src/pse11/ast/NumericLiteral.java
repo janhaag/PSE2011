@@ -10,7 +10,7 @@ public class NumericLiteral extends ArithmeticExpression {
      /**
      * Value represented by this literal
      */
-    private Value value;
+    private final Value value;
 
     /**
      * Constructor.

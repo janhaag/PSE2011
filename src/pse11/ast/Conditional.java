@@ -9,15 +9,15 @@ public class Conditional extends Statement {
     /**
      * condition to be checked
      */
-    private LogicalExpression condition;
+    private final LogicalExpression condition;
     /**
      * statement block execution if condition is evaluated to true
      */
-    private StatementBlock trueStatements;
+    private final StatementBlock trueStatements;
     /**
      * statement block execution if condition is evaluated to false
      */
-    private StatementBlock falseStatements;
+    private final StatementBlock falseStatements;
 
     /**
      * Constructor.

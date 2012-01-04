@@ -9,7 +9,7 @@ public class ReturnStatement extends Statement {
     /**
      * value to be returned
      */
-    private Expression returnValue;
+    private final Expression returnValue;
 
     /**
      * Constructor.

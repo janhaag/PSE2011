@@ -10,7 +10,7 @@ public class VariableRead extends Expression {
     /**
      * identifier belonging to the variable to be read
      */
-    private Identifier variable;
+    private final Identifier variable;
 
     /**
      * Constructor.

@@ -11,7 +11,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * List of the lengths of the different array dimensions.
      * The length of this list is the dimension of the array.
      */
-    private ArithmeticExpression[] indexes;
+    private final ArithmeticExpression[] indexes;
 
     /**
      * Constructor.

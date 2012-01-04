@@ -7,7 +7,7 @@ import ast.Position;
  * the type of the user program are not correct.
  */
 public class IllegalTypeException extends RuntimeException {
-    private Position errorPosition;
+    private final Position errorPosition;
 
     public IllegalTypeException(String message, Position errorPosition) {
         super(message);

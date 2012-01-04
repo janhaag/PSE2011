@@ -10,11 +10,11 @@ public class Assignment extends Statement {
     /**
      * value that should be assigned to the variable
      */
-    private Expression value;
+    private final Expression value;
     /**
      * name of the variable
      */
-    private Identifier identifier;
+    private final Identifier identifier;
 
     /**
      * Constructor.

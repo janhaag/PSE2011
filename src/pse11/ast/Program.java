@@ -10,15 +10,15 @@ public class Program extends ASTRoot {
     /**
      * array of normal functions belonging to the program
      */
-    private Function[] functions;
+    private final Function[] functions;
     /**
      * main function of the program
      */
-    private Function mainFunction;
+    private final Function mainFunction;
     /**
      * global axioms, i.e. formulas given as true
      */
-    private Axiom[] axioms;
+    private final Axiom[] axioms;
 
     /**
      * Constructor.

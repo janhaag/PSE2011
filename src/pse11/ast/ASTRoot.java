@@ -13,7 +13,7 @@ public abstract class ASTRoot {
      * indicates the position of the element
      * in the original source code
      */
-    private Position position;
+    private final Position position;
 
     /**
      * Constructor.

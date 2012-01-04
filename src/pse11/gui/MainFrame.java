@@ -66,5 +66,5 @@ public class MainFrame extends Frame {
 		}
 	}
 	
-	private final static String SHELLTITLE = "PSE";
+	private static final String SHELLTITLE = "PSE";
 }

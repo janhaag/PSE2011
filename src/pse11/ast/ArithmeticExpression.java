@@ -11,18 +11,18 @@ public class ArithmeticExpression extends Expression {
      *  The first operand of the expression (may only be null if
      *  this instanceof NumericLiteral), which may be an expression itself.
      */
-    private Expression subexpression1;
+    private final Expression subexpression1;
     /**
      *  The second operand of the expression (may only be null if
      *  this instanceof NumericLiteral or in case of a unary operator),
      *  which may be an expression itself.
      */
-    private Expression subexpression2;
+    private final Expression subexpression2;
     /**
      *  The operator of this calculation (may only be null if
      *  this instanceof NumericLiteral).
      */
-    private ArithmeticOperator arithmeticOperator;
+    private final ArithmeticOperator arithmeticOperator;
 
     /**
      * Constructor.
@@ -52,7 +52,7 @@ public class ArithmeticExpression extends Expression {
      * Returns the first operand of this expression.
      * @return the first operand
      */
-    public ArithmeticExpression getSubexpression1() {
+    public Expression getSubexpression1() {
         return subexpression1;
     }
 
@@ -60,7 +60,7 @@ public class ArithmeticExpression extends Expression {
      * Returns the second operand of this expression.
      * @return the second operand
      */
-    public ArithmeticExpression getSubexpression2() {
+    public Expression getSubexpression2() {
         return subexpression2;
     }
 

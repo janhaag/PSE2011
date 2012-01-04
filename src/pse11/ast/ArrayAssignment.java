@@ -9,7 +9,7 @@ public class ArrayAssignment extends Assignment {
     /**
      * Indexes used to determine the position of the assigned array element.
      */
-    private ArithmeticExpression[] indexes;
+    private final ArithmeticExpression[] indexes;
 
     /**
      * Constructor.
