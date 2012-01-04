@@ -11,9 +11,13 @@ public class FunctionCall extends Expression {
      */
     private final Expression[] parameters;
     /**
-     * function to be called
+     * identifier of the function to be called
      */
     private final Identifier functionIdentifier;
+    /**
+     * function to be called
+     */
+    private Function function;
 
     /**
      * Constructor.
@@ -28,12 +32,24 @@ public class FunctionCall extends Expression {
         super(position);
         this.parameters = parameters;
         this.functionIdentifier = function;
-
     }
 
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    /**
+     * Sets the reference to the correct function.
+     * This is done during type checking.
+     * @param function function to be called
+     */
+    public void setFunction(Function function) {
+        if (this.function != null) {
+            //function cannot be set again
+            throw new IllegalStateException("Function may only be set once!");
+        }
+        this.function = function;
     }
 
     /**
@@ -50,5 +66,13 @@ public class FunctionCall extends Expression {
      */
     public Identifier getFunctionIdentifier() {
         return functionIdentifier;
+    }
+
+    /**
+     * Returns the function to be called.
+     * @return function to be called
+     */
+    public Function getFunction() {
+        return function;
     }
 }

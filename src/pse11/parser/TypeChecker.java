@@ -14,11 +14,20 @@ public class TypeChecker implements ASTVisitor {
     private Type currentReturnType;
     private Type tempType;
     private Scope currentScope;
-    
+    private Function[] functions;
+
+    /**
+     * Checks the given AST for type correctness.
+     * @param ast AST to check
+     */
     public void checkTypes(ASTRoot ast) {
         ast.accept(this);
     }
-    
+
+    /**
+     * Checks the type correctness of a given conditional statement.
+     * @param conditional conditional to check
+     */
     public void visit(Conditional conditional) {
         conditional.getCondition().accept(this);
         currentScope = new Scope(currentScope,
@@ -31,6 +40,10 @@ public class TypeChecker implements ASTVisitor {
         currentScope = currentScope.getParent();
     }
 
+    /**
+     * Checks the type correctness of a given loop statement.
+     * @param loop loop to check
+     */
     public void visit(Loop loop) {
         loop.getCondition().accept(this);
         Invariant[] invariants = loop.getInvariants();
@@ -41,7 +54,11 @@ public class TypeChecker implements ASTVisitor {
         loop.getLoopBody().accept(this);
         currentScope = currentScope.getParent();
     }
-    
+
+    /**
+     * Checks the type correctness of a given array assignment statement.
+     * @param arrayAssignment array assignment to check
+     */
     public void visit(ArrayAssignment arrayAssignment) {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
@@ -65,6 +82,10 @@ public class TypeChecker implements ASTVisitor {
         }
     }
 
+    /**
+     * Checks the type correctness of a given arithmetic expression.
+     * @param arithmeticExpression expression to check
+     */
     public void visit(ArithmeticExpression arithmeticExpression) {
         arithmeticExpression.getSubexpression1().accept(this);
         ArithmeticOperator operator =
@@ -89,10 +110,19 @@ public class TypeChecker implements ASTVisitor {
         tempType = new IntegerType();
     }
 
+    /**
+     * Checks the type correctness of a given numeric literal.
+     * There will be no type error.
+     * @param number literal to check
+     */
     public void visit(NumericLiteral number) {
         tempType = new IntegerType();
     }
 
+    /**
+     * Checks the type correctness of a given logical expression.
+     * @param logicalExpression expression to check
+     */
     public void visit(LogicalExpression logicalExpression) {
         Position position = logicalExpression.getPosition();
         logicalExpression.getSubexpression1().accept(this);
@@ -117,7 +147,7 @@ public class TypeChecker implements ASTVisitor {
                 }
             } else {
                 //greater, greater equal, less, less equal
-                if(!(tempType instanceof IntegerType)
+                if (!(tempType instanceof IntegerType)
                         || !(tempType1 instanceof IntegerType)) {
                     throw new IllegalTypeException("Operands must be "
                                                    + "integer expressions!",
@@ -135,14 +165,57 @@ public class TypeChecker implements ASTVisitor {
         tempType = new BooleanType();
     }
 
+    /**
+     * Checks the type correctness of a given boolean literal.
+     * There will be no type error.
+     * @param bool literal to check
+     */
     public void visit(BooleanLiteral bool) {
         tempType = new BooleanType();
     }
 
+    /**
+     * Checks the type correctness of a given function call
+     * and inserts the correct function reference.
+     * @param functionCall function call to check
+     */
     public void visit(FunctionCall functionCall) {
-        //TODO
+        String functionName = functionCall.getFunctionIdentifier().getName();
+        Function callee = null;
+        for (Function function : functions) {
+            if (function.getName().equals(functionName)) {
+                if (callee != null) {
+                    throw new IllegalTypeException("Ambiguous function call!",
+                                                   functionCall.getPosition());
+                }
+                callee = function;
+            }
+        }
+        if (callee == null) {
+            throw new IllegalTypeException("No such function:" + functionName,
+                                           functionCall.getPosition());
+        }
+        functionCall.setFunction(callee);
+        Expression[] parameterExpressions = functionCall.getParameters();
+        FunctionParameter[] parameters = callee.getParameters();
+        if (parameterExpressions.length != parameters.length) {
+            throw new IllegalTypeException("Wrong number of parameters used!",
+                                            functionCall.getPosition());
+        }
+        for (int i = 0; i < parameters.length; i++) {
+            parameterExpressions[i].accept(this);
+            if (!tempType.equals(parameters[i].getType())) {
+                throw new IllegalTypeException("Wrong type used as parameter!",
+                                               functionCall.getPosition());
+            }
+        }
+        tempType = callee.getReturnType();
     }
 
+    /**
+     * Checks the type correctness of a given reading variable access.
+     * @param variableRead read expression to check
+     */
     public void visit(VariableRead variableRead) {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = variableRead.getVariable();
@@ -155,6 +228,10 @@ public class TypeChecker implements ASTVisitor {
         tempType = value.getType();
     }
 
+    /**
+     * Checks the type correctness of a given reading array access.
+     * @param arrayRead read expression to check
+     */
     public void visit(ArrayRead arrayRead) {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayRead.getVariable();
@@ -172,6 +249,10 @@ public class TypeChecker implements ASTVisitor {
              baseType(value.getType(), indexes.length, arrayRead.getPosition());
     }
 
+    /**
+     * Checks the type correctness of a given function.
+     * @param function function to check
+     */
     public void visit(Function function) {
         currentReturnType = function.getReturnType();
         currentScope = new Scope(null, function.getFunctionBlock(), true);
@@ -190,14 +271,22 @@ public class TypeChecker implements ASTVisitor {
         function.getFunctionBlock().accept(this);
     }
 
+    /**
+     * Checks the type correctness of a given program.
+     * @param program program to check
+     */
     public void visit(Program program) {
-        Function[] functions = program.getFunctions();
+        functions = program.getFunctions();
         for (Function function : functions) {
             function.accept(this);
         }
         program.getMainFunction().accept(this);
     }
 
+    /**
+     * Checks the type correctness of a given variable assignment.
+     * @param assignment assignment to check
+     */
     public void visit(Assignment assignment) {
         assignment.getValue().accept(this);
         HashMap<Identifier, Value> vars = currentScope.getVariables();
@@ -215,26 +304,70 @@ public class TypeChecker implements ASTVisitor {
         }
     }
 
+    /**
+     * Checks the type correctness of a given assertion.
+     * @param assertion assertion to check
+     */
     public void visit(Assertion assertion) {
         assertion.getExpression().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Expression must have bool type!",
+                                            assertion.getPosition());
+        }
     }
 
+    /**
+     * Checks the type correctness of a given assumption.
+     * @param assumption assumption to check
+     */
     public void visit(Assumption assumption) {
         assumption.getExpression().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Expression must have bool type!",
+                                            assumption.getPosition());
+        }
     }
 
+    /**
+     * Checks the type correctness of a given axiom.
+     * @param axiom axiom to check
+     */
     public void visit(Axiom axiom) {
         axiom.getExpression().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Expression must have bool type!",
+                                            axiom.getPosition());
+        }
     }
 
+    /**
+     * Checks the type correctness of a given ensure.
+     * @param ensure ensure to check
+     */
     public void visit(Ensure ensure) {
         ensure.getExpression().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Expression must have bool type!",
+                                            ensure.getPosition());
+        }
     }
 
+    /**
+     * Checks the type correctness of a given invariant.
+     * @param invariant invariant to check
+     */
     public void visit(Invariant invariant) {
         invariant.getExpression().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Expression must have bool type!",
+                                            invariant.getPosition());
+        }
     }
 
+    /**
+     * Checks the type correctness of a given return statement.
+     * @param returnStatement return statement to check
+     */
     public void visit(ReturnStatement returnStatement) {
         if (currentReturnType == null) {
             throw new IllegalTypeException("Main must not have a "
@@ -248,6 +381,10 @@ public class TypeChecker implements ASTVisitor {
         }
     }
 
+    /**
+     * Checks the type correctness of a given variable declaration.
+     * @param varDec declaration to check
+     */
     public void visit(VariableDeclaration varDec) {
         currentScope.createVar(varDec.getName(), null, varDec.getType());
         varDec.getValue().accept(this);
@@ -258,6 +395,10 @@ public class TypeChecker implements ASTVisitor {
         }
     }
 
+    /**
+     * Checks the type correctness of a given array declaration.
+     * @param arrDec declaration to check
+     */
     public void visit(ArrayDeclaration arrDec) {
         ArithmeticExpression[] indexes = arrDec.getIndexes();
         for (ArithmeticExpression index : indexes) {
@@ -270,20 +411,66 @@ public class TypeChecker implements ASTVisitor {
         currentScope.createArray(arrDec.getName(), arrDec.getType(), lengths);
     }
 
+    /**
+     * Checks the type correctness of a given exists quantifier.
+     * @param existsQuantifier quantifier to check
+     */
     public void visit(ExistsQuantifier existsQuantifier) {
-        currentScope = new Scope(currentScope, null, false);
-        if (existsQuantifier.getExpression() != null) {
-
-        } else {
-            //existsQuantifier.getSubexpression() != null
+        if (existsQuantifier.getRange() != null) {
+            existsQuantifier.getRange().getLowerBound().accept(this);
+            Type tempType1 = tempType;
+            existsQuantifier.getRange().getUpperBound().accept(this);
+            if (!(tempType instanceof IntegerType)
+                        || !(tempType1 instanceof IntegerType)) {
+                throw new IllegalTypeException("Range bounds must be integer "
+                                               + "expressions!",
+                                                existsQuantifier.getPosition());
+            }
         }
-        //TODO
+        currentScope = new Scope(currentScope, null, false);
+        currentScope.createVar(existsQuantifier.getIdentifier().getName(),
+                                null, new IntegerType());
+        existsQuantifier.getSubexpression1().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Subexpression must have bool type!",
+                                            existsQuantifier.getPosition());
+        }
+        currentScope = currentScope.getParent();
+        tempType = new BooleanType();
     }
 
+    /**
+     * Checks the type correctness of a given for all quantifier.
+     * @param forAllQuantifier quantifier to check
+     */
     public void visit(ForAllQuantifier forAllQuantifier) {
-        //TODO
+        if (forAllQuantifier.getRange() != null) {
+            forAllQuantifier.getRange().getLowerBound().accept(this);
+            Type tempType1 = tempType;
+            forAllQuantifier.getRange().getUpperBound().accept(this);
+            if (!(tempType instanceof IntegerType)
+                        || !(tempType1 instanceof IntegerType)) {
+                throw new IllegalTypeException("Range bounds must be integer "
+                                               + "expressions!",
+                                                forAllQuantifier.getPosition());
+            }
+        }
+        currentScope = new Scope(currentScope, null, false);
+        currentScope.createVar(forAllQuantifier.getIdentifier().getName(),
+                                null, new IntegerType());
+        forAllQuantifier.getSubexpression1().accept(this);
+        if (!(tempType instanceof BooleanType)) {
+            throw new IllegalTypeException("Subexpression must have bool type!",
+                                            forAllQuantifier.getPosition());
+        }
+        currentScope = currentScope.getParent();
+        tempType = new BooleanType();
     }
 
+    /**
+     * Checks the type correctness of a given statement block.
+     * @param statementBlock statement block to check
+     */
     public void visit(StatementBlock statementBlock) {
         Statement currentStatement = statementBlock.getNextStatement();
         while (currentStatement != null) {
@@ -292,6 +479,10 @@ public class TypeChecker implements ASTVisitor {
         }
     }
 
+    /**
+     * Checks the type correctness of a given length function call.
+     * @param length length function call to check
+     */
     public void visit(Length length) {
         length.getArray().accept(this);
         if (!(tempType instanceof ArrayType)) {

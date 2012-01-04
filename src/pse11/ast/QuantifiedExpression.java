@@ -28,7 +28,7 @@ public abstract class QuantifiedExpression extends LogicalExpression {
      */
     protected QuantifiedExpression(Position position, Identifier identifier,
                                 Range range,
-                                LogicalExpression subexpression) {
+                                Expression subexpression) {
         super(position, subexpression, null, null);
         this.identifier = identifier;
         this.range = range;
