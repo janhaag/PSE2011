@@ -1,3 +1,5 @@
+package ast;
+
 /**
  * A range for bounded quantifiers.
  */
@@ -5,12 +7,12 @@ public class Range {
     /**
      * the lower bound for the quantifier.
      */
-    private ArithmeticExpression lower;
+    private final ArithmeticExpression lower;
 
     /**
      * the upper bound for the quantifier.
      */
-    private ArithmeticExpression upper;
+    private final ArithmeticExpression upper;
 
     /**
      * Create a new Range.
@@ -38,3 +40,4 @@ public class Range {
     public ArithmeticExpression getUpperBound() {
         return upper;
     }
+}

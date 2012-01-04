@@ -6,20 +6,11 @@ package ast;
  * It contains either a quantified expression itself or
  * a quantifier-free logical expression.
  */
-public abstract class QuantifiedExpression extends Expression {
+public abstract class QuantifiedExpression extends LogicalExpression {
     /**
      * The range of this quantifier (null if unbounded)
      */
-    private Range range;
-
-    /**
-     * quantified subexpression to be satisfied (if not null)
-     */
-    private final QuantifiedExpression subexpression;
-    /**
-     * quantifier-free expression to be satisfied (if not null)
-     */
-    private final LogicalExpression expression;
+    private final Range range;
     /**
      * identifier that is varied in the quantified expression
      */
@@ -27,48 +18,20 @@ public abstract class QuantifiedExpression extends Expression {
 
     /**
      * Constructor.
-     * Either parameter subexpression or expression has to be null.
      *
      * @param position indicates the position of this element
      *                 in the original source code
      * @param range The range for bounded quantification
      *              (null if this quantifier is unbounded)
      * @param identifier identifier that is varied in the formula
-     * @param subexpression quantified subexpression to be satisfied
-     *                      (if not null)
-     * @param expression quantifier-free expression to be satisfied
-     *                   (if not null)
+     * @param subexpression subexpression to be satisfied
      */
     protected QuantifiedExpression(Position position, Identifier identifier,
                                 Range range,
-                                QuantifiedExpression subexpression,
-                                LogicalExpression expression) {
-        super(position);
-        if (!(expression == null ^ subexpression == null)) {
-            throw new IllegalArgumentException(
-                    "Either expression or subexpression must be null."
-            );
-        }
+                                LogicalExpression subexpression) {
+        super(position, subexpression, null, null);
         this.identifier = identifier;
         this.range = range;
-        this.subexpression = subexpression;
-        this.expression = expression;
-    }
-
-    /**
-     * Returns the quantified subexpression.
-     * @return quantified subexpression
-     */
-    public QuantifiedExpression getSubexpression() {
-        return subexpression;
-    }
-
-    /**
-     * Returns the quantifier-free subexpression.
-     * @return quantifier-free subexpression
-     */
-    public LogicalExpression getExpression() {
-        return expression;
     }
 
     /**
