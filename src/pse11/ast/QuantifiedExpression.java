@@ -21,13 +21,13 @@ public abstract class QuantifiedExpression extends LogicalExpression {
      *
      * @param position indicates the position of this element
      *                 in the original source code
+     * @param identifier identifier that is varied in the formula
      * @param range The range for bounded quantification
      *              (null if this quantifier is unbounded)
-     * @param identifier identifier that is varied in the formula
      * @param subexpression subexpression to be satisfied
      */
-    protected QuantifiedExpression(Position position, Identifier identifier,
-                                Range range,
+    protected QuantifiedExpression(Position position, Range range,
+                                Identifier identifier,
                                 Expression subexpression) {
         super(position, subexpression, null, null);
         this.identifier = identifier;

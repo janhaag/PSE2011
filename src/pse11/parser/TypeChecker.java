@@ -404,6 +404,12 @@ public class TypeChecker implements ASTVisitor {
         for (ArithmeticExpression index : indexes) {
             index.accept(this);
         }
+        if (baseType(arrDec.getType(), indexes.length, arrDec.getPosition())
+                instanceof ArrayType) {
+            throw new IllegalTypeException("Type of array declaration does not"
+                                           + "match the number of indexes",
+                                           arrDec.getPosition());
+        }
         int[] lengths = new int[indexes.length];
         for (int i = 0; i < lengths.length; i++) {
             lengths[i] = 1;

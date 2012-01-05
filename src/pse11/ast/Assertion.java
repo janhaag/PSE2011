@@ -15,7 +15,7 @@ public class Assertion extends Specification {
      * @param expression expression that must be true for the assertion
      *                   to be correct
      */
-    public Assertion(Position position, LogicalExpression expression) {
+    public Assertion(Position position, Expression expression) {
         super(position, expression);
     }
 

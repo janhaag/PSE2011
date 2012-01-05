@@ -14,7 +14,7 @@ public class Axiom extends Specification {
      *                 in the original source code
      * @param expression the expression that is given to be true
      */
-    public Axiom(Position position, LogicalExpression expression) {
+    public Axiom(Position position, Expression expression) {
         super(position, expression);
     }
 

@@ -14,7 +14,7 @@ public class Ensure extends Specification {
      *                 in the original source code
      * @param expression formula that must hold
      */
-    public Ensure(Position position, LogicalExpression expression) {
+    public Ensure(Position position, Expression expression) {
         super(position, expression);
     }
 
