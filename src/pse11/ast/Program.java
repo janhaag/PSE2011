@@ -29,7 +29,8 @@ public class Program extends ASTRoot {
      * @param mainFunction main function
      * @param axioms global axioms
      */
-    public Program(Position position, Function[] functions, Function mainFunction, Axiom[] axioms) {
+    public Program(Position position, Function[] functions,
+                   Function mainFunction, Axiom[] axioms) {
         super(position);
         this.functions = functions;
         this.mainFunction = mainFunction;

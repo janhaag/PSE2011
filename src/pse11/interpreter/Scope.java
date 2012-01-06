@@ -72,7 +72,7 @@ public class Scope {
     /**
      * Adds all non-shadowed variables to parameter vars and searches
      * the parent scope for more (if variableSearch is true).
-     * @param vars
+     * @param vars HashMap to which found variables are mapped
      */
     private void addVars(HashMap<Identifier, Value> vars) {
         vars.putAll(variables);

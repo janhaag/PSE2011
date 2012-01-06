@@ -1,19 +1,22 @@
 grammar WhileLanguage;
 
 @header {
-	package pse2011.parser;
-	import pse2011.ast.*;
+	package parser;
+	import ast.*;
 	import java.util.LinkedList;
 }
 
 @lexer::header {
-	package pse2011.parser;
+	package parser;
 }
 
-program
-    @init {LinkedList<Assumption> as = new LinkedList<Assumption>();
+program returns [ ASTRoot ast ]
+    @init {LinkedList<Axiom> as = new LinkedList<Axiom>();
      	   LinkedList<Function> funcs = new LinkedList<Function>();}
-        : assume_statement* ( f=method_declaration {funcs.add((Function) f);} )* main_method
+        : (a=assume_statement {as.add(new Axiom(new Position(), (Expression) a));})*
+        ( f=method_declaration {funcs.add((Function) f);} )* main_method
+        {$ast = new Program(new Position(), funcs.toArray(new Function[funcs.size()]),
+        		    (Function) $main_method.ast, as.toArray(new Axiom[funcs.size()]));}
         ;
 
 single_expression returns [ ASTRoot ast ]
@@ -22,22 +25,41 @@ single_expression returns [ ASTRoot ast ]
 
 method_declaration returns [ ASTRoot ast ]
         : type IDENT '(' parameter_list? ')' method_body
+        {FunctionParameter[] params = new FunctionParameter[0];
+        if ($parameter_list.params != null)
+        	params = $parameter_list.params.toArray(new FunctionParameter[$parameter_list.params.size()]);
+        $ast = new Function(new Position(), $type.type, $IDENT.text, params, (StatementBlock) $method_body.ast[1][0],
+        	(Assumption[]) $method_body.ast[0], (Ensure[]) $method_body.ast[2]);}
         ;
 
 main_method returns [ ASTRoot ast ]
         : 'main' '(' parameter_list? ')' method_body
+        {FunctionParameter[] params = new FunctionParameter[0];
+        if ($parameter_list.params != null)
+        	params = $parameter_list.params.toArray(new FunctionParameter[$parameter_list.params.size()]);
+        $ast = new Function(new Position(), null, "main", params, (StatementBlock) $method_body.ast[1][0],
+        	(Assumption[]) $method_body.ast[0], (Ensure[]) $method_body.ast[2]);}
         ;
 
-parameter_list returns [ ASTRoot ast ]
-        : parameter ( ',' parameter )*
+parameter_list returns [ LinkedList<FunctionParameter> params ]
+    @init {params = new LinkedList<FunctionParameter>();}
+        : p1=parameter {params.add(p1);} ( ',' p2=parameter {params.add(p2);})*
         ;
 
-parameter returns [ Parameter param ]
+parameter returns [ FunctionParameter param ]
         : type IDENT {$param = new FunctionParameter($IDENT.text, $type.type);}
         ;
 
-method_body returns [ ASTRoot ast ]
-        : '{' assume_statement* statement_block ensure_statement* '}'
+method_body returns [ ASTRoot[\][\] ast ]
+    @init {LinkedList<Assumption> as = new LinkedList<Assumption>();
+        LinkedList<Ensure> es = new LinkedList<Ensure>();}
+        : '{' (a=assume_statement {as.add(new Assumption(new Position(), (Expression) a));})*
+        statement_block 
+        (e=ensure_statement {es.add((Ensure) e);})* '}'
+        {$ast = new ASTRoot[3][];
+        $ast[0] = as.toArray(new Assumption[as.size()]);
+        $ast[1] = new ASTRoot[]{$statement_block.ast};
+        $ast[0] = es.toArray(new Ensure[es.size()]);}
         ;
 
 statement returns [ ASTRoot ast ]
@@ -47,7 +69,7 @@ statement returns [ ASTRoot ast ]
         | assignment {$ast = $assignment.ast;}
         | if_statement {$ast = $if_statement.ast;}
         | while_statement {$ast = $while_statement.ast;}
-        | 'return' expression ';'
+        | 'return' expression ';' {$ast = new ReturnStatement(new Position(), (Expression) $expression.ast);}
         ;
 
 invariant_statement returns [ ASTRoot ast ]
@@ -59,7 +81,7 @@ assert_statement returns [ ASTRoot ast ]
         ;
 
 assume_statement returns [ ASTRoot ast ]
-        : 'assume' quantified_expression ';'
+        : 'assume' quantified_expression ';' {$ast = $quantified_expression.ast;}
         ;
 
 ensure_statement returns [ ASTRoot ast ]
@@ -67,16 +89,17 @@ ensure_statement returns [ ASTRoot ast ]
         ;
 
 assignment returns [ ASTRoot ast ]
-    @init {LinkedList<Expression> l = new LinkedList<Expression>();}
-        : IDENT ( '[' e=expression ']' {l.add((Expression) e);} )* '=' value=expression ';'
-        {if (l.isEmpty) $ast = new Assignment(new Position(), (Expression) value, new Identifier($IDENT.text));
+    @init {LinkedList<ArithmeticExpression> l = new LinkedList<ArithmeticExpression>();}
+        : IDENT ( '[' e=expression ']' {if (e instanceof ArithmeticExpression) l.add((ArithmeticExpression) e);
+        				else throw new RuntimeException("TODO");} )* '=' value=expression ';'
+        {if (l.isEmpty()) $ast = new Assignment(new Position(), (Expression) value, new Identifier($IDENT.text));
         	else $ast = new ArrayAssignment(new Position(), (Expression) value, new Identifier($IDENT.text),
-         					l.toArray(new Expression[l.size()]));}
+         					l.toArray(new ArithmeticExpression[l.size()]));}
         ;
 
 variable_declaration returns [ ASTRoot ast ]
         : type IDENT ( '=' expression )? ';'
-        {$ast = new VariableDeclaration(new Position(), $Ident.text, (Expression) $expression.ast, $type.type);}
+        {$ast = new VariableDeclaration(new Position(), $IDENT.text, (Expression) $expression.ast, $type.type);}
         ;
 
 array_declaration returns [ ASTRoot ast ]
@@ -84,15 +107,22 @@ array_declaration returns [ ASTRoot ast ]
         ;
 
 if_statement returns [ ASTRoot ast ]
-        : 'if' '(' expression ')' statement_block ( 'else' statement_block )?
+        : 'if' '(' expression ')' s1=statement_block ( 'else' s2=statement_block )?
         ;
         
 while_statement returns [ ASTRoot ast ]
         : 'while' '(' expression ')' loop_body
+        {$ast = new Loop(new Position(), (Expression) $expression.ast,
+        		 (StatementBlock) $loop_body.ast[1][0], (Invariant[]) $loop_body.ast[0]);}
         ;
 
-loop_body returns [ ASTRoot ast ]
-        : '{' invariant_statement* statement_block ensure_statement* '}'
+loop_body returns [ ASTRoot[\][\] ast ]
+    @init {LinkedList<Invariant> is = new LinkedList<Invariant>();}
+        : '{' (i=invariant_statement {is.add((Invariant) i);})*
+        statement_block '}'
+        {$ast = new ASTRoot[2][];
+        $ast[0] = is.toArray(new Invariant[is.size()]);
+        $ast[1] = new ASTRoot[]{$statement_block.ast};}
         ;
 
 statement_block returns [ ASTRoot ast ]
@@ -104,9 +134,9 @@ statement_block returns [ ASTRoot ast ]
 quantified_expression returns [ ASTRoot ast ]
         : quantifier IDENT '(' range? ')' qe=quantified_expression
         {if ("forall".equals($quantifier.text)) $ast = new ForAllQuantifier(new Position(), $range.range,
-       						 new Identifier($IDENT.text), (Expression) qe.ast);
+       						 new Identifier($IDENT.text), (Expression) qe);
    	 else $ast = new ExistsQuantifier(new Position(), $range.range, new Identifier($IDENT.text), 
-        				   (Expression) $qe.ast);}
+        				   (Expression) qe);}
         | expression {$ast = $expression.ast;}
         ;
 
@@ -120,24 +150,61 @@ range returns [ Range range ]
         ;
 
 expression returns [ ASTRoot ast ]
-        : rel_expression ( ( '==' | '!=' ) rel_expression )*
+        : r1=rel_expression {$ast = r1;}
+        ( ( '==' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) r2, new Equal());}
+        | '!=' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) r2, new NotEqual());})
+        r2=rel_expression )*
         ;
 
 
 rel_expression returns [ ASTRoot ast ]
-        : add_expression ( ( '<' | '<=' | '>' | '>=' ) add_expression )*
+        : a1=add_expression {$ast = a1;}
+        ( ( '<' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) a2, new Less());}
+        | '<=' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) a2, new LessEqual());}
+        | '>' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) a2, new Greater());}
+        | '>=' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) a2, new GreaterEqual());})
+        a2=add_expression )*
         ;
 
 add_expression returns [ ASTRoot ast ]
-        : mul_expression ( ( '|' | '+' | '-' ) mul_expression )*
+        : m1=mul_expression {$ast = m1;}
+        ( ( '|' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) m2, new Disjunction());}
+        | '+' {$ast = new ArithmeticExpression(new Position(), (Expression) $ast,
+        	(Expression) m2, new Addition());}
+        | '-' {$ast = new ArithmeticExpression(new Position(), (Expression) $ast,
+        	(Expression) m2, new Subtraction());})
+        m2=mul_expression )*
         ;
 
 mul_expression returns [ ASTRoot ast ]
-        : unary_expression ( ('&' | '*' | '/' | '%') unary_expression )*
+        : u1=unary_expression {$ast = u1;}
+        ( ('&' {$ast = new LogicalExpression(new Position(), (Expression) $ast,
+        	(Expression) u2, new Conjunction());}
+        | '*' {$ast = new ArithmeticExpression(new Position(), (Expression) $ast,
+        	(Expression) u2, new Multiplication());}
+        | '/' {$ast = new ArithmeticExpression(new Position(), (Expression) $ast,
+        	(Expression) u2, new Division());}
+        | '%' {$ast = new ArithmeticExpression(new Position(), (Expression) $ast,
+        	(Expression) u2, new Modulo());})
+        u2=unary_expression )* 
         ;
 
 unary_expression returns [ ASTRoot ast ]
-        : ( '!' | '+' | '-' )? parenthesized_expression
+   @init {boolean isLogical = false; ArithmeticOperator op = null;}
+        : ( '!' {isLogical = true;}
+        | '+'
+        | '-' {op = new UnaryMinus();})?
+        parenthesized_expression
+        {if (isLogical) $ast = new LogicalExpression(new Position(), (Expression) $parenthesized_expression.ast, null, new Negation());
+        else if (op != null) $ast = new ArithmeticExpression(new Position(), (Expression) $parenthesized_expression.ast, null, op);
+        else $ast = $parenthesized_expression.ast;}
         ;
 
 parenthesized_expression returns [ ASTRoot ast ]
@@ -151,8 +218,8 @@ parenthesized_expression returns [ ASTRoot ast ]
 function_call returns [ ASTRoot ast ]
         : IDENT '(' arglist? ')' {
         	Expression[] params = new Expression[0];
-        	if ($arglist.params != null) params = $arglist.params.toArray(new Expression[arglist.size()]);
-        	$ast = new FuntionCall($IDENT.text, params , new Position());}
+        	if ($arglist.params != null) params = $arglist.params.toArray(new Expression[$arglist.params.size()]);
+        	$ast = new FunctionCall(new Identifier($IDENT.text), params , new Position());}
         ;
 
 arglist returns [ LinkedList<Expression> params ]
@@ -166,12 +233,12 @@ array_read returns [ ASTRoot ast ]
         				else throw new RuntimeException("TODO");} ']' 
         	( '[' e2=expression {if ($e2.ast instanceof ArithmeticExpression) l.add((ArithmeticExpression)e2);
         				else throw new RuntimeException("TODO");} ']' )* 
-        {$ast = new ArrayRead(new Position(), new Identifier($IDENT), l.toArray(new ArithmeticExpression[l.size()]));}
+        {$ast = new ArrayRead(new Position(), new Identifier($IDENT.text), l.toArray(new ArithmeticExpression[l.size()]));}
         ;
 
 literal_expression returns [ ASTRoot ast ]
-        : INT_LITERAL {$ast = new NumericLiteral($INT_LITERAL.text, new Position());}
-        | BOOL_LITERAL {$ast = new BooleanLiteral($BOOL_LITERAL.text, new Position());}
+        : INT_LITERAL {$ast = new NumericLiteral(new Position(), $INT_LITERAL.text);}
+        | BOOL_LITERAL {$ast = new BooleanLiteral(new Position(), $BOOL_LITERAL.text);}
         ;
 
 type returns [ Type type ]

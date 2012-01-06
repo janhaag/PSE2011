@@ -9,7 +9,7 @@ public class Loop extends Statement {
     /**
      * condition to be checked
      */
-    private final LogicalExpression condition;
+    private final Expression condition;
     /**
      * statement block executed while condition holds true
      */
@@ -28,7 +28,7 @@ public class Loop extends Statement {
      * @param body loop body
      * @param invariants list of loop invariants
      */
-    public Loop(Position position, LogicalExpression condition,
+    public Loop(Position position, Expression condition,
                 StatementBlock body, Invariant[] invariants) {
         super(position);
         this.condition = condition;
@@ -48,7 +48,7 @@ public class Loop extends Statement {
      * Returns the loop condition.
      * @return loop condition
      */
-    public LogicalExpression getCondition() {
+    public Expression getCondition() {
         return condition;
     }
 

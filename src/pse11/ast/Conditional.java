@@ -9,7 +9,7 @@ public class Conditional extends Statement {
     /**
      * condition to be checked
      */
-    private final LogicalExpression condition;
+    private final Expression condition;
     /**
      * statement block execution if condition is evaluated to true
      */
@@ -28,7 +28,7 @@ public class Conditional extends Statement {
      * @param trueStatements statements executed if condition is true
      * @param falseStatements statements executed if condition is false
      */
-    public Conditional(Position position, LogicalExpression condition,
+    public Conditional(Position position, Expression condition,
                        StatementBlock trueStatements,
                        StatementBlock falseStatements) {
         super(position);
@@ -41,7 +41,7 @@ public class Conditional extends Statement {
      * Returns the condition of this if-statement
      * @return condition of this if-statement
      */
-    public LogicalExpression getCondition() {
+    public Expression getCondition() {
         return condition;
     }
 

@@ -1,5 +1,6 @@
 package ast;
 
+import interpreter.ASTVisitor;
 import interpreter.IntegerValue;
 import interpreter.Value;
 
@@ -30,5 +31,10 @@ public class NumericLiteral extends ArithmeticExpression {
      */
     public Value getValue() {
         return value;
+    }
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+        visitor.visit(this);
     }
 }

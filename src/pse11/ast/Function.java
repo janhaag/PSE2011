@@ -33,6 +33,7 @@ public class Function extends ASTRoot {
     
     @Override
     public void accept(ASTVisitor visitor) {
+        visitor.visit(this);
     }
 
     /**
