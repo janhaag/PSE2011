@@ -13,6 +13,7 @@ public class AboutFrame extends Frame implements MiscFrame {
 		
 		shell = new Shell(parentShell);
 		shell.setSize(200,200);
+		shell.setText("About");
 		shell.open();
 	}
 	@Override

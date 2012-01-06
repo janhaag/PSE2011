@@ -13,6 +13,7 @@ public class HelpFrame extends Frame implements MiscFrame{
 		
 		shell = new Shell(parentShell);
 		shell.setSize(200,200);
+		shell.setText("Help");
 		shell.open();
 	}
 	@Override
