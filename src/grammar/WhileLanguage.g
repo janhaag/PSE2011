@@ -103,11 +103,17 @@ variable_declaration returns [ ASTRoot ast ]
         ;
 
 array_declaration returns [ ASTRoot ast ]
-        : type IDENT ( '[' expression ']' )+ ';'
+    @init {LinkedList<ArithmeticExpression> indexes = new LinkedList<ArithmeticExpression>();}
+        : type IDENT ( '[' e=expression {if (e instanceof ArithmeticExpression) indexes.add((ArithmeticExpression) e);
+        				 else throw new RuntimeException("TODO");} ']' )+ ';'
+        {$ast = new ArrayDeclaration(new Position(), $IDENT.text, $type.type,
+        	indexes.toArray(new ArithmeticExpression[indexes.size()]));}
         ;
 
 if_statement returns [ ASTRoot ast ]
         : 'if' '(' expression ')' s1=statement_block ( 'else' s2=statement_block )?
+        {$ast = new Conditional(new Position(), (Expression) $expression.ast,
+        	(StatementBlock) s1, (StatementBlock) s2);}
         ;
         
 while_statement returns [ ASTRoot ast ]

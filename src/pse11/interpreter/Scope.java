@@ -4,6 +4,7 @@ import ast.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * This class represents a scope in a user program,
@@ -75,7 +76,12 @@ public class Scope {
      * @param vars HashMap to which found variables are mapped
      */
     private void addVars(HashMap<Identifier, Value> vars) {
-        vars.putAll(variables);
+        Set<Identifier> identifiers = variables.keySet();
+        for (Identifier identifier : identifiers) {
+            if (!vars.containsKey(identifier)) {
+                vars.put(identifier, variables.get(identifier));
+            }
+        }
         if (variableSearch) {
             upScope.addVars(vars);
         }

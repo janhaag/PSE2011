@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-06 12:17:34
+// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-06 14:28:30
 
 	package parser;
 	import ast.*;
@@ -70,14 +70,14 @@ public class WhileLanguageParser extends DebugParser {
 
 
 public static final String[] ruleNames = new String[] {
-    "invalidRule", "while_statement", "assert_statement", "main_method", 
-    "if_statement", "method_body", "program", "add_expression", "literal_expression", 
-    "single_expression", "statement", "ensure_statement", "method_declaration", 
-    "assignment", "quantified_expression", "parameter", "parameter_list", 
-    "function_call", "variable_declaration", "unary_expression", "mul_expression", 
-    "assume_statement", "type", "quantifier", "expression", "rel_expression", 
-    "invariant_statement", "loop_body", "array_read", "array_declaration", 
-    "parenthesized_expression", "statement_block", "arglist", "range"
+    "invalidRule", "parameter_list", "assignment", "parenthesized_expression", 
+    "parameter", "unary_expression", "main_method", "mul_expression", "loop_body", 
+    "single_expression", "type", "assert_statement", "method_body", "literal_expression", 
+    "if_statement", "array_read", "assume_statement", "quantified_expression", 
+    "quantifier", "array_declaration", "variable_declaration", "statement", 
+    "program", "statement_block", "method_declaration", "arglist", "range", 
+    "add_expression", "function_call", "rel_expression", "while_statement", 
+    "invariant_statement", "expression", "ensure_statement"
 };
 
 public static final boolean[] decisionCanBacktrack = new boolean[] {
@@ -1475,32 +1475,39 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "array_declaration"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:105:1: array_declaration returns [ ASTRoot ast ] : type IDENT ( '[' expression ']' )+ ';' ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:105:1: array_declaration returns [ ASTRoot ast ] : type IDENT ( '[' e= expression ']' )+ ';' ;
     public final ASTRoot array_declaration() throws RecognitionException {
         ASTRoot ast = null;
 
 
+        Token IDENT27=null;
+        ASTRoot e =null;
+
+        Type type28 =null;
+
+
+        LinkedList<ArithmeticExpression> indexes = new LinkedList<ArithmeticExpression>();
         try { dbg.enterRule(getGrammarFileName(), "array_declaration");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
         dbg.location(105, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:106:9: ( type IDENT ( '[' expression ']' )+ ';' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:107:9: ( type IDENT ( '[' e= expression ']' )+ ';' )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:106:11: type IDENT ( '[' expression ']' )+ ';'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:107:11: type IDENT ( '[' e= expression ']' )+ ';'
             {
-            dbg.location(106,11);
-            pushFollow(FOLLOW_type_in_array_declaration784);
-            type();
+            dbg.location(107,11);
+            pushFollow(FOLLOW_type_in_array_declaration793);
+            type28=type();
 
             state._fsp--;
 
-            dbg.location(106,16);
-            match(input,IDENT,FOLLOW_IDENT_in_array_declaration786); 
-            dbg.location(106,22);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:106:22: ( '[' expression ']' )+
+            dbg.location(107,16);
+            IDENT27=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_declaration795); 
+            dbg.location(107,22);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:107:22: ( '[' e= expression ']' )+
             int cnt11=0;
             try { dbg.enterSubRule(11);
 
@@ -1522,18 +1529,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:106:24: '[' expression ']'
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:107:24: '[' e= expression ']'
             	    {
-            	    dbg.location(106,24);
-            	    match(input,27,FOLLOW_27_in_array_declaration790); 
-            	    dbg.location(106,28);
-            	    pushFollow(FOLLOW_expression_in_array_declaration792);
-            	    expression();
+            	    dbg.location(107,24);
+            	    match(input,27,FOLLOW_27_in_array_declaration799); 
+            	    dbg.location(107,29);
+            	    pushFollow(FOLLOW_expression_in_array_declaration803);
+            	    e=expression();
 
             	    state._fsp--;
 
-            	    dbg.location(106,39);
-            	    match(input,28,FOLLOW_28_in_array_declaration794); 
+            	    dbg.location(107,41);
+            	    if (e instanceof ArithmeticExpression) indexes.add((ArithmeticExpression) e);
+            	            				 else throw new RuntimeException("TODO");
+            	    dbg.location(108,56);
+            	    match(input,28,FOLLOW_28_in_array_declaration807); 
 
             	    }
             	    break;
@@ -1550,109 +1560,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             } while (true);
             } finally {dbg.exitSubRule(11);}
 
-            dbg.location(106,46);
-            match(input,20,FOLLOW_20_in_array_declaration799); 
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-
-        finally {
-        	// do for sure before leaving
-        }
-        dbg.location(107, 8);
-
-        }
-        finally {
-            dbg.exitRule(getGrammarFileName(), "array_declaration");
-            decRuleLevel();
-            if ( getRuleLevel()==0 ) {dbg.terminate();}
-        }
-
-        return ast;
-    }
-    // $ANTLR end "array_declaration"
-
-
-
-    // $ANTLR start "if_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:109:1: if_statement returns [ ASTRoot ast ] : 'if' '(' expression ')' s1= statement_block ( 'else' s2= statement_block )? ;
-    public final ASTRoot if_statement() throws RecognitionException {
-        ASTRoot ast = null;
-
-
-        ASTRoot s1 =null;
-
-        ASTRoot s2 =null;
-
-
-        try { dbg.enterRule(getGrammarFileName(), "if_statement");
-        if ( getRuleLevel()==0 ) {dbg.commence();}
-        incRuleLevel();
-        dbg.location(109, 0);
-
-        try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:110:9: ( 'if' '(' expression ')' s1= statement_block ( 'else' s2= statement_block )? )
-            dbg.enterAlt(1);
-
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:110:11: 'if' '(' expression ')' s1= statement_block ( 'else' s2= statement_block )?
-            {
-            dbg.location(110,11);
-            match(input,36,FOLLOW_36_in_if_statement828); 
-            dbg.location(110,16);
-            match(input,13,FOLLOW_13_in_if_statement830); 
-            dbg.location(110,20);
-            pushFollow(FOLLOW_expression_in_if_statement832);
-            expression();
-
-            state._fsp--;
-
-            dbg.location(110,31);
-            match(input,14,FOLLOW_14_in_if_statement834); 
-            dbg.location(110,37);
-            pushFollow(FOLLOW_statement_block_in_if_statement838);
-            s1=statement_block();
-
-            state._fsp--;
-
-            dbg.location(110,54);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:110:54: ( 'else' s2= statement_block )?
-            int alt12=2;
-            try { dbg.enterSubRule(12);
-            try { dbg.enterDecision(12, decisionCanBacktrack[12]);
-
-            int LA12_0 = input.LA(1);
-
-            if ( (LA12_0==32) ) {
-                alt12=1;
-            }
-            } finally {dbg.exitDecision(12);}
-
-            switch (alt12) {
-                case 1 :
-                    dbg.enterAlt(1);
-
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:110:56: 'else' s2= statement_block
-                    {
-                    dbg.location(110,56);
-                    match(input,32,FOLLOW_32_in_if_statement842); 
-                    dbg.location(110,65);
-                    pushFollow(FOLLOW_statement_block_in_if_statement846);
-                    s2=statement_block();
-
-                    state._fsp--;
-
-
-                    }
-                    break;
-
-            }
-            } finally {dbg.exitSubRule(12);}
-
+            dbg.location(108,63);
+            match(input,20,FOLLOW_20_in_array_declaration812); 
+            dbg.location(109,9);
+            ast = new ArrayDeclaration(new Position(), (IDENT27!=null?IDENT27.getText():null), type28,
+                    	indexes.toArray(new ArithmeticExpression[indexes.size()]));
 
             }
 
@@ -1669,60 +1581,96 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
         }
         finally {
-            dbg.exitRule(getGrammarFileName(), "if_statement");
+            dbg.exitRule(getGrammarFileName(), "array_declaration");
             decRuleLevel();
             if ( getRuleLevel()==0 ) {dbg.terminate();}
         }
 
         return ast;
     }
-    // $ANTLR end "if_statement"
+    // $ANTLR end "array_declaration"
 
 
 
-    // $ANTLR start "while_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:113:1: while_statement returns [ ASTRoot ast ] : 'while' '(' expression ')' loop_body ;
-    public final ASTRoot while_statement() throws RecognitionException {
+    // $ANTLR start "if_statement"
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:113:1: if_statement returns [ ASTRoot ast ] : 'if' '(' expression ')' s1= statement_block ( 'else' s2= statement_block )? ;
+    public final ASTRoot if_statement() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        ASTRoot expression27 =null;
+        ASTRoot s1 =null;
 
-        ASTRoot[][] loop_body28 =null;
+        ASTRoot s2 =null;
+
+        ASTRoot expression29 =null;
 
 
-        try { dbg.enterRule(getGrammarFileName(), "while_statement");
+        try { dbg.enterRule(getGrammarFileName(), "if_statement");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
         dbg.location(113, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:114:9: ( 'while' '(' expression ')' loop_body )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:114:9: ( 'if' '(' expression ')' s1= statement_block ( 'else' s2= statement_block )? )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:114:11: 'while' '(' expression ')' loop_body
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:114:11: 'if' '(' expression ')' s1= statement_block ( 'else' s2= statement_block )?
             {
             dbg.location(114,11);
-            match(input,41,FOLLOW_41_in_while_statement886); 
-            dbg.location(114,19);
-            match(input,13,FOLLOW_13_in_while_statement888); 
-            dbg.location(114,23);
-            pushFollow(FOLLOW_expression_in_while_statement890);
-            expression27=expression();
+            match(input,36,FOLLOW_36_in_if_statement851); 
+            dbg.location(114,16);
+            match(input,13,FOLLOW_13_in_if_statement853); 
+            dbg.location(114,20);
+            pushFollow(FOLLOW_expression_in_if_statement855);
+            expression29=expression();
 
             state._fsp--;
 
-            dbg.location(114,34);
-            match(input,14,FOLLOW_14_in_while_statement892); 
-            dbg.location(114,38);
-            pushFollow(FOLLOW_loop_body_in_while_statement894);
-            loop_body28=loop_body();
+            dbg.location(114,31);
+            match(input,14,FOLLOW_14_in_if_statement857); 
+            dbg.location(114,37);
+            pushFollow(FOLLOW_statement_block_in_if_statement861);
+            s1=statement_block();
 
             state._fsp--;
+
+            dbg.location(114,54);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:114:54: ( 'else' s2= statement_block )?
+            int alt12=2;
+            try { dbg.enterSubRule(12);
+            try { dbg.enterDecision(12, decisionCanBacktrack[12]);
+
+            int LA12_0 = input.LA(1);
+
+            if ( (LA12_0==32) ) {
+                alt12=1;
+            }
+            } finally {dbg.exitDecision(12);}
+
+            switch (alt12) {
+                case 1 :
+                    dbg.enterAlt(1);
+
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:114:56: 'else' s2= statement_block
+                    {
+                    dbg.location(114,56);
+                    match(input,32,FOLLOW_32_in_if_statement865); 
+                    dbg.location(114,65);
+                    pushFollow(FOLLOW_statement_block_in_if_statement869);
+                    s2=statement_block();
+
+                    state._fsp--;
+
+
+                    }
+                    break;
+
+            }
+            } finally {dbg.exitSubRule(12);}
 
             dbg.location(115,9);
-            ast = new Loop(new Position(), (Expression) expression27,
-                    		 (StatementBlock) loop_body28[1][0], (Invariant[]) loop_body28[0]);
+            ast = new Conditional(new Position(), (Expression) expression29,
+                    	(StatementBlock) s1, (StatementBlock) s2);
 
             }
 
@@ -1739,6 +1687,76 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
         }
         finally {
+            dbg.exitRule(getGrammarFileName(), "if_statement");
+            decRuleLevel();
+            if ( getRuleLevel()==0 ) {dbg.terminate();}
+        }
+
+        return ast;
+    }
+    // $ANTLR end "if_statement"
+
+
+
+    // $ANTLR start "while_statement"
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:119:1: while_statement returns [ ASTRoot ast ] : 'while' '(' expression ')' loop_body ;
+    public final ASTRoot while_statement() throws RecognitionException {
+        ASTRoot ast = null;
+
+
+        ASTRoot expression30 =null;
+
+        ASTRoot[][] loop_body31 =null;
+
+
+        try { dbg.enterRule(getGrammarFileName(), "while_statement");
+        if ( getRuleLevel()==0 ) {dbg.commence();}
+        incRuleLevel();
+        dbg.location(119, 0);
+
+        try {
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:120:9: ( 'while' '(' expression ')' loop_body )
+            dbg.enterAlt(1);
+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:120:11: 'while' '(' expression ')' loop_body
+            {
+            dbg.location(120,11);
+            match(input,41,FOLLOW_41_in_while_statement919); 
+            dbg.location(120,19);
+            match(input,13,FOLLOW_13_in_while_statement921); 
+            dbg.location(120,23);
+            pushFollow(FOLLOW_expression_in_while_statement923);
+            expression30=expression();
+
+            state._fsp--;
+
+            dbg.location(120,34);
+            match(input,14,FOLLOW_14_in_while_statement925); 
+            dbg.location(120,38);
+            pushFollow(FOLLOW_loop_body_in_while_statement927);
+            loop_body31=loop_body();
+
+            state._fsp--;
+
+            dbg.location(121,9);
+            ast = new Loop(new Position(), (Expression) expression30,
+                    		 (StatementBlock) loop_body31[1][0], (Invariant[]) loop_body31[0]);
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+        dbg.location(123, 8);
+
+        }
+        finally {
             dbg.exitRule(getGrammarFileName(), "while_statement");
             decRuleLevel();
             if ( getRuleLevel()==0 ) {dbg.terminate();}
@@ -1751,32 +1769,32 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "loop_body"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:119:1: loop_body returns [ ASTRoot[][] ast ] : '{' (i= invariant_statement )* statement_block '}' ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:125:1: loop_body returns [ ASTRoot[][] ast ] : '{' (i= invariant_statement )* statement_block '}' ;
     public final ASTRoot[][] loop_body() throws RecognitionException {
         ASTRoot[][] ast = null;
 
 
         ASTRoot i =null;
 
-        ASTRoot statement_block29 =null;
+        ASTRoot statement_block32 =null;
 
 
         LinkedList<Invariant> is = new LinkedList<Invariant>();
         try { dbg.enterRule(getGrammarFileName(), "loop_body");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(119, 0);
+        dbg.location(125, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:121:9: ( '{' (i= invariant_statement )* statement_block '}' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:127:9: ( '{' (i= invariant_statement )* statement_block '}' )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:121:11: '{' (i= invariant_statement )* statement_block '}'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:127:11: '{' (i= invariant_statement )* statement_block '}'
             {
-            dbg.location(121,11);
-            match(input,42,FOLLOW_42_in_loop_body942); 
-            dbg.location(121,15);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:121:15: (i= invariant_statement )*
+            dbg.location(127,11);
+            match(input,42,FOLLOW_42_in_loop_body975); 
+            dbg.location(127,15);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:127:15: (i= invariant_statement )*
             try { dbg.enterSubRule(13);
 
             loop13:
@@ -1797,15 +1815,15 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:121:16: i= invariant_statement
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:127:16: i= invariant_statement
             	    {
-            	    dbg.location(121,17);
-            	    pushFollow(FOLLOW_invariant_statement_in_loop_body947);
+            	    dbg.location(127,17);
+            	    pushFollow(FOLLOW_invariant_statement_in_loop_body980);
             	    i=invariant_statement();
 
             	    state._fsp--;
 
-            	    dbg.location(121,38);
+            	    dbg.location(127,38);
             	    is.add((Invariant) i);
 
             	    }
@@ -1817,18 +1835,18 @@ protected boolean evalPredicate(boolean result, String predicate) {
             } while (true);
             } finally {dbg.exitSubRule(13);}
 
-            dbg.location(122,9);
-            pushFollow(FOLLOW_statement_block_in_loop_body961);
-            statement_block29=statement_block();
+            dbg.location(128,9);
+            pushFollow(FOLLOW_statement_block_in_loop_body994);
+            statement_block32=statement_block();
 
             state._fsp--;
 
-            dbg.location(122,25);
-            match(input,44,FOLLOW_44_in_loop_body963); 
-            dbg.location(123,9);
+            dbg.location(128,25);
+            match(input,44,FOLLOW_44_in_loop_body996); 
+            dbg.location(129,9);
             ast = new ASTRoot[2][];
                     ast[0] = is.toArray(new Invariant[is.size()]);
-                    ast[1] = new ASTRoot[]{statement_block29};
+                    ast[1] = new ASTRoot[]{statement_block32};
 
             }
 
@@ -1841,7 +1859,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(126, 8);
+        dbg.location(132, 8);
 
         }
         finally {
@@ -1857,7 +1875,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "statement_block"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:128:1: statement_block returns [ ASTRoot ast ] : '{' (s= statement )* '}' ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:134:1: statement_block returns [ ASTRoot ast ] : '{' (s= statement )* '}' ;
     public final ASTRoot statement_block() throws RecognitionException {
         ASTRoot ast = null;
 
@@ -1869,18 +1887,18 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "statement_block");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(128, 0);
+        dbg.location(134, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:130:9: ( '{' (s= statement )* '}' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:136:9: ( '{' (s= statement )* '}' )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:130:11: '{' (s= statement )* '}'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:136:11: '{' (s= statement )* '}'
             {
-            dbg.location(130,11);
-            match(input,42,FOLLOW_42_in_statement_block1011); 
-            dbg.location(130,15);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:130:15: (s= statement )*
+            dbg.location(136,11);
+            match(input,42,FOLLOW_42_in_statement_block1044); 
+            dbg.location(136,15);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:136:15: (s= statement )*
             try { dbg.enterSubRule(14);
 
             loop14:
@@ -1901,15 +1919,15 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:130:17: s= statement
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:136:17: s= statement
             	    {
-            	    dbg.location(130,18);
-            	    pushFollow(FOLLOW_statement_in_statement_block1017);
+            	    dbg.location(136,18);
+            	    pushFollow(FOLLOW_statement_in_statement_block1050);
             	    s=statement();
 
             	    state._fsp--;
 
-            	    dbg.location(130,29);
+            	    dbg.location(136,29);
             	    l.add((Statement) s);
 
             	    }
@@ -1921,9 +1939,9 @@ protected boolean evalPredicate(boolean result, String predicate) {
             } while (true);
             } finally {dbg.exitSubRule(14);}
 
-            dbg.location(130,55);
-            match(input,44,FOLLOW_44_in_statement_block1023); 
-            dbg.location(131,9);
+            dbg.location(136,55);
+            match(input,44,FOLLOW_44_in_statement_block1056); 
+            dbg.location(137,9);
             ast = new StatementBlock(l.toArray(new Statement[l.size()]), new Position());
 
             }
@@ -1937,7 +1955,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(132, 8);
+        dbg.location(138, 8);
 
         }
         finally {
@@ -1953,28 +1971,28 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "quantified_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:134:1: quantified_expression returns [ ASTRoot ast ] : ( quantifier IDENT '(' ( range )? ')' qe= quantified_expression | expression );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:140:1: quantified_expression returns [ ASTRoot ast ] : ( quantifier IDENT '(' ( range )? ')' qe= quantified_expression | expression );
     public final ASTRoot quantified_expression() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        Token IDENT32=null;
+        Token IDENT35=null;
         ASTRoot qe =null;
 
-        String quantifier30 =null;
+        String quantifier33 =null;
 
-        Range range31 =null;
+        Range range34 =null;
 
-        ASTRoot expression33 =null;
+        ASTRoot expression36 =null;
 
 
         try { dbg.enterRule(getGrammarFileName(), "quantified_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(134, 0);
+        dbg.location(140, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:135:9: ( quantifier IDENT '(' ( range )? ')' qe= quantified_expression | expression )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:141:9: ( quantifier IDENT '(' ( range )? ')' qe= quantified_expression | expression )
             int alt16=2;
             try { dbg.enterDecision(16, decisionCanBacktrack[16]);
 
@@ -2000,20 +2018,20 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:135:11: quantifier IDENT '(' ( range )? ')' qe= quantified_expression
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:141:11: quantifier IDENT '(' ( range )? ')' qe= quantified_expression
                     {
-                    dbg.location(135,11);
-                    pushFollow(FOLLOW_quantifier_in_quantified_expression1062);
-                    quantifier30=quantifier();
+                    dbg.location(141,11);
+                    pushFollow(FOLLOW_quantifier_in_quantified_expression1095);
+                    quantifier33=quantifier();
 
                     state._fsp--;
 
-                    dbg.location(135,22);
-                    IDENT32=(Token)match(input,IDENT,FOLLOW_IDENT_in_quantified_expression1064); 
-                    dbg.location(135,28);
-                    match(input,13,FOLLOW_13_in_quantified_expression1066); 
-                    dbg.location(135,32);
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:135:32: ( range )?
+                    dbg.location(141,22);
+                    IDENT35=(Token)match(input,IDENT,FOLLOW_IDENT_in_quantified_expression1097); 
+                    dbg.location(141,28);
+                    match(input,13,FOLLOW_13_in_quantified_expression1099); 
+                    dbg.location(141,32);
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:141:32: ( range )?
                     int alt15=2;
                     try { dbg.enterSubRule(15);
                     try { dbg.enterDecision(15, decisionCanBacktrack[15]);
@@ -2029,11 +2047,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                         case 1 :
                             dbg.enterAlt(1);
 
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:135:32: range
+                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:141:32: range
                             {
-                            dbg.location(135,32);
-                            pushFollow(FOLLOW_range_in_quantified_expression1068);
-                            range31=range();
+                            dbg.location(141,32);
+                            pushFollow(FOLLOW_range_in_quantified_expression1101);
+                            range34=range();
 
                             state._fsp--;
 
@@ -2044,18 +2062,18 @@ protected boolean evalPredicate(boolean result, String predicate) {
                     }
                     } finally {dbg.exitSubRule(15);}
 
-                    dbg.location(135,39);
-                    match(input,14,FOLLOW_14_in_quantified_expression1071); 
-                    dbg.location(135,45);
-                    pushFollow(FOLLOW_quantified_expression_in_quantified_expression1075);
+                    dbg.location(141,39);
+                    match(input,14,FOLLOW_14_in_quantified_expression1104); 
+                    dbg.location(141,45);
+                    pushFollow(FOLLOW_quantified_expression_in_quantified_expression1108);
                     qe=quantified_expression();
 
                     state._fsp--;
 
-                    dbg.location(136,9);
-                    if ("forall".equals(quantifier30)) ast = new ForAllQuantifier(new Position(), range31,
-                           						 new Identifier((IDENT32!=null?IDENT32.getText():null)), (Expression) qe);
-                       	 else ast = new ExistsQuantifier(new Position(), range31, new Identifier((IDENT32!=null?IDENT32.getText():null)), 
+                    dbg.location(142,9);
+                    if ("forall".equals(quantifier33)) ast = new ForAllQuantifier(new Position(), range34,
+                           						 new Identifier((IDENT35!=null?IDENT35.getText():null)), (Expression) qe);
+                       	 else ast = new ExistsQuantifier(new Position(), range34, new Identifier((IDENT35!=null?IDENT35.getText():null)), 
                             				   (Expression) qe);
 
                     }
@@ -2063,16 +2081,16 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:140:11: expression
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:146:11: expression
                     {
-                    dbg.location(140,11);
-                    pushFollow(FOLLOW_expression_in_quantified_expression1097);
-                    expression33=expression();
+                    dbg.location(146,11);
+                    pushFollow(FOLLOW_expression_in_quantified_expression1130);
+                    expression36=expression();
 
                     state._fsp--;
 
-                    dbg.location(140,22);
-                    ast = expression33;
+                    dbg.location(146,22);
+                    ast = expression36;
 
                     }
                     break;
@@ -2087,7 +2105,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(141, 8);
+        dbg.location(147, 8);
 
         }
         finally {
@@ -2103,7 +2121,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "quantifier"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:143:1: quantifier returns [ String text ] : ( 'forall' | 'exists' );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:149:1: quantifier returns [ String text ] : ( 'forall' | 'exists' );
     public final String quantifier() throws RecognitionException {
         String text = null;
 
@@ -2111,10 +2129,10 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "quantifier");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(143, 0);
+        dbg.location(149, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:144:9: ( 'forall' | 'exists' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:150:9: ( 'forall' | 'exists' )
             int alt17=2;
             try { dbg.enterDecision(17, decisionCanBacktrack[17]);
 
@@ -2140,11 +2158,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:144:11: 'forall'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:150:11: 'forall'
                     {
-                    dbg.location(144,11);
-                    match(input,35,FOLLOW_35_in_quantifier1128); 
-                    dbg.location(144,20);
+                    dbg.location(150,11);
+                    match(input,35,FOLLOW_35_in_quantifier1161); 
+                    dbg.location(150,20);
                     text = "forall";
 
                     }
@@ -2152,11 +2170,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:145:11: 'exists'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:151:11: 'exists'
                     {
-                    dbg.location(145,11);
-                    match(input,34,FOLLOW_34_in_quantifier1142); 
-                    dbg.location(145,20);
+                    dbg.location(151,11);
+                    match(input,34,FOLLOW_34_in_quantifier1175); 
+                    dbg.location(151,20);
                     text = "exists";
 
                     }
@@ -2172,7 +2190,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(146, 8);
+        dbg.location(152, 8);
 
         }
         finally {
@@ -2188,7 +2206,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "range"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:148:1: range returns [ Range range ] : l= expression ',' u= expression ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:154:1: range returns [ Range range ] : l= expression ',' u= expression ;
     public final Range range() throws RecognitionException {
         Range range = null;
 
@@ -2201,29 +2219,29 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "range");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(148, 0);
+        dbg.location(154, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:149:9: (l= expression ',' u= expression )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:155:9: (l= expression ',' u= expression )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:149:11: l= expression ',' u= expression
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:155:11: l= expression ',' u= expression
             {
-            dbg.location(149,12);
-            pushFollow(FOLLOW_expression_in_range1175);
+            dbg.location(155,12);
+            pushFollow(FOLLOW_expression_in_range1208);
             l=expression();
 
             state._fsp--;
 
-            dbg.location(149,24);
-            match(input,17,FOLLOW_17_in_range1177); 
-            dbg.location(149,29);
-            pushFollow(FOLLOW_expression_in_range1181);
+            dbg.location(155,24);
+            match(input,17,FOLLOW_17_in_range1210); 
+            dbg.location(155,29);
+            pushFollow(FOLLOW_expression_in_range1214);
             u=expression();
 
             state._fsp--;
 
-            dbg.location(149,41);
+            dbg.location(155,41);
             range = new Range((Expression) l, (Expression) u);
 
             }
@@ -2237,7 +2255,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(150, 8);
+        dbg.location(156, 8);
 
         }
         finally {
@@ -2253,7 +2271,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:152:1: expression returns [ ASTRoot ast ] : r1= rel_expression ( ( '==' | '!=' ) r2= rel_expression )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:158:1: expression returns [ ASTRoot ast ] : r1= rel_expression ( ( '==' | '!=' ) r2= rel_expression )* ;
     public final ASTRoot expression() throws RecognitionException {
         ASTRoot ast = null;
 
@@ -2266,24 +2284,24 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(152, 0);
+        dbg.location(158, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:153:9: (r1= rel_expression ( ( '==' | '!=' ) r2= rel_expression )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:159:9: (r1= rel_expression ( ( '==' | '!=' ) r2= rel_expression )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:153:11: r1= rel_expression ( ( '==' | '!=' ) r2= rel_expression )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:159:11: r1= rel_expression ( ( '==' | '!=' ) r2= rel_expression )*
             {
-            dbg.location(153,13);
-            pushFollow(FOLLOW_rel_expression_in_expression1214);
+            dbg.location(159,13);
+            pushFollow(FOLLOW_rel_expression_in_expression1247);
             r1=rel_expression();
 
             state._fsp--;
 
-            dbg.location(153,29);
+            dbg.location(159,29);
             ast = r1;
-            dbg.location(154,9);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:154:9: ( ( '==' | '!=' ) r2= rel_expression )*
+            dbg.location(160,9);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:160:9: ( ( '==' | '!=' ) r2= rel_expression )*
             try { dbg.enterSubRule(19);
 
             loop19:
@@ -2304,10 +2322,10 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:154:11: ( '==' | '!=' ) r2= rel_expression
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:160:11: ( '==' | '!=' ) r2= rel_expression
             	    {
-            	    dbg.location(154,11);
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:154:11: ( '==' | '!=' )
+            	    dbg.location(160,11);
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:160:11: ( '==' | '!=' )
             	    int alt18=2;
             	    try { dbg.enterSubRule(18);
             	    try { dbg.enterDecision(18, decisionCanBacktrack[18]);
@@ -2334,11 +2352,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 1 :
             	            dbg.enterAlt(1);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:154:13: '=='
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:160:13: '=='
             	            {
-            	            dbg.location(154,13);
-            	            match(input,24,FOLLOW_24_in_expression1230); 
-            	            dbg.location(154,18);
+            	            dbg.location(160,13);
+            	            match(input,24,FOLLOW_24_in_expression1263); 
+            	            dbg.location(160,18);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) r2, new Equal());
 
@@ -2347,11 +2365,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 2 :
             	            dbg.enterAlt(2);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:156:11: '!='
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:162:11: '!='
             	            {
-            	            dbg.location(156,11);
-            	            match(input,10,FOLLOW_10_in_expression1244); 
-            	            dbg.location(156,16);
+            	            dbg.location(162,11);
+            	            match(input,10,FOLLOW_10_in_expression1277); 
+            	            dbg.location(162,16);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) r2, new NotEqual());
 
@@ -2361,8 +2379,8 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	    }
             	    } finally {dbg.exitSubRule(18);}
 
-            	    dbg.location(158,11);
-            	    pushFollow(FOLLOW_rel_expression_in_expression1259);
+            	    dbg.location(164,11);
+            	    pushFollow(FOLLOW_rel_expression_in_expression1292);
             	    r2=rel_expression();
 
             	    state._fsp--;
@@ -2389,7 +2407,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(159, 8);
+        dbg.location(165, 8);
 
         }
         finally {
@@ -2405,7 +2423,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "rel_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:162:1: rel_expression returns [ ASTRoot ast ] : a1= add_expression ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:168:1: rel_expression returns [ ASTRoot ast ] : a1= add_expression ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )* ;
     public final ASTRoot rel_expression() throws RecognitionException {
         ASTRoot ast = null;
 
@@ -2418,24 +2436,24 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "rel_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(162, 0);
+        dbg.location(168, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:163:9: (a1= add_expression ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:169:9: (a1= add_expression ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:163:11: a1= add_expression ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:169:11: a1= add_expression ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )*
             {
-            dbg.location(163,13);
-            pushFollow(FOLLOW_add_expression_in_rel_expression1294);
+            dbg.location(169,13);
+            pushFollow(FOLLOW_add_expression_in_rel_expression1327);
             a1=add_expression();
 
             state._fsp--;
 
-            dbg.location(163,29);
+            dbg.location(169,29);
             ast = a1;
-            dbg.location(164,9);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:164:9: ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )*
+            dbg.location(170,9);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:170:9: ( ( '<' | '<=' | '>' | '>=' ) a2= add_expression )*
             try { dbg.enterSubRule(21);
 
             loop21:
@@ -2456,10 +2474,10 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:164:11: ( '<' | '<=' | '>' | '>=' ) a2= add_expression
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:170:11: ( '<' | '<=' | '>' | '>=' ) a2= add_expression
             	    {
-            	    dbg.location(164,11);
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:164:11: ( '<' | '<=' | '>' | '>=' )
+            	    dbg.location(170,11);
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:170:11: ( '<' | '<=' | '>' | '>=' )
             	    int alt20=4;
             	    try { dbg.enterSubRule(20);
             	    try { dbg.enterDecision(20, decisionCanBacktrack[20]);
@@ -2500,11 +2518,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 1 :
             	            dbg.enterAlt(1);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:164:13: '<'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:170:13: '<'
             	            {
-            	            dbg.location(164,13);
-            	            match(input,21,FOLLOW_21_in_rel_expression1310); 
-            	            dbg.location(164,17);
+            	            dbg.location(170,13);
+            	            match(input,21,FOLLOW_21_in_rel_expression1343); 
+            	            dbg.location(170,17);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) a2, new Less());
 
@@ -2513,11 +2531,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 2 :
             	            dbg.enterAlt(2);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:166:11: '<='
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:172:11: '<='
             	            {
-            	            dbg.location(166,11);
-            	            match(input,22,FOLLOW_22_in_rel_expression1324); 
-            	            dbg.location(166,16);
+            	            dbg.location(172,11);
+            	            match(input,22,FOLLOW_22_in_rel_expression1357); 
+            	            dbg.location(172,16);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) a2, new LessEqual());
 
@@ -2526,11 +2544,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 3 :
             	            dbg.enterAlt(3);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:168:11: '>'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:174:11: '>'
             	            {
-            	            dbg.location(168,11);
-            	            match(input,25,FOLLOW_25_in_rel_expression1338); 
-            	            dbg.location(168,15);
+            	            dbg.location(174,11);
+            	            match(input,25,FOLLOW_25_in_rel_expression1371); 
+            	            dbg.location(174,15);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) a2, new Greater());
 
@@ -2539,11 +2557,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 4 :
             	            dbg.enterAlt(4);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:170:11: '>='
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:176:11: '>='
             	            {
-            	            dbg.location(170,11);
-            	            match(input,26,FOLLOW_26_in_rel_expression1352); 
-            	            dbg.location(170,16);
+            	            dbg.location(176,11);
+            	            match(input,26,FOLLOW_26_in_rel_expression1385); 
+            	            dbg.location(176,16);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) a2, new GreaterEqual());
 
@@ -2553,8 +2571,8 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	    }
             	    } finally {dbg.exitSubRule(20);}
 
-            	    dbg.location(172,11);
-            	    pushFollow(FOLLOW_add_expression_in_rel_expression1367);
+            	    dbg.location(178,11);
+            	    pushFollow(FOLLOW_add_expression_in_rel_expression1400);
             	    a2=add_expression();
 
             	    state._fsp--;
@@ -2581,7 +2599,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(173, 8);
+        dbg.location(179, 8);
 
         }
         finally {
@@ -2597,7 +2615,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "add_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:175:1: add_expression returns [ ASTRoot ast ] : m1= mul_expression ( ( '|' | '+' | '-' ) m2= mul_expression )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:181:1: add_expression returns [ ASTRoot ast ] : m1= mul_expression ( ( '|' | '+' | '-' ) m2= mul_expression )* ;
     public final ASTRoot add_expression() throws RecognitionException {
         ASTRoot ast = null;
 
@@ -2610,24 +2628,24 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "add_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(175, 0);
+        dbg.location(181, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:176:9: (m1= mul_expression ( ( '|' | '+' | '-' ) m2= mul_expression )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:182:9: (m1= mul_expression ( ( '|' | '+' | '-' ) m2= mul_expression )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:176:11: m1= mul_expression ( ( '|' | '+' | '-' ) m2= mul_expression )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:182:11: m1= mul_expression ( ( '|' | '+' | '-' ) m2= mul_expression )*
             {
-            dbg.location(176,13);
-            pushFollow(FOLLOW_mul_expression_in_add_expression1401);
+            dbg.location(182,13);
+            pushFollow(FOLLOW_mul_expression_in_add_expression1434);
             m1=mul_expression();
 
             state._fsp--;
 
-            dbg.location(176,29);
+            dbg.location(182,29);
             ast = m1;
-            dbg.location(177,9);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:177:9: ( ( '|' | '+' | '-' ) m2= mul_expression )*
+            dbg.location(183,9);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:183:9: ( ( '|' | '+' | '-' ) m2= mul_expression )*
             try { dbg.enterSubRule(23);
 
             loop23:
@@ -2648,10 +2666,10 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:177:11: ( '|' | '+' | '-' ) m2= mul_expression
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:183:11: ( '|' | '+' | '-' ) m2= mul_expression
             	    {
-            	    dbg.location(177,11);
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:177:11: ( '|' | '+' | '-' )
+            	    dbg.location(183,11);
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:183:11: ( '|' | '+' | '-' )
             	    int alt22=3;
             	    try { dbg.enterSubRule(22);
             	    try { dbg.enterDecision(22, decisionCanBacktrack[22]);
@@ -2687,11 +2705,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 1 :
             	            dbg.enterAlt(1);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:177:13: '|'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:183:13: '|'
             	            {
-            	            dbg.location(177,13);
-            	            match(input,43,FOLLOW_43_in_add_expression1417); 
-            	            dbg.location(177,17);
+            	            dbg.location(183,13);
+            	            match(input,43,FOLLOW_43_in_add_expression1450); 
+            	            dbg.location(183,17);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) m2, new Disjunction());
 
@@ -2700,11 +2718,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 2 :
             	            dbg.enterAlt(2);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:179:11: '+'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:185:11: '+'
             	            {
-            	            dbg.location(179,11);
-            	            match(input,16,FOLLOW_16_in_add_expression1431); 
-            	            dbg.location(179,15);
+            	            dbg.location(185,11);
+            	            match(input,16,FOLLOW_16_in_add_expression1464); 
+            	            dbg.location(185,15);
             	            ast = new ArithmeticExpression(new Position(), (Expression) ast,
             	                    	(Expression) m2, new Addition());
 
@@ -2713,11 +2731,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 3 :
             	            dbg.enterAlt(3);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:181:11: '-'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:187:11: '-'
             	            {
-            	            dbg.location(181,11);
-            	            match(input,18,FOLLOW_18_in_add_expression1445); 
-            	            dbg.location(181,15);
+            	            dbg.location(187,11);
+            	            match(input,18,FOLLOW_18_in_add_expression1478); 
+            	            dbg.location(187,15);
             	            ast = new ArithmeticExpression(new Position(), (Expression) ast,
             	                    	(Expression) m2, new Subtraction());
 
@@ -2727,8 +2745,8 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	    }
             	    } finally {dbg.exitSubRule(22);}
 
-            	    dbg.location(183,11);
-            	    pushFollow(FOLLOW_mul_expression_in_add_expression1460);
+            	    dbg.location(189,11);
+            	    pushFollow(FOLLOW_mul_expression_in_add_expression1493);
             	    m2=mul_expression();
 
             	    state._fsp--;
@@ -2755,7 +2773,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(184, 8);
+        dbg.location(190, 8);
 
         }
         finally {
@@ -2771,7 +2789,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "mul_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:186:1: mul_expression returns [ ASTRoot ast ] : u1= unary_expression ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:192:1: mul_expression returns [ ASTRoot ast ] : u1= unary_expression ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )* ;
     public final ASTRoot mul_expression() throws RecognitionException {
         ASTRoot ast = null;
 
@@ -2784,24 +2802,24 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "mul_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(186, 0);
+        dbg.location(192, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:187:9: (u1= unary_expression ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:193:9: (u1= unary_expression ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:187:11: u1= unary_expression ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:193:11: u1= unary_expression ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )*
             {
-            dbg.location(187,13);
-            pushFollow(FOLLOW_unary_expression_in_mul_expression1494);
+            dbg.location(193,13);
+            pushFollow(FOLLOW_unary_expression_in_mul_expression1527);
             u1=unary_expression();
 
             state._fsp--;
 
-            dbg.location(187,31);
+            dbg.location(193,31);
             ast = u1;
-            dbg.location(188,9);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:188:9: ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )*
+            dbg.location(194,9);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:194:9: ( ( '&' | '*' | '/' | '%' ) u2= unary_expression )*
             try { dbg.enterSubRule(25);
 
             loop25:
@@ -2822,10 +2840,10 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:188:11: ( '&' | '*' | '/' | '%' ) u2= unary_expression
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:194:11: ( '&' | '*' | '/' | '%' ) u2= unary_expression
             	    {
-            	    dbg.location(188,11);
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:188:11: ( '&' | '*' | '/' | '%' )
+            	    dbg.location(194,11);
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:194:11: ( '&' | '*' | '/' | '%' )
             	    int alt24=4;
             	    try { dbg.enterSubRule(24);
             	    try { dbg.enterDecision(24, decisionCanBacktrack[24]);
@@ -2866,11 +2884,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 1 :
             	            dbg.enterAlt(1);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:188:12: '&'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:194:12: '&'
             	            {
-            	            dbg.location(188,12);
-            	            match(input,12,FOLLOW_12_in_mul_expression1509); 
-            	            dbg.location(188,16);
+            	            dbg.location(194,12);
+            	            match(input,12,FOLLOW_12_in_mul_expression1542); 
+            	            dbg.location(194,16);
             	            ast = new LogicalExpression(new Position(), (Expression) ast,
             	                    	(Expression) u2, new Conjunction());
 
@@ -2879,11 +2897,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 2 :
             	            dbg.enterAlt(2);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:190:11: '*'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:196:11: '*'
             	            {
-            	            dbg.location(190,11);
-            	            match(input,15,FOLLOW_15_in_mul_expression1523); 
-            	            dbg.location(190,15);
+            	            dbg.location(196,11);
+            	            match(input,15,FOLLOW_15_in_mul_expression1556); 
+            	            dbg.location(196,15);
             	            ast = new ArithmeticExpression(new Position(), (Expression) ast,
             	                    	(Expression) u2, new Multiplication());
 
@@ -2892,11 +2910,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 3 :
             	            dbg.enterAlt(3);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:192:11: '/'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:198:11: '/'
             	            {
-            	            dbg.location(192,11);
-            	            match(input,19,FOLLOW_19_in_mul_expression1537); 
-            	            dbg.location(192,15);
+            	            dbg.location(198,11);
+            	            match(input,19,FOLLOW_19_in_mul_expression1570); 
+            	            dbg.location(198,15);
             	            ast = new ArithmeticExpression(new Position(), (Expression) ast,
             	                    	(Expression) u2, new Division());
 
@@ -2905,11 +2923,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	        case 4 :
             	            dbg.enterAlt(4);
 
-            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:194:11: '%'
+            	            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:200:11: '%'
             	            {
-            	            dbg.location(194,11);
-            	            match(input,11,FOLLOW_11_in_mul_expression1551); 
-            	            dbg.location(194,15);
+            	            dbg.location(200,11);
+            	            match(input,11,FOLLOW_11_in_mul_expression1584); 
+            	            dbg.location(200,15);
             	            ast = new ArithmeticExpression(new Position(), (Expression) ast,
             	                    	(Expression) u2, new Modulo());
 
@@ -2919,8 +2937,8 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	    }
             	    } finally {dbg.exitSubRule(24);}
 
-            	    dbg.location(196,11);
-            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1566);
+            	    dbg.location(202,11);
+            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1599);
             	    u2=unary_expression();
 
             	    state._fsp--;
@@ -2947,7 +2965,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(197, 8);
+        dbg.location(203, 8);
 
         }
         finally {
@@ -2963,28 +2981,28 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "unary_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:199:1: unary_expression returns [ ASTRoot ast ] : ( '!' | '+' | '-' )? parenthesized_expression ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:205:1: unary_expression returns [ ASTRoot ast ] : ( '!' | '+' | '-' )? parenthesized_expression ;
     public final ASTRoot unary_expression() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        ASTRoot parenthesized_expression34 =null;
+        ASTRoot parenthesized_expression37 =null;
 
 
         boolean isLogical = false; ArithmeticOperator op = null;
         try { dbg.enterRule(getGrammarFileName(), "unary_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(199, 0);
+        dbg.location(205, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:201:9: ( ( '!' | '+' | '-' )? parenthesized_expression )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:207:9: ( ( '!' | '+' | '-' )? parenthesized_expression )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:201:11: ( '!' | '+' | '-' )? parenthesized_expression
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:207:11: ( '!' | '+' | '-' )? parenthesized_expression
             {
-            dbg.location(201,11);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:201:11: ( '!' | '+' | '-' )?
+            dbg.location(207,11);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:207:11: ( '!' | '+' | '-' )?
             int alt26=4;
             try { dbg.enterSubRule(26);
             try { dbg.enterDecision(26, decisionCanBacktrack[26]);
@@ -3013,11 +3031,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:201:13: '!'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:207:13: '!'
                     {
-                    dbg.location(201,13);
-                    match(input,9,FOLLOW_9_in_unary_expression1609); 
-                    dbg.location(201,17);
+                    dbg.location(207,13);
+                    match(input,9,FOLLOW_9_in_unary_expression1642); 
+                    dbg.location(207,17);
                     isLogical = true;
 
                     }
@@ -3025,21 +3043,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:202:11: '+'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:208:11: '+'
                     {
-                    dbg.location(202,11);
-                    match(input,16,FOLLOW_16_in_unary_expression1623); 
+                    dbg.location(208,11);
+                    match(input,16,FOLLOW_16_in_unary_expression1656); 
 
                     }
                     break;
                 case 3 :
                     dbg.enterAlt(3);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:203:11: '-'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:209:11: '-'
                     {
-                    dbg.location(203,11);
-                    match(input,18,FOLLOW_18_in_unary_expression1635); 
-                    dbg.location(203,15);
+                    dbg.location(209,11);
+                    match(input,18,FOLLOW_18_in_unary_expression1668); 
+                    dbg.location(209,15);
                     op = new UnaryMinus();
 
                     }
@@ -3048,16 +3066,16 @@ protected boolean evalPredicate(boolean result, String predicate) {
             }
             } finally {dbg.exitSubRule(26);}
 
-            dbg.location(204,9);
-            pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1649);
-            parenthesized_expression34=parenthesized_expression();
+            dbg.location(210,9);
+            pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1682);
+            parenthesized_expression37=parenthesized_expression();
 
             state._fsp--;
 
-            dbg.location(205,9);
-            if (isLogical) ast = new LogicalExpression(new Position(), (Expression) parenthesized_expression34, null, new Negation());
-                    else if (op != null) ast = new ArithmeticExpression(new Position(), (Expression) parenthesized_expression34, null, op);
-                    else ast = parenthesized_expression34;
+            dbg.location(211,9);
+            if (isLogical) ast = new LogicalExpression(new Position(), (Expression) parenthesized_expression37, null, new Negation());
+                    else if (op != null) ast = new ArithmeticExpression(new Position(), (Expression) parenthesized_expression37, null, op);
+                    else ast = parenthesized_expression37;
 
             }
 
@@ -3070,7 +3088,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(208, 8);
+        dbg.location(214, 8);
 
         }
         finally {
@@ -3086,28 +3104,28 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "parenthesized_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:210:1: parenthesized_expression returns [ ASTRoot ast ] : ( '(' expression ')' | function_call | array_read | IDENT | literal_expression );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:216:1: parenthesized_expression returns [ ASTRoot ast ] : ( '(' expression ')' | function_call | array_read | IDENT | literal_expression );
     public final ASTRoot parenthesized_expression() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        Token IDENT38=null;
-        ASTRoot expression35 =null;
+        Token IDENT41=null;
+        ASTRoot expression38 =null;
 
-        ASTRoot function_call36 =null;
+        ASTRoot function_call39 =null;
 
-        ASTRoot array_read37 =null;
+        ASTRoot array_read40 =null;
 
-        ASTRoot literal_expression39 =null;
+        ASTRoot literal_expression42 =null;
 
 
         try { dbg.enterRule(getGrammarFileName(), "parenthesized_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(210, 0);
+        dbg.location(216, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:211:9: ( '(' expression ')' | function_call | array_read | IDENT | literal_expression )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:217:9: ( '(' expression ')' | function_call | array_read | IDENT | literal_expression )
             int alt27=5;
             try { dbg.enterDecision(27, decisionCanBacktrack[27]);
 
@@ -3184,80 +3202,80 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:211:11: '(' expression ')'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:217:11: '(' expression ')'
                     {
-                    dbg.location(211,11);
-                    match(input,13,FOLLOW_13_in_parenthesized_expression1688); 
-                    dbg.location(211,15);
-                    pushFollow(FOLLOW_expression_in_parenthesized_expression1690);
-                    expression35=expression();
+                    dbg.location(217,11);
+                    match(input,13,FOLLOW_13_in_parenthesized_expression1721); 
+                    dbg.location(217,15);
+                    pushFollow(FOLLOW_expression_in_parenthesized_expression1723);
+                    expression38=expression();
 
                     state._fsp--;
 
-                    dbg.location(211,26);
-                    match(input,14,FOLLOW_14_in_parenthesized_expression1692); 
-                    dbg.location(211,30);
-                    ast = expression35;
+                    dbg.location(217,26);
+                    match(input,14,FOLLOW_14_in_parenthesized_expression1725); 
+                    dbg.location(217,30);
+                    ast = expression38;
 
                     }
                     break;
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:212:11: function_call
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:218:11: function_call
                     {
-                    dbg.location(212,11);
-                    pushFollow(FOLLOW_function_call_in_parenthesized_expression1706);
-                    function_call36=function_call();
+                    dbg.location(218,11);
+                    pushFollow(FOLLOW_function_call_in_parenthesized_expression1739);
+                    function_call39=function_call();
 
                     state._fsp--;
 
-                    dbg.location(212,25);
-                    ast = function_call36;
+                    dbg.location(218,25);
+                    ast = function_call39;
 
                     }
                     break;
                 case 3 :
                     dbg.enterAlt(3);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:213:11: array_read
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:219:11: array_read
                     {
-                    dbg.location(213,11);
-                    pushFollow(FOLLOW_array_read_in_parenthesized_expression1720);
-                    array_read37=array_read();
+                    dbg.location(219,11);
+                    pushFollow(FOLLOW_array_read_in_parenthesized_expression1753);
+                    array_read40=array_read();
 
                     state._fsp--;
 
-                    dbg.location(213,22);
-                    ast = array_read37;
+                    dbg.location(219,22);
+                    ast = array_read40;
 
                     }
                     break;
                 case 4 :
                     dbg.enterAlt(4);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:214:11: IDENT
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:220:11: IDENT
                     {
-                    dbg.location(214,11);
-                    IDENT38=(Token)match(input,IDENT,FOLLOW_IDENT_in_parenthesized_expression1734); 
-                    dbg.location(214,17);
-                    ast = new VariableRead(new Position(), new Identifier((IDENT38!=null?IDENT38.getText():null)));
+                    dbg.location(220,11);
+                    IDENT41=(Token)match(input,IDENT,FOLLOW_IDENT_in_parenthesized_expression1767); 
+                    dbg.location(220,17);
+                    ast = new VariableRead(new Position(), new Identifier((IDENT41!=null?IDENT41.getText():null)));
 
                     }
                     break;
                 case 5 :
                     dbg.enterAlt(5);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:215:11: literal_expression
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:221:11: literal_expression
                     {
-                    dbg.location(215,11);
-                    pushFollow(FOLLOW_literal_expression_in_parenthesized_expression1748);
-                    literal_expression39=literal_expression();
+                    dbg.location(221,11);
+                    pushFollow(FOLLOW_literal_expression_in_parenthesized_expression1781);
+                    literal_expression42=literal_expression();
 
                     state._fsp--;
 
-                    dbg.location(215,30);
-                    ast = literal_expression39;
+                    dbg.location(221,30);
+                    ast = literal_expression42;
 
                     }
                     break;
@@ -3272,7 +3290,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(216, 8);
+        dbg.location(222, 8);
 
         }
         finally {
@@ -3288,32 +3306,32 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "function_call"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:218:1: function_call returns [ ASTRoot ast ] : IDENT '(' ( arglist )? ')' ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:224:1: function_call returns [ ASTRoot ast ] : IDENT '(' ( arglist )? ')' ;
     public final ASTRoot function_call() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        Token IDENT41=null;
-        LinkedList<Expression> arglist40 =null;
+        Token IDENT44=null;
+        LinkedList<Expression> arglist43 =null;
 
 
         try { dbg.enterRule(getGrammarFileName(), "function_call");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(218, 0);
+        dbg.location(224, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:219:9: ( IDENT '(' ( arglist )? ')' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:9: ( IDENT '(' ( arglist )? ')' )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:219:11: IDENT '(' ( arglist )? ')'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:11: IDENT '(' ( arglist )? ')'
             {
-            dbg.location(219,11);
-            IDENT41=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_call1779); 
-            dbg.location(219,17);
-            match(input,13,FOLLOW_13_in_function_call1781); 
-            dbg.location(219,21);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:219:21: ( arglist )?
+            dbg.location(225,11);
+            IDENT44=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_call1812); 
+            dbg.location(225,17);
+            match(input,13,FOLLOW_13_in_function_call1814); 
+            dbg.location(225,21);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:21: ( arglist )?
             int alt28=2;
             try { dbg.enterSubRule(28);
             try { dbg.enterDecision(28, decisionCanBacktrack[28]);
@@ -3329,11 +3347,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:219:21: arglist
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:21: arglist
                     {
-                    dbg.location(219,21);
-                    pushFollow(FOLLOW_arglist_in_function_call1783);
-                    arglist40=arglist();
+                    dbg.location(225,21);
+                    pushFollow(FOLLOW_arglist_in_function_call1816);
+                    arglist43=arglist();
 
                     state._fsp--;
 
@@ -3344,13 +3362,13 @@ protected boolean evalPredicate(boolean result, String predicate) {
             }
             } finally {dbg.exitSubRule(28);}
 
-            dbg.location(219,30);
-            match(input,14,FOLLOW_14_in_function_call1786); 
-            dbg.location(219,34);
+            dbg.location(225,30);
+            match(input,14,FOLLOW_14_in_function_call1819); 
+            dbg.location(225,34);
 
                     	Expression[] params = new Expression[0];
-                    	if (arglist40 != null) params = arglist40.toArray(new Expression[arglist40.size()]);
-                    	ast = new FunctionCall(new Identifier((IDENT41!=null?IDENT41.getText():null)), params , new Position());
+                    	if (arglist43 != null) params = arglist43.toArray(new Expression[arglist43.size()]);
+                    	ast = new FunctionCall(new Identifier((IDENT44!=null?IDENT44.getText():null)), params , new Position());
 
             }
 
@@ -3363,7 +3381,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(223, 8);
+        dbg.location(229, 8);
 
         }
         finally {
@@ -3379,7 +3397,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "arglist"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:1: arglist returns [ LinkedList<Expression> params ] : e1= expression ( ',' e2= expression )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:231:1: arglist returns [ LinkedList<Expression> params ] : e1= expression ( ',' e2= expression )* ;
     public final LinkedList<Expression> arglist() throws RecognitionException {
         LinkedList<Expression> params = null;
 
@@ -3393,24 +3411,24 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "arglist");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(225, 0);
+        dbg.location(231, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:227:9: (e1= expression ( ',' e2= expression )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:233:9: (e1= expression ( ',' e2= expression )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:227:11: e1= expression ( ',' e2= expression )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:233:11: e1= expression ( ',' e2= expression )*
             {
-            dbg.location(227,13);
-            pushFollow(FOLLOW_expression_in_arglist1825);
+            dbg.location(233,13);
+            pushFollow(FOLLOW_expression_in_arglist1858);
             e1=expression();
 
             state._fsp--;
 
-            dbg.location(227,25);
+            dbg.location(233,25);
             params.add((Expression) e1);
-            dbg.location(227,56);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:227:56: ( ',' e2= expression )*
+            dbg.location(233,56);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:233:56: ( ',' e2= expression )*
             try { dbg.enterSubRule(29);
 
             loop29:
@@ -3431,17 +3449,17 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:227:58: ',' e2= expression
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:233:58: ',' e2= expression
             	    {
-            	    dbg.location(227,58);
-            	    match(input,17,FOLLOW_17_in_arglist1831); 
-            	    dbg.location(227,64);
-            	    pushFollow(FOLLOW_expression_in_arglist1835);
+            	    dbg.location(233,58);
+            	    match(input,17,FOLLOW_17_in_arglist1864); 
+            	    dbg.location(233,64);
+            	    pushFollow(FOLLOW_expression_in_arglist1868);
             	    e2=expression();
 
             	    state._fsp--;
 
-            	    dbg.location(227,76);
+            	    dbg.location(233,76);
             	    params.add((Expression) e2);
 
             	    }
@@ -3465,7 +3483,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(228, 8);
+        dbg.location(234, 8);
 
         }
         finally {
@@ -3481,12 +3499,12 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "array_read"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:230:1: array_read returns [ ASTRoot ast ] : IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:236:1: array_read returns [ ASTRoot ast ] : IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* ;
     public final ASTRoot array_read() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        Token IDENT42=null;
+        Token IDENT45=null;
         ASTRoot e1 =null;
 
         ASTRoot e2 =null;
@@ -3496,31 +3514,31 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "array_read");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(230, 0);
+        dbg.location(236, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:232:9: ( IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:238:9: ( IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:232:11: IDENT '[' e1= expression ']' ( '[' e2= expression ']' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:238:11: IDENT '[' e1= expression ']' ( '[' e2= expression ']' )*
             {
-            dbg.location(232,11);
-            IDENT42=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_read1875); 
-            dbg.location(232,17);
-            match(input,27,FOLLOW_27_in_array_read1877); 
-            dbg.location(232,23);
-            pushFollow(FOLLOW_expression_in_array_read1881);
+            dbg.location(238,11);
+            IDENT45=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_read1908); 
+            dbg.location(238,17);
+            match(input,27,FOLLOW_27_in_array_read1910); 
+            dbg.location(238,23);
+            pushFollow(FOLLOW_expression_in_array_read1914);
             e1=expression();
 
             state._fsp--;
 
-            dbg.location(232,35);
+            dbg.location(238,35);
             if (e1 instanceof ArithmeticExpression) l.add((ArithmeticExpression)e1);
                     				else throw new RuntimeException("TODO");
-            dbg.location(233,55);
-            match(input,28,FOLLOW_28_in_array_read1885); 
-            dbg.location(234,10);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:234:10: ( '[' e2= expression ']' )*
+            dbg.location(239,55);
+            match(input,28,FOLLOW_28_in_array_read1918); 
+            dbg.location(240,10);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:240:10: ( '[' e2= expression ']' )*
             try { dbg.enterSubRule(30);
 
             loop30:
@@ -3541,21 +3559,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:234:12: '[' e2= expression ']'
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:240:12: '[' e2= expression ']'
             	    {
-            	    dbg.location(234,12);
-            	    match(input,27,FOLLOW_27_in_array_read1899); 
-            	    dbg.location(234,18);
-            	    pushFollow(FOLLOW_expression_in_array_read1903);
+            	    dbg.location(240,12);
+            	    match(input,27,FOLLOW_27_in_array_read1932); 
+            	    dbg.location(240,18);
+            	    pushFollow(FOLLOW_expression_in_array_read1936);
             	    e2=expression();
 
             	    state._fsp--;
 
-            	    dbg.location(234,30);
+            	    dbg.location(240,30);
             	    if (e2 instanceof ArithmeticExpression) l.add((ArithmeticExpression)e2);
             	            				else throw new RuntimeException("TODO");
-            	    dbg.location(235,55);
-            	    match(input,28,FOLLOW_28_in_array_read1907); 
+            	    dbg.location(241,55);
+            	    match(input,28,FOLLOW_28_in_array_read1940); 
 
             	    }
             	    break;
@@ -3566,8 +3584,8 @@ protected boolean evalPredicate(boolean result, String predicate) {
             } while (true);
             } finally {dbg.exitSubRule(30);}
 
-            dbg.location(236,9);
-            ast = new ArrayRead(new Position(), new Identifier((IDENT42!=null?IDENT42.getText():null)), l.toArray(new ArithmeticExpression[l.size()]));
+            dbg.location(242,9);
+            ast = new ArrayRead(new Position(), new Identifier((IDENT45!=null?IDENT45.getText():null)), l.toArray(new ArithmeticExpression[l.size()]));
 
             }
 
@@ -3580,7 +3598,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(237, 8);
+        dbg.location(243, 8);
 
         }
         finally {
@@ -3596,21 +3614,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "literal_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:239:1: literal_expression returns [ ASTRoot ast ] : ( INT_LITERAL | BOOL_LITERAL );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:1: literal_expression returns [ ASTRoot ast ] : ( INT_LITERAL | BOOL_LITERAL );
     public final ASTRoot literal_expression() throws RecognitionException {
         ASTRoot ast = null;
 
 
-        Token INT_LITERAL43=null;
-        Token BOOL_LITERAL44=null;
+        Token INT_LITERAL46=null;
+        Token BOOL_LITERAL47=null;
 
         try { dbg.enterRule(getGrammarFileName(), "literal_expression");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(239, 0);
+        dbg.location(245, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:240:9: ( INT_LITERAL | BOOL_LITERAL )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:246:9: ( INT_LITERAL | BOOL_LITERAL )
             int alt31=2;
             try { dbg.enterDecision(31, decisionCanBacktrack[31]);
 
@@ -3636,24 +3654,24 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:240:11: INT_LITERAL
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:246:11: INT_LITERAL
                     {
-                    dbg.location(240,11);
-                    INT_LITERAL43=(Token)match(input,INT_LITERAL,FOLLOW_INT_LITERAL_in_literal_expression1950); 
-                    dbg.location(240,23);
-                    ast = new NumericLiteral(new Position(), (INT_LITERAL43!=null?INT_LITERAL43.getText():null));
+                    dbg.location(246,11);
+                    INT_LITERAL46=(Token)match(input,INT_LITERAL,FOLLOW_INT_LITERAL_in_literal_expression1983); 
+                    dbg.location(246,23);
+                    ast = new NumericLiteral(new Position(), (INT_LITERAL46!=null?INT_LITERAL46.getText():null));
 
                     }
                     break;
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:241:11: BOOL_LITERAL
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:247:11: BOOL_LITERAL
                     {
-                    dbg.location(241,11);
-                    BOOL_LITERAL44=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal_expression1964); 
-                    dbg.location(241,24);
-                    ast = new BooleanLiteral(new Position(), (BOOL_LITERAL44!=null?BOOL_LITERAL44.getText():null));
+                    dbg.location(247,11);
+                    BOOL_LITERAL47=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal_expression1997); 
+                    dbg.location(247,24);
+                    ast = new BooleanLiteral(new Position(), (BOOL_LITERAL47!=null?BOOL_LITERAL47.getText():null));
 
                     }
                     break;
@@ -3668,7 +3686,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(242, 8);
+        dbg.location(248, 8);
 
         }
         finally {
@@ -3684,7 +3702,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "type"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:244:1: type returns [ Type type ] : ( 'int' | 'bool' ) ( '[' ']' )* ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:250:1: type returns [ Type type ] : ( 'int' | 'bool' ) ( '[' ']' )* ;
     public final Type type() throws RecognitionException {
         Type type = null;
 
@@ -3692,16 +3710,16 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "type");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(244, 0);
+        dbg.location(250, 0);
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:9: ( ( 'int' | 'bool' ) ( '[' ']' )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:9: ( ( 'int' | 'bool' ) ( '[' ']' )* )
             dbg.enterAlt(1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:11: ( 'int' | 'bool' ) ( '[' ']' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:11: ( 'int' | 'bool' ) ( '[' ']' )*
             {
-            dbg.location(245,11);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:11: ( 'int' | 'bool' )
+            dbg.location(251,11);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:11: ( 'int' | 'bool' )
             int alt32=2;
             try { dbg.enterSubRule(32);
             try { dbg.enterDecision(32, decisionCanBacktrack[32]);
@@ -3728,11 +3746,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:12: 'int'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:12: 'int'
                     {
-                    dbg.location(245,12);
-                    match(input,37,FOLLOW_37_in_type1996); 
-                    dbg.location(245,18);
+                    dbg.location(251,12);
+                    match(input,37,FOLLOW_37_in_type2029); 
+                    dbg.location(251,18);
                     type = new IntegerType();
 
                     }
@@ -3740,11 +3758,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:49: 'bool'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:49: 'bool'
                     {
-                    dbg.location(245,49);
-                    match(input,31,FOLLOW_31_in_type2002); 
-                    dbg.location(245,55);
+                    dbg.location(251,49);
+                    match(input,31,FOLLOW_31_in_type2035); 
+                    dbg.location(251,55);
                     type = new BooleanType();
 
                     }
@@ -3753,8 +3771,8 @@ protected boolean evalPredicate(boolean result, String predicate) {
             }
             } finally {dbg.exitSubRule(32);}
 
-            dbg.location(245,85);
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:85: ( '[' ']' )*
+            dbg.location(251,85);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:85: ( '[' ']' )*
             try { dbg.enterSubRule(33);
 
             loop33:
@@ -3775,13 +3793,13 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:87: '[' ']'
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:251:87: '[' ']'
             	    {
-            	    dbg.location(245,87);
-            	    match(input,27,FOLLOW_27_in_type2008); 
-            	    dbg.location(245,91);
-            	    match(input,28,FOLLOW_28_in_type2010); 
-            	    dbg.location(245,95);
+            	    dbg.location(251,87);
+            	    match(input,27,FOLLOW_27_in_type2041); 
+            	    dbg.location(251,91);
+            	    match(input,28,FOLLOW_28_in_type2043); 
+            	    dbg.location(251,95);
             	    type = new ArrayType(type);
 
             	    }
@@ -3805,7 +3823,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(246, 8);
+        dbg.location(252, 8);
 
         }
         finally {
@@ -3947,94 +3965,94 @@ protected boolean evalPredicate(boolean result, String predicate) {
     public static final BitSet FOLLOW_23_in_variable_declaration738 = new BitSet(new long[]{0x00000000000522D0L});
     public static final BitSet FOLLOW_expression_in_variable_declaration740 = new BitSet(new long[]{0x0000000000100000L});
     public static final BitSet FOLLOW_20_in_variable_declaration745 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_type_in_array_declaration784 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_array_declaration786 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_array_declaration790 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_array_declaration792 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_array_declaration794 = new BitSet(new long[]{0x0000000008100000L});
-    public static final BitSet FOLLOW_20_in_array_declaration799 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_if_statement828 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_if_statement830 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_if_statement832 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_if_statement834 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_statement_block_in_if_statement838 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_if_statement842 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_statement_block_in_if_statement846 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_while_statement886 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_while_statement888 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_while_statement890 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_while_statement892 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_loop_body_in_while_statement894 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_loop_body942 = new BitSet(new long[]{0x0000044000000000L});
-    public static final BitSet FOLLOW_invariant_statement_in_loop_body947 = new BitSet(new long[]{0x0000044000000000L});
-    public static final BitSet FOLLOW_statement_block_in_loop_body961 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_loop_body963 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_statement_block1011 = new BitSet(new long[]{0x00001330A0000040L});
-    public static final BitSet FOLLOW_statement_in_statement_block1017 = new BitSet(new long[]{0x00001330A0000040L});
-    public static final BitSet FOLLOW_44_in_statement_block1023 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_quantifier_in_quantified_expression1062 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_quantified_expression1064 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_quantified_expression1066 = new BitSet(new long[]{0x00000000000562D0L});
-    public static final BitSet FOLLOW_range_in_quantified_expression1068 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_quantified_expression1071 = new BitSet(new long[]{0x0000000C000522D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_quantified_expression1075 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_quantified_expression1097 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_quantifier1128 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_quantifier1142 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_range1175 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_range1177 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_range1181 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rel_expression_in_expression1214 = new BitSet(new long[]{0x0000000001000402L});
-    public static final BitSet FOLLOW_24_in_expression1230 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_10_in_expression1244 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_rel_expression_in_expression1259 = new BitSet(new long[]{0x0000000001000402L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1294 = new BitSet(new long[]{0x0000000006600002L});
-    public static final BitSet FOLLOW_21_in_rel_expression1310 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_22_in_rel_expression1324 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_25_in_rel_expression1338 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_26_in_rel_expression1352 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1367 = new BitSet(new long[]{0x0000000006600002L});
-    public static final BitSet FOLLOW_mul_expression_in_add_expression1401 = new BitSet(new long[]{0x0000080000050002L});
-    public static final BitSet FOLLOW_43_in_add_expression1417 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_16_in_add_expression1431 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_18_in_add_expression1445 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_mul_expression_in_add_expression1460 = new BitSet(new long[]{0x0000080000050002L});
-    public static final BitSet FOLLOW_unary_expression_in_mul_expression1494 = new BitSet(new long[]{0x0000000000089802L});
-    public static final BitSet FOLLOW_12_in_mul_expression1509 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_15_in_mul_expression1523 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_19_in_mul_expression1537 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_11_in_mul_expression1551 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_unary_expression_in_mul_expression1566 = new BitSet(new long[]{0x0000000000089802L});
-    public static final BitSet FOLLOW_9_in_unary_expression1609 = new BitSet(new long[]{0x00000000000020D0L});
-    public static final BitSet FOLLOW_16_in_unary_expression1623 = new BitSet(new long[]{0x00000000000020D0L});
-    public static final BitSet FOLLOW_18_in_unary_expression1635 = new BitSet(new long[]{0x00000000000020D0L});
-    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_parenthesized_expression1688 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_parenthesized_expression1690 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_parenthesized_expression1692 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_call_in_parenthesized_expression1706 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_array_read_in_parenthesized_expression1720 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_parenthesized_expression1734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_literal_expression_in_parenthesized_expression1748 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_function_call1779 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_function_call1781 = new BitSet(new long[]{0x00000000000562D0L});
-    public static final BitSet FOLLOW_arglist_in_function_call1783 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_function_call1786 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_arglist1825 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_17_in_arglist1831 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_arglist1835 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_IDENT_in_array_read1875 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_array_read1877 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_array_read1881 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_array_read1885 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_27_in_array_read1899 = new BitSet(new long[]{0x00000000000522D0L});
-    public static final BitSet FOLLOW_expression_in_array_read1903 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_array_read1907 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_INT_LITERAL_in_literal_expression1950 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOL_LITERAL_in_literal_expression1964 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_type1996 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_31_in_type2002 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_27_in_type2008 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_type2010 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_type_in_array_declaration793 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_array_declaration795 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_array_declaration799 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_array_declaration803 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_array_declaration807 = new BitSet(new long[]{0x0000000008100000L});
+    public static final BitSet FOLLOW_20_in_array_declaration812 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_if_statement851 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_if_statement853 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_if_statement855 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_if_statement857 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_statement_block_in_if_statement861 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_if_statement865 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_statement_block_in_if_statement869 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_while_statement919 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_while_statement921 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_while_statement923 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_while_statement925 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_loop_body_in_while_statement927 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_loop_body975 = new BitSet(new long[]{0x0000044000000000L});
+    public static final BitSet FOLLOW_invariant_statement_in_loop_body980 = new BitSet(new long[]{0x0000044000000000L});
+    public static final BitSet FOLLOW_statement_block_in_loop_body994 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_loop_body996 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_statement_block1044 = new BitSet(new long[]{0x00001330A0000040L});
+    public static final BitSet FOLLOW_statement_in_statement_block1050 = new BitSet(new long[]{0x00001330A0000040L});
+    public static final BitSet FOLLOW_44_in_statement_block1056 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_quantifier_in_quantified_expression1095 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_quantified_expression1097 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_quantified_expression1099 = new BitSet(new long[]{0x00000000000562D0L});
+    public static final BitSet FOLLOW_range_in_quantified_expression1101 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_quantified_expression1104 = new BitSet(new long[]{0x0000000C000522D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_quantified_expression1108 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_quantified_expression1130 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_quantifier1161 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_quantifier1175 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_range1208 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_range1210 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_range1214 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rel_expression_in_expression1247 = new BitSet(new long[]{0x0000000001000402L});
+    public static final BitSet FOLLOW_24_in_expression1263 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_10_in_expression1277 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_rel_expression_in_expression1292 = new BitSet(new long[]{0x0000000001000402L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1327 = new BitSet(new long[]{0x0000000006600002L});
+    public static final BitSet FOLLOW_21_in_rel_expression1343 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_22_in_rel_expression1357 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_25_in_rel_expression1371 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_26_in_rel_expression1385 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1400 = new BitSet(new long[]{0x0000000006600002L});
+    public static final BitSet FOLLOW_mul_expression_in_add_expression1434 = new BitSet(new long[]{0x0000080000050002L});
+    public static final BitSet FOLLOW_43_in_add_expression1450 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_16_in_add_expression1464 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_18_in_add_expression1478 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_mul_expression_in_add_expression1493 = new BitSet(new long[]{0x0000080000050002L});
+    public static final BitSet FOLLOW_unary_expression_in_mul_expression1527 = new BitSet(new long[]{0x0000000000089802L});
+    public static final BitSet FOLLOW_12_in_mul_expression1542 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_15_in_mul_expression1556 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_19_in_mul_expression1570 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_11_in_mul_expression1584 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_unary_expression_in_mul_expression1599 = new BitSet(new long[]{0x0000000000089802L});
+    public static final BitSet FOLLOW_9_in_unary_expression1642 = new BitSet(new long[]{0x00000000000020D0L});
+    public static final BitSet FOLLOW_16_in_unary_expression1656 = new BitSet(new long[]{0x00000000000020D0L});
+    public static final BitSet FOLLOW_18_in_unary_expression1668 = new BitSet(new long[]{0x00000000000020D0L});
+    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1682 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_parenthesized_expression1721 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_parenthesized_expression1723 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_parenthesized_expression1725 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_call_in_parenthesized_expression1739 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_array_read_in_parenthesized_expression1753 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_parenthesized_expression1767 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_literal_expression_in_parenthesized_expression1781 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_function_call1812 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_function_call1814 = new BitSet(new long[]{0x00000000000562D0L});
+    public static final BitSet FOLLOW_arglist_in_function_call1816 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_function_call1819 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_arglist1858 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_17_in_arglist1864 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_arglist1868 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_IDENT_in_array_read1908 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_array_read1910 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_array_read1914 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_array_read1918 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_27_in_array_read1932 = new BitSet(new long[]{0x00000000000522D0L});
+    public static final BitSet FOLLOW_expression_in_array_read1936 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_array_read1940 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_INT_LITERAL_in_literal_expression1983 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOL_LITERAL_in_literal_expression1997 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_type2029 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_31_in_type2035 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_27_in_type2041 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_type2043 = new BitSet(new long[]{0x0000000008000002L});
 
 }

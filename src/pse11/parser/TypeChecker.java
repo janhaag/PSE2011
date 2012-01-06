@@ -39,10 +39,12 @@ public class TypeChecker implements ASTVisitor {
                                  conditional.getTrueConditionBody(), false);
         conditional.getTrueConditionBody().accept(this);
         currentScope = currentScope.getParent();
-        currentScope = new Scope(currentScope,
-                                 conditional.getFalseConditionBody(), false);
-        conditional.getFalseConditionBody().accept(this);
-        currentScope = currentScope.getParent();
+        if (conditional.getFalseConditionBody() != null) {
+            currentScope = new Scope(currentScope,
+                                     conditional.getFalseConditionBody(), false);
+            conditional.getFalseConditionBody().accept(this);
+            currentScope = currentScope.getParent();
+        }
     }
 
     /**
@@ -326,8 +328,8 @@ public class TypeChecker implements ASTVisitor {
                                            assignment.getPosition());
         }
         if (!value.getType().equals(tempType)) {
-            throw new IllegalTypeException("Type of variable does not "
-                                           + "match the type of assigned value",
+            throw new IllegalTypeException("Type of variable does not match "
+                                           + "the type of assigned value!",
                                            assignment.getPosition());
         }
     }
