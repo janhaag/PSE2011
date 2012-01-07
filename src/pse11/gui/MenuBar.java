@@ -54,14 +54,14 @@ public class MenuBar {
 		file.setMenu(filemenu);
 		final MenuItem newFileItem = new MenuItem(filemenu, SWT.PUSH);
 		newFileItem.setText("New");
-		final MenuItem separator1 = new MenuItem(filemenu, SWT.SEPARATOR);
+//		final MenuItem separator1 = new MenuItem(filemenu, SWT.SEPARATOR);
 		loadItem = new MenuItem(filemenu, SWT.PUSH);
 		loadItem.setText("Load");
 		loadItem.addSelectionListener(controller);
 		saveItem = new MenuItem(filemenu, SWT.PUSH);
 		saveItem.setText("Save");
 		saveItem.addSelectionListener(controller);
-		final MenuItem separator2 = new MenuItem(filemenu, SWT.SEPARATOR);
+//		final MenuItem separator2 = new MenuItem(filemenu, SWT.SEPARATOR);
 		exitItem = new MenuItem(filemenu, SWT.PUSH);
 		exitItem.setText("Exit");
 		exitItem.addSelectionListener(controller);

@@ -73,6 +73,7 @@ public class HelpBox extends Composite {
 	    this.button.setLayoutData(gData);
 	    
 	    //Add events
+	    //TODO Remove Controller & Model
 	    this.button.addSelectionListener(new SelectionAdapter() {
 	      public void widgetSelected(SelectionEvent e) {
 	        keyword = search.getText();

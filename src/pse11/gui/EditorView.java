@@ -104,9 +104,10 @@ public class EditorView extends Composite {
 	
 	public void updateView() {
 		textfield.setStyleRange(null);
+		int linebreakAddend = 0;
 		for(Keyword word : this.editor.getColorArray()) {
 			StyleRange stylerange = new StyleRange();
-			System.out.println(word.getStart() + " ## " + this.textfield.getLineAtOffset(word.getStart()));
+			//System.out.println(word.getStart() + " ## " + word.getLength());// + " ## " + this.textfield.getLineAtOffset(word.getStart()) + " ## ");//  + this.textfield.getText(word.getStart(), word.getStart()+word.getLength()-1));
 			stylerange.start = word.getStart();// + this.textfield.getLineAtOffset(word.getStart());
 			stylerange.length = word.getLength();
 			stylerange.fontStyle = SWT.BOLD;

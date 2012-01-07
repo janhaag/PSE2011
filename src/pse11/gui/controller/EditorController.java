@@ -18,12 +18,14 @@ public class EditorController implements ModifyListener, VerifyListener, VerifyK
 		this.editorframe = editorframe;
 		this.editor = editor;
 		this.editorframe.getTextField().addFocusListener(this);
+		this.editorframe.getTextField().addModifyListener(this);
 		this.editorframe.getLineNumbers().addFocusListener(this);
 	}
 	@Override
 	public void modifyText(ModifyEvent e) {
 		// TODO REST
 		editor.setSource(editorframe.getText());
+		editor.undo();
 	}
 	@Override
 	public void verifyText(VerifyEvent e) {

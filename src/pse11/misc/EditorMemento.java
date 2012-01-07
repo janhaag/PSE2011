@@ -1,11 +1,11 @@
 package misc;
 
 public class EditorMemento {
-	private final String text;
-	public EditorMemento(String text) {
-		this.text = text;
+	private final String source;
+	public EditorMemento(String source) {
+		this.source = source;
 	}
-	public String getText() {
-		return this.text;
+	public String getSource() {
+		return this.source;
 	}
 }

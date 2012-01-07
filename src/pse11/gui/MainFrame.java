@@ -41,7 +41,6 @@ public class MainFrame extends Frame {
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 3;
 		this.editor.setLayoutData(gridData);
-		
 		EditorController editorcontroller = new EditorController(editor, this.editor);
 		
 	    // Create a composite for tree view and breakpoint view
