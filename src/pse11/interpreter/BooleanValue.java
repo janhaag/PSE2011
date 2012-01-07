@@ -37,4 +37,9 @@ public class BooleanValue extends Value {
     public void setValue(String value) {
         this.value = ("true".equals(value));
     }
+
+    @Override
+    public String toString() {
+        return Boolean.toString(value);
+    }
 }

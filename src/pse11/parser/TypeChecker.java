@@ -416,7 +416,6 @@ public class TypeChecker implements ASTVisitor {
      * @param varDec declaration to check
      */
     public void visit(VariableDeclaration varDec) {
-        currentScope.createVar(varDec.getName(), null, varDec.getType());
         if (varDec.getValue() != null) {
             varDec.getValue().accept(this);
             if (!varDec.getType().equals(tempType)) {
@@ -425,6 +424,7 @@ public class TypeChecker implements ASTVisitor {
                                                varDec.getPosition());
             }
         }
+        currentScope.createVar(varDec.getName(), null, varDec.getType());
     }
 
     /**

@@ -39,4 +39,9 @@ public class IntegerValue extends Value {
     public void setValue(String value) {
         this.value = (value == null) ? BigInteger.ZERO : new BigInteger(value);
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }
