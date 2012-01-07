@@ -17,8 +17,9 @@ public class RandomTestFrame extends Frame implements MiscFrame{
 	private Text intervalTextField2;
 	private Button testButton;
 	
-	public RandomTestFrame(Shell parentShell) {
+	public RandomTestFrame(Shell parentShell, MiscController controller) {
 		this.controller = new MiscController(this);
+		this.controller = controller;
 		
 		this.shell = new Shell();
 		this.shell.setSize(300,250);

@@ -1,5 +1,8 @@
 package misc;
 
+import gui.SettingsFrame;
+import gui.controller.SettingsController;
+
 /**
  * This class provides an instance for reading and writing settings into an external
  * file.
@@ -22,11 +25,13 @@ public class Settings {
 	/**
 	 * instance of this class
 	 */
-	private Settings settings;
+	private static Settings settings;
 	/**
 	 * indicates whether the settings have been changed
 	 */
 	private boolean settingsChanged;
+	private SettingsController controller;
+	
 	/**
 	 * Constructs a new instance of this class.
 	 */
@@ -41,8 +46,8 @@ public class Settings {
 	 * 
 	 * @return the instance of this class
 	 */
-	public Settings getInstance() {
-		return this.settings == null ? (this.settings = new Settings()) : this.settings;
+	public static Settings getInstance() {
+		return settings == null ? (settings = new Settings()) : settings;
 	}
 	/**
 	 * Returns the timeout time for the verifier.
@@ -100,12 +105,17 @@ public class Settings {
 		this.settingsChanged = false;
 		//TODO Settings in Datei schreiben
 	}
+	
+	public void addControler(SettingsController controller) {
+		this.controller = controller;
+	}
+	
 	/**
 	 * Loads the settings from an external file.
 	 */
 	private void loadSettings() {
 		//TODO Settings aus Datei laden
-		this.memoryLimit = 99;
+		this.memoryLimit = 98;
 		this.timeout = 99;
 	}
 }
