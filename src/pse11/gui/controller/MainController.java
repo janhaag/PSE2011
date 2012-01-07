@@ -3,9 +3,12 @@ package gui.controller;
 import org.eclipse.swt.events.*;
 
 import gui.AboutFrame;
+import gui.EvaluationFrame;
+import gui.FileFrame;
 import gui.HelpFrame;
 import gui.MainFrame;
 import gui.OptionFrame;
+import gui.RandomTestFrame;
 
 public class MainController implements SelectionListener {
 	private MainFrame mainframe;
@@ -24,12 +27,19 @@ public class MainController implements SelectionListener {
 	public void widgetSelected(SelectionEvent e) {
 		if(e.getSource() == mainframe.getMenuBar().getMenuBarItemExit()) {
 			System.exit(0);
-		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
-			new HelpFrame(mainframe.getShell());
+		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()
+				|| e.getSource() == mainframe.getMenuBar().getMenuBarItemSave()) {
+			new FileFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new OptionFrame(this.mainframe.getShell());
+		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemEvaluation()) {
+			new EvaluationFrame(this.mainframe.getShell());
+		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
+			new RandomTestFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenurBarItemAbout()) {
 			new AboutFrame(this.mainframe.getShell());
+		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
+			new HelpFrame(this.mainframe.getShell());
 		}
 	}
 	@Override

@@ -26,6 +26,7 @@ public class MainFrame extends Frame {
 		shell.setSize(700,500);
 		shell.setText(SHELLTITLE);
 		
+		//Setting layout
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 4;
 		gridLayout.makeColumnsEqualWidth = true;
@@ -51,18 +52,25 @@ public class MainFrame extends Frame {
 	    composite.setLayoutData(gridData);
 	    
 		//Adding variable view
-	    new Label(composite, SWT.NONE).setText("Variables");
-	    Tree tree = new Tree(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL 
-				| SWT.MULTI | SWT.FULL_SELECTION);
-		this.varView = new VariableView(composite, SWT.NONE, tree);
+		new Label(composite, SWT.NONE).setText("Variables");
+		this.varView = new VariableView(composite, SWT.NONE);
+		gridData = new GridData(GridData.FILL_BOTH);
+		gridData.verticalSpan = 25;
 		this.varView.setLayoutData(gridData);
 		
-		//Adding breakpoint view
+		//Adding breakpoint views
 		new Label(composite, SWT.NONE).setText("Breakpoints");
-		Table table = new Table (composite, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL 
-				| SWT.H_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
-		this.breakView = new BreakpointView(composite, SWT.NONE, table);
-		this.breakView.setLayoutData(gridData);
+		TabFolder tab = new TabFolder(composite, SWT.NONE);	
+		gridData = new GridData(GridData.FILL_BOTH);
+	    tab.setLayoutData(gridData);
+		
+		this.breakView = new BreakpointView(tab, SWT.NONE);
+		TabItem tabitem1 = new TabItem(tab, SWT.BORDER);
+		tabitem1.setText("Global");
+		tabitem1.setControl(this.breakView.getGlobalBreakpoint());
+		TabItem tabitem2 = new TabItem(tab, SWT.BORDER);
+		tabitem2.setText("Statement");
+		tabitem2.setControl(this.breakView.getStatementBreakpoint());
 		
 		//Adding consoles
 		MessageSystem messagesystem = new MessageSystem();

@@ -42,10 +42,10 @@ public class EditorView extends Composite {
 		//Initialize editor components
 		this.parentdisplay = parent.getDisplay();
 		
-		final ScrolledComposite sc1 = new ScrolledComposite (this, SWT.NONE | SWT.V_SCROLL 
+		//Text field for line numbers
+		final ScrolledComposite sc1 = new ScrolledComposite (this, SWT.V_SCROLL 
 				| SWT.H_SCROLL | SWT.RIGHT_TO_LEFT);
-		this.linenumbers = new StyledText(sc1, SWT.NONE | SWT.LEFT
-				| SWT.MULTI | SWT.WRAP);	
+		this.linenumbers = new StyledText(sc1, SWT.LEFT | SWT.MULTI | SWT.WRAP);	
 		sc1.getVerticalBar().setEnabled(false);
 		this.linenumbers.setSize(20, 7500);
 		
@@ -60,7 +60,8 @@ public class EditorView extends Composite {
 		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
 		sc1.setContent(this.linenumbers);
 		
-		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.NONE | SWT.V_SCROLL | SWT.H_SCROLL);
+		//Text field for source code
+		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.V_SCROLL | SWT.H_SCROLL);
 		this.textfield = new StyledText(sc2, SWT.NONE);
 		this.textfield.setLeftMargin(5);
 		this.textfield.setSize(800, 7500);
@@ -68,30 +69,32 @@ public class EditorView extends Composite {
 		
 		//Position the text fields
 		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalAlignment = GridData.BEGINNING;
 		gData.horizontalSpan= 2;
 		sc1.setLayoutData(gData);
 		gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan= 28;
 		sc2.setLayoutData(gData);
-		gData = null;
 		
-		//Simultaneous scrolling of the textfields
+		//Simultaneous scrolling of the text fields
 		final ScrollBar vBar1 = sc1.getVerticalBar();
 		final ScrollBar vBar2 = sc2.getVerticalBar();
 		final ScrollBar hBar1 = sc1.getHorizontalBar();
 		final ScrollBar hBar2 = sc2.getHorizontalBar();
 		SelectionListener listener1 = new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				int x =  hBar1.getSelection() * (hBar2.getMaximum() - hBar2.getThumb()) / Math.max(1, hBar1.getMaximum() - hBar1.getThumb());
-				int y =  vBar1.getSelection() * (vBar2.getMaximum() - vBar2.getThumb()) / Math.max(1, vBar1.getMaximum() - vBar1.getThumb());
+				int x =  hBar1.getSelection() * (hBar2.getMaximum() - hBar2.getThumb()) 
+						/ Math.max(1, hBar1.getMaximum() - hBar1.getThumb());
+				int y =  vBar1.getSelection() * (vBar2.getMaximum() - vBar2.getThumb()) 
+						/ Math.max(1, vBar1.getMaximum() - vBar1.getThumb());
 				sc2.setOrigin (x, y);
 			}
 		};
 		SelectionListener listener2 = new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				int x =  hBar2.getSelection() * (hBar1.getMaximum() - hBar1.getThumb()) / Math.max(1, hBar2.getMaximum() - hBar2.getThumb());
-				int y =  vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) / Math.max(1, vBar2.getMaximum() - vBar2.getThumb());
+				int x =  hBar2.getSelection() * (hBar1.getMaximum() - hBar1.getThumb()) 
+						/ Math.max(1, hBar2.getMaximum() - hBar2.getThumb());
+				int y =  vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) 
+						/ Math.max(1, vBar2.getMaximum() - vBar2.getThumb());
 				sc1.setOrigin (x, y);
 			}
 		};
