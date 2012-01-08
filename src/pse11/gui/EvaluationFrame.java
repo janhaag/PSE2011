@@ -3,6 +3,7 @@ package gui;
 import gui.controller.MiscController;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -25,18 +26,18 @@ public class EvaluationFrame extends Frame implements MiscFrame {
 		this.shell.setText("Evaluate Statement");
 		
 		//Setting layout
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.marginTop = 20;
-		gridLayout.marginLeft = 20;
-		gridLayout.marginBottom = 20;
-		gridLayout.marginRight = 20;
-		this.shell.setLayout(gridLayout);
+		GridLayout gLayout = new GridLayout();
+		gLayout.marginTop = 20;
+		gLayout.marginLeft = 20;
+		gLayout.marginBottom = 20;
+		gLayout.marginRight = 20;
+		this.shell.setLayout(gLayout);
 		
 		Label label = new Label(this.shell, SWT.NONE);
 		label.setText("Please enter the statement:");
 		
 		this.statementTextField = new Text(this.shell, SWT.SINGLE);
-		GridData gData = new GridData(GridData.FILL_BOTH);
+		GridData gData = new GridData(GridData.FILL_HORIZONTAL);
 		this.statementTextField.setLayoutData(gData);
 		
 		this.evaluateButton = new Button(shell, SWT.PUSH);
@@ -46,6 +47,9 @@ public class EvaluationFrame extends Frame implements MiscFrame {
 		
 		new Label(this.shell, SWT.NONE).setText("Result:");
 		this.resultTextField = new Text(this.shell, SWT.SINGLE);
+		this.resultTextField.setEditable(false);
+		this.resultTextField.setBackground(new Color(this.resultTextField.getDisplay(), 
+				255, 255, 255));
 		gData = new GridData(GridData.FILL_BOTH);
 		gData.verticalSpan = 12;
 		this.resultTextField.setLayoutData(gData);

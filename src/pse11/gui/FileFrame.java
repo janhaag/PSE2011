@@ -2,24 +2,25 @@ package gui;
 
 import gui.controller.MiscController;
 
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class FileFrame extends Frame implements MiscFrame {
 	private MiscController controller;
 	private Shell shell;
 
-	public FileFrame(Shell parentShell) {
-		this.controller = new MiscController(this);
-		
+	public FileFrame(Shell parentShell, int def) {
+		this.controller = new MiscController(this);		
 		shell = new Shell(parentShell);
-		shell.setSize(200,200);
-		shell.setText("File");
-		shell.setLayout(new FillLayout());
 		
-		shell.open();
+		FileDialog dlg = new FileDialog(shell, def);
+	    String fileName = dlg.open();
+	    if (fileName != null) {
+	      System.out.println(fileName);
+	    }
 	}
+	
 	@Override
 	public Button getSaveButton() {
 		// TODO Auto-generated method stub

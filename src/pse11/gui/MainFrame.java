@@ -1,7 +1,9 @@
 package gui;
 
+import gui.controller.BreakpointViewController;
 import gui.controller.EditorController;
 import gui.controller.MainController;
+import gui.controller.VariableViewController;
 
 import misc.Editor;
 import misc.MessageSystem;
@@ -17,68 +19,63 @@ public class MainFrame extends Frame {
 	private EditorView editor;
 	private Console console[];
 	private VariableView varView;
-	private BreakpointView breakView;
+	private BreakpointView breakpointView;
 	
 	public MainFrame(MainController controller) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
-		shell.setSize(700,500);
+		shell.setSize(800,600);
 		shell.setText(SHELLTITLE);
 		
 		//Setting layout
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 4;
-		gridLayout.makeColumnsEqualWidth = true;
-		shell.setLayout(gridLayout);
+		GridLayout gLayout = new GridLayout();
+		gLayout.numColumns = 4;
+		gLayout.makeColumnsEqualWidth = true;
+		shell.setLayout(gLayout);
 		
 		//Adding menu bar
 		menubar = new MenuBar(controller, shell);
 		
-		//Adding editor
+		//Adding editor view and controller
 		Editor editor = new Editor();
 		this.editor = new EditorView(shell, SWT.BORDER, editor);
-		GridData gridData = new GridData(GridData.FILL_BOTH);
-		gridData.horizontalSpan = 3;
-		this.editor.setLayoutData(gridData);
-		EditorController editorcontroller = new EditorController(editor, this.editor);
+		GridData gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 3;
+		this.editor.setLayoutData(gData);	
+		EditorController editorController = new EditorController(editor, this.editor);
 		
-	    // Create a composite for tree view and breakpoint view
+	    // Create a composite for variable view and breakpoint view
 	    Composite composite = new Composite(shell, SWT.NONE); 
-	    gridLayout = new GridLayout();
-	    composite.setLayout(gridLayout);
-	    gridData = new GridData(GridData.FILL_BOTH);
-	    composite.setLayoutData(gridData);
+	    gLayout = new GridLayout();
+	    composite.setLayout(gLayout);
+	    gData = new GridData(GridData.FILL_BOTH);
+	    composite.setLayoutData(gData);
 	    
-		//Adding variable view
+		//Adding variable view and controller 
 		new Label(composite, SWT.NONE).setText("Variables");
 		this.varView = new VariableView(composite, SWT.NONE);
-		gridData = new GridData(GridData.FILL_BOTH);
-		gridData.verticalSpan = 25;
-		this.varView.setLayoutData(gridData);
+		gData = new GridData(GridData.FILL_BOTH);
+		this.varView.setLayoutData(gData);
+		VariableViewController varController = new VariableViewController(this.varView);
 		
-		//Adding breakpoint views
-		new Label(composite, SWT.NONE).setText("Breakpoints");
-		TabFolder tab = new TabFolder(composite, SWT.NONE);	
-		gridData = new GridData(GridData.FILL_BOTH);
-	    tab.setLayoutData(gridData);
 		
-		this.breakView = new BreakpointView(tab, SWT.NONE);
-		TabItem tabitem1 = new TabItem(tab, SWT.BORDER);
-		tabitem1.setText("Global");
-		tabitem1.setControl(this.breakView.getGlobalBreakpoint());
-		TabItem tabitem2 = new TabItem(tab, SWT.BORDER);
-		tabitem2.setText("Statement");
-		tabitem2.setControl(this.breakView.getStatementBreakpoint());
+		//Adding breakpoint view and controller			
+		 new Label(composite, SWT.NONE).setText("Breakpoints");
+	    BreakpointViewController breakpointController = new BreakpointViewController();	 	    
+		this.breakpointView = new BreakpointView(composite, SWT.NONE, breakpointController);			
+		breakpointController.addView(this.breakpointView);		
+		gData = new GridData(GridData.FILL_BOTH);
+		this.breakpointView.setLayoutData(gData);
 		
 		//Adding consoles
 		MessageSystem messagesystem = new MessageSystem();
 		this.console = new Console[3];
 		TabFolder tf = new TabFolder(shell, SWT.NONE);
-		gridData = new GridData(GridData.FILL_BOTH);
-		gridData.horizontalSpan = 3;
-		gridData.verticalSpan = 30;
-	    tf.setLayoutData(gridData);
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 3;
+		gData.verticalSpan = 30;
+	    tf.setLayoutData(gData);
 	    
 		TabItem ti1 = new TabItem(tf, SWT.BORDER);
 		ti1.setText("Errors");
@@ -94,9 +91,9 @@ public class MainFrame extends Frame {
 		
 		//Adding help box
 		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);
-		gridData = new GridData(GridData.FILL_BOTH);
-		gridData.verticalSpan = 30;
-	    help.setLayoutData(gridData);
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.verticalSpan = 30;
+	    help.setLayoutData(gData);
 	}
 	public Shell getShell() {
 		return this.shell;

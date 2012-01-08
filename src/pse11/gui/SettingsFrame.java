@@ -25,38 +25,31 @@ public class SettingsFrame extends Frame {
 		this.controller.addView(this);
 		
 		this.shell = new Shell();
-		this.shell.setSize(300,260);
+		this.shell.setSize(300,220);
 		this.shell.setText("Settings");
 		
 		//Setting layout
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-//		gridLayout.makeColumnsEqualWidth = true;
-		gridLayout.marginTop = 20;
-		gridLayout.marginLeft = 20;
-		gridLayout.marginRight = 20;
-		this.shell.setLayout(gridLayout);
+		GridLayout gLayout = new GridLayout();
+		gLayout.numColumns = 2;
+		gLayout.makeColumnsEqualWidth = true;
+		gLayout.marginTop = 20;
+		gLayout.marginLeft = 20;
+		gLayout.marginRight = 20;
+		this.shell.setLayout(gLayout);
 		
 		//Add the group
 		final Group settingsGroup = new Group(this.shell, SWT.SHADOW_ETCHED_IN);
 		settingsGroup.setText("Settings for Z3");
-		gridLayout = new GridLayout();
-		gridLayout.numColumns = 3;
-		gridLayout.makeColumnsEqualWidth = true;
-		gridLayout.marginTop = 10;
-		gridLayout.marginLeft = 10;
-		gridLayout.marginRight = 10;
-		settingsGroup.setLayout(gridLayout);
+		gLayout = new GridLayout();
+		gLayout.numColumns = 3;
+		gLayout.makeColumnsEqualWidth = true;
+		gLayout.marginTop = 10;
+		gLayout.marginLeft = 10;
+		gLayout.marginRight = 10;
+		settingsGroup.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 2;
 		settingsGroup.setLayoutData(gData);
-		
-		/*Label label = new Label(this.shell, SWT.NONE);
-		label.setText("Settings for Z3");
-		GridData gData = new GridData();
-		gData.horizontalSpan = 3;
-		gData.verticalSpan = 10;
-		label.setLayoutData(gData);*/
 		
 		new Label(settingsGroup, SWT.NONE).setText("Timeout:");
 		this.timeoutTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);
@@ -73,13 +66,13 @@ public class SettingsFrame extends Frame {
 		
 		this.saveButton = new Button(shell, SWT.PUSH);
 		this.saveButton.setText(" Save ");
+		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);
+		gData.verticalSpan = 15;
+		this.saveButton.setLayoutData(gData);
 		this.closeButton = new Button(shell, SWT.PUSH);
 		this.closeButton.setText(" Close ");
-		
-		//Position of Buttons
 		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-		gData.verticalSpan = 10;
-		this.saveButton.setLayoutData(gData);
+		gData.verticalSpan = 15;
 		this.closeButton.setLayoutData(gData);
 		
 		//Add label for error message

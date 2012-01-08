@@ -6,6 +6,7 @@ import gui.MiscFrame;
 
 public class MiscController implements SelectionListener {
 	MiscFrame frame;
+	
 	public MiscController(MiscFrame frame) {
 		this.frame = frame;
 //		this.frame.getCloseButton().addSelectionListener(this);

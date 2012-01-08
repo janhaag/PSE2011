@@ -3,7 +3,6 @@ package gui;
 import misc.Editor;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,7 +42,8 @@ public class HelpBox extends Composite {
 		//Create components of the help box
 		Text helpboxheader = new Text(this, SWT.NONE);
 		helpboxheader.setEnabled(false);
-		helpboxheader.setBackground(new Color(helpboxheader.getDisplay(), 142, 189, 247));
+		helpboxheader.setBackground(new Color(helpboxheader.getDisplay(), 
+				142, 189, 247));
 		helpboxheader.setText("Help");
 		gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan = 4; 

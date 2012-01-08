@@ -2,6 +2,7 @@ package gui.controller;
 
 import misc.Settings;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 
 import gui.AboutFrame;
@@ -34,9 +35,10 @@ public class MainController implements SelectionListener {
 	public void widgetSelected(SelectionEvent e) {
 		if(e.getSource() == mainframe.getMenuBar().getMenuBarItemExit()) {
 			System.exit(0);
-		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()
-					|| e.getSource() == mainframe.getMenuBar().getMenuBarItemSave()) {
-			new FileFrame(this.mainframe.getShell());
+		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()) {
+			new FileFrame(this.mainframe.getShell(), SWT.OPEN);
+		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemSave()) {
+			new FileFrame(this.mainframe.getShell(), SWT.SAVE);
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemEvaluation()) {
