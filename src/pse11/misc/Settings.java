@@ -139,6 +139,7 @@ public class Settings {
 		if(!file.exists()) {
 			this.memoryLimit = DEFAULT_MEMORYLIMIT;
 			this.timeout = DEFAULT_TIMEOUT;
+			this.settingsChanged = true;
 		} else {
 			StringBuilder contents = new StringBuilder();
 			try {

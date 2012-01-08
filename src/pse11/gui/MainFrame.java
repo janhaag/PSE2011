@@ -111,11 +111,13 @@ public class MainFrame extends Frame {
 				display.sleep();
 			}
 		}
-		try {
-			Settings.getInstance().saveSettings();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(Settings.getInstance().settingsChanged()) {
+			try {
+				Settings.getInstance().saveSettings();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
