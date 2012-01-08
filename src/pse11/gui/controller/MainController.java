@@ -17,6 +17,7 @@ public class MainController implements SelectionListener {
 	private MainFrame mainframe;
 	private MiscController miscController;
 	private SettingsController settingsController;
+	private EditorController editorController;
 	public MainController() {
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
@@ -24,10 +25,9 @@ public class MainController implements SelectionListener {
 		initMainFrame();
 	}
 	private void initMainFrame() {
-		this.mainframe = new MainFrame(this);
+		this.mainframe = new MainFrame(this, this.editorController);
 		/* Very important to call this in a separated method because SWT uses an infinite 
 		 * loop for its window management and we need the instance of MainFrame.
-		 * => THINK => CHANGE but CHANGE =\> THINK!
 		 */
 		this.mainframe.openWindow();
 	}

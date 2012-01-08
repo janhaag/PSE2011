@@ -25,7 +25,8 @@ public class SettingsFrame extends Frame {
 		this.controller.addView(this);
 		
 		this.shell = new Shell();
-		this.shell.setSize(300,220);
+		//Please mind >all< components before resizing the view
+		this.shell.setSize(300,240);
 		this.shell.setText("Settings");
 		
 		//Setting layout
@@ -64,18 +65,22 @@ public class SettingsFrame extends Frame {
 		this.memoryLimitTextField.setLayoutData(gData);
 		new Label(settingsGroup, SWT.NONE).setText("KB");
 		
-		this.saveButton = new Button(shell, SWT.PUSH);
+		//Add buttons
+		final Composite buttoncomposite = new Composite(this.shell, SWT.NONE);
+		final GridLayout buttonlayout = new GridLayout();
+		buttonlayout.numColumns = 2;
+		buttoncomposite.setLayout(buttonlayout);
+		this.saveButton = new Button(buttoncomposite, SWT.PUSH);
 		this.saveButton.setText(" Save ");
-		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);
-		gData.verticalSpan = 15;
-		this.saveButton.setLayoutData(gData);
-		this.closeButton = new Button(shell, SWT.PUSH);
+		this.closeButton = new Button(buttoncomposite, SWT.PUSH);
 		this.closeButton.setText(" Close ");
-		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-		gData.verticalSpan = 15;
-		this.closeButton.setLayoutData(gData);
+		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);
+		gData.verticalSpan = 10;
+		gData.horizontalSpan = 2;
+		buttoncomposite.setLayoutData(gData);
 		
 		//Add label for error message
+		//TODO Some work on the "layout"/design
 		this.errorLabel = new Label(this.shell, SWT.BORDER | SWT.BORDER_DOT);
 		this.errorLabel.setForeground(new Color(this.shell.getDisplay(), new RGB(0, 0, 0)));
 //		this.errorLabel.setFont(new Font(this.shell.getDisplay(), "arial", 10, SWT.BOLD));

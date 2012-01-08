@@ -21,7 +21,7 @@ public class MainFrame extends Frame {
 	private VariableView varView;
 	private BreakpointView breakpointView;
 	
-	public MainFrame(MainController controller) {
+	public MainFrame(MainController controller, EditorController editorController) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
@@ -37,15 +37,15 @@ public class MainFrame extends Frame {
 		//Adding menu bar
 		menubar = new MenuBar(controller, shell);
 		
-		//Adding editor view and controller
+		//Adding editor
 		Editor editor = new Editor();
 		this.editor = new EditorView(shell, SWT.BORDER, editor);
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan = 3;
 		this.editor.setLayoutData(gData);	
-		EditorController editorController = new EditorController(editor, this.editor);
+		editorController = new EditorController(editor, this.editor);
 		
-	    // Create a composite for variable view and breakpoint view
+	    //Create a composite for variable view and breakpoint view
 	    Composite composite = new Composite(shell, SWT.NONE); 
 	    gLayout = new GridLayout();
 	    composite.setLayout(gLayout);
@@ -61,7 +61,7 @@ public class MainFrame extends Frame {
 		
 		
 		//Adding breakpoint view and controller			
-		 new Label(composite, SWT.NONE).setText("Breakpoints");
+		new Label(composite, SWT.NONE).setText("Breakpoints");
 	    BreakpointViewController breakpointController = new BreakpointViewController();	 	    
 		this.breakpointView = new BreakpointView(composite, SWT.NONE, breakpointController);			
 		breakpointController.addView(this.breakpointView);		
