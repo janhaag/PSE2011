@@ -41,6 +41,10 @@ public class SettingsController {
 				invalidInput();
 				return;
 			}
+			if(timeout < 0 || memorylimit < 0) {
+				invalidInput();
+				return;
+			}
 			settings.setTimeout(timeout);
 			settings.setMemoryLimit(memorylimit);
 			frame.displayMessage(false, "Settings saved.");

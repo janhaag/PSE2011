@@ -78,6 +78,10 @@ public class Settings {
 	 * @param timeout the new timeout time
 	 */
 	public void setTimeout(int timeout) {
+		if(timeout < 0) {
+			throw new IllegalArgumentException("Illegal Argument!"
+					+ "The timout of the verifier has to be a positive integer.");
+		}
 		if(this.timeout != timeout) {
 			this.timeout = timeout;
 			this.settingsChanged = true;
@@ -90,6 +94,10 @@ public class Settings {
 	 * @param memoryLimit the maximum amount of memory usable by the verifier
 	 */
 	public void setMemoryLimit(int memoryLimit) {
+		if(memoryLimit < 0) {
+			throw new IllegalArgumentException("Illegal Argument!"
+					+ "The memory limit of the verifier has to be a positive integer.");
+		}
 		if(this.memoryLimit != memoryLimit) {
 			this.memoryLimit = memoryLimit;
 			this.settingsChanged = true;
