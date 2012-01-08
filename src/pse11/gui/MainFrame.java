@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.IOException;
+
 import gui.controller.BreakpointViewController;
 import gui.controller.EditorController;
 import gui.controller.MainController;
@@ -7,6 +9,7 @@ import gui.controller.VariableViewController;
 
 import misc.Editor;
 import misc.MessageSystem;
+import misc.Settings;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.*;
@@ -107,6 +110,12 @@ public class MainFrame extends Frame {
 			if(!display.readAndDispatch()) {
 				display.sleep();
 			}
+		}
+		try {
+			Settings.getInstance().saveSettings();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

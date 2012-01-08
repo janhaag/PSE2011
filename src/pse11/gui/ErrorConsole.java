@@ -38,12 +38,10 @@ public class ErrorConsole extends Console {
 
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
-		System.out.println("update");
 		int i = 0;
 		for(Message message : messages) {
 			System.out.println("inhalt");
 			if(message.getCategory() == MessageCategories.ERROR) {
-				System.out.println("here");
 				assert this.table != null;
 				TableItem tableitem = new TableItem(this.table, SWT.NONE);
 				tableitem.setText(new String[] {Integer.toString(message.getPosition()),"huh"});

@@ -16,10 +16,6 @@ public abstract class Console extends Composite {
 		super(parent, style);
 		this.messagesystem = messagesystem;
 		messagesystem.addConsole(this);
-		// TODO Auto-generated constructor stub
 	}
-	/*public static void setMessageSystem(MessageSystem ms) {
-		messagesystem = ms;
-	}*/
 	public abstract void updateConsole(ArrayList<Message> messages);
 }
