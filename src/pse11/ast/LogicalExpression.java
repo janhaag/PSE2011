@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  *  This class symbolizes an expression in the user program which result
  *  is from type BooleanType.
@@ -69,5 +67,16 @@ public class LogicalExpression extends Expression {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("( ");
+        sb.append(logicalOperator.toString());
+        sb.append(' ').append(subexpression1.toString());
+        if (logicalOperator.isBinary()) {
+            sb.append(' ').append(subexpression2.toString());
+        }
+        sb.append(" )");
+        return sb.toString();
     }
 }

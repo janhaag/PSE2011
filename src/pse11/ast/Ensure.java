@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes an assurance, i.e. a formula that must hold
  * after execution of a method
@@ -21,5 +19,12 @@ public class Ensure extends Specification {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("ensure ");
+        sb.append(getExpression().toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }

@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes an assignment of a value to a variable.
  * For assignments to arrays there is a subclass @see{ArrayAssignment}.
@@ -50,5 +48,12 @@ public class Assignment extends Statement {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder(identifier.toString());
+        sb.append(" = ").append(value.toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }

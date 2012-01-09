@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes an assumption at the beginning of a method,
  * i.e. it indicates that a method only has to be correct
@@ -23,5 +21,12 @@ public class Assumption extends Specification {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("assume ");
+        sb.append(getExpression().toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }

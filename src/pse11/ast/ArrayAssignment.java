@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  *  This class symbolizes the assignment of a value to an array.
  */
@@ -38,5 +36,17 @@ public class ArrayAssignment extends Assignment {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder(getIdentifier().toString());
+        for (ArithmeticExpression index : indexes) {
+            sb.append('[');
+            sb.append(index.toString());
+            sb.append(']');
+        }
+        sb.append(" = ").append(getValue().toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }

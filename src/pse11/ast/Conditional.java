@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class represents an if-statement.
  */
@@ -64,5 +62,17 @@ public class Conditional extends Statement {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("if (");
+        sb.append(condition);
+        sb.append(") {\n").append(trueStatements);
+        if (falseStatements != null) {
+            sb.append("} else {\n").append(falseStatements);
+        }
+        sb.append("}\n");
+        return sb.toString();
     }
 }

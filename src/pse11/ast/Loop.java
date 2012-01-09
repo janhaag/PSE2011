@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class represents a while-statement.
  */
@@ -63,5 +61,17 @@ public class Loop extends Statement {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("while (");
+        sb.append(condition).append(") {\n");
+        for (Invariant invariant : invariants) {
+            sb.append(invariant);
+        }
+        sb.append(body);
+        sb.append("}\n");
+        return sb.toString();
     }
 }

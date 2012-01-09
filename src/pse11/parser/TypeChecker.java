@@ -1,12 +1,10 @@
 package parser;
 
 import ast.*;
-import interpreter.ASTVisitor;
 import interpreter.Scope;
 import interpreter.Value;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 /**
  * This class checks the type correctness of a user program.
@@ -416,6 +414,11 @@ public class TypeChecker implements ASTVisitor {
      * @param varDec declaration to check
      */
     public void visit(VariableDeclaration varDec) {
+        if (currentScope.existsInScope(new Identifier(varDec.getName()))) {
+            throw new IllegalTypeException("Variable was declared but "
+                                           + "identifier is already used!",
+                                           varDec.getPosition());
+        }
         if (varDec.getValue() != null) {
             varDec.getValue().accept(this);
             if (!varDec.getType().equals(tempType)) {
@@ -432,6 +435,11 @@ public class TypeChecker implements ASTVisitor {
      * @param arrDec declaration to check
      */
     public void visit(ArrayDeclaration arrDec) {
+        if (currentScope.existsInScope(new Identifier(arrDec.getName()))) {
+            throw new IllegalTypeException("Array was declared but identifier "
+                                           + "is already used!",
+                                           arrDec.getPosition());
+        }
         ArithmeticExpression[] indexes = arrDec.getIndexes();
         for (ArithmeticExpression index : indexes) {
             index.accept(this);

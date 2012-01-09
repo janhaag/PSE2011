@@ -1,6 +1,6 @@
 package ast;
 
-import interpreter.ASTVisitor;
+import java.util.Arrays;
 
 /**
  * This class symbolizes a statement block in a user program.
@@ -38,6 +38,7 @@ public class StatementBlock extends ASTRoot {
      * Returns the next statement of this statement block.
      * @return next statement of this statement block
      */
+
     public Statement getNextStatement() {
         if (noOfNextStatement >= statements.length) {
             noOfNextStatement = 0;
@@ -46,5 +47,14 @@ public class StatementBlock extends ASTRoot {
         Statement returnedStatement = statements[noOfNextStatement];
         noOfNextStatement += 1;
         return returnedStatement;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("");
+        for (Statement statement : statements) {
+            sb.append(statement);
+        }
+        return sb.toString();
     }
 }

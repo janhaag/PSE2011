@@ -1,6 +1,6 @@
 package ast;
 
-import interpreter.ASTVisitor;
+import java.util.Arrays;
 
 /**
  * This class represents a function; it may be the main function.
@@ -108,5 +108,29 @@ public class Function extends ASTRoot {
      */
     public Ensure[] getEnsures() {
         return ensures;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("");
+        if (returnType != null) {
+            sb.append(returnType).append(' ');
+        }
+        sb.append(name).append('(');
+        if (parameters.length != 0) {
+            sb.append(parameters[0]);
+        }
+        for (int i = 1; i < parameters.length; i++) {
+            sb.append(", ").append(parameters[i]);
+        }
+        sb.append(") {\n");
+        for (Assumption assumption : assumptions) {
+            sb.append(assumption);
+        }
+        sb.append(functionBody);
+        for (Ensure ensure : ensures) {
+            sb.append(ensure);
+        }
+        return sb.append('}').toString();
     }
 }

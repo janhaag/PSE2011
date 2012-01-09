@@ -9,4 +9,9 @@ public class Negation extends LogicalOperator {
     public boolean isBinary() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "!";
+    }
 }

@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes a quantified expression with an exists quantifier,
  * so that there must be a value to satisfy the expression.
@@ -25,5 +23,16 @@ public class ExistsQuantifier extends QuantifiedExpression {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("exists ");
+        sb.append(getIdentifier()).append('(');
+        if (getRange() != null) {
+            sb.append(getRange());
+        }
+        sb.append(") ").append(getSubexpression1());
+        return sb.append('\n').toString();
     }
 }

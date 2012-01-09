@@ -1,6 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
 import interpreter.BooleanValue;
 import interpreter.Value;
 
@@ -36,5 +35,10 @@ public class BooleanLiteral extends LogicalExpression {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
     }
 }

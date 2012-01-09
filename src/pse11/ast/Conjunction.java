@@ -9,4 +9,9 @@ public class Conjunction extends LogicalOperator {
     public boolean isBinary() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "&";
+    }
 }

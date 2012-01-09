@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes a declaration of a new variable.
  * For declaration of arrays there is a subclass @see{ArrayDeclaration}.
@@ -64,5 +62,15 @@ public class VariableDeclaration extends Statement {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder(type.toString());
+        sb.append(' ').append(name);
+        if (value != null) {
+            sb.append(" = ").append(value.toString());
+        }
+        sb.append(";\n");
+        return sb.toString();
     }
 }

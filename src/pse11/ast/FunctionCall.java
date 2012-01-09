@@ -1,6 +1,6 @@
 package ast;
 
-import interpreter.ASTVisitor;
+import java.util.Arrays;
 
 /**
  * This class symbolizes a function call.
@@ -74,5 +74,19 @@ public class FunctionCall extends Expression {
      */
     public Function getFunction() {
         return function;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(");
+        sb.append(functionIdentifier).append('(');
+        if (parameters.length != 0) {
+            sb.append(parameters[0]);
+        }
+        for (int i = 1; i < parameters.length; i++) {
+            sb.append(", ").append(parameters[i]);
+        }
+        sb.append("))");
+        return sb.toString();
     }
 }

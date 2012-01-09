@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class is the inheritance root for all the classes in the AST.
  * For every logical part of the program there is a dedicates

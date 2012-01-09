@@ -39,4 +39,11 @@ public class Range {
     public Expression getUpperBound() {
         return upper;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(lower.toString());
+        sb.append(", ").append(upper);
+        return sb.toString();
+    }
 }

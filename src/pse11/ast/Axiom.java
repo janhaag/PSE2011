@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes an axiom, i.e. a formula that is given as true
  * and therefore, it does not have to be proved.
@@ -21,5 +19,12 @@ public class Axiom extends Specification {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("assume ");
+        sb.append(getExpression().toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }

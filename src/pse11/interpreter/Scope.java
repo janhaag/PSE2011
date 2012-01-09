@@ -51,6 +51,10 @@ public class Scope {
         variableSearch = !isFunctionScope && upScope != null;
     }
 
+    public boolean existsInScope(Identifier identifier) {
+        return variables.containsKey(identifier);
+    }
+
     /**
      * Returns the parent scope.
      * @return parent scope

@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes an invariant, i.e. a condition that stays
  * true during different loop cycles.
@@ -21,5 +19,12 @@ public class Invariant extends Specification {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("invariant ");
+        sb.append(getExpression().toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }
