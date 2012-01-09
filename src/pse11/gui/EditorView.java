@@ -103,6 +103,10 @@ public class EditorView extends Composite {
 	}
 	
 	public void updateView() {
+		if(!this.textfield.getText().equals(this.editor.getSource())) {
+			this.textfield.setText(editor.getSource());
+		}
+		
 		textfield.setStyleRange(null);
 		int linebreakAddend = 0;
 		for(Keyword word : this.editor.getColorArray()) {
