@@ -1,5 +1,6 @@
 package gui.controller;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -19,33 +20,34 @@ public class EditorController implements ModifyListener, VerifyListener, VerifyK
 		this.editor = editor;
 		this.editorframe.getTextField().addFocusListener(this);
 		this.editorframe.getTextField().addModifyListener(this);
+		this.editorframe.getTextField().addVerifyKeyListener(this);
 		this.editorframe.getLineNumbers().addFocusListener(this);
 	}
 	@Override
 	public void modifyText(ModifyEvent e) {
 		// TODO REST
 		editor.setSource(editorframe.getText());
-		editor.undo();
 	}
 	@Override
 	public void verifyText(VerifyEvent e) {
 		// TODO need?
+//		System.out.println(e.character);
 	}
 	@Override
 	public void verifyKey(VerifyEvent event) {
-		// TODO need?
+		if ((event.stateMask == SWT.CTRL) && (event.character == '\u001A')) {
+			//undo
+			event.doit = false;
+			this.editor.undo();
+		}
 	}
 	@Override
 	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("focus");
 		int test;
-		//TODO erster test und impl. von reaktion nach anklicken einer zeilennummer
 		//TODO nicht vorhandene zeilen
-		//TODO scrolling
-		//TODO comment da nicht leicht verständlich
 		//TODO nur doppelklick funktioniert
-		//TODO IMPORTANT COMFORT FIX => FOCUSLOST AUF TEXTFIELD!
 		// => ZUM TESTEN: Focus nur auf vorhandene Zeilen, daher erst enter drücken
 		System.out.println(test = editorframe.getLineNumbers().getCaretOffset());
 		System.out.println(test = editorframe.getLineNumbers().getLineAtOffset(test));
@@ -67,6 +69,7 @@ public class EditorController implements ModifyListener, VerifyListener, VerifyK
 		if(pos % 2 != 0) {
 			pos++;
 		}
+		//TODO WEG
 		editorframe.getTextField().setCaretOffset(pos);
 		System.out.println(pos);
 	}

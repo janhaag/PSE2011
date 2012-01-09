@@ -24,7 +24,7 @@ public class MainFrame extends Frame {
 	private VariableView varView;
 	private BreakpointView breakpointView;
 	
-	public MainFrame(MainController controller, EditorController editorController) {
+	public MainFrame(MainController mainController, EditorController editorController) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
@@ -38,7 +38,7 @@ public class MainFrame extends Frame {
 		shell.setLayout(gLayout);
 		
 		//Adding menu bar
-		menubar = new MenuBar(controller, shell);
+		menubar = new MenuBar(mainController, editorController, shell);
 		
 		//Adding editor
 		Editor editor = new Editor();

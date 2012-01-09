@@ -1,5 +1,6 @@
 package gui;
 
+import gui.controller.EditorController;
 import gui.controller.MainController;
 
 import org.eclipse.swt.SWT;
@@ -17,8 +18,8 @@ public class MenuBar {
 	private MenuItem aboutItem;
 	private MenuItem randomTestItem;
 	
-	public MenuBar(MainController controller, Shell shell) {
-		initiateMenuBar(controller, shell);
+	public MenuBar(MainController controller, EditorController editorController, Shell shell) {
+		initiateMenuBar(controller, editorController, shell);
 	}
 	public MenuItem getMenuBarItemExit() {
 		return this.exitItem;
@@ -45,7 +46,7 @@ public class MenuBar {
 		return this.helpItem;
 	}
 	
-	private void initiateMenuBar(MainController controller, Shell shell) {
+	private void initiateMenuBar(MainController controller, EditorController editorController, Shell shell) {
 		menu = new Menu(shell,SWT.BAR);
 		
 		final MenuItem file = new MenuItem(menu, SWT.CASCADE);

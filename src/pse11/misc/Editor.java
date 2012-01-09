@@ -59,22 +59,27 @@ public class Editor {
 		return this.source;
 	}
 	public void setSource(String source) {
+		this.undoMemento.push(this.createMemento());
 		this.source = source;
 		findKeywords(source);
 		this.editorview.updateView();
 	}
 	public void undo() {
+		System.out.println("undo");
 		if(!this.undoMemento.empty()) {
 			EditorMemento memento = this.undoMemento.pop();
+			System.out.println("undo22  "+ memento.getSource());
 			this.redoMemento.push(this.createMemento());
-			this.setSource(memento.getSource());
+			this.source = memento.getSource();
+			this.editorview.updateView();
 		}
 	}
 	public void redo() {
 		if(!this.redoMemento.empty()) {
 			EditorMemento memento = this.redoMemento.pop();
 			this.undoMemento.push(this.createMemento());
-			this.setSource(memento.getSource());
+			this.source = memento.getSource();
+			this.editorview.updateView();
 		}
 	}
 	private EditorMemento createMemento() {
@@ -89,23 +94,34 @@ public class Editor {
 	private void findKeywords(String source) {
 		this.colorArray.clear();
 		int position = 0;
+		String word = "";
 		for(int i = 0; i < source.length(); i++) {
 			char currentchar = source.charAt(i);
-			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n') {
+			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n' || currentchar == '\t') {
+				Keyword keyword = this.addKeyWordColor(position, word);
+				if(keyword != null) {
+					this.colorArray.add(keyword);
+				}
+				word = "";
 				position = i+1;
 			} else {
-				Keyword word = this.addKeyWordColor(position, source.substring(position, (i + 1)));
-				if(word != null) {
-					this.colorArray.add(word);
-				}
+				word += source.charAt(i);
 			}
+		}
+		Keyword keyword = this.addKeyWordColor(position, word);
+		if(keyword != null) {
+			this.colorArray.add(keyword);
 		}
 	}
 	private Keyword addKeyWordColor(int position, String keyword) {
 		if(keyword.equals("if")) {
 			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.startsWith("if(")) {
+			return new Keyword(position,2,"0000FF");
 		} else if(keyword.equals("while")) {
 			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.startsWith("while(")) {
+			return new Keyword(position,5,"0000FF");
 		} else if(keyword.equals("true")) {
 			return new Keyword(position,keyword.length(),"00FF00");
 		} else if(keyword.equals("false")) {
