@@ -5,6 +5,7 @@ import interpreter.Scope;
 import interpreter.Value;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * This class checks the type correctness of a user program.
@@ -193,10 +194,6 @@ public class TypeChecker implements ASTVisitor {
         Function callee = null;
         for (Function function : functions) {
             if (function.getName().equals(functionName)) {
-                if (callee != null) {
-                    throw new IllegalTypeException("Ambiguous function call!",
-                                                   functionCall.getPosition());
-                }
                 callee = function;
             }
         }
@@ -305,6 +302,14 @@ public class TypeChecker implements ASTVisitor {
      */
     public void visit(Program program) {
         functions = program.getFunctions();
+        for (int i = 0; i < functions.length - 1; i++) {
+            for (int j = i + 1; j < functions.length; j++) {
+                if (functions[i].getName().equals(functions[j].getName())) {
+                    throw new IllegalTypeException("Function overloaded!",
+                                                   program.getPosition());
+                }
+            }
+        }
         for (Function function : functions) {
             function.accept(this);
         }
@@ -518,10 +523,9 @@ public class TypeChecker implements ASTVisitor {
      * @param statementBlock statement block to check
      */
     public void visit(StatementBlock statementBlock) {
-        Statement currentStatement = statementBlock.getNextStatement();
-        while (currentStatement != null) {
-            currentStatement.accept(this);
-            currentStatement = statementBlock.getNextStatement();
+        Iterator<Statement> statements = statementBlock.getIterator();
+        while (statements.hasNext()) {
+            statements.next().accept(this);
         }
     }
 

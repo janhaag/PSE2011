@@ -31,10 +31,10 @@ public class State implements Cloneable {
             throw new IllegalArgumentException("AST must be a program!");
         }
         Function main = ((Program) ast).getMainFunction();
-        currentStatement = main.getFunctionBlock().getNextStatement();
         /*TODO: erase following line if it is clear what to do at the beginning
         of a program*/
         currentScope = new Scope(null, main.getFunctionBlock(), true);
+        adjustStatement();
     }
 
     /**
@@ -129,10 +129,13 @@ public class State implements Cloneable {
         Statement nextStatement = currentScope.getNextStatement();
         if (nextStatement == null) {
             destroyScope();
-            adjustStatement();
+            if (currentScope != null) {
+                adjustStatement();
+            } else {
+                currentStatement = null;
+            }
         } else {
             currentStatement = nextStatement;
         }
-
     }
 }

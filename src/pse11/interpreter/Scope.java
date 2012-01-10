@@ -4,6 +4,7 @@ import ast.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -29,6 +30,10 @@ public class Scope {
      */
     private final StatementBlock currentBlock;
     /**
+     * iterator over the statements in the current block
+     */
+    private final Iterator<Statement> statements;
+    /**
      * This flag indicates whether variables may searched for in
      * the parent scope. This must be prevented if this scope is
      * associated toa complete function.
@@ -49,6 +54,8 @@ public class Scope {
         this.currentBlock = currentBlock;
         variables = new HashMap<Identifier, Value>();
         variableSearch = !isFunctionScope && upScope != null;
+        statements = (currentBlock != null)
+                     ? currentBlock.getIterator() : null;
     }
 
     public boolean existsInScope(Identifier identifier) {
@@ -97,7 +104,7 @@ public class Scope {
      * @return next statement
      */
     public Statement getNextStatement() {
-        return currentBlock.getNextStatement();
+        return statements.hasNext() ? statements.next() : null;
     }
 
     /**

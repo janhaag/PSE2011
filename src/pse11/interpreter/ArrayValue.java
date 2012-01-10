@@ -64,6 +64,9 @@ public class ArrayValue extends Value {
      */
     public void setValue(String value, ArrayList<Integer> indexes) {
         int pos = indexes.get(0);
+        if (pos < 0 || pos >= values.length) {
+            pos = 0;
+        }
         indexes.remove(0);
         if (indexes.isEmpty()) {
             if (values[pos] instanceof BooleanValue) {
@@ -74,5 +77,24 @@ public class ArrayValue extends Value {
         } else {
             ((ArrayValue) values[pos]).setValue(value, indexes);
         }
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ArrayValue arrayValue = (ArrayValue) o;
+        if (arrayValue.values.length != values.length) {
+            return false;
+        }
+        boolean equal = true;
+        for (int i = 0; i < values.length; i++) {
+            equal = equal && values[i].equals(arrayValue.values[i]);
+        }
+        return equal;
     }
 }

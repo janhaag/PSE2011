@@ -1,6 +1,7 @@
 package ast;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * This class symbolizes a statement block in a user program.
@@ -10,11 +11,7 @@ public class StatementBlock extends ASTRoot {
     /**
      * The list of statements this block contains
      */
-    private final Statement[]  statements;
-    /**
-     * Indicates the number of the next statement.
-     */
-    private int noOfNextStatement;
+    private final Statement[] statements;
     
     /**
      * Constructor.
@@ -26,7 +23,6 @@ public class StatementBlock extends ASTRoot {
     public StatementBlock(Statement[] statements, Position position) {
         super(position);
         this.statements = statements;
-        noOfNextStatement = 0;
     }
 
     @Override
@@ -39,14 +35,8 @@ public class StatementBlock extends ASTRoot {
      * @return next statement of this statement block
      */
 
-    public Statement getNextStatement() {
-        if (noOfNextStatement >= statements.length) {
-            noOfNextStatement = 0;
-            return null;
-        }
-        Statement returnedStatement = statements[noOfNextStatement];
-        noOfNextStatement += 1;
-        return returnedStatement;
+    public Iterator<Statement> getIterator() {
+        return Arrays.asList(statements).iterator();
     }
 
     @Override

@@ -27,12 +27,12 @@ public class ExistsQuantifier extends QuantifiedExpression {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("exists ");
+        StringBuilder sb = new StringBuilder("(exists ");
         sb.append(getIdentifier()).append('(');
         if (getRange() != null) {
             sb.append(getRange());
         }
         sb.append(") ").append(getSubexpression1());
-        return sb.append('\n').toString();
+        return sb.append(')').toString();
     }
 }
