@@ -2,10 +2,9 @@ package gui;
 
 import java.io.IOException;
 
-import gui.controller.BreakpointViewController;
 import gui.controller.EditorController;
 import gui.controller.MainController;
-import gui.controller.VariableViewController;
+import gui.controller.TreeViewController;
 
 import misc.Editor;
 import misc.MessageSystem;
@@ -15,7 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class MainFrame extends Frame {
+public class MainFrame extends Frame {	
 	private Display display;
 	private Shell shell;
 	private MenuBar menubar;
@@ -55,19 +54,15 @@ public class MainFrame extends Frame {
 	    gData = new GridData(GridData.FILL_BOTH);
 	    composite.setLayoutData(gData);
 	    
-		//Adding variable view and controller 
+		//Adding variable view
 		new Label(composite, SWT.NONE).setText("Variables");
 		this.varView = new VariableView(composite, SWT.NONE);
 		gData = new GridData(GridData.FILL_BOTH);
-		this.varView.setLayoutData(gData);
-		VariableViewController varController = new VariableViewController(this.varView);
+		this.varView.setLayoutData(gData);		
 		
-		
-		//Adding breakpoint view and controller			
-		new Label(composite, SWT.NONE).setText("Breakpoints");
-	    BreakpointViewController breakpointController = new BreakpointViewController();	 	    
-		this.breakpointView = new BreakpointView(composite, SWT.NONE, breakpointController);			
-		breakpointController.addView(this.breakpointView);		
+		//Adding breakpoint view		
+		new Label(composite, SWT.NONE).setText("Breakpoints"); 	    
+		this.breakpointView = new BreakpointView(composite, SWT.NONE);				
 		gData = new GridData(GridData.FILL_BOTH);
 		this.breakpointView.setLayoutData(gData);
 		
@@ -98,12 +93,23 @@ public class MainFrame extends Frame {
 		gData.verticalSpan = 30;
 	    help.setLayoutData(gData);
 	}
+	
 	public Shell getShell() {
 		return this.shell;
 	}
+	
 	public MenuBar getMenuBar() {
-		return menubar;
+		return this.menubar;
 	}
+	
+	public VariableView getVarView() {
+		return this.varView;
+	}
+	
+	public BreakpointView getBreakpointView() {
+		return this.breakpointView;
+	}
+	
 	public void openWindow() {
 		shell.open();
 		while(!shell.isDisposed()) {

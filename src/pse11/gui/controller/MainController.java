@@ -1,5 +1,6 @@
 package gui.controller;
 
+import interpreter.ProgramExecution;
 import misc.Settings;
 
 import org.eclipse.swt.SWT;
@@ -14,23 +15,39 @@ import gui.SettingsFrame;
 import gui.RandomTestFrame;
 
 public class MainController implements SelectionListener {
+	private ProgramExecution execution;
+	
 	private MainFrame mainframe;
 	private MiscController miscController;
 	private SettingsController settingsController;
 	private EditorController editorController;
+	private TreeViewController treeController;
+	
 	public MainController() {
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
+		
+		//parser interface for parameter needed.......
+		//this.execution = new ProgramExecution(null);
+		
 		//Has to be the last call in the constructor
 		initMainFrame();
 	}
+	
 	private void initMainFrame() {
-		this.mainframe = new MainFrame(this, this.editorController);
+		this.mainframe = new MainFrame(this, this.editorController);	
+		this.initViewController();
 		/* Very important to call this in a separated method because SWT uses an infinite 
 		 * loop for its window management and we need the instance of MainFrame.
 		 */
 		this.mainframe.openWindow();
 	}
+	
+	private void initViewController() {
+		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
+				this.mainframe.getVarView(), this.execution);
+	}
+	
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		if(e.getSource() == mainframe.getMenuBar().getMenuBarItemExit()) {
@@ -51,6 +68,7 @@ public class MainController implements SelectionListener {
 			new HelpFrame(this.mainframe.getShell());
 		}
 	}
+	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
 		// TODO methodblock
