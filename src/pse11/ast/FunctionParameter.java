@@ -39,4 +39,11 @@ public class FunctionParameter {
     public Type getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(type.toString());
+        sb.append(' ').append(name);
+        return sb.toString();
+    }
 }

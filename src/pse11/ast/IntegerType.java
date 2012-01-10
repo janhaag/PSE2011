@@ -9,4 +9,9 @@ public class IntegerType extends Type {
     public boolean equals(Object o) {
         return o instanceof IntegerType;
     }
+
+    @Override
+    public String toString() {
+        return "int";
+    }
 }

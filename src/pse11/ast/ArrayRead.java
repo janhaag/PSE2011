@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes a reading access to an array element
  * with the provided position.
@@ -37,5 +35,15 @@ public class ArrayRead extends VariableRead {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder(getVariable().toString());
+        for (ArithmeticExpression index : indexes) {
+            sb.append('[');
+            sb.append(index.toString());
+            sb.append(']');
+        }
+        return sb.toString();
     }
 }

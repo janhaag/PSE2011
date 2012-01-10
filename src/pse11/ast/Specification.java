@@ -9,7 +9,7 @@ public abstract class Specification extends Statement {
     /**
      * expression to be evaluated
      */
-    private final LogicalExpression expression;
+    private final Expression expression;
 
     /**
      * Constructor.
@@ -18,7 +18,7 @@ public abstract class Specification extends Statement {
      *                 in the original source code
      * @param expression expression to be evaluated
      */
-    protected Specification(Position position, LogicalExpression expression) {
+    protected Specification(Position position, Expression expression) {
         super(position);
         this.expression = expression;
     }
@@ -27,7 +27,7 @@ public abstract class Specification extends Statement {
      * Returns the expression belonging to this specification.
      * @return expression belonging to this specification
      */
-    public LogicalExpression getExpression() {
+    public Expression getExpression() {
         return expression;
     }
 }

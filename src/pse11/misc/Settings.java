@@ -1,5 +1,15 @@
 package misc;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
+import gui.controller.SettingsController;
+
 /**
  * This class provides an instance for reading and writing settings into an external
  * file.
@@ -22,11 +32,13 @@ public class Settings {
 	/**
 	 * instance of this class
 	 */
-	private Settings settings;
+	private static Settings settings;
 	/**
 	 * indicates whether the settings have been changed
 	 */
 	private boolean settingsChanged;
+	private SettingsController controller;
+	
 	/**
 	 * Constructs a new instance of this class.
 	 */
@@ -41,8 +53,8 @@ public class Settings {
 	 * 
 	 * @return the instance of this class
 	 */
-	public Settings getInstance() {
-		return this.settings == null ? (this.settings = new Settings()) : this.settings;
+	public static Settings getInstance() {
+		return settings == null ? (settings = new Settings()) : settings;
 	}
 	/**
 	 * Returns the timeout time for the verifier.
@@ -66,6 +78,10 @@ public class Settings {
 	 * @param timeout the new timeout time
 	 */
 	public void setTimeout(int timeout) {
+		if(timeout < 0) {
+			throw new IllegalArgumentException("Illegal Argument!"
+					+ "The timout of the verifier has to be a positive integer.");
+		}
 		if(this.timeout != timeout) {
 			this.timeout = timeout;
 			this.settingsChanged = true;
@@ -78,6 +94,10 @@ public class Settings {
 	 * @param memoryLimit the maximum amount of memory usable by the verifier
 	 */
 	public void setMemoryLimit(int memoryLimit) {
+		if(memoryLimit < 0) {
+			throw new IllegalArgumentException("Illegal Argument!"
+					+ "The memory limit of the verifier has to be a positive integer.");
+		}
 		if(this.memoryLimit != memoryLimit) {
 			this.memoryLimit = memoryLimit;
 			this.settingsChanged = true;
@@ -96,16 +116,67 @@ public class Settings {
 	 * Saves the settings in an external file. The settings will not be saved if they
 	 * are unchanged (@see {@link Settings#settingsChanged()}).
 	 */
-	public void saveSettings() {
+	public void saveSettings() throws IOException {
 		this.settingsChanged = false;
-		//TODO Settings in Datei schreiben
+		String settingString = this.timeout + System.getProperty("line.separator") + this.memoryLimit;
+
+		//TODO Pfadangabe
+    	File file = new File(PATH);
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		
+		Writer output = new BufferedWriter(new FileWriter(PATH));
+	    try {
+	    	output.write(settingString);
+	    } finally {
+	    	output.close();
+	    }
 	}
+	
+	public void addControler(SettingsController controller) {
+		this.controller = controller;
+	}
+	
 	/**
 	 * Loads the settings from an external file.
 	 */
 	private void loadSettings() {
-		//TODO Settings aus Datei laden
-		this.memoryLimit = 99;
-		this.timeout = 99;
+		//TODO Pfadangabe
+    	File file = new File(PATH);
+		if(!file.exists()) {
+			this.memoryLimit = DEFAULT_MEMORYLIMIT;
+			this.timeout = DEFAULT_TIMEOUT;
+			this.settingsChanged = true;
+		} else {
+			StringBuilder contents = new StringBuilder();
+			try {
+				BufferedReader input = new BufferedReader(new FileReader(file));
+				try {
+					String line = null;
+					while((line = input.readLine()) != null) {
+						contents.append(line);
+						contents.append(System.getProperty("line.separator"));
+					}
+				} finally {
+					input.close();
+				}
+			} catch(IOException ioe) {
+				//TODO Fehlermeldung anlegen
+				this.memoryLimit = DEFAULT_MEMORYLIMIT;
+				this.timeout = DEFAULT_TIMEOUT;
+			}
+			String elements[] = contents.toString().split(System.getProperty("line.separator"));
+			if(elements.length != 2) {
+				//TODO Fehlermeldung anlegen & evt dynamischer machen
+			}
+			this.timeout = Integer.parseInt(elements[0]);
+			this.memoryLimit = Integer.parseInt(elements[1]);
+		}
 	}
+	
+	private static final int DEFAULT_TIMEOUT = 60;
+	private static final int DEFAULT_MEMORYLIMIT = 100;
+	private static final String FILENAME = "settings.txt";
+	private static final String PATH = "src" + System.getProperty("file.separator") + "data" + System.getProperty("file.separator") + FILENAME;
 }

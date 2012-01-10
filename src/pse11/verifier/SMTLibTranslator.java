@@ -1,7 +1,6 @@
 package verifier;
 
 import ast.*;
-import interpreter.ASTVisitor;
 
 /**
  *

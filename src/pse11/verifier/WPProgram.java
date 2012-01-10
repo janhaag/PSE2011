@@ -8,13 +8,13 @@ public class WPProgram {
     /**
      * The S-Expression.
      */
-    private S_Expression expression;
+    private S_Expression[] expressions;
     /**
      * Constructor.
      * @param expression The S-Expression
      */
-    public WPProgram(S_Expression expression) {
-        this.expression = expression;
+    public WPProgram(S_Expression[] expressions) {
+        this.expressions = expressions;
     }
     /**
      * To String Method.
@@ -23,6 +23,10 @@ public class WPProgram {
      */
     @Override
     public String toString() {
-       return expression.toString();
+       StringBuilder output = new StringBuilder();
+       for(int i = 0; i < expressions.length; i++) {
+           output.append(expressions[i].toString());
+       }
+       return output.toString();
     }
 }

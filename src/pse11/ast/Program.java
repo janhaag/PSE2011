@@ -1,6 +1,6 @@
 package ast;
 
-import interpreter.ASTVisitor;
+import java.util.Arrays;
 
 /**
  * This class symbolizes the user program.
@@ -29,7 +29,8 @@ public class Program extends ASTRoot {
      * @param mainFunction main function
      * @param axioms global axioms
      */
-    public Program(Position position, Function[] functions, Function mainFunction, Axiom[] axioms) {
+    public Program(Position position, Function[] functions,
+                   Function mainFunction, Axiom[] axioms) {
         super(position);
         this.functions = functions;
         this.mainFunction = mainFunction;
@@ -63,5 +64,18 @@ public class Program extends ASTRoot {
      */
     public Axiom[] getAxioms() {
         return axioms;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("");
+        for (Axiom axiom : axioms) {
+            sb.append(axiom);
+        }
+        for (Function function : functions) {
+            sb.append(function).append("\n\n");
+        }
+        sb.append(mainFunction);
+        return sb.toString();
     }
 }

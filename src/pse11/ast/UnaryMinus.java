@@ -9,4 +9,9 @@ public class UnaryMinus extends ArithmeticOperator {
     public boolean isBinary() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "-";
+    }
 }

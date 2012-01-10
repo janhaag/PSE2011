@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class represents a special cased function:
  * the length calculation of an array.
@@ -35,5 +33,12 @@ public class Length extends Expression {
      */
     public VariableRead getArray() {
         return array;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(Len ");
+        sb.append(array).append(')');
+        return sb.toString();
     }
 }

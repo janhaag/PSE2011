@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes a reading access to a variable.
  * For reading access from arrays there is a subclass @see{ArrayRead}.
@@ -35,5 +33,9 @@ public class VariableRead extends Expression {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        return variable.toString();
     }
 }

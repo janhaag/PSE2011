@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  *  This class symbolizes an expression in the user program which result
  *  is from type IntegerType.
@@ -74,5 +72,18 @@ public class ArithmeticExpression extends Expression {
 
     @Override
     public void accept(ASTVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("( ");
+        sb.append(arithmeticOperator.toString());
+        sb.append(' ').append(subexpression1.toString());
+        if (arithmeticOperator.isBinary()) {
+            sb.append(' ').append(subexpression2.toString());
+        }
+        sb.append(" )");
+        return sb.toString();
     }
 }

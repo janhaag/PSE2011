@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes a declaration of a new array
  * with specified dimensions.
@@ -39,5 +37,17 @@ public class ArrayDeclaration extends VariableDeclaration {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder(getType().toString());
+        sb.append(' ').append(getName());
+        for (ArithmeticExpression index : indexes) {
+            sb.append('[');
+            sb.append(index.toString());
+            sb.append(']');
+        }
+        sb.append(";\n");
+        return sb.toString();
     }
 }

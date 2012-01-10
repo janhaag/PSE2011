@@ -9,4 +9,9 @@ public class Subtraction extends ArithmeticOperator {
     public boolean isBinary() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "-";
+    }
 }

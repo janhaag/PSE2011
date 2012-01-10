@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class symbolizes a return statement.
  */
@@ -34,5 +32,12 @@ public class ReturnStatement extends Statement {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("return ");
+        sb.append(returnValue.toString());
+        sb.append(";\n");
+        return sb.toString();
     }
 }

@@ -1,7 +1,5 @@
 package ast;
 
-import interpreter.ASTVisitor;
-
 /**
  * This class represents a while-statement.
  */
@@ -9,7 +7,7 @@ public class Loop extends Statement {
     /**
      * condition to be checked
      */
-    private final LogicalExpression condition;
+    private final Expression condition;
     /**
      * statement block executed while condition holds true
      */
@@ -28,7 +26,7 @@ public class Loop extends Statement {
      * @param body loop body
      * @param invariants list of loop invariants
      */
-    public Loop(Position position, LogicalExpression condition,
+    public Loop(Position position, Expression condition,
                 StatementBlock body, Invariant[] invariants) {
         super(position);
         this.condition = condition;
@@ -48,7 +46,7 @@ public class Loop extends Statement {
      * Returns the loop condition.
      * @return loop condition
      */
-    public LogicalExpression getCondition() {
+    public Expression getCondition() {
         return condition;
     }
 
@@ -63,5 +61,17 @@ public class Loop extends Statement {
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("while (");
+        sb.append(condition).append(") {\n");
+        for (Invariant invariant : invariants) {
+            sb.append(invariant);
+        }
+        sb.append(body);
+        sb.append("}\n");
+        return sb.toString();
     }
 }

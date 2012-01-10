@@ -31,4 +31,14 @@ public class BooleanLiteral extends LogicalExpression {
     public Value getValue() {
         return value;
     }
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

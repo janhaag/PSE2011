@@ -1,12 +1,18 @@
 package gui;
 
+import java.io.IOException;
+
+import gui.controller.BreakpointViewController;
 import gui.controller.EditorController;
 import gui.controller.MainController;
+import gui.controller.VariableViewController;
 
 import misc.Editor;
 import misc.MessageSystem;
+import misc.Settings;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
 public class MainFrame extends Frame {
@@ -15,26 +21,65 @@ public class MainFrame extends Frame {
 	private MenuBar menubar;
 	private EditorView editor;
 	private Console console[];
-	public MainFrame(MainController controller) {
+	private VariableView varView;
+	private BreakpointView breakpointView;
+	
+	public MainFrame(MainController mainController, EditorController editorController) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
-		shell.setSize(700,500);
+		shell.setSize(800,600);
 		shell.setText(SHELLTITLE);
 		
+		//Setting layout
+		GridLayout gLayout = new GridLayout();
+		gLayout.numColumns = 4;
+		gLayout.makeColumnsEqualWidth = true;
+		shell.setLayout(gLayout);
+		
 		//Adding menu bar
-		menubar = new MenuBar(controller, shell);
+		menubar = new MenuBar(mainController, editorController, shell);
+		
 		//Adding editor
 		Editor editor = new Editor();
 		this.editor = new EditorView(shell, SWT.BORDER, editor);
-		this.editor.setBounds(0,0,200,200);
-		EditorController editorcontroller = new EditorController(editor, this.editor);
+		GridData gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 3;
+		this.editor.setLayoutData(gData);	
+		editorController = new EditorController(editor, this.editor);
+		
+	    //Create a composite for variable view and breakpoint view
+	    Composite composite = new Composite(shell, SWT.NONE); 
+	    gLayout = new GridLayout();
+	    composite.setLayout(gLayout);
+	    gData = new GridData(GridData.FILL_BOTH);
+	    composite.setLayoutData(gData);
+	    
+		//Adding variable view and controller 
+		new Label(composite, SWT.NONE).setText("Variables");
+		this.varView = new VariableView(composite, SWT.NONE);
+		gData = new GridData(GridData.FILL_BOTH);
+		this.varView.setLayoutData(gData);
+		VariableViewController varController = new VariableViewController(this.varView);
+		
+		
+		//Adding breakpoint view and controller			
+		new Label(composite, SWT.NONE).setText("Breakpoints");
+	    BreakpointViewController breakpointController = new BreakpointViewController();	 	    
+		this.breakpointView = new BreakpointView(composite, SWT.NONE, breakpointController);			
+		breakpointController.addView(this.breakpointView);		
+		gData = new GridData(GridData.FILL_BOTH);
+		this.breakpointView.setLayoutData(gData);
 		
 		//Adding consoles
 		MessageSystem messagesystem = new MessageSystem();
 		this.console = new Console[3];
 		TabFolder tf = new TabFolder(shell, SWT.NONE);
-		tf.setBounds(0,320,500,300);
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 3;
+		gData.verticalSpan = 30;
+	    tf.setLayoutData(gData);
+	    
 		TabItem ti1 = new TabItem(tf, SWT.BORDER);
 		ti1.setText("Errors");
 		ti1.setControl(console[0] = new ErrorConsole(tf, SWT.BORDER, messagesystem));
@@ -49,7 +94,9 @@ public class MainFrame extends Frame {
 		
 		//Adding help box
 		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);
-		help.setBounds(520,320,300,300);
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.verticalSpan = 30;
+	    help.setLayoutData(gData);
 	}
 	public Shell getShell() {
 		return this.shell;
@@ -62,6 +109,14 @@ public class MainFrame extends Frame {
 		while(!shell.isDisposed()) {
 			if(!display.readAndDispatch()) {
 				display.sleep();
+			}
+		}
+		if(Settings.getInstance().settingsChanged()) {
+			try {
+				Settings.getInstance().saveSettings();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
