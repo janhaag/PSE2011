@@ -16,6 +16,10 @@ public class Loop extends Statement {
      * list of loop invariants
      */
     private final Invariant[] invariants;
+    /**
+     * List of postconditions.
+     */
+    private final Ensure[] postconditions;
 
     /**
      * Constructor.
@@ -27,11 +31,13 @@ public class Loop extends Statement {
      * @param invariants list of loop invariants
      */
     public Loop(Position position, Expression condition,
-                StatementBlock body, Invariant[] invariants) {
+                StatementBlock body, Invariant[] invariants,
+                Ensure[] postconditions) {
         super(position);
         this.condition = condition;
         this.body = body;
         this.invariants = invariants;
+        this.postconditions = postconditions;
     }
 
     /**
@@ -41,6 +47,15 @@ public class Loop extends Statement {
     public Invariant[] getInvariants() {
         return invariants;
     }
+
+    /**
+     * Returns the list of postconditions.
+     * @return the postconditions
+     */
+    public Ensure[] getPostconditions() {
+        return postconditions;
+    }
+
 
     /**
      * Returns the loop condition.

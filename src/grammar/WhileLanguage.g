@@ -1,123 +1,164 @@
 grammar WhileLanguage;
 
 @header {
-	package pse2011.parser;
-	import pse2011.ast.*
+	package parser;
+	import ast.*;
 	import java.util.LinkedList;
 }
 
 @lexer::header {
-	package pse2011.parser;
+	package parser;
 }
 
-program
-        : axiom_statement* method_declaration* main_method
+program returns [Program p]
+	@init {LinkedList<Axiom> axiom = new LinkedList<Axiom>();
+	       LinkedList<Function> function = new LinkedList<Function>();}
+        : (a=axiom_statement {axiom.add($a.ast);})* (f=function_declaration {function.add($f.ast);})* main
+        	{$p = new Program(new Position(), function.toArray(new Function[function.size()]), $main.ast,
+        		axiom.toArray(new Axiom[axiom.size()]));}
         ;
 
-single_expression returns [ ASTRoot ast ]
-	: expression
+single_expression returns [ Expression ast ]
+	: expression {ast = $expression.ast;}
 	;
 
-method_declaration returns [ ASTRoot ast ]
-        : type IDENT '(' parameter_list? ')' method_body
+function_declaration returns [ Function ast ]
+        : type IDENT '(' parameter_list? ')' function_body
+        	{if ("main".equals($IDENT.text)) throw new TreeGeneratorException("Main must only be declared once.");
+        	 $ast = new Function(new Position(), null, "main", 
+        		$parameter_list.params.toArray(new FunctionParameter[$parameter_list.params.size()]),
+        		$function_body.ast, $function_body.pre.toArray(new Asumption[$function_body.pre.size()]),
+        		$function_body.post.toArray(new Ensure[$function_body.post.size()]));}
         ;
 
-main_method returns [ ASTRoot ast ]
-        : 'main' '(' parameter_list? ')' method_body
+main returns [ Function ast ]
+        : 'main' '(' parameter_list? ')' function_body 
+        	{$ast = new Function(new Position(), null, "main", 
+        		$parameter_list.params.toArray(new FunctionParameter[$parameter_list.params.size()]),
+        		$function_body.ast, $function_body.pre.toArray(new Asumption[$function_body.pre.size()]),
+        		$function_body.post.toArray(new Ensure[$function_body.post.size()]));}
         ;
 
-parameter_list returns [ ASTRoot ast ]
-        : parameter ( ',' parameter )*
+parameter_list returns [ LinkedList<FunctionParameter> params ]
+	@init {$params = new LinkedList<FunctionParameter>();}
+        : p1=parameter {$params.add($p1.ast);} ( ',' p2=parameter {$params.add($p2.ast);} )*
         ;
 
-parameter returns [ ASTRoot ast ]
-        : type IDENT
+parameter returns [ FunctionParameter ast ]
+        : type IDENT {$ast = new FunctionParameter($IDENT.text, $type.ast)}
         ;
 
-method_body returns [ ASTRoot ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ]
-        : assume_statement? '{' statement* '}' ensure_statement?
+function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
+	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
+        : assume_statement? 
+          '{' ( statement {s.add($statement.ast} )* '}' {$ast = new StatementBlock(s.toArray(new Statement[s.size()], new Position());}
+          ensure_statement?
         ;
 
-if_body returns [ ASTRoot ast ]
-        : '{' statement* '}'
+if_body returns [ StatementBlock ast ]
+	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
+        : ( '{' statement* '}' {s.add($statement.ast} ) {$ast = new StatementBlock(s.toArray(new Statement[s.size()], new Position());}
         ;
 
-loop_body returns [ ASTRoot ast, Invariant pre, Ensure post ]
-        : invariant_statement? '{' statement* '}' ensure_statement?
+loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ]
+	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
+        : invariant_statement? {$pre = $invariant_statement.result;} 
+          '{' ( statement {s.add($statement.ast} )* '}' {$ast = new StatementBlock(s.toArray(new Statement[s.size()], new Position());}
+       	  ensure_statement? {$post = $ensure_statement.result;}
         ;
 
-statement returns [ ASTRoot ast ]
-        : assert_statement
-        | variable_declaration
-        | array_declaration
-        | assignment
-        | if_statement
-        | while_statement
-        | 'return' expression ';'
+statement returns [ Statement ast ]
+        : e=assert_statement {$ast = $e.ast;}
+        | e=variable_declaration {$ast = $e.ast;}
+        | e=array_declaration {$ast = $e.ast;}
+        | e=assignment {$ast = $e.ast;}
+        | e=if_statement {$ast = $e.ast;}
+        | e=while_statement {$ast = $e.ast;}
+        | e=return_statement {$ast = $e.ast;}
         ;
 
-invariant_statement returns [ ASTRoot ast ]
-        : 'invariant' quantified_expression ';'
+invariant_statement returns [ LinkedList<Invariant> result ]
+	@init {$result = new LinkedList<Invariant>();}
+        : 'invariant' quantified_expression ';' {$result.add(new Invariant(new Position(), $e1.ast));}
+        | 'invariant' '{' (quantified_expression ';' {$result.add(new Invariant(new Position(), $e2.ast));} )+ '}'
         ;
 
-axiom_statement returns [ ASTRoot ast ]
-        : 'axiom' quantified_expression ';'
+axiom_statement returns [ Axiom ast ]
+        : 'axiom' e1=quantified_expression ';' {$ast = new Assertion(new Position(), e1.ast);}
         ;
 
 assert_statement returns [ ASTRoot ast ]
-        : 'assert' quantified_expression ';'
-        | 'assert' '{' (quantified_expression ';')+ '}'
+        : 'assert' e1=quantified_expression ';' {$ast = new Assertion(new Position(), $e1.ast);}
         ;
 
-assume_statement returns [ ASTRoot ast ]
-        : 'assume' quantified_expression ';'
-        | 'assume' '{' (quantified_expression ';')+ '}'
+assume_statement returns [ LinkedList<Assumption> result ]
+	@init {$result = new LinkedList<Assumption>();}
+        : 'assume' quantified_expression ';' {$result.add(new Assumption(new Position(), $e1.ast));}
+        | 'assume' '{' (quantified_expression ';' {$result.add(new Assumption(new Position(), $e2.ast));} )+ '}'
+        ;
+        
+ensure_statement returns [ LinkedList<Ensure> result ]
+	@init {$result = new LinkedList<Ensure>();}
+	: 'ensure' e1=quantified_expression ';' {$result.add(new Ensure(new Position(), $e1.ast));}
+        | 'ensure' '{' (e2=quantified_expression ';' {$result.add(new Ensure(new Position(), $e2.ast));} )+ '}'
         ;
 
-ensure_statement returns [ ASTRoot ast ]
-	: 'ensure' quantified_expression ';'
-        | 'ensure' '{' (quantified_expression ';')+ '}'
+assignment returns [ Assignment ast ]
+        : IDENT '=' expression ';' {$ast = new Assignment(new Position(), $expression.ast, $IDENT.text);}
+        | IDENT {LinkedList<Expression> idx = new LinkedList<Expression>();} 
+        	( '[' e1=expression {idx.add($e1.ast);} ']' )+ '=' e2=expression ';' {
+        	$ast = new ArrayAssignment(new Position(), $e2.ast, $IDENT.text, idx.toArray(new Expression[idx.size()]);}
         ;
 
-assignment returns [ ASTRoot ast ]
-        : IDENT ( '[' expression ']' )* '=' expression ';'
+variable_declaration returns [ VariableDeclaration ast ]
+        : type IDENT ( '=' expression )? ';' {
+        	$ast = new VariableDeclaration(new Position(), $IDENT.text, $expression.ast, $type.ast);}
         ;
 
-variable_declaration returns [ ASTRoot ast ]
-        : type IDENT ( '=' expression )? ';'
+array_declaration returns [ ArrayDeclaration ast ]
+        : type IDENT '=' array_init ';' {
+        	Expression[] dim = $array_init.dim.toArray(new Expression[$array_init.dim.size()])
+        	$ast = new ArrayDeclaration(new Position(), $IDENT.text, $type.ast, dim);}
+        ;
+        
+array_init returns [ LinkedList<Expression> dim]
+	: {dim = new LinkedList<Expression>();}
+	'array' ( '[' expression {dim.add($expression.ast);} ']' )+
+	;
+
+if_statement returns [ Conditional ast ]
+        : 'if' '(' expression ')' b1=if_body ( 'else' b2=if_body )? {
+        	$ast = new Conditional(new Position(), $expression.ast, $b1.ast, $b2.ast);}
         ;
 
-array_declaration returns [ ASTRoot ast ]
-        : type IDENT ( '[' ']' )+ ';'
-        ;
-
-if_statement returns [ ASTRoot ast ]
-        : 'if' '(' expression ')' if_body ( 'else' if_body )?
-        ;
-
-while_statement returns [ ASTRoot ast ]
+while_statement returns [ Loop ast ]
         : 'while' '(' expression ')' loop_body {
-        	$ast = new Loop(new Position(), (LogicalExpression)$expression.ast, $loop_body.ast, ));}
+        	$ast = new Loop(new Position(), $expression.ast, $loop_body.ast, $loop_body.pre, 
+        		$loop_body.post));}
         ;
+        
+return_statement returns [ ReturnStatement ast ]
+	: 'return' expression ';' {$ast = new ReturnStatement(new Position(), $expression.ast);}
+	;
 
 quantified_expression returns [ Expression ast, LinkedList<Expression> divisors ]
-        : QUANTIFIER IDENT '(' range? ')' quantified_expression {
+        : QUANTIFIER IDENT '(' range? ')' e=quantified_expression {
         	Range r;
-        	$divisors = $quantified_expression.divisors
-        	if ($range != null) {
+        	$divisors = $e.divisors
+        	if ($range.e1 != null) {
         		r = new Range($range.e1, $range.e2);
         		$divisors.add($range.divisors);
         	}
         	switch ($QUANTIFIER.text) {
         		case "forall":
         			$ast = new ForallQuantifier(new Position(), r, new Identifier($IDENT.text), 
-        				$quantified_expression.ast, null);
+        				$e.ast, null);
         		case "exists":
         			$ast = new ExistsQuantifier(new Position(), r, new Identifier($IDENT.text), 
-        				$quantified_expression.ast, null);
+        				$e.ast, null);
         	}
         }
-        | expression {if (!$expression instanceof LogicalExpression) 
+        | expression {if (!$expression.ast instanceof LogicalExpression) 
         		throw new TreeGeneratorException("Expected a logical expression.");
         	LogicalExpression exp = (LogicalExpression) $expression.ast;
         	for (Expression e : $expression.divisors) {
@@ -131,7 +172,7 @@ quantified_expression returns [ Expression ast, LinkedList<Expression> divisors 
         ;
 range returns [ ArithmeticExpression e1, ArithmeticExpression e2, LinkedList<Expression> divisors ]
         : e11=expression ',' e22=expression {
-        	if (!($e11.ast instanceof ArithmeticExpression || $e22.at instanceof ArithmeticExpression))
+        	if (!($e11.ast instanceof ArithmeticExpression || $e22.ast instanceof ArithmeticExpression))
         		throw new TreeGeneratorException("Expected an arithmetic expression.");
         	$e1 = (ArithmeticExpression)$e11.ast; 
         	$e2 = (ArithmeticExpression)$e22.ast; 
@@ -242,7 +283,7 @@ literal_expression returns [ Expression ast, LinkedList<Expression> divisors ]
         | BOOL_LITERAL {$ast = new BooleanLiteral($BOOL_LITERAL.text, new Position()); $divisors = new LinkedList<Expression>();}
         ;
 
-type returns [ ASTRoot ast ]
+type returns [ Type ast ]
         : ('int' {$ast = new IntegerType();} | 'bool'{$ast = new BooleanType();}) ( '[' ']' {$ast = new ArrayType(ast);})*
         ;
 
