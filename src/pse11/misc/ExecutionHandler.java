@@ -15,7 +15,7 @@ public class ExecutionHandler {
 		return this.execution;
 	}
 	public void run(String source) {
-		this.execution = new ProgramExecution(new ParserInterface().parse(source));
+		//this.execution = new ProgramExecution(new ParserInterface().parseProgram(source));
 	}
 	public void singleStep() {
 		
