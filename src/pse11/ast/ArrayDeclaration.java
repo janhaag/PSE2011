@@ -42,7 +42,7 @@ public class ArrayDeclaration extends VariableDeclaration {
     public String toString() {
         StringBuilder sb = new StringBuilder(getType().toString());
         sb.append(' ').append(getName());
-        for (ArithmeticExpression index : indexes) {
+        for (Expression index : indexes) {
             sb.append('[');
             sb.append(index.toString());
             sb.append(']');

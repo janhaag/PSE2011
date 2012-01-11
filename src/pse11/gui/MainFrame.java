@@ -2,29 +2,33 @@ package gui;
 
 import java.io.IOException;
 
-import gui.controller.BreakpointViewController;
-import gui.controller.EditorController;
 import gui.controller.MainController;
-import gui.controller.VariableViewController;
 
 import misc.Editor;
 import misc.MessageSystem;
 import misc.Settings;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class MainFrame extends Frame {
+public class MainFrame extends Frame {	
 	private Display display;
 	private Shell shell;
 	private MenuBar menubar;
 	private EditorView editor;
+	private Button runButton;
+	private Button stepButton;
+	private Button validateButton;
+	private Button pauseButton;
+	private Label pauseIcon;
+	private Label runIcon;
 	private Console console[];
 	private VariableView varView;
 	private BreakpointView breakpointView;
 	
-	public MainFrame(MainController mainController, EditorController editorController) {
+	public MainFrame(MainController mainController, Editor editor) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
@@ -38,36 +42,83 @@ public class MainFrame extends Frame {
 		shell.setLayout(gLayout);
 		
 		//Adding menu bar
-		menubar = new MenuBar(mainController, editorController, shell);
+		menubar = new MenuBar(mainController, shell);
 		
-		//Adding editor
-		Editor editor = new Editor();
-		this.editor = new EditorView(shell, SWT.BORDER, editor);
+		Composite c1 = new Composite(shell, SWT.NONE);
+		gLayout = new GridLayout();
+		gLayout.numColumns = 10;
+		gLayout.makeColumnsEqualWidth = true;
+		c1.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan = 3;
-		this.editor.setLayoutData(gData);	
-		editorController = new EditorController(editor, this.editor);
+		c1.setLayoutData(gData);
+		
+		//Adding editor
+		this.editor = new EditorView(c1, SWT.BORDER, editor);
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 10;
+		gData.verticalSpan = 60;
+		this.editor.setLayoutData(gData);
+		
+		//Adding buttons
+		this.runButton = new Button(c1, SWT.PUSH);
+		this.runButton.setText("Run");
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 2;
+		this.runButton.setLayoutData(gData);
+		
+		this.stepButton = new Button(c1, SWT.PUSH);
+		this.stepButton.setText("Single Step");
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 2;
+		this.stepButton.setLayoutData(gData);
+		
+		this.validateButton = new Button(c1, SWT.PUSH);
+		this.validateButton.setText("Validate");
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 2;
+		this.validateButton.setLayoutData(gData);
+		
+		this.pauseButton = new Button(c1, SWT.PUSH);
+		this.pauseButton.setText("Pause");
+		gData = new GridData(GridData.FILL_BOTH);
+		gData.horizontalSpan = 2;
+		this.pauseButton.setLayoutData(gData);
+		
+		this.runButton.addSelectionListener(mainController);
+		this.stepButton.addSelectionListener(mainController);
+		this.validateButton.addSelectionListener(mainController);
+		this.pauseButton.addSelectionListener(mainController);
+		
+		//Adding icons
+		this.pauseIcon = new Label(c1, SWT.NONE);
+		Image image1 = new Image(display, "./src/gui/image/pause1.png");
+		this.pauseIcon.setImage(image1);
+		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);
+		this.pauseIcon.setLayoutData(gData);
+		
+		this.runIcon = new Label(c1, SWT.NONE);
+		Image image2 = new Image(display, "./src/gui/image/run1.png");
+		this.runIcon.setImage(image2);
+		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		this.runIcon.setLayoutData(gData);
 		
 	    //Create a composite for variable view and breakpoint view
-	    Composite composite = new Composite(shell, SWT.NONE); 
+	    Composite c2 = new Composite(shell, SWT.NONE); 
 	    gLayout = new GridLayout();
-	    composite.setLayout(gLayout);
+	    c2.setLayout(gLayout);
 	    gData = new GridData(GridData.FILL_BOTH);
-	    composite.setLayoutData(gData);
+	    c2.setLayoutData(gData);
 	    
-		//Adding variable view and controller 
-		new Label(composite, SWT.NONE).setText("Variables");
-		this.varView = new VariableView(composite, SWT.NONE);
+		//Adding variable view
+		new Label(c2, SWT.NONE).setText("Variables");
+		this.varView = new VariableView(c2, SWT.NONE);
 		gData = new GridData(GridData.FILL_BOTH);
-		this.varView.setLayoutData(gData);
-		VariableViewController varController = new VariableViewController(this.varView);
+		this.varView.setLayoutData(gData);		
 		
-		
-		//Adding breakpoint view and controller			
-		new Label(composite, SWT.NONE).setText("Breakpoints");
-	    BreakpointViewController breakpointController = new BreakpointViewController();	 	    
-		this.breakpointView = new BreakpointView(composite, SWT.NONE, breakpointController);			
-		breakpointController.addView(this.breakpointView);		
+		//Adding breakpoint view		
+		new Label(c2, SWT.NONE).setText("Breakpoints"); 	    
+		this.breakpointView = new BreakpointView(c2, SWT.NONE);				
 		gData = new GridData(GridData.FILL_BOTH);
 		this.breakpointView.setLayoutData(gData);
 		
@@ -76,8 +127,8 @@ public class MainFrame extends Frame {
 		this.console = new Console[3];
 		TabFolder tf = new TabFolder(shell, SWT.NONE);
 		gData = new GridData(GridData.FILL_BOTH);
+		gData = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_FILL);
 		gData.horizontalSpan = 3;
-		gData.verticalSpan = 30;
 	    tf.setLayoutData(gData);
 	    
 		TabItem ti1 = new TabItem(tf, SWT.BORDER);
@@ -94,16 +145,55 @@ public class MainFrame extends Frame {
 		
 		//Adding help box
 		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);
-		gData = new GridData(GridData.FILL_BOTH);
-		gData.verticalSpan = 30;
+		gData = new GridData(GridData.FILL_HORIZONTAL);
 	    help.setLayoutData(gData);
 	}
+	
+	public void switchIcon(Image image, Image image2) {
+		this.runIcon.setImage(image);
+		this.pauseIcon.setImage(image2);
+	}
+	
 	public Shell getShell() {
 		return this.shell;
 	}
-	public MenuBar getMenuBar() {
-		return menubar;
+	
+	public Display getDisplay() {
+		return this.display;
 	}
+	
+	public MenuBar getMenuBar() {
+		return this.menubar;
+	}
+	
+	public EditorView getEditor() {
+		return this.editor;
+	}
+	
+	public VariableView getVarView() {
+		return this.varView;
+	}
+	
+	public BreakpointView getBreakpointView() {
+		return this.breakpointView;
+	}
+	
+	public Button getRunButton() {
+		return this.runButton;
+	}
+	
+	public Button getStepButton() {
+		return this.stepButton;
+	}
+	
+	public Button getValidateButton() {
+		return this.validateButton;
+	}
+	
+	public Button getPauseButton() {
+		return this.pauseButton;
+	}
+	
 	public void openWindow() {
 		shell.open();
 		while(!shell.isDisposed()) {

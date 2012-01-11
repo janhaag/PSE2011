@@ -1,5 +1,6 @@
 package parser;
-import ast;
+import ast.Program;
+import ast.Expression;
 
 public class ParserInterface {
     /**
@@ -8,10 +9,19 @@ public class ParserInterface {
     public void initParser() {}
 
     /**
-     * Parse text into an AST
+     * Parse program text into an AST
      * @param text the text to be parsed
      * @return the AST
      */
-    public ASTRoot parse(String text) {
+    public Program parseProgram(String text) {
+        return null;
+    }
+
+    /**
+     * Parse expression text into an AST
+     * @param text the text to be parsed
+     * @return the AST
+     */
+    public Expression parseExpression(String text) {
         return null;
     }

@@ -31,13 +31,12 @@ public class VariableView extends Composite {
 	    this.tree.setHeaderVisible(true);
 	    this.tree.setLinesVisible(true);
 	    
-	    TreeColumn column1 = new TreeColumn(this.tree, SWT.NONE);
+	    TreeColumn column1 = new TreeColumn(this.tree, SWT.CENTER);
 	    TreeColumn column2 = new TreeColumn(this.tree, SWT.CENTER);
-	    column1.setText("         Variable         ");
-	    column2.setText("         Value         ");
-	    	    
-	    this.tree.getColumn(0).pack();
-	    this.tree.getColumn(1).pack();
+	    column1.setWidth(140);
+	    column1.setText("Variable");
+	    column2.setWidth(85);
+	    column2.setText("Value");
 		
 	}
 	

@@ -1,6 +1,6 @@
 package gui;
 
-import gui.controller.BreakpointViewController;
+import gui.controller.TreeViewController;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -15,15 +15,13 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 public class BreakpointView extends Composite {
-	private BreakpointViewController controller;
 	private Table global;
 	private Table statement;
 	private StyledText addTextField;
 	private Button button;
 	
-	public BreakpointView(Composite parent, int def, BreakpointViewController controller) {
+	public BreakpointView(Composite parent, int def) {
 		super(parent, def);		
-		this.controller = controller;
 		
 		//Setting layout
 		GridLayout gLayout = new GridLayout();
@@ -44,18 +42,16 @@ public class BreakpointView extends Composite {
 			table.setHeaderVisible(true);
 			
 			TableColumn column1 = new TableColumn(table, SWT.CENTER);
+			column1.setWidth(50);
 			column1.setText("Active");
 			TableColumn column2 = new TableColumn(table, SWT.CENTER);
-			
+			column2.setWidth(165);
 			if (i == 0) {
-				column2.setText("              Expression              ");
+				column2.setText("Expression");
 			}
 			else {
-				column2.setText("            Line number            ");
+				column2.setText("Line number");
 			}
-			
-			table.getColumn(0).pack();
-			table.getColumn(1).pack();
 			
 			if (i == 0) {
 				this.global = table;
@@ -72,9 +68,6 @@ public class BreakpointView extends Composite {
 		tabitem2.setText("Statement");
 		tabitem2.setControl(this.statement);
 		
-		this.global.addSelectionListener(this.controller);
-		this.statement.addSelectionListener(this.controller);
-		
 		//Create text field and button for global breakpoint inserts
 	    this.addTextField = new StyledText(this, SWT.SINGLE | SWT.BORDER);
 	    this.addTextField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -87,13 +80,20 @@ public class BreakpointView extends Composite {
 	    gData = new GridData(GridData.FILL_HORIZONTAL);  
 	    gData.verticalSpan = 5;
 	    this.button.setLayoutData(gData);
-	    
-	    this.button.addSelectionListener(this.controller);
+	}
+	
+	public void setListenerControl(TreeViewController controller) {
+		this.global.addSelectionListener(controller);
+		this.statement.addSelectionListener(controller);
+		this.button.addSelectionListener(controller);
 	}
 	
 	public void setGlobalBreakpointItem(String key) {		
 		TableItem item = new TableItem(this.global, SWT.NONE);
 		item.setText(1, key);
+	}
+	
+	public void removeGlobalBreakpointItem() {
 	}
 	
 	public Table getGlobalBreakpoint() {

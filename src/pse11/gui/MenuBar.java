@@ -18,8 +18,8 @@ public class MenuBar {
 	private MenuItem aboutItem;
 	private MenuItem randomTestItem;
 	
-	public MenuBar(MainController controller, EditorController editorController, Shell shell) {
-		initiateMenuBar(controller, editorController, shell);
+	public MenuBar(MainController controller, Shell shell) {
+		initiateMenuBar(controller, null, shell);
 	}
 	public MenuItem getMenuBarItemExit() {
 		return this.exitItem;

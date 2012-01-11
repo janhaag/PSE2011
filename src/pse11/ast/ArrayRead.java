@@ -8,7 +8,7 @@ public class ArrayRead extends VariableRead {
     /**
      * Indexes used to determine the position of the read array element.
      */
-    private final ArithmeticExpression[] indexes;
+    private final Expression[] indexes;
 
     /**
      * Constructor.
@@ -19,7 +19,7 @@ public class ArrayRead extends VariableRead {
      * @param indexes position from which the element is read
      */
     public ArrayRead(Position position, Identifier variable,
-                     ArithmeticExpression[] indexes) {
+                     Expression[] indexes) {
         super(position, variable);
         this.indexes = indexes;
     }
@@ -28,7 +28,7 @@ public class ArrayRead extends VariableRead {
      * Returns the list of array indexes for the element to be read
      * @return list of array indexes
      */
-    public ArithmeticExpression[] getIndexes() {
+    public Expression[] getIndexes() {
         return indexes;
     }
 
@@ -39,7 +39,7 @@ public class ArrayRead extends VariableRead {
 
     public String toString() {
         StringBuilder sb = new StringBuilder(getVariable().toString());
-        for (ArithmeticExpression index : indexes) {
+        for (Expression index : indexes) {
             sb.append('[');
             sb.append(index.toString());
             sb.append(']');
