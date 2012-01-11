@@ -9,7 +9,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * List of the lengths of the different array dimensions.
      * The length of this list is the dimension of the array.
      */
-    private final ArithmeticExpression[] indexes;
+    private final Expression[] indexes;
 
     /**
      * Constructor.
@@ -21,7 +21,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * @param indexes length of the array dimensions
      */
     public ArrayDeclaration(Position position, String name, Type type,
-                            ArithmeticExpression[] indexes) {
+                            Expression[] indexes) {
         super(position, name, null, type);
         this.indexes = indexes;
     }
@@ -30,7 +30,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * Returns the list of the array lengths.
      * @return list of array lengths
      */
-    public ArithmeticExpression[] getIndexes() {
+    public Expression[] getIndexes() {
         return indexes;
     }
 
@@ -42,7 +42,7 @@ public class ArrayDeclaration extends VariableDeclaration {
     public String toString() {
         StringBuilder sb = new StringBuilder(getType().toString());
         sb.append(' ').append(getName());
-        for (ArithmeticExpression index : indexes) {
+        for (Expression index : indexes) {
             sb.append('[');
             sb.append(index.toString());
             sb.append(']');

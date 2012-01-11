@@ -2,6 +2,7 @@ package interpreter;
 
 import ast.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
@@ -36,8 +37,8 @@ public class Interpreter implements ASTVisitor {
     public void visit(ArrayAssignment arrayAssignment) {
         Expression[] indexes = arrayAssignment.getIndexes();
         ArrayList<Integer> lengths = new ArrayList<Integer>();
-        for (int i = 0; i < indexes.length; i++) {
-            indexes[i].accept(this);
+        for (Expression index : indexes) {
+            index.accept(this);
             int pos = ((IntegerValue) tempValue).getValue().intValue();
             lengths.add(pos);
         }
@@ -47,6 +48,49 @@ public class Interpreter implements ASTVisitor {
     }
 
     public void visit(ArithmeticExpression arithmeticExpression) {
+        arithmeticExpression.getSubexpression1().accept(this);
+        ArithmeticOperator operator =
+                arithmeticExpression.getArithmeticOperator();
+        if (operator.isBinary()) {
+            BigInteger value1 = ((IntegerValue) tempValue).getValue();
+            arithmeticExpression.getSubexpression2().accept(this);
+            BigInteger value2 = ((IntegerValue) tempValue).getValue();
+            if (operator instanceof Addition) {
+                BigInteger newValue = value1.add(value2);
+                tempValue = new IntegerValue(newValue.toString());
+            }
+            if (operator instanceof Subtraction) {
+                BigInteger newValue = value1.subtract(value2);
+                tempValue = new IntegerValue(newValue.toString());
+            }
+            if (operator instanceof Multiplication) {
+                BigInteger newValue = value1.multiply(value2);
+                tempValue = new IntegerValue(newValue.toString());
+            }
+            if (operator instanceof Division) {
+                BigInteger newValue;
+                if (value2.equals(BigInteger.ZERO)) {
+                    newValue = BigInteger.ZERO;
+                } else {
+                    newValue = value1.divide(value2);
+                }
+                tempValue = new IntegerValue(newValue.toString());
+            }
+            if (operator instanceof Modulo) {
+                BigInteger newValue;
+                if (value2.equals(BigInteger.ZERO)) {
+                    newValue = value1;
+                } else {
+                    newValue = value1.remainder(value2);
+                }
+                tempValue = new IntegerValue(newValue.toString());
+            }
+        } else {
+            //Unary minus
+            BigInteger newValue =
+                    ((IntegerValue) tempValue).getValue().negate();
+            tempValue = new IntegerValue(newValue.toString());
+        }
     }
 
     public void visit(NumericLiteral number) {
@@ -55,11 +99,11 @@ public class Interpreter implements ASTVisitor {
 
     public void visit(LogicalExpression logicalExpression) {
         logicalExpression.getSubexpression1().accept(this);
-        if (logicalExpression.getLogicalOperator().isBinary()) {
+        LogicalOperator operator = logicalExpression.getLogicalOperator();
+        if (operator.isBinary()) {
             Value tempValue1 = tempValue;
             logicalExpression.getSubexpression2().accept(this);
             Value tempValue2 = tempValue;
-            LogicalOperator operator = logicalExpression.getLogicalOperator();
             if (operator instanceof Disjunction) {
                 boolean newValue = ((BooleanValue) tempValue1).getValue()
                         || ((BooleanValue) tempValue2).getValue();
@@ -73,25 +117,25 @@ public class Interpreter implements ASTVisitor {
             if (operator instanceof Greater) {
                 boolean newValue =
                         ((IntegerValue) tempValue1).getValue().intValue()
-                                > ((IntegerValue) tempValue2).getValue().intValue();
+                            > ((IntegerValue) tempValue2).getValue().intValue();
                 tempValue = new BooleanValue(Boolean.toString(newValue));
             }
             if (operator instanceof GreaterEqual) {
                 boolean newValue =
                         ((IntegerValue) tempValue1).getValue().intValue()
-                                >= ((IntegerValue) tempValue2).getValue().intValue();
+                           >= ((IntegerValue) tempValue2).getValue().intValue();
                 tempValue = new BooleanValue(Boolean.toString(newValue));
             }
             if (operator instanceof Less) {
                 boolean newValue =
                         ((IntegerValue) tempValue1).getValue().intValue()
-                                < ((IntegerValue) tempValue2).getValue().intValue();
+                            < ((IntegerValue) tempValue2).getValue().intValue();
                 tempValue = new BooleanValue(Boolean.toString(newValue));
             }
             if (operator instanceof LessEqual) {
                 boolean newValue =
                         ((IntegerValue) tempValue1).getValue().intValue()
-                                <= ((IntegerValue) tempValue2).getValue().intValue();
+                           <= ((IntegerValue) tempValue2).getValue().intValue();
                 tempValue = new BooleanValue(Boolean.toString(newValue));
             }
             if (operator instanceof Equal) {
@@ -114,6 +158,7 @@ public class Interpreter implements ASTVisitor {
     }
 
     public void visit(FunctionCall functionCall) {
+        //TODO
     }
 
     public void visit(VariableRead variableRead) {
@@ -174,6 +219,7 @@ public class Interpreter implements ASTVisitor {
     }
 
     public void visit(Axiom axiom) {
+        //TODO: is this needed in interpreter?
     }
 
     public void visit(Ensure ensure) {
@@ -193,6 +239,7 @@ public class Interpreter implements ASTVisitor {
     }
 
     public void visit(ReturnStatement returnStatement) {
+        //TODO: write code
     }
 
     public void visit(VariableDeclaration varDec) {
@@ -238,7 +285,7 @@ public class Interpreter implements ASTVisitor {
             tempValue = new BooleanValue(Boolean.toString(satisfied));
             currentState.destroyScope();
         } else {
-            //TODO
+            //TODO: give to verifier
         }
     }
 
@@ -264,11 +311,12 @@ public class Interpreter implements ASTVisitor {
             tempValue = new BooleanValue(Boolean.toString(valid));
             currentState.destroyScope();
         } else {
-            //TODO
+            //TODO: give to verifier
         }
     }
 
     public void visit(StatementBlock statementBlock) {
+        //TODO: is this needed?
     }
 
     public void visit(Length length) {
