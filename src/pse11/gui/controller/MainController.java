@@ -41,7 +41,6 @@ public class MainController implements SelectionListener {
 	}
 	
 	private void initMainFrame() {
-		this.mainframe.setListenerControl(this);
 		/* Very important to call this in a separated method because SWT uses an infinite 
 		 * loop for its window management and we need the instance of MainFrame.
 		 */
@@ -73,26 +72,22 @@ public class MainController implements SelectionListener {
 			//Images
 			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run2.png");
 			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
-			this.mainframe.getRunIcon().setImage(image);
-			this.mainframe.getPauseIcon().setImage(image2);
+			this.mainframe.switchIcon(image, image2);
 			//Functions
 			assert editorController != null;
 			this.executionHandler.run(this.editorController.getEditor().getSource());
 		} else if(e.getSource() == mainframe.getStepButton()) {
 			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run2.png");
 			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
-			this.mainframe.getRunIcon().setImage(image);
-			this.mainframe.getPauseIcon().setImage(image2);
+			this.mainframe.switchIcon(image, image2);
 		} else if(e.getSource() == mainframe.getPauseButton()) {
-			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause2.png");
-			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/run1.png");
-			this.mainframe.getPauseIcon().setImage(image);
-			this.mainframe.getRunIcon().setImage(image2);
+			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run1.png");
+			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause2.png");
+			this.mainframe.switchIcon(image, image2);
 		} else if(e.getSource() == mainframe.getValidateButton()) {
-			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
-			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/run1.png");
-			this.mainframe.getPauseIcon().setImage(image);
-			this.mainframe.getRunIcon().setImage(image2);
+			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run1.png");
+			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
+			this.mainframe.switchIcon(image, image2);
 		}
 	}
 	

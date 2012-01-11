@@ -42,18 +42,16 @@ public class BreakpointView extends Composite {
 			table.setHeaderVisible(true);
 			
 			TableColumn column1 = new TableColumn(table, SWT.CENTER);
+			column1.setWidth(50);
 			column1.setText("Active");
 			TableColumn column2 = new TableColumn(table, SWT.CENTER);
-			
+			column2.setWidth(165);
 			if (i == 0) {
-				column2.setText("              Expression              ");
+				column2.setText("Expression");
 			}
 			else {
-				column2.setText("            Line number            ");
+				column2.setText("Line number");
 			}
-			
-			table.getColumn(0).pack();
-			table.getColumn(1).pack();
 			
 			if (i == 0) {
 				this.global = table;

@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 
-import gui.controller.EditorController;
 import gui.controller.MainController;
 
 import misc.Editor;
@@ -58,6 +57,7 @@ public class MainFrame extends Frame {
 		this.editor = new EditorView(c1, SWT.BORDER, editor);
 		gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan = 10;
+		gData.verticalSpan = 60;
 		this.editor.setLayoutData(gData);
 		
 		//Adding buttons
@@ -84,6 +84,11 @@ public class MainFrame extends Frame {
 		gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan = 2;
 		this.pauseButton.setLayoutData(gData);
+		
+		this.runButton.addSelectionListener(mainController);
+		this.stepButton.addSelectionListener(mainController);
+		this.validateButton.addSelectionListener(mainController);
+		this.pauseButton.addSelectionListener(mainController);
 		
 		//Adding icons
 		this.pauseIcon = new Label(c1, SWT.NONE);
@@ -122,8 +127,8 @@ public class MainFrame extends Frame {
 		this.console = new Console[3];
 		TabFolder tf = new TabFolder(shell, SWT.NONE);
 		gData = new GridData(GridData.FILL_BOTH);
+		gData = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_FILL);
 		gData.horizontalSpan = 3;
-		gData.verticalSpan = 30;
 	    tf.setLayoutData(gData);
 	    
 		TabItem ti1 = new TabItem(tf, SWT.BORDER);
@@ -140,16 +145,13 @@ public class MainFrame extends Frame {
 		
 		//Adding help box
 		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);
-		gData = new GridData(GridData.FILL_BOTH);
-		gData.verticalSpan = 30;
+		gData = new GridData(GridData.FILL_HORIZONTAL);
 	    help.setLayoutData(gData);
 	}
 	
-	public void setListenerControl(MainController controller) {
-		this.runButton.addSelectionListener(controller);
-		this.stepButton.addSelectionListener(controller);
-		this.validateButton.addSelectionListener(controller);
-		this.pauseButton.addSelectionListener(controller);
+	public void switchIcon(Image image, Image image2) {
+		this.runIcon.setImage(image);
+		this.pauseIcon.setImage(image2);
 	}
 	
 	public Shell getShell() {
@@ -190,14 +192,6 @@ public class MainFrame extends Frame {
 	
 	public Button getPauseButton() {
 		return this.pauseButton;
-	}
-	
-	public Label getRunIcon() {
-		return this.runIcon;
-	}
-	
-	public Label getPauseIcon() {
-		return this.pauseIcon;
 	}
 	
 	public void openWindow() {
