@@ -107,7 +107,7 @@ public class TreeViewController implements SelectionListener {
 			
 			if (!contains) {
 				//GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(null);
-				//this.globalBreakpoints.add(gBreakpoint);
+				//this.execution.createStatementBreakpoint(expression);
 				this.breakpointView.setGlobalBreakpointItem(expression);
 			} else {
 				//Remove global breakpoints
