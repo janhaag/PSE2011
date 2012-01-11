@@ -5,6 +5,7 @@ import misc.Settings;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.graphics.Image;
 
 import gui.AboutFrame;
 import gui.EvaluationFrame;
@@ -37,6 +38,7 @@ public class MainController implements SelectionListener {
 	private void initMainFrame() {
 		this.mainframe = new MainFrame(this, this.editorController);	
 		this.initViewController();
+		this.mainframe.setListenerControl(this);
 		/* Very important to call this in a separated method because SWT uses an infinite 
 		 * loop for its window management and we need the instance of MainFrame.
 		 */
@@ -50,7 +52,8 @@ public class MainController implements SelectionListener {
 	
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		if(e.getSource() == mainframe.getMenuBar().getMenuBarItemExit()) {
+		//frame events
+		if(e.getSource() == this.mainframe.getMenuBar().getMenuBarItemExit()) {
 			System.exit(0);
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()) {
 			new FileFrame(this.mainframe.getShell(), SWT.OPEN);
@@ -66,6 +69,29 @@ public class MainController implements SelectionListener {
 			new AboutFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
 			new HelpFrame(this.mainframe.getShell());
+		} 
+		
+		//button events
+		else if(e.getSource() == mainframe.getRunButton()) {
+			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run2.png");
+			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
+			this.mainframe.getRunIcon().setImage(image);
+			this.mainframe.getPauseIcon().setImage(image2);
+		} else if(e.getSource() == mainframe.getStepButton()) {
+			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run2.png");
+			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
+			this.mainframe.getRunIcon().setImage(image);
+			this.mainframe.getPauseIcon().setImage(image2);
+		} else if(e.getSource() == mainframe.getPauseButton()) {
+			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause2.png");
+			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/run1.png");
+			this.mainframe.getPauseIcon().setImage(image);
+			this.mainframe.getRunIcon().setImage(image2);
+		} else if(e.getSource() == mainframe.getValidateButton()) {
+			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
+			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/run1.png");
+			this.mainframe.getPauseIcon().setImage(image);
+			this.mainframe.getRunIcon().setImage(image2);
 		}
 	}
 	
