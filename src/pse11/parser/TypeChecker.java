@@ -25,6 +25,15 @@ public class TypeChecker implements ASTVisitor {
     }
 
     /**
+     * Sets the current scope of the type checker
+     * (for type checking single expressions)
+     * @param currentScope new scope
+     */
+    public void setCurrentScope(Scope currentScope) {
+        this.currentScope = currentScope;
+    }
+
+    /**
      * Checks the type correctness of a given conditional statement.
      * @param conditional conditional to check
      */
@@ -73,9 +82,14 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
         Value value = vars.get(identifier);
-        ArithmeticExpression[] indexes = arrayAssignment.getIndexes();
-        for (ArithmeticExpression index : indexes) {
+        Expression[] indexes = arrayAssignment.getIndexes();
+        for (Expression index : indexes) {
             index.accept(this);
+            if (!(tempType instanceof IntegerType)) {
+                throw new IllegalTypeException("Index must be an integer "
+                                               + "expression!",
+                                               arrayAssignment.getPosition());
+            }
         }
         arrayAssignment.getValue().accept(this);
         Type type = baseType(value.getType(), indexes.length,
@@ -114,16 +128,16 @@ public class TypeChecker implements ASTVisitor {
             arithmeticExpression.getSubexpression2().accept(this);
             if (!(tempType instanceof IntegerType)
                || !(tempType1 instanceof IntegerType)) {
-                throw new IllegalTypeException("Operands must be arithmetic "
+                throw new IllegalTypeException("Operands must be integer "
                                                + "expressions!",
                                             arithmeticExpression.getPosition());
             }
         } else {
             //UnaryMinus
-            if (!(tempType instanceof BooleanType)) {
-                throw new
-                  IllegalTypeException("Operand must be a logical expression!",
-                                       arithmeticExpression.getPosition());
+            if (!(tempType instanceof IntegerType)) {
+                throw new IllegalTypeException("Operand must be an integer "
+                                               + "expression!",
+                                            arithmeticExpression.getPosition());
             }
         }
         tempType = new IntegerType();
@@ -151,10 +165,10 @@ public class TypeChecker implements ASTVisitor {
             logicalExpression.getSubexpression2().accept(this);
             if (operator instanceof Conjunction
                     || operator instanceof Disjunction) {
-                if (!(tempType instanceof IntegerType)
-                        || !(tempType1 instanceof IntegerType)) {
+                if (!(tempType instanceof BooleanType)
+                        || !(tempType1 instanceof BooleanType)) {
                     throw new IllegalTypeException("Operands must be "
-                                                    + "integer expressions!",
+                                                    + "boolean expressions!",
                                                     position);
                 }
             } else if (operator instanceof Equal
@@ -247,9 +261,14 @@ public class TypeChecker implements ASTVisitor {
                                            + " was read but not declared!",
                                            arrayRead.getPosition());
         }
-        ArithmeticExpression[] indexes = arrayRead.getIndexes();
-        for (ArithmeticExpression index : indexes) {
+        Expression[] indexes = arrayRead.getIndexes();
+        for (Expression index : indexes) {
             index.accept(this);
+            if (!(tempType instanceof IntegerType)) {
+                throw new IllegalTypeException("Index must be an integer "
+                                               + "expression!",
+                                               arrayRead.getPosition());
+            }
         }
         tempType =
              baseType(value.getType(), indexes.length, arrayRead.getPosition());
@@ -420,15 +439,14 @@ public class TypeChecker implements ASTVisitor {
      */
     public void visit(VariableDeclaration varDec) {
         if (currentScope.existsInScope(new Identifier(varDec.getName()))) {
-            throw new IllegalTypeException("Variable was declared but "
-                                           + "identifier is already used!",
+            throw new IllegalTypeException("Variable already defined in scope!",
                                            varDec.getPosition());
         }
         if (varDec.getValue() != null) {
             varDec.getValue().accept(this);
             if (!varDec.getType().equals(tempType)) {
-                throw new IllegalTypeException("Type of variable does not match "
-                                               + "the type of initialized value",
+                throw new IllegalTypeException("Type of variable does not match"
+                                               + " the type of initial value",
                                                varDec.getPosition());
             }
         }
@@ -441,13 +459,17 @@ public class TypeChecker implements ASTVisitor {
      */
     public void visit(ArrayDeclaration arrDec) {
         if (currentScope.existsInScope(new Identifier(arrDec.getName()))) {
-            throw new IllegalTypeException("Array was declared but identifier "
-                                           + "is already used!",
+            throw new IllegalTypeException("Array already declared in scope!",
                                            arrDec.getPosition());
         }
-        ArithmeticExpression[] indexes = arrDec.getIndexes();
-        for (ArithmeticExpression index : indexes) {
+        Expression[] indexes = arrDec.getIndexes();
+        for (Expression index : indexes) {
             index.accept(this);
+            if (!(tempType instanceof IntegerType)) {
+                throw new IllegalTypeException("Index must be an integer "
+                                               + "expression!",
+                                               arrDec.getPosition());
+            }
         }
         if (baseType(arrDec.getType(), indexes.length, arrDec.getPosition())
                 instanceof ArrayType) {

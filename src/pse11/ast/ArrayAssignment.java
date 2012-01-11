@@ -7,7 +7,7 @@ public class ArrayAssignment extends Assignment {
     /**
      * Indexes used to determine the position of the assigned array element.
      */
-    private final ArithmeticExpression[] indexes;
+    private final Expression[] indexes;
 
     /**
      * Constructor.
@@ -19,8 +19,7 @@ public class ArrayAssignment extends Assignment {
      * @param indexes position to which the new value is stored
      */
     public ArrayAssignment(Position position, Expression value,
-                           Identifier identifier,
-                           ArithmeticExpression[] indexes) {
+                           Identifier identifier, Expression[] indexes) {
         super(position, value, identifier);
         this.indexes = indexes;
     }
@@ -29,7 +28,7 @@ public class ArrayAssignment extends Assignment {
      * Returns the list of indexes for this assignment.
      * @return the indexes for this assignment
      */
-    public ArithmeticExpression[] getIndexes() {
+    public Expression[] getIndexes() {
         return indexes;
     }
 
@@ -40,7 +39,7 @@ public class ArrayAssignment extends Assignment {
 
     public String toString() {
         StringBuilder sb = new StringBuilder(getIdentifier().toString());
-        for (ArithmeticExpression index : indexes) {
+        for (Expression index : indexes) {
             sb.append('[');
             sb.append(index.toString());
             sb.append(']');
