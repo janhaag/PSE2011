@@ -29,7 +29,7 @@ public class MainFrame extends Frame {
 	private VariableView varView;
 	private BreakpointView breakpointView;
 	
-	public MainFrame(MainController mainController, EditorController editorController) {
+	public MainFrame(MainController mainController, Editor editor) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
@@ -43,7 +43,7 @@ public class MainFrame extends Frame {
 		shell.setLayout(gLayout);
 		
 		//Adding menu bar
-		menubar = new MenuBar(mainController, editorController, shell);
+		menubar = new MenuBar(mainController, shell);
 		
 		Composite c1 = new Composite(shell, SWT.NONE);
 		gLayout = new GridLayout();
@@ -55,12 +55,10 @@ public class MainFrame extends Frame {
 		c1.setLayoutData(gData);
 		
 		//Adding editor
-		Editor editor = new Editor();
 		this.editor = new EditorView(c1, SWT.BORDER, editor);
 		gData = new GridData(GridData.FILL_BOTH);
 		gData.horizontalSpan = 10;
-		this.editor.setLayoutData(gData);	
-		editorController = new EditorController(editor, this.editor);
+		this.editor.setLayoutData(gData);
 		
 		//Adding buttons
 		this.runButton = new Button(c1, SWT.PUSH);
@@ -164,6 +162,10 @@ public class MainFrame extends Frame {
 	
 	public MenuBar getMenuBar() {
 		return this.menubar;
+	}
+	
+	public EditorView getEditor() {
+		return this.editor;
 	}
 	
 	public VariableView getVarView() {

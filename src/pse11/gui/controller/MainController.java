@@ -1,6 +1,7 @@
 package gui.controller;
 
-import interpreter.ProgramExecution;
+import misc.Editor;
+import misc.ExecutionHandler;
 import misc.Settings;
 
 import org.eclipse.swt.SWT;
@@ -16,7 +17,8 @@ import gui.SettingsFrame;
 import gui.RandomTestFrame;
 
 public class MainController implements SelectionListener {
-	private ProgramExecution execution;
+	private ExecutionHandler executionHandler;
+	private Editor editor; //TODO evt nicht nötig...
 	
 	private MainFrame mainframe;
 	private MiscController miscController;
@@ -25,29 +27,25 @@ public class MainController implements SelectionListener {
 	private TreeViewController treeController;
 	
 	public MainController() {
+		Editor editor = new Editor();
+		this.mainframe = new MainFrame(this, editor);
+		this.editorController = new EditorController(editor, mainframe.getEditor());
+		this.executionHandler = new ExecutionHandler();
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
-		
-		//parser interface for parameter needed.......
-		//this.execution = new ProgramExecution(null);
+		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
+				this.mainframe.getVarView(), this.executionHandler.getProgramExecution());
 		
 		//Has to be the last call in the constructor
 		initMainFrame();
 	}
 	
 	private void initMainFrame() {
-		this.mainframe = new MainFrame(this, this.editorController);	
-		this.initViewController();
 		this.mainframe.setListenerControl(this);
 		/* Very important to call this in a separated method because SWT uses an infinite 
 		 * loop for its window management and we need the instance of MainFrame.
 		 */
 		this.mainframe.openWindow();
-	}
-	
-	private void initViewController() {
-		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
-				this.mainframe.getVarView(), this.execution);
 	}
 	
 	@Override
@@ -70,13 +68,16 @@ public class MainController implements SelectionListener {
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
 			new HelpFrame(this.mainframe.getShell());
 		} 
-		
 		//button events
 		else if(e.getSource() == mainframe.getRunButton()) {
+			//Images
 			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run2.png");
 			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
 			this.mainframe.getRunIcon().setImage(image);
 			this.mainframe.getPauseIcon().setImage(image2);
+			//Functions
+			assert editorController != null;
+			this.executionHandler.run(this.editorController.getEditor().getSource());
 		} else if(e.getSource() == mainframe.getStepButton()) {
 			Image image = new Image(this.mainframe.getDisplay(), "./src/gui/image/run2.png");
 			Image image2 = new Image(this.mainframe.getDisplay(), "./src/gui/image/pause1.png");
@@ -97,6 +98,5 @@ public class MainController implements SelectionListener {
 	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO methodblock
 	}
 }
