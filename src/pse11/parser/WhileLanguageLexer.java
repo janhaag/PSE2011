@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-06 14:28:30
+// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-12 17:10:02
 
 	package parser;
 
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class WhileLanguageLexer extends Lexer {
     public static final int EOF=-1;
-    public static final int T__9=9;
     public static final int T__10=10;
     public static final int T__11=11;
     public static final int T__12=12;
@@ -47,11 +46,13 @@ public class WhileLanguageLexer extends Lexer {
     public static final int T__42=42;
     public static final int T__43=43;
     public static final int T__44=44;
+    public static final int T__45=45;
     public static final int BOOL_LITERAL=4;
     public static final int COMMENT=5;
     public static final int IDENT=6;
     public static final int INT_LITERAL=7;
-    public static final int WS=8;
+    public static final int QUANTIFIER=8;
+    public static final int WS=9;
 
     // delegates
     // delegators
@@ -68,38 +69,15 @@ public class WhileLanguageLexer extends Lexer {
     }
     public String getGrammarFileName() { return "C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g"; }
 
-    // $ANTLR start "T__9"
-    public final void mT__9() throws RecognitionException {
-        try {
-            int _type = T__9;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:6:6: ( '!' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:6:8: '!'
-            {
-            match('!'); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "T__9"
-
     // $ANTLR start "T__10"
     public final void mT__10() throws RecognitionException {
         try {
             int _type = T__10;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:7:7: ( '!=' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:7:9: '!='
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:6:7: ( '!' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:6:9: '!'
             {
-            match("!="); 
-
-
+            match('!'); 
 
             }
 
@@ -117,10 +95,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__11;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:8:7: ( '%' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:8:9: '%'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:7:7: ( '!=' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:7:9: '!='
             {
-            match('%'); 
+            match("!="); 
+
+
 
             }
 
@@ -138,10 +118,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:9:7: ( '&' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:9:9: '&'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:8:7: ( '%' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:8:9: '%'
             {
-            match('&'); 
+            match('%'); 
 
             }
 
@@ -159,10 +139,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:10:7: ( '(' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:10:9: '('
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:9:7: ( '&' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:9:9: '&'
             {
-            match('('); 
+            match('&'); 
 
             }
 
@@ -180,10 +160,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:11:7: ( ')' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:11:9: ')'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:10:7: ( '(' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:10:9: '('
             {
-            match(')'); 
+            match('('); 
 
             }
 
@@ -201,10 +181,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:12:7: ( '*' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:12:9: '*'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:11:7: ( ')' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:11:9: ')'
             {
-            match('*'); 
+            match(')'); 
 
             }
 
@@ -222,10 +202,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:13:7: ( '+' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:13:9: '+'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:12:7: ( '*' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:12:9: '*'
             {
-            match('+'); 
+            match('*'); 
 
             }
 
@@ -243,10 +223,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:14:7: ( ',' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:14:9: ','
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:13:7: ( '+' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:13:9: '+'
             {
-            match(','); 
+            match('+'); 
 
             }
 
@@ -264,10 +244,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:15:7: ( '-' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:15:9: '-'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:14:7: ( ',' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:14:9: ','
             {
-            match('-'); 
+            match(','); 
 
             }
 
@@ -285,10 +265,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:16:7: ( '/' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:16:9: '/'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:15:7: ( '-' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:15:9: '-'
             {
-            match('/'); 
+            match('-'); 
 
             }
 
@@ -306,10 +286,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:17:7: ( ';' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:17:9: ';'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:16:7: ( '/' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:16:9: '/'
             {
-            match(';'); 
+            match('/'); 
 
             }
 
@@ -327,10 +307,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:18:7: ( '<' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:18:9: '<'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:17:7: ( ';' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:17:9: ';'
             {
-            match('<'); 
+            match(';'); 
 
             }
 
@@ -348,12 +328,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:19:7: ( '<=' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:19:9: '<='
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:18:7: ( '<' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:18:9: '<'
             {
-            match("<="); 
-
-
+            match('<'); 
 
             }
 
@@ -371,10 +349,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:20:7: ( '=' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:20:9: '='
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:19:7: ( '<=' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:19:9: '<='
             {
-            match('='); 
+            match("<="); 
+
+
 
             }
 
@@ -392,12 +372,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:21:7: ( '==' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:21:9: '=='
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:20:7: ( '=' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:20:9: '='
             {
-            match("=="); 
-
-
+            match('='); 
 
             }
 
@@ -415,10 +393,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:22:7: ( '>' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:22:9: '>'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:21:7: ( '==' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:21:9: '=='
             {
-            match('>'); 
+            match("=="); 
+
+
 
             }
 
@@ -436,12 +416,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:23:7: ( '>=' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:23:9: '>='
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:22:7: ( '>' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:22:9: '>'
             {
-            match(">="); 
-
-
+            match('>'); 
 
             }
 
@@ -459,10 +437,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:24:7: ( '[' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:24:9: '['
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:23:7: ( '>=' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:23:9: '>='
             {
-            match('['); 
+            match(">="); 
+
+
 
             }
 
@@ -480,10 +460,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:25:7: ( ']' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:25:9: ']'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:24:7: ( '[' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:24:9: '['
             {
-            match(']'); 
+            match('['); 
 
             }
 
@@ -501,12 +481,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:26:7: ( 'assert' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:26:9: 'assert'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:25:7: ( ']' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:25:9: ']'
             {
-            match("assert"); 
-
-
+            match(']'); 
 
             }
 
@@ -524,10 +502,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:27:7: ( 'assume' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:27:9: 'assume'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:26:7: ( 'array' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:26:9: 'array'
             {
-            match("assume"); 
+            match("array"); 
 
 
 
@@ -547,10 +525,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:28:7: ( 'bool' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:28:9: 'bool'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:27:7: ( 'assert' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:27:9: 'assert'
             {
-            match("bool"); 
+            match("assert"); 
 
 
 
@@ -570,10 +548,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:29:7: ( 'else' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:29:9: 'else'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:28:7: ( 'assume' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:28:9: 'assume'
             {
-            match("else"); 
+            match("assume"); 
 
 
 
@@ -593,10 +571,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:30:7: ( 'ensure' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:30:9: 'ensure'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:29:7: ( 'axiom' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:29:9: 'axiom'
             {
-            match("ensure"); 
+            match("axiom"); 
 
 
 
@@ -616,10 +594,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:31:7: ( 'exists' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:31:9: 'exists'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:30:7: ( 'bool' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:30:9: 'bool'
             {
-            match("exists"); 
+            match("bool"); 
 
 
 
@@ -639,10 +617,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:32:7: ( 'forall' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:32:9: 'forall'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:31:7: ( 'else' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:31:9: 'else'
             {
-            match("forall"); 
+            match("else"); 
 
 
 
@@ -662,10 +640,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:33:7: ( 'if' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:33:9: 'if'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:32:7: ( 'ensure' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:32:9: 'ensure'
             {
-            match("if"); 
+            match("ensure"); 
 
 
 
@@ -685,10 +663,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:34:7: ( 'int' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:34:9: 'int'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:33:7: ( 'if' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:33:9: 'if'
             {
-            match("int"); 
+            match("if"); 
 
 
 
@@ -708,10 +686,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:35:7: ( 'invariant' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:35:9: 'invariant'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:34:7: ( 'int' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:34:9: 'int'
             {
-            match("invariant"); 
+            match("int"); 
 
 
 
@@ -731,10 +709,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:36:7: ( 'main' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:36:9: 'main'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:35:7: ( 'invariant' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:35:9: 'invariant'
             {
-            match("main"); 
+            match("invariant"); 
 
 
 
@@ -754,10 +732,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:37:7: ( 'return' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:37:9: 'return'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:36:7: ( 'main' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:36:9: 'main'
             {
-            match("return"); 
+            match("main"); 
 
 
 
@@ -777,10 +755,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:38:7: ( 'while' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:38:9: 'while'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:37:7: ( 'return' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:37:9: 'return'
             {
-            match("while"); 
+            match("return"); 
 
 
 
@@ -800,10 +778,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:39:7: ( '{' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:39:9: '{'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:38:7: ( 'while' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:38:9: 'while'
             {
-            match('{'); 
+            match("while"); 
+
+
 
             }
 
@@ -821,10 +801,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:40:7: ( '|' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:40:9: '|'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:39:7: ( '{' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:39:9: '{'
             {
-            match('|'); 
+            match('{'); 
 
             }
 
@@ -842,6 +822,27 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:40:7: ( '|' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:40:9: '|'
+            {
+            match('|'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "T__44"
+
+    // $ANTLR start "T__45"
+    public final void mT__45() throws RecognitionException {
+        try {
+            int _type = T__45;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:41:7: ( '}' )
             // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:41:9: '}'
             {
@@ -856,17 +857,17 @@ public class WhileLanguageLexer extends Lexer {
         	// do for sure before leaving
         }
     }
-    // $ANTLR end "T__44"
+    // $ANTLR end "T__45"
 
     // $ANTLR start "INT_LITERAL"
     public final void mINT_LITERAL() throws RecognitionException {
         try {
             int _type = INT_LITERAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:254:14: ( ( '0' .. '9' )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:254:16: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:293:14: ( ( '0' .. '9' )+ )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:293:16: ( '0' .. '9' )+
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:254:16: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:293:16: ( '0' .. '9' )+
             int cnt1=0;
             loop1:
             do {
@@ -921,7 +922,7 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = BOOL_LITERAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:255:14: ( 'true' | 'false' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:294:14: ( 'true' | 'false' )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -940,7 +941,7 @@ public class WhileLanguageLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:255:16: 'true'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:294:16: 'true'
                     {
                     match("true"); 
 
@@ -949,7 +950,7 @@ public class WhileLanguageLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:255:25: 'false'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:294:25: 'false'
                     {
                     match("false"); 
 
@@ -968,33 +969,85 @@ public class WhileLanguageLexer extends Lexer {
     }
     // $ANTLR end "BOOL_LITERAL"
 
+    // $ANTLR start "QUANTIFIER"
+    public final void mQUANTIFIER() throws RecognitionException {
+        try {
+            int _type = QUANTIFIER;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:296:9: ( 'forall' | 'exists' )
+            int alt3=2;
+            int LA3_0 = input.LA(1);
+
+            if ( (LA3_0=='f') ) {
+                alt3=1;
+            }
+            else if ( (LA3_0=='e') ) {
+                alt3=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 3, 0, input);
+
+                throw nvae;
+
+            }
+            switch (alt3) {
+                case 1 :
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:296:11: 'forall'
+                    {
+                    match("forall"); 
+
+
+
+                    }
+                    break;
+                case 2 :
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:297:11: 'exists'
+                    {
+                    match("exists"); 
+
+
+
+                    }
+                    break;
+
+            }
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "QUANTIFIER"
+
     // $ANTLR start "COMMENT"
     public final void mCOMMENT() throws RecognitionException {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:256:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:256:16: '#' ( . )* ( '\\n' | '\\r' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:299:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:299:16: '#' ( . )* ( '\\n' | '\\r' )
             {
             match('#'); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:256:20: ( . )*
-            loop3:
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:299:20: ( . )*
+            loop4:
             do {
-                int alt3=2;
-                int LA3_0 = input.LA(1);
+                int alt4=2;
+                int LA4_0 = input.LA(1);
 
-                if ( (LA3_0=='\n'||LA3_0=='\r') ) {
-                    alt3=2;
+                if ( (LA4_0=='\n'||LA4_0=='\r') ) {
+                    alt4=2;
                 }
-                else if ( ((LA3_0 >= '\u0000' && LA3_0 <= '\t')||(LA3_0 >= '\u000B' && LA3_0 <= '\f')||(LA3_0 >= '\u000E' && LA3_0 <= '\uFFFF')) ) {
-                    alt3=1;
+                else if ( ((LA4_0 >= '\u0000' && LA4_0 <= '\t')||(LA4_0 >= '\u000B' && LA4_0 <= '\f')||(LA4_0 >= '\u000E' && LA4_0 <= '\uFFFF')) ) {
+                    alt4=1;
                 }
 
 
-                switch (alt3) {
+                switch (alt4) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:256:20: .
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:299:20: .
             	    {
             	    matchAny(); 
 
@@ -1002,7 +1055,7 @@ public class WhileLanguageLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop3;
+            	    break loop4;
                 }
             } while (true);
 
@@ -1035,22 +1088,22 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:257:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:257:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:300:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:300:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:257:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
-            int cnt4=0;
-            loop4:
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:300:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            int cnt5=0;
+            loop5:
             do {
-                int alt4=2;
-                int LA4_0 = input.LA(1);
+                int alt5=2;
+                int LA5_0 = input.LA(1);
 
-                if ( ((LA4_0 >= '\t' && LA4_0 <= '\n')||LA4_0=='\r'||LA4_0==' ') ) {
-                    alt4=1;
+                if ( ((LA5_0 >= '\t' && LA5_0 <= '\n')||LA5_0=='\r'||LA5_0==' ') ) {
+                    alt5=1;
                 }
 
 
-                switch (alt4) {
+                switch (alt5) {
             	case 1 :
             	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:
             	    {
@@ -1068,12 +1121,12 @@ public class WhileLanguageLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt4 >= 1 ) break loop4;
+            	    if ( cnt5 >= 1 ) break loop5;
                         EarlyExitException eee =
-                            new EarlyExitException(4, input);
+                            new EarlyExitException(5, input);
                         throw eee;
                 }
-                cnt4++;
+                cnt5++;
             } while (true);
 
 
@@ -1095,8 +1148,8 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = IDENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:258:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:258:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:301:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:301:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -1108,18 +1161,18 @@ public class WhileLanguageLexer extends Lexer {
             }
 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:258:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
-            loop5:
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:301:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            loop6:
             do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
+                int alt6=2;
+                int LA6_0 = input.LA(1);
 
-                if ( ((LA5_0 >= '0' && LA5_0 <= '9')||(LA5_0 >= 'A' && LA5_0 <= 'Z')||LA5_0=='_'||(LA5_0 >= 'a' && LA5_0 <= 'z')) ) {
-                    alt5=1;
+                if ( ((LA6_0 >= '0' && LA6_0 <= '9')||(LA6_0 >= 'A' && LA6_0 <= 'Z')||LA6_0=='_'||(LA6_0 >= 'a' && LA6_0 <= 'z')) ) {
+                    alt6=1;
                 }
 
 
-                switch (alt5) {
+                switch (alt6) {
             	case 1 :
             	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:
             	    {
@@ -1137,7 +1190,7 @@ public class WhileLanguageLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop5;
+            	    break loop6;
                 }
             } while (true);
 
@@ -1154,300 +1207,300 @@ public class WhileLanguageLexer extends Lexer {
     // $ANTLR end "IDENT"
 
     public void mTokens() throws RecognitionException {
-        // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | INT_LITERAL | BOOL_LITERAL | COMMENT | WS | IDENT )
-        int alt6=41;
-        alt6 = dfa6.predict(input);
-        switch (alt6) {
+        // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:8: ( T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | INT_LITERAL | BOOL_LITERAL | QUANTIFIER | COMMENT | WS | IDENT )
+        int alt7=42;
+        alt7 = dfa7.predict(input);
+        switch (alt7) {
             case 1 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:10: T__9
-                {
-                mT__9(); 
-
-
-                }
-                break;
-            case 2 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:15: T__10
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:10: T__10
                 {
                 mT__10(); 
 
 
                 }
                 break;
-            case 3 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:21: T__11
+            case 2 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:16: T__11
                 {
                 mT__11(); 
 
 
                 }
                 break;
-            case 4 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:27: T__12
+            case 3 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:22: T__12
                 {
                 mT__12(); 
 
 
                 }
                 break;
-            case 5 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:33: T__13
+            case 4 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:28: T__13
                 {
                 mT__13(); 
 
 
                 }
                 break;
-            case 6 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:39: T__14
+            case 5 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:34: T__14
                 {
                 mT__14(); 
 
 
                 }
                 break;
-            case 7 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:45: T__15
+            case 6 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:40: T__15
                 {
                 mT__15(); 
 
 
                 }
                 break;
-            case 8 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:51: T__16
+            case 7 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:46: T__16
                 {
                 mT__16(); 
 
 
                 }
                 break;
-            case 9 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:57: T__17
+            case 8 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:52: T__17
                 {
                 mT__17(); 
 
 
                 }
                 break;
-            case 10 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:63: T__18
+            case 9 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:58: T__18
                 {
                 mT__18(); 
 
 
                 }
                 break;
-            case 11 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:69: T__19
+            case 10 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:64: T__19
                 {
                 mT__19(); 
 
 
                 }
                 break;
-            case 12 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:75: T__20
+            case 11 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:70: T__20
                 {
                 mT__20(); 
 
 
                 }
                 break;
-            case 13 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:81: T__21
+            case 12 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:76: T__21
                 {
                 mT__21(); 
 
 
                 }
                 break;
-            case 14 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:87: T__22
+            case 13 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:82: T__22
                 {
                 mT__22(); 
 
 
                 }
                 break;
-            case 15 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:93: T__23
+            case 14 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:88: T__23
                 {
                 mT__23(); 
 
 
                 }
                 break;
-            case 16 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:99: T__24
+            case 15 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:94: T__24
                 {
                 mT__24(); 
 
 
                 }
                 break;
-            case 17 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:105: T__25
+            case 16 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:100: T__25
                 {
                 mT__25(); 
 
 
                 }
                 break;
-            case 18 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:111: T__26
+            case 17 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:106: T__26
                 {
                 mT__26(); 
 
 
                 }
                 break;
-            case 19 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:117: T__27
+            case 18 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:112: T__27
                 {
                 mT__27(); 
 
 
                 }
                 break;
-            case 20 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:123: T__28
+            case 19 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:118: T__28
                 {
                 mT__28(); 
 
 
                 }
                 break;
-            case 21 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:129: T__29
+            case 20 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:124: T__29
                 {
                 mT__29(); 
 
 
                 }
                 break;
-            case 22 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:135: T__30
+            case 21 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:130: T__30
                 {
                 mT__30(); 
 
 
                 }
                 break;
-            case 23 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:141: T__31
+            case 22 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:136: T__31
                 {
                 mT__31(); 
 
 
                 }
                 break;
-            case 24 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:147: T__32
+            case 23 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:142: T__32
                 {
                 mT__32(); 
 
 
                 }
                 break;
-            case 25 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:153: T__33
+            case 24 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:148: T__33
                 {
                 mT__33(); 
 
 
                 }
                 break;
-            case 26 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:159: T__34
+            case 25 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:154: T__34
                 {
                 mT__34(); 
 
 
                 }
                 break;
-            case 27 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:165: T__35
+            case 26 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:160: T__35
                 {
                 mT__35(); 
 
 
                 }
                 break;
-            case 28 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:171: T__36
+            case 27 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:166: T__36
                 {
                 mT__36(); 
 
 
                 }
                 break;
-            case 29 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:177: T__37
+            case 28 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:172: T__37
                 {
                 mT__37(); 
 
 
                 }
                 break;
-            case 30 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:183: T__38
+            case 29 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:178: T__38
                 {
                 mT__38(); 
 
 
                 }
                 break;
-            case 31 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:189: T__39
+            case 30 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:184: T__39
                 {
                 mT__39(); 
 
 
                 }
                 break;
-            case 32 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:195: T__40
+            case 31 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:190: T__40
                 {
                 mT__40(); 
 
 
                 }
                 break;
-            case 33 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:201: T__41
+            case 32 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:196: T__41
                 {
                 mT__41(); 
 
 
                 }
                 break;
-            case 34 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:207: T__42
+            case 33 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:202: T__42
                 {
                 mT__42(); 
 
 
                 }
                 break;
-            case 35 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:213: T__43
+            case 34 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:208: T__43
                 {
                 mT__43(); 
 
 
                 }
                 break;
-            case 36 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:219: T__44
+            case 35 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:214: T__44
                 {
                 mT__44(); 
 
 
                 }
                 break;
+            case 36 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:220: T__45
+                {
+                mT__45(); 
+
+
+                }
+                break;
             case 37 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:225: INT_LITERAL
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:226: INT_LITERAL
                 {
                 mINT_LITERAL(); 
 
@@ -1455,7 +1508,7 @@ public class WhileLanguageLexer extends Lexer {
                 }
                 break;
             case 38 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:237: BOOL_LITERAL
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:238: BOOL_LITERAL
                 {
                 mBOOL_LITERAL(); 
 
@@ -1463,23 +1516,31 @@ public class WhileLanguageLexer extends Lexer {
                 }
                 break;
             case 39 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:250: COMMENT
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:251: QUANTIFIER
+                {
+                mQUANTIFIER(); 
+
+
+                }
+                break;
+            case 40 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:262: COMMENT
                 {
                 mCOMMENT(); 
 
 
                 }
                 break;
-            case 40 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:258: WS
+            case 41 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:270: WS
                 {
                 mWS(); 
 
 
                 }
                 break;
-            case 41 :
-                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:261: IDENT
+            case 42 :
+                // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:1:273: IDENT
                 {
                 mIDENT(); 
 
@@ -1492,47 +1553,51 @@ public class WhileLanguageLexer extends Lexer {
     }
 
 
-    protected DFA6 dfa6 = new DFA6(this);
-    static final String DFA6_eotS =
-        "\1\uffff\1\42\12\uffff\1\44\1\46\1\50\2\uffff\10\40\4\uffff\1\40"+
-        "\13\uffff\7\40\1\75\14\40\1\uffff\1\114\7\40\1\124\1\125\4\40\1"+
-        "\uffff\1\40\1\133\2\40\1\136\2\40\2\uffff\3\40\1\136\1\40\1\uffff"+
-        "\1\40\1\146\1\uffff\1\147\1\150\1\151\1\152\1\153\1\40\1\155\6\uffff"+
-        "\1\40\1\uffff\1\40\1\160\1\uffff";
-    static final String DFA6_eofS =
-        "\161\uffff";
-    static final String DFA6_minS =
-        "\1\11\1\75\12\uffff\3\75\2\uffff\1\163\1\157\1\154\1\141\1\146\1"+
-        "\141\1\145\1\150\4\uffff\1\162\13\uffff\1\163\1\157\2\163\1\151"+
-        "\1\162\1\154\1\60\1\164\1\151\1\164\1\151\1\165\1\145\1\154\1\145"+
-        "\1\165\1\163\1\141\1\163\1\uffff\1\60\1\141\1\156\1\165\1\154\1"+
-        "\145\1\162\1\155\2\60\1\162\1\164\1\154\1\145\1\uffff\1\162\1\60"+
-        "\1\162\1\145\1\60\1\164\1\145\2\uffff\1\145\1\163\1\154\1\60\1\151"+
-        "\1\uffff\1\156\1\60\1\uffff\5\60\1\141\1\60\6\uffff\1\156\1\uffff"+
-        "\1\164\1\60\1\uffff";
-    static final String DFA6_maxS =
-        "\1\175\1\75\12\uffff\3\75\2\uffff\1\163\1\157\1\170\1\157\1\156"+
-        "\1\141\1\145\1\150\4\uffff\1\162\13\uffff\1\163\1\157\2\163\1\151"+
-        "\1\162\1\154\1\172\1\166\1\151\1\164\1\151\2\165\1\154\1\145\1\165"+
-        "\1\163\1\141\1\163\1\uffff\1\172\1\141\1\156\1\165\1\154\1\145\1"+
-        "\162\1\155\2\172\1\162\1\164\1\154\1\145\1\uffff\1\162\1\172\1\162"+
-        "\1\145\1\172\1\164\1\145\2\uffff\1\145\1\163\1\154\1\172\1\151\1"+
-        "\uffff\1\156\1\172\1\uffff\5\172\1\141\1\172\6\uffff\1\156\1\uffff"+
-        "\1\164\1\172\1\uffff";
-    static final String DFA6_acceptS =
+    protected DFA7 dfa7 = new DFA7(this);
+    static final String DFA7_eotS =
+        "\1\uffff\1\42\12\uffff\1\44\1\46\1\50\2\uffff\7\40\4\uffff\2\40"+
+        "\13\uffff\7\40\1\77\16\40\1\uffff\1\120\13\40\1\134\1\135\2\40\1"+
+        "\uffff\1\40\1\141\2\40\1\144\2\40\1\147\2\40\1\152\2\uffff\3\40"+
+        "\1\uffff\1\40\1\157\1\uffff\1\144\1\40\1\uffff\1\161\1\162\1\uffff"+
+        "\1\163\1\164\1\40\1\166\1\uffff\1\164\4\uffff\1\40\1\uffff\1\40"+
+        "\1\171\1\uffff";
+    static final String DFA7_eofS =
+        "\172\uffff";
+    static final String DFA7_minS =
+        "\1\11\1\75\12\uffff\3\75\2\uffff\1\162\1\157\1\154\1\146\1\141\1"+
+        "\145\1\150\4\uffff\1\162\1\141\13\uffff\1\162\1\163\1\151\1\157"+
+        "\2\163\1\151\1\60\1\164\1\151\1\164\1\151\1\165\1\154\1\162\1\141"+
+        "\1\145\1\157\1\154\1\145\1\165\1\163\1\uffff\1\60\1\141\1\156\1"+
+        "\165\1\154\1\145\1\163\1\141\1\171\1\162\2\155\2\60\1\162\1\164"+
+        "\1\uffff\1\162\1\60\1\162\1\145\1\60\1\145\1\154\1\60\1\164\1\145"+
+        "\1\60\2\uffff\1\145\1\163\1\151\1\uffff\1\156\1\60\1\uffff\1\60"+
+        "\1\154\1\uffff\2\60\1\uffff\2\60\1\141\1\60\1\uffff\1\60\4\uffff"+
+        "\1\156\1\uffff\1\164\1\60\1\uffff";
+    static final String DFA7_maxS =
+        "\1\175\1\75\12\uffff\3\75\2\uffff\1\170\1\157\1\170\1\156\1\141"+
+        "\1\145\1\150\4\uffff\1\162\1\157\13\uffff\1\162\1\163\1\151\1\157"+
+        "\2\163\1\151\1\172\1\166\1\151\1\164\1\151\1\165\1\154\1\162\1\141"+
+        "\1\165\1\157\1\154\1\145\1\165\1\163\1\uffff\1\172\1\141\1\156\1"+
+        "\165\1\154\1\145\1\163\1\141\1\171\1\162\2\155\2\172\1\162\1\164"+
+        "\1\uffff\1\162\1\172\1\162\1\145\1\172\1\145\1\154\1\172\1\164\1"+
+        "\145\1\172\2\uffff\1\145\1\163\1\151\1\uffff\1\156\1\172\1\uffff"+
+        "\1\172\1\154\1\uffff\2\172\1\uffff\2\172\1\141\1\172\1\uffff\1\172"+
+        "\4\uffff\1\156\1\uffff\1\164\1\172\1\uffff";
+    static final String DFA7_acceptS =
         "\2\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff\1"+
-        "\23\1\24\10\uffff\1\42\1\43\1\44\1\45\1\uffff\1\47\1\50\1\51\1\2"+
-        "\1\1\1\16\1\15\1\20\1\17\1\22\1\21\24\uffff\1\34\16\uffff\1\35\7"+
-        "\uffff\1\27\1\30\5\uffff\1\37\2\uffff\1\46\7\uffff\1\41\1\25\1\26"+
-        "\1\31\1\32\1\33\1\uffff\1\40\2\uffff\1\36";
-    static final String DFA6_specialS =
-        "\161\uffff}>";
-    static final String[] DFA6_transitionS = {
+        "\23\1\24\7\uffff\1\42\1\43\1\44\1\45\2\uffff\1\50\1\51\1\52\1\2"+
+        "\1\1\1\16\1\15\1\20\1\17\1\22\1\21\26\uffff\1\34\20\uffff\1\35\13"+
+        "\uffff\1\31\1\32\3\uffff\1\37\2\uffff\1\46\2\uffff\1\25\2\uffff"+
+        "\1\30\4\uffff\1\41\1\uffff\1\26\1\27\1\33\1\47\1\uffff\1\40\2\uffff"+
+        "\1\36";
+    static final String DFA7_specialS =
+        "\172\uffff}>";
+    static final String[] DFA7_transitionS = {
             "\2\37\2\uffff\1\37\22\uffff\1\37\1\1\1\uffff\1\36\1\uffff\1"+
-            "\2\1\3\1\uffff\1\4\1\5\1\6\1\7\1\10\1\11\1\uffff\1\12\12\34"+
+            "\2\1\3\1\uffff\1\4\1\5\1\6\1\7\1\10\1\11\1\uffff\1\12\12\33"+
             "\1\uffff\1\13\1\14\1\15\1\16\2\uffff\32\40\1\17\1\uffff\1\20"+
-            "\1\uffff\1\40\1\uffff\1\21\1\22\2\40\1\23\1\24\2\40\1\25\3\40"+
-            "\1\26\4\40\1\27\1\40\1\35\2\40\1\30\3\40\1\31\1\32\1\33",
+            "\1\uffff\1\40\1\uffff\1\21\1\22\2\40\1\23\1\35\2\40\1\24\3\40"+
+            "\1\25\4\40\1\26\1\40\1\34\2\40\1\27\3\40\1\30\1\31\1\32",
             "\1\41",
             "",
             "",
@@ -1549,10 +1614,9 @@ public class WhileLanguageLexer extends Lexer {
             "\1\47",
             "",
             "",
-            "\1\51",
-            "\1\52",
-            "\1\53\1\uffff\1\54\11\uffff\1\55",
-            "\1\57\15\uffff\1\56",
+            "\1\51\1\52\4\uffff\1\53",
+            "\1\54",
+            "\1\55\1\uffff\1\56\11\uffff\1\57",
             "\1\60\7\uffff\1\61",
             "\1\62",
             "\1\63",
@@ -1562,6 +1626,7 @@ public class WhileLanguageLexer extends Lexer {
             "",
             "",
             "\1\65",
+            "\1\66\15\uffff\1\67",
             "",
             "",
             "",
@@ -1573,111 +1638,120 @@ public class WhileLanguageLexer extends Lexer {
             "",
             "",
             "",
-            "\1\66",
-            "\1\67",
             "\1\70",
             "\1\71",
             "\1\72",
             "\1\73",
             "\1\74",
+            "\1\75",
+            "\1\76",
             "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\1\76\1\uffff\1\77",
-            "\1\100",
-            "\1\101",
+            "\1\100\1\uffff\1\101",
             "\1\102",
             "\1\103",
-            "\1\104\17\uffff\1\105",
+            "\1\104",
+            "\1\105",
             "\1\106",
             "\1\107",
             "\1\110",
-            "\1\111",
-            "\1\112",
+            "\1\111\17\uffff\1\112",
             "\1\113",
-            "",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\114",
             "\1\115",
             "\1\116",
             "\1\117",
-            "\1\120",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "\1\121",
             "\1\122",
             "\1\123",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\124",
+            "\1\125",
             "\1\126",
             "\1\127",
             "\1\130",
             "\1\131",
-            "",
             "\1\132",
+            "\1\133",
             "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\1\134",
-            "\1\135",
             "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\136",
             "\1\137",
+            "",
             "\1\140",
-            "",
-            "",
-            "\1\141",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "\1\142",
             "\1\143",
             "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\1\144",
-            "",
             "\1\145",
+            "\1\146",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\150",
+            "\1\151",
             "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
+            "\1\153",
             "\1\154",
-            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\155",
             "",
             "\1\156",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "",
-            "\1\157",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\160",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\165",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
+            "",
+            "",
+            "",
+            "\1\167",
+            "",
+            "\1\170",
             "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             ""
     };
 
-    static final short[] DFA6_eot = DFA.unpackEncodedString(DFA6_eotS);
-    static final short[] DFA6_eof = DFA.unpackEncodedString(DFA6_eofS);
-    static final char[] DFA6_min = DFA.unpackEncodedStringToUnsignedChars(DFA6_minS);
-    static final char[] DFA6_max = DFA.unpackEncodedStringToUnsignedChars(DFA6_maxS);
-    static final short[] DFA6_accept = DFA.unpackEncodedString(DFA6_acceptS);
-    static final short[] DFA6_special = DFA.unpackEncodedString(DFA6_specialS);
-    static final short[][] DFA6_transition;
+    static final short[] DFA7_eot = DFA.unpackEncodedString(DFA7_eotS);
+    static final short[] DFA7_eof = DFA.unpackEncodedString(DFA7_eofS);
+    static final char[] DFA7_min = DFA.unpackEncodedStringToUnsignedChars(DFA7_minS);
+    static final char[] DFA7_max = DFA.unpackEncodedStringToUnsignedChars(DFA7_maxS);
+    static final short[] DFA7_accept = DFA.unpackEncodedString(DFA7_acceptS);
+    static final short[] DFA7_special = DFA.unpackEncodedString(DFA7_specialS);
+    static final short[][] DFA7_transition;
 
     static {
-        int numStates = DFA6_transitionS.length;
-        DFA6_transition = new short[numStates][];
+        int numStates = DFA7_transitionS.length;
+        DFA7_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA6_transition[i] = DFA.unpackEncodedString(DFA6_transitionS[i]);
+            DFA7_transition[i] = DFA.unpackEncodedString(DFA7_transitionS[i]);
         }
     }
 
-    class DFA6 extends DFA {
+    class DFA7 extends DFA {
 
-        public DFA6(BaseRecognizer recognizer) {
+        public DFA7(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 6;
-            this.eot = DFA6_eot;
-            this.eof = DFA6_eof;
-            this.min = DFA6_min;
-            this.max = DFA6_max;
-            this.accept = DFA6_accept;
-            this.special = DFA6_special;
-            this.transition = DFA6_transition;
+            this.decisionNumber = 7;
+            this.eot = DFA7_eot;
+            this.eof = DFA7_eof;
+            this.min = DFA7_min;
+            this.max = DFA7_max;
+            this.accept = DFA7_accept;
+            this.special = DFA7_special;
+            this.transition = DFA7_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | INT_LITERAL | BOOL_LITERAL | COMMENT | WS | IDENT );";
+            return "1:1: Tokens : ( T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | INT_LITERAL | BOOL_LITERAL | QUANTIFIER | COMMENT | WS | IDENT );";
         }
     }
  

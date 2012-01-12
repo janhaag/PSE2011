@@ -25,3 +25,4 @@ public class ParserInterface {
     public Expression parseExpression(String text) {
         return null;
     }
+}

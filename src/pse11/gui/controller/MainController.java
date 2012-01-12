@@ -18,7 +18,7 @@ import gui.RandomTestFrame;
 
 public class MainController implements SelectionListener {
 	private ExecutionHandler executionHandler;
-	private Editor editor; //TODO evt nicht nötig...
+	private Editor editor; //TODO evt nicht nï¿½tig...
 	
 	private MainFrame mainframe;
 	private MiscController miscController;

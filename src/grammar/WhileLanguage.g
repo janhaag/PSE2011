@@ -27,7 +27,7 @@ function_declaration returns [ Function ast ]
         	{if ("main".equals($IDENT.text)) throw new TreeGeneratorException("Main must only be declared once.");
         	 $ast = new Function(new Position(), null, "main", 
         		$parameter_list.params.toArray(new FunctionParameter[$parameter_list.params.size()]),
-        		$function_body.ast, $function_body.pre.toArray(new Asumption[$function_body.pre.size()]),
+        		$function_body.ast, $function_body.pre.toArray(new Assumption[$function_body.pre.size()]),
         		$function_body.post.toArray(new Ensure[$function_body.post.size()]));}
         ;
 
@@ -35,7 +35,7 @@ main returns [ Function ast ]
         : 'main' '(' parameter_list? ')' function_body 
         	{$ast = new Function(new Position(), null, "main", 
         		$parameter_list.params.toArray(new FunctionParameter[$parameter_list.params.size()]),
-        		$function_body.ast, $function_body.pre.toArray(new Asumption[$function_body.pre.size()]),
+        		$function_body.ast, $function_body.pre.toArray(new Assumption[$function_body.pre.size()]),
         		$function_body.post.toArray(new Ensure[$function_body.post.size()]));}
         ;
 
@@ -45,56 +45,56 @@ parameter_list returns [ LinkedList<FunctionParameter> params ]
         ;
 
 parameter returns [ FunctionParameter ast ]
-        : type IDENT {$ast = new FunctionParameter($IDENT.text, $type.ast)}
+        : type IDENT {$ast = new FunctionParameter($IDENT.text, $type.ast);}
         ;
 
 function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
         : assume_statement? 
-          '{' ( statement {s.add($statement.ast} )* '}' {$ast = new StatementBlock(s.toArray(new Statement[s.size()], new Position());}
+          '{' ( statement {s.add($statement.ast);} )* '}' {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
           ensure_statement?
         ;
 
 if_body returns [ StatementBlock ast ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : ( '{' statement* '}' {s.add($statement.ast} ) {$ast = new StatementBlock(s.toArray(new Statement[s.size()], new Position());}
+        : ( '{' statement* '}' {s.add($statement.ast);} ) {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
         ;
 
 loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
         : invariant_statement? {$pre = $invariant_statement.result;} 
-          '{' ( statement {s.add($statement.ast} )* '}' {$ast = new StatementBlock(s.toArray(new Statement[s.size()], new Position());}
+          '{' ( statement {s.add($statement.ast);} )* '}' {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
        	  ensure_statement? {$post = $ensure_statement.result;}
         ;
 
 statement returns [ Statement ast ]
-        : e=assert_statement {$ast = $e.ast;}
-        | e=variable_declaration {$ast = $e.ast;}
-        | e=array_declaration {$ast = $e.ast;}
-        | e=assignment {$ast = $e.ast;}
-        | e=if_statement {$ast = $e.ast;}
-        | e=while_statement {$ast = $e.ast;}
-        | e=return_statement {$ast = $e.ast;}
+        : e1=assert_statement {$ast = $e1.ast;}
+        | e2=variable_declaration {$ast = $e2.ast;}
+        | e3=array_declaration {$ast = $e3.ast;}
+        | e4=assignment {$ast = $e4.ast;}
+        | e5=if_statement {$ast = $e5.ast;}
+        | e6=while_statement {$ast = $e6.ast;}
+        | e7=return_statement {$ast = $e7.ast;}
         ;
 
 invariant_statement returns [ LinkedList<Invariant> result ]
 	@init {$result = new LinkedList<Invariant>();}
-        : 'invariant' quantified_expression ';' {$result.add(new Invariant(new Position(), $e1.ast));}
-        | 'invariant' '{' (quantified_expression ';' {$result.add(new Invariant(new Position(), $e2.ast));} )+ '}'
+        : 'invariant' e1=quantified_expression ';' {$result.add(new Invariant(new Position(), $e1.ast));}
+        | 'invariant' '{' (e2=quantified_expression ';' {$result.add(new Invariant(new Position(), $e2.ast));} )+ '}'
         ;
 
 axiom_statement returns [ Axiom ast ]
-        : 'axiom' e1=quantified_expression ';' {$ast = new Assertion(new Position(), e1.ast);}
+        : 'axiom' e1=quantified_expression ';' {$ast = new Axiom(new Position(), $e1.ast);}
         ;
 
-assert_statement returns [ ASTRoot ast ]
+assert_statement returns [ Assertion ast ]
         : 'assert' e1=quantified_expression ';' {$ast = new Assertion(new Position(), $e1.ast);}
         ;
 
 assume_statement returns [ LinkedList<Assumption> result ]
 	@init {$result = new LinkedList<Assumption>();}
-        : 'assume' quantified_expression ';' {$result.add(new Assumption(new Position(), $e1.ast));}
-        | 'assume' '{' (quantified_expression ';' {$result.add(new Assumption(new Position(), $e2.ast));} )+ '}'
+        : 'assume' e1=quantified_expression ';' {$result.add(new Assumption(new Position(), $e1.ast));}
+        | 'assume' '{' (e2=quantified_expression ';' {$result.add(new Assumption(new Position(), $e2.ast));} )+ '}'
         ;
         
 ensure_statement returns [ LinkedList<Ensure> result ]
@@ -104,10 +104,11 @@ ensure_statement returns [ LinkedList<Ensure> result ]
         ;
 
 assignment returns [ Assignment ast ]
-        : IDENT '=' expression ';' {$ast = new Assignment(new Position(), $expression.ast, $IDENT.text);}
+        : IDENT '=' expression ';' {$ast = new Assignment(new Position(), $expression.ast, new Identifier($IDENT.text));}
         | IDENT {LinkedList<Expression> idx = new LinkedList<Expression>();} 
         	( '[' e1=expression {idx.add($e1.ast);} ']' )+ '=' e2=expression ';' {
-        	$ast = new ArrayAssignment(new Position(), $e2.ast, $IDENT.text, idx.toArray(new Expression[idx.size()]);}
+        	$ast = new ArrayAssignment(new Position(), $e2.ast, new Identifier($IDENT.text),
+        				   idx.toArray(new Expression[idx.size()]));}
         ;
 
 variable_declaration returns [ VariableDeclaration ast ]
@@ -117,7 +118,7 @@ variable_declaration returns [ VariableDeclaration ast ]
 
 array_declaration returns [ ArrayDeclaration ast ]
         : type IDENT '=' array_init ';' {
-        	Expression[] dim = $array_init.dim.toArray(new Expression[$array_init.dim.size()])
+        	Expression[] dim = $array_init.dim.toArray(new Expression[$array_init.dim.size()]);
         	$ast = new ArrayDeclaration(new Position(), $IDENT.text, $type.ast, dim);}
         ;
         
@@ -133,8 +134,11 @@ if_statement returns [ Conditional ast ]
 
 while_statement returns [ Loop ast ]
         : 'while' '(' expression ')' loop_body {
-        	$ast = new Loop(new Position(), $expression.ast, $loop_body.ast, $loop_body.pre, 
-        		$loop_body.post));}
+		Invariant[] i = new Invariant[0];
+		i = $loop_body.pre != null ? $loop_body.pre.toArray(new Invariant[$loop_body.pre.size()]) : null; 
+		Ensure[] e = new Ensure[0];
+		e = $loop_body.post != null ? $loop_body.post.toArray(new Ensure[$loop_body.post.size()]) : null;       
+        	$ast = new Loop(new Position(), $expression.ast, $loop_body.ast, i, e);}
         ;
         
 return_statement returns [ ReturnStatement ast ]
@@ -143,31 +147,31 @@ return_statement returns [ ReturnStatement ast ]
 
 quantified_expression returns [ Expression ast, LinkedList<Expression> divisors ]
         : QUANTIFIER IDENT '(' range? ')' e=quantified_expression {
-        	Range r;
-        	$divisors = $e.divisors
+        	Range r = null;
+        	$divisors = $e.divisors;
         	if ($range.e1 != null) {
         		r = new Range($range.e1, $range.e2);
-        		$divisors.add($range.divisors);
+        		$divisors.addAll($range.divisors);
         	}
         	switch ($QUANTIFIER.text) {
         		case "forall":
-        			$ast = new ForallQuantifier(new Position(), r, new Identifier($IDENT.text), 
-        				$e.ast, null);
+        			$ast = new ForAllQuantifier(new Position(), r, new Identifier($IDENT.text), 
+        				$e.ast);
         		case "exists":
         			$ast = new ExistsQuantifier(new Position(), r, new Identifier($IDENT.text), 
-        				$e.ast, null);
+        				$e.ast);
         	}
         }
-        | expression {if (!$expression.ast instanceof LogicalExpression) 
+        | expression {if (!($expression.ast instanceof LogicalExpression)) 
         		throw new TreeGeneratorException("Expected a logical expression.");
-        	LogicalExpression exp = (LogicalExpression) $expression.ast;
-        	for (Expression e : $expression.divisors) {
-        		LogicalExpression x = new LogicalExpression(new Position(), e, 
-        			new NumericLiteral("0", new Position()), new NotEqual());
-        		exp = new LogicalExpression(new Position(), x, exp, new Conjunction());
+        	LogicalExpression conj = (LogicalExpression) $expression.ast;
+        	for (Expression exp : $expression.divisors) {
+        		LogicalExpression x = new LogicalExpression(new Position(), exp, 
+        			new NumericLiteral(new Position(), "0"), new NotEqual());
+        		conj = new LogicalExpression(new Position(), x, conj, new Conjunction());
         	}
-        	$ast = new QuantifiedExpression(new Position(), null, null, null, exp);
-        	$divisors = new LinkedList<Expression>
+        	$ast = conj;
+        	$divisors = new LinkedList<Expression>();
         	}
         ;
 range returns [ ArithmeticExpression e1, ArithmeticExpression e2, LinkedList<Expression> divisors ]
@@ -176,15 +180,16 @@ range returns [ ArithmeticExpression e1, ArithmeticExpression e2, LinkedList<Exp
         		throw new TreeGeneratorException("Expected an arithmetic expression.");
         	$e1 = (ArithmeticExpression)$e11.ast; 
         	$e2 = (ArithmeticExpression)$e22.ast; 
-        	$divisors = $e11.divisors.add(e22.divisors);}
+        	$divisors = $e11.divisors;
+        	$divisors.addAll(e22.divisors);}
         ;
 
 expression returns [ Expression ast, LinkedList<Expression> divisors ]
         : e1=rel_expression {$ast = e1.ast; $divisors = $e1.divisors;} ( 
         	  '==' e2=rel_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new Equal());
-        	  	$divisors = $divisors.add(e2.divisors);}
+        	  	$divisors.addAll(e2.divisors);}
         	| '!=' e2=rel_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new NotEqual());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         )*
         ;
 
@@ -192,60 +197,58 @@ expression returns [ Expression ast, LinkedList<Expression> divisors ]
 rel_expression returns [ Expression ast, LinkedList<Expression> divisors ]
         : e1=add_expression {$ast = e1.ast; $divisors = $e1.divisors;} ( 
         	  '<'  e2=add_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new Less());
-        	  	$divisors = $divisors.add(e2.divisors);}
+        	  	$divisors.addAll(e2.divisors);}
         	| '<=' e2=add_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new LessEqual());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         	| '>'  e2=add_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new Greater());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         	| '>=' e2=add_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new GreaterEqual());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         )*
         ;
 
 add_expression returns [ Expression ast, LinkedList<Expression> divisors ]
         : e1=mul_expression {$ast = e1.ast; $divisors = $e1.divisors;} ( 
         	  '|' e2=mul_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new Disjunction());
-        	  	$divisors = $divisors.add(e2.divisors);}
+        	  	$divisors.addAll(e2.divisors);}
         	| '+' e2=mul_expression {$ast = new ArithmeticExpression(new Position(), $ast, $e2.ast, new Addition());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         	| '-' e2=mul_expression {$ast = new ArithmeticExpression(new Position(), $ast, $e2.ast, new Subtraction());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         )*
         ;
 
 mul_expression returns [ Expression ast, LinkedList<Expression> divisors ]
         : e1=unary_expression {$ast = e1.ast; $divisors = $e1.divisors;} ( 
         	  '&' e2=unary_expression {$ast = new LogicalExpression(new Position(), $ast, $e2.ast, new Conjunction());
-        	  	$divisors = $divisors.add(e2.divisors);}
+        	  	$divisors.addAll(e2.divisors);}
         	| '*' e2=unary_expression {$ast = new ArithmeticExpression(new Position(), $ast, $e2.ast, new Multiplication());
-        		$divisors = $divisors.add(e2.divisors);}
+        		$divisors.addAll(e2.divisors);}
         	| '/' e2=unary_expression {$ast = new ArithmeticExpression(new Position(), $ast, $e2.ast, new Division());
-        		$divisors = $divisors.add(e2.divisors);
+        		$divisors.addAll(e2.divisors);
         		$divisors.add($e2.ast);}
-        	| '%' e2=unary_expression {if (!$e1.ast instanceof ArithmeticExpression) 
+        	| '%' e2=unary_expression {if (!($e1.ast instanceof ArithmeticExpression)) 
         			throw new TreeGeneratorException("Expected an arithmetic expression.");
         		$ast = new ArithmeticExpression(new Position(), $ast, $e2.ast, new Modulo());
-        		$divisors = $divisors.add(e2.divisors);
+        		$divisors.addAll(e2.divisors);
         		$divisors.add($e2.ast);}
         )*
         ;
 
 unary_expression returns [ Expression ast, LinkedList<Expression> divisors ]
-        : '!'  e=parenthesized_expression {if (!$e.ast instanceof ArithmeticExpression) 
-        		throw new TreeGeneratorException("Expected an arithmetic expression.");
+        : '!'  e=parenthesized_expression {
         	$ast = new LogicalExpression(new Position(), $e.ast, null, new Negation());
         	$divisors = e.divisors;}
-        | '-'  e=parenthesized_expression {if (!$e.ast instanceof ArithmeticExpression) 
+        | '-'  e=parenthesized_expression {if (!($e.ast instanceof LogicalExpression)) 
         		throw new TreeGeneratorException("Expected an arithmetic expression.");
         	$ast = new ArithmeticExpression(new Position(), $e.ast, null, new UnaryMinus());
         	$divisors = e.divisors;}
-        | '+'? e=parenthesized_expression {if (!$e.ast instanceof ArithmeticExpression) 
-        		throw new TreeGeneratorException("Expected an arithmetic expression.");
+        | '+'? e=parenthesized_expression {
         	$ast = $e.ast;
         	$divisors = e.divisors;}
         ;
 
-parenthesized_expression returns [ ASTRoot ast, LinkedList<Expression> divisors ]
+parenthesized_expression returns [ Expression ast, LinkedList<Expression> divisors ]
         : '(' expression ')' {$ast = $expression.ast; $divisors = $expression.divisors;}
         | function_call {$ast = $function_call.ast; $divisors = $function_call.divisors;}
         | array_read {$ast = $array_read.ast; $divisors = $array_read.divisors;}
@@ -255,32 +258,32 @@ parenthesized_expression returns [ ASTRoot ast, LinkedList<Expression> divisors 
 
 function_call returns [ Expression ast, LinkedList<Expression> divisors ]
         : IDENT '(' arglist? ')' {
-        	Expression[] params = new Expression[0]
-        	if ($arglist.params != null) params = $arglist.params.toArray(new Expression[arglist.size()]);
-        	$ast = new FunctionCall($IDENT.text, params , new Position();
+        	Expression[] params = new Expression[0];
+        	if ($arglist.params != null) params = $arglist.params.toArray(new Expression[$arglist.params.size()]);
+        	$ast = new FunctionCall(new Identifier($IDENT.text), params , new Position());
         	$divisors = $arglist.divisors;}
         ;
 
 arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors ]
-	@init {params = new LinkedList<Expression>();}
-        : e1=expression {params.add((Expression) e1); $divisors = $e1.divisors;} 
-        	( ',' e2=expression {params.add((Expression) e2); $divisors.add($e2.divisors);} )*
+	@init {LinkedList<Expression> params = new LinkedList<Expression>();}
+        : e1=expression {params.add((Expression) e1.ast); $divisors = $e1.divisors;} 
+        	( ',' e2=expression {params.add((Expression) $e2.ast); $divisors.addAll($e2.divisors);} )*
         ;
 
 array_read returns [ Expression ast, LinkedList<Expression> divisors ]
-	@init {LinkedList<ArithmeticExpression> l = LinkedList<ArithmeticExpression>();}
-        : IDENT '[' e1=expression {if ($e1.ast instanceof ArithmeticExpression) l.add((ArithmeticExpression)e1);
+	@init {LinkedList<ArithmeticExpression> l = new LinkedList<ArithmeticExpression>();}
+        : IDENT '[' e1=expression {if ($e1.ast instanceof ArithmeticExpression) l.add((ArithmeticExpression)$e1.ast);
         			else throw new TreeGeneratorException("expected an arithmetic expression, got a logical expression");
         		$divisors = $e1.divisors;} ']' 
-        	( '[' e2=expression {if ($e2.ast instanceof ArithmeticExpression) l.add((ArithmeticExpression)e2);
+        	( '[' e2=expression {if ($e2.ast instanceof ArithmeticExpression) l.add((ArithmeticExpression)$e2.ast);
         			else throw new TreeGeneratorException("expected an arithmetic expression, got a logical expression");
-        		$divisors.add($e2.divisors);} ']' )* 
-        {$ast = new ArrayRead(new Position(), new Identifier($IDENT), l.toArray(new ArithmeticExpression[l.size()]));}
+        		$divisors.addAll($e2.divisors);} ']' )* 
+        {$ast = new ArrayRead(new Position(), new Identifier($IDENT.text), l.toArray(new ArithmeticExpression[l.size()]));}
         ;
 
 literal_expression returns [ Expression ast, LinkedList<Expression> divisors ]
-        : INT_LITERAL {$ast = new NumericLiteral($INT_LITERAL.text, new Position()); $divisors = new LinkedList<Expression>();}
-        | BOOL_LITERAL {$ast = new BooleanLiteral($BOOL_LITERAL.text, new Position()); $divisors = new LinkedList<Expression>();}
+        : INT_LITERAL {$ast = new NumericLiteral(new Position(), $INT_LITERAL.text); $divisors = new LinkedList<Expression>();}
+        | BOOL_LITERAL {$ast = new BooleanLiteral(new Position(), $BOOL_LITERAL.text); $divisors = new LinkedList<Expression>();}
         ;
 
 type returns [ Type ast ]
