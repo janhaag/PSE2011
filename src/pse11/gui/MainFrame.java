@@ -20,8 +20,9 @@ public class MainFrame extends Frame {
 	private EditorView editor;
 	private Button runButton;
 	private Button stepButton;
-	private Button validateButton;
 	private Button pauseButton;
+	private Button stopButton;
+	private Button validateButton;
 	private Label pauseIcon;
 	private Label runIcon;
 	private Console console[];
@@ -46,7 +47,7 @@ public class MainFrame extends Frame {
 		
 		Composite c1 = new Composite(shell, SWT.NONE);
 		gLayout = new GridLayout();
-		gLayout.numColumns = 10;
+		gLayout.numColumns = 17;
 		gLayout.makeColumnsEqualWidth = true;
 		c1.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_BOTH);
@@ -56,49 +57,55 @@ public class MainFrame extends Frame {
 		//Adding editor
 		this.editor = new EditorView(c1, SWT.BORDER, editor);
 		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalSpan = 10;
-		gData.verticalSpan = 60;
+		gData.horizontalSpan = 17;
 		this.editor.setLayoutData(gData);
 		
 		//Adding buttons
 		this.runButton = new Button(c1, SWT.PUSH);
 		this.runButton.setText("Run");
-		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalSpan = 2;
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
 		this.runButton.setLayoutData(gData);
 		
 		this.stepButton = new Button(c1, SWT.PUSH);
 		this.stepButton.setText("Single Step");
-		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalSpan = 2;
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
 		this.stepButton.setLayoutData(gData);
-		
-		this.validateButton = new Button(c1, SWT.PUSH);
-		this.validateButton.setText("Validate");
-		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalSpan = 2;
-		this.validateButton.setLayoutData(gData);
 		
 		this.pauseButton = new Button(c1, SWT.PUSH);
 		this.pauseButton.setText("Pause");
-		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalSpan = 2;
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
 		this.pauseButton.setLayoutData(gData);
+		
+		this.stopButton = new Button(c1, SWT.PUSH);
+		this.stopButton.setText("Stop");
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
+		this.stopButton.setLayoutData(gData);
+		
+		this.validateButton = new Button(c1, SWT.PUSH);
+		this.validateButton.setText("Validate");
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
+		this.validateButton.setLayoutData(gData);
 		
 		this.runButton.addSelectionListener(mainController);
 		this.stepButton.addSelectionListener(mainController);
 		this.validateButton.addSelectionListener(mainController);
 		this.pauseButton.addSelectionListener(mainController);
+		this.stopButton.addSelectionListener(mainController);
 		
 		//Adding icons
 		this.pauseIcon = new Label(c1, SWT.NONE);
-		Image image1 = new Image(display, "./src/gui/image/pause1.png");
+		Image image1 = new Image(display, MainFrame.class.getResourceAsStream("image/pause1.png"));
 		this.pauseIcon.setImage(image1);
 		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);
 		this.pauseIcon.setLayoutData(gData);
 		
 		this.runIcon = new Label(c1, SWT.NONE);
-		Image image2 = new Image(display, "./src/gui/image/run1.png");
+		Image image2 = new Image(display, MainFrame.class.getResourceAsStream("image/run1.png"));
 		this.runIcon.setImage(image2);
 		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
 		this.runIcon.setLayoutData(gData);
@@ -192,6 +199,10 @@ public class MainFrame extends Frame {
 	
 	public Button getPauseButton() {
 		return this.pauseButton;
+	}
+	
+	public Button getStopButton() {
+		return this.stopButton;
 	}
 	
 	public void openWindow() {
