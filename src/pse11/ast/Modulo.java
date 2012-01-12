@@ -5,12 +5,7 @@ package ast;
  *  in @see{ArithmeticExpressions}.
  *  It is used to calculate the remainder of a division.
  */
-public class Modulo extends ArithmeticOperator {
-    @Override
-    public boolean isBinary() {
-        return true;
-    }
-
+public class Modulo extends BinaryOperator implements ArithmeticOperator {
     @Override
     public String toString() {
         return "%";

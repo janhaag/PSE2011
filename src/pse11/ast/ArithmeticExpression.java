@@ -80,7 +80,7 @@ public class ArithmeticExpression extends Expression {
         StringBuilder sb = new StringBuilder("( ");
         sb.append(arithmeticOperator.toString());
         sb.append(' ').append(subexpression1.toString());
-        if (arithmeticOperator.isBinary()) {
+        if (arithmeticOperator instanceof BinaryOperator) {
             sb.append(' ').append(subexpression2.toString());
         }
         sb.append(" )");

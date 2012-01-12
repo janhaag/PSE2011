@@ -51,7 +51,7 @@ public class Interpreter implements ASTVisitor {
         arithmeticExpression.getSubexpression1().accept(this);
         ArithmeticOperator operator =
                 arithmeticExpression.getArithmeticOperator();
-        if (operator.isBinary()) {
+        if (operator instanceof BinaryOperator) {
             BigInteger value1 = ((IntegerValue) tempValue).getValue();
             arithmeticExpression.getSubexpression2().accept(this);
             BigInteger value2 = ((IntegerValue) tempValue).getValue();
@@ -100,7 +100,7 @@ public class Interpreter implements ASTVisitor {
     public void visit(LogicalExpression logicalExpression) {
         logicalExpression.getSubexpression1().accept(this);
         LogicalOperator operator = logicalExpression.getLogicalOperator();
-        if (operator.isBinary()) {
+        if (operator instanceof BinaryOperator) {
             Value tempValue1 = tempValue;
             logicalExpression.getSubexpression2().accept(this);
             Value tempValue2 = tempValue;

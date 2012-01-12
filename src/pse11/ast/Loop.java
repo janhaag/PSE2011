@@ -29,6 +29,7 @@ public class Loop extends Statement {
      * @param condition condition to be checked
      * @param body loop body
      * @param invariants list of loop invariants
+     * @param postconditions list of post-conditions
      */
     public Loop(Position position, Expression condition,
                 StatementBlock body, Invariant[] invariants,
@@ -81,12 +82,15 @@ public class Loop extends Statement {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("while (");
-        sb.append(condition).append(") {\n");
+        sb.append(condition).append(")\n");
         for (Invariant invariant : invariants) {
             sb.append(invariant);
         }
-        sb.append(body);
+        sb.append("{\n").append(body);
         sb.append("}\n");
+        for (Ensure ensure : postconditions) {
+            sb.append(ensure);
+        }
         return sb.toString();
     }
 }

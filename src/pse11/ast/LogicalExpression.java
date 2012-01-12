@@ -73,7 +73,7 @@ public class LogicalExpression extends Expression {
         StringBuilder sb = new StringBuilder("( ");
         sb.append(logicalOperator.toString());
         sb.append(' ').append(subexpression1.toString());
-        if (logicalOperator.isBinary()) {
+        if (logicalOperator instanceof BinaryOperator) {
             sb.append(' ').append(subexpression2.toString());
         }
         sb.append(" )");

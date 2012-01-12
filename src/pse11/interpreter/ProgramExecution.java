@@ -49,8 +49,8 @@ public class ProgramExecution {
 
     public boolean checkBreakpoints() {
         for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {
-            if ((statementBreakpoint.getStatement()
-                                        == currentState.getCurrentStatement())
+            if ((currentState.getCurrentStatement().getPosition().getLine()
+                            == statementBreakpoint.getLine())
                     && statementBreakpoint.isActive()) {
                 return true;
             }
@@ -82,8 +82,8 @@ public class ProgramExecution {
         return globalBreakpoints;
     }
 
-    public void createStatementBreakpoint(Statement statement) {
-        statementBreakpoints.add(new StatementBreakpoint(statement));
+    public void createStatementBreakpoint(int line) {
+        statementBreakpoints.add(new StatementBreakpoint(line));
     }
 
     public void createGlobalBreakpoint(Expression expression) {
@@ -91,6 +91,23 @@ public class ProgramExecution {
     }
     
     public HashMap<Identifier, Value> getVariables() {
-        return currentState.getVariables();
+        //return currentState.getVariables();
+        //TODO: delete this and comment out the line above
+        HashMap<Identifier, Value> vars = new HashMap<Identifier, Value>();
+        ArrayValue a = new ArrayValue(new ArrayType(new BooleanType()),
+                                      new int[]{2}, 0);
+        ArrayList<Integer> l = new ArrayList<Integer>();
+        l.add(0);
+        a.setValue("true", l);
+        vars.put(new Identifier("a"), a);
+        vars.put(new Identifier("B"), new BooleanValue("true"));
+        vars.put(new Identifier("z_k"), new IntegerValue("-8"));
+        ArrayValue i =
+                new ArrayValue(new ArrayType(new ArrayType(new IntegerType())),
+                                      new int[]{2, 1}, 0);
+        l.add(1);l.add(0);
+        i.setValue("42", l);
+        vars.put(new Identifier("i0"), i);
+        return vars;
     }
 }

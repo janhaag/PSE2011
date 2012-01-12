@@ -4,12 +4,7 @@ package ast;
  * This class encapsulates the equal ('==') operator
  * in @see{LogicalExpressions}.
  */
-public class Equal extends LogicalOperator {
-    @Override
-    public boolean isBinary() {
-        return true;
-    }
-
+public class Equal extends BinaryOperator implements LogicalOperator {
     @Override
     public String toString() {
         return "==";

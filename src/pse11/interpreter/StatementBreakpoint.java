@@ -1,18 +1,16 @@
 package interpreter;
 
-import ast.Statement;
-
 /**
  *
  */
 public class StatementBreakpoint extends Breakpoint {
-    private final Statement statement;
+    private final int line;
     
-    public StatementBreakpoint(Statement statement) {
-        this.statement = statement;
+    public StatementBreakpoint(int line) {
+        this.line = line;
     }
 
-    public Statement getStatement() {
-        return statement;
+    public int getLine() {
+        return line;
     }
 }

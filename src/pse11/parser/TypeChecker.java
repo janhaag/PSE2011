@@ -14,6 +14,7 @@ public class TypeChecker implements ASTVisitor {
     private Type currentReturnType;
     private Type tempType;
     private Scope currentScope;
+    private boolean functionCallAllowed = true;
     private Function[] functions;
 
     /**
@@ -31,6 +32,14 @@ public class TypeChecker implements ASTVisitor {
      */
     public void setCurrentScope(Scope currentScope) {
         this.currentScope = currentScope;
+    }
+
+    public boolean isFunctionCallAllowed() {
+        return functionCallAllowed;
+    }
+
+    public void setFunctionCallAllowed(boolean functionCallAllowed) {
+        this.functionCallAllowed = functionCallAllowed;
     }
 
     /**
@@ -72,6 +81,10 @@ public class TypeChecker implements ASTVisitor {
         currentScope = new Scope(currentScope, loop.getLoopBody(), false);
         loop.getLoopBody().accept(this);
         currentScope = currentScope.getParent();
+        Ensure[] ensures = loop.getPostconditions();
+        for (Ensure ensure : ensures) {
+            ensure.accept(this);
+        }
     }
 
     /**
@@ -123,7 +136,7 @@ public class TypeChecker implements ASTVisitor {
         arithmeticExpression.getSubexpression1().accept(this);
         ArithmeticOperator operator =
                 arithmeticExpression.getArithmeticOperator();
-        if (operator.isBinary()) {
+        if (operator instanceof BinaryOperator) {
             Type tempType1 = tempType;
             arithmeticExpression.getSubexpression2().accept(this);
             if (!(tempType instanceof IntegerType)
@@ -160,7 +173,7 @@ public class TypeChecker implements ASTVisitor {
         Position position = logicalExpression.getPosition();
         logicalExpression.getSubexpression1().accept(this);
         LogicalOperator operator = logicalExpression.getLogicalOperator();
-        if (operator.isBinary()) {
+        if (operator instanceof BinaryOperator) {
             Type tempType1 = tempType;
             logicalExpression.getSubexpression2().accept(this);
             if (operator instanceof Conjunction
@@ -204,6 +217,10 @@ public class TypeChecker implements ASTVisitor {
      * @param functionCall function call to check
      */
     public void visit(FunctionCall functionCall) {
+        if (!functionCallAllowed) {
+            throw new FunctionCallNotAllowedException("Function call not "
+                                                      + "allowed here!");
+        }
         String functionName = functionCall.getFunctionIdentifier().getName();
         Function callee = null;
         for (Function function : functions) {

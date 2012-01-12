@@ -2737,14 +2737,14 @@ protected boolean evalPredicate(boolean result, String predicate) {
                             		r = new Range((range29!=null?range29.e1:null), (range29!=null?range29.e2:null));
                             		retval.divisors.addAll((range29!=null?range29.divisors:null));
                             	}
-                            	switch ((QUANTIFIER30!=null?QUANTIFIER30.getText():null)) {
+                            	/*switch ((QUANTIFIER30!=null?QUANTIFIER30.getText():null)) {
                             		case "forall":
                             			retval.ast = new ForAllQuantifier(new Position(), r, new Identifier((IDENT31!=null?IDENT31.getText():null)), 
                             				(e!=null?e.ast:null));
                             		case "exists":
                             			retval.ast = new ExistsQuantifier(new Position(), r, new Identifier((IDENT31!=null?IDENT31.getText():null)), 
                             				(e!=null?e.ast:null));
-                            	}
+                            	}*/
                             
 
                     }
