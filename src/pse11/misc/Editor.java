@@ -1,6 +1,8 @@
 package misc;
 
 
+import interpreter.ProgramExecution;
+
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.StringTokenizer;
@@ -38,12 +40,16 @@ public class Editor {
 	 * a list of past versions which have been changed trough the undo function
 	 */
 	private Stack<EditorMemento> redoMemento;
+	
+	private ProgramExecution execution;
+	
 	/**
 	 * Constructs a new instance of Editor.
 	 * 
 	 * The source will be initialized to an empty String.
 	 */
-	public Editor() {
+	public Editor(ProgramExecution execution) {
+		this.execution = execution;
 		this.source = "";
 		this.colorArray = new ArrayList<Keyword>();
 		this.undoMemento = new Stack<EditorMemento>();
@@ -137,5 +143,8 @@ public class Editor {
 		} else {
 			return null;
 		}
+	}
+	public void addBreakpoint(int line) {
+		//this.execution.createStatementBreakpoint(line);
 	}
 }

@@ -27,10 +27,11 @@ public class MainController implements SelectionListener {
 	private TreeViewController treeController;
 	
 	public MainController() {
-		Editor editor = new Editor();
-		this.mainframe = new MainFrame(this, editor);
-		this.editorController = new EditorController(editor, mainframe.getEditor());
+		//TODO Das wird wohl schiefgehen, da JAVA != C
 		this.executionHandler = new ExecutionHandler();
+		Editor editor = new Editor(this.executionHandler.getProgramExecution());
+		this.mainframe = new MainFrame(this, editor);
+		this.editorController = new EditorController(editor, this.mainframe.getEditor());
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
@@ -72,31 +73,34 @@ public class MainController implements SelectionListener {
 			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run2.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
-			this.mainframe.switchIcon(image, image2);		
+			this.mainframe.switchIcon(image, image2);
+			this.mainframe.getPauseButton().setEnabled(true);
+			this.mainframe.getStopButton().setEnabled(true);
 			//Functions
 			assert editorController != null;
-			this.executionHandler.run(this.editorController.getEditor().getSource());		
+			this.executionHandler.parse(this.editorController.getEditor().getSource());
 		} else if(e.getSource() == mainframe.getStepButton()) {
-			//Images
-			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
-			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
-			this.mainframe.switchIcon(image, image2);			
-			//Functions
-			this.treeController.updateVarView();			
-		} else if(e.getSource() == mainframe.getPauseButton()) {
 			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
 			this.mainframe.switchIcon(image, image2);
 			//Functions
-			this.treeController.updateVarView();	
+			this.treeController.updateVarView();      
+		} else if(e.getSource() == mainframe.getPauseButton()) {
+			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
+			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
+			this.mainframe.switchIcon(image, image2);
+			//Functions
+			this.treeController.updateVarView();      
 		} else if(e.getSource() == mainframe.getStopButton()) {
 			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
 			this.mainframe.switchIcon(image, image2);
+			this.mainframe.getStopButton().setEnabled(false);
+			this.mainframe.getPauseButton().setEnabled(false);
 			//Functions
-			this.treeController.updateVarView();
+			this.treeController.updateVarView();      
 		} else if(e.getSource() == mainframe.getValidateButton()) {
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
