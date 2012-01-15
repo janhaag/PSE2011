@@ -1,9 +1,5 @@
 package gui;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,22 +29,32 @@ public class VariableView extends Composite {
 	    
 	    TreeColumn column1 = new TreeColumn(this.tree, SWT.CENTER);
 	    TreeColumn column2 = new TreeColumn(this.tree, SWT.CENTER);
-	    column1.setWidth(140);
-	    column1.setText("Variable");
-	    column2.setWidth(85);
-	    column2.setText("Value");
+	    TreeColumn column3 = new TreeColumn(this.tree, SWT.CENTER);
+	    column1.setWidth(80);
+	    column1.setText("Type");
+	    column2.setWidth(100);
+	    column2.setText("Variable");
+	    column3.setWidth(100);
+	    column3.setText("Value");
 		
 	}
 	
-	//Update variable view
-	public void drawView(HashMap<String, Integer> var) {
-		Iterator<Map.Entry<String, Integer>> it = var.entrySet().iterator();		
-		while(it.hasNext()) {
-			TreeItem item = new TreeItem(this.tree, SWT.NONE);
-			Map.Entry<String, Integer> entry = it.next();
-			item.setText(entry.getKey().toString());
-			item.setText(1, entry.getValue().toString());
-		}
+	//insert first level tree items
+	public TreeItem addTreeItem(Tree parent, String type, String id, String value) {
+		TreeItem item = new TreeItem(parent, SWT.NONE);
+		item.setText(type);
+		item.setText(1, id);
+		item.setText(2, value);
+		return item;
+	}
+	
+	//insert tree items of level 2 and more
+	public TreeItem addTreeItem(TreeItem parent, String type, String id, String value) {
+		TreeItem item = new TreeItem(parent, SWT.NONE);
+		item.setText(type);
+		item.setText(1, id);
+		item.setText(2, value);
+		return item;
 	}
 	
 	public Tree getVarTree() {

@@ -9,13 +9,14 @@ public class ExecutionHandler {
 	private Interpreter interpreter;
 	
 	public ExecutionHandler() {
-		
+		this.interpreter = new Interpreter();
 	}
 	public ProgramExecution getProgramExecution() {
 		return this.execution;
 	}
-	public void run(String source) {
-		//this.execution = new ProgramExecution(new ParserInterface().parseProgram(source));
+	public void parse(String source) {
+		/*this.execution = new ProgramExecution(new ParserInterface().parseProgram(source), 
+				this.interpreter);*/
 	}
 	public void singleStep() {
 		

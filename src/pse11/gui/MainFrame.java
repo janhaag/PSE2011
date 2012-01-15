@@ -78,18 +78,21 @@ public class MainFrame extends Frame {
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.pauseButton.setLayoutData(gData);
+		this.pauseButton.setEnabled(false);
 		
 		this.stopButton = new Button(c1, SWT.PUSH);
 		this.stopButton.setText("Stop");
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.stopButton.setLayoutData(gData);
+		this.stopButton.setEnabled(false);
 		
 		this.validateButton = new Button(c1, SWT.PUSH);
 		this.validateButton.setText("Validate");
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.validateButton.setLayoutData(gData);
+		this.validateButton.setEnabled(false);
 		
 		this.runButton.addSelectionListener(mainController);
 		this.stepButton.addSelectionListener(mainController);
@@ -124,7 +127,7 @@ public class MainFrame extends Frame {
 		this.varView.setLayoutData(gData);		
 		
 		//Adding breakpoint view		
-		new Label(c2, SWT.NONE).setText("Breakpoints"); 	    
+		new Label(c2, SWT.NONE).setText("Breakpoints");
 		this.breakpointView = new BreakpointView(c2, SWT.NONE);				
 		gData = new GridData(GridData.FILL_BOTH);
 		this.breakpointView.setLayoutData(gData);
@@ -212,6 +215,7 @@ public class MainFrame extends Frame {
 				display.sleep();
 			}
 		}
+		//Save modified settings
 		if(Settings.getInstance().settingsChanged()) {
 			try {
 				Settings.getInstance().saveSettings();

@@ -11,6 +11,7 @@ import org.eclipse.swt.events.VerifyListener;
 
 import gui.EditorView;
 import misc.Editor;
+import misc.ExecutionHandler;
 
 public class EditorController implements ModifyListener, VerifyListener, VerifyKeyListener, FocusListener {
         private EditorView editorframe;
@@ -37,10 +38,10 @@ public class EditorController implements ModifyListener, VerifyListener, VerifyK
 //              System.out.println(e.character);
         }
         @Override
-        public void verifyKey(VerifyEvent event) {
-                if ((event.stateMask == SWT.CTRL) && (event.character == '\u001A')) {
+        public void verifyKey(VerifyEvent e) {
+                if ((e.stateMask == SWT.CTRL) && (e.character == '\u001A')) {
                         //undo
-                        event.doit = false;
+                        e.doit = false;
                         this.editor.undo();
                 }
         }
@@ -75,11 +76,12 @@ public class EditorController implements ModifyListener, VerifyListener, VerifyK
                 //TODO WEG
                 editorframe.getTextField().setCaretOffset(pos);
                 System.out.println(pos);
+                //TODO ADDBREAKPOINT
+                this.editor.addBreakpoint(pos);
         }
         @Override
         public void focusLost(FocusEvent e) {
                 // TODO Auto-generated method stub
 
         }
-
 }

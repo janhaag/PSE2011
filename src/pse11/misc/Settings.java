@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import gui.MainFrame;
 import gui.controller.SettingsController;
 
 /**
