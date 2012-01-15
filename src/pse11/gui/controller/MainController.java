@@ -72,22 +72,31 @@ public class MainController implements SelectionListener {
 			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run2.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
-			this.mainframe.switchIcon(image, image2);
+			this.mainframe.switchIcon(image, image2);		
 			//Functions
 			assert editorController != null;
-			this.executionHandler.run(this.editorController.getEditor().getSource());
+			this.executionHandler.run(this.editorController.getEditor().getSource());		
 		} else if(e.getSource() == mainframe.getStepButton()) {
+			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
-			this.mainframe.switchIcon(image, image2);
+			this.mainframe.switchIcon(image, image2);			
+			//Functions
+			this.treeController.updateVarView();			
 		} else if(e.getSource() == mainframe.getPauseButton()) {
+			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
 			this.mainframe.switchIcon(image, image2);
+			//Functions
+			this.treeController.updateVarView();	
 		} else if(e.getSource() == mainframe.getStopButton()) {
+			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
 			this.mainframe.switchIcon(image, image2);
+			//Functions
+			this.treeController.updateVarView();
 		} else if(e.getSource() == mainframe.getValidateButton()) {
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
