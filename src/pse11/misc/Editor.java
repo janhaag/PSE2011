@@ -41,15 +41,12 @@ public class Editor {
 	 */
 	private Stack<EditorMemento> redoMemento;
 	
-	private ProgramExecution execution;
-	
 	/**
 	 * Constructs a new instance of Editor.
 	 * 
 	 * The source will be initialized to an empty String.
 	 */
-	public Editor(ProgramExecution execution) {
-		this.execution = execution;
+	public Editor() {
 		this.source = "";
 		this.colorArray = new ArrayList<Keyword>();
 		this.undoMemento = new Stack<EditorMemento>();

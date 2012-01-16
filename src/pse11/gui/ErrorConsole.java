@@ -38,6 +38,7 @@ public class ErrorConsole extends Console {
 
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
+		System.out.println("testhier");
 		int i = 0;
 		for(Message message : messages) {
 			System.out.println("inhalt");
