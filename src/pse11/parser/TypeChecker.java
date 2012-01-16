@@ -53,12 +53,12 @@ public class TypeChecker implements ASTVisitor {
                                            conditional.getPosition());
         }
         currentScope = new Scope(currentScope,
-                                 conditional.getTrueConditionBody(), false);
+                                 conditional.getTrueConditionBody(), null);
         conditional.getTrueConditionBody().accept(this);
         currentScope = currentScope.getParent();
         if (conditional.getFalseConditionBody() != null) {
             currentScope = new Scope(currentScope,
-                                     conditional.getFalseConditionBody(), false);
+                                     conditional.getFalseConditionBody(), null);
             conditional.getFalseConditionBody().accept(this);
             currentScope = currentScope.getParent();
         }
@@ -78,7 +78,7 @@ public class TypeChecker implements ASTVisitor {
         for (Invariant invariant : invariants) {
             invariant.accept(this);
         }
-        currentScope = new Scope(currentScope, loop.getLoopBody(), false);
+        currentScope = new Scope(currentScope, loop.getLoopBody(), null);
         loop.getLoopBody().accept(this);
         currentScope = currentScope.getParent();
         Ensure[] ensures = loop.getPostconditions();
@@ -297,7 +297,7 @@ public class TypeChecker implements ASTVisitor {
      */
     public void visit(Function function) {
         currentReturnType = function.getReturnType();
-        currentScope = new Scope(null, function.getFunctionBlock(), true);
+        currentScope = new Scope(null, function.getFunctionBlock(), function);
         if (currentReturnType instanceof ArrayType) {
             throw new IllegalTypeException("Functions must not return arrays.",
                                            function.getPosition());
@@ -517,7 +517,7 @@ public class TypeChecker implements ASTVisitor {
                                                 existsQuantifier.getPosition());
             }
         }
-        currentScope = new Scope(currentScope, null, false);
+        currentScope = new Scope(currentScope, null, null);
         currentScope.createVar(existsQuantifier.getIdentifier().getName(),
                                 null, new IntegerType());
         existsQuantifier.getSubexpression1().accept(this);
@@ -545,7 +545,7 @@ public class TypeChecker implements ASTVisitor {
                                                 forAllQuantifier.getPosition());
             }
         }
-        currentScope = new Scope(currentScope, null, false);
+        currentScope = new Scope(currentScope, null, null);
         currentScope.createVar(forAllQuantifier.getIdentifier().getName(),
                                 null, new IntegerType());
         forAllQuantifier.getSubexpression1().accept(this);
