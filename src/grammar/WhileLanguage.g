@@ -219,12 +219,10 @@ quantified_expression returns [ Expression ast, LinkedList<Expression> divisors 
         		r = new Range($range.e1, $range.e2);
         		$divisors.addAll($range.divisors);
         	}
-        	switch ($QUANTIFIER.text) {
-        		case "forall":
+        	if ("forall".equals($QUANTIFIER.text))
         			$ast = new ForAllQuantifier(new Position(), r, new Identifier($IDENT.text),
         				$e.ast);
-        		case "exists":
-        			$ast = new ExistsQuantifier(new Position(), r, new Identifier($IDENT.text),
+            else $ast = new ExistsQuantifier(new Position(), r, new Identifier($IDENT.text),
         				$e.ast);
         	}
         }
