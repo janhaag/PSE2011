@@ -29,7 +29,7 @@ public class MainFrame extends Frame {
 	private VariableView varView;
 	private BreakpointView breakpointView;
 	
-	public MainFrame(MainController mainController, Editor editor) {
+	public MainFrame(MainController mainController, Editor editor, MessageSystem messagesystem) {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
@@ -133,7 +133,6 @@ public class MainFrame extends Frame {
 		this.breakpointView.setLayoutData(gData);
 		
 		//Adding consoles
-		MessageSystem messagesystem = new MessageSystem();
 		this.console = new Console[3];
 		TabFolder tf = new TabFolder(shell, SWT.NONE);
 		gData = new GridData(GridData.FILL_BOTH);
@@ -151,7 +150,7 @@ public class MainFrame extends Frame {
 		ti3.setText("Misc");
 		ti3.setControl(console[2] = new MiscConsole(tf, SWT.BORDER, messagesystem));
 		//TODO WEG!
-		messagesystem.notifyConsoles();
+		//messagesystem.notifyConsoles();
 		
 		//Adding help box
 		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);

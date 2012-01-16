@@ -1,43 +1,46 @@
 grammar z3;
 
-Start	:	Block+
+start	:	block+
 	;
 	
-Block	: 'unsat'
+block	: 'unsat'
 	   .*
 	|  'sat'
-	   Model
+	   model
 	| 'unknown'
 	 .*
 	;
 
-Model	:	'(model'
-		('(define-fun' ID  '('(ID  TYPE)*')' TYPE VALUE ')')*
-		('define-fun' ID '()' '(ArrayIntInt)'
-		'(_as-array' ID '!' INT')')*
-		('(define-fun' ID '!' INT '('('('ID '!' INT TYPE')')+')' TYPE '(' ITE ')' VALUE VALUE '))')*
-		')'
+model	
+	:	'(model'
+		('(define-fun' IDENT  '('(IDENT  TYPE)*')' TYPE value ')')*
+		('define-fun' IDENT '()' '(Array'('Int')+ TYPE  ')'
+		'(_as-array' IDENT '!' INT')')*
+		('(define-fun' IDENT '!' INT '('('('IDENT '!' INT TYPE')')+')' TYPE  '('ite'))')*
+		')' 
 	;
-ITE
-	:	'(=' ID '!' INT')'
-	|	'(and'('(=' ID '!' INT')')+')' 		
-	;
-	
-TYPE	:	'INT'
-	|	'BOOL'
-	
+ite	:	'(=' IDENT '!' INT')'  value (value | ite)
+	|	'(and'('(=' IDENT '!' INT')')+')' value (value | ite)		
 	;
 
-VALUE	:	INT
-	|	'true'
-	|	'false'
+value	returns [String content]
+	:	INT {$content =$INT.text}
+	|	BOOL  {$content = $BOOL.text)}
 	;			
 
-ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+TYPE	:	'Int'
+	|	'Bool'
+	
+	;
+
+IDENT:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
 INT :	'0'..'9'+
     ;
+
+BOOL	: 'true' | 'false'	
+	;    
 
 WS  :   ( ' '
         | '\t'

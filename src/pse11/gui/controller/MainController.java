@@ -2,6 +2,7 @@ package gui.controller;
 
 import misc.Editor;
 import misc.ExecutionHandler;
+import misc.MessageSystem;
 import misc.Settings;
 
 import org.eclipse.swt.SWT;
@@ -18,7 +19,6 @@ import gui.RandomTestFrame;
 
 public class MainController implements SelectionListener {
 	private ExecutionHandler executionHandler;
-	private Editor editor; //TODO evt nicht nï¿½tig...
 	
 	private MainFrame mainframe;
 	private MiscController miscController;
@@ -27,13 +27,14 @@ public class MainController implements SelectionListener {
 	private TreeViewController treeController;
 	
 	public MainController() {
-		//TODO Das wird wohl schiefgehen, da JAVA != C
-		this.executionHandler = new ExecutionHandler();
-		Editor editor = new Editor(this.executionHandler.getProgramExecution());
-		this.mainframe = new MainFrame(this, editor);
+		MessageSystem messagesystem = new MessageSystem();
+		this.executionHandler = new ExecutionHandler(messagesystem);
+		Editor editor = new Editor();
+		this.mainframe = new MainFrame(this, editor, messagesystem);
 		this.editorController = new EditorController(editor, this.mainframe.getEditor());
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
+		//TODO Übergabe vom ExecutionHandler
 		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
 				this.mainframe.getVarView(), this.executionHandler.getProgramExecution());
 		
