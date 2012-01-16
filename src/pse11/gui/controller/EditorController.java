@@ -14,75 +14,74 @@ import misc.Editor;
 import misc.ExecutionHandler;
 
 public class EditorController implements ModifyListener, VerifyListener, VerifyKeyListener, FocusListener {
-	private EditorView editorframe;
-	private Editor editor;
-	public EditorController(Editor editor, EditorView editorframe) {
-		this.editorframe = editorframe;
-		this.editor = editor;
-		this.editorframe.getTextField().addFocusListener(this);
-		this.editorframe.getTextField().addModifyListener(this);
-		this.editorframe.getTextField().addVerifyKeyListener(this);
-		this.editorframe.getLineNumbers().addFocusListener(this);
-	}
-	public Editor getEditor() {
-		return this.editor;
-	}
-	@Override
-	public void modifyText(ModifyEvent e) {
-		// TODO REST
-		editor.setSource(editorframe.getText());
-	}
-	@Override
-	public void verifyText(VerifyEvent e) {
-		// TODO need?
-//		System.out.println(e.character);
-	}
-	@Override
-	public void verifyKey(VerifyEvent e) {
-		if ((e.stateMask == SWT.CTRL) && (e.character == '\u001A')) {
-			//undo
-			e.doit = false;
-			this.editor.undo();
-		}
-	}
-	@Override
-	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("focus");
-		int test;
-		//TODO nicht vorhandene zeilen
-		//TODO nur doppelklick funktioniert
-		// => ZUM TESTEN: Focus nur auf vorhandene Zeilen, daher erst enter drücken
-		System.out.println(test = editorframe.getLineNumbers().getCaretOffset());
-		System.out.println(test = editorframe.getLineNumbers().getLineAtOffset(test));
-		editorframe.getTextField().setFocus();
-		int pos = 0;
-		for(int i = 0; i < test; i++) {
-			int linelength;
-			if(i < this.editorframe.getTextField().getLineCount()) {
-				linelength = this.editorframe.getTextField().getLine(i).length();
-			} else {
-				linelength = 0;
-			}
-			if(linelength == 0) {
-				pos += 2;
-			} else {
-				pos += linelength+2;
-			}
-		}
-		if(pos % 2 != 0) {
-			pos++;
-		}
-		//TODO WEG
-		editorframe.getTextField().setCaretOffset(pos);
-		System.out.println(pos);
-		//TODO ADDBREAKPOINT
-		this.editor.addBreakpoint(pos);
-	}
-	@Override
-	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+        private EditorView editorframe;
+        private Editor editor;
+        public EditorController(Editor editor, EditorView editorframe) {
+                this.editorframe = editorframe;
+                this.editor = editor;
+                this.editorframe.getTextField().addFocusListener(this);
+                this.editorframe.getTextField().addModifyListener(this);
+                this.editorframe.getTextField().addVerifyKeyListener(this);
+                this.editorframe.getLineNumbers().addFocusListener(this);
+        }
+        public Editor getEditor() {
+                return this.editor;
+        }
+        @Override
+        public void modifyText(ModifyEvent e) {
+                // TODO REST
+                editor.setSource(editorframe.getText());
+        }
+        @Override
+        public void verifyText(VerifyEvent e) {
+                // TODO need?
+//              System.out.println(e.character);
+        }
+        @Override
+        public void verifyKey(VerifyEvent e) {
+                if ((e.stateMask == SWT.CTRL) && (e.character == '\u001A')) {
+                        //undo
+                        e.doit = false;
+                        this.editor.undo();
+                }
+        }
+        @Override
+        public void focusGained(FocusEvent e) {
+                // TODO Auto-generated method stub
+                System.out.println("focus");
+                int test;
+                //TODO nicht vorhandene zeilen
+                //TODO nur doppelklick funktioniert
+                // => ZUM TESTEN: Focus nur auf vorhandene Zeilen, daher erst enter drÃ¼cken
+                System.out.println(test = editorframe.getLineNumbers().getCaretOffset());
+                System.out.println(test = editorframe.getLineNumbers().getLineAtOffset(test));
+                editorframe.getTextField().setFocus();
+                int pos = 0;
+                for(int i = 0; i < test; i++) {
+                        int linelength;
+                        if(i < this.editorframe.getTextField().getLineCount()) {
+                                linelength = this.editorframe.getTextField().getLine(i).length();
+                        } else {
+                                linelength = 0;
+                        }
+                        if(linelength == 0) {
+                                pos += 2;
+                        } else {
+                                pos += linelength+2;
+                        }
+                }
+                if(pos % 2 != 0) {
+                        pos++;
+                }
+                //TODO WEG
+                editorframe.getTextField().setCaretOffset(pos);
+                System.out.println(pos);
+                //TODO ADDBREAKPOINT
+                this.editor.addBreakpoint(pos);
+        }
+        @Override
+        public void focusLost(FocusEvent e) {
+                // TODO Auto-generated method stub
 
+        }
 }
