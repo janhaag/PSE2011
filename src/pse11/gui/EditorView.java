@@ -50,6 +50,7 @@ public class EditorView extends Composite {
 				| SWT.H_SCROLL | SWT.RIGHT_TO_LEFT);
 		this.linenumbers = new StyledText(sc1, SWT.LEFT | SWT.MULTI | SWT.WRAP);	
 		sc1.getVerticalBar().setEnabled(false);
+		sc1.getHorizontalBar().setEnabled(false);
 		this.linenumbers.setSize(30, 7500);
 		
 		String s = "";
@@ -68,6 +69,7 @@ public class EditorView extends Composite {
 		}
 		
 		this.linenumbers.setEditable(false);
+		this.linenumbers.setDoubleClickEnabled(false);
 		this.linenumbers.setBackground(new Color(this.getDisplay(), 211, 211, 211));
 		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
 		sc1.setContent(this.linenumbers);

@@ -97,7 +97,7 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 				int offset = this.editorframe.getLineNumbers().getCaretOffset();
 				int lineCount = this.editorframe.getTextField().getLineCount();
 				if (offset > lineCount - 1 || this.editorframe.getTextField().getLine(offset) == null 
-						|| this.editorframe.getTextField().getLine(offset).length() == 0) {
+						|| !this.editorframe.getTextField().getLine(offset).contains(";")) {
 					this.editorframe.getTextField().setFocus();
 					return;
 				} 

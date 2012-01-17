@@ -124,7 +124,7 @@ public class MainController implements SelectionListener, MouseListener {
 			int offset = this.editorController.getEditorView().getLineNumbers().getCaretOffset();
 			int lineCount = this.editorController.getEditorView().getTextField().getLineCount();
 			if (offset > lineCount - 1 || this.editorController.getEditorView().getTextField().getLine(offset) == null 
-					|| this.editorController.getEditorView().getTextField().getLine(offset).length() == 0) {
+					|| !this.editorController.getEditorView().getTextField().getLine(offset).contains(";")) {
 				return;
 			} 
 			this.treeController.addStatementBreakpoint(offset + 1);
