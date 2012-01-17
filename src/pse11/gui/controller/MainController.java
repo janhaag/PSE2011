@@ -36,7 +36,7 @@ public class MainController implements SelectionListener {
 		this.settingsController = new SettingsController(Settings.getInstance());
 		//TODO Übergabe vom ExecutionHandler
 		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
-				this.mainframe.getVarView(), this.executionHandler.getProgramExecution());
+				this.mainframe.getVarView());
 		
 		//Has to be the last call in the constructor
 		initMainFrame();
@@ -80,13 +80,16 @@ public class MainController implements SelectionListener {
 			//Functions
 			assert editorController != null;
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
+			this.treeController.addExecution(this.executionHandler.getProgramExecution());
 		} else if(e.getSource() == mainframe.getStepButton()) {
 			//Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
 			this.mainframe.switchIcon(image, image2);
+			this.mainframe.getStopButton().setEnabled(true);
 			//Functions
-			this.treeController.updateVarView();      
+			this.treeController.addExecution(this.executionHandler.getProgramExecution());
+			this.treeController.updateVarView();   
 		} else if(e.getSource() == mainframe.getPauseButton()) {
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
@@ -101,7 +104,8 @@ public class MainController implements SelectionListener {
 			this.mainframe.getStopButton().setEnabled(false);
 			this.mainframe.getPauseButton().setEnabled(false);
 			//Functions
-			this.treeController.updateVarView();      
+			this.treeController.updateVarView();    
+			this.treeController.removeExecution();
 		} else if(e.getSource() == mainframe.getValidateButton()) {
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));

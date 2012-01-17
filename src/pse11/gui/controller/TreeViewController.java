@@ -39,14 +39,13 @@ public class TreeViewController implements SelectionListener {
 	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
 	
-	public TreeViewController(BreakpointView breakpointView, VariableView varView,
-			ProgramExecution execution) {
-		this.execution = execution;
-		
+	public TreeViewController(BreakpointView breakpointView, VariableView varView) {	
 		this.breakpointView = breakpointView;
 		this.varView = varView;		
 		
-		this.breakpointView.setListenerControl(this);
+		this.breakpointView.getGlobalBreakpoint().addSelectionListener(this);
+		this.breakpointView.getStatementBreakpoint().addSelectionListener(this);
+		this.breakpointView.getAddButton().addSelectionListener(this);
 		
 		//test values
 		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
@@ -55,6 +54,16 @@ public class TreeViewController implements SelectionListener {
 		this.statementBreakpoints.add(sbreakpoint);
 		TableItem item = new TableItem(this.breakpointView.getStatementBreakpoint(), SWT.NONE);
 		item.setText(1, "20");
+	}
+	
+	public void addExecution(ProgramExecution execution) {
+		if (this.execution == null) {
+			this.execution = execution;
+		}
+	}
+	
+	public void removeExecution() {
+		this.execution = null;
 	}
 	
 	//update the variable view when in single step, paused or stopped state
@@ -76,7 +85,7 @@ public class TreeViewController implements SelectionListener {
         i.setValue("42", l);
         vars.put(new Identifier("i0"), i);
 		
-        
+        //if (this.execution == null) return;
         //HashMap<Identifier, Value> vars = this.execution.getVariables();
       
         //insert Tree items       
@@ -85,42 +94,39 @@ public class TreeViewController implements SelectionListener {
 		Iterator<Map.Entry<Identifier, Value>> it = vars.entrySet().iterator();		
 		while (it.hasNext()) {
 			Map.Entry<Identifier, Value> entry = it.next();
-			Value tmp = entry.getValue();
+			String type = entry.getValue().getType().toString();
 			String id = entry.getKey().toString();
-			this.checkValue(tmp, this.varView.getVarTree(), id);
+			Value tmp = entry.getValue();
+			this.checkValue(this.varView.getVarTree(), type, id, tmp);
 		}     
 	}
 	
 	//insert first level tree items
-	private void checkValue(Value tmp, Tree parent, String id) {
-		if (tmp instanceof IntegerValue) {
-			this.varView.addTreeItem(parent, "int", id, tmp.toString());
-		}
-		else if (tmp instanceof BooleanValue) {
-			this.varView.addTreeItem(parent, "bool", id, tmp.toString());
+	private void checkValue(Tree parent, String type, String id, Value tmp) {
+		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {
+			this.varView.addTreeItem(parent, type, id, tmp.toString());
 		}
 		else if (tmp instanceof ArrayValue) {
-			TreeItem item = this.varView.addTreeItem(parent, "array", id, "-");
+			TreeItem item = this.varView.addTreeItem(parent, type, id, "-");
 			for (int i = 0; i < ((ArrayValue) tmp).getValues().length; i++) {
 				String newId = id + "[" + i + "]";
-				this.checkValue(((ArrayValue) tmp).getValues()[i], item, newId);
+				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), 
+						newId, ((ArrayValue) tmp).getValues()[i]);
 			}
 		}
 	}
 	
 	//insert tree items of level 2 and more
-	private void checkValue(Value tmp, TreeItem parent, String id) {
-		if (tmp instanceof IntegerValue) {
-			this.varView.addTreeItem(parent, "int", id, tmp.toString());
-		}
-		else if (tmp instanceof BooleanValue) {
-			this.varView.addTreeItem(parent, "bool", id, tmp.toString());
+	private void checkValue(TreeItem parent, String type, String id, Value tmp) {
+		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {
+			this.varView.addTreeItem(parent, type, id, tmp.toString());
 		}
 		else if (tmp instanceof ArrayValue) {
 			for (int i = 0; i < ((ArrayValue) tmp).getValues().length; i++) {
-				TreeItem item = this.varView.addTreeItem(parent, "array", id, "-");
+				TreeItem item = this.varView.addTreeItem(parent, type, id, "-");
 				String newId = id + "[" + i + "]";
-				this.checkValue(((ArrayValue) tmp).getValues()[i], item, newId);
+				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), 
+						newId, ((ArrayValue) tmp).getValues()[i]);
 			}
 		}
 	}

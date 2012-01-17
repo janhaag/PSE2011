@@ -119,6 +119,15 @@ public class EditorView extends Composite {
 			textfield.setStyleRange(stylerange);
 		}
 	}
+	
+	public void setBreakpoint(int offset) {
+		StyleRange style = new StyleRange();
+    	style.start = offset;
+        style.length = 1;
+        style.background = new Color(this.parentdisplay, 250, 150, 150);
+        this.linenumbers.setStyleRange(style);
+	}
+	
 	public String getText() {
 		return this.textfield.getText();
 	}

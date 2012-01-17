@@ -82,12 +82,6 @@ public class BreakpointView extends Composite {
 	    this.button.setLayoutData(gData);
 	}
 	
-	public void setListenerControl(TreeViewController controller) {
-		this.global.addSelectionListener(controller);
-		this.statement.addSelectionListener(controller);
-		this.button.addSelectionListener(controller);
-	}
-	
 	public void setGlobalBreakpointItem(String key) {		
 		TableItem item = new TableItem(this.global, SWT.NONE);
 		item.setText(1, key);

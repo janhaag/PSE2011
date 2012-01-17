@@ -1,6 +1,7 @@
 package gui.controller;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -8,6 +9,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 
 import gui.EditorView;
 import misc.Editor;
@@ -78,7 +81,10 @@ public class EditorController implements ModifyListener, VerifyListener, VerifyK
                 System.out.println(pos);
                 //TODO ADDBREAKPOINT
                 this.editor.addBreakpoint(pos);
+                int offset = this.editorframe.getLineNumbers().getCaretOffset();
+                this.editorframe.setBreakpoint(offset);
         }
+        
         @Override
         public void focusLost(FocusEvent e) {
                 // TODO Auto-generated method stub
