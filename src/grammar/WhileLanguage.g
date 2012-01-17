@@ -225,7 +225,6 @@ quantified_expression returns [ Expression ast, LinkedList<Expression> divisors 
             else $ast = new ExistsQuantifier(new Position(), r, new Identifier($IDENT.text),
         				$e.ast);
         	}
-        }
         | expression {$divisors = $expression.divisors;
         	$ast = $expression.ast;
         }

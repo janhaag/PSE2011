@@ -1,4 +1,4 @@
-// $ANTLR 3.4 ../src/grammar/WhileLanguage.g 2012-01-16 00:43:16
+// $ANTLR 3.4 ../src/grammar/WhileLanguage.g 2012-01-17 23:34:37
 
 	package parser;
 
@@ -864,10 +864,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = INT_LITERAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/WhileLanguage.g:352:14: ( ( '0' .. '9' )+ )
-            // ../src/grammar/WhileLanguage.g:352:16: ( '0' .. '9' )+
+            // ../src/grammar/WhileLanguage.g:349:14: ( ( '0' .. '9' )+ )
+            // ../src/grammar/WhileLanguage.g:349:16: ( '0' .. '9' )+
             {
-            // ../src/grammar/WhileLanguage.g:352:16: ( '0' .. '9' )+
+            // ../src/grammar/WhileLanguage.g:349:16: ( '0' .. '9' )+
             int cnt1=0;
             loop1:
             do {
@@ -922,7 +922,7 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = BOOL_LITERAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/WhileLanguage.g:353:14: ( 'true' | 'false' )
+            // ../src/grammar/WhileLanguage.g:350:14: ( 'true' | 'false' )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -941,7 +941,7 @@ public class WhileLanguageLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:353:16: 'true'
+                    // ../src/grammar/WhileLanguage.g:350:16: 'true'
                     {
                     match("true"); 
 
@@ -950,7 +950,7 @@ public class WhileLanguageLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:353:25: 'false'
+                    // ../src/grammar/WhileLanguage.g:350:25: 'false'
                     {
                     match("false"); 
 
@@ -974,7 +974,7 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = QUANTIFIER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/WhileLanguage.g:355:9: ( 'forall' | 'exists' )
+            // ../src/grammar/WhileLanguage.g:352:9: ( 'forall' | 'exists' )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -993,7 +993,7 @@ public class WhileLanguageLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:355:11: 'forall'
+                    // ../src/grammar/WhileLanguage.g:352:11: 'forall'
                     {
                     match("forall"); 
 
@@ -1002,7 +1002,7 @@ public class WhileLanguageLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:356:11: 'exists'
+                    // ../src/grammar/WhileLanguage.g:353:11: 'exists'
                     {
                     match("exists"); 
 
@@ -1026,12 +1026,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/WhileLanguage.g:358:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
-            // ../src/grammar/WhileLanguage.g:358:16: '#' ( . )* ( '\\n' | '\\r' )
+            // ../src/grammar/WhileLanguage.g:355:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
+            // ../src/grammar/WhileLanguage.g:355:16: '#' ( . )* ( '\\n' | '\\r' )
             {
             match('#'); 
 
-            // ../src/grammar/WhileLanguage.g:358:20: ( . )*
+            // ../src/grammar/WhileLanguage.g:355:20: ( . )*
             loop4:
             do {
                 int alt4=2;
@@ -1047,7 +1047,7 @@ public class WhileLanguageLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:358:20: .
+            	    // ../src/grammar/WhileLanguage.g:355:20: .
             	    {
             	    matchAny(); 
 
@@ -1088,10 +1088,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/WhileLanguage.g:359:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
-            // ../src/grammar/WhileLanguage.g:359:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // ../src/grammar/WhileLanguage.g:356:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
+            // ../src/grammar/WhileLanguage.g:356:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
             {
-            // ../src/grammar/WhileLanguage.g:359:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // ../src/grammar/WhileLanguage.g:356:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
             int cnt5=0;
             loop5:
             do {
@@ -1148,8 +1148,8 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = IDENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/WhileLanguage.g:360:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../src/grammar/WhileLanguage.g:360:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../src/grammar/WhileLanguage.g:357:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../src/grammar/WhileLanguage.g:357:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -1161,7 +1161,7 @@ public class WhileLanguageLexer extends Lexer {
             }
 
 
-            // ../src/grammar/WhileLanguage.g:360:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../src/grammar/WhileLanguage.g:357:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop6:
             do {
                 int alt6=2;
