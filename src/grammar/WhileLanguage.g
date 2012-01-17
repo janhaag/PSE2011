@@ -92,10 +92,10 @@ parameter returns [ FunctionParameter ast ]
 
 function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : assume_statement?
+        : assume_statement? {$pre = $invariant_statement.result;}
           '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}'
               {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
-          ensure_statement?
+          ensure_statement? {$post = $ensure_statement.result;}
         ;
 
 if_body returns [ StatementBlock ast ]
