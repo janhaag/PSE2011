@@ -17,7 +17,7 @@ import gui.MainFrame;
 import gui.SettingsFrame;
 import gui.RandomTestFrame;
 
-public class MainController implements SelectionListener {
+public class MainController implements SelectionListener, MouseListener {
 	private ExecutionHandler executionHandler;
 	
 	private MainFrame mainframe;
@@ -36,7 +36,11 @@ public class MainController implements SelectionListener {
 		this.settingsController = new SettingsController(Settings.getInstance());
 		//TODO Übergabe vom ExecutionHandler
 		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
-				this.mainframe.getVarView());
+				this.mainframe.getVarView());		
+		
+		//Statement breakpoints setzen
+		this.editorController.getEditorView().getLineNumbers().addMouseListener(this);
+		
 		
 		//Has to be the last call in the constructor
 		initMainFrame();
@@ -86,6 +90,7 @@ public class MainController implements SelectionListener {
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
 			this.mainframe.switchIcon(image, image2);
+			this.mainframe.getPauseButton().setEnabled(false);
 			this.mainframe.getStopButton().setEnabled(true);
 			//Functions
 			this.treeController.addExecution(this.executionHandler.getProgramExecution());
@@ -114,6 +119,28 @@ public class MainController implements SelectionListener {
 	}
 	
 	@Override
+	public void mouseDoubleClick(MouseEvent e) {
+		if (e.getSource() == this.editorController.getEditorView().getLineNumbers()) {
+			int offset = this.editorController.getEditorView().getLineNumbers().getCaretOffset();
+			int lineCount = this.editorController.getEditorView().getTextField().getLineCount();
+			if (offset > lineCount - 1 || this.editorController.getEditorView().getTextField().getLine(offset) == null 
+					|| this.editorController.getEditorView().getTextField().getLine(offset).length() == 0) {
+				return;
+			} 
+			this.treeController.addStatementBreakpoint(offset + 1);
+		}		
+	}
+	
+	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void mouseDown(MouseEvent arg0) {
+		// TODO Auto-generated method stub		
+	}
+	@Override
+	public void mouseUp(MouseEvent arg0) {
+		// TODO Auto-generated method stub		
 	}
 }

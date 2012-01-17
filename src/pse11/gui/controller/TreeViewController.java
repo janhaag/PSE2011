@@ -50,10 +50,13 @@ public class TreeViewController implements SelectionListener {
 		//test values
 		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
 		this.statementBreakpoints = new ArrayList<StatementBreakpoint>();
-		StatementBreakpoint sbreakpoint = new StatementBreakpoint(20);
+	}
+	
+	public void addStatementBreakpoint(int line) {
+		StatementBreakpoint sbreakpoint = new StatementBreakpoint(line);
 		this.statementBreakpoints.add(sbreakpoint);
 		TableItem item = new TableItem(this.breakpointView.getStatementBreakpoint(), SWT.NONE);
-		item.setText(1, "20");
+		item.setText(1, line + "");
 	}
 	
 	public void addExecution(ProgramExecution execution) {
