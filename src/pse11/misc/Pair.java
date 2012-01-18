@@ -25,7 +25,7 @@ public class Pair<V, W> {
      * Get the first value.
      * @return the first value
      */
-    public V getValue1 {
+    public V getValue1() {
         return v;
     }
 
