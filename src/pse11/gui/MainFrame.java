@@ -18,6 +18,7 @@ public class MainFrame extends Frame {
 	private Shell shell;
 	private MenuBar menubar;
 	private EditorView editor;
+	private Button parseButton;
 	private Button runButton;
 	private Button stepButton;
 	private Button pauseButton;
@@ -61,17 +62,26 @@ public class MainFrame extends Frame {
 		this.editor.setLayoutData(gData);
 		
 		//Adding buttons
+		/*this.parseButton = new Button(c1, SWT.PUSH);
+		this.parseButton.setText("Parse");
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
+		this.parseButton.setLayoutData(gData);
+		this.parseButton.setVisible(false);*/
+		
 		this.runButton = new Button(c1, SWT.PUSH);
 		this.runButton.setText("Run");
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.runButton.setLayoutData(gData);
+//		this.runButton.setVisible(false);
 		
 		this.stepButton = new Button(c1, SWT.PUSH);
 		this.stepButton.setText("Single Step");
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.stepButton.setLayoutData(gData);
+//		this.stepButton.setVisible(false);
 		
 		this.pauseButton = new Button(c1, SWT.PUSH);
 		this.pauseButton.setText("Pause");
@@ -79,6 +89,7 @@ public class MainFrame extends Frame {
 		gData.horizontalSpan = 3;
 		this.pauseButton.setLayoutData(gData);
 		this.pauseButton.setEnabled(false);
+//		this.pauseButton.setVisible(false);
 		
 		this.stopButton = new Button(c1, SWT.PUSH);
 		this.stopButton.setText("Stop");
@@ -86,6 +97,7 @@ public class MainFrame extends Frame {
 		gData.horizontalSpan = 3;
 		this.stopButton.setLayoutData(gData);
 		this.stopButton.setEnabled(false);
+//		this.stopButton.setVisible(false);
 		
 		this.validateButton = new Button(c1, SWT.PUSH);
 		this.validateButton.setText("Validate");
@@ -93,7 +105,9 @@ public class MainFrame extends Frame {
 		gData.horizontalSpan = 3;
 		this.validateButton.setLayoutData(gData);
 		this.validateButton.setEnabled(false);
+//		this.validateButton.setVisible(false);
 		
+//		this.parseButton.addSelectionListener(mainController);
 		this.runButton.addSelectionListener(mainController);
 		this.stepButton.addSelectionListener(mainController);
 		this.validateButton.addSelectionListener(mainController);
@@ -106,12 +120,14 @@ public class MainFrame extends Frame {
 		this.pauseIcon.setImage(image1);
 		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);
 		this.pauseIcon.setLayoutData(gData);
+//		this.pauseIcon.setVisible(false);
 		
 		this.runIcon = new Label(c1, SWT.NONE);
 		Image image2 = new Image(display, MainFrame.class.getResourceAsStream("image/run1.png"));
 		this.runIcon.setImage(image2);
 		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
 		this.runIcon.setLayoutData(gData);
+//		this.runIcon.setVisible(false);
 		
 	    //Create a composite for variable view and breakpoint view
 	    Composite c2 = new Composite(shell, SWT.NONE); 
@@ -185,6 +201,10 @@ public class MainFrame extends Frame {
 		return this.breakpointView;
 	}
 	
+	public Button getParseButton() {
+		return this.parseButton;
+	}
+	
 	public Button getRunButton() {
 		return this.runButton;
 	}
@@ -224,4 +244,6 @@ public class MainFrame extends Frame {
 	}
 	
 	private static final String SHELLTITLE = "PSE";
+
+	
 }
