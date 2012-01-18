@@ -8,32 +8,61 @@ import java.util.ArrayList;
 /**
  *
  */
-public class Interpreter implements ASTVisitor {
+public class Interpreter implements ast.ASTVisitor {
     private Value tempValue;
     private State currentState;
+    private Value returnValue;
+    private Value[] parameters;
+    
+    private static class StopStatementException extends RuntimeException {
+    }
     
     public State step(State state) {
         currentState = state;
-        state.getCurrentStatement().accept(this);
-        state.adjustStatement();
+        try {
+            state.getCurrentStatement().accept(this);
+        } catch (StopStatementException ignored) {
+            //nothing to do
+        }
         return state;
     }
 
+    @Override
     public void visit(Conditional conditional) {
         conditional.getCondition().accept(this);
         if (((BooleanValue) tempValue).getValue()) {
             currentState.createScope(conditional.getTrueConditionBody(),
-                                     false);
-        } else {
+                    null);
+        } else if (conditional.getFalseConditionBody() != null) {
             currentState.createScope(conditional.getFalseConditionBody(),
-                                     false);
+                    null);
+        }
+        adjustStatement();
+    }
+
+    @Override
+    public void visit(Loop loop) {
+        loop.getCondition().accept(this);
+        boolean condition = ((BooleanValue) tempValue).getValue();
+        if (condition) {
+            currentState.createScope(loop.getLoopBody(),
+                                     null);
+            adjustStatement();
+        }
+        Invariant[] invariants = loop.getInvariants();
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+        }
+        if (!condition) {
+            Ensure[] ensures = loop.getPostconditions();
+            for (Ensure ensure : ensures) {
+                ensure.accept(this);
+            }
+            adjustStatement();
         }
     }
 
-    public void visit(Loop loop) {
-        //TODO: reset loop somehow
-    }
-
+    @Override
     public void visit(ArrayAssignment arrayAssignment) {
         Expression[] indexes = arrayAssignment.getIndexes();
         ArrayList<Integer> lengths = new ArrayList<Integer>();
@@ -45,8 +74,10 @@ public class Interpreter implements ASTVisitor {
         arrayAssignment.getValue().accept(this);
         currentState.setArray(arrayAssignment.getIdentifier().toString(),
                               tempValue.toString(), lengths);
+        adjustStatement();
     }
 
+    @Override
     public void visit(ArithmeticExpression arithmeticExpression) {
         arithmeticExpression.getSubexpression1().accept(this);
         ArithmeticOperator operator =
@@ -93,10 +124,12 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(NumericLiteral number) {
         tempValue = number.getValue();
     }
 
+    @Override
     public void visit(LogicalExpression logicalExpression) {
         logicalExpression.getSubexpression1().accept(this);
         LogicalOperator operator = logicalExpression.getLogicalOperator();
@@ -153,18 +186,39 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(BooleanLiteral bool) {
         tempValue = bool.getValue();
     }
 
+    @Override
     public void visit(FunctionCall functionCall) {
-        //TODO
+        if (returnValue != null) {
+            currentState.createFunctionResult(functionCall, returnValue);
+        }
+        Value value = currentState.getReturnValues().get(functionCall);
+        if (value == null) {
+            //result not calculated yet
+            Expression[] parameterExpressions = functionCall.getParameters();
+            parameters = new Value[parameterExpressions.length];
+            for (int i = 0; i < parameters.length; i++) {
+                parameterExpressions[i].accept(this);
+                parameters[i] = tempValue;
+            }
+            functionCall.getFunction().accept(this);
+            //statement must be started again
+            throw new StopStatementException();
+        } else {
+            tempValue = value;
+        }
     }
 
+    @Override
     public void visit(VariableRead variableRead) {
         tempValue = currentState.getVariables().get(variableRead.getVariable());
     }
 
+    @Override
     public void visit(ArrayRead arrayRead) {
         Expression[] indexes = arrayRead.getIndexes();
         tempValue = currentState.getVariables().get(arrayRead.getVariable());
@@ -179,37 +233,52 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(Function function) {
-        //TODO: maybe single step through assumptions
+        currentState.createScope(function.getFunctionBlock(), function);
+        FunctionParameter[] params = function.getParameters();
+        for (int i = 0; i < params.length; i++) {
+            Value value = parameters[i];
+            String varName = params[i].getName();
+            if (value instanceof ArrayValue) {
+                //TODO
+            } else {
+                currentState.createVar(varName, value.toString(),
+                                       value.getType());
+            }
+        }
         Assumption[] assumptions = function.getAssumptions();
         for (Assumption assumption : assumptions) {
             assumption.accept(this);
         }
-        FunctionParameter[] params = function.getParameters();
-        for (FunctionParameter param : params) {
-            //TODO: read params
-        }
+        adjustStatement();
     }
 
+    @Override
     public void visit(Program program) {
         //TODO: is this needed?
         program.getMainFunction().accept(this);
     }
 
+    @Override
     public void visit(Assignment assignment) {
         assignment.getValue().accept(this);
         currentState.setVar(assignment.getIdentifier().getName(),
                 tempValue.toString());
+        adjustStatement();
     }
 
+    @Override
     public void visit(Assertion assertion) {
         assertion.getExpression().accept(this);
         if (!((BooleanValue) tempValue).getValue()) {
             throw new AssertionFailureException("Assertion failed!",
                                                 assertion.getPosition());
         }
+        adjustStatement();
     }
 
+    @Override
     public void visit(Assumption assumption) {
         assumption.getExpression().accept(this);
         if (!((BooleanValue) tempValue).getValue()) {
@@ -218,10 +287,12 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(Axiom axiom) {
         //TODO: is this needed in interpreter?
     }
 
+    @Override
     public void visit(Ensure ensure) {
         ensure.getExpression().accept(this);
         if (!((BooleanValue) tempValue).getValue()) {
@@ -230,6 +301,7 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(Invariant invariant) {
         invariant.getExpression().accept(this);
         if (!((BooleanValue) tempValue).getValue()) {
@@ -238,10 +310,25 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(ReturnStatement returnStatement) {
-        //TODO: write code
+        returnStatement.getReturnValue().accept(this);
+        returnValue = tempValue;
+        Ensure[] ensures = currentState.getCurrentFunction().getEnsures();
+        currentState.adjustStatement();
+        try {
+            for (Ensure ensure : ensures) {
+                ensure.accept(this);
+            }
+        } finally {
+            while (!currentState.isFunctionScope()) {
+                currentState.destroyScope();
+            }
+            currentState.destroyScope();
+        }
     }
 
+    @Override
     public void visit(VariableDeclaration varDec) {
         if (varDec.getValue() == null) {
             currentState.createVar(varDec.getName(), null, varDec.getType());
@@ -250,8 +337,10 @@ public class Interpreter implements ASTVisitor {
             currentState.createVar(varDec.getName(),
                         tempValue.toString(), varDec.getType());
         }
+        adjustStatement();
     }
 
+    @Override
     public void visit(ArrayDeclaration arrDec) {
         Expression[] indexes = arrDec.getIndexes();
         int[] lengths = new int[indexes.length];
@@ -261,8 +350,10 @@ public class Interpreter implements ASTVisitor {
             lengths[i] = (length > 0) ? length : 1;
         }
         currentState.createArray(arrDec.getName(), arrDec.getType(), lengths);
+        adjustStatement();
     }
 
+    @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         Range range = existsQuantifier.getRange();
         if (range != null) {
@@ -270,7 +361,7 @@ public class Interpreter implements ASTVisitor {
             int lower = ((IntegerValue) tempValue).getValue().intValue();
             range.getUpperBound().accept(this);
             int upper = ((IntegerValue) tempValue).getValue().intValue();
-            currentState.createScope(null, false);
+            currentState.createScope(null, null);
             String varName = existsQuantifier.getIdentifier().toString();
             currentState.createVar(varName, null, new IntegerType());
             boolean satisfied = false;
@@ -289,6 +380,7 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         Range range = forAllQuantifier.getRange();
         if (range != null) {
@@ -296,7 +388,7 @@ public class Interpreter implements ASTVisitor {
             int lower = ((IntegerValue) tempValue).getValue().intValue();
             range.getUpperBound().accept(this);
             int upper = ((IntegerValue) tempValue).getValue().intValue();
-            currentState.createScope(null, false);
+            currentState.createScope(null, null);
             String varName = forAllQuantifier.getIdentifier().toString();
             currentState.createVar(varName, null, new IntegerType());
             boolean valid = true;
@@ -315,13 +407,41 @@ public class Interpreter implements ASTVisitor {
         }
     }
 
+    @Override
     public void visit(StatementBlock statementBlock) {
         //TODO: is this needed?
     }
 
+    @Override
     public void visit(Length length) {
         length.getArray().accept(this);
         int arrayLength = ((ArrayValue) tempValue).getValues().length;
         tempValue = new IntegerValue(Integer.toString(arrayLength));
+    }
+
+    private void adjustStatement() {
+        returnValue = null;
+        Function currentFunction = currentState.getCurrentFunction();
+        currentState.adjustStatement();
+        if (currentState.getCurrentStatement() == null) {
+            if (currentState.isFunctionScope()) {
+                 returnValue = (currentFunction.getReturnType()
+                                    instanceof BooleanType)
+                              ? new BooleanValue(null) : new IntegerValue(null);
+                Ensure[] ensures = currentFunction.getEnsures();
+                try {
+                    for (Ensure ensure : ensures) {
+                        ensure.accept(this);
+                    }
+                } finally {
+                    currentState.destroyScope();
+                }
+            } else {
+                currentState.destroyScope();
+                if (currentState.getCurrentStatement() instanceof Conditional) {
+                    adjustStatement();
+                }
+            }
+        }
     }
 }

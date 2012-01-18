@@ -2,10 +2,7 @@ package interpreter;
 
 import ast.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class represents a scope in a user program,
@@ -26,17 +23,25 @@ public class Scope {
      */
     private final HashMap<Identifier, Value> variables;
     /**
-     * statement block associated with this scope
+     * temporarily saves the result of function calls
      */
-    private final StatementBlock currentBlock;
+    private final IdentityHashMap<FunctionCall, Value> returnValues;
+    /**
+     * function associated with this scope, if there is any
+     */
+    private final Function currentFunction;
     /**
      * iterator over the statements in the current block
      */
     private final Iterator<Statement> statements;
     /**
+     * next statement in this scope
+     */
+    private Statement currentStatement;
+    /**
      * This flag indicates whether variables may searched for in
      * the parent scope. This must be prevented if this scope is
-     * associated toa complete function.
+     * associated to a complete function.
      */
     private final boolean variableSearch;
 
@@ -45,15 +50,16 @@ public class Scope {
      *
      * @param upScope parent scope of this instance
      * @param currentBlock statement block associated with this scope
-     * @param isFunctionScope indicates whether this scope belongs to
-     *                        a function or not
+     * @param currentFunction function associated with this scope,
+     *                        if there is any
      */
     public Scope(Scope upScope, StatementBlock currentBlock,
-                 boolean isFunctionScope) {
+                 Function currentFunction) {
         this.upScope = upScope;
-        this.currentBlock = currentBlock;
+        this.currentFunction = currentFunction;
         variables = new HashMap<Identifier, Value>();
-        variableSearch = !isFunctionScope && upScope != null;
+        returnValues = new IdentityHashMap<FunctionCall, Value>();
+        variableSearch = (currentFunction == null) && upScope != null;
         statements = (currentBlock != null)
                      ? currentBlock.getIterator() : null;
     }
@@ -68,6 +74,24 @@ public class Scope {
      */
     public Scope getParent() {
         return upScope;
+    }
+
+    public boolean isFunctionScope() {
+        return currentFunction != null;
+    }
+
+    /**
+     * Returns the function this scope belongs to.
+     *
+     * @return function this scope belongs to
+     */
+    public Function getCurrentFunction() {
+        return currentFunction != null
+                ? currentFunction : upScope.getCurrentFunction();
+    }
+
+    public IdentityHashMap<FunctionCall, Value> getReturnValues() {
+        return returnValues;
     }
 
     /**
@@ -104,7 +128,12 @@ public class Scope {
      * @return next statement
      */
     public Statement getNextStatement() {
-        return statements.hasNext() ? statements.next() : null;
+        currentStatement = statements.hasNext() ? statements.next() : null;
+        return currentStatement;
+    }
+
+    public Statement getCurrentStatement() {
+        return currentStatement;
     }
 
     /**
@@ -113,7 +142,7 @@ public class Scope {
      * @param value new value (as String)
      */
     public void setVar(String name, String value) {
-        Value oldValue = variables.get(new Identifier(name));
+        Value oldValue = getVariables().get(new Identifier(name));
         if (oldValue instanceof BooleanValue) {
             ((BooleanValue) oldValue).setValue(value);
         } else {
@@ -134,6 +163,15 @@ public class Scope {
         if (array instanceof ArrayValue) {
             ((ArrayValue) array).setValue(value, indexes);
         }
+    }
+
+    public void createFunctionResult(FunctionCall functionCall,
+                                     Value returnValue) {
+        returnValues.put(functionCall, returnValue);
+    }
+
+    public void clearFunctionResults() {
+        returnValues.clear();
     }
 
     /**

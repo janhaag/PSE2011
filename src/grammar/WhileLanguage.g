@@ -7,6 +7,17 @@ grammar WhileLanguage;
 }
 
 @members {
+    private LinkedList<String> reporter;
+
+    public void setErrorReporter(LinkedList<String> reporter) {
+        this.reporter = reporter;
+    }
+
+    @Override
+    public void emitErrorMessage(String msg) {
+        reporter.add(msg);
+    }
+
     public LinkedList<Assertion> possibleDivByZero(LinkedList<Expression> expressions) {
         LinkedList<Assertion> result = new LinkedList<Assertion>();
         for (Expression e : expressions) {
@@ -50,6 +61,20 @@ grammar WhileLanguage;
 
 @lexer::header {
 	package parser;
+    import java.util.LinkedList;
+}
+
+@lexer::members {
+    private LinkedList<String> reporter;
+
+    public void setErrorReporter(LinkedList<String> reporter) {
+        this.reporter = reporter;
+    }
+
+    @Override
+    public void emitErrorMessage(String msg) {
+        reporter.add(msg);
+    }
 }
 
 program returns [Program p]
@@ -92,10 +117,10 @@ parameter returns [ FunctionParameter ast ]
 
 function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : assume_statement?
+        : a=assume_statement? {$pre = $a.result != null ? $a.result : new LinkedList<Assumption>();}
           '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}'
               {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
-          ensure_statement?
+          e=ensure_statement? {$post = $e.result != null ? $e.result : new LinkedList<Ensure>();}
         ;
 
 if_body returns [ StatementBlock ast ]
@@ -106,10 +131,10 @@ if_body returns [ StatementBlock ast ]
 
 loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : invariant_statement? {$pre = $invariant_statement.result;}
+        : i=invariant_statement? {$pre = $i.result != null ? $i.result : new LinkedList<Invariant>();}
           '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}'
               {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
-       	  ensure_statement? {$post = $ensure_statement.result;}
+       	  e=ensure_statement? {$post = $e.result != null ? $e.result : new LinkedList<Ensure>();}
         ;
 
 statement returns [ Statement ast, LinkedList<Expression> divisors ]
@@ -225,7 +250,6 @@ quantified_expression returns [ Expression ast, LinkedList<Expression> divisors 
             else $ast = new ExistsQuantifier(new Position(), r, new Identifier($IDENT.text),
         				$e.ast);
         	}
-        }
         | expression {$divisors = $expression.divisors;
         	$ast = $expression.ast;
         }

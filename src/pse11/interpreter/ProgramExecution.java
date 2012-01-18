@@ -56,15 +56,19 @@ public class ProgramExecution {
             }
         }
         for (GlobalBreakpoint globalBreakpoint : globalBreakpoints) {
-            typeChecker.setCurrentScope(currentState.getCurrentScope());
-            try {
-                Expression condition = globalBreakpoint.getExpression();
-                Assertion assertion = new Assertion(new Position(), condition);
-                assertion.accept(typeChecker);
-                assertion.accept(interpreter);
-                return true;
-            } catch (IllegalTypeException e) {
-            } catch (AssertionFailureException e) {
+            if (globalBreakpoint.isActive()) {
+                typeChecker.setCurrentScope(currentState.getCurrentScope());
+                try {
+                    Expression condition = globalBreakpoint.getExpression();
+                    Assertion assertion = new Assertion(new Position(), condition);
+                    typeChecker.setFunctionCallAllowed(false);
+                    assertion.accept(typeChecker);
+                    typeChecker.setFunctionCallAllowed(true);
+                    assertion.accept(interpreter);
+                    return true;
+                } catch (IllegalTypeException ignored) {
+                } catch (AssertionFailureException ignored) {
+                }
             }
         }
         return false;

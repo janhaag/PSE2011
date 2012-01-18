@@ -1,7 +1,5 @@
 package gui;
 
-import gui.controller.TreeViewController;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
@@ -45,7 +43,7 @@ public class BreakpointView extends Composite {
 			column1.setWidth(50);
 			column1.setText("Active");
 			TableColumn column2 = new TableColumn(table, SWT.CENTER);
-			column2.setWidth(230);
+			column2.setWidth(200);
 			if (i == 0) {
 				column2.setText("Expression");
 			}

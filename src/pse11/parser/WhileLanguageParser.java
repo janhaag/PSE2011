@@ -1,4 +1,4 @@
-// $ANTLR 3.4 ../src/grammar/WhileLanguage.g 2012-01-16 00:43:14
+// $ANTLR 3.4 ../src/grammar/WhileLanguage.g 2012-01-18 18:24:11
 
 	package parser;
 	import ast.*;
@@ -79,6 +79,17 @@ public class WhileLanguageParser extends Parser {
     public String getGrammarFileName() { return "../src/grammar/WhileLanguage.g"; }
 
 
+        private LinkedList<String> reporter;
+
+        public void setErrorReporter(LinkedList<String> reporter) {
+            this.reporter = reporter;
+        }
+
+        @Override
+        public void emitErrorMessage(String msg) {
+            reporter.add(msg);
+        }
+
         public LinkedList<Assertion> possibleDivByZero(LinkedList<Expression> expressions) {
             LinkedList<Assertion> result = new LinkedList<Assertion>();
             for (Expression e : expressions) {
@@ -122,7 +133,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "program"
-    // ../src/grammar/WhileLanguage.g:55:1: program returns [Program p] : (a= axiom_statement )* (f= function_declaration )* main ;
+    // ../src/grammar/WhileLanguage.g:80:1: program returns [Program p] : (a= axiom_statement )* (f= function_declaration )* main ;
     public final Program program() throws RecognitionException {
         Program p = null;
 
@@ -137,10 +148,10 @@ public class WhileLanguageParser extends Parser {
         LinkedList<Axiom> axiom = new LinkedList<Axiom>();
         	       LinkedList<Function> function = new LinkedList<Function>();
         try {
-            // ../src/grammar/WhileLanguage.g:58:9: ( (a= axiom_statement )* (f= function_declaration )* main )
-            // ../src/grammar/WhileLanguage.g:58:11: (a= axiom_statement )* (f= function_declaration )* main
+            // ../src/grammar/WhileLanguage.g:83:9: ( (a= axiom_statement )* (f= function_declaration )* main )
+            // ../src/grammar/WhileLanguage.g:83:11: (a= axiom_statement )* (f= function_declaration )* main
             {
-            // ../src/grammar/WhileLanguage.g:58:11: (a= axiom_statement )*
+            // ../src/grammar/WhileLanguage.g:83:11: (a= axiom_statement )*
             loop1:
             do {
                 int alt1=2;
@@ -153,9 +164,9 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:58:12: a= axiom_statement
+            	    // ../src/grammar/WhileLanguage.g:83:12: a= axiom_statement
             	    {
-            	    pushFollow(FOLLOW_axiom_statement_in_program52);
+            	    pushFollow(FOLLOW_axiom_statement_in_program61);
             	    a=axiom_statement();
 
             	    state._fsp--;
@@ -172,7 +183,7 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            // ../src/grammar/WhileLanguage.g:58:59: (f= function_declaration )*
+            // ../src/grammar/WhileLanguage.g:83:59: (f= function_declaration )*
             loop2:
             do {
                 int alt2=2;
@@ -185,9 +196,9 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:58:60: f= function_declaration
+            	    // ../src/grammar/WhileLanguage.g:83:60: f= function_declaration
             	    {
-            	    pushFollow(FOLLOW_function_declaration_in_program61);
+            	    pushFollow(FOLLOW_function_declaration_in_program70);
             	    f=function_declaration();
 
             	    state._fsp--;
@@ -204,7 +215,7 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            pushFollow(FOLLOW_main_in_program67);
+            pushFollow(FOLLOW_main_in_program76);
             main1=main();
 
             state._fsp--;
@@ -231,7 +242,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "single_expression"
-    // ../src/grammar/WhileLanguage.g:63:1: single_expression returns [ Expression ast ] : expression ;
+    // ../src/grammar/WhileLanguage.g:88:1: single_expression returns [ Expression ast ] : expression ;
     public final Expression single_expression() throws RecognitionException {
         Expression ast = null;
 
@@ -240,10 +251,10 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:64:2: ( expression )
-            // ../src/grammar/WhileLanguage.g:64:4: expression
+            // ../src/grammar/WhileLanguage.g:89:2: ( expression )
+            // ../src/grammar/WhileLanguage.g:89:4: expression
             {
-            pushFollow(FOLLOW_expression_in_single_expression100);
+            pushFollow(FOLLOW_expression_in_single_expression109);
             expression2=expression();
 
             state._fsp--;
@@ -269,7 +280,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "function_declaration"
-    // ../src/grammar/WhileLanguage.g:67:1: function_declaration returns [ Function ast ] : type IDENT '(' ( parameter_list )? ')' function_body ;
+    // ../src/grammar/WhileLanguage.g:92:1: function_declaration returns [ Function ast ] : type IDENT '(' ( parameter_list )? ')' function_body ;
     public final Function function_declaration() throws RecognitionException {
         Function ast = null;
 
@@ -281,20 +292,20 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:68:9: ( type IDENT '(' ( parameter_list )? ')' function_body )
-            // ../src/grammar/WhileLanguage.g:68:11: type IDENT '(' ( parameter_list )? ')' function_body
+            // ../src/grammar/WhileLanguage.g:93:9: ( type IDENT '(' ( parameter_list )? ')' function_body )
+            // ../src/grammar/WhileLanguage.g:93:11: type IDENT '(' ( parameter_list )? ')' function_body
             {
-            pushFollow(FOLLOW_type_in_function_declaration124);
+            pushFollow(FOLLOW_type_in_function_declaration133);
             type();
 
             state._fsp--;
 
 
-            IDENT3=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_declaration126); 
+            IDENT3=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_declaration135); 
 
-            match(input,14,FOLLOW_14_in_function_declaration128); 
+            match(input,14,FOLLOW_14_in_function_declaration137); 
 
-            // ../src/grammar/WhileLanguage.g:68:26: ( parameter_list )?
+            // ../src/grammar/WhileLanguage.g:93:26: ( parameter_list )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -303,9 +314,9 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt3) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:68:26: parameter_list
+                    // ../src/grammar/WhileLanguage.g:93:26: parameter_list
                     {
-                    pushFollow(FOLLOW_parameter_list_in_function_declaration130);
+                    pushFollow(FOLLOW_parameter_list_in_function_declaration139);
                     parameter_list4=parameter_list();
 
                     state._fsp--;
@@ -317,9 +328,9 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            match(input,15,FOLLOW_15_in_function_declaration133); 
+            match(input,15,FOLLOW_15_in_function_declaration142); 
 
-            pushFollow(FOLLOW_function_body_in_function_declaration135);
+            pushFollow(FOLLOW_function_body_in_function_declaration144);
             function_body5=function_body();
 
             state._fsp--;
@@ -349,7 +360,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "main"
-    // ../src/grammar/WhileLanguage.g:76:1: main returns [ Function ast ] : 'main' '(' ( parameter_list )? ')' function_body ;
+    // ../src/grammar/WhileLanguage.g:101:1: main returns [ Function ast ] : 'main' '(' ( parameter_list )? ')' function_body ;
     public final Function main() throws RecognitionException {
         Function ast = null;
 
@@ -360,14 +371,14 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:77:9: ( 'main' '(' ( parameter_list )? ')' function_body )
-            // ../src/grammar/WhileLanguage.g:77:11: 'main' '(' ( parameter_list )? ')' function_body
+            // ../src/grammar/WhileLanguage.g:102:9: ( 'main' '(' ( parameter_list )? ')' function_body )
+            // ../src/grammar/WhileLanguage.g:102:11: 'main' '(' ( parameter_list )? ')' function_body
             {
-            match(input,40,FOLLOW_40_in_main175); 
+            match(input,40,FOLLOW_40_in_main184); 
 
-            match(input,14,FOLLOW_14_in_main177); 
+            match(input,14,FOLLOW_14_in_main186); 
 
-            // ../src/grammar/WhileLanguage.g:77:22: ( parameter_list )?
+            // ../src/grammar/WhileLanguage.g:102:22: ( parameter_list )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -376,9 +387,9 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:77:22: parameter_list
+                    // ../src/grammar/WhileLanguage.g:102:22: parameter_list
                     {
-                    pushFollow(FOLLOW_parameter_list_in_main179);
+                    pushFollow(FOLLOW_parameter_list_in_main188);
                     parameter_list6=parameter_list();
 
                     state._fsp--;
@@ -390,9 +401,9 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            match(input,15,FOLLOW_15_in_main182); 
+            match(input,15,FOLLOW_15_in_main191); 
 
-            pushFollow(FOLLOW_function_body_in_main184);
+            pushFollow(FOLLOW_function_body_in_main193);
             function_body7=function_body();
 
             state._fsp--;
@@ -421,7 +432,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "parameter_list"
-    // ../src/grammar/WhileLanguage.g:84:1: parameter_list returns [ LinkedList<FunctionParameter> params ] : p1= parameter ( ',' p2= parameter )* ;
+    // ../src/grammar/WhileLanguage.g:109:1: parameter_list returns [ LinkedList<FunctionParameter> params ] : p1= parameter ( ',' p2= parameter )* ;
     public final LinkedList<FunctionParameter> parameter_list() throws RecognitionException {
         LinkedList<FunctionParameter> params = null;
 
@@ -433,10 +444,10 @@ public class WhileLanguageParser extends Parser {
 
         params = new LinkedList<FunctionParameter>();
         try {
-            // ../src/grammar/WhileLanguage.g:86:9: (p1= parameter ( ',' p2= parameter )* )
-            // ../src/grammar/WhileLanguage.g:86:11: p1= parameter ( ',' p2= parameter )*
+            // ../src/grammar/WhileLanguage.g:111:9: (p1= parameter ( ',' p2= parameter )* )
+            // ../src/grammar/WhileLanguage.g:111:11: p1= parameter ( ',' p2= parameter )*
             {
-            pushFollow(FOLLOW_parameter_in_parameter_list232);
+            pushFollow(FOLLOW_parameter_in_parameter_list241);
             p1=parameter();
 
             state._fsp--;
@@ -444,7 +455,7 @@ public class WhileLanguageParser extends Parser {
 
             params.add(p1);
 
-            // ../src/grammar/WhileLanguage.g:86:48: ( ',' p2= parameter )*
+            // ../src/grammar/WhileLanguage.g:111:48: ( ',' p2= parameter )*
             loop5:
             do {
                 int alt5=2;
@@ -457,11 +468,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:86:50: ',' p2= parameter
+            	    // ../src/grammar/WhileLanguage.g:111:50: ',' p2= parameter
             	    {
-            	    match(input,18,FOLLOW_18_in_parameter_list238); 
+            	    match(input,18,FOLLOW_18_in_parameter_list247); 
 
-            	    pushFollow(FOLLOW_parameter_in_parameter_list242);
+            	    pushFollow(FOLLOW_parameter_in_parameter_list251);
             	    p2=parameter();
 
             	    state._fsp--;
@@ -496,7 +507,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "parameter"
-    // ../src/grammar/WhileLanguage.g:89:1: parameter returns [ FunctionParameter ast ] : type IDENT ;
+    // ../src/grammar/WhileLanguage.g:114:1: parameter returns [ FunctionParameter ast ] : type IDENT ;
     public final FunctionParameter parameter() throws RecognitionException {
         FunctionParameter ast = null;
 
@@ -506,16 +517,16 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:90:9: ( type IDENT )
-            // ../src/grammar/WhileLanguage.g:90:11: type IDENT
+            // ../src/grammar/WhileLanguage.g:115:9: ( type IDENT )
+            // ../src/grammar/WhileLanguage.g:115:11: type IDENT
             {
-            pushFollow(FOLLOW_type_in_parameter276);
+            pushFollow(FOLLOW_type_in_parameter285);
             type9=type();
 
             state._fsp--;
 
 
-            IDENT8=(Token)match(input,IDENT,FOLLOW_IDENT_in_parameter278); 
+            IDENT8=(Token)match(input,IDENT,FOLLOW_IDENT_in_parameter287); 
 
             ast = new FunctionParameter((IDENT8!=null?IDENT8.getText():null), type9);
 
@@ -543,21 +554,25 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "function_body"
-    // ../src/grammar/WhileLanguage.g:93:1: function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ] : ( assume_statement )? '{' ( statement )* '}' ( ensure_statement )? ;
+    // ../src/grammar/WhileLanguage.g:118:1: function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ] : (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )? ;
     public final WhileLanguageParser.function_body_return function_body() throws RecognitionException {
         WhileLanguageParser.function_body_return retval = new WhileLanguageParser.function_body_return();
         retval.start = input.LT(1);
 
+
+        LinkedList<Assumption> a =null;
+
+        LinkedList<Ensure> e =null;
 
         WhileLanguageParser.statement_return statement10 =null;
 
 
         LinkedList<Statement> s = new LinkedList<Statement>();
         try {
-            // ../src/grammar/WhileLanguage.g:95:9: ( ( assume_statement )? '{' ( statement )* '}' ( ensure_statement )? )
-            // ../src/grammar/WhileLanguage.g:95:11: ( assume_statement )? '{' ( statement )* '}' ( ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:120:9: ( (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )? )
+            // ../src/grammar/WhileLanguage.g:120:11: (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )?
             {
-            // ../src/grammar/WhileLanguage.g:95:11: ( assume_statement )?
+            // ../src/grammar/WhileLanguage.g:120:12: (a= assume_statement )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -566,10 +581,10 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt6) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:95:11: assume_statement
+                    // ../src/grammar/WhileLanguage.g:120:12: a= assume_statement
                     {
-                    pushFollow(FOLLOW_assume_statement_in_function_body315);
-                    assume_statement();
+                    pushFollow(FOLLOW_assume_statement_in_function_body326);
+                    a=assume_statement();
 
                     state._fsp--;
 
@@ -580,9 +595,11 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            match(input,43,FOLLOW_43_in_function_body328); 
+            retval.pre = a != null ? a : new LinkedList<Assumption>();
 
-            // ../src/grammar/WhileLanguage.g:96:15: ( statement )*
+            match(input,43,FOLLOW_43_in_function_body341); 
+
+            // ../src/grammar/WhileLanguage.g:121:15: ( statement )*
             loop7:
             do {
                 int alt7=2;
@@ -595,9 +612,9 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:96:17: statement
+            	    // ../src/grammar/WhileLanguage.g:121:17: statement
             	    {
-            	    pushFollow(FOLLOW_statement_in_function_body332);
+            	    pushFollow(FOLLOW_statement_in_function_body345);
             	    statement10=statement();
 
             	    state._fsp--;
@@ -614,11 +631,11 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            match(input,45,FOLLOW_45_in_function_body339); 
+            match(input,45,FOLLOW_45_in_function_body352); 
 
             retval.ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());
 
-            // ../src/grammar/WhileLanguage.g:98:11: ( ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:123:12: (e= ensure_statement )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -627,10 +644,10 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt8) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:98:11: ensure_statement
+                    // ../src/grammar/WhileLanguage.g:123:12: e= ensure_statement
                     {
-                    pushFollow(FOLLOW_ensure_statement_in_function_body367);
-                    ensure_statement();
+                    pushFollow(FOLLOW_ensure_statement_in_function_body382);
+                    e=ensure_statement();
 
                     state._fsp--;
 
@@ -640,6 +657,8 @@ public class WhileLanguageParser extends Parser {
 
             }
 
+
+            retval.post = e != null ? e : new LinkedList<Ensure>();
 
             }
 
@@ -662,7 +681,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "if_body"
-    // ../src/grammar/WhileLanguage.g:101:1: if_body returns [ StatementBlock ast ] : ( '{' ( statement )* '}' ) ;
+    // ../src/grammar/WhileLanguage.g:126:1: if_body returns [ StatementBlock ast ] : ( '{' ( statement )* '}' ) ;
     public final StatementBlock if_body() throws RecognitionException {
         StatementBlock ast = null;
 
@@ -672,15 +691,15 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Statement> s = new LinkedList<Statement>();
         try {
-            // ../src/grammar/WhileLanguage.g:103:9: ( ( '{' ( statement )* '}' ) )
-            // ../src/grammar/WhileLanguage.g:103:11: ( '{' ( statement )* '}' )
+            // ../src/grammar/WhileLanguage.g:128:9: ( ( '{' ( statement )* '}' ) )
+            // ../src/grammar/WhileLanguage.g:128:11: ( '{' ( statement )* '}' )
             {
-            // ../src/grammar/WhileLanguage.g:103:11: ( '{' ( statement )* '}' )
-            // ../src/grammar/WhileLanguage.g:103:13: '{' ( statement )* '}'
+            // ../src/grammar/WhileLanguage.g:128:11: ( '{' ( statement )* '}' )
+            // ../src/grammar/WhileLanguage.g:128:13: '{' ( statement )* '}'
             {
-            match(input,43,FOLLOW_43_in_if_body405); 
+            match(input,43,FOLLOW_43_in_if_body422); 
 
-            // ../src/grammar/WhileLanguage.g:103:17: ( statement )*
+            // ../src/grammar/WhileLanguage.g:128:17: ( statement )*
             loop9:
             do {
                 int alt9=2;
@@ -693,9 +712,9 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:103:17: statement
+            	    // ../src/grammar/WhileLanguage.g:128:17: statement
             	    {
-            	    pushFollow(FOLLOW_statement_in_if_body407);
+            	    pushFollow(FOLLOW_statement_in_if_body424);
             	    statement11=statement();
 
             	    state._fsp--;
@@ -710,7 +729,7 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            match(input,45,FOLLOW_45_in_if_body410); 
+            match(input,45,FOLLOW_45_in_if_body427); 
 
             s.addAll(possibleDivByZero((statement11!=null?statement11.divisors:null))); s.add((statement11!=null?statement11.ast:null));
 
@@ -743,25 +762,25 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "loop_body"
-    // ../src/grammar/WhileLanguage.g:107:1: loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ] : ( invariant_statement )? '{' ( statement )* '}' ( ensure_statement )? ;
+    // ../src/grammar/WhileLanguage.g:132:1: loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ] : (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )? ;
     public final WhileLanguageParser.loop_body_return loop_body() throws RecognitionException {
         WhileLanguageParser.loop_body_return retval = new WhileLanguageParser.loop_body_return();
         retval.start = input.LT(1);
 
 
-        LinkedList<Invariant> invariant_statement12 =null;
+        LinkedList<Invariant> i =null;
 
-        WhileLanguageParser.statement_return statement13 =null;
+        LinkedList<Ensure> e =null;
 
-        LinkedList<Ensure> ensure_statement14 =null;
+        WhileLanguageParser.statement_return statement12 =null;
 
 
         LinkedList<Statement> s = new LinkedList<Statement>();
         try {
-            // ../src/grammar/WhileLanguage.g:109:9: ( ( invariant_statement )? '{' ( statement )* '}' ( ensure_statement )? )
-            // ../src/grammar/WhileLanguage.g:109:11: ( invariant_statement )? '{' ( statement )* '}' ( ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:134:9: ( (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )? )
+            // ../src/grammar/WhileLanguage.g:134:11: (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )?
             {
-            // ../src/grammar/WhileLanguage.g:109:11: ( invariant_statement )?
+            // ../src/grammar/WhileLanguage.g:134:12: (i= invariant_statement )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -770,10 +789,10 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt10) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:109:11: invariant_statement
+                    // ../src/grammar/WhileLanguage.g:134:12: i= invariant_statement
                     {
-                    pushFollow(FOLLOW_invariant_statement_in_loop_body463);
-                    invariant_statement12=invariant_statement();
+                    pushFollow(FOLLOW_invariant_statement_in_loop_body482);
+                    i=invariant_statement();
 
                     state._fsp--;
 
@@ -784,11 +803,11 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            retval.pre = invariant_statement12;
+            retval.pre = i != null ? i : new LinkedList<Invariant>();
 
-            match(input,43,FOLLOW_43_in_loop_body478); 
+            match(input,43,FOLLOW_43_in_loop_body497); 
 
-            // ../src/grammar/WhileLanguage.g:110:15: ( statement )*
+            // ../src/grammar/WhileLanguage.g:135:15: ( statement )*
             loop11:
             do {
                 int alt11=2;
@@ -801,15 +820,15 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:110:17: statement
+            	    // ../src/grammar/WhileLanguage.g:135:17: statement
             	    {
-            	    pushFollow(FOLLOW_statement_in_loop_body482);
-            	    statement13=statement();
+            	    pushFollow(FOLLOW_statement_in_loop_body501);
+            	    statement12=statement();
 
             	    state._fsp--;
 
 
-            	    s.addAll(possibleDivByZero((statement13!=null?statement13.divisors:null))); s.add((statement13!=null?statement13.ast:null));
+            	    s.addAll(possibleDivByZero((statement12!=null?statement12.divisors:null))); s.add((statement12!=null?statement12.ast:null));
 
             	    }
             	    break;
@@ -820,11 +839,11 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            match(input,45,FOLLOW_45_in_loop_body489); 
+            match(input,45,FOLLOW_45_in_loop_body508); 
 
             retval.ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());
 
-            // ../src/grammar/WhileLanguage.g:112:11: ( ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:137:12: (e= ensure_statement )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -833,10 +852,10 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:112:11: ensure_statement
+                    // ../src/grammar/WhileLanguage.g:137:12: e= ensure_statement
                     {
-                    pushFollow(FOLLOW_ensure_statement_in_loop_body517);
-                    ensure_statement14=ensure_statement();
+                    pushFollow(FOLLOW_ensure_statement_in_loop_body538);
+                    e=ensure_statement();
 
                     state._fsp--;
 
@@ -847,7 +866,7 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            retval.post = ensure_statement14;
+            retval.post = e != null ? e : new LinkedList<Ensure>();
 
             }
 
@@ -875,7 +894,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "statement"
-    // ../src/grammar/WhileLanguage.g:115:1: statement returns [ Statement ast, LinkedList<Expression> divisors ] : (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement );
+    // ../src/grammar/WhileLanguage.g:140:1: statement returns [ Statement ast, LinkedList<Expression> divisors ] : (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement );
     public final WhileLanguageParser.statement_return statement() throws RecognitionException {
         WhileLanguageParser.statement_return retval = new WhileLanguageParser.statement_return();
         retval.start = input.LT(1);
@@ -897,14 +916,14 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:116:9: (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement )
+            // ../src/grammar/WhileLanguage.g:141:9: (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement )
             int alt13=7;
             alt13 = dfa13.predict(input);
             switch (alt13) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:116:11: e1= assert_statement
+                    // ../src/grammar/WhileLanguage.g:141:11: e1= assert_statement
                     {
-                    pushFollow(FOLLOW_assert_statement_in_statement551);
+                    pushFollow(FOLLOW_assert_statement_in_statement572);
                     e1=assert_statement();
 
                     state._fsp--;
@@ -915,9 +934,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:117:11: e2= variable_declaration
+                    // ../src/grammar/WhileLanguage.g:142:11: e2= variable_declaration
                     {
-                    pushFollow(FOLLOW_variable_declaration_in_statement567);
+                    pushFollow(FOLLOW_variable_declaration_in_statement588);
                     e2=variable_declaration();
 
                     state._fsp--;
@@ -928,9 +947,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ../src/grammar/WhileLanguage.g:118:11: e3= array_declaration
+                    // ../src/grammar/WhileLanguage.g:143:11: e3= array_declaration
                     {
-                    pushFollow(FOLLOW_array_declaration_in_statement583);
+                    pushFollow(FOLLOW_array_declaration_in_statement604);
                     e3=array_declaration();
 
                     state._fsp--;
@@ -941,9 +960,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // ../src/grammar/WhileLanguage.g:119:11: e4= assignment
+                    // ../src/grammar/WhileLanguage.g:144:11: e4= assignment
                     {
-                    pushFollow(FOLLOW_assignment_in_statement599);
+                    pushFollow(FOLLOW_assignment_in_statement620);
                     e4=assignment();
 
                     state._fsp--;
@@ -954,9 +973,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // ../src/grammar/WhileLanguage.g:120:11: e5= if_statement
+                    // ../src/grammar/WhileLanguage.g:145:11: e5= if_statement
                     {
-                    pushFollow(FOLLOW_if_statement_in_statement615);
+                    pushFollow(FOLLOW_if_statement_in_statement636);
                     e5=if_statement();
 
                     state._fsp--;
@@ -967,9 +986,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // ../src/grammar/WhileLanguage.g:121:11: e6= while_statement
+                    // ../src/grammar/WhileLanguage.g:146:11: e6= while_statement
                     {
-                    pushFollow(FOLLOW_while_statement_in_statement631);
+                    pushFollow(FOLLOW_while_statement_in_statement652);
                     e6=while_statement();
 
                     state._fsp--;
@@ -980,9 +999,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // ../src/grammar/WhileLanguage.g:122:11: e7= return_statement
+                    // ../src/grammar/WhileLanguage.g:147:11: e7= return_statement
                     {
-                    pushFollow(FOLLOW_return_statement_in_statement647);
+                    pushFollow(FOLLOW_return_statement_in_statement668);
                     e7=return_statement();
 
                     state._fsp--;
@@ -1013,7 +1032,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "invariant_statement"
-    // ../src/grammar/WhileLanguage.g:125:1: invariant_statement returns [ LinkedList<Invariant> result ] : ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' );
+    // ../src/grammar/WhileLanguage.g:150:1: invariant_statement returns [ LinkedList<Invariant> result ] : ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' );
     public final LinkedList<Invariant> invariant_statement() throws RecognitionException {
         LinkedList<Invariant> result = null;
 
@@ -1025,7 +1044,7 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Invariant>();
         try {
-            // ../src/grammar/WhileLanguage.g:127:9: ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' )
+            // ../src/grammar/WhileLanguage.g:152:9: ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1055,17 +1074,17 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt15) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:127:11: 'invariant' e1= quantified_expression ';'
+                    // ../src/grammar/WhileLanguage.g:152:11: 'invariant' e1= quantified_expression ';'
                     {
-                    match(input,39,FOLLOW_39_in_invariant_statement684); 
+                    match(input,39,FOLLOW_39_in_invariant_statement705); 
 
-                    pushFollow(FOLLOW_quantified_expression_in_invariant_statement688);
+                    pushFollow(FOLLOW_quantified_expression_in_invariant_statement709);
                     e1=quantified_expression();
 
                     state._fsp--;
 
 
-                    match(input,21,FOLLOW_21_in_invariant_statement690); 
+                    match(input,21,FOLLOW_21_in_invariant_statement711); 
 
                     result.addAll(possibleDivByZeroI((e1!=null?e1.divisors:null)));
                                 result.add(new Invariant(new Position(), (e1!=null?e1.ast:null)));
@@ -1073,13 +1092,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:129:11: 'invariant' '{' (e2= quantified_expression ';' )+ '}'
+                    // ../src/grammar/WhileLanguage.g:154:11: 'invariant' '{' (e2= quantified_expression ';' )+ '}'
                     {
-                    match(input,39,FOLLOW_39_in_invariant_statement704); 
+                    match(input,39,FOLLOW_39_in_invariant_statement725); 
 
-                    match(input,43,FOLLOW_43_in_invariant_statement706); 
+                    match(input,43,FOLLOW_43_in_invariant_statement727); 
 
-                    // ../src/grammar/WhileLanguage.g:129:27: (e2= quantified_expression ';' )+
+                    // ../src/grammar/WhileLanguage.g:154:27: (e2= quantified_expression ';' )+
                     int cnt14=0;
                     loop14:
                     do {
@@ -1093,15 +1112,15 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // ../src/grammar/WhileLanguage.g:129:28: e2= quantified_expression ';'
+                    	    // ../src/grammar/WhileLanguage.g:154:28: e2= quantified_expression ';'
                     	    {
-                    	    pushFollow(FOLLOW_quantified_expression_in_invariant_statement711);
+                    	    pushFollow(FOLLOW_quantified_expression_in_invariant_statement732);
                     	    e2=quantified_expression();
 
                     	    state._fsp--;
 
 
-                    	    match(input,21,FOLLOW_21_in_invariant_statement713); 
+                    	    match(input,21,FOLLOW_21_in_invariant_statement734); 
 
                     	    result.addAll(possibleDivByZeroI((e1!=null?e1.divisors:null)));
                     	                result.add(new Invariant(new Position(), (e2!=null?e2.ast:null)));
@@ -1119,7 +1138,7 @@ public class WhileLanguageParser extends Parser {
                     } while (true);
 
 
-                    match(input,45,FOLLOW_45_in_invariant_statement720); 
+                    match(input,45,FOLLOW_45_in_invariant_statement741); 
 
                     }
                     break;
@@ -1141,7 +1160,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "axiom_statement"
-    // ../src/grammar/WhileLanguage.g:133:1: axiom_statement returns [ LinkedList<Axiom> result ] : 'axiom' e1= quantified_expression ';' ;
+    // ../src/grammar/WhileLanguage.g:158:1: axiom_statement returns [ LinkedList<Axiom> result ] : 'axiom' e1= quantified_expression ';' ;
     public final LinkedList<Axiom> axiom_statement() throws RecognitionException {
         LinkedList<Axiom> result = null;
 
@@ -1151,18 +1170,18 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Axiom>();
         try {
-            // ../src/grammar/WhileLanguage.g:135:9: ( 'axiom' e1= quantified_expression ';' )
-            // ../src/grammar/WhileLanguage.g:135:11: 'axiom' e1= quantified_expression ';'
+            // ../src/grammar/WhileLanguage.g:160:9: ( 'axiom' e1= quantified_expression ';' )
+            // ../src/grammar/WhileLanguage.g:160:11: 'axiom' e1= quantified_expression ';'
             {
-            match(input,33,FOLLOW_33_in_axiom_statement758); 
+            match(input,33,FOLLOW_33_in_axiom_statement779); 
 
-            pushFollow(FOLLOW_quantified_expression_in_axiom_statement762);
+            pushFollow(FOLLOW_quantified_expression_in_axiom_statement783);
             e1=quantified_expression();
 
             state._fsp--;
 
 
-            match(input,21,FOLLOW_21_in_axiom_statement764); 
+            match(input,21,FOLLOW_21_in_axiom_statement785); 
 
 
                     for (Expression e : (e1!=null?e1.divisors:null)) {
@@ -1195,7 +1214,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "assert_statement"
-    // ../src/grammar/WhileLanguage.g:144:1: assert_statement returns [ Assertion ast, LinkedList<Expression> divisors ] : 'assert' e1= quantified_expression ';' ;
+    // ../src/grammar/WhileLanguage.g:169:1: assert_statement returns [ Assertion ast, LinkedList<Expression> divisors ] : 'assert' e1= quantified_expression ';' ;
     public final WhileLanguageParser.assert_statement_return assert_statement() throws RecognitionException {
         WhileLanguageParser.assert_statement_return retval = new WhileLanguageParser.assert_statement_return();
         retval.start = input.LT(1);
@@ -1205,18 +1224,18 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:145:9: ( 'assert' e1= quantified_expression ';' )
-            // ../src/grammar/WhileLanguage.g:145:11: 'assert' e1= quantified_expression ';'
+            // ../src/grammar/WhileLanguage.g:170:9: ( 'assert' e1= quantified_expression ';' )
+            // ../src/grammar/WhileLanguage.g:170:11: 'assert' e1= quantified_expression ';'
             {
-            match(input,31,FOLLOW_31_in_assert_statement795); 
+            match(input,31,FOLLOW_31_in_assert_statement816); 
 
-            pushFollow(FOLLOW_quantified_expression_in_assert_statement799);
+            pushFollow(FOLLOW_quantified_expression_in_assert_statement820);
             e1=quantified_expression();
 
             state._fsp--;
 
 
-            match(input,21,FOLLOW_21_in_assert_statement801); 
+            match(input,21,FOLLOW_21_in_assert_statement822); 
 
             retval.ast = new Assertion(new Position(), (e1!=null?e1.ast:null)); retval.divisors = (e1!=null?e1.divisors:null);
 
@@ -1241,7 +1260,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "assume_statement"
-    // ../src/grammar/WhileLanguage.g:148:1: assume_statement returns [ LinkedList<Assumption> result ] : ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' );
+    // ../src/grammar/WhileLanguage.g:173:1: assume_statement returns [ LinkedList<Assumption> result ] : ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' );
     public final LinkedList<Assumption> assume_statement() throws RecognitionException {
         LinkedList<Assumption> result = null;
 
@@ -1253,7 +1272,7 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Assumption>();
         try {
-            // ../src/grammar/WhileLanguage.g:150:9: ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' )
+            // ../src/grammar/WhileLanguage.g:175:9: ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' )
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -1283,17 +1302,17 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt17) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:150:11: 'assume' e1= quantified_expression ';'
+                    // ../src/grammar/WhileLanguage.g:175:11: 'assume' e1= quantified_expression ';'
                     {
-                    match(input,32,FOLLOW_32_in_assume_statement838); 
+                    match(input,32,FOLLOW_32_in_assume_statement859); 
 
-                    pushFollow(FOLLOW_quantified_expression_in_assume_statement842);
+                    pushFollow(FOLLOW_quantified_expression_in_assume_statement863);
                     e1=quantified_expression();
 
                     state._fsp--;
 
 
-                    match(input,21,FOLLOW_21_in_assume_statement844); 
+                    match(input,21,FOLLOW_21_in_assume_statement865); 
 
                     result.addAll(possibleDivByZeroA((e1!=null?e1.divisors:null)));
                                 result.add(new Assumption(new Position(), (e1!=null?e1.ast:null)));
@@ -1301,13 +1320,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:152:11: 'assume' '{' (e2= quantified_expression ';' )+ '}'
+                    // ../src/grammar/WhileLanguage.g:177:11: 'assume' '{' (e2= quantified_expression ';' )+ '}'
                     {
-                    match(input,32,FOLLOW_32_in_assume_statement858); 
+                    match(input,32,FOLLOW_32_in_assume_statement879); 
 
-                    match(input,43,FOLLOW_43_in_assume_statement860); 
+                    match(input,43,FOLLOW_43_in_assume_statement881); 
 
-                    // ../src/grammar/WhileLanguage.g:152:24: (e2= quantified_expression ';' )+
+                    // ../src/grammar/WhileLanguage.g:177:24: (e2= quantified_expression ';' )+
                     int cnt16=0;
                     loop16:
                     do {
@@ -1321,15 +1340,15 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt16) {
                     	case 1 :
-                    	    // ../src/grammar/WhileLanguage.g:152:25: e2= quantified_expression ';'
+                    	    // ../src/grammar/WhileLanguage.g:177:25: e2= quantified_expression ';'
                     	    {
-                    	    pushFollow(FOLLOW_quantified_expression_in_assume_statement865);
+                    	    pushFollow(FOLLOW_quantified_expression_in_assume_statement886);
                     	    e2=quantified_expression();
 
                     	    state._fsp--;
 
 
-                    	    match(input,21,FOLLOW_21_in_assume_statement867); 
+                    	    match(input,21,FOLLOW_21_in_assume_statement888); 
 
                     	    result.addAll(possibleDivByZeroA((e1!=null?e1.divisors:null)));
                     	                result.add(new Assumption(new Position(), (e2!=null?e2.ast:null)));
@@ -1347,7 +1366,7 @@ public class WhileLanguageParser extends Parser {
                     } while (true);
 
 
-                    match(input,45,FOLLOW_45_in_assume_statement874); 
+                    match(input,45,FOLLOW_45_in_assume_statement895); 
 
                     }
                     break;
@@ -1369,7 +1388,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "ensure_statement"
-    // ../src/grammar/WhileLanguage.g:156:1: ensure_statement returns [ LinkedList<Ensure> result ] : ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' );
+    // ../src/grammar/WhileLanguage.g:181:1: ensure_statement returns [ LinkedList<Ensure> result ] : ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' );
     public final LinkedList<Ensure> ensure_statement() throws RecognitionException {
         LinkedList<Ensure> result = null;
 
@@ -1381,7 +1400,7 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Ensure>();
         try {
-            // ../src/grammar/WhileLanguage.g:158:9: ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' )
+            // ../src/grammar/WhileLanguage.g:183:9: ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1411,17 +1430,17 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt19) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:158:11: 'ensure' e1= quantified_expression ';'
+                    // ../src/grammar/WhileLanguage.g:183:11: 'ensure' e1= quantified_expression ';'
                     {
-                    match(input,36,FOLLOW_36_in_ensure_statement909); 
+                    match(input,36,FOLLOW_36_in_ensure_statement930); 
 
-                    pushFollow(FOLLOW_quantified_expression_in_ensure_statement913);
+                    pushFollow(FOLLOW_quantified_expression_in_ensure_statement934);
                     e1=quantified_expression();
 
                     state._fsp--;
 
 
-                    match(input,21,FOLLOW_21_in_ensure_statement915); 
+                    match(input,21,FOLLOW_21_in_ensure_statement936); 
 
                     result.addAll(possibleDivByZeroE((e1!=null?e1.divisors:null)));
                                 result.add(new Ensure(new Position(), (e1!=null?e1.ast:null)));
@@ -1429,13 +1448,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:160:11: 'ensure' '{' (e2= quantified_expression ';' )+ '}'
+                    // ../src/grammar/WhileLanguage.g:185:11: 'ensure' '{' (e2= quantified_expression ';' )+ '}'
                     {
-                    match(input,36,FOLLOW_36_in_ensure_statement929); 
+                    match(input,36,FOLLOW_36_in_ensure_statement950); 
 
-                    match(input,43,FOLLOW_43_in_ensure_statement931); 
+                    match(input,43,FOLLOW_43_in_ensure_statement952); 
 
-                    // ../src/grammar/WhileLanguage.g:160:24: (e2= quantified_expression ';' )+
+                    // ../src/grammar/WhileLanguage.g:185:24: (e2= quantified_expression ';' )+
                     int cnt18=0;
                     loop18:
                     do {
@@ -1449,15 +1468,15 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt18) {
                     	case 1 :
-                    	    // ../src/grammar/WhileLanguage.g:160:25: e2= quantified_expression ';'
+                    	    // ../src/grammar/WhileLanguage.g:185:25: e2= quantified_expression ';'
                     	    {
-                    	    pushFollow(FOLLOW_quantified_expression_in_ensure_statement936);
+                    	    pushFollow(FOLLOW_quantified_expression_in_ensure_statement957);
                     	    e2=quantified_expression();
 
                     	    state._fsp--;
 
 
-                    	    match(input,21,FOLLOW_21_in_ensure_statement938); 
+                    	    match(input,21,FOLLOW_21_in_ensure_statement959); 
 
                     	    result.addAll(possibleDivByZeroE((e1!=null?e1.divisors:null)));
                     	                result.add(new Ensure(new Position(), (e2!=null?e2.ast:null)));
@@ -1475,7 +1494,7 @@ public class WhileLanguageParser extends Parser {
                     } while (true);
 
 
-                    match(input,45,FOLLOW_45_in_ensure_statement945); 
+                    match(input,45,FOLLOW_45_in_ensure_statement966); 
 
                     }
                     break;
@@ -1502,24 +1521,24 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "assignment"
-    // ../src/grammar/WhileLanguage.g:164:1: assignment returns [ Assignment ast, LinkedList<Expression> divisors ] : ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' );
+    // ../src/grammar/WhileLanguage.g:189:1: assignment returns [ Assignment ast, LinkedList<Expression> divisors ] : ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' );
     public final WhileLanguageParser.assignment_return assignment() throws RecognitionException {
         WhileLanguageParser.assignment_return retval = new WhileLanguageParser.assignment_return();
         retval.start = input.LT(1);
 
 
-        Token IDENT16=null;
-        Token IDENT17=null;
+        Token IDENT14=null;
+        Token IDENT15=null;
         WhileLanguageParser.expression_return e1 =null;
 
         WhileLanguageParser.expression_return e2 =null;
 
-        WhileLanguageParser.expression_return expression15 =null;
+        WhileLanguageParser.expression_return expression13 =null;
 
 
         retval.divisors = new LinkedList<Expression>();
         try {
-            // ../src/grammar/WhileLanguage.g:166:9: ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' )
+            // ../src/grammar/WhileLanguage.g:191:9: ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' )
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -1549,33 +1568,33 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt21) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:166:11: IDENT '=' expression ';'
+                    // ../src/grammar/WhileLanguage.g:191:11: IDENT '=' expression ';'
                     {
-                    IDENT16=(Token)match(input,IDENT,FOLLOW_IDENT_in_assignment983); 
+                    IDENT14=(Token)match(input,IDENT,FOLLOW_IDENT_in_assignment1004); 
 
-                    match(input,24,FOLLOW_24_in_assignment985); 
+                    match(input,24,FOLLOW_24_in_assignment1006); 
 
-                    pushFollow(FOLLOW_expression_in_assignment987);
-                    expression15=expression();
+                    pushFollow(FOLLOW_expression_in_assignment1008);
+                    expression13=expression();
 
                     state._fsp--;
 
 
-                    match(input,21,FOLLOW_21_in_assignment989); 
+                    match(input,21,FOLLOW_21_in_assignment1010); 
 
-                    retval.ast = new Assignment(new Position(), (expression15!=null?expression15.ast:null), new Identifier((IDENT16!=null?IDENT16.getText():null)));
-                                retval.divisors = (expression15!=null?expression15.divisors:null);
+                    retval.ast = new Assignment(new Position(), (expression13!=null?expression13.ast:null), new Identifier((IDENT14!=null?IDENT14.getText():null)));
+                                retval.divisors = (expression13!=null?expression13.divisors:null);
 
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:168:11: IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';'
+                    // ../src/grammar/WhileLanguage.g:193:11: IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';'
                     {
-                    IDENT17=(Token)match(input,IDENT,FOLLOW_IDENT_in_assignment1003); 
+                    IDENT15=(Token)match(input,IDENT,FOLLOW_IDENT_in_assignment1024); 
 
                     LinkedList<Expression> idx = new LinkedList<Expression>();
 
-                    // ../src/grammar/WhileLanguage.g:169:10: ( '[' e1= expression ']' )+
+                    // ../src/grammar/WhileLanguage.g:194:10: ( '[' e1= expression ']' )+
                     int cnt20=0;
                     loop20:
                     do {
@@ -1589,11 +1608,11 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt20) {
                     	case 1 :
-                    	    // ../src/grammar/WhileLanguage.g:169:12: '[' e1= expression ']'
+                    	    // ../src/grammar/WhileLanguage.g:194:12: '[' e1= expression ']'
                     	    {
-                    	    match(input,28,FOLLOW_28_in_assignment1018); 
+                    	    match(input,28,FOLLOW_28_in_assignment1039); 
 
-                    	    pushFollow(FOLLOW_expression_in_assignment1022);
+                    	    pushFollow(FOLLOW_expression_in_assignment1043);
                     	    e1=expression();
 
                     	    state._fsp--;
@@ -1601,7 +1620,7 @@ public class WhileLanguageParser extends Parser {
 
                     	    idx.add((e1!=null?e1.ast:null)); retval.divisors.addAll((e1!=null?e1.divisors:null));
 
-                    	    match(input,29,FOLLOW_29_in_assignment1026); 
+                    	    match(input,29,FOLLOW_29_in_assignment1047); 
 
                     	    }
                     	    break;
@@ -1616,18 +1635,18 @@ public class WhileLanguageParser extends Parser {
                     } while (true);
 
 
-                    match(input,24,FOLLOW_24_in_assignment1031); 
+                    match(input,24,FOLLOW_24_in_assignment1052); 
 
-                    pushFollow(FOLLOW_expression_in_assignment1035);
+                    pushFollow(FOLLOW_expression_in_assignment1056);
                     e2=expression();
 
                     state._fsp--;
 
 
-                    match(input,21,FOLLOW_21_in_assignment1037); 
+                    match(input,21,FOLLOW_21_in_assignment1058); 
 
 
-                            	retval.ast = new ArrayAssignment(new Position(), (e2!=null?e2.ast:null), new Identifier((IDENT17!=null?IDENT17.getText():null)),
+                            	retval.ast = new ArrayAssignment(new Position(), (e2!=null?e2.ast:null), new Identifier((IDENT15!=null?IDENT15.getText():null)),
                             				   idx.toArray(new Expression[idx.size()]));
                                 retval.divisors.addAll((e2!=null?e2.divisors:null));
 
@@ -1659,31 +1678,31 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "variable_declaration"
-    // ../src/grammar/WhileLanguage.g:175:1: variable_declaration returns [ VariableDeclaration ast, LinkedList<Expression> divisors ] : type IDENT ( '=' expression )? ';' ;
+    // ../src/grammar/WhileLanguage.g:200:1: variable_declaration returns [ VariableDeclaration ast, LinkedList<Expression> divisors ] : type IDENT ( '=' expression )? ';' ;
     public final WhileLanguageParser.variable_declaration_return variable_declaration() throws RecognitionException {
         WhileLanguageParser.variable_declaration_return retval = new WhileLanguageParser.variable_declaration_return();
         retval.start = input.LT(1);
 
 
-        Token IDENT18=null;
-        WhileLanguageParser.expression_return expression19 =null;
+        Token IDENT16=null;
+        WhileLanguageParser.expression_return expression17 =null;
 
-        Type type20 =null;
+        Type type18 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:176:9: ( type IDENT ( '=' expression )? ';' )
-            // ../src/grammar/WhileLanguage.g:176:11: type IDENT ( '=' expression )? ';'
+            // ../src/grammar/WhileLanguage.g:201:9: ( type IDENT ( '=' expression )? ';' )
+            // ../src/grammar/WhileLanguage.g:201:11: type IDENT ( '=' expression )? ';'
             {
-            pushFollow(FOLLOW_type_in_variable_declaration1068);
-            type20=type();
+            pushFollow(FOLLOW_type_in_variable_declaration1089);
+            type18=type();
 
             state._fsp--;
 
 
-            IDENT18=(Token)match(input,IDENT,FOLLOW_IDENT_in_variable_declaration1070); 
+            IDENT16=(Token)match(input,IDENT,FOLLOW_IDENT_in_variable_declaration1091); 
 
-            // ../src/grammar/WhileLanguage.g:176:22: ( '=' expression )?
+            // ../src/grammar/WhileLanguage.g:201:22: ( '=' expression )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -1692,12 +1711,12 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt22) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:176:24: '=' expression
+                    // ../src/grammar/WhileLanguage.g:201:24: '=' expression
                     {
-                    match(input,24,FOLLOW_24_in_variable_declaration1074); 
+                    match(input,24,FOLLOW_24_in_variable_declaration1095); 
 
-                    pushFollow(FOLLOW_expression_in_variable_declaration1076);
-                    expression19=expression();
+                    pushFollow(FOLLOW_expression_in_variable_declaration1097);
+                    expression17=expression();
 
                     state._fsp--;
 
@@ -1708,11 +1727,11 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            match(input,21,FOLLOW_21_in_variable_declaration1081); 
+            match(input,21,FOLLOW_21_in_variable_declaration1102); 
 
 
-                    	retval.ast = new VariableDeclaration(new Position(), (IDENT18!=null?IDENT18.getText():null), (expression19!=null?expression19.ast:null), type20);
-                        retval.divisors = (expression19!=null?expression19.divisors:null);
+                    	retval.ast = new VariableDeclaration(new Position(), (IDENT16!=null?IDENT16.getText():null), (expression17!=null?expression17.ast:null), type18);
+                        retval.divisors = (expression17!=null?expression17.divisors:null);
 
             }
 
@@ -1740,44 +1759,44 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "array_declaration"
-    // ../src/grammar/WhileLanguage.g:181:1: array_declaration returns [ ArrayDeclaration ast, LinkedList<Expression> divisors ] : type IDENT '=' array_init ';' ;
+    // ../src/grammar/WhileLanguage.g:206:1: array_declaration returns [ ArrayDeclaration ast, LinkedList<Expression> divisors ] : type IDENT '=' array_init ';' ;
     public final WhileLanguageParser.array_declaration_return array_declaration() throws RecognitionException {
         WhileLanguageParser.array_declaration_return retval = new WhileLanguageParser.array_declaration_return();
         retval.start = input.LT(1);
 
 
-        Token IDENT22=null;
-        WhileLanguageParser.array_init_return array_init21 =null;
+        Token IDENT20=null;
+        WhileLanguageParser.array_init_return array_init19 =null;
 
-        Type type23 =null;
+        Type type21 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:182:9: ( type IDENT '=' array_init ';' )
-            // ../src/grammar/WhileLanguage.g:182:11: type IDENT '=' array_init ';'
+            // ../src/grammar/WhileLanguage.g:207:9: ( type IDENT '=' array_init ';' )
+            // ../src/grammar/WhileLanguage.g:207:11: type IDENT '=' array_init ';'
             {
-            pushFollow(FOLLOW_type_in_array_declaration1112);
-            type23=type();
+            pushFollow(FOLLOW_type_in_array_declaration1133);
+            type21=type();
 
             state._fsp--;
 
 
-            IDENT22=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_declaration1114); 
+            IDENT20=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_declaration1135); 
 
-            match(input,24,FOLLOW_24_in_array_declaration1116); 
+            match(input,24,FOLLOW_24_in_array_declaration1137); 
 
-            pushFollow(FOLLOW_array_init_in_array_declaration1118);
-            array_init21=array_init();
+            pushFollow(FOLLOW_array_init_in_array_declaration1139);
+            array_init19=array_init();
 
             state._fsp--;
 
 
-            match(input,21,FOLLOW_21_in_array_declaration1120); 
+            match(input,21,FOLLOW_21_in_array_declaration1141); 
 
 
-                    	Expression[] dim = (array_init21!=null?array_init21.dim:null).toArray(new Expression[(array_init21!=null?array_init21.dim:null).size()]);
-                    	retval.ast = new ArrayDeclaration(new Position(), (IDENT22!=null?IDENT22.getText():null), type23, dim);
-                        retval.divisors = (array_init21!=null?array_init21.divisors:null);
+                    	Expression[] dim = (array_init19!=null?array_init19.dim:null).toArray(new Expression[(array_init19!=null?array_init19.dim:null).size()]);
+                    	retval.ast = new ArrayDeclaration(new Position(), (IDENT20!=null?IDENT20.getText():null), type21, dim);
+                        retval.divisors = (array_init19!=null?array_init19.divisors:null);
 
             }
 
@@ -1805,25 +1824,25 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "array_init"
-    // ../src/grammar/WhileLanguage.g:188:1: array_init returns [ LinkedList<Expression> dim, LinkedList<Expression> divisors ] : 'array' ( '[' expression ']' )+ ;
+    // ../src/grammar/WhileLanguage.g:213:1: array_init returns [ LinkedList<Expression> dim, LinkedList<Expression> divisors ] : 'array' ( '[' expression ']' )+ ;
     public final WhileLanguageParser.array_init_return array_init() throws RecognitionException {
         WhileLanguageParser.array_init_return retval = new WhileLanguageParser.array_init_return();
         retval.start = input.LT(1);
 
 
-        WhileLanguageParser.expression_return expression24 =null;
+        WhileLanguageParser.expression_return expression22 =null;
 
 
         retval.divisors = new LinkedList<Expression>();
         try {
-            // ../src/grammar/WhileLanguage.g:190:2: ( 'array' ( '[' expression ']' )+ )
-            // ../src/grammar/WhileLanguage.g:190:4: 'array' ( '[' expression ']' )+
+            // ../src/grammar/WhileLanguage.g:215:2: ( 'array' ( '[' expression ']' )+ )
+            // ../src/grammar/WhileLanguage.g:215:4: 'array' ( '[' expression ']' )+
             {
             retval.dim = new LinkedList<Expression>();
 
-            match(input,30,FOLLOW_30_in_array_init1156); 
+            match(input,30,FOLLOW_30_in_array_init1177); 
 
-            // ../src/grammar/WhileLanguage.g:191:10: ( '[' expression ']' )+
+            // ../src/grammar/WhileLanguage.g:216:10: ( '[' expression ']' )+
             int cnt23=0;
             loop23:
             do {
@@ -1837,19 +1856,19 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt23) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:191:12: '[' expression ']'
+            	    // ../src/grammar/WhileLanguage.g:216:12: '[' expression ']'
             	    {
-            	    match(input,28,FOLLOW_28_in_array_init1160); 
+            	    match(input,28,FOLLOW_28_in_array_init1181); 
 
-            	    pushFollow(FOLLOW_expression_in_array_init1162);
-            	    expression24=expression();
+            	    pushFollow(FOLLOW_expression_in_array_init1183);
+            	    expression22=expression();
 
             	    state._fsp--;
 
 
-            	    retval.dim.add((expression24!=null?expression24.ast:null)); retval.divisors.addAll((expression24!=null?expression24.divisors:null));
+            	    retval.dim.add((expression22!=null?expression22.ast:null)); retval.divisors.addAll((expression22!=null?expression22.divisors:null));
 
-            	    match(input,29,FOLLOW_29_in_array_init1166); 
+            	    match(input,29,FOLLOW_29_in_array_init1187); 
 
             	    }
             	    break;
@@ -1890,7 +1909,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "if_statement"
-    // ../src/grammar/WhileLanguage.g:194:1: if_statement returns [ Conditional ast, LinkedList<Expression> divisors ] : 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? ;
+    // ../src/grammar/WhileLanguage.g:219:1: if_statement returns [ Conditional ast, LinkedList<Expression> divisors ] : 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? ;
     public final WhileLanguageParser.if_statement_return if_statement() throws RecognitionException {
         WhileLanguageParser.if_statement_return retval = new WhileLanguageParser.if_statement_return();
         retval.start = input.LT(1);
@@ -1900,32 +1919,32 @@ public class WhileLanguageParser extends Parser {
 
         StatementBlock b2 =null;
 
-        WhileLanguageParser.expression_return expression25 =null;
+        WhileLanguageParser.expression_return expression23 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:195:9: ( 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? )
-            // ../src/grammar/WhileLanguage.g:195:11: 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )?
+            // ../src/grammar/WhileLanguage.g:220:9: ( 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? )
+            // ../src/grammar/WhileLanguage.g:220:11: 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )?
             {
-            match(input,37,FOLLOW_37_in_if_statement1191); 
+            match(input,37,FOLLOW_37_in_if_statement1212); 
 
-            match(input,14,FOLLOW_14_in_if_statement1193); 
+            match(input,14,FOLLOW_14_in_if_statement1214); 
 
-            pushFollow(FOLLOW_expression_in_if_statement1195);
-            expression25=expression();
+            pushFollow(FOLLOW_expression_in_if_statement1216);
+            expression23=expression();
 
             state._fsp--;
 
 
-            match(input,15,FOLLOW_15_in_if_statement1197); 
+            match(input,15,FOLLOW_15_in_if_statement1218); 
 
-            pushFollow(FOLLOW_if_body_in_if_statement1201);
+            pushFollow(FOLLOW_if_body_in_if_statement1222);
             b1=if_body();
 
             state._fsp--;
 
 
-            // ../src/grammar/WhileLanguage.g:195:46: ( 'else' b2= if_body )?
+            // ../src/grammar/WhileLanguage.g:220:46: ( 'else' b2= if_body )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -1934,11 +1953,11 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt24) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:195:48: 'else' b2= if_body
+                    // ../src/grammar/WhileLanguage.g:220:48: 'else' b2= if_body
                     {
-                    match(input,35,FOLLOW_35_in_if_statement1205); 
+                    match(input,35,FOLLOW_35_in_if_statement1226); 
 
-                    pushFollow(FOLLOW_if_body_in_if_statement1209);
+                    pushFollow(FOLLOW_if_body_in_if_statement1230);
                     b2=if_body();
 
                     state._fsp--;
@@ -1951,8 +1970,8 @@ public class WhileLanguageParser extends Parser {
 
 
 
-                    	retval.ast = new Conditional(new Position(), (expression25!=null?expression25.ast:null), b1, b2);
-                        retval.divisors = (expression25!=null?expression25.divisors:null);
+                    	retval.ast = new Conditional(new Position(), (expression23!=null?expression23.ast:null), b1, b2);
+                        retval.divisors = (expression23!=null?expression23.divisors:null);
 
             }
 
@@ -1980,46 +1999,46 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "while_statement"
-    // ../src/grammar/WhileLanguage.g:200:1: while_statement returns [ Loop ast, LinkedList<Expression> divisors ] : 'while' '(' expression ')' loop_body ;
+    // ../src/grammar/WhileLanguage.g:225:1: while_statement returns [ Loop ast, LinkedList<Expression> divisors ] : 'while' '(' expression ')' loop_body ;
     public final WhileLanguageParser.while_statement_return while_statement() throws RecognitionException {
         WhileLanguageParser.while_statement_return retval = new WhileLanguageParser.while_statement_return();
         retval.start = input.LT(1);
 
 
-        WhileLanguageParser.loop_body_return loop_body26 =null;
+        WhileLanguageParser.loop_body_return loop_body24 =null;
 
-        WhileLanguageParser.expression_return expression27 =null;
+        WhileLanguageParser.expression_return expression25 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:201:9: ( 'while' '(' expression ')' loop_body )
-            // ../src/grammar/WhileLanguage.g:201:11: 'while' '(' expression ')' loop_body
+            // ../src/grammar/WhileLanguage.g:226:9: ( 'while' '(' expression ')' loop_body )
+            // ../src/grammar/WhileLanguage.g:226:11: 'while' '(' expression ')' loop_body
             {
-            match(input,42,FOLLOW_42_in_while_statement1243); 
+            match(input,42,FOLLOW_42_in_while_statement1264); 
 
-            match(input,14,FOLLOW_14_in_while_statement1245); 
+            match(input,14,FOLLOW_14_in_while_statement1266); 
 
-            pushFollow(FOLLOW_expression_in_while_statement1247);
-            expression27=expression();
+            pushFollow(FOLLOW_expression_in_while_statement1268);
+            expression25=expression();
 
             state._fsp--;
 
 
-            match(input,15,FOLLOW_15_in_while_statement1249); 
+            match(input,15,FOLLOW_15_in_while_statement1270); 
 
-            pushFollow(FOLLOW_loop_body_in_while_statement1251);
-            loop_body26=loop_body();
+            pushFollow(FOLLOW_loop_body_in_while_statement1272);
+            loop_body24=loop_body();
 
             state._fsp--;
 
 
 
             		Invariant[] i = new Invariant[0];
-            		i = (loop_body26!=null?loop_body26.pre:null) != null ? (loop_body26!=null?loop_body26.pre:null).toArray(new Invariant[(loop_body26!=null?loop_body26.pre:null).size()]) : null;
+            		i = (loop_body24!=null?loop_body24.pre:null) != null ? (loop_body24!=null?loop_body24.pre:null).toArray(new Invariant[(loop_body24!=null?loop_body24.pre:null).size()]) : null;
             		Ensure[] e = new Ensure[0];
-            		e = (loop_body26!=null?loop_body26.post:null) != null ? (loop_body26!=null?loop_body26.post:null).toArray(new Ensure[(loop_body26!=null?loop_body26.post:null).size()]) : null;
-                   	retval.ast = new Loop(new Position(), (expression27!=null?expression27.ast:null), (loop_body26!=null?loop_body26.ast:null), i, e);
-                    retval.divisors = (expression27!=null?expression27.divisors:null);
+            		e = (loop_body24!=null?loop_body24.post:null) != null ? (loop_body24!=null?loop_body24.post:null).toArray(new Ensure[(loop_body24!=null?loop_body24.post:null).size()]) : null;
+                   	retval.ast = new Loop(new Position(), (expression25!=null?expression25.ast:null), (loop_body24!=null?loop_body24.ast:null), i, e);
+                    retval.divisors = (expression25!=null?expression25.divisors:null);
 
             }
 
@@ -2047,30 +2066,30 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "return_statement"
-    // ../src/grammar/WhileLanguage.g:210:1: return_statement returns [ ReturnStatement ast, LinkedList<Expression> divisors ] : 'return' expression ';' ;
+    // ../src/grammar/WhileLanguage.g:235:1: return_statement returns [ ReturnStatement ast, LinkedList<Expression> divisors ] : 'return' expression ';' ;
     public final WhileLanguageParser.return_statement_return return_statement() throws RecognitionException {
         WhileLanguageParser.return_statement_return retval = new WhileLanguageParser.return_statement_return();
         retval.start = input.LT(1);
 
 
-        WhileLanguageParser.expression_return expression28 =null;
+        WhileLanguageParser.expression_return expression26 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:211:2: ( 'return' expression ';' )
-            // ../src/grammar/WhileLanguage.g:211:4: 'return' expression ';'
+            // ../src/grammar/WhileLanguage.g:236:2: ( 'return' expression ';' )
+            // ../src/grammar/WhileLanguage.g:236:4: 'return' expression ';'
             {
-            match(input,41,FOLLOW_41_in_return_statement1275); 
+            match(input,41,FOLLOW_41_in_return_statement1296); 
 
-            pushFollow(FOLLOW_expression_in_return_statement1277);
-            expression28=expression();
+            pushFollow(FOLLOW_expression_in_return_statement1298);
+            expression26=expression();
 
             state._fsp--;
 
 
-            match(input,21,FOLLOW_21_in_return_statement1279); 
+            match(input,21,FOLLOW_21_in_return_statement1300); 
 
-            retval.ast = new ReturnStatement(new Position(), (expression28!=null?expression28.ast:null)); retval.divisors = (expression28!=null?expression28.divisors:null);
+            retval.ast = new ReturnStatement(new Position(), (expression26!=null?expression26.ast:null)); retval.divisors = (expression26!=null?expression26.divisors:null);
 
             }
 
@@ -2098,23 +2117,23 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "quantified_expression"
-    // ../src/grammar/WhileLanguage.g:214:1: quantified_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression );
+    // ../src/grammar/WhileLanguage.g:239:1: quantified_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression );
     public final WhileLanguageParser.quantified_expression_return quantified_expression() throws RecognitionException {
         WhileLanguageParser.quantified_expression_return retval = new WhileLanguageParser.quantified_expression_return();
         retval.start = input.LT(1);
 
 
-        Token QUANTIFIER30=null;
-        Token IDENT31=null;
+        Token QUANTIFIER28=null;
+        Token IDENT29=null;
         WhileLanguageParser.quantified_expression_return e =null;
 
-        WhileLanguageParser.range_return range29 =null;
+        WhileLanguageParser.range_return range27 =null;
 
-        WhileLanguageParser.expression_return expression32 =null;
+        WhileLanguageParser.expression_return expression30 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:215:9: ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression )
+            // ../src/grammar/WhileLanguage.g:240:9: ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression )
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2133,15 +2152,15 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt26) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:215:11: QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression
+                    // ../src/grammar/WhileLanguage.g:240:11: QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression
                     {
-                    QUANTIFIER30=(Token)match(input,QUANTIFIER,FOLLOW_QUANTIFIER_in_quantified_expression1303); 
+                    QUANTIFIER28=(Token)match(input,QUANTIFIER,FOLLOW_QUANTIFIER_in_quantified_expression1324); 
 
-                    IDENT31=(Token)match(input,IDENT,FOLLOW_IDENT_in_quantified_expression1305); 
+                    IDENT29=(Token)match(input,IDENT,FOLLOW_IDENT_in_quantified_expression1326); 
 
-                    match(input,14,FOLLOW_14_in_quantified_expression1307); 
+                    match(input,14,FOLLOW_14_in_quantified_expression1328); 
 
-                    // ../src/grammar/WhileLanguage.g:215:32: ( range )?
+                    // ../src/grammar/WhileLanguage.g:240:32: ( range )?
                     int alt25=2;
                     int LA25_0 = input.LA(1);
 
@@ -2150,10 +2169,10 @@ public class WhileLanguageParser extends Parser {
                     }
                     switch (alt25) {
                         case 1 :
-                            // ../src/grammar/WhileLanguage.g:215:32: range
+                            // ../src/grammar/WhileLanguage.g:240:32: range
                             {
-                            pushFollow(FOLLOW_range_in_quantified_expression1309);
-                            range29=range();
+                            pushFollow(FOLLOW_range_in_quantified_expression1330);
+                            range27=range();
 
                             state._fsp--;
 
@@ -2164,9 +2183,9 @@ public class WhileLanguageParser extends Parser {
                     }
 
 
-                    match(input,15,FOLLOW_15_in_quantified_expression1312); 
+                    match(input,15,FOLLOW_15_in_quantified_expression1333); 
 
-                    pushFollow(FOLLOW_quantified_expression_in_quantified_expression1316);
+                    pushFollow(FOLLOW_quantified_expression_in_quantified_expression1337);
                     e=quantified_expression();
 
                     state._fsp--;
@@ -2175,33 +2194,30 @@ public class WhileLanguageParser extends Parser {
 
                             	Range r = null;
                             	retval.divisors = (e!=null?e.divisors:null);
-                            	if ((range29!=null?range29.e1:null) != null) {
-                            		r = new Range((range29!=null?range29.e1:null), (range29!=null?range29.e2:null));
-                            		retval.divisors.addAll((range29!=null?range29.divisors:null));
+                            	if ((range27!=null?range27.e1:null) != null) {
+                            		r = new Range((range27!=null?range27.e1:null), (range27!=null?range27.e2:null));
+                            		retval.divisors.addAll((range27!=null?range27.divisors:null));
                             	}
-                            	switch ((QUANTIFIER30!=null?QUANTIFIER30.getText():null)) {
-                            		case "forall":
-                            			retval.ast = new ForAllQuantifier(new Position(), r, new Identifier((IDENT31!=null?IDENT31.getText():null)),
+                            	if ("forall".equals((QUANTIFIER28!=null?QUANTIFIER28.getText():null)))
+                            			retval.ast = new ForAllQuantifier(new Position(), r, new Identifier((IDENT29!=null?IDENT29.getText():null)),
                             				(e!=null?e.ast:null));
-                            		case "exists":
-                            			retval.ast = new ExistsQuantifier(new Position(), r, new Identifier((IDENT31!=null?IDENT31.getText():null)),
+                                else retval.ast = new ExistsQuantifier(new Position(), r, new Identifier((IDENT29!=null?IDENT29.getText():null)),
                             				(e!=null?e.ast:null));
-                            	}
-                            
+                            	
 
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:231:11: expression
+                    // ../src/grammar/WhileLanguage.g:253:11: expression
                     {
-                    pushFollow(FOLLOW_expression_in_quantified_expression1330);
-                    expression32=expression();
+                    pushFollow(FOLLOW_expression_in_quantified_expression1351);
+                    expression30=expression();
 
                     state._fsp--;
 
 
-                    retval.divisors = (expression32!=null?expression32.divisors:null);
-                            	retval.ast = (expression32!=null?expression32.ast:null);
+                    retval.divisors = (expression30!=null?expression30.divisors:null);
+                            	retval.ast = (expression30!=null?expression30.ast:null);
                             
 
                     }
@@ -2233,7 +2249,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "range"
-    // ../src/grammar/WhileLanguage.g:236:1: range returns [ ArithmeticExpression e1, ArithmeticExpression e2, LinkedList<Expression> divisors ] : e11= expression ',' e22= expression ;
+    // ../src/grammar/WhileLanguage.g:258:1: range returns [ ArithmeticExpression e1, ArithmeticExpression e2, LinkedList<Expression> divisors ] : e11= expression ',' e22= expression ;
     public final WhileLanguageParser.range_return range() throws RecognitionException {
         WhileLanguageParser.range_return retval = new WhileLanguageParser.range_return();
         retval.start = input.LT(1);
@@ -2245,18 +2261,18 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:237:9: (e11= expression ',' e22= expression )
-            // ../src/grammar/WhileLanguage.g:237:11: e11= expression ',' e22= expression
+            // ../src/grammar/WhileLanguage.g:259:9: (e11= expression ',' e22= expression )
+            // ../src/grammar/WhileLanguage.g:259:11: e11= expression ',' e22= expression
             {
-            pushFollow(FOLLOW_expression_in_range1363);
+            pushFollow(FOLLOW_expression_in_range1384);
             e11=expression();
 
             state._fsp--;
 
 
-            match(input,18,FOLLOW_18_in_range1365); 
+            match(input,18,FOLLOW_18_in_range1386); 
 
-            pushFollow(FOLLOW_expression_in_range1369);
+            pushFollow(FOLLOW_expression_in_range1390);
             e22=expression();
 
             state._fsp--;
@@ -2296,7 +2312,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "expression"
-    // ../src/grammar/WhileLanguage.g:246:1: expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* ;
+    // ../src/grammar/WhileLanguage.g:268:1: expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* ;
     public final WhileLanguageParser.expression_return expression() throws RecognitionException {
         WhileLanguageParser.expression_return retval = new WhileLanguageParser.expression_return();
         retval.start = input.LT(1);
@@ -2308,10 +2324,10 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:247:9: (e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* )
-            // ../src/grammar/WhileLanguage.g:247:11: e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )*
+            // ../src/grammar/WhileLanguage.g:269:9: (e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* )
+            // ../src/grammar/WhileLanguage.g:269:11: e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )*
             {
-            pushFollow(FOLLOW_rel_expression_in_expression1402);
+            pushFollow(FOLLOW_rel_expression_in_expression1423);
             e1=rel_expression();
 
             state._fsp--;
@@ -2319,7 +2335,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // ../src/grammar/WhileLanguage.g:247:72: ( '==' e2= rel_expression | '!=' e2= rel_expression )*
+            // ../src/grammar/WhileLanguage.g:269:72: ( '==' e2= rel_expression | '!=' e2= rel_expression )*
             loop27:
             do {
                 int alt27=3;
@@ -2335,11 +2351,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt27) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:248:12: '==' e2= rel_expression
+            	    // ../src/grammar/WhileLanguage.g:270:12: '==' e2= rel_expression
             	    {
-            	    match(input,25,FOLLOW_25_in_expression1419); 
+            	    match(input,25,FOLLOW_25_in_expression1440); 
 
-            	    pushFollow(FOLLOW_rel_expression_in_expression1423);
+            	    pushFollow(FOLLOW_rel_expression_in_expression1444);
             	    e2=rel_expression();
 
             	    state._fsp--;
@@ -2351,11 +2367,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // ../src/grammar/WhileLanguage.g:250:12: '!=' e2= rel_expression
+            	    // ../src/grammar/WhileLanguage.g:272:12: '!=' e2= rel_expression
             	    {
-            	    match(input,11,FOLLOW_11_in_expression1438); 
+            	    match(input,11,FOLLOW_11_in_expression1459); 
 
-            	    pushFollow(FOLLOW_rel_expression_in_expression1442);
+            	    pushFollow(FOLLOW_rel_expression_in_expression1463);
             	    e2=rel_expression();
 
             	    state._fsp--;
@@ -2399,7 +2415,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "rel_expression"
-    // ../src/grammar/WhileLanguage.g:256:1: rel_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* ;
+    // ../src/grammar/WhileLanguage.g:278:1: rel_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* ;
     public final WhileLanguageParser.rel_expression_return rel_expression() throws RecognitionException {
         WhileLanguageParser.rel_expression_return retval = new WhileLanguageParser.rel_expression_return();
         retval.start = input.LT(1);
@@ -2411,10 +2427,10 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:257:9: (e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* )
-            // ../src/grammar/WhileLanguage.g:257:11: e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
+            // ../src/grammar/WhileLanguage.g:279:9: (e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* )
+            // ../src/grammar/WhileLanguage.g:279:11: e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
             {
-            pushFollow(FOLLOW_add_expression_in_rel_expression1487);
+            pushFollow(FOLLOW_add_expression_in_rel_expression1508);
             e1=add_expression();
 
             state._fsp--;
@@ -2422,7 +2438,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // ../src/grammar/WhileLanguage.g:257:72: ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
+            // ../src/grammar/WhileLanguage.g:279:72: ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
             loop28:
             do {
                 int alt28=5;
@@ -2452,11 +2468,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt28) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:258:12: '<' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:280:12: '<' e2= add_expression
             	    {
-            	    match(input,22,FOLLOW_22_in_rel_expression1504); 
+            	    match(input,22,FOLLOW_22_in_rel_expression1525); 
 
-            	    pushFollow(FOLLOW_add_expression_in_rel_expression1509);
+            	    pushFollow(FOLLOW_add_expression_in_rel_expression1530);
             	    e2=add_expression();
 
             	    state._fsp--;
@@ -2468,11 +2484,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // ../src/grammar/WhileLanguage.g:260:12: '<=' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:282:12: '<=' e2= add_expression
             	    {
-            	    match(input,23,FOLLOW_23_in_rel_expression1524); 
+            	    match(input,23,FOLLOW_23_in_rel_expression1545); 
 
-            	    pushFollow(FOLLOW_add_expression_in_rel_expression1528);
+            	    pushFollow(FOLLOW_add_expression_in_rel_expression1549);
             	    e2=add_expression();
 
             	    state._fsp--;
@@ -2484,11 +2500,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // ../src/grammar/WhileLanguage.g:262:12: '>' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:284:12: '>' e2= add_expression
             	    {
-            	    match(input,26,FOLLOW_26_in_rel_expression1543); 
+            	    match(input,26,FOLLOW_26_in_rel_expression1564); 
 
-            	    pushFollow(FOLLOW_add_expression_in_rel_expression1548);
+            	    pushFollow(FOLLOW_add_expression_in_rel_expression1569);
             	    e2=add_expression();
 
             	    state._fsp--;
@@ -2500,11 +2516,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 4 :
-            	    // ../src/grammar/WhileLanguage.g:264:12: '>=' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:286:12: '>=' e2= add_expression
             	    {
-            	    match(input,27,FOLLOW_27_in_rel_expression1563); 
+            	    match(input,27,FOLLOW_27_in_rel_expression1584); 
 
-            	    pushFollow(FOLLOW_add_expression_in_rel_expression1567);
+            	    pushFollow(FOLLOW_add_expression_in_rel_expression1588);
             	    e2=add_expression();
 
             	    state._fsp--;
@@ -2548,7 +2564,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "add_expression"
-    // ../src/grammar/WhileLanguage.g:269:1: add_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* ;
+    // ../src/grammar/WhileLanguage.g:291:1: add_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* ;
     public final WhileLanguageParser.add_expression_return add_expression() throws RecognitionException {
         WhileLanguageParser.add_expression_return retval = new WhileLanguageParser.add_expression_return();
         retval.start = input.LT(1);
@@ -2560,10 +2576,10 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:270:9: (e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* )
-            // ../src/grammar/WhileLanguage.g:270:11: e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
+            // ../src/grammar/WhileLanguage.g:292:9: (e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* )
+            // ../src/grammar/WhileLanguage.g:292:11: e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
             {
-            pushFollow(FOLLOW_mul_expression_in_add_expression1611);
+            pushFollow(FOLLOW_mul_expression_in_add_expression1632);
             e1=mul_expression();
 
             state._fsp--;
@@ -2571,7 +2587,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // ../src/grammar/WhileLanguage.g:270:72: ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
+            // ../src/grammar/WhileLanguage.g:292:72: ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
             loop29:
             do {
                 int alt29=4;
@@ -2596,11 +2612,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt29) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:271:12: '|' e2= mul_expression
+            	    // ../src/grammar/WhileLanguage.g:293:12: '|' e2= mul_expression
             	    {
-            	    match(input,44,FOLLOW_44_in_add_expression1628); 
+            	    match(input,44,FOLLOW_44_in_add_expression1649); 
 
-            	    pushFollow(FOLLOW_mul_expression_in_add_expression1632);
+            	    pushFollow(FOLLOW_mul_expression_in_add_expression1653);
             	    e2=mul_expression();
 
             	    state._fsp--;
@@ -2612,11 +2628,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // ../src/grammar/WhileLanguage.g:273:12: '+' e2= mul_expression
+            	    // ../src/grammar/WhileLanguage.g:295:12: '+' e2= mul_expression
             	    {
-            	    match(input,17,FOLLOW_17_in_add_expression1647); 
+            	    match(input,17,FOLLOW_17_in_add_expression1668); 
 
-            	    pushFollow(FOLLOW_mul_expression_in_add_expression1651);
+            	    pushFollow(FOLLOW_mul_expression_in_add_expression1672);
             	    e2=mul_expression();
 
             	    state._fsp--;
@@ -2628,11 +2644,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // ../src/grammar/WhileLanguage.g:275:12: '-' e2= mul_expression
+            	    // ../src/grammar/WhileLanguage.g:297:12: '-' e2= mul_expression
             	    {
-            	    match(input,19,FOLLOW_19_in_add_expression1666); 
+            	    match(input,19,FOLLOW_19_in_add_expression1687); 
 
-            	    pushFollow(FOLLOW_mul_expression_in_add_expression1670);
+            	    pushFollow(FOLLOW_mul_expression_in_add_expression1691);
             	    e2=mul_expression();
 
             	    state._fsp--;
@@ -2676,7 +2692,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "mul_expression"
-    // ../src/grammar/WhileLanguage.g:280:1: mul_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* ;
+    // ../src/grammar/WhileLanguage.g:302:1: mul_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* ;
     public final WhileLanguageParser.mul_expression_return mul_expression() throws RecognitionException {
         WhileLanguageParser.mul_expression_return retval = new WhileLanguageParser.mul_expression_return();
         retval.start = input.LT(1);
@@ -2688,10 +2704,10 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:281:9: (e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* )
-            // ../src/grammar/WhileLanguage.g:281:11: e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
+            // ../src/grammar/WhileLanguage.g:303:9: (e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* )
+            // ../src/grammar/WhileLanguage.g:303:11: e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
             {
-            pushFollow(FOLLOW_unary_expression_in_mul_expression1714);
+            pushFollow(FOLLOW_unary_expression_in_mul_expression1735);
             e1=unary_expression();
 
             state._fsp--;
@@ -2699,7 +2715,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // ../src/grammar/WhileLanguage.g:281:74: ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
+            // ../src/grammar/WhileLanguage.g:303:74: ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
             loop30:
             do {
                 int alt30=5;
@@ -2729,11 +2745,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt30) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:282:12: '&' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:304:12: '&' e2= unary_expression
             	    {
-            	    match(input,13,FOLLOW_13_in_mul_expression1731); 
+            	    match(input,13,FOLLOW_13_in_mul_expression1752); 
 
-            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1735);
+            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1756);
             	    e2=unary_expression();
 
             	    state._fsp--;
@@ -2745,11 +2761,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // ../src/grammar/WhileLanguage.g:284:12: '*' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:306:12: '*' e2= unary_expression
             	    {
-            	    match(input,16,FOLLOW_16_in_mul_expression1750); 
+            	    match(input,16,FOLLOW_16_in_mul_expression1771); 
 
-            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1754);
+            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1775);
             	    e2=unary_expression();
 
             	    state._fsp--;
@@ -2761,11 +2777,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // ../src/grammar/WhileLanguage.g:286:12: '/' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:308:12: '/' e2= unary_expression
             	    {
-            	    match(input,20,FOLLOW_20_in_mul_expression1769); 
+            	    match(input,20,FOLLOW_20_in_mul_expression1790); 
 
-            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1773);
+            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1794);
             	    e2=unary_expression();
 
             	    state._fsp--;
@@ -2778,11 +2794,11 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 4 :
-            	    // ../src/grammar/WhileLanguage.g:289:12: '%' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:311:12: '%' e2= unary_expression
             	    {
-            	    match(input,12,FOLLOW_12_in_mul_expression1788); 
+            	    match(input,12,FOLLOW_12_in_mul_expression1809); 
 
-            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1792);
+            	    pushFollow(FOLLOW_unary_expression_in_mul_expression1813);
             	    e2=unary_expression();
 
             	    state._fsp--;
@@ -2829,7 +2845,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "unary_expression"
-    // ../src/grammar/WhileLanguage.g:297:1: unary_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression );
+    // ../src/grammar/WhileLanguage.g:319:1: unary_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression );
     public final WhileLanguageParser.unary_expression_return unary_expression() throws RecognitionException {
         WhileLanguageParser.unary_expression_return retval = new WhileLanguageParser.unary_expression_return();
         retval.start = input.LT(1);
@@ -2839,7 +2855,7 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:298:9: ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression )
+            // ../src/grammar/WhileLanguage.g:320:9: ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression )
             int alt32=3;
             switch ( input.LA(1) ) {
             case 10:
@@ -2871,11 +2887,11 @@ public class WhileLanguageParser extends Parser {
 
             switch (alt32) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:298:11: '!' e= parenthesized_expression
+                    // ../src/grammar/WhileLanguage.g:320:11: '!' e= parenthesized_expression
                     {
-                    match(input,10,FOLLOW_10_in_unary_expression1834); 
+                    match(input,10,FOLLOW_10_in_unary_expression1855); 
 
-                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1839);
+                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1860);
                     e=parenthesized_expression();
 
                     state._fsp--;
@@ -2888,11 +2904,11 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:301:11: '-' e= parenthesized_expression
+                    // ../src/grammar/WhileLanguage.g:323:11: '-' e= parenthesized_expression
                     {
-                    match(input,19,FOLLOW_19_in_unary_expression1853); 
+                    match(input,19,FOLLOW_19_in_unary_expression1874); 
 
-                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1858);
+                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1879);
                     e=parenthesized_expression();
 
                     state._fsp--;
@@ -2906,9 +2922,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ../src/grammar/WhileLanguage.g:305:11: ( '+' )? e= parenthesized_expression
+                    // ../src/grammar/WhileLanguage.g:327:11: ( '+' )? e= parenthesized_expression
                     {
-                    // ../src/grammar/WhileLanguage.g:305:11: ( '+' )?
+                    // ../src/grammar/WhileLanguage.g:327:11: ( '+' )?
                     int alt31=2;
                     int LA31_0 = input.LA(1);
 
@@ -2917,9 +2933,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     switch (alt31) {
                         case 1 :
-                            // ../src/grammar/WhileLanguage.g:305:11: '+'
+                            // ../src/grammar/WhileLanguage.g:327:11: '+'
                             {
-                            match(input,17,FOLLOW_17_in_unary_expression1872); 
+                            match(input,17,FOLLOW_17_in_unary_expression1893); 
 
                             }
                             break;
@@ -2927,7 +2943,7 @@ public class WhileLanguageParser extends Parser {
                     }
 
 
-                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1877);
+                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression1898);
                     e=parenthesized_expression();
 
                     state._fsp--;
@@ -2965,24 +2981,24 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "parenthesized_expression"
-    // ../src/grammar/WhileLanguage.g:310:1: parenthesized_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '(' expression ')' | function_call | array_read | IDENT | literal_expression );
+    // ../src/grammar/WhileLanguage.g:332:1: parenthesized_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '(' expression ')' | function_call | array_read | IDENT | literal_expression );
     public final WhileLanguageParser.parenthesized_expression_return parenthesized_expression() throws RecognitionException {
         WhileLanguageParser.parenthesized_expression_return retval = new WhileLanguageParser.parenthesized_expression_return();
         retval.start = input.LT(1);
 
 
-        Token IDENT36=null;
-        WhileLanguageParser.expression_return expression33 =null;
+        Token IDENT34=null;
+        WhileLanguageParser.expression_return expression31 =null;
 
-        WhileLanguageParser.function_call_return function_call34 =null;
+        WhileLanguageParser.function_call_return function_call32 =null;
 
-        WhileLanguageParser.array_read_return array_read35 =null;
+        WhileLanguageParser.array_read_return array_read33 =null;
 
-        WhileLanguageParser.literal_expression_return literal_expression37 =null;
+        WhileLanguageParser.literal_expression_return literal_expression35 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:311:9: ( '(' expression ')' | function_call | array_read | IDENT | literal_expression )
+            // ../src/grammar/WhileLanguage.g:333:9: ( '(' expression ')' | function_call | array_read | IDENT | literal_expression )
             int alt33=5;
             switch ( input.LA(1) ) {
             case 14:
@@ -3051,67 +3067,67 @@ public class WhileLanguageParser extends Parser {
 
             switch (alt33) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:311:11: '(' expression ')'
+                    // ../src/grammar/WhileLanguage.g:333:11: '(' expression ')'
                     {
-                    match(input,14,FOLLOW_14_in_parenthesized_expression1908); 
+                    match(input,14,FOLLOW_14_in_parenthesized_expression1929); 
 
-                    pushFollow(FOLLOW_expression_in_parenthesized_expression1910);
-                    expression33=expression();
+                    pushFollow(FOLLOW_expression_in_parenthesized_expression1931);
+                    expression31=expression();
 
                     state._fsp--;
 
 
-                    match(input,15,FOLLOW_15_in_parenthesized_expression1912); 
+                    match(input,15,FOLLOW_15_in_parenthesized_expression1933); 
 
-                    retval.ast = (expression33!=null?expression33.ast:null); retval.divisors = (expression33!=null?expression33.divisors:null);
+                    retval.ast = (expression31!=null?expression31.ast:null); retval.divisors = (expression31!=null?expression31.divisors:null);
 
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:312:11: function_call
+                    // ../src/grammar/WhileLanguage.g:334:11: function_call
                     {
-                    pushFollow(FOLLOW_function_call_in_parenthesized_expression1926);
-                    function_call34=function_call();
+                    pushFollow(FOLLOW_function_call_in_parenthesized_expression1947);
+                    function_call32=function_call();
 
                     state._fsp--;
 
 
-                    retval.ast = (function_call34!=null?function_call34.ast:null); retval.divisors = (function_call34!=null?function_call34.divisors:null);
+                    retval.ast = (function_call32!=null?function_call32.ast:null); retval.divisors = (function_call32!=null?function_call32.divisors:null);
 
                     }
                     break;
                 case 3 :
-                    // ../src/grammar/WhileLanguage.g:313:11: array_read
+                    // ../src/grammar/WhileLanguage.g:335:11: array_read
                     {
-                    pushFollow(FOLLOW_array_read_in_parenthesized_expression1940);
-                    array_read35=array_read();
+                    pushFollow(FOLLOW_array_read_in_parenthesized_expression1961);
+                    array_read33=array_read();
 
                     state._fsp--;
 
 
-                    retval.ast = (array_read35!=null?array_read35.ast:null); retval.divisors = (array_read35!=null?array_read35.divisors:null);
+                    retval.ast = (array_read33!=null?array_read33.ast:null); retval.divisors = (array_read33!=null?array_read33.divisors:null);
 
                     }
                     break;
                 case 4 :
-                    // ../src/grammar/WhileLanguage.g:314:11: IDENT
+                    // ../src/grammar/WhileLanguage.g:336:11: IDENT
                     {
-                    IDENT36=(Token)match(input,IDENT,FOLLOW_IDENT_in_parenthesized_expression1954); 
+                    IDENT34=(Token)match(input,IDENT,FOLLOW_IDENT_in_parenthesized_expression1975); 
 
-                    retval.ast = new VariableRead(new Position(), new Identifier((IDENT36!=null?IDENT36.getText():null))); retval.divisors = new LinkedList<Expression>();
+                    retval.ast = new VariableRead(new Position(), new Identifier((IDENT34!=null?IDENT34.getText():null))); retval.divisors = new LinkedList<Expression>();
 
                     }
                     break;
                 case 5 :
-                    // ../src/grammar/WhileLanguage.g:315:11: literal_expression
+                    // ../src/grammar/WhileLanguage.g:337:11: literal_expression
                     {
-                    pushFollow(FOLLOW_literal_expression_in_parenthesized_expression1968);
-                    literal_expression37=literal_expression();
+                    pushFollow(FOLLOW_literal_expression_in_parenthesized_expression1989);
+                    literal_expression35=literal_expression();
 
                     state._fsp--;
 
 
-                    retval.ast = (literal_expression37!=null?literal_expression37.ast:null); retval.divisors = (literal_expression37!=null?literal_expression37.divisors:null);
+                    retval.ast = (literal_expression35!=null?literal_expression35.ast:null); retval.divisors = (literal_expression35!=null?literal_expression35.divisors:null);
 
                     }
                     break;
@@ -3141,25 +3157,25 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "function_call"
-    // ../src/grammar/WhileLanguage.g:318:1: function_call returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '(' ( arglist )? ')' ;
+    // ../src/grammar/WhileLanguage.g:340:1: function_call returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '(' ( arglist )? ')' ;
     public final WhileLanguageParser.function_call_return function_call() throws RecognitionException {
         WhileLanguageParser.function_call_return retval = new WhileLanguageParser.function_call_return();
         retval.start = input.LT(1);
 
 
-        Token IDENT39=null;
-        WhileLanguageParser.arglist_return arglist38 =null;
+        Token IDENT37=null;
+        WhileLanguageParser.arglist_return arglist36 =null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:319:9: ( IDENT '(' ( arglist )? ')' )
-            // ../src/grammar/WhileLanguage.g:319:11: IDENT '(' ( arglist )? ')'
+            // ../src/grammar/WhileLanguage.g:341:9: ( IDENT '(' ( arglist )? ')' )
+            // ../src/grammar/WhileLanguage.g:341:11: IDENT '(' ( arglist )? ')'
             {
-            IDENT39=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_call1999); 
+            IDENT37=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_call2020); 
 
-            match(input,14,FOLLOW_14_in_function_call2001); 
+            match(input,14,FOLLOW_14_in_function_call2022); 
 
-            // ../src/grammar/WhileLanguage.g:319:21: ( arglist )?
+            // ../src/grammar/WhileLanguage.g:341:21: ( arglist )?
             int alt34=2;
             int LA34_0 = input.LA(1);
 
@@ -3168,10 +3184,10 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt34) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:319:21: arglist
+                    // ../src/grammar/WhileLanguage.g:341:21: arglist
                     {
-                    pushFollow(FOLLOW_arglist_in_function_call2003);
-                    arglist38=arglist();
+                    pushFollow(FOLLOW_arglist_in_function_call2024);
+                    arglist36=arglist();
 
                     state._fsp--;
 
@@ -3182,13 +3198,13 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            match(input,15,FOLLOW_15_in_function_call2006); 
+            match(input,15,FOLLOW_15_in_function_call2027); 
 
 
                     	Expression[] params = new Expression[0];
-                    	if ((arglist38!=null?arglist38.params:null) != null) params = (arglist38!=null?arglist38.params:null).toArray(new Expression[(arglist38!=null?arglist38.params:null).size()]);
-                    	retval.ast = new FunctionCall(new Identifier((IDENT39!=null?IDENT39.getText():null)), params , new Position());
-                    	retval.divisors = (arglist38!=null?arglist38.divisors:null);
+                    	if ((arglist36!=null?arglist36.params:null) != null) params = (arglist36!=null?arglist36.params:null).toArray(new Expression[(arglist36!=null?arglist36.params:null).size()]);
+                    	retval.ast = new FunctionCall(new Identifier((IDENT37!=null?IDENT37.getText():null)), params , new Position());
+                    	retval.divisors = (arglist36!=null?arglist36.divisors:null);
 
             }
 
@@ -3216,7 +3232,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "arglist"
-    // ../src/grammar/WhileLanguage.g:326:1: arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors ] : e1= expression ( ',' e2= expression )* ;
+    // ../src/grammar/WhileLanguage.g:348:1: arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors ] : e1= expression ( ',' e2= expression )* ;
     public final WhileLanguageParser.arglist_return arglist() throws RecognitionException {
         WhileLanguageParser.arglist_return retval = new WhileLanguageParser.arglist_return();
         retval.start = input.LT(1);
@@ -3229,10 +3245,10 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Expression> params = new LinkedList<Expression>();
         try {
-            // ../src/grammar/WhileLanguage.g:328:9: (e1= expression ( ',' e2= expression )* )
-            // ../src/grammar/WhileLanguage.g:328:11: e1= expression ( ',' e2= expression )*
+            // ../src/grammar/WhileLanguage.g:350:9: (e1= expression ( ',' e2= expression )* )
+            // ../src/grammar/WhileLanguage.g:350:11: e1= expression ( ',' e2= expression )*
             {
-            pushFollow(FOLLOW_expression_in_arglist2045);
+            pushFollow(FOLLOW_expression_in_arglist2066);
             e1=expression();
 
             state._fsp--;
@@ -3240,7 +3256,7 @@ public class WhileLanguageParser extends Parser {
 
             params.add((Expression) e1.ast); retval.divisors = (e1!=null?e1.divisors:null);
 
-            // ../src/grammar/WhileLanguage.g:329:10: ( ',' e2= expression )*
+            // ../src/grammar/WhileLanguage.g:351:10: ( ',' e2= expression )*
             loop35:
             do {
                 int alt35=2;
@@ -3253,11 +3269,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt35) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:329:12: ',' e2= expression
+            	    // ../src/grammar/WhileLanguage.g:351:12: ',' e2= expression
             	    {
-            	    match(input,18,FOLLOW_18_in_arglist2060); 
+            	    match(input,18,FOLLOW_18_in_arglist2081); 
 
-            	    pushFollow(FOLLOW_expression_in_arglist2064);
+            	    pushFollow(FOLLOW_expression_in_arglist2085);
             	    e2=expression();
 
             	    state._fsp--;
@@ -3300,13 +3316,13 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "array_read"
-    // ../src/grammar/WhileLanguage.g:332:1: array_read returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* ;
+    // ../src/grammar/WhileLanguage.g:354:1: array_read returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* ;
     public final WhileLanguageParser.array_read_return array_read() throws RecognitionException {
         WhileLanguageParser.array_read_return retval = new WhileLanguageParser.array_read_return();
         retval.start = input.LT(1);
 
 
-        Token IDENT40=null;
+        Token IDENT38=null;
         WhileLanguageParser.expression_return e1 =null;
 
         WhileLanguageParser.expression_return e2 =null;
@@ -3314,14 +3330,14 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<ArithmeticExpression> l = new LinkedList<ArithmeticExpression>();
         try {
-            // ../src/grammar/WhileLanguage.g:334:9: ( IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* )
-            // ../src/grammar/WhileLanguage.g:334:11: IDENT '[' e1= expression ']' ( '[' e2= expression ']' )*
+            // ../src/grammar/WhileLanguage.g:356:9: ( IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* )
+            // ../src/grammar/WhileLanguage.g:356:11: IDENT '[' e1= expression ']' ( '[' e2= expression ']' )*
             {
-            IDENT40=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_read2104); 
+            IDENT38=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_read2125); 
 
-            match(input,28,FOLLOW_28_in_array_read2106); 
+            match(input,28,FOLLOW_28_in_array_read2127); 
 
-            pushFollow(FOLLOW_expression_in_array_read2110);
+            pushFollow(FOLLOW_expression_in_array_read2131);
             e1=expression();
 
             state._fsp--;
@@ -3331,9 +3347,9 @@ public class WhileLanguageParser extends Parser {
                     			else throw new TreeGeneratorException("expected an arithmetic expression, got a logical expression");
                     		retval.divisors = (e1!=null?e1.divisors:null);
 
-            match(input,29,FOLLOW_29_in_array_read2114); 
+            match(input,29,FOLLOW_29_in_array_read2135); 
 
-            // ../src/grammar/WhileLanguage.g:337:10: ( '[' e2= expression ']' )*
+            // ../src/grammar/WhileLanguage.g:359:10: ( '[' e2= expression ']' )*
             loop36:
             do {
                 int alt36=2;
@@ -3346,11 +3362,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt36) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:337:12: '[' e2= expression ']'
+            	    // ../src/grammar/WhileLanguage.g:359:12: '[' e2= expression ']'
             	    {
-            	    match(input,28,FOLLOW_28_in_array_read2127); 
+            	    match(input,28,FOLLOW_28_in_array_read2148); 
 
-            	    pushFollow(FOLLOW_expression_in_array_read2131);
+            	    pushFollow(FOLLOW_expression_in_array_read2152);
             	    e2=expression();
 
             	    state._fsp--;
@@ -3360,7 +3376,7 @@ public class WhileLanguageParser extends Parser {
             	            			else throw new TreeGeneratorException("expected an arithmetic expression, got a logical expression");
             	            		retval.divisors.addAll((e2!=null?e2.divisors:null));
 
-            	    match(input,29,FOLLOW_29_in_array_read2135); 
+            	    match(input,29,FOLLOW_29_in_array_read2156); 
 
             	    }
             	    break;
@@ -3371,7 +3387,7 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            retval.ast = new ArrayRead(new Position(), new Identifier((IDENT40!=null?IDENT40.getText():null)), l.toArray(new ArithmeticExpression[l.size()]));
+            retval.ast = new ArrayRead(new Position(), new Identifier((IDENT38!=null?IDENT38.getText():null)), l.toArray(new ArithmeticExpression[l.size()]));
 
             }
 
@@ -3399,17 +3415,17 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "literal_expression"
-    // ../src/grammar/WhileLanguage.g:343:1: literal_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( INT_LITERAL | BOOL_LITERAL );
+    // ../src/grammar/WhileLanguage.g:365:1: literal_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( INT_LITERAL | BOOL_LITERAL );
     public final WhileLanguageParser.literal_expression_return literal_expression() throws RecognitionException {
         WhileLanguageParser.literal_expression_return retval = new WhileLanguageParser.literal_expression_return();
         retval.start = input.LT(1);
 
 
-        Token INT_LITERAL41=null;
-        Token BOOL_LITERAL42=null;
+        Token INT_LITERAL39=null;
+        Token BOOL_LITERAL40=null;
 
         try {
-            // ../src/grammar/WhileLanguage.g:344:9: ( INT_LITERAL | BOOL_LITERAL )
+            // ../src/grammar/WhileLanguage.g:366:9: ( INT_LITERAL | BOOL_LITERAL )
             int alt37=2;
             int LA37_0 = input.LA(1);
 
@@ -3428,20 +3444,20 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt37) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:344:11: INT_LITERAL
+                    // ../src/grammar/WhileLanguage.g:366:11: INT_LITERAL
                     {
-                    INT_LITERAL41=(Token)match(input,INT_LITERAL,FOLLOW_INT_LITERAL_in_literal_expression2177); 
+                    INT_LITERAL39=(Token)match(input,INT_LITERAL,FOLLOW_INT_LITERAL_in_literal_expression2198); 
 
-                    retval.ast = new NumericLiteral(new Position(), (INT_LITERAL41!=null?INT_LITERAL41.getText():null)); retval.divisors = new LinkedList<Expression>();
+                    retval.ast = new NumericLiteral(new Position(), (INT_LITERAL39!=null?INT_LITERAL39.getText():null)); retval.divisors = new LinkedList<Expression>();
 
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:345:11: BOOL_LITERAL
+                    // ../src/grammar/WhileLanguage.g:367:11: BOOL_LITERAL
                     {
-                    BOOL_LITERAL42=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal_expression2191); 
+                    BOOL_LITERAL40=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal_expression2212); 
 
-                    retval.ast = new BooleanLiteral(new Position(), (BOOL_LITERAL42!=null?BOOL_LITERAL42.getText():null)); retval.divisors = new LinkedList<Expression>();
+                    retval.ast = new BooleanLiteral(new Position(), (BOOL_LITERAL40!=null?BOOL_LITERAL40.getText():null)); retval.divisors = new LinkedList<Expression>();
 
                     }
                     break;
@@ -3466,16 +3482,16 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "type"
-    // ../src/grammar/WhileLanguage.g:348:1: type returns [ Type ast ] : ( 'int' | 'bool' ) ( '[' ']' )* ;
+    // ../src/grammar/WhileLanguage.g:370:1: type returns [ Type ast ] : ( 'int' | 'bool' ) ( '[' ']' )* ;
     public final Type type() throws RecognitionException {
         Type ast = null;
 
 
         try {
-            // ../src/grammar/WhileLanguage.g:349:9: ( ( 'int' | 'bool' ) ( '[' ']' )* )
-            // ../src/grammar/WhileLanguage.g:349:11: ( 'int' | 'bool' ) ( '[' ']' )*
+            // ../src/grammar/WhileLanguage.g:371:9: ( ( 'int' | 'bool' ) ( '[' ']' )* )
+            // ../src/grammar/WhileLanguage.g:371:11: ( 'int' | 'bool' ) ( '[' ']' )*
             {
-            // ../src/grammar/WhileLanguage.g:349:11: ( 'int' | 'bool' )
+            // ../src/grammar/WhileLanguage.g:371:11: ( 'int' | 'bool' )
             int alt38=2;
             int LA38_0 = input.LA(1);
 
@@ -3494,18 +3510,18 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt38) {
                 case 1 :
-                    // ../src/grammar/WhileLanguage.g:349:12: 'int'
+                    // ../src/grammar/WhileLanguage.g:371:12: 'int'
                     {
-                    match(input,38,FOLLOW_38_in_type2223); 
+                    match(input,38,FOLLOW_38_in_type2244); 
 
                     ast = new IntegerType();
 
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/WhileLanguage.g:349:48: 'bool'
+                    // ../src/grammar/WhileLanguage.g:371:48: 'bool'
                     {
-                    match(input,34,FOLLOW_34_in_type2229); 
+                    match(input,34,FOLLOW_34_in_type2250); 
 
                     ast = new BooleanType();
 
@@ -3515,7 +3531,7 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            // ../src/grammar/WhileLanguage.g:349:83: ( '[' ']' )*
+            // ../src/grammar/WhileLanguage.g:371:83: ( '[' ']' )*
             loop39:
             do {
                 int alt39=2;
@@ -3528,11 +3544,11 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt39) {
             	case 1 :
-            	    // ../src/grammar/WhileLanguage.g:349:85: '[' ']'
+            	    // ../src/grammar/WhileLanguage.g:371:85: '[' ']'
             	    {
-            	    match(input,28,FOLLOW_28_in_type2235); 
+            	    match(input,28,FOLLOW_28_in_type2256); 
 
-            	    match(input,29,FOLLOW_29_in_type2237); 
+            	    match(input,29,FOLLOW_29_in_type2258); 
 
             	    ast = new ArrayType(ast);
 
@@ -3625,193 +3641,193 @@ public class WhileLanguageParser extends Parser {
             this.transition = DFA13_transition;
         }
         public String getDescription() {
-            return "115:1: statement returns [ Statement ast, LinkedList<Expression> divisors ] : (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement );";
+            return "140:1: statement returns [ Statement ast, LinkedList<Expression> divisors ] : (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement );";
         }
     }
  
 
-    public static final BitSet FOLLOW_axiom_statement_in_program52 = new BitSet(new long[]{0x0000014600000000L});
-    public static final BitSet FOLLOW_function_declaration_in_program61 = new BitSet(new long[]{0x0000014400000000L});
-    public static final BitSet FOLLOW_main_in_program67 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_single_expression100 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_type_in_function_declaration124 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_function_declaration126 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_function_declaration128 = new BitSet(new long[]{0x0000004400008000L});
-    public static final BitSet FOLLOW_parameter_list_in_function_declaration130 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_function_declaration133 = new BitSet(new long[]{0x0000080100000000L});
-    public static final BitSet FOLLOW_function_body_in_function_declaration135 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_main175 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_main177 = new BitSet(new long[]{0x0000004400008000L});
-    public static final BitSet FOLLOW_parameter_list_in_main179 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_main182 = new BitSet(new long[]{0x0000080100000000L});
-    public static final BitSet FOLLOW_function_body_in_main184 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_parameter_in_parameter_list232 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_18_in_parameter_list238 = new BitSet(new long[]{0x0000004400000000L});
-    public static final BitSet FOLLOW_parameter_in_parameter_list242 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_type_in_parameter276 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_parameter278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_assume_statement_in_function_body315 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_function_body328 = new BitSet(new long[]{0x0000266480000040L});
-    public static final BitSet FOLLOW_statement_in_function_body332 = new BitSet(new long[]{0x0000266480000040L});
-    public static final BitSet FOLLOW_45_in_function_body339 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_ensure_statement_in_function_body367 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_if_body405 = new BitSet(new long[]{0x0000266480000040L});
-    public static final BitSet FOLLOW_statement_in_if_body407 = new BitSet(new long[]{0x0000266480000040L});
-    public static final BitSet FOLLOW_45_in_if_body410 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_invariant_statement_in_loop_body463 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_loop_body478 = new BitSet(new long[]{0x0000266480000040L});
-    public static final BitSet FOLLOW_statement_in_loop_body482 = new BitSet(new long[]{0x0000266480000040L});
-    public static final BitSet FOLLOW_45_in_loop_body489 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_ensure_statement_in_loop_body517 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_assert_statement_in_statement551 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_variable_declaration_in_statement567 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_array_declaration_in_statement583 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_assignment_in_statement599 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_if_statement_in_statement615 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_while_statement_in_statement631 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_return_statement_in_statement647 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_invariant_statement684 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_invariant_statement688 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_invariant_statement690 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_invariant_statement704 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_invariant_statement706 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_invariant_statement711 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_invariant_statement713 = new BitSet(new long[]{0x00002000000A45D0L});
-    public static final BitSet FOLLOW_45_in_invariant_statement720 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_axiom_statement758 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_axiom_statement762 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_axiom_statement764 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_assert_statement795 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_assert_statement799 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_assert_statement801 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_assume_statement838 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_assume_statement842 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_assume_statement844 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_assume_statement858 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_assume_statement860 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_assume_statement865 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_assume_statement867 = new BitSet(new long[]{0x00002000000A45D0L});
-    public static final BitSet FOLLOW_45_in_assume_statement874 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ensure_statement909 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_ensure_statement913 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_ensure_statement915 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ensure_statement929 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_ensure_statement931 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_ensure_statement936 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_ensure_statement938 = new BitSet(new long[]{0x00002000000A45D0L});
-    public static final BitSet FOLLOW_45_in_ensure_statement945 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_assignment983 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_assignment985 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_assignment987 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_assignment989 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_assignment1003 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_assignment1018 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_assignment1022 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_assignment1026 = new BitSet(new long[]{0x0000000011000000L});
-    public static final BitSet FOLLOW_24_in_assignment1031 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_assignment1035 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_assignment1037 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_type_in_variable_declaration1068 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_variable_declaration1070 = new BitSet(new long[]{0x0000000001200000L});
-    public static final BitSet FOLLOW_24_in_variable_declaration1074 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_variable_declaration1076 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_variable_declaration1081 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_type_in_array_declaration1112 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_array_declaration1114 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_array_declaration1116 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_array_init_in_array_declaration1118 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_array_declaration1120 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_array_init1156 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_array_init1160 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_array_init1162 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_array_init1166 = new BitSet(new long[]{0x0000000010000002L});
-    public static final BitSet FOLLOW_37_in_if_statement1191 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_if_statement1193 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_if_statement1195 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_if_statement1197 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_if_body_in_if_statement1201 = new BitSet(new long[]{0x0000000800000002L});
-    public static final BitSet FOLLOW_35_in_if_statement1205 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_if_body_in_if_statement1209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_while_statement1243 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_while_statement1245 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_while_statement1247 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_while_statement1249 = new BitSet(new long[]{0x0000088000000000L});
-    public static final BitSet FOLLOW_loop_body_in_while_statement1251 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_return_statement1275 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_return_statement1277 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_return_statement1279 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_QUANTIFIER_in_quantified_expression1303 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_IDENT_in_quantified_expression1305 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_quantified_expression1307 = new BitSet(new long[]{0x00000000000AC4D0L});
-    public static final BitSet FOLLOW_range_in_quantified_expression1309 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_quantified_expression1312 = new BitSet(new long[]{0x00000000000A45D0L});
-    public static final BitSet FOLLOW_quantified_expression_in_quantified_expression1316 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_quantified_expression1330 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_range1363 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_range1365 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_range1369 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rel_expression_in_expression1402 = new BitSet(new long[]{0x0000000002000802L});
-    public static final BitSet FOLLOW_25_in_expression1419 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_axiom_statement_in_program61 = new BitSet(new long[]{0x0000014600000000L});
+    public static final BitSet FOLLOW_function_declaration_in_program70 = new BitSet(new long[]{0x0000014400000000L});
+    public static final BitSet FOLLOW_main_in_program76 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_single_expression109 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_type_in_function_declaration133 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_function_declaration135 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_function_declaration137 = new BitSet(new long[]{0x0000004400008000L});
+    public static final BitSet FOLLOW_parameter_list_in_function_declaration139 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_function_declaration142 = new BitSet(new long[]{0x0000080100000000L});
+    public static final BitSet FOLLOW_function_body_in_function_declaration144 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_main184 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_main186 = new BitSet(new long[]{0x0000004400008000L});
+    public static final BitSet FOLLOW_parameter_list_in_main188 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_main191 = new BitSet(new long[]{0x0000080100000000L});
+    public static final BitSet FOLLOW_function_body_in_main193 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_parameter_in_parameter_list241 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_18_in_parameter_list247 = new BitSet(new long[]{0x0000004400000000L});
+    public static final BitSet FOLLOW_parameter_in_parameter_list251 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_type_in_parameter285 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_parameter287 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_assume_statement_in_function_body326 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_function_body341 = new BitSet(new long[]{0x0000266480000040L});
+    public static final BitSet FOLLOW_statement_in_function_body345 = new BitSet(new long[]{0x0000266480000040L});
+    public static final BitSet FOLLOW_45_in_function_body352 = new BitSet(new long[]{0x0000001000000002L});
+    public static final BitSet FOLLOW_ensure_statement_in_function_body382 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_if_body422 = new BitSet(new long[]{0x0000266480000040L});
+    public static final BitSet FOLLOW_statement_in_if_body424 = new BitSet(new long[]{0x0000266480000040L});
+    public static final BitSet FOLLOW_45_in_if_body427 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_invariant_statement_in_loop_body482 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_loop_body497 = new BitSet(new long[]{0x0000266480000040L});
+    public static final BitSet FOLLOW_statement_in_loop_body501 = new BitSet(new long[]{0x0000266480000040L});
+    public static final BitSet FOLLOW_45_in_loop_body508 = new BitSet(new long[]{0x0000001000000002L});
+    public static final BitSet FOLLOW_ensure_statement_in_loop_body538 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_assert_statement_in_statement572 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_variable_declaration_in_statement588 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_array_declaration_in_statement604 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_assignment_in_statement620 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_if_statement_in_statement636 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_while_statement_in_statement652 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_return_statement_in_statement668 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_invariant_statement705 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_invariant_statement709 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_invariant_statement711 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_invariant_statement725 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_invariant_statement727 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_invariant_statement732 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_invariant_statement734 = new BitSet(new long[]{0x00002000000A45D0L});
+    public static final BitSet FOLLOW_45_in_invariant_statement741 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_axiom_statement779 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_axiom_statement783 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_axiom_statement785 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_assert_statement816 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_assert_statement820 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_assert_statement822 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_assume_statement859 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_assume_statement863 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_assume_statement865 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_assume_statement879 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_assume_statement881 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_assume_statement886 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_assume_statement888 = new BitSet(new long[]{0x00002000000A45D0L});
+    public static final BitSet FOLLOW_45_in_assume_statement895 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ensure_statement930 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_ensure_statement934 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ensure_statement936 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ensure_statement950 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_ensure_statement952 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_ensure_statement957 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ensure_statement959 = new BitSet(new long[]{0x00002000000A45D0L});
+    public static final BitSet FOLLOW_45_in_ensure_statement966 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_assignment1004 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_assignment1006 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_assignment1008 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_assignment1010 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_assignment1024 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_assignment1039 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_assignment1043 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_assignment1047 = new BitSet(new long[]{0x0000000011000000L});
+    public static final BitSet FOLLOW_24_in_assignment1052 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_assignment1056 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_assignment1058 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_type_in_variable_declaration1089 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_variable_declaration1091 = new BitSet(new long[]{0x0000000001200000L});
+    public static final BitSet FOLLOW_24_in_variable_declaration1095 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_variable_declaration1097 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_variable_declaration1102 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_type_in_array_declaration1133 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_array_declaration1135 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_array_declaration1137 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_array_init_in_array_declaration1139 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_array_declaration1141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_array_init1177 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_array_init1181 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_array_init1183 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_array_init1187 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_37_in_if_statement1212 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_if_statement1214 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_if_statement1216 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_if_statement1218 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_if_body_in_if_statement1222 = new BitSet(new long[]{0x0000000800000002L});
+    public static final BitSet FOLLOW_35_in_if_statement1226 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_if_body_in_if_statement1230 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_while_statement1264 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_while_statement1266 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_while_statement1268 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_while_statement1270 = new BitSet(new long[]{0x0000088000000000L});
+    public static final BitSet FOLLOW_loop_body_in_while_statement1272 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_return_statement1296 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_return_statement1298 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_return_statement1300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_QUANTIFIER_in_quantified_expression1324 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_IDENT_in_quantified_expression1326 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_quantified_expression1328 = new BitSet(new long[]{0x00000000000AC4D0L});
+    public static final BitSet FOLLOW_range_in_quantified_expression1330 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_quantified_expression1333 = new BitSet(new long[]{0x00000000000A45D0L});
+    public static final BitSet FOLLOW_quantified_expression_in_quantified_expression1337 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_quantified_expression1351 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_range1384 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_range1386 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_range1390 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rel_expression_in_expression1423 = new BitSet(new long[]{0x0000000002000802L});
-    public static final BitSet FOLLOW_11_in_expression1438 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_rel_expression_in_expression1442 = new BitSet(new long[]{0x0000000002000802L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1487 = new BitSet(new long[]{0x000000000CC00002L});
-    public static final BitSet FOLLOW_22_in_rel_expression1504 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1509 = new BitSet(new long[]{0x000000000CC00002L});
-    public static final BitSet FOLLOW_23_in_rel_expression1524 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1528 = new BitSet(new long[]{0x000000000CC00002L});
-    public static final BitSet FOLLOW_26_in_rel_expression1543 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1548 = new BitSet(new long[]{0x000000000CC00002L});
-    public static final BitSet FOLLOW_27_in_rel_expression1563 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_add_expression_in_rel_expression1567 = new BitSet(new long[]{0x000000000CC00002L});
-    public static final BitSet FOLLOW_mul_expression_in_add_expression1611 = new BitSet(new long[]{0x00001000000A0002L});
-    public static final BitSet FOLLOW_44_in_add_expression1628 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_25_in_expression1440 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_rel_expression_in_expression1444 = new BitSet(new long[]{0x0000000002000802L});
+    public static final BitSet FOLLOW_11_in_expression1459 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_rel_expression_in_expression1463 = new BitSet(new long[]{0x0000000002000802L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1508 = new BitSet(new long[]{0x000000000CC00002L});
+    public static final BitSet FOLLOW_22_in_rel_expression1525 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1530 = new BitSet(new long[]{0x000000000CC00002L});
+    public static final BitSet FOLLOW_23_in_rel_expression1545 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1549 = new BitSet(new long[]{0x000000000CC00002L});
+    public static final BitSet FOLLOW_26_in_rel_expression1564 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1569 = new BitSet(new long[]{0x000000000CC00002L});
+    public static final BitSet FOLLOW_27_in_rel_expression1584 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_add_expression_in_rel_expression1588 = new BitSet(new long[]{0x000000000CC00002L});
     public static final BitSet FOLLOW_mul_expression_in_add_expression1632 = new BitSet(new long[]{0x00001000000A0002L});
-    public static final BitSet FOLLOW_17_in_add_expression1647 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_mul_expression_in_add_expression1651 = new BitSet(new long[]{0x00001000000A0002L});
-    public static final BitSet FOLLOW_19_in_add_expression1666 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_mul_expression_in_add_expression1670 = new BitSet(new long[]{0x00001000000A0002L});
-    public static final BitSet FOLLOW_unary_expression_in_mul_expression1714 = new BitSet(new long[]{0x0000000000113002L});
-    public static final BitSet FOLLOW_13_in_mul_expression1731 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_44_in_add_expression1649 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_mul_expression_in_add_expression1653 = new BitSet(new long[]{0x00001000000A0002L});
+    public static final BitSet FOLLOW_17_in_add_expression1668 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_mul_expression_in_add_expression1672 = new BitSet(new long[]{0x00001000000A0002L});
+    public static final BitSet FOLLOW_19_in_add_expression1687 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_mul_expression_in_add_expression1691 = new BitSet(new long[]{0x00001000000A0002L});
     public static final BitSet FOLLOW_unary_expression_in_mul_expression1735 = new BitSet(new long[]{0x0000000000113002L});
-    public static final BitSet FOLLOW_16_in_mul_expression1750 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_unary_expression_in_mul_expression1754 = new BitSet(new long[]{0x0000000000113002L});
-    public static final BitSet FOLLOW_20_in_mul_expression1769 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_unary_expression_in_mul_expression1773 = new BitSet(new long[]{0x0000000000113002L});
-    public static final BitSet FOLLOW_12_in_mul_expression1788 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_unary_expression_in_mul_expression1792 = new BitSet(new long[]{0x0000000000113002L});
-    public static final BitSet FOLLOW_10_in_unary_expression1834 = new BitSet(new long[]{0x00000000000040D0L});
-    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1839 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_unary_expression1853 = new BitSet(new long[]{0x00000000000040D0L});
-    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1858 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_unary_expression1872 = new BitSet(new long[]{0x00000000000040D0L});
-    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1877 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_parenthesized_expression1908 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_parenthesized_expression1910 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_parenthesized_expression1912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_call_in_parenthesized_expression1926 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_array_read_in_parenthesized_expression1940 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_parenthesized_expression1954 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_literal_expression_in_parenthesized_expression1968 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_function_call1999 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_function_call2001 = new BitSet(new long[]{0x00000000000AC4D0L});
-    public static final BitSet FOLLOW_arglist_in_function_call2003 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_function_call2006 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_arglist2045 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_18_in_arglist2060 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_arglist2064 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_IDENT_in_array_read2104 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_array_read2106 = new BitSet(new long[]{0x00000000000A44D0L});
-    public static final BitSet FOLLOW_expression_in_array_read2110 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_array_read2114 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_13_in_mul_expression1752 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_unary_expression_in_mul_expression1756 = new BitSet(new long[]{0x0000000000113002L});
+    public static final BitSet FOLLOW_16_in_mul_expression1771 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_unary_expression_in_mul_expression1775 = new BitSet(new long[]{0x0000000000113002L});
+    public static final BitSet FOLLOW_20_in_mul_expression1790 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_unary_expression_in_mul_expression1794 = new BitSet(new long[]{0x0000000000113002L});
+    public static final BitSet FOLLOW_12_in_mul_expression1809 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_unary_expression_in_mul_expression1813 = new BitSet(new long[]{0x0000000000113002L});
+    public static final BitSet FOLLOW_10_in_unary_expression1855 = new BitSet(new long[]{0x00000000000040D0L});
+    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1860 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_unary_expression1874 = new BitSet(new long[]{0x00000000000040D0L});
+    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1879 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_unary_expression1893 = new BitSet(new long[]{0x00000000000040D0L});
+    public static final BitSet FOLLOW_parenthesized_expression_in_unary_expression1898 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_parenthesized_expression1929 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_parenthesized_expression1931 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_parenthesized_expression1933 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_call_in_parenthesized_expression1947 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_array_read_in_parenthesized_expression1961 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_parenthesized_expression1975 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_literal_expression_in_parenthesized_expression1989 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_function_call2020 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_function_call2022 = new BitSet(new long[]{0x00000000000AC4D0L});
+    public static final BitSet FOLLOW_arglist_in_function_call2024 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_function_call2027 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_arglist2066 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_18_in_arglist2081 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_arglist2085 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_IDENT_in_array_read2125 = new BitSet(new long[]{0x0000000010000000L});
     public static final BitSet FOLLOW_28_in_array_read2127 = new BitSet(new long[]{0x00000000000A44D0L});
     public static final BitSet FOLLOW_expression_in_array_read2131 = new BitSet(new long[]{0x0000000020000000L});
     public static final BitSet FOLLOW_29_in_array_read2135 = new BitSet(new long[]{0x0000000010000002L});
-    public static final BitSet FOLLOW_INT_LITERAL_in_literal_expression2177 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOL_LITERAL_in_literal_expression2191 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_type2223 = new BitSet(new long[]{0x0000000010000002L});
-    public static final BitSet FOLLOW_34_in_type2229 = new BitSet(new long[]{0x0000000010000002L});
-    public static final BitSet FOLLOW_28_in_type2235 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_type2237 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_28_in_array_read2148 = new BitSet(new long[]{0x00000000000A44D0L});
+    public static final BitSet FOLLOW_expression_in_array_read2152 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_array_read2156 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_INT_LITERAL_in_literal_expression2198 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOL_LITERAL_in_literal_expression2212 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_type2244 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_34_in_type2250 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_28_in_type2256 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_type2258 = new BitSet(new long[]{0x0000000010000002L});
 
 }

@@ -1,6 +1,8 @@
 package gui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.Bullet;
+import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -9,6 +11,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.GlyphMetrics;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -47,15 +50,26 @@ public class EditorView extends Composite {
 				| SWT.H_SCROLL | SWT.RIGHT_TO_LEFT);
 		this.linenumbers = new StyledText(sc1, SWT.LEFT | SWT.MULTI | SWT.WRAP);	
 		sc1.getVerticalBar().setEnabled(false);
-		this.linenumbers.setSize(20, 7500);
+		sc1.getHorizontalBar().setEnabled(false);
+		this.linenumbers.setSize(30, 7500);
 		
-		String lines = "";
-		for (int i = 1; i <= MAX_LINES; i++) {
-			lines = lines + i + "\n";
+		String s = "";
+		for (int i = 0; i < MAX_LINES - 1; i++) {
+			s += "\r";
+		}
+		this.linenumbers.setText(s);
+		
+		for (int i = 0; i < MAX_LINES; i++) {		
+			StyleRange style = new StyleRange();
+			style.length = 0;
+			style.metrics = new GlyphMetrics(0, 0, 0);
+			Bullet b = new Bullet(ST.BULLET_TEXT, style);
+			b.text = (i + 1) + " ";
+			this.linenumbers.setLineBullet(i, 1, b);
 		}
 		
-		this.linenumbers.setText(lines);
 		this.linenumbers.setEditable(false);
+		this.linenumbers.setDoubleClickEnabled(false);
 		this.linenumbers.setBackground(new Color(this.getDisplay(), 211, 211, 211));
 		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
 		sc1.setContent(this.linenumbers);
@@ -64,7 +78,8 @@ public class EditorView extends Composite {
 		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.V_SCROLL | SWT.H_SCROLL);
 		this.textfield = new StyledText(sc2, SWT.NONE);
 		this.textfield.setLeftMargin(5);
-		this.textfield.setSize(800, 7500);
+		this.textfield.setSize(1200, 7500);
+		this.textfield.setFocus();
 		sc2.setContent(this.textfield);
 		
 		//Position the text fields
@@ -78,54 +93,32 @@ public class EditorView extends Composite {
 		//Simultaneous scrolling of the text fields
 		final ScrollBar vBar1 = sc1.getVerticalBar();
 		final ScrollBar vBar2 = sc2.getVerticalBar();
-		final ScrollBar hBar1 = sc1.getHorizontalBar();
-		final ScrollBar hBar2 = sc2.getHorizontalBar();
-		SelectionListener listener1 = new SelectionAdapter () {
+		SelectionListener listener = new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				int x =  hBar1.getSelection() * (hBar2.getMaximum() - hBar2.getThumb()) 
-						/ Math.max(1, hBar1.getMaximum() - hBar1.getThumb());
-				int y =  vBar1.getSelection() * (vBar2.getMaximum() - vBar2.getThumb()) 
-						/ Math.max(1, vBar1.getMaximum() - vBar1.getThumb());
-				sc2.setOrigin (x, y);
-			}
-		};
-		SelectionListener listener2 = new SelectionAdapter () {
-			public void widgetSelected (SelectionEvent e) {
-				int x =  hBar2.getSelection() * (hBar1.getMaximum() - hBar1.getThumb()) 
-						/ Math.max(1, hBar2.getMaximum() - hBar2.getThumb());
+				int x =  sc1.getOrigin().x;
 				int y =  vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) 
 						/ Math.max(1, vBar2.getMaximum() - vBar2.getThumb());
 				sc1.setOrigin (x, y);
 			}
 		};
-		vBar1.addSelectionListener(listener1);
-		vBar2.addSelectionListener(listener2); 
+		vBar2.addSelectionListener(listener); 
 	}
 	
 	public void updateView() {
+		//Source updates (necessary because of undo/redo functions)
 		if(!this.textfield.getText().equals(this.editor.getSource())) {
 			this.textfield.setText(editor.getSource());
 		}
-		
+		//Syntax highlighting
 		textfield.setStyleRange(null);
-		int linebreakAddend = 0;
 		for(Keyword word : this.editor.getColorArray()) {
 			StyleRange stylerange = new StyleRange();
-			//System.out.println(word.getStart() + " ## " + word.getLength());// + " ## " + this.textfield.getLineAtOffset(word.getStart()) + " ## ");//  + this.textfield.getText(word.getStart(), word.getStart()+word.getLength()-1));
-			stylerange.start = word.getStart();// + this.textfield.getLineAtOffset(word.getStart());
+			stylerange.start = word.getStart();
 			stylerange.length = word.getLength();
 			stylerange.fontStyle = SWT.BOLD;
 			stylerange.foreground = new Color(this.textfield.getDisplay(), word.getColor());
 			textfield.setStyleRange(stylerange);
 		}
-	}
-	
-	public void setBreakpoint(int offset) {
-		StyleRange style = new StyleRange();
-    	style.start = offset;
-        style.length = 1;
-        style.background = new Color(this.parentdisplay, 250, 150, 150);
-        this.linenumbers.setStyleRange(style);
 	}
 	
 	public String getText() {

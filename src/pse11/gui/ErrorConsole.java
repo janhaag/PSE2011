@@ -26,26 +26,22 @@ public class ErrorConsole extends Console {
 		this.positionColumn = new TableColumn(this.table, SWT.CENTER);
 		this.positionColumn.setText("Position");
 		this.positionColumn.setWidth(100);
-		this.errormessageColumn = new TableColumn(this.table, SWT.CENTER);
+		this.errormessageColumn = new TableColumn(this.table, SWT.CENTER | SWT.FILL);
 		this.errormessageColumn.setText("Message");
 		this.errormessageColumn.setWidth(300);
-		//this.table.setBounds(0,0,250,100);
 		this.table.setHeaderVisible(true);
-		// TODO Auto-generated constructor stub
-		TableItem ti1 = new TableItem(this.table, SWT.NONE);
-		ti1.setText(new String[] {"lol","huh"});
 	}
 
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
-		System.out.println("testhier");
-		int i = 0;
+		assert this.table != null;
+		this.table.clearAll();
+		//clearAll() doesn't work correct, so itemcount has to be set manually
+		this.table.setItemCount(0);
 		for(Message message : messages) {
-			System.out.println("inhalt");
 			if(message.getCategory() == MessageCategories.ERROR) {
-				assert this.table != null;
 				TableItem tableitem = new TableItem(this.table, SWT.NONE);
-				tableitem.setText(new String[] {Integer.toString(message.getPosition()),"huh"});
+				tableitem.setText(new String[] {Integer.toString(message.getPosition()),message.getText()});
 			}
 		}	
 	}
