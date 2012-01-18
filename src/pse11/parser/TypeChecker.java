@@ -11,7 +11,7 @@ import java.util.Iterator;
  * This class checks the type correctness of a user program.
  */
 public class TypeChecker implements ASTVisitor {
-    private Type currentReturnType;
+    private Function currentFunction;
     private Type tempType;
     private Scope currentScope;
     private boolean functionCallAllowed = true;
@@ -46,6 +46,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given conditional statement.
      * @param conditional conditional to check
      */
+    @Override
     public void visit(Conditional conditional) {
         conditional.getCondition().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -68,6 +69,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given loop statement.
      * @param loop loop to check
      */
+    @Override
     public void visit(Loop loop) {
         loop.getCondition().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -91,6 +93,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given array assignment statement.
      * @param arrayAssignment array assignment to check
      */
+    @Override
     public void visit(ArrayAssignment arrayAssignment) {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
@@ -124,6 +127,7 @@ public class TypeChecker implements ASTVisitor {
      * There will be no type error.
      * @param number literal to check
      */
+    @Override
     public void visit(NumericLiteral number) {
         tempType = new IntegerType();
     }
@@ -132,6 +136,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given arithmetic expression.
      * @param arithmeticExpression expression to check
      */
+    @Override
     public void visit(ArithmeticExpression arithmeticExpression) {
         arithmeticExpression.getSubexpression1().accept(this);
         ArithmeticOperator operator =
@@ -161,6 +166,7 @@ public class TypeChecker implements ASTVisitor {
      * There will be no type error.
      * @param bool literal to check
      */
+    @Override
     public void visit(BooleanLiteral bool) {
         tempType = new BooleanType();
     }
@@ -169,6 +175,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given logical expression.
      * @param logicalExpression expression to check
      */
+    @Override
     public void visit(LogicalExpression logicalExpression) {
         Position position = logicalExpression.getPosition();
         logicalExpression.getSubexpression1().accept(this);
@@ -216,6 +223,7 @@ public class TypeChecker implements ASTVisitor {
      * and inserts the correct function reference.
      * @param functionCall function call to check
      */
+    @Override
     public void visit(FunctionCall functionCall) {
         if (!functionCallAllowed) {
             throw new FunctionCallNotAllowedException("Function call not "
@@ -253,6 +261,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given reading variable access.
      * @param variableRead read expression to check
      */
+    @Override
     public void visit(VariableRead variableRead) {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = variableRead.getVariable();
@@ -269,6 +278,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given reading array access.
      * @param arrayRead read expression to check
      */
+    @Override
     public void visit(ArrayRead arrayRead) {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayRead.getVariable();
@@ -295,10 +305,11 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given function.
      * @param function function to check
      */
+    @Override
     public void visit(Function function) {
-        currentReturnType = function.getReturnType();
+        currentFunction = function;
         currentScope = new Scope(null, function.getFunctionBlock(), function);
-        if (currentReturnType instanceof ArrayType) {
+        if (currentFunction.getReturnType() instanceof ArrayType) {
             throw new IllegalTypeException("Functions must not return arrays.",
                                            function.getPosition());
         }
@@ -324,11 +335,11 @@ public class TypeChecker implements ASTVisitor {
         for (Assumption assumption : assumptions) {
             assumption.accept(this);
         }
+        function.getFunctionBlock().accept(this);
         Ensure[] ensures = function.getEnsures();
         for (Ensure ensure : ensures) {
             ensure.accept(this);
         }
-        function.getFunctionBlock().accept(this);
         currentScope = currentScope.getParent();
     }
 
@@ -336,6 +347,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given program.
      * @param program program to check
      */
+    @Override
     public void visit(Program program) {
         functions = program.getFunctions();
         for (int i = 0; i < functions.length - 1; i++) {
@@ -356,6 +368,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given variable assignment.
      * @param assignment assignment to check
      */
+    @Override
     public void visit(Assignment assignment) {
         assignment.getValue().accept(this);
         HashMap<Identifier, Value> vars = currentScope.getVariables();
@@ -377,6 +390,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given assertion.
      * @param assertion assertion to check
      */
+    @Override
     public void visit(Assertion assertion) {
         assertion.getExpression().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -389,6 +403,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given assumption.
      * @param assumption assumption to check
      */
+    @Override
     public void visit(Assumption assumption) {
         assumption.getExpression().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -401,6 +416,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given axiom.
      * @param axiom axiom to check
      */
+    @Override
     public void visit(Axiom axiom) {
         axiom.getExpression().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -413,6 +429,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given ensure.
      * @param ensure ensure to check
      */
+    @Override
     public void visit(Ensure ensure) {
         ensure.getExpression().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -425,6 +442,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given invariant.
      * @param invariant invariant to check
      */
+    @Override
     public void visit(Invariant invariant) {
         invariant.getExpression().accept(this);
         if (!(tempType instanceof BooleanType)) {
@@ -437,7 +455,9 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given return statement.
      * @param returnStatement return statement to check
      */
+    @Override
     public void visit(ReturnStatement returnStatement) {
+        Type currentReturnType = currentFunction.getReturnType();
         if (currentReturnType == null) {
             throw new IllegalTypeException("Main must not have a "
                            + "return statement!", returnStatement.getPosition());
@@ -448,12 +468,17 @@ public class TypeChecker implements ASTVisitor {
                                 + "not match type that the function returns!",
                                 returnStatement.getPosition());
         }
+        Ensure[] ensures = currentFunction.getEnsures();
+        for (Ensure ensure : ensures) {
+            ensure.accept(this);
+        }
     }
 
     /**
      * Checks the type correctness of a given variable declaration.
      * @param varDec declaration to check
      */
+    @Override
     public void visit(VariableDeclaration varDec) {
         if (currentScope.existsInScope(new Identifier(varDec.getName()))) {
             throw new IllegalTypeException("Variable already defined in scope!",
@@ -474,6 +499,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given array declaration.
      * @param arrDec declaration to check
      */
+    @Override
     public void visit(ArrayDeclaration arrDec) {
         if (currentScope.existsInScope(new Identifier(arrDec.getName()))) {
             throw new IllegalTypeException("Array already declared in scope!",
@@ -505,6 +531,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given exists quantifier.
      * @param existsQuantifier quantifier to check
      */
+    @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         if (existsQuantifier.getRange() != null) {
             existsQuantifier.getRange().getLowerBound().accept(this);
@@ -533,6 +560,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given for all quantifier.
      * @param forAllQuantifier quantifier to check
      */
+    @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         if (forAllQuantifier.getRange() != null) {
             forAllQuantifier.getRange().getLowerBound().accept(this);
@@ -561,6 +589,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given statement block.
      * @param statementBlock statement block to check
      */
+    @Override
     public void visit(StatementBlock statementBlock) {
         Iterator<Statement> statements = statementBlock.getIterator();
         while (statements.hasNext()) {
@@ -572,6 +601,7 @@ public class TypeChecker implements ASTVisitor {
      * Checks the type correctness of a given length function call.
      * @param length length function call to check
      */
+    @Override
     public void visit(Length length) {
         length.getArray().accept(this);
         if (!(tempType instanceof ArrayType)) {

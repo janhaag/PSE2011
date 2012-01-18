@@ -35,6 +35,10 @@ public class Scope {
      */
     private final Iterator<Statement> statements;
     /**
+     * next statement in this scope
+     */
+    private Statement currentStatement;
+    /**
      * This flag indicates whether variables may searched for in
      * the parent scope. This must be prevented if this scope is
      * associated to a complete function.
@@ -72,13 +76,18 @@ public class Scope {
         return upScope;
     }
 
+    public boolean isFunctionScope() {
+        return currentFunction != null;
+    }
+
     /**
-     * Returns the function associated with this scope.
-     * Returns null if this is not a function's scope.
-     * @return function associated with this scope
+     * Returns the function this scope belongs to.
+     *
+     * @return function this scope belongs to
      */
     public Function getCurrentFunction() {
-        return currentFunction;
+        return currentFunction != null
+                ? currentFunction : upScope.getCurrentFunction();
     }
 
     public IdentityHashMap<FunctionCall, Value> getReturnValues() {
@@ -119,7 +128,12 @@ public class Scope {
      * @return next statement
      */
     public Statement getNextStatement() {
-        return statements.hasNext() ? statements.next() : null;
+        currentStatement = statements.hasNext() ? statements.next() : null;
+        return currentStatement;
+    }
+
+    public Statement getCurrentStatement() {
+        return currentStatement;
     }
 
     /**
@@ -128,7 +142,7 @@ public class Scope {
      * @param value new value (as String)
      */
     public void setVar(String name, String value) {
-        Value oldValue = variables.get(new Identifier(name));
+        Value oldValue = getVariables().get(new Identifier(name));
         if (oldValue instanceof BooleanValue) {
             ((BooleanValue) oldValue).setValue(value);
         } else {

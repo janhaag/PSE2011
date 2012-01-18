@@ -43,6 +43,9 @@ public class State implements Cloneable {
      */
     public void destroyScope() {
         currentScope = currentScope.getParent();
+        if (currentScope != null) {
+            currentStatement = currentScope.getCurrentStatement();
+        }
     }
 
     /**
@@ -131,10 +134,6 @@ public class State implements Cloneable {
     public void adjustStatement() {
         currentScope.clearFunctionResults();
         currentStatement = currentScope.getNextStatement();
-        if (currentScope.getCurrentFunction() == null
-                && currentStatement == null) {
-            destroyScope();
-        }
     }
 
     /**
@@ -144,6 +143,10 @@ public class State implements Cloneable {
      */
     public Function getCurrentFunction() {
         return currentScope.getCurrentFunction();
+    }
+
+    public boolean isFunctionScope() {
+        return currentScope.isFunctionScope();
     }
 
     public IdentityHashMap<FunctionCall, Value> getReturnValues() {
