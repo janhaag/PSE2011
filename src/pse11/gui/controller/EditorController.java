@@ -93,12 +93,15 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
         
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
+			//TODO Funktioniert nicht richtig!
 			if (e.getSource() == this.editorframe.getLineNumbers()) {
+				System.out.println("here");
 				int offset = this.editorframe.getLineNumbers().getCaretOffset();
 				int lineCount = this.editorframe.getTextField().getLineCount();
 				if (offset > lineCount - 1 || this.editorframe.getTextField().getLine(offset) == null 
 						|| !this.editorframe.getTextField().getLine(offset).contains(";")) {
 					this.editorframe.getTextField().setFocus();
+					System.out.println("there");
 					return;
 				} 
 				this.editorframe.getLineNumbers().getLineBullet

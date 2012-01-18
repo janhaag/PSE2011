@@ -1,4 +1,4 @@
-// $ANTLR 3.4 ../src/grammar/z3.g 2012-01-18 15:38:37
+// $ANTLR 3.4 ../src/grammar/z3.g 2012-01-18 17:18:48
 
     package verifier;
 
@@ -467,60 +467,49 @@ public class z3Lexer extends Lexer {
     }
     // $ANTLR end "TYPE"
 
-    // $ANTLR start "IDENT"
-    public final void mIDENT() throws RecognitionException {
+    // $ANTLR start "BOOL"
+    public final void mBOOL() throws RecognitionException {
         try {
-            int _type = IDENT;
+            int _type = BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:45:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // ../src/grammar/z3.g:45:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
-            {
-            if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
-                input.consume();
+            // ../src/grammar/z3.g:45:6: ( 'true' | 'false' )
+            int alt2=2;
+            int LA2_0 = input.LA(1);
+
+            if ( (LA2_0=='t') ) {
+                alt2=1;
+            }
+            else if ( (LA2_0=='f') ) {
+                alt2=2;
             }
             else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;
-            }
+                NoViableAltException nvae =
+                    new NoViableAltException("", 2, 0, input);
 
-
-            // ../src/grammar/z3.g:45:32: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
-            loop2:
-            do {
-                int alt2=2;
-                int LA2_0 = input.LA(1);
-
-                if ( ((LA2_0 >= '0' && LA2_0 <= '9')||(LA2_0 >= 'A' && LA2_0 <= 'Z')||LA2_0=='_'||(LA2_0 >= 'a' && LA2_0 <= 'z')) ) {
-                    alt2=1;
-                }
-
-
-                switch (alt2) {
-            	case 1 :
-            	    // ../src/grammar/z3.g:
-            	    {
-            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
-            	        input.consume();
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop2;
-                }
-            } while (true);
-
+                throw nvae;
 
             }
+            switch (alt2) {
+                case 1 :
+                    // ../src/grammar/z3.g:45:8: 'true'
+                    {
+                    match("true"); 
 
+
+
+                    }
+                    break;
+                case 2 :
+                    // ../src/grammar/z3.g:45:17: 'false'
+                    {
+                    match("false"); 
+
+
+
+                    }
+                    break;
+
+            }
             state.type = _type;
             state.channel = _channel;
         }
@@ -528,7 +517,7 @@ public class z3Lexer extends Lexer {
         	// do for sure before leaving
         }
     }
-    // $ANTLR end "IDENT"
+    // $ANTLR end "BOOL"
 
     // $ANTLR start "INT"
     public final void mINT() throws RecognitionException {
@@ -588,65 +577,13 @@ public class z3Lexer extends Lexer {
     }
     // $ANTLR end "INT"
 
-    // $ANTLR start "BOOL"
-    public final void mBOOL() throws RecognitionException {
-        try {
-            int _type = BOOL;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:51:6: ( 'true' | 'false' )
-            int alt4=2;
-            int LA4_0 = input.LA(1);
-
-            if ( (LA4_0=='t') ) {
-                alt4=1;
-            }
-            else if ( (LA4_0=='f') ) {
-                alt4=2;
-            }
-            else {
-                NoViableAltException nvae =
-                    new NoViableAltException("", 4, 0, input);
-
-                throw nvae;
-
-            }
-            switch (alt4) {
-                case 1 :
-                    // ../src/grammar/z3.g:51:8: 'true'
-                    {
-                    match("true"); 
-
-
-
-                    }
-                    break;
-                case 2 :
-                    // ../src/grammar/z3.g:51:17: 'false'
-                    {
-                    match("false"); 
-
-
-
-                    }
-                    break;
-
-            }
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "BOOL"
-
     // $ANTLR start "WS"
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:54:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // ../src/grammar/z3.g:54:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // ../src/grammar/z3.g:51:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // ../src/grammar/z3.g:51:9: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -676,31 +613,31 @@ public class z3Lexer extends Lexer {
         try {
             int _type = CHAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:61:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
-            // ../src/grammar/z3.g:61:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
+            // ../src/grammar/z3.g:58:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
+            // ../src/grammar/z3.g:58:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
             {
             match('\''); 
 
-            // ../src/grammar/z3.g:61:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
-            int alt5=2;
-            int LA5_0 = input.LA(1);
+            // ../src/grammar/z3.g:58:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
+            int alt4=2;
+            int LA4_0 = input.LA(1);
 
-            if ( (LA5_0=='\\') ) {
-                alt5=1;
+            if ( (LA4_0=='\\') ) {
+                alt4=1;
             }
-            else if ( ((LA5_0 >= '\u0000' && LA5_0 <= '&')||(LA5_0 >= '(' && LA5_0 <= '[')||(LA5_0 >= ']' && LA5_0 <= '\uFFFF')) ) {
-                alt5=2;
+            else if ( ((LA4_0 >= '\u0000' && LA4_0 <= '&')||(LA4_0 >= '(' && LA4_0 <= '[')||(LA4_0 >= ']' && LA4_0 <= '\uFFFF')) ) {
+                alt4=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 5, 0, input);
+                    new NoViableAltException("", 4, 0, input);
 
                 throw nvae;
 
             }
-            switch (alt5) {
+            switch (alt4) {
                 case 1 :
-                    // ../src/grammar/z3.g:61:15: ESC_SEQ
+                    // ../src/grammar/z3.g:58:15: ESC_SEQ
                     {
                     mESC_SEQ(); 
 
@@ -708,7 +645,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:61:25: ~ ( '\\'' | '\\\\' )
+                    // ../src/grammar/z3.g:58:25: ~ ( '\\'' | '\\\\' )
                     {
                     if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '&')||(input.LA(1) >= '(' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
                         input.consume();
@@ -738,6 +675,69 @@ public class z3Lexer extends Lexer {
         }
     }
     // $ANTLR end "CHAR"
+
+    // $ANTLR start "IDENT"
+    public final void mIDENT() throws RecognitionException {
+        try {
+            int _type = IDENT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../src/grammar/z3.g:61:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // ../src/grammar/z3.g:61:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            {
+            if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+                input.consume();
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;
+            }
+
+
+            // ../src/grammar/z3.g:61:32: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            loop5:
+            do {
+                int alt5=2;
+                int LA5_0 = input.LA(1);
+
+                if ( ((LA5_0 >= '0' && LA5_0 <= '9')||(LA5_0 >= 'A' && LA5_0 <= 'Z')||LA5_0=='_'||(LA5_0 >= 'a' && LA5_0 <= 'z')) ) {
+                    alt5=1;
+                }
+
+
+                switch (alt5) {
+            	case 1 :
+            	    // ../src/grammar/z3.g:
+            	    {
+            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+            	        input.consume();
+            	    }
+            	    else {
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop5;
+                }
+            } while (true);
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "IDENT"
 
     // $ANTLR start "HEX_DIGIT"
     public final void mHEX_DIGIT() throws RecognitionException {
@@ -1040,428 +1040,9 @@ public class z3Lexer extends Lexer {
     // $ANTLR end "UNICODE_ESC"
 
     public void mTokens() throws RecognitionException {
-        // ../src/grammar/z3.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | TYPE | IDENT | INT | BOOL | WS | CHAR )
+        // ../src/grammar/z3.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | TYPE | BOOL | INT | WS | CHAR | IDENT )
         int alt8=22;
-        switch ( input.LA(1) ) {
-        case '!':
-            {
-            alt8=1;
-            }
-            break;
-        case '(':
-            {
-            switch ( input.LA(2) ) {
-            case ')':
-                {
-                alt8=3;
-                }
-                break;
-            case '=':
-                {
-                alt8=4;
-                }
-                break;
-            case 'A':
-                {
-                alt8=5;
-                }
-                break;
-            case '_':
-                {
-                alt8=6;
-                }
-                break;
-            case 'a':
-                {
-                alt8=7;
-                }
-                break;
-            case 'd':
-                {
-                alt8=8;
-                }
-                break;
-            case 'm':
-                {
-                alt8=9;
-                }
-                break;
-            default:
-                alt8=2;
-            }
-
-            }
-            break;
-        case ')':
-            {
-            int LA8_3 = input.LA(2);
-
-            if ( (LA8_3==')') ) {
-                alt8=11;
-            }
-            else {
-                alt8=10;
-            }
-            }
-            break;
-        case 'I':
-            {
-            int LA8_4 = input.LA(2);
-
-            if ( (LA8_4=='n') ) {
-                int LA8_25 = input.LA(3);
-
-                if ( (LA8_25=='t') ) {
-                    int LA8_32 = input.LA(4);
-
-                    if ( ((LA8_32 >= '0' && LA8_32 <= '9')||(LA8_32 >= 'A' && LA8_32 <= 'Z')||LA8_32=='_'||(LA8_32 >= 'a' && LA8_32 <= 'z')) ) {
-                        alt8=18;
-                    }
-                    else {
-                        alt8=12;
-                    }
-                }
-                else {
-                    alt8=18;
-                }
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case 'd':
-            {
-            int LA8_5 = input.LA(2);
-
-            if ( (LA8_5=='e') ) {
-                int LA8_26 = input.LA(3);
-
-                if ( (LA8_26=='f') ) {
-                    int LA8_33 = input.LA(4);
-
-                    if ( (LA8_33=='i') ) {
-                        int LA8_41 = input.LA(5);
-
-                        if ( (LA8_41=='n') ) {
-                            int LA8_48 = input.LA(6);
-
-                            if ( (LA8_48=='e') ) {
-                                int LA8_53 = input.LA(7);
-
-                                if ( (LA8_53=='-') ) {
-                                    alt8=13;
-                                }
-                                else {
-                                    alt8=18;
-                                }
-                            }
-                            else {
-                                alt8=18;
-                            }
-                        }
-                        else {
-                            alt8=18;
-                        }
-                    }
-                    else {
-                        alt8=18;
-                    }
-                }
-                else {
-                    alt8=18;
-                }
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case 's':
-            {
-            int LA8_6 = input.LA(2);
-
-            if ( (LA8_6=='a') ) {
-                int LA8_27 = input.LA(3);
-
-                if ( (LA8_27=='t') ) {
-                    int LA8_34 = input.LA(4);
-
-                    if ( ((LA8_34 >= '0' && LA8_34 <= '9')||(LA8_34 >= 'A' && LA8_34 <= 'Z')||LA8_34=='_'||(LA8_34 >= 'a' && LA8_34 <= 'z')) ) {
-                        alt8=18;
-                    }
-                    else {
-                        alt8=14;
-                    }
-                }
-                else {
-                    alt8=18;
-                }
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case 'u':
-            {
-            int LA8_7 = input.LA(2);
-
-            if ( (LA8_7=='n') ) {
-                switch ( input.LA(3) ) {
-                case 'k':
-                    {
-                    int LA8_35 = input.LA(4);
-
-                    if ( (LA8_35=='n') ) {
-                        int LA8_43 = input.LA(5);
-
-                        if ( (LA8_43=='o') ) {
-                            int LA8_49 = input.LA(6);
-
-                            if ( (LA8_49=='w') ) {
-                                int LA8_54 = input.LA(7);
-
-                                if ( (LA8_54=='n') ) {
-                                    int LA8_57 = input.LA(8);
-
-                                    if ( ((LA8_57 >= '0' && LA8_57 <= '9')||(LA8_57 >= 'A' && LA8_57 <= 'Z')||LA8_57=='_'||(LA8_57 >= 'a' && LA8_57 <= 'z')) ) {
-                                        alt8=18;
-                                    }
-                                    else {
-                                        alt8=15;
-                                    }
-                                }
-                                else {
-                                    alt8=18;
-                                }
-                            }
-                            else {
-                                alt8=18;
-                            }
-                        }
-                        else {
-                            alt8=18;
-                        }
-                    }
-                    else {
-                        alt8=18;
-                    }
-                    }
-                    break;
-                case 's':
-                    {
-                    int LA8_36 = input.LA(4);
-
-                    if ( (LA8_36=='a') ) {
-                        int LA8_44 = input.LA(5);
-
-                        if ( (LA8_44=='t') ) {
-                            int LA8_50 = input.LA(6);
-
-                            if ( ((LA8_50 >= '0' && LA8_50 <= '9')||(LA8_50 >= 'A' && LA8_50 <= 'Z')||LA8_50=='_'||(LA8_50 >= 'a' && LA8_50 <= 'z')) ) {
-                                alt8=18;
-                            }
-                            else {
-                                alt8=16;
-                            }
-                        }
-                        else {
-                            alt8=18;
-                        }
-                    }
-                    else {
-                        alt8=18;
-                    }
-                    }
-                    break;
-                default:
-                    alt8=18;
-                }
-
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case 'B':
-            {
-            int LA8_8 = input.LA(2);
-
-            if ( (LA8_8=='o') ) {
-                int LA8_29 = input.LA(3);
-
-                if ( (LA8_29=='o') ) {
-                    int LA8_37 = input.LA(4);
-
-                    if ( (LA8_37=='l') ) {
-                        int LA8_45 = input.LA(5);
-
-                        if ( ((LA8_45 >= '0' && LA8_45 <= '9')||(LA8_45 >= 'A' && LA8_45 <= 'Z')||LA8_45=='_'||(LA8_45 >= 'a' && LA8_45 <= 'z')) ) {
-                            alt8=18;
-                        }
-                        else {
-                            alt8=17;
-                        }
-                    }
-                    else {
-                        alt8=18;
-                    }
-                }
-                else {
-                    alt8=18;
-                }
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case 't':
-            {
-            int LA8_9 = input.LA(2);
-
-            if ( (LA8_9=='r') ) {
-                int LA8_30 = input.LA(3);
-
-                if ( (LA8_30=='u') ) {
-                    int LA8_38 = input.LA(4);
-
-                    if ( (LA8_38=='e') ) {
-                        alt8=18;
-                    }
-                    else {
-                        alt8=18;
-                    }
-                }
-                else {
-                    alt8=18;
-                }
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            {
-            alt8=19;
-            }
-            break;
-        case 'f':
-            {
-            int LA8_11 = input.LA(2);
-
-            if ( (LA8_11=='a') ) {
-                int LA8_31 = input.LA(3);
-
-                if ( (LA8_31=='l') ) {
-                    int LA8_39 = input.LA(4);
-
-                    if ( (LA8_39=='s') ) {
-                        int LA8_47 = input.LA(5);
-
-                        if ( (LA8_47=='e') ) {
-                            alt8=18;
-                        }
-                        else {
-                            alt8=18;
-                        }
-                    }
-                    else {
-                        alt8=18;
-                    }
-                }
-                else {
-                    alt8=18;
-                }
-            }
-            else {
-                alt8=18;
-            }
-            }
-            break;
-        case 'A':
-        case 'C':
-        case 'D':
-        case 'E':
-        case 'F':
-        case 'G':
-        case 'H':
-        case 'J':
-        case 'K':
-        case 'L':
-        case 'M':
-        case 'N':
-        case 'O':
-        case 'P':
-        case 'Q':
-        case 'R':
-        case 'S':
-        case 'T':
-        case 'U':
-        case 'V':
-        case 'W':
-        case 'X':
-        case 'Y':
-        case 'Z':
-        case '_':
-        case 'a':
-        case 'b':
-        case 'c':
-        case 'e':
-        case 'g':
-        case 'h':
-        case 'i':
-        case 'j':
-        case 'k':
-        case 'l':
-        case 'm':
-        case 'n':
-        case 'o':
-        case 'p':
-        case 'q':
-        case 'r':
-        case 'v':
-        case 'w':
-        case 'x':
-        case 'y':
-        case 'z':
-            {
-            alt8=18;
-            }
-            break;
-        case '\t':
-        case '\n':
-        case '\r':
-        case ' ':
-            {
-            alt8=21;
-            }
-            break;
-        case '\'':
-            {
-            alt8=22;
-            }
-            break;
-        default:
-            NoViableAltException nvae =
-                new NoViableAltException("", 8, 0, input);
-
-            throw nvae;
-
-        }
-
+        alt8 = dfa8.predict(input);
         switch (alt8) {
             case 1 :
                 // ../src/grammar/z3.g:1:10: T__14
@@ -1600,15 +1181,15 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 18 :
-                // ../src/grammar/z3.g:1:111: IDENT
+                // ../src/grammar/z3.g:1:111: BOOL
                 {
-                mIDENT(); 
+                mBOOL(); 
 
 
                 }
                 break;
             case 19 :
-                // ../src/grammar/z3.g:1:117: INT
+                // ../src/grammar/z3.g:1:116: INT
                 {
                 mINT(); 
 
@@ -1616,25 +1197,25 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 20 :
-                // ../src/grammar/z3.g:1:121: BOOL
-                {
-                mBOOL(); 
-
-
-                }
-                break;
-            case 21 :
-                // ../src/grammar/z3.g:1:126: WS
+                // ../src/grammar/z3.g:1:120: WS
                 {
                 mWS(); 
 
 
                 }
                 break;
-            case 22 :
-                // ../src/grammar/z3.g:1:129: CHAR
+            case 21 :
+                // ../src/grammar/z3.g:1:123: CHAR
                 {
                 mCHAR(); 
+
+
+                }
+                break;
+            case 22 :
+                // ../src/grammar/z3.g:1:128: IDENT
+                {
+                mIDENT(); 
 
 
                 }
@@ -1645,6 +1226,129 @@ public class z3Lexer extends Lexer {
     }
 
 
+    protected DFA8 dfa8 = new DFA8(this);
+    static final String DFA8_eotS =
+        "\2\uffff\1\26\1\30\7\16\16\uffff\7\16\1\50\1\16\1\52\5\16\1\uffff"+
+        "\1\16\1\uffff\2\16\1\63\1\64\3\16\1\70\2\uffff\1\64\2\16\2\uffff"+
+        "\1\73\1\uffff";
+    static final String DFA8_eofS =
+        "\74\uffff";
+    static final String DFA8_minS =
+        "\1\11\1\uffff\2\51\1\156\1\145\1\141\1\156\1\157\1\162\1\141\16"+
+        "\uffff\1\164\1\146\1\164\1\153\1\157\1\165\1\154\1\60\1\151\1\60"+
+        "\1\156\1\141\1\154\1\145\1\163\1\uffff\1\156\1\uffff\1\157\1\164"+
+        "\2\60\2\145\1\167\1\60\2\uffff\1\60\1\55\1\156\2\uffff\1\60\1\uffff";
+    static final String DFA8_maxS =
+        "\1\172\1\uffff\1\155\1\51\1\156\1\145\1\141\1\156\1\157\1\162\1"+
+        "\141\16\uffff\1\164\1\146\1\164\1\163\1\157\1\165\1\154\1\172\1"+
+        "\151\1\172\1\156\1\141\1\154\1\145\1\163\1\uffff\1\156\1\uffff\1"+
+        "\157\1\164\2\172\2\145\1\167\1\172\2\uffff\1\172\1\55\1\156\2\uffff"+
+        "\1\172\1\uffff";
+    static final String DFA8_acceptS =
+        "\1\uffff\1\1\11\uffff\1\23\1\24\1\25\1\26\1\3\1\4\1\5\1\6\1\7\1"+
+        "\10\1\11\1\2\1\13\1\12\17\uffff\1\14\1\uffff\1\16\10\uffff\1\21"+
+        "\1\22\3\uffff\1\20\1\15\1\uffff\1\17";
+    static final String DFA8_specialS =
+        "\74\uffff}>";
+    static final String[] DFA8_transitionS = {
+            "\2\14\2\uffff\1\14\22\uffff\1\14\1\1\5\uffff\1\15\1\2\1\3\6"+
+            "\uffff\12\13\7\uffff\1\16\1\10\6\16\1\4\21\16\4\uffff\1\16\1"+
+            "\uffff\3\16\1\5\1\16\1\12\14\16\1\6\1\11\1\7\5\16",
+            "",
+            "\1\17\23\uffff\1\20\3\uffff\1\21\35\uffff\1\22\1\uffff\1\23"+
+            "\2\uffff\1\24\10\uffff\1\25",
+            "\1\27",
+            "\1\31",
+            "\1\32",
+            "\1\33",
+            "\1\34",
+            "\1\35",
+            "\1\36",
+            "\1\37",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\40",
+            "\1\41",
+            "\1\42",
+            "\1\43\7\uffff\1\44",
+            "\1\45",
+            "\1\46",
+            "\1\47",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            "\1\51",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            "\1\53",
+            "\1\54",
+            "\1\55",
+            "\1\56",
+            "\1\57",
+            "",
+            "\1\60",
+            "",
+            "\1\61",
+            "\1\62",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            "\1\65",
+            "\1\66",
+            "\1\67",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            "",
+            "",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            "\1\71",
+            "\1\72",
+            "",
+            "",
+            "\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+            ""
+    };
+
+    static final short[] DFA8_eot = DFA.unpackEncodedString(DFA8_eotS);
+    static final short[] DFA8_eof = DFA.unpackEncodedString(DFA8_eofS);
+    static final char[] DFA8_min = DFA.unpackEncodedStringToUnsignedChars(DFA8_minS);
+    static final char[] DFA8_max = DFA.unpackEncodedStringToUnsignedChars(DFA8_maxS);
+    static final short[] DFA8_accept = DFA.unpackEncodedString(DFA8_acceptS);
+    static final short[] DFA8_special = DFA.unpackEncodedString(DFA8_specialS);
+    static final short[][] DFA8_transition;
+
+    static {
+        int numStates = DFA8_transitionS.length;
+        DFA8_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA8_transition[i] = DFA.unpackEncodedString(DFA8_transitionS[i]);
+        }
+    }
+
+    class DFA8 extends DFA {
+
+        public DFA8(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 8;
+            this.eot = DFA8_eot;
+            this.eof = DFA8_eof;
+            this.min = DFA8_min;
+            this.max = DFA8_max;
+            this.accept = DFA8_accept;
+            this.special = DFA8_special;
+            this.transition = DFA8_transition;
+        }
+        public String getDescription() {
+            return "1:1: Tokens : ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | TYPE | BOOL | INT | WS | CHAR | IDENT );";
+        }
+    }
  
 
 }

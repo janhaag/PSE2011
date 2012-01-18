@@ -30,9 +30,9 @@ public class Message {
 	 * @param text the text of the message
 	 */
 	public Message(MessageCategories category, int position, String text) {
-		this.category = MessageCategories.ERROR;
-		this.position = 99;
-		this.text = "test";
+		this.category = category;
+		this.position = position;
+		this.text = text;
 	}
 	/**
 	 * Returns the category of the message.
