@@ -21,7 +21,6 @@ def build(bld):
 	'${CP} -u antlr/WhileLanguage/*.java ../src/pse11/parser/', always=True)
     bld(rule = '${JAVA} org.antlr.Tool -make -fo antlr/Z3 ../src/grammar/z3.g;'
         '${CP} -u antlr/Z3/*.java ../src/pse11/verifier/', always=True)
-#    bld(rule = '${CP} -uR ../src/pse11/gui/image pse11/gui/', always=True)
     bld(features = 'javac jar',
         srcdir   = 'pse11/',
         outdir   = 'pse11',
