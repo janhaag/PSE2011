@@ -3,5 +3,5 @@ package ast;
 /**
  *
  */
-public class UnaryOperator {
+public abstract class UnaryOperator {
 }

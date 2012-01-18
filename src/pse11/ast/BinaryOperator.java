@@ -3,5 +3,5 @@ package ast;
 /**
  *
  */
-public class BinaryOperator {
+public abstract class BinaryOperator {
 }

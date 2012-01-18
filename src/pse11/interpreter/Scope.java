@@ -199,7 +199,7 @@ public class Scope {
      */
     public void createArray(String name, Type typeOfValue, int[] lengths) {
         Identifier identifier = new Identifier(name);
-        Value newValue = new ArrayValue((ArrayType) typeOfValue, lengths, 0);
+        Value newValue = new ArrayValue((ArrayType) typeOfValue, lengths);
         variables.put(identifier, newValue);
     }
 }

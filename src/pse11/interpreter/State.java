@@ -12,7 +12,7 @@ import java.util.IdentityHashMap;
  * (which saves the variables and all other scopes)
  * and the reference to the statement that will be executed.
  */
-public class State implements Cloneable {
+public class State {
     /**
      * current scope during program execution
      */

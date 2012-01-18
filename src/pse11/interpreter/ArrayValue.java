@@ -47,6 +47,10 @@ public class ArrayValue extends Value {
         }
     }
 
+    public ArrayValue(ArrayType type, int[] lengths) {
+        this(type, lengths, 0);
+    }
+
     /**
      * Returns the collection of values that this array saves.
      * @return collection of values that this array saves

@@ -18,11 +18,11 @@ public class ProgramExecution {
     /**
      * list of this program's statement breakpoints
      */
-    private final ArrayList<StatementBreakpoint> statementBreakpoints;
+    private ArrayList<StatementBreakpoint> statementBreakpoints;
     /**
      * list of this program's global breakpoints
      */
-    private final ArrayList<GlobalBreakpoint> globalBreakpoints;
+    private ArrayList<GlobalBreakpoint> globalBreakpoints;
     //TODO: delete typeChecker if necessary
     /**
      * type checker to evaluate the type correctness of global statements
@@ -86,12 +86,14 @@ public class ProgramExecution {
         return globalBreakpoints;
     }
 
-    public void createStatementBreakpoint(int line) {
-        statementBreakpoints.add(new StatementBreakpoint(line));
+    public void setStatementBreakpoints(
+            ArrayList<StatementBreakpoint> statementBreakpoints) {
+        this.statementBreakpoints = statementBreakpoints;
     }
 
-    public void createGlobalBreakpoint(Expression expression) {
-        globalBreakpoints.add(new GlobalBreakpoint(expression));
+    public void setGlobalBreakpoints(
+            ArrayList<GlobalBreakpoint> globalBreakpoints) {
+        this.globalBreakpoints = globalBreakpoints;
     }
     
     public HashMap<Identifier, Value> getVariables() {

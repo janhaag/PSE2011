@@ -20,7 +20,7 @@ public class ExecutionHandler {
 	}
 	public void parse(String source) {
 		try {
-			/*this.execution = new ProgramExecution(new ParserInterface().parseProgram(source), 
+			/*this.execution = new ProgramExecution(new ParserInterface().parseProgram(source),
 					this.interpreter);*/
 			new ParserInterface().parseProgram(source);
 		} catch (RecognitionException e) {
