@@ -13,7 +13,7 @@ import gui.EditorView;
  * <li>Syntax HL</li>
  * <li>interface for one view</li>
  * </ul>
- * 
+ *
  * @version 1.0
  */
 public class Editor {
@@ -38,12 +38,12 @@ public class Editor {
 	 * a list of past versions which have been changed trough the undo function
 	 */
 	private Stack<EditorMemento> redoMemento;
-	
+
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
-	
+
 	/**
 	 * Constructs a new instance of Editor.
-	 * 
+	 *
 	 * The source will be initialized to an empty String.
 	 */
 	public Editor() {
@@ -91,7 +91,7 @@ public class Editor {
 	/**
 	 * Find the keywords in the given source and add them to the list of keywords
 	 * (@see {@link Editor#colorArray}).
-	 * 
+	 *
 	 * @param source the text which should be searched
 	 */
 	private void findKeywords(String source) {
@@ -136,6 +136,8 @@ public class Editor {
 		} else if(keyword.equals("int")) {
 			return new Keyword(position,keyword.length(),"0000FF");
 		} else if(keyword.equals("bool")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+        } else if(keyword.equals("array")) {
 			return new Keyword(position,keyword.length(),"0000FF");
 		} else if(keyword.equals("else")) {
 			return new Keyword(position,keyword.length(),"0000FF");
