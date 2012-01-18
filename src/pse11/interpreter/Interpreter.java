@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  *
  */
-public class Interpreter implements ASTVisitor {
+public class Interpreter implements ast.ASTVisitor {
     private Value tempValue;
     private State currentState;
     private Value returnValue;

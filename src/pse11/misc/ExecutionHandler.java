@@ -19,14 +19,20 @@ public class ExecutionHandler {
 		return this.execution;
 	}
 	public void parse(String source) {
+		ParserInterface parser = new ParserInterface();
+		this.messagesystem.clear(MessageCategories.ERROR);
 		try {
 			/*this.execution = new ProgramExecution(new ParserInterface().parseProgram(source), 
 					this.interpreter);*/
-			new ParserInterface().parseProgram(source);
-		} catch (RecognitionException e) {
+			parser.parseProgram(source);
+		} catch (RecognitionException re) {
 			//e.printStackTrace();
-			this.messagesystem.addMessage(MessageCategories.ERROR, 0, e.getMessage());
-			//new Message(MessageCategories.ERROR, 0, e.getMessage());
+			this.messagesystem.addMessage(MessageCategories.ERROR, 0, re.getMessage());
+		} catch(NullPointerException npe) {
+			this.messagesystem.addMessage(MessageCategories.ERROR, -1, "AST creation not possible!");
+		}
+		for(String error : parser.getErrors()) {
+			this.messagesystem.addMessage(MessageCategories.ERROR, 0, error);
 		}
 	}
 	public void singleStep() {

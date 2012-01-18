@@ -36,6 +36,7 @@ public class TreeViewController implements SelectionListener {
 	private VariableView varView;
 	
 	//get them from program execution, parser interface needed
+	//TODO Model im Controller? Why?
 	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
 	

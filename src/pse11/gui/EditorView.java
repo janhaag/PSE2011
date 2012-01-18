@@ -105,16 +105,15 @@ public class EditorView extends Composite {
 	}
 	
 	public void updateView() {
+		//Source updates (necessary because of undo/redo functions)
 		if(!this.textfield.getText().equals(this.editor.getSource())) {
 			this.textfield.setText(editor.getSource());
 		}
-		
+		//Syntax highlighting
 		textfield.setStyleRange(null);
-		int linebreakAddend = 0;
 		for(Keyword word : this.editor.getColorArray()) {
 			StyleRange stylerange = new StyleRange();
-			//System.out.println(word.getStart() + " ## " + word.getLength());// + " ## " + this.textfield.getLineAtOffset(word.getStart()) + " ## ");//  + this.textfield.getText(word.getStart(), word.getStart()+word.getLength()-1));
-			stylerange.start = word.getStart();// + this.textfield.getLineAtOffset(word.getStart());
+			stylerange.start = word.getStart();
 			stylerange.length = word.getLength();
 			stylerange.fontStyle = SWT.BOLD;
 			stylerange.foreground = new Color(this.textfield.getDisplay(), word.getColor());

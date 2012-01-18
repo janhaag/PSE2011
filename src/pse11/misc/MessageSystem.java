@@ -62,7 +62,6 @@ public class MessageSystem {
 	public void addMessage(MessageCategories category, int position, String text) {
 		this.messages.add(new Message(MessageCategories.ERROR, position, text));
 		this.notifyConsoles();
-		System.out.println("lol");
 	}
 	//TODO private
 	/**
@@ -72,5 +71,15 @@ public class MessageSystem {
 		for(Console console : this.consoles) {
 			console.updateConsole(this.messages);
 		}
+	}
+	public void clear(MessageCategories category) {
+		ArrayList<Message> delMessages = new ArrayList<Message>();
+		for(Message message : this.messages) {
+			if(message.getCategory() == category) {
+				delMessages.add(message);
+			}
+		}
+		this.messages.removeAll(delMessages);
+		this.notifyConsoles();
 	}
 }

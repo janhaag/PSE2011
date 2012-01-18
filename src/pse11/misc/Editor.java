@@ -1,12 +1,9 @@
 package misc;
 
-
-import interpreter.ProgramExecution;
 import interpreter.StatementBreakpoint;
 
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.StringTokenizer;
 
 import gui.EditorView;
 
@@ -41,6 +38,8 @@ public class Editor {
 	 * a list of past versions which have been changed trough the undo function
 	 */
 	private Stack<EditorMemento> redoMemento;
+	
+	private ArrayList<StatementBreakpoint> statementBreakpoints;
 	
 	/**
 	 * Constructs a new instance of Editor.
@@ -128,21 +127,29 @@ public class Editor {
 			return new Keyword(position,5,"0000FF");
 		} else if(keyword.equals("true")) {
 			return new Keyword(position,keyword.length(),"00FF00");
+		} else if(keyword.equals("true;")) {
+			return new Keyword(position,4,"00FF00");
 		} else if(keyword.equals("false")) {
 			return new Keyword(position,keyword.length(),"FF0000");
+		} else if(keyword.equals("false;")) {
+			return new Keyword(position,5,"FF0000");
 		} else if(keyword.equals("int")) {
 			return new Keyword(position,keyword.length(),"0000FF");
-		} else if(keyword.equals("boolean")) {
-			return new Keyword(position,keyword.length(),"0000FF");
-		} else if(keyword.equals("while")) {
+		} else if(keyword.equals("bool")) {
 			return new Keyword(position,keyword.length(),"0000FF");
 		} else if(keyword.equals("else")) {
 			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("return")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("return;")) {
+			return new Keyword(position,6,"0000FF");
 		} else {
 			return null;
 		}
 	}
 	public void addBreakpoint(int line) {
-		//this.execution.createStatementBreakpoint(line);
+		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
+		if(!this.statementBreakpoints.contains(newStatementBreakpoint))
+			this.statementBreakpoints.add(newStatementBreakpoint);
 	}
 }

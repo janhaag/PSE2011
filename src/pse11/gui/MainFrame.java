@@ -149,8 +149,6 @@ public class MainFrame extends Frame {
 		TabItem ti3 = new TabItem(tf, SWT.BORDER);
 		ti3.setText("Misc");
 		ti3.setControl(console[2] = new MiscConsole(tf, SWT.BORDER, messagesystem));
-		//TODO WEG!
-		//messagesystem.notifyConsoles();
 		
 		//Adding help box
 		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);

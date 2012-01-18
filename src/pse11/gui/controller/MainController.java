@@ -17,7 +17,7 @@ import gui.MainFrame;
 import gui.SettingsFrame;
 import gui.RandomTestFrame;
 
-public class MainController implements SelectionListener, MouseListener {
+public class MainController implements SelectionListener {
         private ExecutionHandler executionHandler;
 
         private MainFrame mainframe;
@@ -34,13 +34,9 @@ public class MainController implements SelectionListener, MouseListener {
                 this.editorController = new EditorController(editor, this.mainframe.getEditor());
                 this.miscController = new MiscController(null);
                 this.settingsController = new SettingsController(Settings.getInstance());
-                //TODO Ãœbergabe vom ExecutionHandler
+                //TODO Übergabe vom ExecutionHandler
                 this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
                                 this.mainframe.getVarView());
-
-                //Statement breakpoints setzen
-                this.editorController.getEditorView().getLineNumbers().addMouseListener(this);
-
 
                 //Has to be the last call in the constructor
                 initMainFrame();
@@ -117,9 +113,14 @@ public class MainController implements SelectionListener, MouseListener {
                         this.mainframe.switchIcon(image, image2);
                 }
         }
-
+        
         @Override
-        public void mouseDoubleClick(MouseEvent e) {
+        public void widgetDefaultSelected(SelectionEvent e) {
+                // TODO Auto-generated method stub
+        }
+
+        //TODO Löschen?!
+        /*public void mouseDoubleClick(MouseEvent e) {
                 if (e.getSource() == this.editorController.getEditorView().getLineNumbers()) {
                         int offset = this.editorController.getEditorView().getLineNumbers().getCaretOffset();
                         int lineCount = this.editorController.getEditorView().getTextField().getLineCount();
@@ -129,18 +130,5 @@ public class MainController implements SelectionListener, MouseListener {
                         }
                         this.treeController.addStatementBreakpoint(offset + 1);
                 }
-        }
-
-        @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
-                // TODO Auto-generated method stub
-        }
-        @Override
-        public void mouseDown(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-        }
-        @Override
-        public void mouseUp(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-        }
+        }*/
 }
