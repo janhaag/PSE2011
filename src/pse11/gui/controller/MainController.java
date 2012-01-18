@@ -2,6 +2,7 @@ package gui.controller;
 
 import misc.Editor;
 import misc.ExecutionHandler;
+import misc.Help;
 import misc.MessageSystem;
 import misc.Settings;
 
@@ -23,6 +24,7 @@ public class MainController implements SelectionListener {
 	private MainFrame mainframe;
 	private MiscController miscController;
 	private SettingsController settingsController;
+	private HelpController helpController;
 	private EditorController editorController;
 	private TreeViewController treeController;
 	
@@ -34,6 +36,7 @@ public class MainController implements SelectionListener {
 		this.editorController = new EditorController(editor, this.mainframe.getEditor());
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
+		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
 		//TODO Übergabe vom ExecutionHandler
 		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
 				this.mainframe.getVarView());
@@ -67,7 +70,7 @@ public class MainController implements SelectionListener {
 		} else if(e.getSource() == mainframe.getMenuBar().getMenurBarItemAbout()) {
 			new AboutFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
-			new HelpFrame(this.mainframe.getShell());
+			new HelpFrame(this.mainframe.getShell(), this.helpController);
 		} 
 		//button events
 		else if(e.getSource() == mainframe.getRunButton()) {

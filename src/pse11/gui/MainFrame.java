@@ -28,6 +28,7 @@ public class MainFrame extends Frame {
 	private Console console[];
 	private VariableView varView;
 	private BreakpointView breakpointView;
+	private HelpBox help;
 	
 	public MainFrame(MainController mainController, Editor editor, MessageSystem messagesystem) {
 		//Initialization and Configuration of the window
@@ -153,7 +154,7 @@ public class MainFrame extends Frame {
 		//messagesystem.notifyConsoles();
 		
 		//Adding help box
-		HelpBox help = new HelpBox(shell, SWT.BORDER, editor);
+		help = new HelpBox(shell, SWT.BORDER, editor);
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 	    help.setLayoutData(gData);
 	}
@@ -205,6 +206,10 @@ public class MainFrame extends Frame {
 	
 	public Button getStopButton() {
 		return this.stopButton;
+	}
+	
+	public HelpBox getHelpBox() {
+		return this.help;
 	}
 	
 	public void openWindow() {
