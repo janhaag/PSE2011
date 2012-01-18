@@ -117,10 +117,10 @@ parameter returns [ FunctionParameter ast ]
 
 function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : assume_statement? {$pre = $assume_statement.result;}
+        : a=assume_statement? {$pre = $a.result != null ? $a.result : new LinkedList<Assumption>();}
           '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}'
               {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
-          ensure_statement? {$post = $ensure_statement.result;}
+          e=ensure_statement? {$post = $e.result != null ? $e.result : new LinkedList<Ensure>();}
         ;
 
 if_body returns [ StatementBlock ast ]
@@ -131,10 +131,10 @@ if_body returns [ StatementBlock ast ]
 
 loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : invariant_statement? {$pre = $invariant_statement.result;}
+        : i=invariant_statement? {$pre = $i.result != null ? $i.result : new LinkedList<Invariant>();}
           '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}'
               {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
-       	  ensure_statement? {$post = $ensure_statement.result;}
+       	  e=ensure_statement? {$post = $e.result != null ? $e.result : new LinkedList<Ensure>();}
         ;
 
 statement returns [ Statement ast, LinkedList<Expression> divisors ]
