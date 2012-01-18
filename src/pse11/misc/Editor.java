@@ -1,5 +1,6 @@
 package misc;
 
+import interpreter.GlobalBreakpoint;
 import interpreter.StatementBreakpoint;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class Editor {
 	private Stack<EditorMemento> redoMemento;
 
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
+	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 
 	/**
 	 * Constructs a new instance of Editor.
@@ -51,6 +53,9 @@ public class Editor {
 		this.colorArray = new ArrayList<Keyword>();
 		this.undoMemento = new Stack<EditorMemento>();
 		this.redoMemento = new Stack<EditorMemento>();
+		
+		this.statementBreakpoints = new ArrayList<StatementBreakpoint>();
+		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
 	}
 	public void setView(EditorView view) {
 		this.editorview = view;
@@ -149,12 +154,22 @@ public class Editor {
 			return null;
 		}
 	}
+	
 	public void addBreakpoint(int line) {
-		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
-		if(!this.statementBreakpoints.contains(newStatementBreakpoint)) {
-			this.statementBreakpoints.add(newStatementBreakpoint);
-		} else {
-			newStatementBreakpoint = null;
+		for (int i = 0; i < this.statementBreakpoints.size(); i++) {
+			if (this.statementBreakpoints.get(i).getLine() == line) {
+				return;
+			}
 		}
+		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
+		this.statementBreakpoints.add(newStatementBreakpoint);
+	}
+	
+	public ArrayList<StatementBreakpoint> getStatementBreakpoints() {
+		return this.statementBreakpoints;
+	}
+	
+	public ArrayList<GlobalBreakpoint> getGlobalBreakpoints() {
+		return this.globalBreakpoints;
 	}
 }

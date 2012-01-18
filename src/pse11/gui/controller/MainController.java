@@ -17,6 +17,7 @@ import gui.HelpFrame;
 import gui.MainFrame;
 import gui.SettingsFrame;
 import gui.RandomTestFrame;
+import gui.controller.EditorController.BreakpointViewController;
 
 public class MainController implements SelectionListener {
 	private ExecutionHandler executionHandler;
@@ -26,7 +27,8 @@ public class MainController implements SelectionListener {
 	private SettingsController settingsController;
 	private HelpController helpController;
 	private EditorController editorController;
-	private TreeViewController treeController;
+    private BreakpointViewController breakpointController;
+    private VariableViewController varController;
 	
 	public MainController() {
 		MessageSystem messagesystem = new MessageSystem();
@@ -37,9 +39,9 @@ public class MainController implements SelectionListener {
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
-		//TODO Übergabe vom ExecutionHandler
-		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
-                this.mainframe.getVarView(), this.executionHandler, editor);
+		//TODO uebergabe vom ExecutionHandler
+        this.varController = new VariableViewController(this.mainframe.getVarView());
+        this.breakpointController = this.editorController.new BreakpointViewController(this.mainframe.getBreakpointView());
 		
 		//Has to be the last call in the constructor
 		initMainFrame();
@@ -83,7 +85,6 @@ public class MainController implements SelectionListener {
             //Functions
             assert editorController != null;
             this.executionHandler.parse(this.editorController.getEditor().getSource());
-            //this.treeController.addExecution(this.executionHandler.getProgramExecution());
         } else if(e.getSource() == mainframe.getStepButton()) {
             //Images
             Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
@@ -93,13 +94,13 @@ public class MainController implements SelectionListener {
             this.mainframe.getStopButton().setEnabled(true);
             //Functions
             //this.treeController.addExecution(this.executionHandler.getProgramExecution());
-            this.treeController.updateVarView();
+            this.varController.updateVarView();
         } else if(e.getSource() == mainframe.getPauseButton()) {
             Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
             Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause2.png"));
             this.mainframe.switchIcon(image, image2);
             //Functions
-            this.treeController.updateVarView();
+            this.varController.updateVarView();
         } else if(e.getSource() == mainframe.getStopButton()) {
             //Images
             Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
@@ -108,8 +109,7 @@ public class MainController implements SelectionListener {
             this.mainframe.getStopButton().setEnabled(false);
             this.mainframe.getPauseButton().setEnabled(false);
             //Functions
-            this.treeController.updateVarView();
-            //this.treeController.removeExecution();
+            this.varController.updateVarView();
         } else if(e.getSource() == mainframe.getValidateButton()) {
             Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
             Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
@@ -121,17 +121,4 @@ public class MainController implements SelectionListener {
     public void widgetDefaultSelected(SelectionEvent e) {
         // TODO Auto-generated method stub
     }
-
-    //TODO Löschen?!
-    /*public void mouseDoubleClick(MouseEvent e) {
-            if (e.getSource() == this.editorController.getEditorView().getLineNumbers()) {
-                    int offset = this.editorController.getEditorView().getLineNumbers().getCaretOffset();
-                    int lineCount = this.editorController.getEditorView().getTextField().getLineCount();
-                    if (offset > lineCount - 1 || this.editorController.getEditorView().getTextField().getLine(offset) == null
-                                    || !this.editorController.getEditorView().getTextField().getLine(offset).contains(";")) {
-                            return;
-                    }
-                    this.treeController.addStatementBreakpoint(offset + 1);
-            }
-    }*/
 }
