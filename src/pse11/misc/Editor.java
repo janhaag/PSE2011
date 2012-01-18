@@ -155,14 +155,16 @@ public class Editor {
 		}
 	}
 	
-	public void addBreakpoint(int line) {
+	public int addBreakpoint(int line) {
 		for (int i = 0; i < this.statementBreakpoints.size(); i++) {
 			if (this.statementBreakpoints.get(i).getLine() == line) {
-				return;
+				this.statementBreakpoints.remove(i);
+				return 0;
 			}
 		}
 		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
 		this.statementBreakpoints.add(newStatementBreakpoint);
+		return 1;
 	}
 	
 	public ArrayList<StatementBreakpoint> getStatementBreakpoints() {

@@ -105,15 +105,14 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 				if (offset > lineCount - 1 || this.editorframe.getTextField().getLine(offset) == null 
 						|| !(this.editorframe.getTextField().getLine(offset).contains(";")
 								|| this.editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("if(")
-								|| this.editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("else(")
+								|| this.editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("else")
 								|| this.editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("while("))) {
 					this.editorframe.getTextField().setFocus();
 					return;
-				} 			
-				this.editorframe.setStatementBreakpoint(offset + 1);
+				} 					
+				int i = this.editor.addBreakpoint(offset + 1); 
+				this.editorframe.setStatementBreakpoint(offset + 1, i);
 				this.editorframe.getTextField().setFocus();
-				
-				this.editor.addBreakpoint(offset + 1); 
 			}			
 		}
         
@@ -153,7 +152,7 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
                     if (offset > lineCount - 1 || editorframe.getTextField().getLine(offset) == null
                                     || !(editorframe.getTextField().getLine(offset).contains(";")
         									|| editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("if(")
-        									|| editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("else(")
+        									|| editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("else")
         									|| editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("while("))) {
                     		return;
                     }

@@ -125,7 +125,9 @@ public class EditorView extends Composite {
 	          StyleRange style = event.style;
               int x = event.x;
               int y = event.y + event.ascent - style.metrics.ascent;
-              gc.drawImage(breakpoint, x, y);
+              if ((Image)event.style.data != null) {
+            	  gc.drawImage((Image)event.style.data, x, y);
+              }
 	        }
 	      }); 
 	}
@@ -147,11 +149,13 @@ public class EditorView extends Composite {
 		}
 	}
 	
-	public void setStatementBreakpoint(int line) {	
+	public void setStatementBreakpoint(int line, int set) {	
 		StyleRange style = new StyleRange();
 		style.start = line * 2 - 2;
 		style.length = 1;
-		style.data = this.breakpoint;
+		if (set == 1) {
+			style.data = this.breakpoint;
+		}
 		Rectangle rect = this.breakpoint.getBounds();
 		style.metrics = new GlyphMetrics(rect.height, 0, rect.width);		
 		this.linenumbers.setStyleRange(style);

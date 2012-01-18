@@ -35,7 +35,7 @@ public class MainFrame extends Frame {
 		//Initialization and Configuration of the window
 		display = new Display();
 		shell = new Shell(display);
-		shell.setSize(800,600);
+		shell.setSize(950,650);
 		shell.setText(SHELLTITLE);
 		
 		//Setting layout
