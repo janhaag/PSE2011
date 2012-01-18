@@ -1,5 +1,13 @@
 grammar z3;
 
+@header {
+    package verifier;
+}
+
+@lexer::header {
+    package verifier;
+}
+
 start	:	block+
 	;
 

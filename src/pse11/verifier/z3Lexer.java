@@ -1,4 +1,7 @@
-// $ANTLR 3.4 ../src/grammar/z3.g 2012-01-18 11:45:52
+// $ANTLR 3.4 ../src/grammar/z3.g 2012-01-18 15:38:37
+
+    package verifier;
+
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -55,8 +58,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:2:7: ( '!' )
-            // ../src/grammar/z3.g:2:9: '!'
+            // ../src/grammar/z3.g:6:7: ( '!' )
+            // ../src/grammar/z3.g:6:9: '!'
             {
             match('!'); 
 
@@ -76,8 +79,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:3:7: ( '(' )
-            // ../src/grammar/z3.g:3:9: '('
+            // ../src/grammar/z3.g:7:7: ( '(' )
+            // ../src/grammar/z3.g:7:9: '('
             {
             match('('); 
 
@@ -97,8 +100,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:4:7: ( '()' )
-            // ../src/grammar/z3.g:4:9: '()'
+            // ../src/grammar/z3.g:8:7: ( '()' )
+            // ../src/grammar/z3.g:8:9: '()'
             {
             match("()"); 
 
@@ -120,8 +123,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:5:7: ( '(=' )
-            // ../src/grammar/z3.g:5:9: '(='
+            // ../src/grammar/z3.g:9:7: ( '(=' )
+            // ../src/grammar/z3.g:9:9: '(='
             {
             match("(="); 
 
@@ -143,8 +146,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:6:7: ( '(Array' )
-            // ../src/grammar/z3.g:6:9: '(Array'
+            // ../src/grammar/z3.g:10:7: ( '(Array' )
+            // ../src/grammar/z3.g:10:9: '(Array'
             {
             match("(Array"); 
 
@@ -166,8 +169,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:7:7: ( '(_as-array' )
-            // ../src/grammar/z3.g:7:9: '(_as-array'
+            // ../src/grammar/z3.g:11:7: ( '(_as-array' )
+            // ../src/grammar/z3.g:11:9: '(_as-array'
             {
             match("(_as-array"); 
 
@@ -189,8 +192,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:8:7: ( '(and' )
-            // ../src/grammar/z3.g:8:9: '(and'
+            // ../src/grammar/z3.g:12:7: ( '(and' )
+            // ../src/grammar/z3.g:12:9: '(and'
             {
             match("(and"); 
 
@@ -212,8 +215,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:9:7: ( '(define-fun' )
-            // ../src/grammar/z3.g:9:9: '(define-fun'
+            // ../src/grammar/z3.g:13:7: ( '(define-fun' )
+            // ../src/grammar/z3.g:13:9: '(define-fun'
             {
             match("(define-fun"); 
 
@@ -235,8 +238,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:10:7: ( '(model' )
-            // ../src/grammar/z3.g:10:9: '(model'
+            // ../src/grammar/z3.g:14:7: ( '(model' )
+            // ../src/grammar/z3.g:14:9: '(model'
             {
             match("(model"); 
 
@@ -258,8 +261,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:11:7: ( ')' )
-            // ../src/grammar/z3.g:11:9: ')'
+            // ../src/grammar/z3.g:15:7: ( ')' )
+            // ../src/grammar/z3.g:15:9: ')'
             {
             match(')'); 
 
@@ -279,8 +282,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:12:7: ( '))' )
-            // ../src/grammar/z3.g:12:9: '))'
+            // ../src/grammar/z3.g:16:7: ( '))' )
+            // ../src/grammar/z3.g:16:9: '))'
             {
             match("))"); 
 
@@ -302,8 +305,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:13:7: ( 'Int' )
-            // ../src/grammar/z3.g:13:9: 'Int'
+            // ../src/grammar/z3.g:17:7: ( 'Int' )
+            // ../src/grammar/z3.g:17:9: 'Int'
             {
             match("Int"); 
 
@@ -325,8 +328,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:14:7: ( 'define-fun' )
-            // ../src/grammar/z3.g:14:9: 'define-fun'
+            // ../src/grammar/z3.g:18:7: ( 'define-fun' )
+            // ../src/grammar/z3.g:18:9: 'define-fun'
             {
             match("define-fun"); 
 
@@ -348,8 +351,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:15:7: ( 'sat' )
-            // ../src/grammar/z3.g:15:9: 'sat'
+            // ../src/grammar/z3.g:19:7: ( 'sat' )
+            // ../src/grammar/z3.g:19:9: 'sat'
             {
             match("sat"); 
 
@@ -371,8 +374,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:16:7: ( 'unknown' )
-            // ../src/grammar/z3.g:16:9: 'unknown'
+            // ../src/grammar/z3.g:20:7: ( 'unknown' )
+            // ../src/grammar/z3.g:20:9: 'unknown'
             {
             match("unknown"); 
 
@@ -394,8 +397,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:17:7: ( 'unsat' )
-            // ../src/grammar/z3.g:17:9: 'unsat'
+            // ../src/grammar/z3.g:21:7: ( 'unsat' )
+            // ../src/grammar/z3.g:21:9: 'unsat'
             {
             match("unsat"); 
 
@@ -417,7 +420,7 @@ public class z3Lexer extends Lexer {
         try {
             int _type = TYPE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:32:6: ( 'Int' | 'Bool' )
+            // ../src/grammar/z3.g:40:6: ( 'Int' | 'Bool' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -436,7 +439,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../src/grammar/z3.g:32:8: 'Int'
+                    // ../src/grammar/z3.g:40:8: 'Int'
                     {
                     match("Int"); 
 
@@ -445,7 +448,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:33:4: 'Bool'
+                    // ../src/grammar/z3.g:41:4: 'Bool'
                     {
                     match("Bool"); 
 
@@ -469,8 +472,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = IDENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:37:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // ../src/grammar/z3.g:37:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // ../src/grammar/z3.g:45:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // ../src/grammar/z3.g:45:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -482,7 +485,7 @@ public class z3Lexer extends Lexer {
             }
 
 
-            // ../src/grammar/z3.g:37:32: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // ../src/grammar/z3.g:45:32: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop2:
             do {
                 int alt2=2;
@@ -532,10 +535,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:40:5: ( ( '0' .. '9' )+ )
-            // ../src/grammar/z3.g:40:7: ( '0' .. '9' )+
+            // ../src/grammar/z3.g:48:5: ( ( '0' .. '9' )+ )
+            // ../src/grammar/z3.g:48:7: ( '0' .. '9' )+
             {
-            // ../src/grammar/z3.g:40:7: ( '0' .. '9' )+
+            // ../src/grammar/z3.g:48:7: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -590,7 +593,7 @@ public class z3Lexer extends Lexer {
         try {
             int _type = BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:43:6: ( 'true' | 'false' )
+            // ../src/grammar/z3.g:51:6: ( 'true' | 'false' )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -609,7 +612,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // ../src/grammar/z3.g:43:8: 'true'
+                    // ../src/grammar/z3.g:51:8: 'true'
                     {
                     match("true"); 
 
@@ -618,7 +621,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:43:17: 'false'
+                    // ../src/grammar/z3.g:51:17: 'false'
                     {
                     match("false"); 
 
@@ -642,8 +645,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:46:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // ../src/grammar/z3.g:46:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // ../src/grammar/z3.g:54:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // ../src/grammar/z3.g:54:9: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -673,12 +676,12 @@ public class z3Lexer extends Lexer {
         try {
             int _type = CHAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../src/grammar/z3.g:53:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
-            // ../src/grammar/z3.g:53:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
+            // ../src/grammar/z3.g:61:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
+            // ../src/grammar/z3.g:61:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
             {
             match('\''); 
 
-            // ../src/grammar/z3.g:53:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
+            // ../src/grammar/z3.g:61:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -697,7 +700,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // ../src/grammar/z3.g:53:15: ESC_SEQ
+                    // ../src/grammar/z3.g:61:15: ESC_SEQ
                     {
                     mESC_SEQ(); 
 
@@ -705,7 +708,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:53:25: ~ ( '\\'' | '\\\\' )
+                    // ../src/grammar/z3.g:61:25: ~ ( '\\'' | '\\\\' )
                     {
                     if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '&')||(input.LA(1) >= '(' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
                         input.consume();
@@ -739,7 +742,7 @@ public class z3Lexer extends Lexer {
     // $ANTLR start "HEX_DIGIT"
     public final void mHEX_DIGIT() throws RecognitionException {
         try {
-            // ../src/grammar/z3.g:58:11: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+            // ../src/grammar/z3.g:66:11: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
             // ../src/grammar/z3.g:
             {
             if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'F')||(input.LA(1) >= 'a' && input.LA(1) <= 'f') ) {
@@ -765,7 +768,7 @@ public class z3Lexer extends Lexer {
     // $ANTLR start "ESC_SEQ"
     public final void mESC_SEQ() throws RecognitionException {
         try {
-            // ../src/grammar/z3.g:62:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
+            // ../src/grammar/z3.g:70:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
             int alt6=3;
             int LA6_0 = input.LA(1);
 
@@ -818,7 +821,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../src/grammar/z3.g:62:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+                    // ../src/grammar/z3.g:70:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
                     {
                     match('\\'); 
 
@@ -835,7 +838,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:63:9: UNICODE_ESC
+                    // ../src/grammar/z3.g:71:9: UNICODE_ESC
                     {
                     mUNICODE_ESC(); 
 
@@ -843,7 +846,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../src/grammar/z3.g:64:9: OCTAL_ESC
+                    // ../src/grammar/z3.g:72:9: OCTAL_ESC
                     {
                     mOCTAL_ESC(); 
 
@@ -863,7 +866,7 @@ public class z3Lexer extends Lexer {
     // $ANTLR start "OCTAL_ESC"
     public final void mOCTAL_ESC() throws RecognitionException {
         try {
-            // ../src/grammar/z3.g:69:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
+            // ../src/grammar/z3.g:77:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
             int alt7=3;
             int LA7_0 = input.LA(1);
 
@@ -914,7 +917,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // ../src/grammar/z3.g:69:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
+                    // ../src/grammar/z3.g:77:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
                     {
                     match('\\'); 
 
@@ -951,7 +954,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:70:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
+                    // ../src/grammar/z3.g:78:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
                     {
                     match('\\'); 
 
@@ -978,7 +981,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../src/grammar/z3.g:71:9: '\\\\' ( '0' .. '7' )
+                    // ../src/grammar/z3.g:79:9: '\\\\' ( '0' .. '7' )
                     {
                     match('\\'); 
 
@@ -1007,8 +1010,8 @@ public class z3Lexer extends Lexer {
     // $ANTLR start "UNICODE_ESC"
     public final void mUNICODE_ESC() throws RecognitionException {
         try {
-            // ../src/grammar/z3.g:76:5: ( '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
-            // ../src/grammar/z3.g:76:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+            // ../src/grammar/z3.g:84:5: ( '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
+            // ../src/grammar/z3.g:84:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
             {
             match('\\'); 
 
