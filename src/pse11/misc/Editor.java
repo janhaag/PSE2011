@@ -149,7 +149,10 @@ public class Editor {
 	}
 	public void addBreakpoint(int line) {
 		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
-		if(!this.statementBreakpoints.contains(newStatementBreakpoint))
+		if(!this.statementBreakpoints.contains(newStatementBreakpoint)) {
 			this.statementBreakpoints.add(newStatementBreakpoint);
+		} else {
+			newStatementBreakpoint = null;
+		}
 	}
 }
