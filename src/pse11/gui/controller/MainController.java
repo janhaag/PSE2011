@@ -34,7 +34,7 @@ public class MainController implements SelectionListener {
                 this.editorController = new EditorController(editor, this.mainframe.getEditor());
                 this.miscController = new MiscController(null);
                 this.settingsController = new SettingsController(Settings.getInstance());
-                //TODO Übergabe vom ExecutionHandler
+                //TODO Ãœbergabe vom ExecutionHandler
                 this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
                                 this.mainframe.getVarView());
 
@@ -113,13 +113,13 @@ public class MainController implements SelectionListener {
                         this.mainframe.switchIcon(image, image2);
                 }
         }
-        
+
         @Override
         public void widgetDefaultSelected(SelectionEvent e) {
                 // TODO Auto-generated method stub
         }
 
-        //TODO Löschen?!
+        //TODO LÃ¶schen?!
         /*public void mouseDoubleClick(MouseEvent e) {
                 if (e.getSource() == this.editorController.getEditorView().getLineNumbers()) {
                         int offset = this.editorController.getEditorView().getLineNumbers().getCaretOffset();
