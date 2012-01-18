@@ -8,28 +8,31 @@ grammar z3;
     package verifier;
 }
 
-start	:	block+
+start	returns[LinkedList list] @init{list = new LinkedList();}
+	:(pair = block {$list.add($pair);})+
 	;
 
-block	: 'unsat'
-	   .*
+block	returns[misc.Pair<Boolean, String> result] 
+	:'unsat'
+	   .* {result = new Pair(true,"");}
 	|  'sat'
-	   model
-	| 'unknown'
-	 .*
+	   example = model {result = new Pair(false, $example);}
+	| 'unknown' 
+	 .* {result = new Pair(true,"unknown");}
 	;
 
-model
+model	returns [String example]	
 	:	'(model'
-		('(define-fun' IDENT  '('(IDENT  TYPE)*')' TYPE value ')')*
-		('define-fun' IDENT '()' '(Array'('Int')+ TYPE  ')'
-		'(_as-array' IDENT '!' INT')')*
-		('(define-fun' IDENT '!' INT '('('('IDENT '!' INT TYPE')')+')' TYPE  '('ite'))')*
-		')'
+		('(define-fun' id = IDENT  '('(IDENT  TYPE)*')' TYPE val = value ')' {$example += $id.text + "=" + $val + "\n";} )*
+		{HashMap m = new HashMap()}('(define-fun'  id = IDENT '()' {$example = $id.text;} '(Array'('Int'{$example += "[ ]";})+ TYPE  ')'	
+		'(_as-array'  id2 = (IDENT '!' INT)'))' {m.put($id2.text,$id.text;)}{$example += "\n";})*
+		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE  '('ass = ite {$example += m.get($id3.text) + $ass;}'))')*
+		')' 
 	;
 
-ite	:	'(=' IDENT '!' INT')'  value (value | ite)
-	|	'(and'('(=' IDENT '!' INT')')+')' value (value | ite)
+ite	returns[String assignment]
+	:	'(=' IDENT '!' INT i = INT')'  val = value {$assignment = "[" + $i.text + "]" + "=" + $val + "\n"}(value | '('as=ite')'{$assignment += as;})
+	|	'(and'('(=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')' val=value {$assignment += "=" + $val + "\n";}(value | '('as=ite')'{$assignment += as;})		
 	;
 
 value	returns [String content]
