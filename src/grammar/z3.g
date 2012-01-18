@@ -2,7 +2,7 @@ grammar z3;
 
 start	:	block+
 	;
-	
+
 block	: 'unsat'
 	   .*
 	|  'sat'
@@ -11,26 +11,27 @@ block	: 'unsat'
 	 .*
 	;
 
-model	
+model
 	:	'(model'
 		('(define-fun' IDENT  '('(IDENT  TYPE)*')' TYPE value ')')*
 		('define-fun' IDENT '()' '(Array'('Int')+ TYPE  ')'
 		'(_as-array' IDENT '!' INT')')*
 		('(define-fun' IDENT '!' INT '('('('IDENT '!' INT TYPE')')+')' TYPE  '('ite'))')*
-		')' 
+		')'
 	;
+
 ite	:	'(=' IDENT '!' INT')'  value (value | ite)
-	|	'(and'('(=' IDENT '!' INT')')+')' value (value | ite)		
+	|	'(and'('(=' IDENT '!' INT')')+')' value (value | ite)
 	;
 
 value	returns [String content]
-	:	INT {$content =$INT.text}
-	|	BOOL  {$content = $BOOL.text)}
-	;			
+	:	INT {$content =$INT.text;}
+	|	BOOL  {$content = $BOOL.text;}
+	;
 
 TYPE	:	'Int'
 	|	'Bool'
-	
+
 	;
 
 IDENT:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
@@ -39,8 +40,8 @@ IDENT:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
 INT :	'0'..'9'+
     ;
 
-BOOL	: 'true' | 'false'	
-	;    
+BOOL	: 'true' | 'false'
+	;
 
 WS  :   ( ' '
         | '\t'
