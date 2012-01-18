@@ -12,4 +12,8 @@ public class AssertionFailureException extends RuntimeException {
         super(message);
         this.position = position;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

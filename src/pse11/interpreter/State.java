@@ -4,6 +4,7 @@ import ast.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 
 /**
  * This class encapsulates a state during program execution.
@@ -33,7 +34,7 @@ public class State implements Cloneable {
         Function main = ((Program) ast).getMainFunction();
         /*TODO: erase following line if it is clear what to do at the beginning
         of a program*/
-        currentScope = new Scope(null, main.getFunctionBlock(), true);
+        currentScope = new Scope(null, main.getFunctionBlock(), main);
         adjustStatement();
     }
 
@@ -42,17 +43,21 @@ public class State implements Cloneable {
      */
     public void destroyScope() {
         currentScope = currentScope.getParent();
+        if (currentScope != null) {
+            currentStatement = currentScope.getCurrentStatement();
+        }
     }
 
     /**
      * Creates a new scope with the given parameters. The old scope
      * will become parent scope of this new one.
      * @param statementBlock statement block belonging to this scope
-     * @param isFunctionScope indicates whether this scope belongs to a function
+     * @param currentFunction function associated with this scope,
+     *                        if there is any
      */
     public void createScope(StatementBlock statementBlock,
-                            boolean isFunctionScope) {
-        currentScope = new Scope(currentScope, statementBlock, isFunctionScope);
+                            Function currentFunction) {
+        currentScope = new Scope(currentScope, statementBlock, currentFunction);
     }
 
     /**
@@ -123,19 +128,33 @@ public class State implements Cloneable {
 
     /**
      * Sets the current statement reference to the next statement;
-     * destroys scopes if they are evaluated completely.
+     * destroys the current scope if it is evaluated completely and
+     * not a function scope.
      */
     public void adjustStatement() {
-        Statement nextStatement = currentScope.getNextStatement();
-        if (nextStatement == null) {
-            destroyScope();
-            if (currentScope != null) {
-                adjustStatement();
-            } else {
-                currentStatement = null;
-            }
-        } else {
-            currentStatement = nextStatement;
-        }
+        currentScope.clearFunctionResults();
+        currentStatement = currentScope.getNextStatement();
+    }
+
+    /**
+     * Returns the function associated with the current scope.
+     * Returns null if this scope is not a function's scope.
+     * @return function associated with the current scope
+     */
+    public Function getCurrentFunction() {
+        return currentScope.getCurrentFunction();
+    }
+
+    public boolean isFunctionScope() {
+        return currentScope.isFunctionScope();
+    }
+
+    public IdentityHashMap<FunctionCall, Value> getReturnValues() {
+        return currentScope.getReturnValues();
+    }
+
+    public void createFunctionResult(FunctionCall functionCall,
+                                     Value returnValue) {
+        currentScope.createFunctionResult(functionCall, returnValue);
     }
 }

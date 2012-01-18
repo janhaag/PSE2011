@@ -1,46 +1,55 @@
 grammar z3;
 
-start	:	block+
-	;
-	
-block	: 'unsat'
-	   .*
-	|  'sat'
-	   model
-	| 'unknown'
-	 .*
+@header {
+    package verifier;
+}
+
+@lexer::header {
+    package verifier;
+}
+
+start	returns[LinkedList list] @init{list = new LinkedList();}
+	:(pair = block {$list.add($pair);})+
 	;
 
-model	
+block	returns[misc.Pair<Boolean, String> result] 
+	:'unsat'
+	   .* {result = new Pair(true,"");}
+	|  'sat'
+	   example = model {result = new Pair(false, $example);}
+	| 'unknown' 
+	 .* {result = new Pair(true,"unknown");}
+	;
+
+model	returns [String example]	
 	:	'(model'
-		('(define-fun' IDENT  '('(IDENT  TYPE)*')' TYPE value ')')*
-		('define-fun' IDENT '()' '(Array'('Int')+ TYPE  ')'
-		'(_as-array' IDENT '!' INT')')*
-		('(define-fun' IDENT '!' INT '('('('IDENT '!' INT TYPE')')+')' TYPE  '('ite'))')*
+		('(define-fun' id = IDENT  '('(IDENT  TYPE)*')' TYPE val = value ')' {$example += $id.text + "=" + $val + "\n";} )*
+		{HashMap m = new HashMap()}('(define-fun'  id = IDENT '()' {$example = $id.text;} '(Array'('Int'{$example += "[ ]";})+ TYPE  ')'	
+		'(_as-array'  id2 = (IDENT '!' INT)'))' {m.put($id2.text,$id.text;)}{$example += "\n";})*
+		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE  '('ass = ite {$example += m.get($id3.text) + $ass;}'))')*
 		')' 
 	;
-ite	:	'(=' IDENT '!' INT')'  value (value | ite)
-	|	'(and'('(=' IDENT '!' INT')')+')' value (value | ite)		
+
+ite	returns[String assignment]
+	:	'(=' IDENT '!' INT i = INT')'  val = value {$assignment = "[" + $i.text + "]" + "=" + $val + "\n"}(value | '('as=ite')'{$assignment += as;})
+	|	'(and'('(=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')' val=value {$assignment += "=" + $val + "\n";}(value | '('as=ite')'{$assignment += as;})		
 	;
 
 value	returns [String content]
-	:	INT {$content =$INT.text}
-	|	BOOL  {$content = $BOOL.text)}
-	;			
+	:	INT {$content =$INT.text;}
+	|	BOOL  {$content = $BOOL.text;}
+	;
 
 TYPE	:	'Int'
 	|	'Bool'
-	
+
 	;
 
-IDENT:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
-    ;
+BOOL	: 'true' | 'false'
+	;
 
 INT :	'0'..'9'+
     ;
-
-BOOL	: 'true' | 'false'	
-	;    
 
 WS  :   ( ' '
         | '\t'
@@ -50,6 +59,9 @@ WS  :   ( ' '
     ;
 
 CHAR:  '\'' ( ESC_SEQ | ~('\''|'\\') ) '\''
+    ;
+
+IDENT:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
 fragment

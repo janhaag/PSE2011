@@ -1,0 +1,11 @@
+PSE2011 -- Building Instructions
+================================
+
+- Install Python (python.org)
+- put Antlr3 (antlr.org) in your java classpath
+- do the same with SWT (eclipse.org/swt/)
+- change directory into 'src', then run
+    - python ./waf configure
+    - python ./waf build -j 1
+- change directory to ../bin
+- Run via java -cp path/to/antlr.jar:path/to/swt.jar:./pse11.jar misc.MainClass

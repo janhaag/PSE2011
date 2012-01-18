@@ -23,10 +23,6 @@ public class VerifierInterface {
         this.verifier = verifier;
     }
 
-    public void notifyConsole() {
-        //An welchen Controller und was genau?
-    }
-
     public String verify(ASTRoot ast) throws IOException {
         program = smtLibTranslator.getWPTree(ast);
         File file = saveInSMTFile(program.toString());
@@ -48,8 +44,12 @@ public class VerifierInterface {
             }
         }
         verifierout.close();
+        String[] path = verifier.split("/");
+        String [] nameAndEnding = path[path.length - 1].split(".");
+        String name = nameAndEnding[0];
+        String lexerName = name + "Lexer";
+        String parserName = name + "Parser";
         //Schicke Ergebniss von Z3 an Lexer und dessen an Parser.
-        notifyConsole();
         if (file.exists()) {
             file.delete();
         }
