@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import misc.Editor;
+import misc.ExecutionHandler;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -30,7 +33,9 @@ import gui.BreakpointView;
 import gui.VariableView;
 
 public class TreeViewController implements SelectionListener {
-	private ProgramExecution execution;
+	//private ProgramExecution execution;
+	private ExecutionHandler execution;
+	private Editor editor;
 	
 	private BreakpointView breakpointView;
 	private VariableView varView;
@@ -40,7 +45,11 @@ public class TreeViewController implements SelectionListener {
 	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
 	
-	public TreeViewController(BreakpointView breakpointView, VariableView varView) {	
+	public TreeViewController(BreakpointView breakpointView, VariableView varView, 
+			ExecutionHandler executionHandler, Editor editor) {	
+		this.execution = executionHandler;
+		this.editor = editor;
+		
 		this.breakpointView = breakpointView;
 		this.varView = varView;		
 		
@@ -48,27 +57,29 @@ public class TreeViewController implements SelectionListener {
 		this.breakpointView.getStatementBreakpoint().addSelectionListener(this);
 		this.breakpointView.getAddButton().addSelectionListener(this);
 		
-		//test values
+		//TODO test values
 		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
 		this.statementBreakpoints = new ArrayList<StatementBreakpoint>();
 	}
 	
 	public void addStatementBreakpoint(int line) {
+		editor.addBreakpoint(line);
+		//TODO TEST?
 		StatementBreakpoint sbreakpoint = new StatementBreakpoint(line);
 		this.statementBreakpoints.add(sbreakpoint);
 		TableItem item = new TableItem(this.breakpointView.getStatementBreakpoint(), SWT.NONE);
 		item.setText(1, line + "");
 	}
 	
-	public void addExecution(ProgramExecution execution) {
+	/*public void addExecution(ProgramExecution execution) {
 		if (this.execution == null) {
 			this.execution = execution;
 		}
-	}
+	}*/
 	
-	public void removeExecution() {
+	/*public void removeExecution() {
 		this.execution = null;
-	}
+	}*/
 	
 	//update the variable view when in single step, paused or stopped state
 	public void updateVarView() {        
@@ -179,7 +190,8 @@ public class TreeViewController implements SelectionListener {
 			
 			boolean contains = false;
 			for (GlobalBreakpoint g : this.globalBreakpoints) {
-				if (g.getExpression().toString().equals(expression)) contains = true;
+				if (g.getExpression().toString().equals(expression)) 
+					contains = true;
 			}
 			
 			if (!contains) {
