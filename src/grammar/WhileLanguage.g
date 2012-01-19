@@ -4,6 +4,8 @@ grammar WhileLanguage;
 	package parser;
 	import ast.*;
 	import java.util.LinkedList;
+
+    import static misc.WhileLanguageParserUtils.*;
 }
 
 @members {
@@ -16,46 +18,6 @@ grammar WhileLanguage;
     @Override
     public void emitErrorMessage(String msg) {
         reporter.add(msg);
-    }
-
-    public LinkedList<Assertion> possibleDivByZero(LinkedList<Expression> expressions) {
-        LinkedList<Assertion> result = new LinkedList<Assertion>();
-        for (Expression e : expressions) {
-            result.add(new Assertion(new Position(),
-                new LogicalExpression(new Position(), e, new NumericLiteral(new Position(), "0"), new NotEqual())
-                ));
-        }
-        return result;
-    }
-
-    public LinkedList<Invariant> possibleDivByZeroI(LinkedList<Expression> expressions) {
-        LinkedList<Invariant> result = new LinkedList<Invariant>();
-        for (Expression e : expressions) {
-            result.add(new Invariant(new Position(),
-                new LogicalExpression(new Position(), e, new NumericLiteral(new Position(), "0"), new NotEqual())
-                ));
-        }
-        return result;
-    }
-
-    public LinkedList<Assumption> possibleDivByZeroA(LinkedList<Expression> expressions) {
-        LinkedList<Assumption> result = new LinkedList<Assumption>();
-        for (Expression e : expressions) {
-            result.add(new Assumption(new Position(),
-                new LogicalExpression(new Position(), e, new NumericLiteral(new Position(), "0"), new NotEqual())
-                ));
-        }
-        return result;
-    }
-
-    public LinkedList<Ensure> possibleDivByZeroE(LinkedList<Expression> expressions) {
-        LinkedList<Ensure> result = new LinkedList<Ensure>();
-        for (Expression e : expressions) {
-            result.add(new Ensure(new Position(),
-                new LogicalExpression(new Position(), e, new NumericLiteral(new Position(), "0"), new NotEqual())
-                ));
-        }
-        return result;
     }
 }
 
@@ -129,7 +91,7 @@ function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedLi
 
 if_body returns [ StatementBlock ast ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
-        : '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}' 
+        : '{' ( statement {s.addAll(possibleDivByZero($statement.divisors)); s.add($statement.ast);} )* '}'
             {$ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());}
         ;
 
