@@ -36,11 +36,6 @@ public class ArithmeticExpression extends Expression {
                                 Expression subexpression2,
                                 ArithmeticOperator arithmeticOperator) {
         super(position);
-        if (subexpression1 instanceof LogicalExpression ||
-            subexpression2 instanceof LogicalExpression) {
-                throw new IllegalArgumentException(
-                        "No use doing Arithmetic with logical expressions.");
-            }
         this.subexpression1 = subexpression1;
         this.subexpression2 = subexpression2;
         this.arithmeticOperator = arithmeticOperator;

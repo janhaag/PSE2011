@@ -37,7 +37,7 @@ public class MainController implements SelectionListener {
 		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
-		//TODO Übergabe vom ExecutionHandler
+		//TODO Uebergabe vom ExecutionHandler
 		this.treeController = new TreeViewController(this.mainframe.getBreakpointView(),
                 this.mainframe.getVarView(), this.executionHandler, editor);
 		
@@ -122,7 +122,7 @@ public class MainController implements SelectionListener {
         // TODO Auto-generated method stub
     }
 
-    //TODO Löschen?!
+    //TODO Loeschen?!
     /*public void mouseDoubleClick(MouseEvent e) {
             if (e.getSource() == this.editorController.getEditorView().getLineNumbers()) {
                     int offset = this.editorController.getEditorView().getLineNumbers().getCaretOffset();
