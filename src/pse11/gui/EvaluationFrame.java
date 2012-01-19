@@ -1,7 +1,5 @@
 package gui;
 
-import gui.controller.MiscController;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -12,14 +10,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class EvaluationFrame extends Frame implements MiscFrame {
-	private MiscController controller;
 	Shell shell;
 	private Text statementTextField;
 	private Text resultTextField;
 	private Button evaluateButton;
 	
 	public EvaluationFrame(Shell parentShell) {
-		this.controller = new MiscController(this);
 		
 		this.shell = new Shell();
 		this.shell.setSize(300,250);

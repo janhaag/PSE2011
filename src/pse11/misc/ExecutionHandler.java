@@ -43,9 +43,9 @@ public class ExecutionHandler {
 					this.interpreter);*/
 			parser.parseProgram(source);
 		} catch (RecognitionException re) {
-			//e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.ERROR, 0, re.getMessage());
 		} catch(NullPointerException npe) {
+			npe.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.ERROR, -1, "AST creation not possible!");
 		}
 		for(String error : parser.getErrors()) {

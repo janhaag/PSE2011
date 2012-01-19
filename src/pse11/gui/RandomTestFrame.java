@@ -1,7 +1,5 @@
 package gui;
 
-import gui.controller.MiscController;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -12,15 +10,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class RandomTestFrame extends Frame implements MiscFrame {
-	private MiscController controller;
 	Shell shell;
 	private Text intervalTextField1;
 	private Text intervalTextField2;
 	private Button testButton;
 	
-	public RandomTestFrame(Shell parentShell, MiscController controller) {
-		this.controller = new MiscController(this);
-		this.controller = controller;
+	public RandomTestFrame(Shell parentShell) {
 		
 		this.shell = new Shell();
 		this.shell.setSize(300,200);

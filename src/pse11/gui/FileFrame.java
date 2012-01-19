@@ -1,17 +1,13 @@
 package gui;
 
-import gui.controller.MiscController;
-
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class FileFrame extends Frame implements MiscFrame {
-	private MiscController controller;
 	private Shell shell;
 
 	public FileFrame(Shell parentShell, int def) {
-		this.controller = new MiscController(this);		
 		shell = new Shell(parentShell);
 		
 		FileDialog dlg = new FileDialog(shell, def);

@@ -23,7 +23,6 @@ public class MainController implements SelectionListener {
 	private ExecutionHandler executionHandler;
 	
 	private MainFrame mainframe;
-	private MiscController miscController;
 	private SettingsController settingsController;
 	private HelpController helpController;
 	private EditorController editorController;
@@ -36,7 +35,6 @@ public class MainController implements SelectionListener {
 		Editor editor = new Editor();
 		this.mainframe = new MainFrame(this, editor, messagesystem);
 		this.editorController = new EditorController(editor, this.mainframe.getEditor());
-		this.miscController = new MiscController(null);
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
 		//TODO uebergabe vom ExecutionHandler
@@ -68,7 +66,7 @@ public class MainController implements SelectionListener {
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemEvaluation()) {
 			new EvaluationFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
-			new RandomTestFrame(this.mainframe.getShell(), miscController);
+			new RandomTestFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenurBarItemAbout()) {
 			new AboutFrame(this.mainframe.getShell());
 		} else if(e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {

@@ -37,7 +37,6 @@ public class MessageSystem {
 		if(!this.consoles.contains(console)) {
 			this.consoles.add(console);
 		}
-		System.out.println(console.toString());
 	}
 	/**
 	 * Removes the specified console from the observer list.
