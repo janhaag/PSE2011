@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-19 01:43:09
+// $ANTLR 3.4 ../src/grammar/WhileLanguage.g 2012-01-19 22:17:22
 
 	package parser;
 	import ast.*;
@@ -133,7 +133,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "program"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:80:1: program returns [Program p] : (a= axiom_statement )* (f= function_declaration )* main ;
+    // ../src/grammar/WhileLanguage.g:80:1: program returns [Program p] : (a= axiom_statement )* (f= function_declaration )* main ;
     public final Program program() throws RecognitionException {
         Program p = null;
 
@@ -148,10 +148,10 @@ public class WhileLanguageParser extends Parser {
         LinkedList<Axiom> axiom = new LinkedList<Axiom>();
         	       LinkedList<Function> function = new LinkedList<Function>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:83:9: ( (a= axiom_statement )* (f= function_declaration )* main )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:83:11: (a= axiom_statement )* (f= function_declaration )* main
+            // ../src/grammar/WhileLanguage.g:83:9: ( (a= axiom_statement )* (f= function_declaration )* main )
+            // ../src/grammar/WhileLanguage.g:83:11: (a= axiom_statement )* (f= function_declaration )* main
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:83:11: (a= axiom_statement )*
+            // ../src/grammar/WhileLanguage.g:83:11: (a= axiom_statement )*
             loop1:
             do {
                 int alt1=2;
@@ -164,7 +164,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:83:12: a= axiom_statement
+            	    // ../src/grammar/WhileLanguage.g:83:12: a= axiom_statement
             	    {
             	    pushFollow(FOLLOW_axiom_statement_in_program61);
             	    a=axiom_statement();
@@ -183,7 +183,7 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:83:59: (f= function_declaration )*
+            // ../src/grammar/WhileLanguage.g:83:59: (f= function_declaration )*
             loop2:
             do {
                 int alt2=2;
@@ -196,7 +196,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:83:60: f= function_declaration
+            	    // ../src/grammar/WhileLanguage.g:83:60: f= function_declaration
             	    {
             	    pushFollow(FOLLOW_function_declaration_in_program70);
             	    f=function_declaration();
@@ -242,7 +242,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "single_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:88:1: single_expression returns [ Expression ast ] : expression ;
+    // ../src/grammar/WhileLanguage.g:88:1: single_expression returns [ Expression ast ] : expression ;
     public final Expression single_expression() throws RecognitionException {
         Expression ast = null;
 
@@ -251,8 +251,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:89:2: ( expression )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:89:4: expression
+            // ../src/grammar/WhileLanguage.g:89:2: ( expression )
+            // ../src/grammar/WhileLanguage.g:89:4: expression
             {
             pushFollow(FOLLOW_expression_in_single_expression109);
             expression2=expression();
@@ -280,7 +280,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "function_declaration"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:92:1: function_declaration returns [ Function ast ] : type IDENT '(' (p= parameter_list )? ')' function_body ;
+    // ../src/grammar/WhileLanguage.g:92:1: function_declaration returns [ Function ast ] : type IDENT '(' (p= parameter_list )? ')' function_body ;
     public final Function function_declaration() throws RecognitionException {
         Function ast = null;
 
@@ -294,8 +294,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:93:9: ( type IDENT '(' (p= parameter_list )? ')' function_body )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:93:11: type IDENT '(' (p= parameter_list )? ')' function_body
+            // ../src/grammar/WhileLanguage.g:93:9: ( type IDENT '(' (p= parameter_list )? ')' function_body )
+            // ../src/grammar/WhileLanguage.g:93:11: type IDENT '(' (p= parameter_list )? ')' function_body
             {
             pushFollow(FOLLOW_type_in_function_declaration133);
             type4=type();
@@ -307,7 +307,7 @@ public class WhileLanguageParser extends Parser {
 
             match(input,14,FOLLOW_14_in_function_declaration137); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:93:27: (p= parameter_list )?
+            // ../src/grammar/WhileLanguage.g:93:27: (p= parameter_list )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -316,7 +316,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt3) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:93:27: p= parameter_list
+                    // ../src/grammar/WhileLanguage.g:93:27: p= parameter_list
                     {
                     pushFollow(FOLLOW_parameter_list_in_function_declaration141);
                     p=parameter_list();
@@ -364,7 +364,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "main"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:103:1: main returns [ Function ast ] : 'main' '(' ( parameter_list )? ')' function_body ;
+    // ../src/grammar/WhileLanguage.g:103:1: main returns [ Function ast ] : 'main' '(' ( parameter_list )? ')' function_body ;
     public final Function main() throws RecognitionException {
         Function ast = null;
 
@@ -375,14 +375,14 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:104:9: ( 'main' '(' ( parameter_list )? ')' function_body )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:104:11: 'main' '(' ( parameter_list )? ')' function_body
+            // ../src/grammar/WhileLanguage.g:104:9: ( 'main' '(' ( parameter_list )? ')' function_body )
+            // ../src/grammar/WhileLanguage.g:104:11: 'main' '(' ( parameter_list )? ')' function_body
             {
             match(input,40,FOLLOW_40_in_main186); 
 
             match(input,14,FOLLOW_14_in_main188); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:104:22: ( parameter_list )?
+            // ../src/grammar/WhileLanguage.g:104:22: ( parameter_list )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -391,7 +391,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:104:22: parameter_list
+                    // ../src/grammar/WhileLanguage.g:104:22: parameter_list
                     {
                     pushFollow(FOLLOW_parameter_list_in_main190);
                     parameter_list6=parameter_list();
@@ -438,7 +438,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "parameter_list"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:113:1: parameter_list returns [ LinkedList<FunctionParameter> params ] : p1= parameter ( ',' p2= parameter )* ;
+    // ../src/grammar/WhileLanguage.g:113:1: parameter_list returns [ LinkedList<FunctionParameter> params ] : p1= parameter ( ',' p2= parameter )* ;
     public final LinkedList<FunctionParameter> parameter_list() throws RecognitionException {
         LinkedList<FunctionParameter> params = null;
 
@@ -450,8 +450,8 @@ public class WhileLanguageParser extends Parser {
 
         params = new LinkedList<FunctionParameter>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:115:9: (p1= parameter ( ',' p2= parameter )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:115:11: p1= parameter ( ',' p2= parameter )*
+            // ../src/grammar/WhileLanguage.g:115:9: (p1= parameter ( ',' p2= parameter )* )
+            // ../src/grammar/WhileLanguage.g:115:11: p1= parameter ( ',' p2= parameter )*
             {
             pushFollow(FOLLOW_parameter_in_parameter_list250);
             p1=parameter();
@@ -461,7 +461,7 @@ public class WhileLanguageParser extends Parser {
 
             params.add(p1);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:115:48: ( ',' p2= parameter )*
+            // ../src/grammar/WhileLanguage.g:115:48: ( ',' p2= parameter )*
             loop5:
             do {
                 int alt5=2;
@@ -474,7 +474,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt5) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:115:50: ',' p2= parameter
+            	    // ../src/grammar/WhileLanguage.g:115:50: ',' p2= parameter
             	    {
             	    match(input,18,FOLLOW_18_in_parameter_list256); 
 
@@ -513,7 +513,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "parameter"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:118:1: parameter returns [ FunctionParameter ast ] : type IDENT ;
+    // ../src/grammar/WhileLanguage.g:118:1: parameter returns [ FunctionParameter ast ] : type IDENT ;
     public final FunctionParameter parameter() throws RecognitionException {
         FunctionParameter ast = null;
 
@@ -523,8 +523,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:119:9: ( type IDENT )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:119:11: type IDENT
+            // ../src/grammar/WhileLanguage.g:119:9: ( type IDENT )
+            // ../src/grammar/WhileLanguage.g:119:11: type IDENT
             {
             pushFollow(FOLLOW_type_in_parameter294);
             type9=type();
@@ -560,7 +560,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "function_body"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:122:1: function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ] : (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )? ;
+    // ../src/grammar/WhileLanguage.g:122:1: function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ] : (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )? ;
     public final WhileLanguageParser.function_body_return function_body() throws RecognitionException {
         WhileLanguageParser.function_body_return retval = new WhileLanguageParser.function_body_return();
         retval.start = input.LT(1);
@@ -575,10 +575,10 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Statement> s = new LinkedList<Statement>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:124:9: ( (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )? )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:124:11: (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:124:9: ( (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )? )
+            // ../src/grammar/WhileLanguage.g:124:11: (a= assume_statement )? '{' ( statement )* '}' (e= ensure_statement )?
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:124:12: (a= assume_statement )?
+            // ../src/grammar/WhileLanguage.g:124:12: (a= assume_statement )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -587,7 +587,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt6) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:124:12: a= assume_statement
+                    // ../src/grammar/WhileLanguage.g:124:12: a= assume_statement
                     {
                     pushFollow(FOLLOW_assume_statement_in_function_body335);
                     a=assume_statement();
@@ -605,7 +605,7 @@ public class WhileLanguageParser extends Parser {
 
             match(input,43,FOLLOW_43_in_function_body350); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:125:15: ( statement )*
+            // ../src/grammar/WhileLanguage.g:125:15: ( statement )*
             loop7:
             do {
                 int alt7=2;
@@ -618,7 +618,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt7) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:125:17: statement
+            	    // ../src/grammar/WhileLanguage.g:125:17: statement
             	    {
             	    pushFollow(FOLLOW_statement_in_function_body354);
             	    statement10=statement();
@@ -641,7 +641,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:127:12: (e= ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:127:12: (e= ensure_statement )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -650,7 +650,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt8) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:127:12: e= ensure_statement
+                    // ../src/grammar/WhileLanguage.g:127:12: e= ensure_statement
                     {
                     pushFollow(FOLLOW_ensure_statement_in_function_body391);
                     e=ensure_statement();
@@ -687,7 +687,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "if_body"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:130:1: if_body returns [ StatementBlock ast ] : '{' ( statement )* '}' ;
+    // ../src/grammar/WhileLanguage.g:130:1: if_body returns [ StatementBlock ast ] : '{' ( statement )* '}' ;
     public final StatementBlock if_body() throws RecognitionException {
         StatementBlock ast = null;
 
@@ -697,12 +697,12 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Statement> s = new LinkedList<Statement>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:132:9: ( '{' ( statement )* '}' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:132:11: '{' ( statement )* '}'
+            // ../src/grammar/WhileLanguage.g:132:9: ( '{' ( statement )* '}' )
+            // ../src/grammar/WhileLanguage.g:132:11: '{' ( statement )* '}'
             {
             match(input,43,FOLLOW_43_in_if_body429); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:132:15: ( statement )*
+            // ../src/grammar/WhileLanguage.g:132:15: ( statement )*
             loop9:
             do {
                 int alt9=2;
@@ -715,7 +715,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt9) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:132:17: statement
+            	    // ../src/grammar/WhileLanguage.g:132:17: statement
             	    {
             	    pushFollow(FOLLOW_statement_in_if_body433);
             	    statement11=statement();
@@ -762,7 +762,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "loop_body"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:136:1: loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ] : (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )? ;
+    // ../src/grammar/WhileLanguage.g:136:1: loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<Ensure> post ] : (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )? ;
     public final WhileLanguageParser.loop_body_return loop_body() throws RecognitionException {
         WhileLanguageParser.loop_body_return retval = new WhileLanguageParser.loop_body_return();
         retval.start = input.LT(1);
@@ -777,10 +777,10 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Statement> s = new LinkedList<Statement>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:138:9: ( (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )? )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:138:11: (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:138:9: ( (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )? )
+            // ../src/grammar/WhileLanguage.g:138:11: (i= invariant_statement )? '{' ( statement )* '}' (e= ensure_statement )?
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:138:12: (i= invariant_statement )?
+            // ../src/grammar/WhileLanguage.g:138:12: (i= invariant_statement )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -789,7 +789,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt10) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:138:12: i= invariant_statement
+                    // ../src/grammar/WhileLanguage.g:138:12: i= invariant_statement
                     {
                     pushFollow(FOLLOW_invariant_statement_in_loop_body492);
                     i=invariant_statement();
@@ -807,7 +807,7 @@ public class WhileLanguageParser extends Parser {
 
             match(input,43,FOLLOW_43_in_loop_body507); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:139:15: ( statement )*
+            // ../src/grammar/WhileLanguage.g:139:15: ( statement )*
             loop11:
             do {
                 int alt11=2;
@@ -820,7 +820,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt11) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:139:17: statement
+            	    // ../src/grammar/WhileLanguage.g:139:17: statement
             	    {
             	    pushFollow(FOLLOW_statement_in_loop_body511);
             	    statement12=statement();
@@ -843,7 +843,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = new StatementBlock(s.toArray(new Statement[s.size()]), new Position());
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:141:12: (e= ensure_statement )?
+            // ../src/grammar/WhileLanguage.g:141:12: (e= ensure_statement )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -852,7 +852,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:141:12: e= ensure_statement
+                    // ../src/grammar/WhileLanguage.g:141:12: e= ensure_statement
                     {
                     pushFollow(FOLLOW_ensure_statement_in_loop_body548);
                     e=ensure_statement();
@@ -894,7 +894,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:144:1: statement returns [ Statement ast, LinkedList<Expression> divisors ] : (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement );
+    // ../src/grammar/WhileLanguage.g:144:1: statement returns [ Statement ast, LinkedList<Expression> divisors ] : (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement );
     public final WhileLanguageParser.statement_return statement() throws RecognitionException {
         WhileLanguageParser.statement_return retval = new WhileLanguageParser.statement_return();
         retval.start = input.LT(1);
@@ -916,12 +916,12 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:145:9: (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement )
+            // ../src/grammar/WhileLanguage.g:145:9: (e1= assert_statement |e2= variable_declaration |e3= array_declaration |e4= assignment |e5= if_statement |e6= while_statement |e7= return_statement )
             int alt13=7;
             alt13 = dfa13.predict(input);
             switch (alt13) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:145:11: e1= assert_statement
+                    // ../src/grammar/WhileLanguage.g:145:11: e1= assert_statement
                     {
                     pushFollow(FOLLOW_assert_statement_in_statement582);
                     e1=assert_statement();
@@ -934,7 +934,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:146:11: e2= variable_declaration
+                    // ../src/grammar/WhileLanguage.g:146:11: e2= variable_declaration
                     {
                     pushFollow(FOLLOW_variable_declaration_in_statement598);
                     e2=variable_declaration();
@@ -947,7 +947,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:147:11: e3= array_declaration
+                    // ../src/grammar/WhileLanguage.g:147:11: e3= array_declaration
                     {
                     pushFollow(FOLLOW_array_declaration_in_statement614);
                     e3=array_declaration();
@@ -960,7 +960,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:148:11: e4= assignment
+                    // ../src/grammar/WhileLanguage.g:148:11: e4= assignment
                     {
                     pushFollow(FOLLOW_assignment_in_statement630);
                     e4=assignment();
@@ -973,7 +973,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:149:11: e5= if_statement
+                    // ../src/grammar/WhileLanguage.g:149:11: e5= if_statement
                     {
                     pushFollow(FOLLOW_if_statement_in_statement646);
                     e5=if_statement();
@@ -986,7 +986,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:150:11: e6= while_statement
+                    // ../src/grammar/WhileLanguage.g:150:11: e6= while_statement
                     {
                     pushFollow(FOLLOW_while_statement_in_statement662);
                     e6=while_statement();
@@ -999,7 +999,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:151:11: e7= return_statement
+                    // ../src/grammar/WhileLanguage.g:151:11: e7= return_statement
                     {
                     pushFollow(FOLLOW_return_statement_in_statement678);
                     e7=return_statement();
@@ -1032,7 +1032,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "invariant_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:154:1: invariant_statement returns [ LinkedList<Invariant> result ] : ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' );
+    // ../src/grammar/WhileLanguage.g:154:1: invariant_statement returns [ LinkedList<Invariant> result ] : ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' );
     public final LinkedList<Invariant> invariant_statement() throws RecognitionException {
         LinkedList<Invariant> result = null;
 
@@ -1044,7 +1044,7 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Invariant>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:156:9: ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' )
+            // ../src/grammar/WhileLanguage.g:156:9: ( 'invariant' e1= quantified_expression ';' | 'invariant' '{' (e2= quantified_expression ';' )+ '}' )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1074,7 +1074,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt15) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:156:11: 'invariant' e1= quantified_expression ';'
+                    // ../src/grammar/WhileLanguage.g:156:11: 'invariant' e1= quantified_expression ';'
                     {
                     match(input,39,FOLLOW_39_in_invariant_statement715); 
 
@@ -1092,13 +1092,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:158:11: 'invariant' '{' (e2= quantified_expression ';' )+ '}'
+                    // ../src/grammar/WhileLanguage.g:158:11: 'invariant' '{' (e2= quantified_expression ';' )+ '}'
                     {
                     match(input,39,FOLLOW_39_in_invariant_statement735); 
 
                     match(input,43,FOLLOW_43_in_invariant_statement737); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:158:27: (e2= quantified_expression ';' )+
+                    // ../src/grammar/WhileLanguage.g:158:27: (e2= quantified_expression ';' )+
                     int cnt14=0;
                     loop14:
                     do {
@@ -1112,7 +1112,7 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:158:28: e2= quantified_expression ';'
+                    	    // ../src/grammar/WhileLanguage.g:158:28: e2= quantified_expression ';'
                     	    {
                     	    pushFollow(FOLLOW_quantified_expression_in_invariant_statement742);
                     	    e2=quantified_expression();
@@ -1160,7 +1160,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "axiom_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:162:1: axiom_statement returns [ LinkedList<Axiom> result ] : 'axiom' e1= quantified_expression ';' ;
+    // ../src/grammar/WhileLanguage.g:162:1: axiom_statement returns [ LinkedList<Axiom> result ] : 'axiom' e1= quantified_expression ';' ;
     public final LinkedList<Axiom> axiom_statement() throws RecognitionException {
         LinkedList<Axiom> result = null;
 
@@ -1170,8 +1170,8 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Axiom>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:164:9: ( 'axiom' e1= quantified_expression ';' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:164:11: 'axiom' e1= quantified_expression ';'
+            // ../src/grammar/WhileLanguage.g:164:9: ( 'axiom' e1= quantified_expression ';' )
+            // ../src/grammar/WhileLanguage.g:164:11: 'axiom' e1= quantified_expression ';'
             {
             match(input,33,FOLLOW_33_in_axiom_statement789); 
 
@@ -1214,7 +1214,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "assert_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:173:1: assert_statement returns [ Assertion ast, LinkedList<Expression> divisors ] : 'assert' e1= quantified_expression ';' ;
+    // ../src/grammar/WhileLanguage.g:173:1: assert_statement returns [ Assertion ast, LinkedList<Expression> divisors ] : 'assert' e1= quantified_expression ';' ;
     public final WhileLanguageParser.assert_statement_return assert_statement() throws RecognitionException {
         WhileLanguageParser.assert_statement_return retval = new WhileLanguageParser.assert_statement_return();
         retval.start = input.LT(1);
@@ -1224,8 +1224,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:174:9: ( 'assert' e1= quantified_expression ';' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:174:11: 'assert' e1= quantified_expression ';'
+            // ../src/grammar/WhileLanguage.g:174:9: ( 'assert' e1= quantified_expression ';' )
+            // ../src/grammar/WhileLanguage.g:174:11: 'assert' e1= quantified_expression ';'
             {
             match(input,31,FOLLOW_31_in_assert_statement826); 
 
@@ -1260,7 +1260,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "assume_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:177:1: assume_statement returns [ LinkedList<Assumption> result ] : ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' );
+    // ../src/grammar/WhileLanguage.g:177:1: assume_statement returns [ LinkedList<Assumption> result ] : ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' );
     public final LinkedList<Assumption> assume_statement() throws RecognitionException {
         LinkedList<Assumption> result = null;
 
@@ -1272,7 +1272,7 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Assumption>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:179:9: ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' )
+            // ../src/grammar/WhileLanguage.g:179:9: ( 'assume' e1= quantified_expression ';' | 'assume' '{' (e2= quantified_expression ';' )+ '}' )
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -1302,7 +1302,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt17) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:179:11: 'assume' e1= quantified_expression ';'
+                    // ../src/grammar/WhileLanguage.g:179:11: 'assume' e1= quantified_expression ';'
                     {
                     match(input,32,FOLLOW_32_in_assume_statement869); 
 
@@ -1320,13 +1320,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:181:11: 'assume' '{' (e2= quantified_expression ';' )+ '}'
+                    // ../src/grammar/WhileLanguage.g:181:11: 'assume' '{' (e2= quantified_expression ';' )+ '}'
                     {
                     match(input,32,FOLLOW_32_in_assume_statement889); 
 
                     match(input,43,FOLLOW_43_in_assume_statement891); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:181:24: (e2= quantified_expression ';' )+
+                    // ../src/grammar/WhileLanguage.g:181:24: (e2= quantified_expression ';' )+
                     int cnt16=0;
                     loop16:
                     do {
@@ -1340,7 +1340,7 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt16) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:181:25: e2= quantified_expression ';'
+                    	    // ../src/grammar/WhileLanguage.g:181:25: e2= quantified_expression ';'
                     	    {
                     	    pushFollow(FOLLOW_quantified_expression_in_assume_statement896);
                     	    e2=quantified_expression();
@@ -1388,7 +1388,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "ensure_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:185:1: ensure_statement returns [ LinkedList<Ensure> result ] : ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' );
+    // ../src/grammar/WhileLanguage.g:185:1: ensure_statement returns [ LinkedList<Ensure> result ] : ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' );
     public final LinkedList<Ensure> ensure_statement() throws RecognitionException {
         LinkedList<Ensure> result = null;
 
@@ -1400,7 +1400,7 @@ public class WhileLanguageParser extends Parser {
 
         result = new LinkedList<Ensure>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:187:9: ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' )
+            // ../src/grammar/WhileLanguage.g:187:9: ( 'ensure' e1= quantified_expression ';' | 'ensure' '{' (e2= quantified_expression ';' )+ '}' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1430,7 +1430,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt19) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:187:11: 'ensure' e1= quantified_expression ';'
+                    // ../src/grammar/WhileLanguage.g:187:11: 'ensure' e1= quantified_expression ';'
                     {
                     match(input,36,FOLLOW_36_in_ensure_statement940); 
 
@@ -1448,13 +1448,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:189:11: 'ensure' '{' (e2= quantified_expression ';' )+ '}'
+                    // ../src/grammar/WhileLanguage.g:189:11: 'ensure' '{' (e2= quantified_expression ';' )+ '}'
                     {
                     match(input,36,FOLLOW_36_in_ensure_statement960); 
 
                     match(input,43,FOLLOW_43_in_ensure_statement962); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:189:24: (e2= quantified_expression ';' )+
+                    // ../src/grammar/WhileLanguage.g:189:24: (e2= quantified_expression ';' )+
                     int cnt18=0;
                     loop18:
                     do {
@@ -1468,7 +1468,7 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt18) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:189:25: e2= quantified_expression ';'
+                    	    // ../src/grammar/WhileLanguage.g:189:25: e2= quantified_expression ';'
                     	    {
                     	    pushFollow(FOLLOW_quantified_expression_in_ensure_statement967);
                     	    e2=quantified_expression();
@@ -1521,7 +1521,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "assignment"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:193:1: assignment returns [ Assignment ast, LinkedList<Expression> divisors ] : ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' );
+    // ../src/grammar/WhileLanguage.g:193:1: assignment returns [ Assignment ast, LinkedList<Expression> divisors ] : ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' );
     public final WhileLanguageParser.assignment_return assignment() throws RecognitionException {
         WhileLanguageParser.assignment_return retval = new WhileLanguageParser.assignment_return();
         retval.start = input.LT(1);
@@ -1538,7 +1538,7 @@ public class WhileLanguageParser extends Parser {
 
         retval.divisors = new LinkedList<Expression>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:195:9: ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' )
+            // ../src/grammar/WhileLanguage.g:195:9: ( IDENT '=' expression ';' | IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';' )
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -1568,7 +1568,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt21) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:195:11: IDENT '=' expression ';'
+                    // ../src/grammar/WhileLanguage.g:195:11: IDENT '=' expression ';'
                     {
                     IDENT14=(Token)match(input,IDENT,FOLLOW_IDENT_in_assignment1014); 
 
@@ -1588,13 +1588,13 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:197:11: IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';'
+                    // ../src/grammar/WhileLanguage.g:197:11: IDENT ( '[' e1= expression ']' )+ '=' e2= expression ';'
                     {
                     IDENT15=(Token)match(input,IDENT,FOLLOW_IDENT_in_assignment1034); 
 
                     LinkedList<Expression> idx = new LinkedList<Expression>();
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:198:10: ( '[' e1= expression ']' )+
+                    // ../src/grammar/WhileLanguage.g:198:10: ( '[' e1= expression ']' )+
                     int cnt20=0;
                     loop20:
                     do {
@@ -1608,7 +1608,7 @@ public class WhileLanguageParser extends Parser {
 
                         switch (alt20) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:198:12: '[' e1= expression ']'
+                    	    // ../src/grammar/WhileLanguage.g:198:12: '[' e1= expression ']'
                     	    {
                     	    match(input,28,FOLLOW_28_in_assignment1049); 
 
@@ -1678,7 +1678,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "variable_declaration"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:204:1: variable_declaration returns [ VariableDeclaration ast, LinkedList<Expression> divisors ] : type IDENT ( '=' expression )? ';' ;
+    // ../src/grammar/WhileLanguage.g:204:1: variable_declaration returns [ VariableDeclaration ast, LinkedList<Expression> divisors ] : type IDENT ( '=' expression )? ';' ;
     public final WhileLanguageParser.variable_declaration_return variable_declaration() throws RecognitionException {
         WhileLanguageParser.variable_declaration_return retval = new WhileLanguageParser.variable_declaration_return();
         retval.start = input.LT(1);
@@ -1691,8 +1691,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:205:9: ( type IDENT ( '=' expression )? ';' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:205:11: type IDENT ( '=' expression )? ';'
+            // ../src/grammar/WhileLanguage.g:205:9: ( type IDENT ( '=' expression )? ';' )
+            // ../src/grammar/WhileLanguage.g:205:11: type IDENT ( '=' expression )? ';'
             {
             pushFollow(FOLLOW_type_in_variable_declaration1099);
             type18=type();
@@ -1702,7 +1702,7 @@ public class WhileLanguageParser extends Parser {
 
             IDENT17=(Token)match(input,IDENT,FOLLOW_IDENT_in_variable_declaration1101); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:205:22: ( '=' expression )?
+            // ../src/grammar/WhileLanguage.g:205:22: ( '=' expression )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -1711,7 +1711,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt22) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:205:24: '=' expression
+                    // ../src/grammar/WhileLanguage.g:205:24: '=' expression
                     {
                     match(input,24,FOLLOW_24_in_variable_declaration1105); 
 
@@ -1760,7 +1760,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "array_declaration"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:211:1: array_declaration returns [ ArrayDeclaration ast, LinkedList<Expression> divisors ] : type IDENT '=' array_init ';' ;
+    // ../src/grammar/WhileLanguage.g:211:1: array_declaration returns [ ArrayDeclaration ast, LinkedList<Expression> divisors ] : type IDENT '=' array_init ';' ;
     public final WhileLanguageParser.array_declaration_return array_declaration() throws RecognitionException {
         WhileLanguageParser.array_declaration_return retval = new WhileLanguageParser.array_declaration_return();
         retval.start = input.LT(1);
@@ -1773,8 +1773,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:212:9: ( type IDENT '=' array_init ';' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:212:11: type IDENT '=' array_init ';'
+            // ../src/grammar/WhileLanguage.g:212:9: ( type IDENT '=' array_init ';' )
+            // ../src/grammar/WhileLanguage.g:212:11: type IDENT '=' array_init ';'
             {
             pushFollow(FOLLOW_type_in_array_declaration1143);
             type21=type();
@@ -1825,7 +1825,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "array_init"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:218:1: array_init returns [ LinkedList<Expression> dim, LinkedList<Expression> divisors ] : 'array' ( '[' expression ']' )+ ;
+    // ../src/grammar/WhileLanguage.g:218:1: array_init returns [ LinkedList<Expression> dim, LinkedList<Expression> divisors ] : 'array' ( '[' expression ']' )+ ;
     public final WhileLanguageParser.array_init_return array_init() throws RecognitionException {
         WhileLanguageParser.array_init_return retval = new WhileLanguageParser.array_init_return();
         retval.start = input.LT(1);
@@ -1836,14 +1836,14 @@ public class WhileLanguageParser extends Parser {
 
         retval.divisors = new LinkedList<Expression>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:220:2: ( 'array' ( '[' expression ']' )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:220:4: 'array' ( '[' expression ']' )+
+            // ../src/grammar/WhileLanguage.g:220:2: ( 'array' ( '[' expression ']' )+ )
+            // ../src/grammar/WhileLanguage.g:220:4: 'array' ( '[' expression ']' )+
             {
             retval.dim = new LinkedList<Expression>();
 
             match(input,30,FOLLOW_30_in_array_init1187); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:221:10: ( '[' expression ']' )+
+            // ../src/grammar/WhileLanguage.g:221:10: ( '[' expression ']' )+
             int cnt23=0;
             loop23:
             do {
@@ -1857,7 +1857,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt23) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:221:12: '[' expression ']'
+            	    // ../src/grammar/WhileLanguage.g:221:12: '[' expression ']'
             	    {
             	    match(input,28,FOLLOW_28_in_array_init1191); 
 
@@ -1910,7 +1910,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "if_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:224:1: if_statement returns [ Conditional ast, LinkedList<Expression> divisors ] : 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? ;
+    // ../src/grammar/WhileLanguage.g:224:1: if_statement returns [ Conditional ast, LinkedList<Expression> divisors ] : 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? ;
     public final WhileLanguageParser.if_statement_return if_statement() throws RecognitionException {
         WhileLanguageParser.if_statement_return retval = new WhileLanguageParser.if_statement_return();
         retval.start = input.LT(1);
@@ -1924,8 +1924,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:9: ( 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:11: 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )?
+            // ../src/grammar/WhileLanguage.g:225:9: ( 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )? )
+            // ../src/grammar/WhileLanguage.g:225:11: 'if' '(' expression ')' b1= if_body ( 'else' b2= if_body )?
             {
             match(input,37,FOLLOW_37_in_if_statement1222); 
 
@@ -1945,7 +1945,7 @@ public class WhileLanguageParser extends Parser {
             state._fsp--;
 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:46: ( 'else' b2= if_body )?
+            // ../src/grammar/WhileLanguage.g:225:46: ( 'else' b2= if_body )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -1954,7 +1954,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt24) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:225:48: 'else' b2= if_body
+                    // ../src/grammar/WhileLanguage.g:225:48: 'else' b2= if_body
                     {
                     match(input,35,FOLLOW_35_in_if_statement1236); 
 
@@ -2000,7 +2000,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "while_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:230:1: while_statement returns [ Loop ast, LinkedList<Expression> divisors ] : 'while' '(' expression ')' loop_body ;
+    // ../src/grammar/WhileLanguage.g:230:1: while_statement returns [ Loop ast, LinkedList<Expression> divisors ] : 'while' '(' expression ')' loop_body ;
     public final WhileLanguageParser.while_statement_return while_statement() throws RecognitionException {
         WhileLanguageParser.while_statement_return retval = new WhileLanguageParser.while_statement_return();
         retval.start = input.LT(1);
@@ -2012,8 +2012,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:231:9: ( 'while' '(' expression ')' loop_body )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:231:11: 'while' '(' expression ')' loop_body
+            // ../src/grammar/WhileLanguage.g:231:9: ( 'while' '(' expression ')' loop_body )
+            // ../src/grammar/WhileLanguage.g:231:11: 'while' '(' expression ')' loop_body
             {
             match(input,42,FOLLOW_42_in_while_statement1274); 
 
@@ -2067,7 +2067,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "return_statement"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:240:1: return_statement returns [ ReturnStatement ast, LinkedList<Expression> divisors ] : 'return' expression ';' ;
+    // ../src/grammar/WhileLanguage.g:240:1: return_statement returns [ ReturnStatement ast, LinkedList<Expression> divisors ] : 'return' expression ';' ;
     public final WhileLanguageParser.return_statement_return return_statement() throws RecognitionException {
         WhileLanguageParser.return_statement_return retval = new WhileLanguageParser.return_statement_return();
         retval.start = input.LT(1);
@@ -2077,8 +2077,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:241:2: ( 'return' expression ';' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:241:4: 'return' expression ';'
+            // ../src/grammar/WhileLanguage.g:241:2: ( 'return' expression ';' )
+            // ../src/grammar/WhileLanguage.g:241:4: 'return' expression ';'
             {
             match(input,41,FOLLOW_41_in_return_statement1306); 
 
@@ -2118,7 +2118,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "quantified_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:244:1: quantified_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression );
+    // ../src/grammar/WhileLanguage.g:244:1: quantified_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression );
     public final WhileLanguageParser.quantified_expression_return quantified_expression() throws RecognitionException {
         WhileLanguageParser.quantified_expression_return retval = new WhileLanguageParser.quantified_expression_return();
         retval.start = input.LT(1);
@@ -2134,7 +2134,7 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:9: ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression )
+            // ../src/grammar/WhileLanguage.g:245:9: ( QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression | expression )
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2153,7 +2153,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt26) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:11: QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression
+                    // ../src/grammar/WhileLanguage.g:245:11: QUANTIFIER IDENT '(' ( range )? ')' e= quantified_expression
                     {
                     QUANTIFIER28=(Token)match(input,QUANTIFIER,FOLLOW_QUANTIFIER_in_quantified_expression1334); 
 
@@ -2161,7 +2161,7 @@ public class WhileLanguageParser extends Parser {
 
                     match(input,14,FOLLOW_14_in_quantified_expression1338); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:32: ( range )?
+                    // ../src/grammar/WhileLanguage.g:245:32: ( range )?
                     int alt25=2;
                     int LA25_0 = input.LA(1);
 
@@ -2170,7 +2170,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     switch (alt25) {
                         case 1 :
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:245:32: range
+                            // ../src/grammar/WhileLanguage.g:245:32: range
                             {
                             pushFollow(FOLLOW_range_in_quantified_expression1340);
                             range27=range();
@@ -2209,7 +2209,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:258:11: expression
+                    // ../src/grammar/WhileLanguage.g:258:11: expression
                     {
                     pushFollow(FOLLOW_expression_in_quantified_expression1361);
                     expression30=expression();
@@ -2250,7 +2250,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "range"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:263:1: range returns [ Expression e1, Expression e2, LinkedList<Expression> divisors ] : l= expression ',' u= expression ;
+    // ../src/grammar/WhileLanguage.g:263:1: range returns [ Expression e1, Expression e2, LinkedList<Expression> divisors ] : l= expression ',' u= expression ;
     public final WhileLanguageParser.range_return range() throws RecognitionException {
         WhileLanguageParser.range_return retval = new WhileLanguageParser.range_return();
         retval.start = input.LT(1);
@@ -2262,8 +2262,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:264:9: (l= expression ',' u= expression )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:264:11: l= expression ',' u= expression
+            // ../src/grammar/WhileLanguage.g:264:9: (l= expression ',' u= expression )
+            // ../src/grammar/WhileLanguage.g:264:11: l= expression ',' u= expression
             {
             pushFollow(FOLLOW_expression_in_range1394);
             l=expression();
@@ -2310,7 +2310,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:270:1: expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* ;
+    // ../src/grammar/WhileLanguage.g:270:1: expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* ;
     public final WhileLanguageParser.expression_return expression() throws RecognitionException {
         WhileLanguageParser.expression_return retval = new WhileLanguageParser.expression_return();
         retval.start = input.LT(1);
@@ -2322,8 +2322,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:271:9: (e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:271:11: e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )*
+            // ../src/grammar/WhileLanguage.g:271:9: (e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )* )
+            // ../src/grammar/WhileLanguage.g:271:11: e1= rel_expression ( '==' e2= rel_expression | '!=' e2= rel_expression )*
             {
             pushFollow(FOLLOW_rel_expression_in_expression1433);
             e1=rel_expression();
@@ -2333,7 +2333,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:271:72: ( '==' e2= rel_expression | '!=' e2= rel_expression )*
+            // ../src/grammar/WhileLanguage.g:271:72: ( '==' e2= rel_expression | '!=' e2= rel_expression )*
             loop27:
             do {
                 int alt27=3;
@@ -2349,7 +2349,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt27) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:272:12: '==' e2= rel_expression
+            	    // ../src/grammar/WhileLanguage.g:272:12: '==' e2= rel_expression
             	    {
             	    match(input,25,FOLLOW_25_in_expression1450); 
 
@@ -2365,7 +2365,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:274:12: '!=' e2= rel_expression
+            	    // ../src/grammar/WhileLanguage.g:274:12: '!=' e2= rel_expression
             	    {
             	    match(input,11,FOLLOW_11_in_expression1469); 
 
@@ -2413,7 +2413,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "rel_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:280:1: rel_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* ;
+    // ../src/grammar/WhileLanguage.g:280:1: rel_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* ;
     public final WhileLanguageParser.rel_expression_return rel_expression() throws RecognitionException {
         WhileLanguageParser.rel_expression_return retval = new WhileLanguageParser.rel_expression_return();
         retval.start = input.LT(1);
@@ -2425,8 +2425,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:281:9: (e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:281:11: e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
+            // ../src/grammar/WhileLanguage.g:281:9: (e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )* )
+            // ../src/grammar/WhileLanguage.g:281:11: e1= add_expression ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
             {
             pushFollow(FOLLOW_add_expression_in_rel_expression1518);
             e1=add_expression();
@@ -2436,7 +2436,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:281:72: ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
+            // ../src/grammar/WhileLanguage.g:281:72: ( '<' e2= add_expression | '<=' e2= add_expression | '>' e2= add_expression | '>=' e2= add_expression )*
             loop28:
             do {
                 int alt28=5;
@@ -2466,7 +2466,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt28) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:282:12: '<' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:282:12: '<' e2= add_expression
             	    {
             	    match(input,22,FOLLOW_22_in_rel_expression1535); 
 
@@ -2482,7 +2482,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:284:12: '<=' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:284:12: '<=' e2= add_expression
             	    {
             	    match(input,23,FOLLOW_23_in_rel_expression1555); 
 
@@ -2498,7 +2498,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:286:12: '>' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:286:12: '>' e2= add_expression
             	    {
             	    match(input,26,FOLLOW_26_in_rel_expression1574); 
 
@@ -2514,7 +2514,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 4 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:288:12: '>=' e2= add_expression
+            	    // ../src/grammar/WhileLanguage.g:288:12: '>=' e2= add_expression
             	    {
             	    match(input,27,FOLLOW_27_in_rel_expression1594); 
 
@@ -2562,7 +2562,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "add_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:293:1: add_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* ;
+    // ../src/grammar/WhileLanguage.g:293:1: add_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* ;
     public final WhileLanguageParser.add_expression_return add_expression() throws RecognitionException {
         WhileLanguageParser.add_expression_return retval = new WhileLanguageParser.add_expression_return();
         retval.start = input.LT(1);
@@ -2574,8 +2574,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:294:9: (e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:294:11: e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
+            // ../src/grammar/WhileLanguage.g:294:9: (e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )* )
+            // ../src/grammar/WhileLanguage.g:294:11: e1= mul_expression ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
             {
             pushFollow(FOLLOW_mul_expression_in_add_expression1642);
             e1=mul_expression();
@@ -2585,7 +2585,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:294:72: ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
+            // ../src/grammar/WhileLanguage.g:294:72: ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
             loop29:
             do {
                 int alt29=4;
@@ -2610,7 +2610,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt29) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:295:12: '|' e2= mul_expression
+            	    // ../src/grammar/WhileLanguage.g:295:12: '|' e2= mul_expression
             	    {
             	    match(input,44,FOLLOW_44_in_add_expression1659); 
 
@@ -2626,7 +2626,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:297:12: '+' e2= mul_expression
+            	    // ../src/grammar/WhileLanguage.g:297:12: '+' e2= mul_expression
             	    {
             	    match(input,17,FOLLOW_17_in_add_expression1678); 
 
@@ -2642,7 +2642,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:299:12: '-' e2= mul_expression
+            	    // ../src/grammar/WhileLanguage.g:299:12: '-' e2= mul_expression
             	    {
             	    match(input,19,FOLLOW_19_in_add_expression1697); 
 
@@ -2690,7 +2690,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "mul_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:304:1: mul_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* ;
+    // ../src/grammar/WhileLanguage.g:304:1: mul_expression returns [ Expression ast, LinkedList<Expression> divisors ] : e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* ;
     public final WhileLanguageParser.mul_expression_return mul_expression() throws RecognitionException {
         WhileLanguageParser.mul_expression_return retval = new WhileLanguageParser.mul_expression_return();
         retval.start = input.LT(1);
@@ -2702,8 +2702,8 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:305:9: (e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:305:11: e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
+            // ../src/grammar/WhileLanguage.g:305:9: (e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )* )
+            // ../src/grammar/WhileLanguage.g:305:11: e1= unary_expression ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
             {
             pushFollow(FOLLOW_unary_expression_in_mul_expression1745);
             e1=unary_expression();
@@ -2713,7 +2713,7 @@ public class WhileLanguageParser extends Parser {
 
             retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:305:74: ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
+            // ../src/grammar/WhileLanguage.g:305:74: ( '&' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
             loop30:
             do {
                 int alt30=5;
@@ -2743,7 +2743,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt30) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:306:12: '&' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:306:12: '&' e2= unary_expression
             	    {
             	    match(input,13,FOLLOW_13_in_mul_expression1762); 
 
@@ -2759,7 +2759,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:308:12: '*' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:308:12: '*' e2= unary_expression
             	    {
             	    match(input,16,FOLLOW_16_in_mul_expression1781); 
 
@@ -2775,7 +2775,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:310:12: '/' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:310:12: '/' e2= unary_expression
             	    {
             	    match(input,20,FOLLOW_20_in_mul_expression1800); 
 
@@ -2792,7 +2792,7 @@ public class WhileLanguageParser extends Parser {
             	    }
             	    break;
             	case 4 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:313:12: '%' e2= unary_expression
+            	    // ../src/grammar/WhileLanguage.g:313:12: '%' e2= unary_expression
             	    {
             	    match(input,12,FOLLOW_12_in_mul_expression1819); 
 
@@ -2842,7 +2842,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "unary_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:320:1: unary_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression );
+    // ../src/grammar/WhileLanguage.g:320:1: unary_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression );
     public final WhileLanguageParser.unary_expression_return unary_expression() throws RecognitionException {
         WhileLanguageParser.unary_expression_return retval = new WhileLanguageParser.unary_expression_return();
         retval.start = input.LT(1);
@@ -2852,7 +2852,7 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:321:9: ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression )
+            // ../src/grammar/WhileLanguage.g:321:9: ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression )
             int alt32=3;
             switch ( input.LA(1) ) {
             case 10:
@@ -2884,7 +2884,7 @@ public class WhileLanguageParser extends Parser {
 
             switch (alt32) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:321:11: '!' e= parenthesized_expression
+                    // ../src/grammar/WhileLanguage.g:321:11: '!' e= parenthesized_expression
                     {
                     match(input,10,FOLLOW_10_in_unary_expression1865); 
 
@@ -2901,7 +2901,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:324:11: '-' e= parenthesized_expression
+                    // ../src/grammar/WhileLanguage.g:324:11: '-' e= parenthesized_expression
                     {
                     match(input,19,FOLLOW_19_in_unary_expression1884); 
 
@@ -2918,9 +2918,9 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:327:11: ( '+' )? e= parenthesized_expression
+                    // ../src/grammar/WhileLanguage.g:327:11: ( '+' )? e= parenthesized_expression
                     {
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:327:11: ( '+' )?
+                    // ../src/grammar/WhileLanguage.g:327:11: ( '+' )?
                     int alt31=2;
                     int LA31_0 = input.LA(1);
 
@@ -2929,7 +2929,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     switch (alt31) {
                         case 1 :
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:327:11: '+'
+                            // ../src/grammar/WhileLanguage.g:327:11: '+'
                             {
                             match(input,17,FOLLOW_17_in_unary_expression1903); 
 
@@ -2977,7 +2977,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "parenthesized_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:332:1: parenthesized_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '(' expression ')' | function_call | array_read | IDENT | literal_expression );
+    // ../src/grammar/WhileLanguage.g:332:1: parenthesized_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( '(' expression ')' | function_call | array_read | IDENT | literal_expression );
     public final WhileLanguageParser.parenthesized_expression_return parenthesized_expression() throws RecognitionException {
         WhileLanguageParser.parenthesized_expression_return retval = new WhileLanguageParser.parenthesized_expression_return();
         retval.start = input.LT(1);
@@ -2994,7 +2994,7 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:333:9: ( '(' expression ')' | function_call | array_read | IDENT | literal_expression )
+            // ../src/grammar/WhileLanguage.g:333:9: ( '(' expression ')' | function_call | array_read | IDENT | literal_expression )
             int alt33=5;
             switch ( input.LA(1) ) {
             case 14:
@@ -3063,7 +3063,7 @@ public class WhileLanguageParser extends Parser {
 
             switch (alt33) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:333:11: '(' expression ')'
+                    // ../src/grammar/WhileLanguage.g:333:11: '(' expression ')'
                     {
                     match(input,14,FOLLOW_14_in_parenthesized_expression1939); 
 
@@ -3080,7 +3080,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:334:11: function_call
+                    // ../src/grammar/WhileLanguage.g:334:11: function_call
                     {
                     pushFollow(FOLLOW_function_call_in_parenthesized_expression1957);
                     function_call32=function_call();
@@ -3093,7 +3093,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:335:11: array_read
+                    // ../src/grammar/WhileLanguage.g:335:11: array_read
                     {
                     pushFollow(FOLLOW_array_read_in_parenthesized_expression1971);
                     array_read33=array_read();
@@ -3106,7 +3106,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:336:11: IDENT
+                    // ../src/grammar/WhileLanguage.g:336:11: IDENT
                     {
                     IDENT34=(Token)match(input,IDENT,FOLLOW_IDENT_in_parenthesized_expression1985); 
 
@@ -3115,7 +3115,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:337:11: literal_expression
+                    // ../src/grammar/WhileLanguage.g:337:11: literal_expression
                     {
                     pushFollow(FOLLOW_literal_expression_in_parenthesized_expression1999);
                     literal_expression35=literal_expression();
@@ -3153,7 +3153,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "function_call"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:340:1: function_call returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '(' ( arglist )? ')' ;
+    // ../src/grammar/WhileLanguage.g:340:1: function_call returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '(' ( arglist )? ')' ;
     public final WhileLanguageParser.function_call_return function_call() throws RecognitionException {
         WhileLanguageParser.function_call_return retval = new WhileLanguageParser.function_call_return();
         retval.start = input.LT(1);
@@ -3164,14 +3164,14 @@ public class WhileLanguageParser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:341:9: ( IDENT '(' ( arglist )? ')' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:341:11: IDENT '(' ( arglist )? ')'
+            // ../src/grammar/WhileLanguage.g:341:9: ( IDENT '(' ( arglist )? ')' )
+            // ../src/grammar/WhileLanguage.g:341:11: IDENT '(' ( arglist )? ')'
             {
             IDENT37=(Token)match(input,IDENT,FOLLOW_IDENT_in_function_call2030); 
 
             match(input,14,FOLLOW_14_in_function_call2032); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:341:21: ( arglist )?
+            // ../src/grammar/WhileLanguage.g:341:21: ( arglist )?
             int alt34=2;
             int LA34_0 = input.LA(1);
 
@@ -3180,7 +3180,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt34) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:341:21: arglist
+                    // ../src/grammar/WhileLanguage.g:341:21: arglist
                     {
                     pushFollow(FOLLOW_arglist_in_function_call2034);
                     arglist36=arglist();
@@ -3228,7 +3228,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "arglist"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:348:1: arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors ] : e1= expression ( ',' e2= expression )* ;
+    // ../src/grammar/WhileLanguage.g:348:1: arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors ] : e1= expression ( ',' e2= expression )* ;
     public final WhileLanguageParser.arglist_return arglist() throws RecognitionException {
         WhileLanguageParser.arglist_return retval = new WhileLanguageParser.arglist_return();
         retval.start = input.LT(1);
@@ -3241,8 +3241,8 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Expression> params = new LinkedList<Expression>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:350:9: (e1= expression ( ',' e2= expression )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:350:11: e1= expression ( ',' e2= expression )*
+            // ../src/grammar/WhileLanguage.g:350:9: (e1= expression ( ',' e2= expression )* )
+            // ../src/grammar/WhileLanguage.g:350:11: e1= expression ( ',' e2= expression )*
             {
             pushFollow(FOLLOW_expression_in_arglist2076);
             e1=expression();
@@ -3252,7 +3252,7 @@ public class WhileLanguageParser extends Parser {
 
             params.add((Expression) e1.ast); retval.divisors = (e1!=null?e1.divisors:null);
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:351:10: ( ',' e2= expression )*
+            // ../src/grammar/WhileLanguage.g:351:10: ( ',' e2= expression )*
             loop35:
             do {
                 int alt35=2;
@@ -3265,7 +3265,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt35) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:351:12: ',' e2= expression
+            	    // ../src/grammar/WhileLanguage.g:351:12: ',' e2= expression
             	    {
             	    match(input,18,FOLLOW_18_in_arglist2091); 
 
@@ -3312,7 +3312,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "array_read"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:354:1: array_read returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* ;
+    // ../src/grammar/WhileLanguage.g:354:1: array_read returns [ Expression ast, LinkedList<Expression> divisors ] : IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* ;
     public final WhileLanguageParser.array_read_return array_read() throws RecognitionException {
         WhileLanguageParser.array_read_return retval = new WhileLanguageParser.array_read_return();
         retval.start = input.LT(1);
@@ -3326,8 +3326,8 @@ public class WhileLanguageParser extends Parser {
 
         LinkedList<Expression> l = new LinkedList<Expression>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:356:9: ( IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:356:11: IDENT '[' e1= expression ']' ( '[' e2= expression ']' )*
+            // ../src/grammar/WhileLanguage.g:356:9: ( IDENT '[' e1= expression ']' ( '[' e2= expression ']' )* )
+            // ../src/grammar/WhileLanguage.g:356:11: IDENT '[' e1= expression ']' ( '[' e2= expression ']' )*
             {
             IDENT38=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_read2135); 
 
@@ -3344,7 +3344,7 @@ public class WhileLanguageParser extends Parser {
 
             match(input,29,FOLLOW_29_in_array_read2145); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:358:10: ( '[' e2= expression ']' )*
+            // ../src/grammar/WhileLanguage.g:358:10: ( '[' e2= expression ']' )*
             loop36:
             do {
                 int alt36=2;
@@ -3357,7 +3357,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt36) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:358:12: '[' e2= expression ']'
+            	    // ../src/grammar/WhileLanguage.g:358:12: '[' e2= expression ']'
             	    {
             	    match(input,28,FOLLOW_28_in_array_read2158); 
 
@@ -3409,7 +3409,7 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "literal_expression"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:363:1: literal_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( INT_LITERAL | BOOL_LITERAL );
+    // ../src/grammar/WhileLanguage.g:363:1: literal_expression returns [ Expression ast, LinkedList<Expression> divisors ] : ( INT_LITERAL | BOOL_LITERAL );
     public final WhileLanguageParser.literal_expression_return literal_expression() throws RecognitionException {
         WhileLanguageParser.literal_expression_return retval = new WhileLanguageParser.literal_expression_return();
         retval.start = input.LT(1);
@@ -3419,7 +3419,7 @@ public class WhileLanguageParser extends Parser {
         Token BOOL_LITERAL40=null;
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:364:9: ( INT_LITERAL | BOOL_LITERAL )
+            // ../src/grammar/WhileLanguage.g:364:9: ( INT_LITERAL | BOOL_LITERAL )
             int alt37=2;
             int LA37_0 = input.LA(1);
 
@@ -3438,7 +3438,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt37) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:364:11: INT_LITERAL
+                    // ../src/grammar/WhileLanguage.g:364:11: INT_LITERAL
                     {
                     INT_LITERAL39=(Token)match(input,INT_LITERAL,FOLLOW_INT_LITERAL_in_literal_expression2208); 
 
@@ -3447,7 +3447,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:365:11: BOOL_LITERAL
+                    // ../src/grammar/WhileLanguage.g:365:11: BOOL_LITERAL
                     {
                     BOOL_LITERAL40=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal_expression2222); 
 
@@ -3476,16 +3476,16 @@ public class WhileLanguageParser extends Parser {
 
 
     // $ANTLR start "type"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:368:1: type returns [ Type ast ] : ( 'int' | 'bool' ) ( '[' ']' )* ;
+    // ../src/grammar/WhileLanguage.g:368:1: type returns [ Type ast ] : ( 'int' | 'bool' ) ( '[' ']' )* ;
     public final Type type() throws RecognitionException {
         Type ast = null;
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:9: ( ( 'int' | 'bool' ) ( '[' ']' )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:11: ( 'int' | 'bool' ) ( '[' ']' )*
+            // ../src/grammar/WhileLanguage.g:369:9: ( ( 'int' | 'bool' ) ( '[' ']' )* )
+            // ../src/grammar/WhileLanguage.g:369:11: ( 'int' | 'bool' ) ( '[' ']' )*
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:11: ( 'int' | 'bool' )
+            // ../src/grammar/WhileLanguage.g:369:11: ( 'int' | 'bool' )
             int alt38=2;
             int LA38_0 = input.LA(1);
 
@@ -3504,7 +3504,7 @@ public class WhileLanguageParser extends Parser {
             }
             switch (alt38) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:12: 'int'
+                    // ../src/grammar/WhileLanguage.g:369:12: 'int'
                     {
                     match(input,38,FOLLOW_38_in_type2254); 
 
@@ -3513,7 +3513,7 @@ public class WhileLanguageParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:48: 'bool'
+                    // ../src/grammar/WhileLanguage.g:369:48: 'bool'
                     {
                     match(input,34,FOLLOW_34_in_type2260); 
 
@@ -3525,7 +3525,7 @@ public class WhileLanguageParser extends Parser {
             }
 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:83: ( '[' ']' )*
+            // ../src/grammar/WhileLanguage.g:369:83: ( '[' ']' )*
             loop39:
             do {
                 int alt39=2;
@@ -3538,7 +3538,7 @@ public class WhileLanguageParser extends Parser {
 
                 switch (alt39) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:369:85: '[' ']'
+            	    // ../src/grammar/WhileLanguage.g:369:85: '[' ']'
             	    {
             	    match(input,28,FOLLOW_28_in_type2266); 
 
