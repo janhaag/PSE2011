@@ -1,5 +1,9 @@
 package gui;
 
+import interpreter.StatementBreakpoint;
+
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
@@ -83,6 +87,14 @@ public class BreakpointView extends Composite {
 	public void setGlobalBreakpointItem(String key) {		
 		TableItem item = new TableItem(this.global, SWT.NONE);
 		item.setText(1, key);
+	}
+	
+	public void drawStatementBreakpoint(ArrayList<StatementBreakpoint> sbreakpoints) {
+		this.statement.removeAll();
+		for (int i = 0; i < sbreakpoints.size(); i++) {
+			TableItem item = new TableItem(this.statement, SWT.NONE);
+			item.setText(1, sbreakpoints.get(i).getLine() + "");
+		}
 	}
 	
 	public void removeGlobalBreakpointItem() {
