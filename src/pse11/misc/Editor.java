@@ -103,17 +103,37 @@ public class Editor {
 		this.colorArray.clear();
 		int position = 0;
 		String word = "";
+		ArrayList <Keyword> tmplist = new ArrayList<Keyword>();
 		for(int i = 0; i < source.length(); i++) {
 			char currentchar = source.charAt(i);
 			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n' || currentchar == '\t') {
-				Keyword keyword = this.addKeyWordColor(position, word);
-				if(keyword != null) {
-					this.colorArray.add(keyword);
+				String[] keywords = word.split("[^a-z]");
+				int positionplus = 0;
+				for(String subword : keywords) {
+					System.out.println(subword);
+					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
+					positionplus += (subword.length() + 1);
+					if(keyword != null) {
+						this.colorArray.add(keyword);
+					}
 				}
 				word = "";
 				position = i+1;
+				tmplist.clear();
 			} else {
+				this.colorArray.removeAll(tmplist);
 				word += source.charAt(i);
+				String[] keywords = word.split("[^a-z]");
+				int positionplus = 0;
+				for(String subword : keywords) {
+					System.out.println(subword);
+					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
+					positionplus += (subword.length() + 1);
+					if(keyword != null) {
+						this.colorArray.add(keyword);
+						tmplist.add(keyword);
+					}
+				}
 			}
 		}
 		Keyword keyword = this.addKeyWordColor(position, word);
@@ -124,20 +144,12 @@ public class Editor {
 	private Keyword addKeyWordColor(int position, String keyword) {
 		if(keyword.equals("if")) {
 			return new Keyword(position,keyword.length(),"0000FF");
-		} else if(keyword.startsWith("if(")) {
-			return new Keyword(position,2,"0000FF");
 		} else if(keyword.equals("while")) {
 			return new Keyword(position,keyword.length(),"0000FF");
-		} else if(keyword.startsWith("while(")) {
-			return new Keyword(position,5,"0000FF");
 		} else if(keyword.equals("true")) {
 			return new Keyword(position,keyword.length(),"00FF00");
-		} else if(keyword.equals("true;")) {
-			return new Keyword(position,4,"00FF00");
 		} else if(keyword.equals("false")) {
 			return new Keyword(position,keyword.length(),"FF0000");
-		} else if(keyword.equals("false;")) {
-			return new Keyword(position,5,"FF0000");
 		} else if(keyword.equals("int")) {
 			return new Keyword(position,keyword.length(),"0000FF");
 		} else if(keyword.equals("bool")) {
@@ -148,8 +160,12 @@ public class Editor {
 			return new Keyword(position,keyword.length(),"0000FF");
 		} else if(keyword.equals("return")) {
 			return new Keyword(position,keyword.length(),"0000FF");
-		} else if(keyword.equals("return;")) {
-			return new Keyword(position,6,"0000FF");
+		} else if(keyword.equals("assert")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("assume")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("main")) {
+			return new Keyword(position,keyword.length(),"0000FF");
 		} else {
 			return null;
 		}
