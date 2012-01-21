@@ -23,6 +23,9 @@ public class ProgramExecution {
      * list of this program's global breakpoints
      */
     private ArrayList<GlobalBreakpoint> globalBreakpoints;
+    
+    private int[] parameterValues;
+    
     //TODO: delete typeChecker if necessary
     /**
      * type checker to evaluate the type correctness of global statements
@@ -39,9 +42,11 @@ public class ProgramExecution {
      * @param ast program whose execution context is saved
      * @param interpreter interpreter to evaluate breakpoint expressions
      */
-    public ProgramExecution(ASTRoot ast, Interpreter interpreter) {
-        this.statementBreakpoints = new ArrayList<StatementBreakpoint>();
-        this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
+    public ProgramExecution(ASTRoot ast, Interpreter interpreter, ArrayList<StatementBreakpoint> sbreakpoints,
+    		ArrayList<GlobalBreakpoint> gbreakpoints, int[] parameterValues) {
+        this.statementBreakpoints = sbreakpoints;
+        this.globalBreakpoints = gbreakpoints;
+        this.parameterValues = parameterValues;
         currentState = new State(ast);
         typeChecker = new TypeChecker();
         this.interpreter = interpreter;

@@ -13,6 +13,7 @@ import java.util.Map;
 
 import misc.ExecutionHandler;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -26,36 +27,21 @@ public class VariableViewController {
 	private VariableView varView;
 	
 	
-	public VariableViewController(VariableView varView) {	
-		this.varView = varView;		
+	public VariableViewController(VariableView varView, ExecutionHandler executionHandler) {	
+		this.varView = varView;	
+		this.executionHandler = executionHandler;
 	}
 	
 
 	//update the variable view when in single step, paused or stopped state
-	public void updateVarView() {        
-		//TODO: delete this when an instance of ProgramExecution can be created
-		HashMap<Identifier, Value> vars = new HashMap<Identifier, Value>();
-        ArrayValue a = new ArrayValue(new ArrayType(new BooleanType()),
-                                      new int[]{2}, 0);
-        ArrayList<Integer> l = new ArrayList<Integer>();
-        l.add(0);
-        a.setValue("true", l);
-        vars.put(new Identifier("a"), a);
-        vars.put(new Identifier("B"), new BooleanValue("true"));
-        vars.put(new Identifier("z_k"), new IntegerValue("-8"));
-        ArrayValue i =
-                new ArrayValue(new ArrayType(new ArrayType(new IntegerType())),
-                                      new int[]{2, 1}, 0);
-        l.add(1);l.add(0);
-        i.setValue("42", l);
-        vars.put(new Identifier("i0"), i);
-		
-        //if (this.execution == null) return;
-        //HashMap<Identifier, Value> vars = this.execution.getVariables();
+	public void updateVarView() {        		
+        if (this.executionHandler == null || this.executionHandler.getProgramExecution() == null) {
+        	return;
+        }
+        HashMap<Identifier, Value> vars = this.executionHandler.getProgramExecution().getVariables();
       
         //insert Tree items       
-        this.varView.getVarTree().removeAll();
-        
+        this.varView.getVarTree().removeAll();       
 		Iterator<Map.Entry<Identifier, Value>> it = vars.entrySet().iterator();		
 		while (it.hasNext()) {
 			Map.Entry<Identifier, Value> entry = it.next();
@@ -94,5 +80,21 @@ public class VariableViewController {
 						newId, ((ArrayValue) tmp).getValues()[i]);
 			}
 		}
+	}
+	
+	public void deactivateView() {
+		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));
+		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));
+	}
+	
+	public void activateView() {
+		this.varView.getVarTree().setBackground(null);
+		this.varView.getVarTree().setForeground(null);
+	}
+	
+	
+	
+	public VariableView getVarView() {
+		return this.varView;
 	}
 }

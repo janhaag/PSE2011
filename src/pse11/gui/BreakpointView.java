@@ -1,5 +1,6 @@
 package gui;
 
+import interpreter.GlobalBreakpoint;
 import interpreter.StatementBreakpoint;
 
 import java.util.ArrayList;
@@ -84,9 +85,12 @@ public class BreakpointView extends Composite {
 	    this.button.setLayoutData(gData);
 	}
 	
-	public void setGlobalBreakpointItem(String key) {		
-		TableItem item = new TableItem(this.global, SWT.NONE);
-		item.setText(1, key);
+	public void drawGlobalBreakpointItem(ArrayList<GlobalBreakpoint> gbreakpoints) {		
+		this.global.removeAll();
+		for (int i = 0; i < gbreakpoints.size(); i++) {
+			TableItem item = new TableItem(this.global, SWT.NONE);
+			item.setText(1, gbreakpoints.get(i).getExpression().toString());
+		}
 	}
 	
 	public void drawStatementBreakpoint(ArrayList<StatementBreakpoint> sbreakpoints) {

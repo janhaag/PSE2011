@@ -2,6 +2,7 @@ package gui.controller;
 
 import interpreter.GlobalBreakpoint;
 
+import org.antlr.runtime.RecognitionException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -16,9 +17,12 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Table;
 
+import ast.Expression;
+
 import gui.BreakpointView;
 import gui.EditorView;
 import misc.Editor;
+import misc.ExecutionHandler;
 
 public class EditorController implements MouseListener, ModifyListener, VerifyListener, VerifyKeyListener, FocusListener {
     private EditorView editorframe;
@@ -33,12 +37,23 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
         this.editorframe.getLineNumbers().addMouseListener(this);
         this.editorframe.getLineNumbers().addFocusListener(this);
     }
+    
     public Editor getEditor() {
         return this.editor;
     }
     
     public EditorView getEditorView() {
 		return this.editorframe;
+    }
+    
+    public void deactivateView() {
+    	this.editorframe.getLineNumbers().removeMouseListener(this);
+    	this.editorframe.getTextField().setEditable(false);
+    }
+    
+    public void activateView() {
+    	this.editorframe.getLineNumbers().addMouseListener(this);
+    	this.editorframe.getTextField().setEditable(true);
     }
     
     @Override
@@ -104,9 +119,12 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 	//nested class
 	public class BreakpointViewController implements MouseListener, SelectionListener {			
 		private BreakpointView breakpointView;
+		private ExecutionHandler executionHandler;
 		
-		public BreakpointViewController(BreakpointView breakpointView) {
-			this.breakpointView = breakpointView;			
+		public BreakpointViewController(BreakpointView breakpointView, ExecutionHandler executionHandler) {
+			this.breakpointView = breakpointView;	
+			this.executionHandler = executionHandler;
+			
 			this.breakpointView.getGlobalBreakpoint().addSelectionListener(this);
 			this.breakpointView.getStatementBreakpoint().addSelectionListener(this);
 			this.breakpointView.getAddButton().addSelectionListener(this);
@@ -127,6 +145,16 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
                 }
                 this.breakpointView.drawStatementBreakpoint(editor.getStatementBreakpoints());
             }
+		}
+		
+		public void deactivateView() {
+			this.breakpointView.getAddButton().removeSelectionListener(this);
+			editorframe.getLineNumbers().removeMouseListener(this);
+		}
+		
+		public void activateView() {
+			this.breakpointView.getAddButton().addSelectionListener(this);
+			editorframe.getLineNumbers().addMouseListener(this);
 		}
 		
 		@Override
@@ -171,19 +199,27 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 					return;
 				}
 				
-				boolean contains = false;
-				for (GlobalBreakpoint g : editor.getGlobalBreakpoints()) {
-					if (g.getExpression().toString().equals(expression)) 
-						contains = true;
+				int i;
+				for (i = 0; i < editor.getGlobalBreakpoints().size(); i++) {
+					if (editor.getGlobalBreakpoints().get(i).getExpression().toString().replaceAll(" ", "").equals(expression.replaceAll(" ", ""))) {
+						break;
+					}				
 				}	
-				if (!contains) {
-					//GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(null);
-					//this.execution.createStatementBreakpoint(expression);
-					//this.breakpointView.setGlobalBreakpointItem(expression);
+				if (i >= editor.getGlobalBreakpoints().size()) {
+					Expression exp = null;
+					try {
+						exp = this.executionHandler.getParserInterface().parseExpression(expression);
+					} catch (RecognitionException e1) {
+						System.out.println("Invalid expression!");
+					}
+					if (exp != null) {
+						GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(exp);
+						editor.getGlobalBreakpoints().add(gBreakpoint);
+					}
 				} else {
-					//Remove global breakpoints
-					//this.breakpointView.removeGlobalBreakpointItem();
+					editor.getGlobalBreakpoints().remove(i);
 				}
+				this.breakpointView.drawGlobalBreakpointItem(editor.getGlobalBreakpoints());
 			}	
 		} 
 

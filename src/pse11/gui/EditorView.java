@@ -58,7 +58,7 @@ public class EditorView extends Composite {
 		this.linenumbers = new StyledText(sc1, SWT.MULTI | SWT.WRAP);	
 		sc1.getVerticalBar().setEnabled(false);
 		sc1.getHorizontalBar().setEnabled(false);
-		this.linenumbers.setSize(40, 7500);
+		this.linenumbers.setSize(35, 7500);
 		
 		String s = "";
 		for (int i = 0; i < MAX_LINES - 1; i++) {

@@ -18,7 +18,7 @@ public class MainFrame extends Frame {
 	private Shell shell;
 	private MenuBar menubar;
 	private EditorView editor;
-	private Button parseButton;
+	private Button checkSyntaxButton;
 	private Button runButton;
 	private Button stepButton;
 	private Button pauseButton;
@@ -49,7 +49,7 @@ public class MainFrame extends Frame {
 		
 		Composite c1 = new Composite(shell, SWT.NONE);
 		gLayout = new GridLayout();
-		gLayout.numColumns = 17;
+		gLayout.numColumns = 20;
 		gLayout.makeColumnsEqualWidth = true;
 		c1.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_BOTH);
@@ -59,17 +59,15 @@ public class MainFrame extends Frame {
 		//Adding editor
 		this.editor = new EditorView(c1, SWT.BORDER, editor);
 		gData = new GridData(GridData.FILL_BOTH);
-		gData.horizontalSpan = 17;
+		gData.horizontalSpan = 20;
 		this.editor.setLayoutData(gData);
 		
 		//Adding buttons
-		//TODO Add new button as discussed on 01/19/2012
-		/*this.parseButton = new Button(c1, SWT.PUSH);
-		this.parseButton.setText("Parse");
+		this.checkSyntaxButton = new Button(c1, SWT.PUSH);
+		this.checkSyntaxButton.setText("Check Syntax");
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
-		this.parseButton.setLayoutData(gData);
-		this.parseButton.setVisible(false);*/
+		this.checkSyntaxButton.setLayoutData(gData);
 		
 		this.runButton = new Button(c1, SWT.PUSH);
 		this.runButton.setText("Run");
@@ -104,7 +102,7 @@ public class MainFrame extends Frame {
 		this.validateButton.setLayoutData(gData);
 		this.validateButton.setEnabled(false);
 		
-//		this.parseButton.addSelectionListener(mainController);
+		this.checkSyntaxButton.addSelectionListener(mainController);
 		this.runButton.addSelectionListener(mainController);
 		this.stepButton.addSelectionListener(mainController);
 		this.validateButton.addSelectionListener(mainController);
@@ -196,8 +194,8 @@ public class MainFrame extends Frame {
 		return this.breakpointView;
 	}
 	
-	public Button getParseButton() {
-		return this.parseButton;
+	public Button getCheckSyntaxButton() {
+		return this.checkSyntaxButton;
 	}
 	
 	public Button getRunButton() {
