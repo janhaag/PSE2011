@@ -23,6 +23,7 @@ public class ExecutionHandler {
 	
 	private FunctionParameter[] parameters;
 	private int[] parameterValues;
+	private boolean paused;
 	
 	public ExecutionHandler(MessageSystem messagesystem) {
 		this.messagesystem = messagesystem;
@@ -53,7 +54,14 @@ public class ExecutionHandler {
 	
 	public int run(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
-		int status = this.singleStep(source, sbreakpoints, gbreakpoints);
+		int status = 1;
+		boolean finished = false;
+		while (!paused && status != 0 && !finished) {
+			status = this.singleStep(source, sbreakpoints, gbreakpoints);
+			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
+				finished = true;
+			}
+		}
 		return status;
 	}
 	

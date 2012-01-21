@@ -15,9 +15,11 @@ public class ParameterController implements SelectionListener {
 	}
 
 	public void addView(ParameterFrame frame) {
-		this.frame = frame;
-		this.frame.createFrame(this.executionHandler.getParameters());
-		this.frame.getOkButton().addSelectionListener(this);		
+		if (this.executionHandler.getParameters() != null) {
+			this.frame = frame;
+			this.frame.createFrame(this.executionHandler.getParameters());
+			this.frame.getOkButton().addSelectionListener(this);
+		}		
 	}
 	
 	@Override
