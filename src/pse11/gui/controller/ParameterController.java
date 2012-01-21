@@ -15,9 +15,11 @@ public class ParameterController implements SelectionListener {
 	}
 
 	public void addView(ParameterFrame frame) {
-		this.frame = frame;
-		this.frame.createFrame(this.executionHandler.getParameters());
-		this.frame.getOkButton().addSelectionListener(this);		
+		if (this.executionHandler.getParameters() != null) {
+			this.frame = frame;
+			this.frame.createFrame(this.executionHandler.getParameters());
+			this.frame.getOkButton().addSelectionListener(this);
+		}		
 	}
 	
 	@Override
@@ -28,6 +30,7 @@ public class ParameterController implements SelectionListener {
 				String s = this.frame.getValues()[i].getText();
 				try {
 					parameterValues[i] = Integer.parseInt(s);
+					System.out.println(parameterValues[i]);
 				}
 				catch (NumberFormatException nf) {
 					parameterValues[i] = 0;

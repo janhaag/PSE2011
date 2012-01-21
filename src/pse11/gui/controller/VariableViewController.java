@@ -73,8 +73,8 @@ public class VariableViewController {
 			this.varView.addTreeItem(parent, type, id, tmp.toString());
 		}
 		else if (tmp instanceof ArrayValue) {
+            TreeItem item = this.varView.addTreeItem(parent, type, id, "-");
 			for (int i = 0; i < ((ArrayValue) tmp).getValues().length; i++) {
-				TreeItem item = this.varView.addTreeItem(parent, type, id, "-");
 				String newId = id + "[" + i + "]";
 				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), 
 						newId, ((ArrayValue) tmp).getValues()[i]);

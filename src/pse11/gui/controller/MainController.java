@@ -82,15 +82,20 @@ public class MainController implements SelectionListener {
             assert editorController != null;
             int status = 1;
             if (this.executionHandler.getProgramExecution() == null) {
+            	this.varController.getVarView().getVarTree().removeAll();
+            	ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
+            	this.parameterContoller.addView(frame);
                 status = this.executionHandler.run(this.editorController.getEditor().getSource(), 
                 		this.editorController.getEditor().getStatementBreakpoints(),
                 		this.editorController.getEditor().getGlobalBreakpoints());
-                this.varController.getVarView().getVarTree().removeAll();
-                
-                if (status == 1) {
-                	ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
-                	this.parameterContoller.addView(frame);
-                }
+                this.varController.updateVarView();
+            }
+            else {
+            	this.executionHandler.run(this.editorController.getEditor().getSource(), 
+                		this.editorController.getEditor().getStatementBreakpoints(),
+                		this.editorController.getEditor().getGlobalBreakpoints());
+                //this.varController.getVarView().getVarTree().removeAll();
+            	this.varController.updateVarView();
             }
             if (status == 1) {
             	//(De-)activations
@@ -113,7 +118,7 @@ public class MainController implements SelectionListener {
             assert editorController != null;
             int status = 1;
             if (this.executionHandler.getProgramExecution() == null) {
-                status = this.executionHandler.run(this.editorController.getEditor().getSource(), 
+                status = this.executionHandler.singleStep(this.editorController.getEditor().getSource(), 
                 		this.editorController.getEditor().getStatementBreakpoints(),
                 		this.editorController.getEditor().getGlobalBreakpoints());
                 this.varController.getVarView().getVarTree().removeAll();
@@ -124,7 +129,10 @@ public class MainController implements SelectionListener {
                 	this.varController.updateVarView();
                 }           
             } else {
-            	 this.varController.updateVarView();
+            	this.executionHandler.singleStep(this.editorController.getEditor().getSource(), 
+                		this.editorController.getEditor().getStatementBreakpoints(),
+                		this.editorController.getEditor().getGlobalBreakpoints());
+            	this.varController.updateVarView();
             }                   
             if (status == 1) {
             	//(De-)activations

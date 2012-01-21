@@ -40,6 +40,9 @@ public class ParameterFrame extends Frame implements MiscFrame {
 	}
 	
 	public void createFrame(FunctionParameter[] parameters) {
+		if (parameters == null) {
+			return;
+		}
 		this.values = new Text[parameters.length];
 		shell.setSize(200, 150 + 15 * parameters.length);
 		GridData gData;

@@ -23,6 +23,7 @@ public class ExecutionHandler {
 	
 	private FunctionParameter[] parameters;
 	private int[] parameterValues;
+	private boolean paused;
 	
 	public ExecutionHandler(MessageSystem messagesystem) {
 		this.messagesystem = messagesystem;
@@ -53,19 +54,36 @@ public class ExecutionHandler {
 	
 	public int run(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
-		Program ast = this.parse(source);
-		int status = 0;
-		if (ast != null) {
-			this.execution = new ProgramExecution(ast, this.interpreter, 
-					sbreakpoints, gbreakpoints, this.parameterValues);
-			status = 1;
-			this.parameters = ast.getMainFunction().getParameters();
+		int status = 1;
+		boolean finished = false;
+		while (!paused && status != 0 && !finished) {
+			status = this.singleStep(source, sbreakpoints, gbreakpoints);
+			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
+				finished = true;
+			}
 		}
 		return status;
 	}
 	
-	public void singleStep() {
-		
+	public int singleStep(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
+			ArrayList<GlobalBreakpoint> gbreakpoints) {
+		int status = 1;
+		if (this.execution == null) {
+			Program ast = this.parse(source);
+			if (ast != null) {
+				this.execution = new ProgramExecution(ast, this.interpreter, 
+						sbreakpoints, gbreakpoints, this.parameterValues == null ? new int[0] : this.parameterValues);
+				status = 1;
+				this.parameters = ast.getMainFunction().getParameters();
+			}
+			else {
+				status = 0;
+			}
+		}
+		if (status == 1) {
+			this.interpreter.step(this.execution.getCurrentState());
+		}
+		return status;
 	}
 	
 	private String[] parseParserError(String error) {

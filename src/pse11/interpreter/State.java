@@ -42,8 +42,8 @@ public class State {
      * Destroys the currently most inner scope.
      */
     public void destroyScope() {
-        currentScope = currentScope.getParent();
-        if (currentScope != null) {
+        if (currentScope.getParent() != null) {
+            currentScope = currentScope.getParent();
             currentStatement = currentScope.getCurrentStatement();
         }
     }

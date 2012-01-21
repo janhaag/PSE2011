@@ -24,8 +24,6 @@ public class ProgramExecution {
      */
     private ArrayList<GlobalBreakpoint> globalBreakpoints;
     
-    private int[] parameterValues;
-    
     //TODO: delete typeChecker if necessary
     /**
      * type checker to evaluate the type correctness of global statements
@@ -46,7 +44,6 @@ public class ProgramExecution {
     		ArrayList<GlobalBreakpoint> gbreakpoints, int[] parameterValues) {
         this.statementBreakpoints = sbreakpoints;
         this.globalBreakpoints = gbreakpoints;
-        this.parameterValues = parameterValues;
         currentState = new State(ast);
         typeChecker = new TypeChecker();
         this.interpreter = interpreter;
@@ -59,7 +56,7 @@ public class ProgramExecution {
 
     private void initParams(Value[] values) {
         FunctionParameter[] parameters = currentState.getCurrentFunction().getParameters();
-        for (int i = 0; i < parameters.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             currentState.createVar(parameters[i].getName(),
                     values[i].toString(), values[i].getType());
         }
@@ -116,5 +113,22 @@ public class ProgramExecution {
     
     public HashMap<Identifier, Value> getVariables() {
         return currentState.getVariables();
+        //TODO: delete this and comment out the line above
+        /*HashMap<Identifier, Value> vars = new HashMap<Identifier, Value>();
+        ArrayValue a = new ArrayValue(new ArrayType(new BooleanType()),
+                                      new int[]{2}, 0);
+        ArrayList<Integer> l = new ArrayList<Integer>();
+        l.add(0);
+        a.setValue("true", l);
+        vars.put(new Identifier("a"), a);
+        vars.put(new Identifier("B"), new BooleanValue("true"));
+        vars.put(new Identifier("z_k"), new IntegerValue("-8"));
+        ArrayValue i =
+                new ArrayValue(new ArrayType(new ArrayType(new IntegerType())),
+                                      new int[]{2, 1}, 0);
+        l.add(1);l.add(0);
+        i.setValue("42", l);
+        vars.put(new Identifier("i0"), i);
+        return vars; */
     }
 }
