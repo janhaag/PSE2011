@@ -76,7 +76,7 @@ public class Editor {
 		System.out.println("undo");
 		if(!this.undoMemento.empty()) {
 			EditorMemento memento = this.undoMemento.pop();
-			System.out.println("undo22  "+ memento.getSource());
+			//System.out.println("undo22  "+ memento.getSource());
 			this.redoMemento.push(this.createMemento());
 			this.source = memento.getSource();
 			this.editorview.updateView();
@@ -110,7 +110,6 @@ public class Editor {
 				String[] keywords = word.split("[^a-z]");
 				int positionplus = 0;
 				for(String subword : keywords) {
-					System.out.println(subword);
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
 					positionplus += (subword.length() + 1);
 					if(keyword != null) {
@@ -126,7 +125,6 @@ public class Editor {
 				String[] keywords = word.split("[^a-z]");
 				int positionplus = 0;
 				for(String subword : keywords) {
-					System.out.println(subword);
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
 					positionplus += (subword.length() + 1);
 					if(keyword != null) {
