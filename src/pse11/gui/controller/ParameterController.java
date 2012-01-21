@@ -28,6 +28,7 @@ public class ParameterController implements SelectionListener {
 				String s = this.frame.getValues()[i].getText();
 				try {
 					parameterValues[i] = Integer.parseInt(s);
+					System.out.println(parameterValues[i]);
 				}
 				catch (NumberFormatException nf) {
 					parameterValues[i] = 0;

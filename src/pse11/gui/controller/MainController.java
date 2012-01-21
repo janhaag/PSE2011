@@ -113,7 +113,7 @@ public class MainController implements SelectionListener {
             assert editorController != null;
             int status = 1;
             if (this.executionHandler.getProgramExecution() == null) {
-                status = this.executionHandler.run(this.editorController.getEditor().getSource(), 
+                status = this.executionHandler.singleStep(this.editorController.getEditor().getSource(), 
                 		this.editorController.getEditor().getStatementBreakpoints(),
                 		this.editorController.getEditor().getGlobalBreakpoints());
                 this.varController.getVarView().getVarTree().removeAll();

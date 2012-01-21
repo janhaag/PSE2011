@@ -53,19 +53,26 @@ public class ExecutionHandler {
 	
 	public int run(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
-		Program ast = this.parse(source);
-		int status = 0;
-		if (ast != null) {
-			this.execution = new ProgramExecution(ast, this.interpreter, 
-					sbreakpoints, gbreakpoints, this.parameterValues);
-			status = 1;
-			this.parameters = ast.getMainFunction().getParameters();
-		}
+		int status = this.singleStep(source, sbreakpoints, gbreakpoints);
 		return status;
 	}
 	
-	public void singleStep() {
-		
+	public int singleStep(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
+			ArrayList<GlobalBreakpoint> gbreakpoints) {
+		int status = 0;
+		if (this.execution == null) {
+			Program ast = this.parse(source);
+			if (ast != null) {
+				this.execution = new ProgramExecution(ast, this.interpreter, 
+						sbreakpoints, gbreakpoints, this.parameterValues);
+				status = 1;
+				this.parameters = ast.getMainFunction().getParameters();
+			}
+		}
+		if (status == 1) {
+			this.interpreter.step(this.execution.getCurrentState());
+		}
+		return status;
 	}
 	
 	private String[] parseParserError(String error) {

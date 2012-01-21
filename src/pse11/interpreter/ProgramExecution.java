@@ -102,9 +102,9 @@ public class ProgramExecution {
     }
     
     public HashMap<Identifier, Value> getVariables() {
-        //return currentState.getVariables();
+        return currentState.getVariables();
         //TODO: delete this and comment out the line above
-        HashMap<Identifier, Value> vars = new HashMap<Identifier, Value>();
+        /*HashMap<Identifier, Value> vars = new HashMap<Identifier, Value>();
         ArrayValue a = new ArrayValue(new ArrayType(new BooleanType()),
                                       new int[]{2}, 0);
         ArrayList<Integer> l = new ArrayList<Integer>();
@@ -119,6 +119,6 @@ public class ProgramExecution {
         l.add(1);l.add(0);
         i.setValue("42", l);
         vars.put(new Identifier("i0"), i);
-        return vars;
+        return vars; */
     }
 }
