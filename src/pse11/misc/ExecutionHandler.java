@@ -59,7 +59,7 @@ public class ExecutionHandler {
 	
 	public int singleStep(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
-		int status = 0;
+		int status = 1;
 		if (this.execution == null) {
 			Program ast = this.parse(source);
 			if (ast != null) {
@@ -67,6 +67,9 @@ public class ExecutionHandler {
 						sbreakpoints, gbreakpoints, this.parameterValues);
 				status = 1;
 				this.parameters = ast.getMainFunction().getParameters();
+			}
+			else {
+				status = 0;
 			}
 		}
 		if (status == 1) {

@@ -124,7 +124,10 @@ public class MainController implements SelectionListener {
                 	this.varController.updateVarView();
                 }           
             } else {
-            	 this.varController.updateVarView();
+            	this.executionHandler.singleStep(this.editorController.getEditor().getSource(), 
+                		this.editorController.getEditor().getStatementBreakpoints(),
+                		this.editorController.getEditor().getGlobalBreakpoints());
+            	this.varController.updateVarView();
             }                   
             if (status == 1) {
             	//(De-)activations
