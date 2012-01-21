@@ -101,4 +101,14 @@ public class ArrayValue extends Value {
         }
         return equal;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("{");
+        for (Value value : values) {
+            sb.append(value.toString());
+            sb.append(',');
+        }
+        return sb.append('}').toString();
+    }
 }

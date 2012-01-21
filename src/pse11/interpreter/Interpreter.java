@@ -220,17 +220,18 @@ public class Interpreter implements ast.ASTVisitor {
 
     @Override
     public void visit(ArrayRead arrayRead) {
+        Value value = currentState.getVariables().get(arrayRead.getVariable());
         Expression[] indexes = arrayRead.getIndexes();
-        tempValue = currentState.getVariables().get(arrayRead.getVariable());
         for (Expression index : indexes) {
             index.accept(this);
             int pos = ((IntegerValue) tempValue).getValue().intValue();
-            Value[] values = ((ArrayValue) tempValue).getValues();
+            Value[] values = ((ArrayValue) value).getValues();
             if (pos < 0 || pos >= values.length) {
                 pos = 0;
             }
-            tempValue = values[pos];
+            value = values[pos];
         }
+        tempValue = value;
     }
 
     @Override

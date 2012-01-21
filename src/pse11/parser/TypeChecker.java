@@ -349,6 +349,7 @@ public class TypeChecker implements ASTVisitor {
      */
     @Override
     public void visit(Program program) {
+        functionCallAllowed = true;
         functions = program.getFunctions();
         for (int i = 0; i < functions.length - 1; i++) {
             for (int j = i + 1; j < functions.length; j++) {
@@ -405,7 +406,9 @@ public class TypeChecker implements ASTVisitor {
      */
     @Override
     public void visit(Assumption assumption) {
+        functionCallAllowed = false;
         assumption.getExpression().accept(this);
+        functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Expression must have bool type!",
                                             assumption.getPosition());
@@ -418,7 +421,9 @@ public class TypeChecker implements ASTVisitor {
      */
     @Override
     public void visit(Axiom axiom) {
+        functionCallAllowed = false;
         axiom.getExpression().accept(this);
+        functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Expression must have bool type!",
                                             axiom.getPosition());
@@ -431,7 +436,9 @@ public class TypeChecker implements ASTVisitor {
      */
     @Override
     public void visit(Ensure ensure) {
+        functionCallAllowed = false;
         ensure.getExpression().accept(this);
+        functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Expression must have bool type!",
                                             ensure.getPosition());
@@ -444,7 +451,9 @@ public class TypeChecker implements ASTVisitor {
      */
     @Override
     public void visit(Invariant invariant) {
+        functionCallAllowed = false;
         invariant.getExpression().accept(this);
+        functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Expression must have bool type!",
                                             invariant.getPosition());
@@ -547,7 +556,9 @@ public class TypeChecker implements ASTVisitor {
         currentScope = new Scope(currentScope, null, null);
         currentScope.createVar(existsQuantifier.getIdentifier().getName(),
                                 null, new IntegerType());
+        functionCallAllowed = false;
         existsQuantifier.getSubexpression1().accept(this);
+        functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Subexpression must have bool type!",
                                             existsQuantifier.getPosition());
@@ -576,7 +587,9 @@ public class TypeChecker implements ASTVisitor {
         currentScope = new Scope(currentScope, null, null);
         currentScope.createVar(forAllQuantifier.getIdentifier().getName(),
                                 null, new IntegerType());
+        functionCallAllowed = false;
         forAllQuantifier.getSubexpression1().accept(this);
+        functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Subexpression must have bool type!",
                                             forAllQuantifier.getPosition());

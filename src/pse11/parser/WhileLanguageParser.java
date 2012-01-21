@@ -3355,7 +3355,7 @@ public class WhileLanguageParser extends Parser {
             } while (true);
 
 
-            if (!error) {retval.ast = new ArrayRead(new Position(), new Identifier((IDENT38!=null?IDENT38.getText():null)), l.toArray(new ArithmeticExpression[l.size()]));}
+            if (!error) {retval.ast = new ArrayRead(new Position(), new Identifier((IDENT38!=null?IDENT38.getText():null)), l.toArray(new Expression[l.size()]));}
 
             }
 

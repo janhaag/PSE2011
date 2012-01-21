@@ -159,7 +159,7 @@ public class Scope {
      */
     public void setArray(String name, String value,
                          ArrayList<Integer> indexes) {
-        Value array = variables.get(new Identifier(name));
+        Value array = getVariables().get(new Identifier(name));
         if (array instanceof ArrayValue) {
             ((ArrayValue) array).setValue(value, indexes);
         }

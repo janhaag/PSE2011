@@ -333,7 +333,7 @@ array_read returns [ Expression ast, LinkedList<Expression> divisors ]
         		$divisors = $e1.divisors;}} ']'
         	( '[' e2=expression {if (!error) {l.add($e2.ast);
         		$divisors.addAll($e2.divisors);}} ']' )*
-        {if (!error) {$ast = new ArrayRead(new Position(), new Identifier($IDENT.text), l.toArray(new ArithmeticExpression[l.size()]));}}
+        {if (!error) {$ast = new ArrayRead(new Position(), new Identifier($IDENT.text), l.toArray(new Expression[l.size()]));}}
         ;
 
 literal_expression returns [ Expression ast, LinkedList<Expression> divisors ]
