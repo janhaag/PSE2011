@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-01-22 23:36:37
+// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-01-23 00:30:44
 
     package verifier;
 
@@ -66,9 +66,9 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "start"
-    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:15:1: start returns [LinkedList<Pair> list] : (pair= block )+ ;
-    public final LinkedList<Pair> start() throws RecognitionException {
-        LinkedList<Pair> list = null;
+    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:15:1: start returns [LinkedList<Pair<Boolean,String>> list] : (pair= block )+ ;
+    public final LinkedList<Pair<Boolean,String>> start() throws RecognitionException {
+        LinkedList<Pair<Boolean,String>> list = null;
 
 
         Pair<Boolean, String> pair =null;
@@ -359,7 +359,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "model"
-    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[m.get($id3.text)] '))' )* ')' ;
+    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )* ')' ;
     public final String model() throws RecognitionException {
         String example = null;
 
@@ -374,8 +374,8 @@ public class z3Parser extends Parser {
 
         example = "";
         try {
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[m.get($id3.text)] '))' )* ')' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[m.get($id3.text)] '))' )* ')'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )* ')' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )* ')'
             {
             match(input,22,FOLLOW_22_in_model111); 
 
@@ -568,7 +568,7 @@ public class z3Parser extends Parser {
             } while (true);
 
 
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:35:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[m.get($id3.text)] '))' )*
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:35:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )*
             loop10:
             do {
                 int alt10=2;
@@ -581,7 +581,7 @@ public class z3Parser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:35:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[m.get($id3.text)] '))'
+            	    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:35:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))'
             	    {
             	    match(input,21,FOLLOW_21_in_model221); 
 
@@ -647,7 +647,7 @@ public class z3Parser extends Parser {
             	    match(input,15,FOLLOW_15_in_model260); 
 
             	    pushFollow(FOLLOW_ite_in_model265);
-            	    ass=ite(m.get((id3!=null?id3.getText():null)));
+            	    ass=ite((String)m.get((id3!=null?id3.getText():null)));
 
             	    state._fsp--;
 

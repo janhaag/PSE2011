@@ -12,7 +12,7 @@ grammar z3;
     package verifier;
 }
 
-start	returns[LinkedList<Pair> list] @init{list = new LinkedList();}
+start	returns[LinkedList<Pair<Boolean,String>> list] @init{list = new LinkedList();}
 	:(pair = block{$list.add($pair.result);})+
 	;
 
@@ -33,7 +33,7 @@ model	returns [String example] @init{$example = "";}
         '(Array'('Int'{$example += "[ ]";})+ TYPE  ')'
 		'(_as-array'  id2 = (IDENT '!' INT)'))' {m.put($id2.text,$id.text);}{$example += "\n";})*
 		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE
-        '('ass = ite[m.get($id3.text)] {$example += $ass.assignment;}'))')*
+        '('ass = ite[(String)m.get($id3.text)] {$example += $ass.assignment;}'))')*
 		')'
 	;
 
