@@ -164,6 +164,10 @@ public class EditorView extends Composite {
 	public String getText() {
 		return this.textfield.getText();
 	}
+	public void setText(String text) {
+		this.textfield.setText(text);
+	}
+	
 	public StyledText getTextField() {
 		return this.textfield;
 	}
