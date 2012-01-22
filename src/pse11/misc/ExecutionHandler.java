@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import org.antlr.runtime.RecognitionException;
 
-import ast.FunctionParameter;
 import ast.Program;
 
 import parser.ParserInterface;
@@ -21,7 +20,7 @@ public class ExecutionHandler {
 	private MessageSystem messagesystem;
 	private ParserInterface parser;
 	
-	private FunctionParameter[] parameters;
+	private Program ast;
 	private int[] parameterValues;
 	private boolean paused;
 	
@@ -34,11 +33,10 @@ public class ExecutionHandler {
 		return this.execution;
 	}
 
-	public Program parse(String source) {
-		Program ast = null;
+	public void parse(String source) {
 		this.messagesystem.clear(MessageCategories.ERROR);
 		try {
-			ast = this.parser.parseProgram(source);
+			this.ast = this.parser.parseProgram(source);
 		} catch (RecognitionException re) {
 			this.messagesystem.addMessage(MessageCategories.ERROR, 0, re.getMessage());
 		} catch(NullPointerException npe) {
@@ -49,41 +47,34 @@ public class ExecutionHandler {
 			String[] parsedError = parseParserError(error);
 			this.messagesystem.addMessage(MessageCategories.ERROR, Integer.parseInt(parsedError[0]), parsedError[1]);
 		}
-		return ast;
 	}
 	
-	public int run(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
+	public void run(ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
-		int status = 1;
+		if (this.ast == null) {
+			return;
+		}
 		boolean finished = false;
-		while (!paused && status != 0 && !finished) {
-			status = this.singleStep(source, sbreakpoints, gbreakpoints);
+		while (!paused && !finished) {
+			this.singleStep(sbreakpoints, gbreakpoints);
 			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
 				finished = true;
 			}
 		}
-		return status;
 	}
 	
-	public int singleStep(String source, ArrayList<StatementBreakpoint> sbreakpoints, 
+	public void singleStep(ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
-		int status = 1;
-		if (this.execution == null) {
-			Program ast = this.parse(source);
-			if (ast != null) {
-				this.execution = new ProgramExecution(ast, this.interpreter, 
-						sbreakpoints, gbreakpoints, this.parameterValues == null ? new int[0] : this.parameterValues);
-				status = 1;
-				this.parameters = ast.getMainFunction().getParameters();
-			}
-			else {
-				status = 0;
-			}
+		if (this.ast == null) {
+			return;
 		}
-		if (status == 1) {
+		if (this.execution == null) {
+			this.execution = new ProgramExecution(this.ast, this.interpreter, 
+					sbreakpoints, gbreakpoints, this.parameterValues == null ? new int[0] : this.parameterValues);
+		}
+		if (this.execution.getCurrentState().getCurrentStatement() != null) {
 			this.interpreter.step(this.execution.getCurrentState());
 		}
-		return status;
 	}
 	
 	private String[] parseParserError(String error) {
@@ -108,8 +99,16 @@ public class ExecutionHandler {
 		this.parameterValues = values;
 	}
 	
-	public FunctionParameter[] getParameters() {
-		return this.parameters;
+	public int[] getParameterValues() {
+		return this.parameterValues;
+	}
+	
+	public void setAST(Program ast) {
+		this.ast = ast;
+	}
+	
+	public Program getAST() {
+		return this.ast;
 	}
 	
 	public ParserInterface getParserInterface() {

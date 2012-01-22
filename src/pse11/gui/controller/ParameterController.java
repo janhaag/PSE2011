@@ -15,9 +15,9 @@ public class ParameterController implements SelectionListener {
 	}
 
 	public void addView(ParameterFrame frame) {
-		if (this.executionHandler.getParameters() != null) {
+		if (this.executionHandler.getAST() != null && this.executionHandler.getAST().getMainFunction().getParameters() != null) {
 			this.frame = frame;
-			this.frame.createFrame(this.executionHandler.getParameters());
+			this.frame.createFrame(this.executionHandler.getAST().getMainFunction().getParameters());
 			this.frame.getOkButton().addSelectionListener(this);
 		}		
 	}
@@ -30,7 +30,6 @@ public class ParameterController implements SelectionListener {
 				String s = this.frame.getValues()[i].getText();
 				try {
 					parameterValues[i] = Integer.parseInt(s);
-					System.out.println(parameterValues[i]);
 				}
 				catch (NumberFormatException nf) {
 					parameterValues[i] = 0;
@@ -41,6 +40,10 @@ public class ParameterController implements SelectionListener {
 		}		
 	}
 
+	public ParameterFrame getFrame() {
+		return this.frame;
+	}
+	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
 		// TODO Auto-generated method stub	

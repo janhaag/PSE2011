@@ -24,12 +24,12 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		shell.setLayout(gLayout);
 		
 		Label label = new Label(this.shell, SWT.NONE);
-		label.setText("Please insert parameter values");	
+		label.setText("Please insert the parameters first");	
 		GridData gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label.setLayoutData(gData);
 		Label label2 = new Label(this.shell, SWT.NONE);
-		label2.setText("for the main function:");	
+		label2.setText("and restart the execution:");	
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label2.setLayoutData(gData);
