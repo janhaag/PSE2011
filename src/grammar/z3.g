@@ -25,7 +25,7 @@ block	returns[Pair<Boolean, String> result]
 	 .* {$result = new Pair(true,"unknown");}
 	;
 
-model	returns [String example]
+model	returns [String example] @init{$example = "";}
 	:	'(model'
 		('(define-fun' id = IDENT  '('(IDENT  TYPE)*')' TYPE val = value ')'
         {$example += $id.text + "=" + $val.content + "\n";} )*
@@ -33,16 +33,16 @@ model	returns [String example]
         '(Array'('Int'{$example += "[ ]";})+ TYPE  ')'
 		'(_as-array'  id2 = (IDENT '!' INT)'))' {m.put($id2.text,$id.text);}{$example += "\n";})*
 		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE
-        '('ass = ite {$example += m.get($id3.text) + $ass.assignment;}'))')*
+        '('ass = ite[m.get($id3.text)] {$example += $ass.assignment;}'))')*
 		')'
 	;
 
-ite	returns[String assignment]
+ite	[String id] returns[String assignment] @init{$assignment += id;}
 	:	'(=' IDENT '!' INT i = INT')'  val = value
         {$assignment = "[" + $i.text + "]" + "=" + $val.content + "\n";}
-        (value | '('as=ite')'{$assignment += $as.assignment;})
+        (value | '('as=ite[id]')'{$assignment += $as.assignment;})
 	|	'(and'('(=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')'
-        val=value {$assignment += "=" + $val.content + "\n";}(value | '('as=ite')'{$assignment += as;})
+        val=value {$assignment += "=" + $val.content + "\n";}(value | '('as=ite[id]')'{$assignment += as;})
 	;
 
 value	returns [String content]
