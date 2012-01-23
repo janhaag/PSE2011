@@ -107,7 +107,7 @@ public class Editor {
 		for(int i = 0; i < source.length(); i++) {
 			char currentchar = source.charAt(i);
 			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n' || currentchar == '\t') {
-				String[] keywords = word.split("[^a-z]");
+				String[] keywords = word.split("\\W");
 				int positionplus = 0;
 				for(String subword : keywords) {
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
@@ -122,7 +122,7 @@ public class Editor {
 			} else {
 				this.colorArray.removeAll(tmplist);
 				word += source.charAt(i);
-				String[] keywords = word.split("[^a-z]");
+				String[] keywords = word.split("\\W");
 				int positionplus = 0;
 				for(String subword : keywords) {
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
@@ -162,9 +162,21 @@ public class Editor {
 			return new Keyword(position,keyword.length(),"0000FF");
 		} else if(keyword.equals("assume")) {
 			return new Keyword(position,keyword.length(),"0000FF");
-		} else if(keyword.equals("main")) {
+		} else if(keyword.equals("axiom")) {
 			return new Keyword(position,keyword.length(),"0000FF");
-		} else {
+		} else if(keyword.equals("ensure")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("invariant")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("forall")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.equals("exists")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		}else if(keyword.equals("main")) {
+			return new Keyword(position,keyword.length(),"0000FF");
+		} else if(keyword.matches("\\d+")) {
+			return new Keyword(position,keyword.length(),"FF8000");
+		}  else {
 			return null;
 		}
 	}

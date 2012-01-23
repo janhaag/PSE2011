@@ -124,9 +124,4 @@ public interface ASTVisitor {
      * @param statementBlock statement block to visit
      */
     public void visit(StatementBlock statementBlock);
-    /**
-     * Visits the length function call.
-     * @param length length function call to visit
-     */
-    public void visit(Length length);
 }

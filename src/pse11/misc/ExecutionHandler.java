@@ -70,7 +70,7 @@ public class ExecutionHandler {
 		}
 		if (this.execution == null) {
 			this.execution = new ProgramExecution(this.ast, this.interpreter, 
-					sbreakpoints, gbreakpoints, this.parameterValues == null ? new int[0] : this.parameterValues);
+					sbreakpoints, gbreakpoints, this.parameterValues);
 		}
 		if (this.execution.getCurrentState().getCurrentStatement() != null) {
 			this.interpreter.step(this.execution.getCurrentState());

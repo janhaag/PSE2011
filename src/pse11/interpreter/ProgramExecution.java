@@ -47,19 +47,64 @@ public class ProgramExecution {
         currentState = new State(ast);
         typeChecker = new TypeChecker();
         this.interpreter = interpreter;
-        Value[] values = new Value[parameterValues.length];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = new IntegerValue(Integer.toString(parameterValues[i]));
+        String[] values = parameterValues != null
+            ? new String[parameterValues.length] : null;
+        for (int i = 0; i < (values != null ? values.length : 0); i++) {
+            values[i] = Integer.toString(parameterValues[i]);
         }
         initParams(values);
     }
 
-    private void initParams(Value[] values) {
+    private void initParams(String[] values) {
         FunctionParameter[] parameters = currentState.getCurrentFunction().getParameters();
+        if (values == null)return;
         for (int i = 0; i < values.length; i++) {
-            currentState.createVar(parameters[i].getName(),
-                    values[i].toString(), values[i].getType());
+            if (parameters[i].getType() instanceof ArrayType) {
+                initArray(parameters[i], values[i]);
+            } else {
+                currentState.createVar(parameters[i].getName(),
+                        values[i], parameters[i].getType());
+            }
         }
+    }
+
+    public void initArray(FunctionParameter parameter, String value) {
+        Type type = parameter.getType();
+        int depth = 0;
+        while (type instanceof ArrayType) {
+            type = ((ArrayType) type).getType();
+            depth += 1;
+        }
+        int[] maxIndex = new int[depth + 1];
+        int[] counters = new int[depth + 1];
+        depth = 0;
+        boolean valid = true;
+        for (int i = 0; (i < value.length()) && valid; i++) {
+            char c = value.charAt(i);
+            if (c == '{') {
+                if (depth < maxIndex.length) {
+                    depth += 1;
+                    counters[depth] = 1;
+                } else {
+                    valid = false;
+                }
+            }
+            if (c == ',') {
+                counters[depth] += 1;
+            }
+            if (c == '}') {
+                if (depth > 0) {
+                    if (counters[depth] > maxIndex[depth]) {
+                        maxIndex[depth] = counters[depth];
+                    }
+                    depth -= 1;
+                } else {
+                    valid = false;
+                }
+            }
+        }
+        currentState.createArray(parameter.getName(), parameter.getType(),
+                maxIndex);
     }
 
     public boolean checkBreakpoints() {

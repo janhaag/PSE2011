@@ -83,7 +83,4 @@ public class SMTLibTranslator implements ASTVisitor {
 
     public void visit(StatementBlock statementBlock) {
     }
-
-    public void visit(Length length) {
-    }
 }

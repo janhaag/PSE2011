@@ -193,6 +193,12 @@ public class Interpreter implements ast.ASTVisitor {
 
     @Override
     public void visit(FunctionCall functionCall) {
+        if ("length".equals(functionCall.getFunctionIdentifier().toString())) {
+            functionCall.getParameters()[0].accept(this);
+            int arrayLength = ((ArrayValue) tempValue).getValues().length;
+            tempValue = new IntegerValue(Integer.toString(arrayLength));
+            return;
+        }
         if (returnValue != null) {
             currentState.createFunctionResult(functionCall, returnValue);
         }
@@ -411,13 +417,6 @@ public class Interpreter implements ast.ASTVisitor {
     @Override
     public void visit(StatementBlock statementBlock) {
         //TODO: is this needed?
-    }
-
-    @Override
-    public void visit(Length length) {
-        length.getArray().accept(this);
-        int arrayLength = ((ArrayValue) tempValue).getValues().length;
-        tempValue = new IntegerValue(Integer.toString(arrayLength));
     }
 
     private void adjustStatement() {

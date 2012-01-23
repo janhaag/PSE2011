@@ -225,6 +225,19 @@ public class TypeChecker implements ASTVisitor {
      */
     @Override
     public void visit(FunctionCall functionCall) {
+        if ("length".equals(functionCall.getFunctionIdentifier().toString())) {
+            if (functionCall.getParameters().length != 1
+                    || !(functionCall.getParameters()[0] instanceof VariableRead)) {
+                throw new IllegalTypeException("Parameter of 'length' must be exactly "
+                                               + "one array!", functionCall.getPosition());
+            }
+            functionCall.getParameters()[0].accept(this);
+            if (!(tempType instanceof ArrayType)) {
+                throw new IllegalTypeException("Parameter of 'length' must be an "
+                                               + "array!", functionCall.getPosition());
+            }
+            tempType = new IntegerType();
+        }
         if (!functionCallAllowed) {
             throw new FunctionCallNotAllowedException("Function call not "
                                                       + "allowed here!");
@@ -608,20 +621,6 @@ public class TypeChecker implements ASTVisitor {
         while (statements.hasNext()) {
             statements.next().accept(this);
         }
-    }
-
-    /**
-     * Checks the type correctness of a given length function call.
-     * @param length length function call to check
-     */
-    @Override
-    public void visit(Length length) {
-        length.getArray().accept(this);
-        if (!(tempType instanceof ArrayType)) {
-            throw new IllegalTypeException("Parameter of 'length' must be an "
-                                           + "array!", length.getPosition());
-        }
-        tempType = new IntegerType();
     }
 
     /**
