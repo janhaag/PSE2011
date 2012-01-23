@@ -24,12 +24,12 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		shell.setLayout(gLayout);
 		
 		Label label = new Label(this.shell, SWT.NONE);
-		label.setText("Please insert the parameters first");	
+		label.setText("Please insert parameter values");	
 		GridData gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label.setLayoutData(gData);
 		Label label2 = new Label(this.shell, SWT.NONE);
-		label2.setText("and restart the execution:");	
+		label2.setText("for the main function:");	
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label2.setLayoutData(gData);
@@ -44,7 +44,7 @@ public class ParameterFrame extends Frame implements MiscFrame {
 			return;
 		}
 		this.values = new Text[parameters.length];
-		shell.setSize(200, 150 + 15 * parameters.length);
+		this.shell.setSize(200, 150 + 15 * parameters.length);
 		GridData gData;
 		
 		for (int i = 0; i < parameters.length; i++) {
@@ -63,7 +63,7 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		this.okButton.setLayoutData(gData);
 		
 		if (parameters.length > 0) {
-			shell.open();
+			this.shell.open();
 		}	
 	}
 

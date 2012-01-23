@@ -26,7 +26,6 @@ import gui.MainFrame;
 import gui.ParameterFrame;
 import gui.SettingsFrame;
 import gui.RandomTestFrame;
-import gui.controller.EditorController.BreakpointViewController;
 
 public class MainController implements SelectionListener {
 	private ExecutionHandler executionHandler;
@@ -36,8 +35,7 @@ public class MainController implements SelectionListener {
 	private HelpController helpController;
 	private ParameterController parameterContoller;
 	private EditorController editorController;
-	private BreakpointViewController breakpointController;
-	private VariableViewController varController;
+	private TableViewController tableController;
 
 	public MainController() {
 		MessageSystem messagesystem = new MessageSystem();
@@ -48,9 +46,8 @@ public class MainController implements SelectionListener {
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
 		this.parameterContoller = new ParameterController(this.executionHandler);
-		this.varController = new VariableViewController(this.mainframe.getVarView(), this.executionHandler);
-		this.breakpointController = this.editorController.new BreakpointViewController(
-				this.mainframe.getBreakpointView(), this.executionHandler);
+		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), 
+				this.mainframe.getVarView(), this.executionHandler);
 
 		// Has to be the last call in the constructor
 		initMainFrame();
@@ -102,50 +99,67 @@ public class MainController implements SelectionListener {
 			// Functions
 			assert editorController != null;
 			if (this.executionHandler.getAST() == null) {
-				this.varController.getVarView().getVarTree().removeAll();
+				this.tableController.getVarView().getVarTree().removeAll();
 				this.executionHandler.parse(this.editorController.getEditor().getSource());
 				if (this.executionHandler.getAST() != null) {
-					ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
-					this.parameterContoller.addView(frame);
+					ParameterFrame frame = new ParameterFrame(mainframe.getShell());
+					parameterContoller.addView(frame);
 				} else {
 					return;
 				}
 			}
-
-			// Set the parameters first and need to restart execution
-			if (this.executionHandler.getAST() != null
-					&& this.executionHandler.getAST().getMainFunction().getParameters() != null
-					&& this.executionHandler.getAST().getMainFunction().getParameters().length != 0
-					&& (this.executionHandler.getParameterValues() == null || this.executionHandler
-							.getParameterValues().length == 0)) {
-				return;
-			}
-
+			
 			// (De-)activations
 			this.mainframe.getPauseButton().setEnabled(true);
 			this.mainframe.getStepButton().setEnabled(false);
 			this.mainframe.getStopButton().setEnabled(true);
 			this.mainframe.getCheckSyntaxButton().setEnabled(false);
-			this.varController.activateView();
-			this.varController.getVarView().getVarTree().removeAll();
+			this.tableController.activateVarView();
+			this.tableController.deactivateBreakpointView();
+			this.tableController.getVarView().getVarTree().removeAll();
 			this.editorController.deactivateView();
-			this.breakpointController.deactivateView();
 			// Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run2.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(),
 					MainFrame.class.getResourceAsStream("image/pause1.png"));
 			this.mainframe.switchIcon(image, image2);
-
-			this.executionHandler.run(this.editorController.getEditor().getStatementBreakpoints(),
-					this.editorController.getEditor().getGlobalBreakpoints());
-			this.varController.updateVarView();
-			this.stopExecution();
-
+		
+			// Execution without parameter
+			if (this.executionHandler.getAST().getMainFunction().getParameters() == null
+					|| this.executionHandler.getAST().getMainFunction().getParameters().length == 0) {
+				this.executionHandler.run(this.editorController.getEditor().getStatementBreakpoints(),
+						this.executionHandler.getGlobalBreakpoints());
+				this.tableController.updateVarView();
+				stopExecution();
+				return;
+			}
+			
+			// Execution with parameter
+			new Thread() {
+				public void run() {
+					while (!parameterContoller.getFrame().getShell().isDisposed()) {
+						try {
+							sleep(100);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					executionHandler.run(editorController.getEditor().getStatementBreakpoints(),
+							executionHandler.getGlobalBreakpoints());
+					mainframe.getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							tableController.updateVarView();
+							stopExecution();
+						}
+					});
+				}
+			}.start();
 		} else if (e.getSource() == mainframe.getStepButton()) {
 			// Functions
 			assert editorController != null;
 			if (this.executionHandler.getAST() == null) {
-				this.varController.getVarView().getVarTree().removeAll();
+				this.tableController.getVarView().getVarTree().removeAll();
 				this.executionHandler.parse(this.editorController.getEditor().getSource());
 				if (this.executionHandler.getAST() != null) {
 					ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
@@ -153,40 +167,62 @@ public class MainController implements SelectionListener {
 				} else {
 					return;
 				}
-			}
-
-			// Set the parameters first and need to restart execution
-			if (this.executionHandler.getAST().getMainFunction().getParameters() != null
-					&& this.executionHandler.getAST().getMainFunction().getParameters().length != 0
-					&& (this.executionHandler.getParameterValues() == null || this.executionHandler
-							.getParameterValues().length == 0)) {
-				return;
 			}
 
 			// (De-)activations
 			this.mainframe.getPauseButton().setEnabled(false);
 			this.mainframe.getCheckSyntaxButton().setEnabled(false);
 			this.mainframe.getStopButton().setEnabled(true);
-			this.varController.activateView();
+			this.tableController.activateVarView();
+			this.tableController.deactivateBreakpointView();
 			this.editorController.deactivateView();
-			this.breakpointController.deactivateView();
 			// Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
 			Image image2 = new Image(this.mainframe.getDisplay(),
 					MainFrame.class.getResourceAsStream("image/pause2.png"));
 			this.mainframe.switchIcon(image, image2);
+			
+			// Execution without parameter
+			if (executionHandler.getAST().getMainFunction().getParameters() == null
+					|| executionHandler.getAST().getMainFunction().getParameters().length == 0) {
+				this.executionHandler.singleStep(this.editorController.getEditor().getStatementBreakpoints(),
+						this.executionHandler.getGlobalBreakpoints());
+				this.tableController.updateVarView();
 
-			this.executionHandler.singleStep(this.editorController.getEditor().getStatementBreakpoints(),
-					this.editorController.getEditor().getGlobalBreakpoints());
-			this.varController.updateVarView();
-
-			if (this.executionHandler.getProgramExecution() != null
-					&& this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
-				this.stopExecution();
+				if (this.executionHandler.getProgramExecution() != null
+						&& this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
+					this.stopExecution();
+				}
+				return;
 			}
+			
+			// Execution with parameter
+			new Thread() {
+				public void run() {
+					while (!parameterContoller.getFrame().getShell().isDisposed()) {
+						try {
+							sleep(100);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					executionHandler.singleStep(editorController.getEditor().getStatementBreakpoints(),
+							executionHandler.getGlobalBreakpoints());
+					mainframe.getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							tableController.updateVarView();
+							if (executionHandler.getProgramExecution() != null
+									&& executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
+								stopExecution();
+							}
+						}
+					});
+				}
+			}.start();
 		} else if (e.getSource() == mainframe.getPauseButton()) {
 			// Functions
-			this.varController.updateVarView();
+			this.tableController.updateVarView();
 
 			// Images
 			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
@@ -198,7 +234,7 @@ public class MainController implements SelectionListener {
 			this.mainframe.getStepButton().setEnabled(true);
 			this.mainframe.getPauseButton().setEnabled(false);
 			this.editorController.deactivateView();
-			this.breakpointController.deactivateView();
+			this.tableController.deactivateBreakpointView();
 		} else if (e.getSource() == mainframe.getStopButton()) {
 			this.stopExecution();
 		} else if (e.getSource() == mainframe.getCheckSyntaxButton()) {
@@ -211,7 +247,7 @@ public class MainController implements SelectionListener {
 
 	private void stopExecution() {
 		// Functions
-		this.varController.updateVarView();
+		this.tableController.updateVarView();
 		this.executionHandler.destroyProgramExecution();
 		this.executionHandler.setParameterValues(null);
 		this.executionHandler.setAST(null);
@@ -226,9 +262,9 @@ public class MainController implements SelectionListener {
 		this.mainframe.getPauseButton().setEnabled(false);
 		this.mainframe.getStepButton().setEnabled(true);
 		this.mainframe.getCheckSyntaxButton().setEnabled(true);
-		this.varController.deactivateView();
+		this.tableController.deactivateVarView();
+		this.tableController.activateBreakpointView();
 		this.editorController.activateView();
-		this.breakpointController.activateView();
 	}
 
 	private static String getFileAsString(File file) {

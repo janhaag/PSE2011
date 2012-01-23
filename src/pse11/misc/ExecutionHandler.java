@@ -21,6 +21,7 @@ public class ExecutionHandler {
 	private ParserInterface parser;
 	
 	private Program ast;
+	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 	private int[] parameterValues;
 	private boolean paused;
 	
@@ -28,7 +29,9 @@ public class ExecutionHandler {
 		this.messagesystem = messagesystem;
 		this.interpreter = new Interpreter();
 		this.parser = new ParserInterface();
+		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
 	}
+	
 	public ProgramExecution getProgramExecution() {
 		return this.execution;
 	}
@@ -113,5 +116,9 @@ public class ExecutionHandler {
 	
 	public ParserInterface getParserInterface() {
 		return this.parser;
+	}
+	
+	public ArrayList<GlobalBreakpoint> getGlobalBreakpoints() {
+		return this.globalBreakpoints;
 	}
 }
