@@ -59,6 +59,7 @@ public class MenuBar {
 		file.setMenu(filemenu);
 		newFileItem = new MenuItem(filemenu, SWT.PUSH);
 		newFileItem.setText("New");
+		newFileItem.addSelectionListener(controller);
 //		final MenuItem separator1 = new MenuItem(filemenu, SWT.SEPARATOR);
 		loadItem = new MenuItem(filemenu, SWT.PUSH);
 		loadItem.setText("Load");

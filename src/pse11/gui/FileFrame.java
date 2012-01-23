@@ -21,12 +21,13 @@ public class FileFrame extends Frame implements MiscFrame {
 		fileName = dlg.open();
 		if (fileName != null) {
 			File file = new File(fileName);
-			if((def == SWT.OPEN && file.canRead()) || (def == SWT.SAVE && file.canWrite())) {
+			if ((def == SWT.OPEN && file.canRead())
+					|| (def == SWT.SAVE && (!file.exists() || (file.exists() && file.canWrite())))) {
 				chosenFile = file;
 			}
 		}
 	}
-	
+
 	public File getChosenFile() {
 		return chosenFile;
 	}
