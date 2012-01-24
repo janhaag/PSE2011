@@ -4,7 +4,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -37,6 +39,13 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label3.setLayoutData(gData);	
+		
+		this.shell.addListener(SWT.Close, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+			event.doit = false;
+			}
+		});
 	}
 	
 	public void createFrame(FunctionParameter[] parameters) {
