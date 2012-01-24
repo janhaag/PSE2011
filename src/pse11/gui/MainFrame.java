@@ -136,7 +136,7 @@ public class MainFrame extends Frame {
 		this.varView.setLayoutData(gData);		
 		
 		//Adding breakpoint view		
-		new Label(c2, SWT.NONE).setText("Breakpoints");
+		new Label(c2, SWT.NONE).setText("Global Breakpoints");
 		this.breakpointView = new BreakpointView(c2, SWT.NONE);				
 		gData = new GridData(GridData.FILL_BOTH);
 		this.breakpointView.setLayoutData(gData);

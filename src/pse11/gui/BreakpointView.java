@@ -1,7 +1,6 @@
 package gui;
 
 import interpreter.GlobalBreakpoint;
-import interpreter.StatementBreakpoint;
 
 import java.util.ArrayList;
 
@@ -11,15 +10,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 public class BreakpointView extends Composite {
 	private Table global;
-	private Table statement;
 	private StyledText addTextField;
 	private Button button;
 	
@@ -31,58 +27,34 @@ public class BreakpointView extends Composite {
 		this.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		this.setLayoutData(gData);
-	    
-		TabFolder tab = new TabFolder(this, SWT.NONE);
+		
+		this.global = new Table (this, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL 
+				| SWT.H_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
+		
+		this.global.setLinesVisible(true);
+		this.global.setHeaderVisible(true);
 		gData = new GridData(GridData.FILL_BOTH);
-		tab.setLayoutData(gData);
-		
-		//Create global and statement breakpoint tables
-		for (int i = 0; i < 2; i++) {
-			Table table = new Table (tab, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL 
-					| SWT.H_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
-			
-			table.setLinesVisible(true);
-			table.setHeaderVisible(true);
-			
-			TableColumn column1 = new TableColumn(table, SWT.CENTER);
-			column1.setWidth(50);
-			column1.setText("Active");
-			TableColumn column2 = new TableColumn(table, SWT.CENTER);
-			column2.setWidth(200);
-			if (i == 0) {
-				column2.setText("Expression");
-			}
-			else {
-				column2.setText("Line number");
-			}
-			
-			if (i == 0) {
-				this.global = table;
-			}
-			else {
-				this.statement = table;
-			}
-		}
-		
-		TabItem tabitem1 = new TabItem(tab, SWT.BORDER);
-		tabitem1.setText("Global");
-		tabitem1.setControl(this.global);
-		TabItem tabitem2 = new TabItem(tab, SWT.BORDER);
-		tabitem2.setText("Statement");
-		tabitem2.setControl(this.statement);
-		
+		this.global.setLayoutData(gData);
+				
+		TableColumn column1 = new TableColumn(this.global, SWT.CENTER);
+		column1.setWidth(50);
+		column1.setText("Active");
+		TableColumn column2 = new TableColumn(this.global, SWT.CENTER);
+		column2.setWidth(200);
+		column2.setText("Expression");
+	
 		//Create text field and button for global breakpoint inserts
-	    this.addTextField = new StyledText(this, SWT.SINGLE | SWT.BORDER);
-	    this.addTextField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-	    gData = new GridData(GridData.FILL_HORIZONTAL); 
-	    gData.verticalSpan = 5;
-	    this.addTextField.setLayoutData(gData);
-	    
-	    this.button = new Button(this, SWT.PUSH);
-	    this.button.setText("Add Globalbreakpoint");
-	    gData = new GridData(GridData.FILL_HORIZONTAL);  
-	    gData.verticalSpan = 5;
-	    this.button.setLayoutData(gData);
+		this.addTextField = new StyledText(this, SWT.SINGLE | SWT.BORDER);
+		this.addTextField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		gData = new GridData(GridData.FILL_HORIZONTAL); 
+		gData.verticalSpan = 5;
+		this.addTextField.setLayoutData(gData);
+    
+		this.button = new Button(this, SWT.PUSH);
+		this.button.setText("Add/Remove");
+		gData = new GridData(GridData.FILL_HORIZONTAL);  
+		gData.verticalSpan = 5;
+		this.button.setLayoutData(gData);
 	}
 	
 	public void drawGlobalBreakpointItem(ArrayList<GlobalBreakpoint> gbreakpoints) {		
@@ -93,23 +65,11 @@ public class BreakpointView extends Composite {
 		}
 	}
 	
-	public void drawStatementBreakpoint(ArrayList<StatementBreakpoint> sbreakpoints) {
-		this.statement.removeAll();
-		for (int i = 0; i < sbreakpoints.size(); i++) {
-			TableItem item = new TableItem(this.statement, SWT.NONE);
-			item.setText(1, sbreakpoints.get(i).getLine() + "");
-		}
-	}
-	
 	public void removeGlobalBreakpointItem() {
 	}
 	
 	public Table getGlobalBreakpoint() {
 		return this.global;
-	}
-	
-	public Table getStatementBreakpoint() {
-		return this.statement;
 	}
 	
 	public StyledText getAddTextField() {

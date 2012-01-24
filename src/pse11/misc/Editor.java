@@ -41,7 +41,6 @@ public class Editor {
 	private Stack<EditorMemento> redoMemento;
 
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
-	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 
 	/**
 	 * Constructs a new instance of Editor.
@@ -55,7 +54,6 @@ public class Editor {
 		this.redoMemento = new Stack<EditorMemento>();
 		
 		this.statementBreakpoints = new ArrayList<StatementBreakpoint>();
-		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
 	}
 	public void setView(EditorView view) {
 		this.editorview = view;
@@ -195,9 +193,5 @@ public class Editor {
 	
 	public ArrayList<StatementBreakpoint> getStatementBreakpoints() {
 		return this.statementBreakpoints;
-	}
-	
-	public ArrayList<GlobalBreakpoint> getGlobalBreakpoints() {
-		return this.globalBreakpoints;
 	}
 }

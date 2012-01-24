@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.*;
 
 public class MenuBar {
 	private Menu menu;
+	private MenuItem newFileItem;
 	private MenuItem exitItem;
 	private MenuItem loadItem;
 	private MenuItem saveItem;
@@ -20,6 +21,9 @@ public class MenuBar {
 	
 	public MenuBar(MainController controller, Shell shell) {
 		initiateMenuBar(controller, null, shell);
+	}
+	public MenuItem getMenuBarItemNewFile() {
+		return this.newFileItem;
 	}
 	public MenuItem getMenuBarItemExit() {
 		return this.exitItem;
@@ -53,8 +57,9 @@ public class MenuBar {
 		file.setText("File");
 		final Menu filemenu = new Menu(shell, SWT.DROP_DOWN);
 		file.setMenu(filemenu);
-		final MenuItem newFileItem = new MenuItem(filemenu, SWT.PUSH);
+		newFileItem = new MenuItem(filemenu, SWT.PUSH);
 		newFileItem.setText("New");
+		newFileItem.addSelectionListener(controller);
 //		final MenuItem separator1 = new MenuItem(filemenu, SWT.SEPARATOR);
 		loadItem = new MenuItem(filemenu, SWT.PUSH);
 		loadItem.setText("Load");
