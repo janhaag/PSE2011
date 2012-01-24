@@ -25,15 +25,10 @@ public class ParameterController implements SelectionListener {
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		if (e.getSource() == this.frame.getOkButton()) {
-			int[] parameterValues = new int[this.frame.getValues().length];
+			String[] parameterValues = new String[this.frame.getValues().length];
 			for (int i = 0; i < this.frame.getValues().length; i++) {
-				String s = this.frame.getValues()[i].getText();
-				try {
-					parameterValues[i] = Integer.parseInt(s);
-				}
-				catch (NumberFormatException nf) {
-					parameterValues[i] = 0;
-				}
+				parameterValues[i] = "";
+				parameterValues[i] += this.frame.getValues()[i].getText();
 			}
 			this.executionHandler.setParameterValues(parameterValues);
 			this.frame.getShell().dispose();

@@ -22,7 +22,7 @@ public class ExecutionHandler {
 	
 	private Program ast;
 	private ArrayList<GlobalBreakpoint> globalBreakpoints;
-	private int[] parameterValues;
+	private String[] parameterValues;
 	private boolean paused;
 	
 	public ExecutionHandler(MessageSystem messagesystem) {
@@ -98,11 +98,11 @@ public class ExecutionHandler {
 		this.execution = null;
 	}
 	
-	public void setParameterValues(int[] values) {
+	public void setParameterValues(String[] values) {
 		this.parameterValues = values;
 	}
 	
-	public int[] getParameterValues() {
+	public String[] getParameterValues() {
 		return this.parameterValues;
 	}
 	

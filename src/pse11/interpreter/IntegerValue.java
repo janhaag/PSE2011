@@ -23,8 +23,9 @@ public class IntegerValue extends Value {
      */
     public IntegerValue(String value) {
         super(new IntegerType());
-        this.value = (value == null || !NUMBER.matcher(value).matches())
-                ? BigInteger.ZERO : new BigInteger(value);
+       /* this.value = (value == null || !NUMBER.matcher(value).matches())
+                ? BigInteger.ZERO : new BigInteger(value); */
+        this.value = (value == null) ? BigInteger.ZERO : new BigInteger(value);
     }
 
     /**

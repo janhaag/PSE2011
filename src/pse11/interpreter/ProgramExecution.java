@@ -41,18 +41,13 @@ public class ProgramExecution {
      * @param interpreter interpreter to evaluate breakpoint expressions
      */
     public ProgramExecution(ASTRoot ast, Interpreter interpreter, ArrayList<StatementBreakpoint> sbreakpoints,
-    		ArrayList<GlobalBreakpoint> gbreakpoints, int[] parameterValues) {
+    		ArrayList<GlobalBreakpoint> gbreakpoints, String[] parameterValues) {
         this.statementBreakpoints = sbreakpoints;
         this.globalBreakpoints = gbreakpoints;
         currentState = new State(ast);
         typeChecker = new TypeChecker();
         this.interpreter = interpreter;
-        String[] values = parameterValues != null
-            ? new String[parameterValues.length] : null;
-        for (int i = 0; i < (values != null ? values.length : 0); i++) {
-            values[i] = Integer.toString(parameterValues[i]);
-        }
-        initParams(values);
+        initParams(parameterValues);
     }
 
     private void initParams(String[] values) {
@@ -69,7 +64,7 @@ public class ProgramExecution {
     }
 
     public void initArray(FunctionParameter parameter, String value) {
-        Type type = parameter.getType();
+    	Type type = parameter.getType();
         int depth = 0;
         while (type instanceof ArrayType) {
             type = ((ArrayType) type).getType();
