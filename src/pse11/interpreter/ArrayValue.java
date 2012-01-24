@@ -6,6 +6,7 @@ import ast.IntegerType;
 import ast.Type;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a value of array type,
@@ -59,6 +60,10 @@ public class ArrayValue extends Value {
         return values;
     }
 
+    public void setValue(String value, List<Integer> indexes) {
+        setValue(value, indexes, 0);
+    }
+
     /**
      * Changes the value of one element in this array
      * at the specified position.
@@ -66,20 +71,17 @@ public class ArrayValue extends Value {
      * @param indexes indexes describing the position of the
      *                element that will be changed
      */
-    public void setValue(String value, ArrayList<Integer> indexes) {
-        int pos = indexes.get(0);
+    public void setValue(String value, List<Integer> indexes, int depth) {
+        int pos = indexes.get(depth);
         if (pos < 0 || pos >= values.length) {
             pos = 0;
         }
-        indexes.remove(0);
-        if (indexes.isEmpty()) {
-            if (values[pos] instanceof BooleanValue) {
-                ((BooleanValue) values[pos]).setValue(value);
-            } else {
-                ((IntegerValue) values[pos]).setValue(value);
-            }
+        if (values[pos] instanceof BooleanValue) {
+            ((BooleanValue) values[pos]).setValue(value);
+        } else if (values[pos] instanceof IntegerValue) {
+            ((IntegerValue) values[pos]).setValue(value);
         } else {
-            ((ArrayValue) values[pos]).setValue(value, indexes);
+            ((ArrayValue) values[pos]).setValue(value, indexes, depth + 1);
         }
     }
     

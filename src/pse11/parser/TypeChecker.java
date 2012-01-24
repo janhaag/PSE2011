@@ -237,6 +237,7 @@ public class TypeChecker implements ASTVisitor {
                                                + "array!", functionCall.getPosition());
             }
             tempType = new IntegerType();
+            return;
         }
         if (!functionCallAllowed) {
             throw new FunctionCallNotAllowedException("Function call not "

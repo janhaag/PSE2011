@@ -322,9 +322,9 @@ function_call returns [ Expression ast, LinkedList<Expression> divisors ]
         ;
 
 arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors ]
-	@init {LinkedList<Expression> params = new LinkedList<Expression>();}
-        : e1=expression {if (!error) {params.add((Expression) e1.ast); $divisors = $e1.divisors;}}
-        	( ',' e2=expression {if (!error) {params.add((Expression) $e2.ast); $divisors.addAll($e2.divisors);}} )*
+	@init {$params = new LinkedList<Expression>();}
+        : e1=expression {if (!error) {$params.add((Expression) e1.ast); $divisors = $e1.divisors;}}
+        	( ',' e2=expression {if (!error) {$params.add((Expression) $e2.ast); $divisors.addAll($e2.divisors);}} )*
         ;
 
 array_read returns [ Expression ast, LinkedList<Expression> divisors ]

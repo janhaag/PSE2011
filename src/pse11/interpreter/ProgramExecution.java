@@ -5,6 +5,7 @@ import parser.IllegalTypeException;
 import parser.TypeChecker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -70,36 +71,79 @@ public class ProgramExecution {
             type = ((ArrayType) type).getType();
             depth += 1;
         }
-        int[] maxIndex = new int[depth + 1];
-        int[] counters = new int[depth + 1];
+        int[] maxIndex = new int[depth];
+        Integer[] counters = new Integer[depth];
         depth = 0;
         boolean valid = true;
         for (int i = 0; (i < value.length()) && valid; i++) {
-            char c = value.charAt(i);
-            if (c == '{') {
-                if (depth < maxIndex.length) {
-                    depth += 1;
-                    counters[depth] = 1;
-                } else {
-                    valid = false;
-                }
-            }
-            if (c == ',') {
-                counters[depth] += 1;
-            }
-            if (c == '}') {
-                if (depth > 0) {
-                    if (counters[depth] > maxIndex[depth]) {
-                        maxIndex[depth] = counters[depth];
+            switch (value.charAt(i)) {
+                case '{':
+                    if (depth < maxIndex.length) {
+                        depth += 1;
+                        counters[depth - 1] = 1;
+                    } else {
+                        valid = false;
                     }
-                    depth -= 1;
-                } else {
-                    valid = false;
-                }
+                    break;
+                case ',':
+                    if (depth > 0) {
+                        counters[depth - 1] += 1;
+                    } else {
+                        valid = false;
+                    }
+                    break;
+                case '}':
+                    if (depth > 0) {
+                        if (counters[depth - 1] > maxIndex[depth - 1]) {
+                            maxIndex[depth - 1] = counters[depth - 1];
+                        }
+                        depth -= 1;
+                    } else {
+                        valid = false;
+                    }
+                    break;
+            }
+        }
+        for (int i = 0; i < maxIndex.length; i++) {
+            if (maxIndex[i] <= 0 || !valid) {
+                maxIndex[i] = 1;
             }
         }
         currentState.createArray(parameter.getName(), parameter.getType(),
                 maxIndex);
+        if (!valid) {
+            return;
+        }
+        depth = 0;
+        counters = new Integer[maxIndex.length];
+        StringBuilder temp = new StringBuilder("");
+        for (int i = 0; (i < value.length()) && valid; i++) {
+            switch (value.charAt(i)) {
+                case '{':
+                    temp = new StringBuilder("");
+                    depth += 1;
+                    counters[depth - 1] = 0;
+                    break;
+                case ',':
+                    if (depth == counters.length) {
+                        currentState.setArray(parameter.getName(), temp.toString(),
+                                Arrays.asList(counters));
+                    }
+                    temp = new StringBuilder("");
+                    counters[depth - 1] += 1;
+                    break;
+                case '}':
+                    if (depth == counters.length) {
+                        currentState.setArray(parameter.getName(), temp.toString(),
+                                Arrays.asList(counters));
+                    }
+                    temp = new StringBuilder("");
+                    depth -= 1;
+                    break;
+                default:
+                    temp.append(value.charAt(i));
+            }
+        }
     }
 
     public boolean checkBreakpoints() {
@@ -153,22 +197,5 @@ public class ProgramExecution {
     
     public HashMap<Identifier, Value> getVariables() {
         return currentState.getVariables();
-        //TODO: delete this and comment out the line above
-        /*HashMap<Identifier, Value> vars = new HashMap<Identifier, Value>();
-        ArrayValue a = new ArrayValue(new ArrayType(new BooleanType()),
-                                      new int[]{2}, 0);
-        ArrayList<Integer> l = new ArrayList<Integer>();
-        l.add(0);
-        a.setValue("true", l);
-        vars.put(new Identifier("a"), a);
-        vars.put(new Identifier("B"), new BooleanValue("true"));
-        vars.put(new Identifier("z_k"), new IntegerValue("-8"));
-        ArrayValue i =
-                new ArrayValue(new ArrayType(new ArrayType(new IntegerType())),
-                                      new int[]{2, 1}, 0);
-        l.add(1);l.add(0);
-        i.setValue("42", l);
-        vars.put(new Identifier("i0"), i);
-        return vars; */
     }
 }

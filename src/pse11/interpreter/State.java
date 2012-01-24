@@ -2,9 +2,9 @@ package interpreter;
 
 import ast.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
+import java.util.List;
 
 /**
  * This class encapsulates a state during program execution.
@@ -76,7 +76,7 @@ public class State {
      * @param indexes position of this element
      */
     public void setArray(String name, String value,
-                         ArrayList<Integer> indexes) {
+                         List<Integer> indexes) {
         currentScope.setArray(name, value, indexes);
     }
 

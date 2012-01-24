@@ -13,6 +13,8 @@ public class ParserInterface {
 
     private String[] errors = new String[0];
 
+    private TypeChecker typeChecker;
+
     /**
      * Report all errors from lexer and parser.
      * @return A list of error messages
@@ -38,6 +40,10 @@ public class ParserInterface {
         parser.setErrorReporter(errors);
         Program p = parser.program();
         this.errors = errors.toArray(new String[errors.size()]);
+        if (typeChecker == null) {
+            typeChecker = new TypeChecker();
+        }
+        typeChecker.checkTypes(p);
         return p;
     }
 

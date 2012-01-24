@@ -67,8 +67,8 @@ public class z3Parser extends Parser {
 
     // $ANTLR start "start"
     // ../src/grammar/z3.g:15:1: start returns [LinkedList<Pair> list] : (pair= block )+ ;
-    public final LinkedList<Pair> start() throws RecognitionException {
-        LinkedList<Pair> list = null;
+    public final LinkedList<Pair<Boolean, String>> start() throws RecognitionException {
+        LinkedList<Pair<Boolean,String>> list = null;
 
 
         Pair<Boolean, String> pair =null;

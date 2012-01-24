@@ -4,6 +4,7 @@ import ast.*;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -248,7 +249,20 @@ public class Interpreter implements ast.ASTVisitor {
             Value value = parameters[i];
             String varName = params[i].getName();
             if (value instanceof ArrayValue) {
-                //TODO
+                int depth = 0;
+                for (Type temp = value.getType(); temp instanceof ArrayType;
+                     temp = ((ArrayType) temp).getType()) {
+                    depth += 1;
+                }
+                int[] lengths = new int[depth];
+                depth = 0;
+                for (Value temp = value; temp instanceof ArrayValue;
+                     temp = ((ArrayValue) temp).getValues()[0]) {
+                    lengths[depth] = ((ArrayValue) temp).getValues().length;
+                    depth += 1;
+                }
+                currentState.createArray(varName, value.getType(), lengths);
+                copyArray(varName, value, depth);
             } else {
                 currentState.createVar(varName, value.toString(),
                                        value.getType());
@@ -261,6 +275,26 @@ public class Interpreter implements ast.ASTVisitor {
         adjustStatement();
     }
 
+    private void copyArray(String varName, Value value, int maxDepth) {
+        Integer[] counters = new Integer[maxDepth];
+        helpArrayCopy(varName, value, counters, 0);
+    }
+
+    private void helpArrayCopy(String varName, Value value,
+                               Integer[] counters, int depth) {
+        if (value instanceof ArrayValue) {
+            int length = ((ArrayValue) value).getValues().length;
+            for (int i = 0; i < length; i++) {
+                counters[depth] = i;
+                helpArrayCopy(varName, ((ArrayValue) value).getValues()[i],
+                        counters, depth + 1);
+            }
+        } else {
+            currentState.setArray(varName, value.toString(),
+                    Arrays.asList(counters));
+        }
+    }
+    
     @Override
     public void visit(Program program) {
         //TODO: is this needed?

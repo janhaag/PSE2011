@@ -70,13 +70,13 @@ public class LogicalExpression extends Expression {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder("( ");
+        StringBuilder sb = new StringBuilder("(");
+        sb.append(subexpression1.toString()).append(' ');
         sb.append(logicalOperator.toString());
-        sb.append(' ').append(subexpression1.toString());
         if (logicalOperator instanceof BinaryOperator) {
             sb.append(' ').append(subexpression2.toString());
         }
-        sb.append(" )");
+        sb.append(')');
         return sb.toString();
     }
 }

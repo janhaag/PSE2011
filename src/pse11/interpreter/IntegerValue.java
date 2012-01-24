@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * This class represents a value of integer type.
  */
 public class IntegerValue extends Value {
-    private static final Pattern NUMBER = Pattern.compile("-\\d+");
+    private static final Pattern NUMBER = Pattern.compile("-?\\d+");
     /**
      * value this instance represents
      */
@@ -23,9 +23,8 @@ public class IntegerValue extends Value {
      */
     public IntegerValue(String value) {
         super(new IntegerType());
-       /* this.value = (value == null || !NUMBER.matcher(value).matches())
-                ? BigInteger.ZERO : new BigInteger(value); */
-        this.value = (value == null) ? BigInteger.ZERO : new BigInteger(value);
+       this.value = (value == null || !NUMBER.matcher(value).matches())
+                ? BigInteger.ZERO : new BigInteger(value);
     }
 
     /**
@@ -41,7 +40,8 @@ public class IntegerValue extends Value {
      * @param value new value (as String)
      */
     public void setValue(String value) {
-        this.value = (value == null) ? BigInteger.ZERO : new BigInteger(value);
+       this.value = (value == null || !NUMBER.matcher(value).matches())
+                ? BigInteger.ZERO : new BigInteger(value);
     }
 
     @Override

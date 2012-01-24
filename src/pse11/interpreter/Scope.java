@@ -158,7 +158,7 @@ public class Scope {
      *                element that will be changed
      */
     public void setArray(String name, String value,
-                         ArrayList<Integer> indexes) {
+                         List<Integer> indexes) {
         Value array = getVariables().get(new Identifier(name));
         if (array instanceof ArrayValue) {
             ((ArrayValue) array).setValue(value, indexes);
