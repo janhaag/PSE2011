@@ -99,22 +99,18 @@ public class TableViewController implements SelectionListener {
 				if (e.item == table.getItem(i)) {
 					break;
 				}
-			}			
-			String expression = table.getItem(i).getText(1);
-			if (this.executionHandler.getGlobalBreakpoints().get(i).isActive()) {
-				this.executionHandler.getGlobalBreakpoints().get(i).setActive(false);
-				System.out.println("Globalbreakpoint " + expression + " deactivated.");
-			} else {
-				this.executionHandler.getGlobalBreakpoints().get(i).setActive(true);
-				System.out.println("Globalbreakpoint " + expression + " activated."); 
-
-			}
+			}	
+			if (this.executionHandler.getProgramExecution() != null) {
+				table.getItem(i).setChecked(!table.getItem(i).getChecked());
+				return;
+			} 			
+			this.executionHandler.getGlobalBreakpoints().get(i).setActive(
+					!this.executionHandler.getGlobalBreakpoints().get(i).isActive());
 		} else if(e.getSource() == this.breakpointView.getAddButton()) {
 			String expression = this.breakpointView.getAddTextField().getText();
 			if (expression == null || expression.length() == 0) {
 				return;
-			}
-			
+			}		
 			int i;
 			Expression exp = null;
 			try {
@@ -159,6 +155,10 @@ public class TableViewController implements SelectionListener {
 	
 	public VariableView getVarView() {
 		return this.varView;
+	}
+	
+	public BreakpointView getBreakpointView() {
+		return this.breakpointView;
 	}
 	
 	@Override
