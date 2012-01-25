@@ -2,7 +2,7 @@ package verifier;
 
 /**
  * This class represents the Program for the theorem prover.
- * It consists of an S-Expression.
+ * It consists of S-Expressions.
  */
 public class WPProgram {
     /**
@@ -11,7 +11,7 @@ public class WPProgram {
     private S_Expression[] expressions;
     /**
      * Constructor.
-     * @param expression The S-Expression
+     * @param expressions The S-Expression
      */
     public WPProgram(S_Expression[] expressions) {
         this.expressions = expressions;
@@ -23,8 +23,8 @@ public class WPProgram {
      */
     @Override
     public String toString() {
-       StringBuilder output = new StringBuilder();
-       for(int i = 0; i < expressions.length; i++) {
+       StringBuilder output = new StringBuilder("");
+       for (int i = 0; i < expressions.length; i++) {
            output.append(expressions[i].toString());
        }
        return output.toString();

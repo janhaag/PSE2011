@@ -23,10 +23,10 @@ public class S_Expression {
         this.op = op;
         this.subexpressions = subexpressions;
     }
-/**
- * To String method.
- * @return Operator and operands in brackets.
- */
+    /**
+     * To String method.
+     * @return Operator and operands in brackets.
+     */
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder("(" + op);
@@ -37,5 +37,24 @@ public class S_Expression {
         return output.toString();
     }
 
-
+    public S_Expression deepCopy() {
+        S_Expression[] newSubExpressions
+                = new S_Expression[subexpressions.length];
+        for (int i = 0; i < subexpressions.length; i++) {
+            newSubExpressions[i] = subexpressions[i].deepCopy();
+        }
+        return new S_Expression(op, newSubExpressions);
+    }
+    
+    public void replace(String varName, S_Expression newValue) {
+        for (int i = 0; i < subexpressions.length; i++) {
+            if (subexpressions[i] instanceof Variable) {
+                if (subexpressions[i].toString().equals(varName)) {
+                    subexpressions[i] = newValue.deepCopy();
+                }
+            } else if (!(subexpressions[i] instanceof Constant)) {
+                subexpressions[i].replace(varName, newValue);
+            }
+        }
+    }
 }

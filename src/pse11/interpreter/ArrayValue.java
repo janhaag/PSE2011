@@ -107,9 +107,9 @@ public class ArrayValue extends Value {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("{");
-        for (Value value : values) {
-            sb.append(value.toString());
-            sb.append(',');
+        sb.append(values[0].toString());
+        for (int i = 1; i < values.length; i++) {
+            sb.append(',').append(values[i].toString());
         }
         return sb.append('}').toString();
     }
