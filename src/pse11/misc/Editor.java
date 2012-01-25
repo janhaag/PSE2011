@@ -65,25 +65,43 @@ public class Editor {
 		return this.source;
 	}
 	public void setSource(String source) {
-		this.undoMemento.push(this.createMemento());
+		if(!this.undoMemento.empty()) {
+			if(!this.undoMemento.peek().equals(this.createMemento())) {
+				//System.out.println(this.undoMemento.peek().getSource() + " __ " + this.source);
+				this.undoMemento.push(this.createMemento());
+			} else {
+				System.out.println("NE");
+			}
+		} else {
+			this.undoMemento.push(this.createMemento());
+		}
 		this.source = source;
 		findKeywords(source);
 		this.editorview.updateView();
 	}
 	public void undo() {
-		System.out.println("undo");
 		if(!this.undoMemento.empty()) {
 			EditorMemento memento = this.undoMemento.pop();
-			//System.out.println("undo22  "+ memento.getSource());
-			this.redoMemento.push(this.createMemento());
+			if(!this.redoMemento.empty()) {
+				if(!this.redoMemento.peek().equals(this.createMemento()))
+					this.redoMemento.push(this.createMemento());
+			} else {
+				this.redoMemento.push(this.createMemento());
+			}
 			this.source = memento.getSource();
 			this.editorview.updateView();
 		}
+		//System.out.println(this.undoMemento.size());
 	}
 	public void redo() {
 		if(!this.redoMemento.empty()) {
 			EditorMemento memento = this.redoMemento.pop();
-			this.undoMemento.push(this.createMemento());
+			if(!this.undoMemento.empty()) {
+				if(!this.undoMemento.peek().equals(this.createMemento()))
+					this.undoMemento.push(this.createMemento());
+			} else {
+				this.undoMemento.push(this.createMemento());
+			}
 			this.source = memento.getSource();
 			this.editorview.updateView();
 		}

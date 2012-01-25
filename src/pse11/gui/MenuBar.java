@@ -14,6 +14,8 @@ public class MenuBar {
 	private MenuItem loadItem;
 	private MenuItem saveItem;
 	private MenuItem helpItem;
+	private MenuItem undoItem;
+	private MenuItem redoItem;
 	private MenuItem settingsItem;
 	private MenuItem evaluationItem;
 	private MenuItem aboutItem;
@@ -49,6 +51,12 @@ public class MenuBar {
 	public MenuItem getMenuBarItemHelp() {
 		return this.helpItem;
 	}
+	public MenuItem getMenurBarItemUndo() {
+		return this.undoItem;
+	}
+	public MenuItem getMenuBarItemRedo() {
+		return this.redoItem;
+	}
 	
 	private void initiateMenuBar(MainController controller, EditorController editorController, Shell shell) {
 		menu = new Menu(shell,SWT.BAR);
@@ -76,10 +84,12 @@ public class MenuBar {
 		edit.setText("Edit");
 		final Menu editmenu = new Menu(shell, SWT.DROP_DOWN);
 		edit.setMenu(editmenu);
-		final MenuItem undoItem = new MenuItem(editmenu, SWT.PUSH);
-		undoItem.setText("Undo");
-		final MenuItem redoItem = new MenuItem(editmenu, SWT.PUSH);
-		redoItem.setText("Redo");
+		this.undoItem = new MenuItem(editmenu, SWT.PUSH);
+		this.undoItem.setText("Undo");
+		this.undoItem.addSelectionListener(controller);
+		this.redoItem = new MenuItem(editmenu, SWT.PUSH);
+		this.redoItem.setText("Redo");
+		this.redoItem.addSelectionListener(controller);
 		final MenuItem separator3 = new MenuItem(editmenu, SWT.SEPARATOR);
 		final MenuItem cutItem = new MenuItem(editmenu, SWT.PUSH);
 		cutItem.setText("Cut");
