@@ -96,7 +96,7 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(VariableRead variableRead) {
-        tempExpr = new Variable(variableRead.toString());
+        Variable tempExpr = new Variable(variableRead.toString());
     }
 
     @Override
@@ -187,10 +187,16 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
+        existsQuantifier.getSubexpression1().accept(this);
+        tempExpr = new S_Expression("exists", new S_Expression[] {
+            new VarDef(existsQuantifier.getIdentifier().getName(), "Int"), tempExpr});
     }
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
+        forAllQuantifier.getSubexpression1().accept(this);
+        tempExpr = new S_Expression("forall", new S_Expression[] {
+            new VarDef(forAllQuantifier.getIdentifier().getName(), "Int"), tempExpr});
     }
 
     @Override
