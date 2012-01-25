@@ -38,8 +38,8 @@ public class SMTLibTranslator implements ASTVisitor {
         arithmeticExpression.getSubexpression1().accept(this);
         ArithmeticOperator operator =
                 arithmeticExpression.getArithmeticOperator();
-        S_Expression[] expressions =
-                new S_Expression[operator instanceof BinaryOperator ? 2 : 1];
+        int length = operator instanceof BinaryOperator ? 2 : 1;
+        S_Expression[] expressions = new S_Expression[length];
         expressions[0] = tempExpr;
         String op = operator.toString();
         if (operator instanceof Division) {
@@ -63,8 +63,8 @@ public class SMTLibTranslator implements ASTVisitor {
     public void visit(LogicalExpression logicalExpression) {
         logicalExpression.getSubexpression1().accept(this);
         LogicalOperator operator = logicalExpression.getLogicalOperator();
-        S_Expression[] expressions =
-                new S_Expression[operator instanceof BinaryOperator ? 2 : 1];
+        int length = operator instanceof BinaryOperator ? 2 : 1;
+        S_Expression[] expressions = new S_Expression[length];
         expressions[0] = tempExpr;
         String op = operator.toString();
         if (operator instanceof Negation) {

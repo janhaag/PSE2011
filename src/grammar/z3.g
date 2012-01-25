@@ -37,7 +37,7 @@ model	returns [String example] @init{$example = "";}
 		')'
 	;
 
-ite	[String id] returns[String assignment] @init{$assignment += id;}
+ite	[String id] returns[String assignment] @init{$assignment = id;}
 	:	'(=' IDENT '!' INT i = INT')'  val = value
         {$assignment = "[" + $i.text + "]" + "=" + $val.content + "\n";}
         (value | '('as=ite[id]')'{$assignment += $as.assignment;})
