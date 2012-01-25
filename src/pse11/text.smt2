@@ -1,0 +1,1 @@
+(set-logic AUFNIRA)(declare-fun i () Int)(assert (not (and (= (+ (- i 1) 1) i) (and true (and (= (+ i (* 2 (- i 1))) (- (* 3 i) 2)) true)))))(check-sat)
