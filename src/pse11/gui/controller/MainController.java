@@ -95,14 +95,15 @@ public class MainController implements SelectionListener {
 		}
 
 		// button events
-		else if (e.getSource() == mainframe.getRunButton()) {
+		else if (e.getSource() == this.mainframe.getRunButton() 
+				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemRun()) {
 			// Functions
 			assert editorController != null;
 			if (this.executionHandler.getAST() == null) {
 				this.tableController.getVarView().getVarTree().removeAll();
 				this.executionHandler.parse(this.editorController.getEditor().getSource());
 				if (this.executionHandler.getAST() != null) {
-					ParameterFrame frame = new ParameterFrame(mainframe.getShell());
+					ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
 					parameterContoller.addView(frame);
 				} else {
 					return;
@@ -145,6 +146,7 @@ public class MainController implements SelectionListener {
 							e.printStackTrace();
 						}
 					}
+					
 					executionHandler.run(editorController.getEditor().getStatementBreakpoints(),
 							executionHandler.getGlobalBreakpoints());
 					mainframe.getDisplay().asyncExec(new Runnable() {
@@ -155,7 +157,8 @@ public class MainController implements SelectionListener {
 					});
 				}
 			}.start();
-		} else if (e.getSource() == mainframe.getStepButton()) {
+		} else if (e.getSource() == this.mainframe.getStepButton() 
+				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemStep()) {
 			// Functions
 			assert editorController != null;
 			if (this.executionHandler.getAST() == null) {

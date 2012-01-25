@@ -106,6 +106,10 @@ public class ExecutionHandler {
 		return this.parameterValues;
 	}
 	
+	public MessageSystem getMessageSystem() {
+		return this.messagesystem;
+	}
+	
 	public void setAST(Program ast) {
 		this.ast = ast;
 	}

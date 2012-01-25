@@ -15,6 +15,8 @@ public class MenuBar {
 	private MenuItem saveItem;
 	private MenuItem helpItem;
 	private MenuItem settingsItem;
+	private MenuItem runItem;
+	private MenuItem stepItem;
 	private MenuItem evaluationItem;
 	private MenuItem aboutItem;
 	private MenuItem randomTestItem;
@@ -36,6 +38,12 @@ public class MenuBar {
 	}
 	public MenuItem getMenuBarItemSettings() {
 		return this.settingsItem;
+	}
+	public MenuItem getMenuBarItemRun() {
+		return this.runItem;
+	}
+	public MenuItem getMenuBarItemStep() {
+		return this.stepItem;
 	}
 	public MenuItem getMenuBarItemEvaluation() {
 		return this.evaluationItem;
@@ -60,14 +68,14 @@ public class MenuBar {
 		newFileItem = new MenuItem(filemenu, SWT.PUSH);
 		newFileItem.setText("New");
 		newFileItem.addSelectionListener(controller);
-//		final MenuItem separator1 = new MenuItem(filemenu, SWT.SEPARATOR);
+		final MenuItem separator1 = new MenuItem(filemenu, SWT.SEPARATOR);
 		loadItem = new MenuItem(filemenu, SWT.PUSH);
 		loadItem.setText("Load");
 		loadItem.addSelectionListener(controller);
 		saveItem = new MenuItem(filemenu, SWT.PUSH);
 		saveItem.setText("Save");
 		saveItem.addSelectionListener(controller);
-//		final MenuItem separator2 = new MenuItem(filemenu, SWT.SEPARATOR);
+		final MenuItem separator2 = new MenuItem(filemenu, SWT.SEPARATOR);
 		exitItem = new MenuItem(filemenu, SWT.PUSH);
 		exitItem.setText("Exit");
 		exitItem.addSelectionListener(controller);
@@ -96,10 +104,12 @@ public class MenuBar {
 		run.setText("Run");
 		final Menu runmenu = new Menu(shell, SWT.DROP_DOWN);
 		run.setMenu(runmenu);
-		final MenuItem runItem = new MenuItem(runmenu, SWT.PUSH);
+		runItem = new MenuItem(runmenu, SWT.PUSH);
 		runItem.setText("Run");
-		final MenuItem stepItem = new MenuItem(runmenu, SWT.PUSH);
+		runItem.addSelectionListener(controller);
+		stepItem = new MenuItem(runmenu, SWT.PUSH);
 		stepItem.setText("Single Step");
+		stepItem.addSelectionListener(controller);
 		final MenuItem separator5 = new MenuItem(runmenu, SWT.SEPARATOR);
 		randomTestItem = new MenuItem(runmenu, SWT.PUSH);
 		randomTestItem.setText("Random Tests");
