@@ -64,7 +64,6 @@ public class MainController implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		this.mainframe.getValidateButton().setEnabled(true);
 		// frame events
 		if (e.getSource() == this.mainframe.getMenuBar().getMenuBarItemExit()) {
 			System.exit(0);
@@ -94,10 +93,8 @@ public class MainController implements SelectionListener {
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
 			new HelpFrame(this.mainframe.getShell(), this.helpController);
 		} else if (e.getSource() == mainframe.getMenuBar().getMenurBarItemUndo()) {
-			//TODO wrong here
 			this.editorController.getEditor().undo();
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {
-			//TODO wrong here
 			this.editorController.getEditor().redo();
 		} 
 
@@ -275,7 +272,6 @@ public class MainController implements SelectionListener {
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
 			this.executionHandler.setAST(null);
 		} else if (e.getSource() == mainframe.getValidateButton()) {
-			//Code sucks
 			this.executionHandler.verify(this.editorController.getEditor().getSource());
 		}
 	}

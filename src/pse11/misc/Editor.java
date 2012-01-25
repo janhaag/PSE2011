@@ -66,11 +66,8 @@ public class Editor {
 	}
 	public void setSource(String source) {
 		if(!this.undoMemento.empty()) {
-			if(!this.undoMemento.peek().equals(this.createMemento())) {
-				//System.out.println(this.undoMemento.peek().getSource() + " __ " + this.source);
+			if(!this.undoMemento.peek().getSource().equals(source)) {
 				this.undoMemento.push(this.createMemento());
-			} else {
-				System.out.println("NE");
 			}
 		} else {
 			this.undoMemento.push(this.createMemento());
@@ -91,7 +88,6 @@ public class Editor {
 			this.source = memento.getSource();
 			this.editorview.updateView();
 		}
-		//System.out.println(this.undoMemento.size());
 	}
 	public void redo() {
 		if(!this.redoMemento.empty()) {

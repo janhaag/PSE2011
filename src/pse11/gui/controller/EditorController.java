@@ -49,7 +49,8 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     @Override
     public void modifyText(ModifyEvent e) {
         // TODO REST
-        editor.setSource(editorframe.getText());
+    	if(!this.editor.getSource().equals(editorframe.getText()))
+    		editor.setSource(editorframe.getText());
     }
     @Override
     public void verifyText(VerifyEvent e) {
