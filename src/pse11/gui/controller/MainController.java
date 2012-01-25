@@ -92,7 +92,11 @@ public class MainController implements SelectionListener {
 			new AboutFrame(this.mainframe.getShell());
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
 			new HelpFrame(this.mainframe.getShell(), this.helpController);
-		}
+		} else if (e.getSource() == mainframe.getMenuBar().getMenurBarItemUndo()) {
+			this.editorController.getEditor().undo();
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {
+			this.editorController.getEditor().redo();
+		} 
 
 		// button events
 		else if (e.getSource() == this.mainframe.getRunButton() 
@@ -268,6 +272,7 @@ public class MainController implements SelectionListener {
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
 			this.executionHandler.setAST(null);
 		} else if (e.getSource() == mainframe.getValidateButton()) {
+			this.executionHandler.verify(this.editorController.getEditor().getSource());
 		}
 	}
 

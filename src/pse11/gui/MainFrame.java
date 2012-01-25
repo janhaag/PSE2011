@@ -100,7 +100,6 @@ public class MainFrame extends Frame {
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.validateButton.setLayoutData(gData);
-		this.validateButton.setEnabled(false);
 		
 		this.checkSyntaxButton.addSelectionListener(mainController);
 		this.runButton.addSelectionListener(mainController);
