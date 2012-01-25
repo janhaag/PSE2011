@@ -33,6 +33,10 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArithmeticExpression arithmeticExpression) {
+        int length = arithmeticExpression.getArithmeticOperator() instanceof BinaryOperator? 2:1;
+        S_Expression[] subExpressions = new S_Expression[length];
+        tempExpr = new S_Expression(
+                arithmeticExpression.getArithmeticOperator().toString(), subExpressions);
     }
 
     @Override
@@ -42,6 +46,9 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(LogicalExpression logicalExpression) {
+        S_Expression[] subExpressions = new S_Expression[2];
+        tempExpr = new S_Expression(
+                logicalExpression.getLogicalOperator().toString(), subExpressions);
     }
 
     @Override
