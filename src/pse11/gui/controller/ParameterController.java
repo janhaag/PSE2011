@@ -64,6 +64,7 @@ public class ParameterController implements SelectionListener {
 			this.parameterframe.getShell().dispose();
 		}
 		else if (this.randomtestframe != null && e.getSource() == this.randomtestframe.getStartButton()) {			
+			this.console.getTable().removeAll();
 			String s = this.getRandomtestframe().getCount().getText();
 			int count;
 			try {
@@ -86,6 +87,7 @@ public class ParameterController implements SelectionListener {
 				try {
 					this.executionHandler.run(null, null);
 					result[2] = "success";
+					this.executionHandler.destroyProgramExecution();
 				}
 				catch (AssertionFailureException ae) {
 					result[2] = ae.getMessage() + " (line " + ae.getPosition() + ")";

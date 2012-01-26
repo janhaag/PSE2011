@@ -46,6 +46,10 @@ public class MiscConsole extends Console {
 		item.setText(2, result[2]);
 	}
 	
+	public Table getTable() {
+		return this.table;
+	}
+	
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
 		// TODO Auto-generated method stub
