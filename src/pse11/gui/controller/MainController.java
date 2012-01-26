@@ -86,8 +86,6 @@ public class MainController implements SelectionListener {
 			this.mainframe.getEditor().setText("");
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
-		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemEvaluation()) {
-			new EvaluationFrame(this.mainframe.getShell());
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
 			RandomTestFrame randomtestframe = new RandomTestFrame(this.mainframe.getShell());
 			this.parameterContoller.addRandomTestFrame(randomtestframe, this.editorController.getEditor().getSource());

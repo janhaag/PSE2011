@@ -19,7 +19,6 @@ public class MenuBar {
 	private MenuItem settingsItem;
 	private MenuItem runItem;
 	private MenuItem stepItem;
-	private MenuItem evaluationItem;
 	private MenuItem aboutItem;
 	private MenuItem randomTestItem;
 	
@@ -46,9 +45,6 @@ public class MenuBar {
 	}
 	public MenuItem getMenuBarItemStep() {
 		return this.stepItem;
-	}
-	public MenuItem getMenuBarItemEvaluation() {
-		return this.evaluationItem;
 	}
 	public MenuItem getMenuBarItemRandomTest() {
 		return this.randomTestItem;
@@ -124,9 +120,9 @@ public class MenuBar {
 		randomTestItem = new MenuItem(runmenu, SWT.PUSH);
 		randomTestItem.setText("Random Tests");
 		randomTestItem.addSelectionListener(controller);
-		this.evaluationItem = new MenuItem(runmenu, SWT.PUSH);
+		/*this.evaluationItem = new MenuItem(runmenu, SWT.PUSH);
 		evaluationItem.setText("Evaluate Statement");
-		evaluationItem.addSelectionListener(controller);
+		evaluationItem.addSelectionListener(controller);*/
 		final MenuItem separator6 = new MenuItem(runmenu, SWT.SEPARATOR);
 		final MenuItem verItem = new MenuItem(runmenu, SWT.PUSH);
 		verItem.setText("Verify");
