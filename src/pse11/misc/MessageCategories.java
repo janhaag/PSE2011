@@ -6,5 +6,6 @@ package misc;
  * @version 1.0
  */
 public enum MessageCategories {
-	ERROR;
+	ERROR,
+	VERIFYERROR;
 }

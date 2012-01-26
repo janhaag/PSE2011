@@ -9,8 +9,9 @@ import misc.Message;
 import misc.MessageSystem;
 
 public abstract class Console extends Composite {
-	protected MessageSystem messagesystem;
 	protected Table table;
+	protected MessageSystem messagesystem;
+	
 	public Console(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style);
 		this.messagesystem = messagesystem;

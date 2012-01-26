@@ -146,12 +146,11 @@ public class ProgramExecution {
         }
     }
 
-    public boolean checkBreakpoints() {
+    public Breakpoint checkBreakpoints() {
         for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {
             if ((currentState.getCurrentStatement().getPosition().getLine()
-                            == statementBreakpoint.getLine())
-                    && statementBreakpoint.isActive()) {
-                return true;
+                            == statementBreakpoint.getLine())) {
+                return statementBreakpoint;
             }
         }
         for (GlobalBreakpoint globalBreakpoint : globalBreakpoints) {
@@ -164,13 +163,13 @@ public class ProgramExecution {
                     assertion.accept(typeChecker);
                     typeChecker.setFunctionCallAllowed(true);
                     assertion.accept(interpreter);
-                    return true;
+                    return globalBreakpoint;
                 } catch (IllegalTypeException ignored) {
                 } catch (AssertionFailureException ignored) {
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public State getCurrentState() {

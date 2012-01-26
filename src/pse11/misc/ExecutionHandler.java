@@ -1,5 +1,6 @@
 package misc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +10,9 @@ import org.antlr.runtime.RecognitionException;
 import ast.Program;
 
 import parser.ParserInterface;
+import verifier.SMTLibTranslator;
+import verifier.VerifierInterface;
+import interpreter.AssertionFailureException;
 import interpreter.Interpreter;
 import interpreter.ProgramExecution;
 import interpreter.GlobalBreakpoint;
@@ -23,6 +27,7 @@ public class ExecutionHandler {
 	private Program ast;
 	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 	private String[] parameterValues;
+	private String[] assertionFailureMessage;
 	private boolean paused;
 	
 	public ExecutionHandler(MessageSystem messagesystem) {
@@ -58,25 +63,56 @@ public class ExecutionHandler {
 			return;
 		}
 		boolean finished = false;
-		while (!paused && !finished) {
-			this.singleStep(sbreakpoints, gbreakpoints);
+		boolean success = true;
+		while (!paused && !finished && success) {
+			success = this.singleStep(sbreakpoints, gbreakpoints);
 			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
 				finished = true;
 			}
 		}
 	}
 	
-	public void singleStep(ArrayList<StatementBreakpoint> sbreakpoints, 
+	public boolean singleStep(ArrayList<StatementBreakpoint> sbreakpoints, 
 			ArrayList<GlobalBreakpoint> gbreakpoints) {
+		boolean success = false;
 		if (this.ast == null) {
-			return;
+			return false;
 		}
 		if (this.execution == null) {
 			this.execution = new ProgramExecution(this.ast, this.interpreter, 
 					sbreakpoints, gbreakpoints, this.parameterValues);
 		}
-		if (this.execution.getCurrentState().getCurrentStatement() != null) {
-			this.interpreter.step(this.execution.getCurrentState());
+		try {
+			if (this.execution.getCurrentState().getCurrentStatement() != null) {
+				this.interpreter.step(this.execution.getCurrentState());
+				success = true;
+			}
+		}
+		catch (AssertionFailureException e) {
+			this.assertionFailureMessage = new String[2];
+			success = false;
+			this.assertionFailureMessage[0] = "" + e.getPosition().getLine();
+			this.assertionFailureMessage[1] = e.getMessage();
+	    }
+		return success;
+	}
+	
+	public void verify(String source) {
+		if(this.ast == null) {
+			this.parse(source);
+		}
+		VerifierInterface verifier = new VerifierInterface(new SMTLibTranslator(), "Z3");
+		try {
+			verifier.verify(this.ast);
+		} catch (IOException e) {
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOE: "+e.getMessage());
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IE: "+e.getMessage());
+			e.printStackTrace();
+		} catch (RecognitionException e) {
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "RE: "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -94,6 +130,19 @@ public class ExecutionHandler {
 		return parsedError;
 	}
 	
+	public void printAssertionFailureMessage() {
+		int position;
+		try {
+			position = Integer.parseInt(this.assertionFailureMessage[0]);
+		}
+		catch (NumberFormatException e) {
+			position = -1;
+		}
+		this.messagesystem.addMessage(MessageCategories.ERROR, position, 
+				this.assertionFailureMessage[1]);
+		this.assertionFailureMessage = null;
+	}
+	
 	public void destroyProgramExecution() {
 		this.execution = null;
 	}
@@ -101,13 +150,25 @@ public class ExecutionHandler {
 	public void setParameterValues(String[] values) {
 		this.parameterValues = values;
 	}
+
+	public void setAST(Program ast) {
+		this.ast = ast;
+	}
+	
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
 	
 	public String[] getParameterValues() {
 		return this.parameterValues;
 	}
 	
-	public void setAST(Program ast) {
-		this.ast = ast;
+	public MessageSystem getMessageSystem() {
+		return this.messagesystem;
+	}
+	
+	public String[] getAssertionFailureMessage() {
+		return this.assertionFailureMessage;
 	}
 	
 	public Program getAST() {
@@ -120,5 +181,9 @@ public class ExecutionHandler {
 	
 	public ArrayList<GlobalBreakpoint> getGlobalBreakpoints() {
 		return this.globalBreakpoints;
+	}
+	
+	public boolean getPaused() {
+		return this.paused;
 	}
 }

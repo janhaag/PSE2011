@@ -1,43 +1,35 @@
 package gui.controller;
 
-import gui.BreakpointView;
 import gui.VariableView;
 import interpreter.ArrayValue;
 import interpreter.BooleanValue;
-import interpreter.GlobalBreakpoint;
 import interpreter.IntegerValue;
 import interpreter.Value;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import misc.ExecutionHandler;
 
-import org.antlr.runtime.RecognitionException;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import ast.Expression;
+import ast.ArrayType;
+import ast.BooleanType;
 import ast.Identifier;
+import ast.IntegerType;
 
-public class TableViewController implements SelectionListener {
-	private VariableView varView;
-	private BreakpointView breakpointView;
+public class VariableViewController {
 	private ExecutionHandler executionHandler;
+	private VariableView varView;
 	
-	public TableViewController(BreakpointView breakpointView, VariableView varView, ExecutionHandler executionHandler) {	
-		this.breakpointView = breakpointView;	
+	
+	public VariableViewController(VariableView varView, ExecutionHandler executionHandler) {	
 		this.varView = varView;	
 		this.executionHandler = executionHandler;
-		
-		this.breakpointView.getGlobalBreakpoint().addSelectionListener(this);
-		this.breakpointView.getAddButton().addSelectionListener(this);
 	}
 	
 
@@ -89,80 +81,20 @@ public class TableViewController implements SelectionListener {
 			}
 		}
 	}
-
-	@Override
-	public void widgetSelected(SelectionEvent e) {
-		if(e.getSource() == this.breakpointView.getGlobalBreakpoint() && e.detail == SWT.CHECK) {
-			Table table = this.breakpointView.getGlobalBreakpoint();		
-			int i;
-			for (i = 0; i < table.getItemCount(); i++) {
-				if (e.item == table.getItem(i)) {
-					break;
-				}
-			}	
-			if (this.executionHandler.getProgramExecution() != null) {
-				table.getItem(i).setChecked(!table.getItem(i).getChecked());
-				return;
-			} 			
-			this.executionHandler.getGlobalBreakpoints().get(i).setActive(
-					!this.executionHandler.getGlobalBreakpoints().get(i).isActive());
-		} else if(e.getSource() == this.breakpointView.getAddButton()) {
-			String expression = this.breakpointView.getAddTextField().getText();
-			if (expression == null || expression.length() == 0) {
-				return;
-			}		
-			int i;
-			Expression exp = null;
-			try {
-				exp = this.executionHandler.getParserInterface().parseExpression(expression);
-			} catch (RecognitionException e1) {
-				return;
-			}		
-			for (i = 0; i < this.executionHandler.getGlobalBreakpoints().size(); i++) {
-				if (this.executionHandler.getGlobalBreakpoints().get(i).getExpression().toString().equals(exp.toString())) {
-					break;
-				}
-			}	
-			if (i >= this.executionHandler.getGlobalBreakpoints().size()) {
-				if (exp != null) {
-					GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(exp);
-					this.executionHandler.getGlobalBreakpoints().add(gBreakpoint);
-				}
-			} else {
-				this.executionHandler.getGlobalBreakpoints().remove(i);
-			}
-			this.breakpointView.drawGlobalBreakpointItem(this.executionHandler.getGlobalBreakpoints());
-		}	
-	} 
 	
-	public void deactivateVarView() {
+	public void deactivateView() {
 		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));
 		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));
 	}
 	
-	public void activateVarView() {
+	public void activateView() {
 		this.varView.getVarTree().setBackground(null);
 		this.varView.getVarTree().setForeground(null);
 	}
 	
-	public void deactivateBreakpointView() {
-		this.breakpointView.getAddButton().removeSelectionListener(this);
-	}
 	
-	public void activateBreakpointView() {
-		this.breakpointView.getAddButton().addSelectionListener(this);
-	}
 	
 	public VariableView getVarView() {
 		return this.varView;
-	}
-	
-	public BreakpointView getBreakpointView() {
-		return this.breakpointView;
-	}
-	
-	@Override
-	public void widgetDefaultSelected(SelectionEvent arg0) {
-		// TODO Auto-generated method stub			
 	}
 }

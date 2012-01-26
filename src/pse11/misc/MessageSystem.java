@@ -59,7 +59,7 @@ public class MessageSystem {
 	 * @param text the text of the message
 	 */
 	public void addMessage(MessageCategories category, int position, String text) {
-		this.messages.add(new Message(MessageCategories.ERROR, position, text));
+		this.messages.add(new Message(category, position, text));
 		this.notifyConsoles();
 	}
 	//TODO private
