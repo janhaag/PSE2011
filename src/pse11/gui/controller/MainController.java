@@ -19,7 +19,6 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Image;
 
 import gui.AboutFrame;
-import gui.EvaluationFrame;
 import gui.FileFrame;
 import gui.HelpFrame;
 import gui.MainFrame;

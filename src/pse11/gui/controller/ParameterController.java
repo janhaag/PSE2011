@@ -1,7 +1,5 @@
 package gui.controller;
 
-import interpreter.AssertionFailureException;
-
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
@@ -84,14 +82,16 @@ public class ParameterController implements SelectionListener {
 					+ parameterValues[j] + "; ";
 				}
 				this.executionHandler.setParameterValues(parameterValues);
-				try {
-					this.executionHandler.run(null, null);
+				this.executionHandler.run(null, null);
+				if (this.executionHandler.getAssertionFailureMessage() == null) {
 					result[2] = "success";
-					this.executionHandler.destroyProgramExecution();
 				}
-				catch (AssertionFailureException ae) {
-					result[2] = ae.getMessage() + " (line " + ae.getPosition() + ")";
+				else {
+					result[2] = this.executionHandler.getAssertionFailureMessage()[1]
+					+ " (line " + this.executionHandler.getAssertionFailureMessage()[0] + ")";
+					this.executionHandler.clearAssertionFailureMessage();
 				}
+				this.executionHandler.destroyProgramExecution();
 				this.console.printRandomTestResult(result);
 			}
 			this.executionHandler.setAST(null);
@@ -207,7 +207,6 @@ public class ParameterController implements SelectionListener {
 		}
 		return parameterValues;
 	}
-		
 	
 	private int createRandomIntegerValue(int begin, int end) {
 		return (int) (Math.random() * (end - begin + 1)) + begin;

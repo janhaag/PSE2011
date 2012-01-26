@@ -139,6 +139,10 @@ public class ExecutionHandler {
 		this.assertionFailureMessage = null;
 	}
 	
+	public void clearAssertionFailureMessage() {
+		this.assertionFailureMessage = null;
+	}
+	
 	public void destroyProgramExecution() {
 		this.execution = null;
 	}
