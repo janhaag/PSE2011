@@ -23,6 +23,7 @@ import gui.EvaluationFrame;
 import gui.FileFrame;
 import gui.HelpFrame;
 import gui.MainFrame;
+import gui.MiscConsole;
 import gui.ParameterFrame;
 import gui.SettingsFrame;
 import gui.RandomTestFrame;
@@ -45,7 +46,8 @@ public class MainController implements SelectionListener {
 		this.editorController = new EditorController(editor, this.mainframe.getEditor());
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
-		this.parameterContoller = new ParameterController(this.executionHandler);
+		this.parameterContoller = new ParameterController(this.executionHandler, 
+				(MiscConsole) this.mainframe.getConsole()[2]);
 		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), 
 				this.mainframe.getVarView(), this.executionHandler);
 
@@ -87,7 +89,8 @@ public class MainController implements SelectionListener {
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemEvaluation()) {
 			new EvaluationFrame(this.mainframe.getShell());
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
-			new RandomTestFrame(this.mainframe.getShell());
+			RandomTestFrame randomtestframe = new RandomTestFrame(this.mainframe.getShell());
+			this.parameterContoller.addRandomTestFrame(randomtestframe, this.editorController.getEditor().getSource());
 		} else if (e.getSource() == mainframe.getMenuBar().getMenurBarItemAbout()) {
 			new AboutFrame(this.mainframe.getShell());
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {
@@ -96,7 +99,7 @@ public class MainController implements SelectionListener {
 			this.editorController.getEditor().undo();
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {
 			this.editorController.getEditor().redo();
-		} 
+		}
 
 		// button events
 		else if (e.getSource() == this.mainframe.getRunButton() 
@@ -108,8 +111,8 @@ public class MainController implements SelectionListener {
 				this.tableController.getVarView().getVarTree().removeAll();
 				this.executionHandler.parse(this.editorController.getEditor().getSource());
 				if (this.executionHandler.getAST() != null) {
-					ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
-					parameterContoller.addView(frame);
+					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());
+					parameterContoller.addParameterFrame(parameterframe);
 				} else {
 					return;
 				}
@@ -148,7 +151,7 @@ public class MainController implements SelectionListener {
 			// Execution with parameter
 			new Thread() {
 				public void run() {
-					while (!parameterContoller.getFrame().getShell().isDisposed()) {
+					while (!parameterContoller.getParameterframe().getShell().isDisposed()) {
 						try {
 							sleep(100);
 						} catch (InterruptedException e) {
@@ -179,8 +182,8 @@ public class MainController implements SelectionListener {
 				this.tableController.getVarView().getVarTree().removeAll();
 				this.executionHandler.parse(this.editorController.getEditor().getSource());
 				if (this.executionHandler.getAST() != null) {
-					ParameterFrame frame = new ParameterFrame(this.mainframe.getShell());
-					this.parameterContoller.addView(frame);
+					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());
+					this.parameterContoller.addParameterFrame(parameterframe);
 				} else {
 					return;
 				}
@@ -221,7 +224,7 @@ public class MainController implements SelectionListener {
 			// Execution with parameter
 			new Thread() {
 				public void run() {
-					while (!parameterContoller.getFrame().getShell().isDisposed()) {
+					while (!parameterContoller.getParameterframe().getShell().isDisposed()) {
 						try {
 							sleep(100);
 						} catch (InterruptedException e) {

@@ -217,6 +217,10 @@ public class MainFrame extends Frame {
 		return this.stopButton;
 	}
 	
+	public Console[] getConsole() {
+		return this.console;
+	}
+	
 	public HelpBox getHelpBox() {
 		return this.help;
 	}

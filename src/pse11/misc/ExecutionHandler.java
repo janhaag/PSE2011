@@ -36,10 +36,6 @@ public class ExecutionHandler {
 		this.parser = new ParserInterface();
 		this.globalBreakpoints = new ArrayList<GlobalBreakpoint>();
 	}
-	
-	public ProgramExecution getProgramExecution() {
-		return this.execution;
-	}
 
 	public void parse(String source) {
 		this.messagesystem.clear(MessageCategories.ERROR);
@@ -157,6 +153,10 @@ public class ExecutionHandler {
 	
 	public void setPaused(boolean paused) {
 		this.paused = paused;
+	}
+	
+	public ProgramExecution getProgramExecution() {
+		return this.execution;
 	}
 	
 	public String[] getParameterValues() {

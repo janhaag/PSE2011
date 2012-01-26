@@ -23,15 +23,18 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		
 		GridLayout gLayout = new GridLayout();
 		gLayout.numColumns = 4;
+		gLayout.marginTop = 10;
+		gLayout.marginLeft = 10;
+		gLayout.marginRight = 10;
 		shell.setLayout(gLayout);
 		
 		Label label = new Label(this.shell, SWT.NONE);
-		label.setText("Please insert parameter values");	
+		label.setText("Please insert parameter values for the");	
 		GridData gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label.setLayoutData(gData);
 		Label label2 = new Label(this.shell, SWT.NONE);
-		label2.setText("for the main function:");	
+		label2.setText("main function:");	
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 4;
 		label2.setLayoutData(gData);
@@ -53,7 +56,7 @@ public class ParameterFrame extends Frame implements MiscFrame {
 			return;
 		}
 		this.values = new Text[parameters.length];
-		this.shell.setSize(200, 150 + 15 * parameters.length);
+		this.shell.setSize(250, 180 + 20 * parameters.length);
 		GridData gData;
 		
 		for (int i = 0; i < parameters.length; i++) {
@@ -65,6 +68,10 @@ public class ParameterFrame extends Frame implements MiscFrame {
 			this.values[i] = value;
 		}
 		
+		Label label = new Label(this.shell, SWT.NONE);
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 4;
+		label.setLayoutData(gData);
 		this.okButton = new Button(this.shell, SWT.NONE);
 		this.okButton.setText("OK");
 		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
