@@ -10,8 +10,8 @@ import org.antlr.runtime.RecognitionException;
 import ast.Program;
 
 import parser.ParserInterface;
-import verifier.SMTLibTranslator;
 import verifier.VerifierInterface;
+import verifier.smtlib.SMTLibTranslator;
 import interpreter.AssertionFailureException;
 import interpreter.Interpreter;
 import interpreter.ProgramExecution;
@@ -97,7 +97,7 @@ public class ExecutionHandler {
 		if(this.ast == null) {
 			this.parse(source);
 		}
-		VerifierInterface verifier = new VerifierInterface(new SMTLibTranslator(), "Z3");
+		/* VerifierInterface verifier = new VerifierInterface(new SMTLibTranslator());
 		try {
 			verifier.verify(this.ast);
 		} catch (IOException e) {
@@ -109,7 +109,7 @@ public class ExecutionHandler {
 		} catch (RecognitionException e) {
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "RE: "+e.getMessage());
 			e.printStackTrace();
-		}
+		} */
 	}
 	
 	private String[] parseParserError(String error) {

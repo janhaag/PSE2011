@@ -85,7 +85,7 @@ public class ParameterController implements SelectionListener {
 				this.executionHandler.setParameterValues(parameterValues);
 				try {
 					this.executionHandler.run(null, null);
-					result[2] = "succes\n";
+					result[2] = "success";
 				}
 				catch (AssertionFailureException ae) {
 					result[2] = ae.getMessage() + " (line " + ae.getPosition() + ")";
