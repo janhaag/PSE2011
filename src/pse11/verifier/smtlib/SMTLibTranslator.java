@@ -1,4 +1,4 @@
-package verifier;
+package verifier.smtlib;
 
 import ast.*;
 

@@ -1,4 +1,4 @@
-package verifier;
+package verifier.smtlib;
 
 /**
  * Defines a Variable (for quantification)

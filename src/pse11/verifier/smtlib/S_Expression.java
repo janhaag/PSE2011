@@ -1,4 +1,4 @@
-package verifier;
+package verifier.smtlib;
 
 
 /**
@@ -45,7 +45,7 @@ public class S_Expression {
         }
         return new S_Expression(op, newSubExpressions);
     }
-    
+
     public void replace(String varName, S_Expression newValue) {
         for (int i = 0; i < subexpressions.length; i++) {
             if (subexpressions[i] instanceof Variable) {
