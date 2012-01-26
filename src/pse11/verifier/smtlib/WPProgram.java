@@ -1,4 +1,4 @@
-package verifier;
+package verifier.smtlib;
 
 /**
  * This class represents the Program for the theorem prover.

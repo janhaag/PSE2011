@@ -149,8 +149,7 @@ public class ProgramExecution {
     public Breakpoint checkBreakpoints() {
         for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {
             if ((currentState.getCurrentStatement().getPosition().getLine()
-                            == statementBreakpoint.getLine())
-                    && statementBreakpoint.isActive()) {
+                            == statementBreakpoint.getLine())) {
                 return statementBreakpoint;
             }
         }
