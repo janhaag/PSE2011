@@ -150,13 +150,13 @@ public class ProgramExecution {
 
     public Breakpoint checkBreakpoints() {
         for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {
-            if ((currentState.getCurrentStatement().getPosition().getLine()
+        	if ((currentState.getCurrentStatement().getPosition().getLine()
                             == statementBreakpoint.getLine())) {
                 return statementBreakpoint;
             }
         }
         for (GlobalBreakpoint globalBreakpoint : globalBreakpoints) {
-            if (globalBreakpoint.isActive()) {
+        	if (globalBreakpoint.isActive()) {
                 typeChecker.setCurrentScope(currentState.getCurrentScope());
                 try {
                     Expression condition = globalBreakpoint.getExpression();

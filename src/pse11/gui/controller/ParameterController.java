@@ -1,5 +1,10 @@
 package gui.controller;
 
+import java.util.ArrayList;
+
+import interpreter.GlobalBreakpoint;
+import interpreter.StatementBreakpoint;
+
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
@@ -82,7 +87,7 @@ public class ParameterController implements SelectionListener {
 					+ parameterValues[j] + "; ";
 				}
 				this.executionHandler.setParameterValues(parameterValues);
-				this.executionHandler.run(null, null);
+				this.executionHandler.run(new ArrayList<StatementBreakpoint>(), new ArrayList<GlobalBreakpoint>());
 				if (this.executionHandler.getAssertionFailureMessage() == null) {
 					result[2] = "success";
 				}
@@ -163,7 +168,7 @@ public class ParameterController implements SelectionListener {
 										value += "}";
 									}
 									else {
-										value += ", ";
+										value += ",";
 										l = dimension;
 									}
 								}
@@ -196,7 +201,7 @@ public class ParameterController implements SelectionListener {
 								value += "}";
 							}
 							else {
-								value += ", ";
+								value += ",";
 								l = dimension;
 							}
 						}
@@ -224,7 +229,7 @@ public class ParameterController implements SelectionListener {
 				random += this.createRandomIntegerValue(begin, end);
 			}
 			else {
-				random += this.createRandomIntegerValue(begin, end) + ", ";
+				random += this.createRandomIntegerValue(begin, end) + ",";
 			}
 		}
 		random = "{" + random + "}";
@@ -238,7 +243,7 @@ public class ParameterController implements SelectionListener {
 				random += this.createRandomBooleanValue();
 			}
 			else {
-				random += this.createRandomBooleanValue() + ", ";
+				random += this.createRandomBooleanValue() + ",";
 			}
 		}
 		random = "{" + random + "}";
