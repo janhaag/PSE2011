@@ -49,6 +49,8 @@ public class ProgramExecution {
         typeChecker = new TypeChecker();
         this.interpreter = interpreter;
         initParams(parameterValues);
+        interpreter.checkAssumptions(currentState,
+                ((Program) ast).getMainFunction().getAssumptions());
     }
 
     private void initParams(String[] values) {
@@ -158,11 +160,11 @@ public class ProgramExecution {
                 typeChecker.setCurrentScope(currentState.getCurrentScope());
                 try {
                     Expression condition = globalBreakpoint.getExpression();
-                    Assertion assertion = new Assertion(new Position(), condition);
+                    Ensure ensure = new Ensure(new Position(), condition);
                     typeChecker.setFunctionCallAllowed(false);
-                    assertion.accept(typeChecker);
+                    ensure.accept(typeChecker);
                     typeChecker.setFunctionCallAllowed(true);
-                    assertion.accept(interpreter);
+                    ensure.accept(interpreter);
                     return globalBreakpoint;
                 } catch (IllegalTypeException ignored) {
                 } catch (AssertionFailureException ignored) {

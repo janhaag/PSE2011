@@ -118,7 +118,7 @@ public class SMTLibTranslator implements ASTVisitor {
         } else if (operator instanceof Equal) {
             op = "=";
         } else if (operator instanceof NotEqual) {
-            op = "!=";
+            op = "distinct";
         }
         if (operator instanceof BinaryOperator) {
             logicalExpression.getSubexpression2().accept(this);
@@ -138,7 +138,7 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(VariableRead variableRead) {
-        Variable tempExpr = new Variable(variableRead.toString());
+        tempExpr = new Variable(variableRead.toString());
     }
 
     @Override
@@ -157,6 +157,7 @@ public class SMTLibTranslator implements ASTVisitor {
             program.set(program.size() - 1, new S_Expression("and",
                             new S_Expression[]{tempExpr, program.getLast()}));
         }
+        tempExpr = program.getLast();
         function.getFunctionBlock().accept(this);
         program.set(program.size() - 1, tempExpr);
         Assumption[] assumptions = function.getAssumptions();
@@ -226,7 +227,15 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(VariableDeclaration varDec) {
         S_Expression expression = tempExpr;
-        varDec.getValue().accept(this);
+        if (varDec.getValue() != null) {
+            varDec.getValue().accept(this);
+        } else {
+            if (varDec.getType() instanceof BooleanType) {
+                tempExpr = new Constant("true");
+            } else {
+                tempExpr = new Constant("0");
+            }
+        }
         expression.replace(varDec.getName(), tempExpr);
         upScopeReplacements.remove(varDec.getName());
     }

@@ -1,6 +1,6 @@
 // $ANTLR 3.4 ../src/grammar/z3.g 2012-01-19 22:25:53
 
-    package verifier;
+    package verifier.smtlib.z3;
 
 
 import org.antlr.runtime.*;

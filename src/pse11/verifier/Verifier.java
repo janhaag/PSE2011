@@ -79,6 +79,7 @@ public abstract class Verifier {
                 file.deleteOnExit();
                 template[i] = file.getAbsolutePath();
             }
+            result.append(template[i]).append(' ');
         }
         return new Pair<String, File>(result.toString(), file);
     }
