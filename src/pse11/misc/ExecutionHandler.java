@@ -9,6 +9,7 @@ import org.antlr.runtime.RecognitionException;
 
 import ast.Program;
 
+import parser.IllegalTypeException;
 import parser.ParserInterface;
 import verifier.VerifierInterface;
 import verifier.smtlib.SMTLibTranslator;
@@ -46,6 +47,8 @@ public class ExecutionHandler {
 		} catch(NullPointerException npe) {
 			npe.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.ERROR, -1, "AST creation not possible!");
+		} catch(IllegalTypeException ite) {
+			this.messagesystem.addMessage(MessageCategories.ERROR, ite.getErrorPosition().getLine(), ite.getMessage());
 		}
 		for(String error : parser.getErrors()) {
 			String[] parsedError = parseParserError(error);
