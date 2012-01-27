@@ -16,20 +16,38 @@ public class SMTLibTranslator implements ASTVisitor {
     private boolean change;
 
     public WPProgram getWPTree(ASTRoot ast) {
-        //TODO: Fill stub
         programs = new ArrayList<LinkedList<S_Expression>>();
         upScopeReplacements = new HashMap<String, S_Expression>();
         ast.accept(this);
-        prepareFinalProgram(programs.get(0));
-        int size = programs.get(0).size();
-        return new WPProgram(programs.get(0).toArray(new S_Expression[size]));
+        LinkedList<S_Expression> result = prepareFinalProgram(programs);
+        int size = result.size();
+        return new WPProgram(result.toArray(new S_Expression[size]));
     }
 
-    private static void prepareFinalProgram(LinkedList<S_Expression> program) {
+    private static LinkedList<S_Expression> prepareFinalProgram(ArrayList<LinkedList<S_Expression>> programs) {
+        ListIterator<LinkedList<S_Expression>> i = programs.listIterator();
+        while(i.hasNext()) {
+           createBlock(i.next());
+        }
+        i = programs.listIterator();
+        ListIterator<S_Expression> j;
+        LinkedList<S_Expression> result = new LinkedList<S_Expression>();
+        while(i.hasNext()) {
+            j = i.next().listIterator();
+            while(j.hasNext()) {
+                result.add(j.next());
+            }
+        }
+        return null;
+    }
+    
+    private static void createBlock(LinkedList<S_Expression> program) {
         program.addFirst(new S_Expression("set-logic",
                 new S_Expression[]{new Constant("AUFNIRA")}));
+        program.addFirst(new Constant("(push)"));
         program.addLast(new Constant("(check-sat)"));
         program.addLast(new Constant("(get-model)"));
+        program.addLast(new Constant("(pop)"));
     }
     
     //TODO: fill in stubs
