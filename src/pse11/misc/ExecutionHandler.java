@@ -61,10 +61,14 @@ public class ExecutionHandler {
 		boolean finished = false;
 		boolean success = true;
 		while (!paused && !finished && success) {
-			success = this.singleStep(sbreakpoints, gbreakpoints);
+			if (this.execution != null && this.execution.checkBreakpoints() != null) {
+				paused = true;
+				break;
+			}
 			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
 				finished = true;
 			}
+			success = this.singleStep(sbreakpoints, gbreakpoints);
 		}
 	}
 	
@@ -89,6 +93,7 @@ public class ExecutionHandler {
 			success = false;
 			this.assertionFailureMessage[0] = "" + e.getPosition().getLine();
 			this.assertionFailureMessage[1] = e.getMessage();
+			this.destroyProgramExecution();
 	    }
 		return success;
 	}

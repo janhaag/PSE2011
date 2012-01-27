@@ -14,7 +14,7 @@ public class GlobalBreakpoint extends Breakpoint {
 
     public GlobalBreakpoint(Expression expression) {
         this.expression = expression;
-        active = true;
+        active = false;
     }
 
     public Expression getExpression() {
