@@ -46,6 +46,14 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     	this.editorframe.getTextField().setEditable(true);
     }
     
+    public void markCurrentLine(int line) {
+    	this.editorframe.markLine(line);
+    }
+    
+    public void removeMark() {
+    	this.editorframe.removeAllLineBackground();
+    }
+    
     @Override
     public void modifyText(ModifyEvent e) {
         // TODO REST

@@ -205,8 +205,11 @@ public class MainController implements SelectionListener {
 	}
 
 	private void runView() {
+		//Functions
+		this.editorController.removeMark();
 		// Images
-		Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run2.png"));
+		Image image = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/run2.png"));
 		Image image2 = new Image(this.mainframe.getDisplay(),
 				MainFrame.class.getResourceAsStream("image/pause1.png"));
 		this.mainframe.switchIcon(image, image2);
@@ -224,6 +227,11 @@ public class MainController implements SelectionListener {
 	private void pauseView() {
 		// Functions
 		this.tableController.updateVarView();
+		this.editorController.removeMark();
+		if (this.executionHandler.getProgramExecution() != null) {
+			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();
+			this.editorController.markCurrentLine(line);
+		}
 		// Images
 		Image image = new Image(this.mainframe.getDisplay(), 
 				MainFrame.class.getResourceAsStream("image/run1.png"));
@@ -242,13 +250,16 @@ public class MainController implements SelectionListener {
 	
 	private void stopView() {
 		// Functions
+		this.editorController.removeMark();
 		this.tableController.updateVarView();
 		this.executionHandler.destroyProgramExecution();
 		this.executionHandler.setParameterValues(null);
 		this.executionHandler.setAST(null);
 		// Images
-		Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
-		Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
+		Image image = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/run1.png"));
+		Image image2 = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/pause1.png"));
 		this.mainframe.switchIcon(image, image2);
 		// (De-)activations
 		this.mainframe.getStopButton().setEnabled(false);
