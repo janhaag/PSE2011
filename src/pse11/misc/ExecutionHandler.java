@@ -1,5 +1,6 @@
 package misc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +11,8 @@ import ast.Program;
 
 import parser.IllegalTypeException;
 import parser.ParserInterface;
+import verifier.smtlib.z3.Z3;
+import verifier.VerifierInterface;
 import interpreter.AssertionFailureException;
 import interpreter.Interpreter;
 import interpreter.ProgramExecution;
@@ -104,19 +107,23 @@ public class ExecutionHandler {
 		if(this.ast == null) {
 			this.parse(source);
 		}
-		/* VerifierInterface verifier = new VerifierInterface(new SMTLibTranslator());
+		VerifierInterface verifier = new VerifierInterface(new Z3(""));
+		this.messagesystem.clear(MessageCategories.VERIFYERROR);
 		try {
 			verifier.verify(this.ast);
 		} catch (IOException e) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOE: "+e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IE: "+e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RecognitionException e) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "RE: "+e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} */
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "NullPointer");
+		}
 	}
 	
 	private String[] parseParserError(String error) {

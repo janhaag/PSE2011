@@ -56,7 +56,6 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     
     @Override
     public void modifyText(ModifyEvent e) {
-        // TODO REST
     	if(!this.editor.getSource().equals(editorframe.getText()))
     		editor.setSource(editorframe.getText());
     }
@@ -101,17 +100,14 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     
     @Override
     public void focusLost(FocusEvent e) {
-            // TODO Auto-generated method stub
 
     }
 	@Override
 	public void mouseDown(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void mouseUp(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}		
 }
