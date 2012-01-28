@@ -237,8 +237,7 @@ public class MainFrame extends Frame {
 			try {
 				Settings.getInstance().saveSettings();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//The default settings will be loaded at the next program start
 			}
 		}
 	}
