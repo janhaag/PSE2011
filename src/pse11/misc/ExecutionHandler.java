@@ -81,11 +81,13 @@ public class ExecutionHandler {
 		if (this.ast == null) {
 			return false;
 		}
-		if (this.execution == null) {
-			this.execution = new ProgramExecution(this.ast, this.interpreter, 
-					sbreakpoints, gbreakpoints, this.parameterValues);
-		}
 		try {
+			if (this.execution == null) {
+				if (sbreakpoints == null) sbreakpoints = new ArrayList<StatementBreakpoint>();
+				if (gbreakpoints == null) gbreakpoints = new ArrayList<GlobalBreakpoint>();
+				this.execution = new ProgramExecution(this.ast, this.interpreter, 
+						sbreakpoints, gbreakpoints, this.parameterValues);
+			}
 			if (this.execution.getCurrentState().getCurrentStatement() != null) {
 				this.interpreter.step(this.execution.getCurrentState());
 				success = true;
