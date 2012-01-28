@@ -16,10 +16,8 @@ import org.eclipse.swt.widgets.TableItem;
 public class VerifierConsole extends Console {
 	private TableColumn positionColumn;
 	private TableColumn errormessageColumn;
-	private ArrayList<TableItem> tableitems;;
 	public VerifierConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
-		this.tableitems = new ArrayList<TableItem>();
 		FillLayout fLayout = new FillLayout();
 		this.setLayout(fLayout);
 		this.table = new Table(this, SWT.BORDER);

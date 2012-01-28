@@ -1,6 +1,5 @@
 package misc;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,8 +10,6 @@ import ast.Program;
 
 import parser.IllegalTypeException;
 import parser.ParserInterface;
-import verifier.VerifierInterface;
-import verifier.smtlib.SMTLibTranslator;
 import interpreter.AssertionFailureException;
 import interpreter.Interpreter;
 import interpreter.ProgramExecution;

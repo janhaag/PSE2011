@@ -5,7 +5,6 @@ import ast.BooleanType;
 import ast.IntegerType;
 import ast.Type;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

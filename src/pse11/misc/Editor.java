@@ -1,6 +1,5 @@
 package misc;
 
-import interpreter.GlobalBreakpoint;
 import interpreter.StatementBreakpoint;
 
 import java.util.ArrayList;
