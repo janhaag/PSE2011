@@ -161,6 +161,14 @@ public class EditorView extends Composite {
 		this.linenumbers.setStyleRange(style);
 	}
 	
+	public void markLine(int line) {
+		this.textfield.setLineBackground(line, 1, new Color(this.parentdisplay, 249, 250, 158));
+	}
+	
+	public void removeAllLineBackground() {
+		this.textfield.setLineBackground(0, this.textfield.getLineCount(), null);
+	}
+	
 	public String getText() {
 		return this.textfield.getText();
 	}

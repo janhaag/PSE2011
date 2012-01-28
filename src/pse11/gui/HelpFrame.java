@@ -5,6 +5,8 @@ import gui.controller.HelpController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -59,6 +61,12 @@ public class HelpFrame extends Frame implements MiscFrame {
 		closeButtonLayoutData.horizontalSpan = 2;
 		closeButton.setLayoutData(closeButtonLayoutData);
 
+		this.closeButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				close();
+			}
+		});
+		
 		shell.setMinimumSize(400, 320);
 		shell.pack();
 		shell.open();
