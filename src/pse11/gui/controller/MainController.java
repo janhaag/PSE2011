@@ -45,8 +45,7 @@ public class MainController implements SelectionListener {
 		this.editorController = new EditorController(editor, this.mainframe.getEditor());
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
-		this.parameterContoller = new ParameterController(this.executionHandler, 
-				(MiscConsole) this.mainframe.getConsole()[2]);
+		this.parameterContoller = new ParameterController(this.executionHandler, messagesystem);
 		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), 
 				this.mainframe.getVarView(), this.executionHandler);
 

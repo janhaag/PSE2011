@@ -3,6 +3,7 @@ package gui;
 import java.util.ArrayList;
 
 import misc.Message;
+import misc.MessageCategories;
 import misc.MessageSystem;
 
 import org.eclipse.swt.SWT;
@@ -15,7 +16,6 @@ import org.eclipse.swt.widgets.TableItem;
 public class MiscConsole extends Console {
 	public MiscConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
-		this.messagesystem = messagesystem;
 		
 		FillLayout fLayout = new FillLayout();
 		this.setLayout(fLayout);
@@ -34,21 +34,25 @@ public class MiscConsole extends Console {
 		this.table.setHeaderVisible(true);
 	}
 	
-	public void printRandomTestResult(String[] result) {
+	/*public void printRandomTestResult(String[] result) {
 		TableItem item = new TableItem(this.table, SWT.NONE);
 		item.setText(result[0]);
 		item.setText(1, result[1]);
 		item.setText(2, result[2]);
-	}
-	
-	public Table getTable() {
-		return this.table;
-	}
+	}*/
 	
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
-		// TODO Auto-generated method stub
-		
+		assert this.table != null;
+		this.table.clearAll();
+		//clearAll() doesn't work correct, so itemcount has to be set manually
+		this.table.setItemCount(0);
+		for(Message message : messages) {
+			if(message.getCategory() == MessageCategories.MISC) {
+				TableItem tableitem = new TableItem(this.table, SWT.NONE);
+				tableitem.setText(new String[] {Integer.toString(message.getPosition()),message.getText()});
+			}
+		}	
 	}
 
 }

@@ -15,18 +15,18 @@ import ast.IntegerType;
 import ast.Type;
 
 import misc.ExecutionHandler;
-import gui.MiscConsole;
+import misc.MessageSystem;
 import gui.ParameterFrame;
 import gui.RandomTestFrame;
 
 public class ParameterController implements SelectionListener {
 	private ParameterFrame parameterframe;
 	private RandomTestFrame randomtestframe;
-	private MiscConsole console;
+	private MessageSystem messagesystem;
 	private ExecutionHandler executionHandler;
 	
-	public ParameterController(ExecutionHandler executionHandler, MiscConsole console) {
-		this.console = console;
+	public ParameterController(ExecutionHandler executionHandler, MessageSystem messagesystem) {
+		this.messagesystem = messagesystem;
 		this.executionHandler = executionHandler;
 	}
 
@@ -67,7 +67,6 @@ public class ParameterController implements SelectionListener {
 			this.parameterframe.getShell().dispose();
 		}
 		else if (this.randomtestframe != null && e.getSource() == this.randomtestframe.getStartButton()) {			
-			this.console.getTable().removeAll();
 			String s = this.getRandomtestframe().getCount().getText();
 			int count;
 			try {
@@ -97,7 +96,7 @@ public class ParameterController implements SelectionListener {
 					this.executionHandler.clearAssertionFailureMessage();
 				}
 				this.executionHandler.destroyProgramExecution();
-				this.console.printRandomTestResult(result);
+				/*this.console.printRandomTestResult(result);*/
 			}
 			this.executionHandler.setAST(null);
 			this.randomtestframe.getShell().dispose();

@@ -25,7 +25,7 @@ public class ErrorConsole extends Console {
 		this.positionColumn.setText("Position");
 		this.positionColumn.setWidth(100);
 		this.errormessageColumn = new TableColumn(this.table, SWT.CENTER | SWT.FILL);
-		this.errormessageColumn.setText("Message");
+		this.errormessageColumn.setText("Error Message");
 		this.errormessageColumn.setWidth(550);
 		this.table.setHeaderVisible(true);
 	}
