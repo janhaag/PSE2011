@@ -35,7 +35,7 @@ public class HelpController {
 		public void widgetSelected(SelectionEvent e) {
 			String search = helpBox.getSearchText();
 			if (search != null && !(search.equals(""))) {
-				String similarTag = findSimilarTag(search, help.getTags());
+				String similarTag = findSimilarTag(search.toLowerCase(), help.getTags());
 				String helpText = help.getHelpByTag(similarTag);
 
 				String styleSheet = help.getSmallStyle();
