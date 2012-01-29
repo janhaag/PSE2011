@@ -7,7 +7,7 @@ public class ArrayAssignment extends Assignment {
     /**
      * Indexes used to determine the position of the assigned array element.
      */
-    private final Expression[] indexes;
+    private final Expression[] indices;
 
     /**
      * Constructor.
@@ -16,20 +16,20 @@ public class ArrayAssignment extends Assignment {
      *                 in the original source code
      * @param value the value which is stored into the array
      * @param identifier name of the array to which the value is assigned
-     * @param indexes position to which the new value is stored
+     * @param indices position to which the new value is stored
      */
     public ArrayAssignment(Position position, Expression value,
-                           Identifier identifier, Expression[] indexes) {
+                           Identifier identifier, Expression[] indices) {
         super(position, value, identifier);
-        this.indexes = indexes;
+        this.indices = indices;
     }
 
     /**
-     * Returns the list of indexes for this assignment.
-     * @return the indexes for this assignment
+     * Returns the list of indices for this assignment.
+     * @return the indices for this assignment
      */
-    public Expression[] getIndexes() {
-        return indexes;
+    public Expression[] getIndices() {
+        return indices;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ArrayAssignment extends Assignment {
 
     public String toString() {
         StringBuilder sb = new StringBuilder(getIdentifier().toString());
-        for (Expression index : indexes) {
+        for (Expression index : indices) {
             sb.append('[');
             sb.append(index.toString());
             sb.append(']');

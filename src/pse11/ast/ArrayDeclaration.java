@@ -9,7 +9,7 @@ public class ArrayDeclaration extends VariableDeclaration {
      * List of the lengths of the different array dimensions.
      * The length of this list is the dimension of the array.
      */
-    private final Expression[] indexes;
+    private final Expression[] indices;
 
     /**
      * Constructor.
@@ -18,20 +18,20 @@ public class ArrayDeclaration extends VariableDeclaration {
      *                 in the original source code
      * @param name name of the array identifier
      * @param type type of the array declared
-     * @param indexes length of the array dimensions
+     * @param indices length of the array dimensions
      */
     public ArrayDeclaration(Position position, String name, Type type,
-                            Expression[] indexes) {
+                            Expression[] indices) {
         super(position, name, null, type);
-        this.indexes = indexes;
+        this.indices = indices;
     }
 
     /**
      * Returns the list of the array lengths.
      * @return list of array lengths
      */
-    public Expression[] getIndexes() {
-        return indexes;
+    public Expression[] getIndices() {
+        return indices;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ArrayDeclaration extends VariableDeclaration {
     public String toString() {
         StringBuilder sb = new StringBuilder(getType().toString());
         sb.append(' ').append(getName());
-        for (Expression index : indexes) {
+        for (Expression index : indices) {
             sb.append('[');
             sb.append(index.toString());
             sb.append(']');
