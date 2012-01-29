@@ -15,6 +15,7 @@ import ast.IntegerType;
 import ast.Type;
 
 import misc.ExecutionHandler;
+import misc.MessageCategories;
 import misc.MessageSystem;
 import gui.ParameterFrame;
 import gui.RandomTestFrame;
@@ -75,37 +76,46 @@ public class ParameterController implements SelectionListener {
 			catch (NumberFormatException ne) {
 				count = 0;
 			}
-			String[] result = new String[3];
+			String[] result = new String[2];
 			for (int i = 0; i < count; i++) {
 				FunctionParameter[] parameters = this.executionHandler.getAST().getMainFunction().getParameters();
 				String[] parameterValues = this.createRandomTestValues(parameters);
-				result[0] = "" + (i + 1);
-				result[1] = "";
+				result[0] = "";
 				for (int j = 0; j < parameterValues.length; j++) {
-					result[1] = result[1] + parameters[j].getName().toString() + " = " 
+					result[0] = result[0] + parameters[j].getName().toString() + " = " 
 					+ parameterValues[j] + "; ";
 				}
 				this.executionHandler.setParameterValues(parameterValues);
 				this.executionHandler.run(new ArrayList<StatementBreakpoint>(), new ArrayList<GlobalBreakpoint>());
 				if (this.executionHandler.getAssertionFailureMessage() == null) {
-					result[2] = "success";
+					result[1] = "success";
 				}
 				else {
-					result[2] = this.executionHandler.getAssertionFailureMessage()[1]
+					result[1] = this.executionHandler.getAssertionFailureMessage()[1]
 					+ " (line " + this.executionHandler.getAssertionFailureMessage()[0] + ")";
 					this.executionHandler.clearAssertionFailureMessage();
 				}
 				this.executionHandler.destroyProgramExecution();
-				/*this.console.printRandomTestResult(result);*/
+				this.messagesystem.addMessage(MessageCategories.MISC, (i + 1), result[0]+"\n"+result[1]);
 			}
 			this.executionHandler.setAST(null);
 			this.randomtestframe.getShell().dispose();
 		}
 	}
-
+	private void test(IntegerType type) {
+		System.out.println("int");
+	}
+	private void test(Type type) {
+		System.out.println("void");
+	}
+	private void test(BooleanType type) {
+		System.out.println("type");
+	}
 	private String[] createRandomTestValues(FunctionParameter[] parameters) {
 		String[] parameterValues = new String[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
+			System.out.println(parameters[i].getType().toString());
+			test(parameters[i].getType());
 			if (parameters[i].getType() instanceof IntegerType) {
 				String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();
 				String endString = this.getRandomtestframe().getIntervals()[i][1].getText();
@@ -259,6 +269,5 @@ public class ParameterController implements SelectionListener {
 	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
-		// TODO Auto-generated method stub	
 	}
 }

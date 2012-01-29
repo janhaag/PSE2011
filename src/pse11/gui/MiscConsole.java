@@ -19,7 +19,7 @@ public class MiscConsole extends Console {
 		
 		FillLayout fLayout = new FillLayout();
 		this.setLayout(fLayout);
-		this.table = new Table(this, SWT.BORDER);		
+		this.table = new Table(this, SWT.BORDER | SWT.MULTI);		
 		
 		TableColumn column1 = new TableColumn(this.table, SWT.CENTER);
 		column1.setWidth(30);
