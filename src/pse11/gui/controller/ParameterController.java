@@ -77,6 +77,7 @@ public class ParameterController implements SelectionListener {
 				count = 0;
 			}
 			String[] result = new String[2];
+			this.messagesystem.clear(MessageCategories.MISC);
 			for (int i = 0; i < count; i++) {
 				FunctionParameter[] parameters = this.executionHandler.getAST().getMainFunction().getParameters();
 				String[] parameterValues = this.createRandomTestValues(parameters);
@@ -96,7 +97,7 @@ public class ParameterController implements SelectionListener {
 					this.executionHandler.clearAssertionFailureMessage();
 				}
 				this.executionHandler.destroyProgramExecution();
-				this.messagesystem.addMessage(MessageCategories.MISC, (i + 1), result[0]+"\n"+result[1]);
+				this.messagesystem.addMessage(MessageCategories.MISC, (i + 1), result[0], result[1]);
 			}
 			this.executionHandler.setAST(null);
 			this.randomtestframe.getShell().dispose();

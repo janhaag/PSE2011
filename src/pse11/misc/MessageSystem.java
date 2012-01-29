@@ -60,6 +60,12 @@ public class MessageSystem {
 		this.messages.add(new Message(category, position, text));
 		this.notifyConsoles();
 	}
+	
+	public void addMessage(MessageCategories category, int position, String text, String result) {
+		this.messages.add(new Message(category, position, text, result));
+		this.notifyConsoles();
+	}
+	
 	/**
 	 * Notifies all observers on a change of the messages.
 	 */
@@ -68,6 +74,7 @@ public class MessageSystem {
 			console.updateConsole(this.messages);
 		}
 	}
+	
 	public void clear(MessageCategories category) {
 		ArrayList<Message> delMessages = new ArrayList<Message>();
 		for(Message message : this.messages) {
