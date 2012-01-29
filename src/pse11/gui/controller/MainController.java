@@ -1,5 +1,13 @@
 package gui.controller;
 
+import gui.AboutFrame;
+import gui.FileFrame;
+import gui.HelpFrame;
+import gui.MainFrame;
+import gui.ParameterFrame;
+import gui.RandomTestFrame;
+import gui.SettingsFrame;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,16 +23,12 @@ import misc.MessageSystem;
 import misc.Settings;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-
-import gui.AboutFrame;
-import gui.FileFrame;
-import gui.HelpFrame;
-import gui.MainFrame;
-import gui.ParameterFrame;
-import gui.SettingsFrame;
-import gui.RandomTestFrame;
+import org.eclipse.swt.graphics.Point;
 
 public class MainController implements SelectionListener {
 	private ExecutionHandler executionHandler;
@@ -88,7 +92,7 @@ public class MainController implements SelectionListener {
 				writeStringToFile(this.mainframe.getEditor().getText(), saveFileFrame.getChosenFile());
 			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemNewFile()) {
-			this.mainframe.getEditor().setText("");
+			this.editorController.getEditor().setSource("");
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
@@ -102,6 +106,30 @@ public class MainController implements SelectionListener {
 			this.editorController.getEditor().undo();
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {
 			this.editorController.getEditor().redo();
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCut()) {
+			Point selection = this.mainframe.getEditor().getSelection();
+			String source = this.mainframe.getEditor().getText();
+			String cutSource = source.substring(0, selection.x) + source.substring(selection.y);
+			this.editorController.getEditor().setSource(cutSource);
+			this.mainframe.getEditor().getTextField().setSelection(selection.x);
+			
+			String cut = source.substring(selection.x, selection.y);
+			this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {
+			Point selection = this.mainframe.getEditor().getSelection();
+			String source = this.mainframe.getEditor().getText();
+			String copy = source.substring(selection.x, selection.y);
+			this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {
+			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());
+			if(!paste.equals("")) {
+				Point selection = this.mainframe.getEditor().getSelection();
+				String source = this.mainframe.getEditor().getText();
+				String pastedSource = source.substring(0, selection.x) + paste + source.substring(selection.y); 
+				this.editorController.getEditor().setSource(pastedSource);
+				this.mainframe.getEditor().getTextField().setSelection(selection.x + paste.length());
+			}
+			//String pastedSource = source.substring(0, selection.x) + 
 		}
 		//button events
 		else if (e.getSource() == this.mainframe.getRunButton() 
