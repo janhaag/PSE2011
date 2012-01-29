@@ -1,7 +1,7 @@
 grammar z3;
 
 @header {
-    package verifier;
+    package verifier.smtlib.z3;
 
     import java.util.LinkedList;
     import java.util.HashMap;
@@ -9,7 +9,7 @@ grammar z3;
 }
 
 @lexer::header {
-    package verifier;
+    package verifier.smtlib.z3;
 }
 
 start	returns[LinkedList<Pair<Boolean,String>> list] @init{list = new LinkedList();}

@@ -16,10 +16,8 @@ import org.eclipse.swt.widgets.TableItem;
 public class ErrorConsole extends Console {
 	private TableColumn positionColumn;
 	private TableColumn errormessageColumn;
-	private ArrayList<TableItem> tableitems;;
 	public ErrorConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
-		this.tableitems = new ArrayList<TableItem>();
 		FillLayout fLayout = new FillLayout();
 		this.setLayout(fLayout);
 		this.table = new Table(this, SWT.BORDER);
@@ -27,8 +25,8 @@ public class ErrorConsole extends Console {
 		this.positionColumn.setText("Position");
 		this.positionColumn.setWidth(100);
 		this.errormessageColumn = new TableColumn(this.table, SWT.CENTER | SWT.FILL);
-		this.errormessageColumn.setText("Message");
-		this.errormessageColumn.setWidth(300);
+		this.errormessageColumn.setText("Error Message");
+		this.errormessageColumn.setWidth(550);
 		this.table.setHeaderVisible(true);
 	}
 

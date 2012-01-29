@@ -1,6 +1,5 @@
 package misc;
 
-import interpreter.GlobalBreakpoint;
 import interpreter.StatementBreakpoint;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import gui.EditorView;
  * <li>undo/redo function</li>
  * <li>Syntax HL</li>
  * <li>interface for one view</li>
+ * <li>statement breakpoints</li>
  * </ul>
  *
  * @version 1.0
@@ -39,7 +39,9 @@ public class Editor {
 	 * a list of past versions which have been changed trough the undo function
 	 */
 	private Stack<EditorMemento> redoMemento;
-
+	/**
+	 * a list of statement breakpoints
+	 */
 	private ArrayList<StatementBreakpoint> statementBreakpoints;
 
 	/**
@@ -86,6 +88,7 @@ public class Editor {
 				this.redoMemento.push(this.createMemento());
 			}
 			this.source = memento.getSource();
+			findKeywords(source);
 			this.editorview.updateView();
 		}
 	}
@@ -99,6 +102,7 @@ public class Editor {
 				this.undoMemento.push(this.createMemento());
 			}
 			this.source = memento.getSource();
+			findKeywords(source);
 			this.editorview.updateView();
 		}
 	}
@@ -151,6 +155,16 @@ public class Editor {
 			this.colorArray.add(keyword);
 		}
 	}
+	/**
+	 * Checks if the given <code>String</code> is a "keyword" and in case of success
+	 * returns an instance of {@link Keyword}.
+	 * If the given <code>String</code> is not a "keyword" the function returns <code>null</code>.
+	 * <br>Auxiliary function for: {@link Editor#findKeywords(String)}
+	 * 
+	 * @param position the position of the first letter of the word in the source
+	 * @param keyword the <code>String</code> which should be checked
+	 * @return an instance of {@link Keyword} or <code>null</code>
+	 */
 	private Keyword addKeyWordColor(int position, String keyword) {
 		if(keyword.equals("if")) {
 			return new Keyword(position,keyword.length(),"0000FF");

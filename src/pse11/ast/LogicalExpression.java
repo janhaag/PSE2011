@@ -69,12 +69,16 @@ public class LogicalExpression extends Expression {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("(");
-        sb.append(subexpression1.toString()).append(' ');
-        sb.append(logicalOperator.toString());
         if (logicalOperator instanceof BinaryOperator) {
+            sb.append(subexpression1.toString()).append(' ');
+            sb.append(logicalOperator.toString());
             sb.append(' ').append(subexpression2.toString());
+        } else {
+            sb.append(logicalOperator.toString());
+            sb.append(' ').append(subexpression1.toString());
         }
         sb.append(')');
         return sb.toString();

@@ -8,9 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-import gui.MainFrame;
-import gui.controller.SettingsController;
-
 /**
  * This class provides an instance for reading and writing settings into an external
  * file.
@@ -38,7 +35,6 @@ public class Settings {
 	 * indicates whether the settings have been changed
 	 */
 	private boolean settingsChanged;
-	private SettingsController controller;
 	
 	/**
 	 * Constructs a new instance of this class.
@@ -138,9 +134,7 @@ public class Settings {
 	    }
 	}
 	
-	public void addControler(SettingsController controller) {
-		this.controller = controller;
-	}
+
 	
 	/**
 	 * Loads the settings from an external file.

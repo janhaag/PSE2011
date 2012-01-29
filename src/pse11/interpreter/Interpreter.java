@@ -28,6 +28,13 @@ public class Interpreter implements ast.ASTVisitor {
         return state;
     }
 
+    public void checkAssumptions(State state, Assumption[] assumptions) {
+        currentState = state;
+        for (Assumption assumption : assumptions) {
+            assumption.accept(this);
+        }
+    }
+
     @Override
     public void visit(Conditional conditional) {
         conditional.getCondition().accept(this);
@@ -200,10 +207,12 @@ public class Interpreter implements ast.ASTVisitor {
             tempValue = new IntegerValue(Integer.toString(arrayLength));
             return;
         }
-        if (returnValue != null) {
-            currentState.createFunctionResult(functionCall, returnValue);
-        }
         Value value = currentState.getReturnValues().get(functionCall);
+        if (value == null && returnValue != null) {
+            currentState.createFunctionResult(functionCall, returnValue);
+            value = returnValue;
+            returnValue = null;
+        }
         if (value == null) {
             //result not calculated yet
             Expression[] parameterExpressions = functionCall.getParameters();

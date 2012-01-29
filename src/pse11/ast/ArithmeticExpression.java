@@ -73,10 +73,13 @@ public class ArithmeticExpression extends Expression {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("(");
-        sb.append(subexpression1.toString()).append(' ');
-        sb.append(arithmeticOperator.toString());
         if (arithmeticOperator instanceof BinaryOperator) {
+            sb.append(subexpression1.toString()).append(' ');
+            sb.append(arithmeticOperator.toString());
             sb.append(' ').append(subexpression2.toString());
+        } else {
+            sb.append(arithmeticOperator.toString());
+            sb.append(' ').append(subexpression1.toString());
         }
         sb.append(')');
         return sb.toString();

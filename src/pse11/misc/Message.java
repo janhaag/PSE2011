@@ -22,6 +22,8 @@ public class Message {
 	 * the text of the message
 	 */
 	private String text;
+	
+	private String result;
 	/**
 	 * Constructs a new instance of Message with the specified values.
 	 * 
@@ -34,6 +36,14 @@ public class Message {
 		this.position = position;
 		this.text = text;
 	}
+	
+	public Message(MessageCategories category, int position, String text, String result) {
+		this.category = category;
+		this.position = position;
+		this.text = text;
+		this.result = result;
+	}
+	
 	/**
 	 * Returns the category of the message.
 	 * 
@@ -52,5 +62,9 @@ public class Message {
 	 */
 	public String getText() {
 		return this.text;
+	}
+	
+	public String getResult() {
+		return this.result;
 	}
 }

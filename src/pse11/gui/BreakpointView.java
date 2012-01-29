@@ -62,6 +62,7 @@ public class BreakpointView extends Composite {
 		for (int i = 0; i < gbreakpoints.size(); i++) {
 			TableItem item = new TableItem(this.global, SWT.NONE);
 			item.setText(1, gbreakpoints.get(i).getExpression().toString());
+			if (gbreakpoints.get(i).isActive()) item.setChecked(true);
 		}
 	}
 	

@@ -25,8 +25,6 @@ public class MessageSystem {
 	public MessageSystem() {
 		this.consoles = new ArrayList<Console>();
 		this.messages = new ArrayList<Message>();
-		//TODO weg
-		//messages.add(new Message(MessageCategories.ERROR,2,"test"));
 	}
 	/**
 	 * Adds the specified console as an observer to this instance.
@@ -62,7 +60,12 @@ public class MessageSystem {
 		this.messages.add(new Message(category, position, text));
 		this.notifyConsoles();
 	}
-	//TODO private
+	
+	public void addMessage(MessageCategories category, int position, String text, String result) {
+		this.messages.add(new Message(category, position, text, result));
+		this.notifyConsoles();
+	}
+	
 	/**
 	 * Notifies all observers on a change of the messages.
 	 */
@@ -71,6 +74,7 @@ public class MessageSystem {
 			console.updateConsole(this.messages);
 		}
 	}
+	
 	public void clear(MessageCategories category) {
 		ArrayList<Message> delMessages = new ArrayList<Message>();
 		for(Message message : this.messages) {

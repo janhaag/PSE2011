@@ -9,9 +9,10 @@ import org.antlr.runtime.RecognitionException;
 
 import ast.Program;
 
+import parser.IllegalTypeException;
 import parser.ParserInterface;
+import verifier.smtlib.z3.Z3;
 import verifier.VerifierInterface;
-import verifier.smtlib.SMTLibTranslator;
 import interpreter.AssertionFailureException;
 import interpreter.Interpreter;
 import interpreter.ProgramExecution;
@@ -46,6 +47,8 @@ public class ExecutionHandler {
 		} catch(NullPointerException npe) {
 			npe.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.ERROR, -1, "AST creation not possible!");
+		} catch(IllegalTypeException ite) {
+			this.messagesystem.addMessage(MessageCategories.ERROR, ite.getErrorPosition().getLine(), ite.getMessage());
 		}
 		for(String error : parser.getErrors()) {
 			String[] parsedError = parseParserError(error);
@@ -61,10 +64,14 @@ public class ExecutionHandler {
 		boolean finished = false;
 		boolean success = true;
 		while (!paused && !finished && success) {
-			success = this.singleStep(sbreakpoints, gbreakpoints);
+			if (this.execution != null && this.execution.checkBreakpoints() != null) {
+				paused = true;
+				break;
+			}
 			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
 				finished = true;
 			}
+			success = this.singleStep(sbreakpoints, gbreakpoints);
 		}
 	}
 	
@@ -74,11 +81,13 @@ public class ExecutionHandler {
 		if (this.ast == null) {
 			return false;
 		}
-		if (this.execution == null) {
-			this.execution = new ProgramExecution(this.ast, this.interpreter, 
-					sbreakpoints, gbreakpoints, this.parameterValues);
-		}
 		try {
+			if (this.execution == null) {
+				if (sbreakpoints == null) sbreakpoints = new ArrayList<StatementBreakpoint>();
+				if (gbreakpoints == null) gbreakpoints = new ArrayList<GlobalBreakpoint>();
+				this.execution = new ProgramExecution(this.ast, this.interpreter, 
+						sbreakpoints, gbreakpoints, this.parameterValues);
+			}
 			if (this.execution.getCurrentState().getCurrentStatement() != null) {
 				this.interpreter.step(this.execution.getCurrentState());
 				success = true;
@@ -89,6 +98,7 @@ public class ExecutionHandler {
 			success = false;
 			this.assertionFailureMessage[0] = "" + e.getPosition().getLine();
 			this.assertionFailureMessage[1] = e.getMessage();
+			this.destroyProgramExecution();
 	    }
 		return success;
 	}
@@ -97,19 +107,23 @@ public class ExecutionHandler {
 		if(this.ast == null) {
 			this.parse(source);
 		}
-		/* VerifierInterface verifier = new VerifierInterface(new SMTLibTranslator());
+		VerifierInterface verifier = new VerifierInterface(new Z3(""));
+		this.messagesystem.clear(MessageCategories.VERIFYERROR);
 		try {
 			verifier.verify(this.ast);
 		} catch (IOException e) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOE: "+e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IE: "+e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RecognitionException e) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "RE: "+e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} */
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "NullPointer");
+		}
 	}
 	
 	private String[] parseParserError(String error) {
@@ -136,6 +150,10 @@ public class ExecutionHandler {
 		}
 		this.messagesystem.addMessage(MessageCategories.ERROR, position, 
 				this.assertionFailureMessage[1]);
+		this.assertionFailureMessage = null;
+	}
+	
+	public void clearAssertionFailureMessage() {
 		this.assertionFailureMessage = null;
 	}
 	

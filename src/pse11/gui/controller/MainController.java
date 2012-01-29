@@ -19,11 +19,9 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Image;
 
 import gui.AboutFrame;
-import gui.EvaluationFrame;
 import gui.FileFrame;
 import gui.HelpFrame;
 import gui.MainFrame;
-import gui.MiscConsole;
 import gui.ParameterFrame;
 import gui.SettingsFrame;
 import gui.RandomTestFrame;
@@ -46,8 +44,7 @@ public class MainController implements SelectionListener {
 		this.editorController = new EditorController(editor, this.mainframe.getEditor());
 		this.settingsController = new SettingsController(Settings.getInstance());
 		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());
-		this.parameterContoller = new ParameterController(this.executionHandler, 
-				(MiscConsole) this.mainframe.getConsole()[2]);
+		this.parameterContoller = new ParameterController(this.executionHandler, messagesystem);
 		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), 
 				this.mainframe.getVarView(), this.executionHandler);
 
@@ -66,8 +63,16 @@ public class MainController implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		// frame events
+		//menu bar button events
 		if (e.getSource() == this.mainframe.getMenuBar().getMenuBarItemExit()) {
+			//Save modified settings
+			if(Settings.getInstance().settingsChanged()) {
+				try {
+					Settings.getInstance().saveSettings();
+				} catch (IOException ioe) {
+					//The default settings will be loaded at the next program start
+				}
+			}
 			System.exit(0);
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()) {
 			FileFrame openFileFrame = new FileFrame(this.mainframe.getShell(), SWT.OPEN);
@@ -86,8 +91,6 @@ public class MainController implements SelectionListener {
 			this.mainframe.getEditor().setText("");
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
-		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemEvaluation()) {
-			new EvaluationFrame(this.mainframe.getShell());
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
 			RandomTestFrame randomtestframe = new RandomTestFrame(this.mainframe.getShell());
 			this.parameterContoller.addRandomTestFrame(randomtestframe, this.editorController.getEditor().getSource());
@@ -100,11 +103,9 @@ public class MainController implements SelectionListener {
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {
 			this.editorController.getEditor().redo();
 		}
-
-		// button events
+		//button events
 		else if (e.getSource() == this.mainframe.getRunButton() 
 				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemRun()) {
-			// Functions
 			assert editorController != null;
 			this.executionHandler.setPaused(false);
 			if (this.executionHandler.getAST() == null) {
@@ -116,47 +117,18 @@ public class MainController implements SelectionListener {
 				} else {
 					return;
 				}
-			}
+			}			
+			this.runView();
 			
-			// (De-)activations
-			this.mainframe.getPauseButton().setEnabled(true);
-			this.mainframe.getStepButton().setEnabled(false);
-			this.mainframe.getStopButton().setEnabled(true);
-			this.mainframe.getCheckSyntaxButton().setEnabled(false);
-			this.tableController.activateVarView();
-			this.tableController.deactivateBreakpointView();
-			this.tableController.getVarView().getVarTree().removeAll();
-			this.editorController.deactivateView();
-			// Images
-			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run2.png"));
-			Image image2 = new Image(this.mainframe.getDisplay(),
-					MainFrame.class.getResourceAsStream("image/pause1.png"));
-			this.mainframe.switchIcon(image, image2);
-		
-			// Execution without parameter
-			if (this.executionHandler.getAST().getMainFunction().getParameters() == null
-					|| this.executionHandler.getAST().getMainFunction().getParameters().length == 0) {
-				this.executionHandler.run(this.editorController.getEditor().getStatementBreakpoints(),
-						this.executionHandler.getGlobalBreakpoints());
-				if (this.executionHandler.getAssertionFailureMessage() != null) {
-					this.executionHandler.printAssertionFailureMessage();
-				}
-				if (!this.executionHandler.getPaused()) {
-					this.tableController.updateVarView();
-					stopExecution();
-				}
-				return;
-			}
-			
-			// Execution with parameter
+			//Execution
 			new Thread() {
 				public void run() {
-					while (!parameterContoller.getParameterframe().getShell().isDisposed()) {
+					while (!parameterContoller.getParameterframe().getShell().isDisposed()
+							&& !(executionHandler.getAST().getMainFunction().getParameters() == null
+							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {
 						try {
 							sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						} catch (InterruptedException ignored) {
 						}
 					}
 					executionHandler.run(editorController.getEditor().getStatementBreakpoints(),
@@ -165,10 +137,14 @@ public class MainController implements SelectionListener {
 						public void run() {
 							if (executionHandler.getAssertionFailureMessage() != null) {
 								executionHandler.printAssertionFailureMessage();
+								stopView();
+								return;
 							}
-							if (!executionHandler.getPaused()) {
-								tableController.updateVarView();
-								stopExecution();
+							if (executionHandler.getPaused()) {
+								pauseView();
+							}
+							else {
+								stopView();
 							}
 						}
 					});
@@ -176,7 +152,7 @@ public class MainController implements SelectionListener {
 			}.start();
 		} else if (e.getSource() == this.mainframe.getStepButton() 
 				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemStep()) {
-			// Functions
+			//Functions
 			assert editorController != null;
 			if (this.executionHandler.getAST() == null) {
 				this.tableController.getVarView().getVarTree().removeAll();
@@ -188,48 +164,17 @@ public class MainController implements SelectionListener {
 					return;
 				}
 			}
-
-			// (De-)activations
-			this.mainframe.getPauseButton().setEnabled(false);
-			this.mainframe.getCheckSyntaxButton().setEnabled(false);
-			this.mainframe.getStopButton().setEnabled(true);
-			this.tableController.activateVarView();
-			this.tableController.deactivateBreakpointView();
-			this.editorController.deactivateView();
-			// Images
-			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
-			Image image2 = new Image(this.mainframe.getDisplay(),
-					MainFrame.class.getResourceAsStream("image/pause2.png"));
-			this.mainframe.switchIcon(image, image2);
+			this.pauseView();
 			
-			// Execution without parameter
-			if (executionHandler.getAST().getMainFunction().getParameters() == null
-					|| executionHandler.getAST().getMainFunction().getParameters().length == 0) {
-				this.executionHandler.singleStep(this.editorController.getEditor().getStatementBreakpoints(),
-						this.executionHandler.getGlobalBreakpoints());
-				if (this.executionHandler.getAssertionFailureMessage() != null) {
-					this.executionHandler.printAssertionFailureMessage();
-					this.tableController.updateVarView();
-					stopExecution();
-					return;
-				}
-				this.tableController.updateVarView();
-				if (this.executionHandler.getProgramExecution() != null
-						&& this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
-					this.stopExecution();
-				}
-				return;
-			}
-			
-			// Execution with parameter
+			//Execution
 			new Thread() {
 				public void run() {
-					while (!parameterContoller.getParameterframe().getShell().isDisposed()) {
+					while (!parameterContoller.getParameterframe().getShell().isDisposed()
+							&& !(executionHandler.getAST().getMainFunction().getParameters() == null
+							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {
 						try {
 							sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						} catch (InterruptedException ignored) {
 						}
 					}
 					executionHandler.singleStep(editorController.getEditor().getStatementBreakpoints(),
@@ -238,39 +183,24 @@ public class MainController implements SelectionListener {
 						public void run() {
 							if (executionHandler.getAssertionFailureMessage() != null) {
 								executionHandler.printAssertionFailureMessage();
-								tableController.updateVarView();
-								stopExecution();
+								stopView();
 								return;
 							}
 							tableController.updateVarView();
 							if (executionHandler.getProgramExecution() != null
 									&& executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
-								stopExecution();
+								stopView();
 							}
 						}
 					});
 				}
 			}.start();
 		} else if (e.getSource() == mainframe.getPauseButton()) {
-			// Functions
-			this.tableController.updateVarView();
 			this.executionHandler.setPaused(true);
-
-			// Images
-			Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
-			Image image2 = new Image(this.mainframe.getDisplay(),
-					MainFrame.class.getResourceAsStream("image/pause2.png"));
-			this.mainframe.switchIcon(image, image2);
-
-			// (De-)activations
-			this.mainframe.getStepButton().setEnabled(true);
-			this.mainframe.getPauseButton().setEnabled(false);
-			this.editorController.deactivateView();
-			this.tableController.deactivateBreakpointView();
 		} else if (e.getSource() == mainframe.getStopButton()) {
-			this.stopExecution();
+			this.stopView();
 		} else if (e.getSource() == mainframe.getCheckSyntaxButton()) {
-			// Functions
+			//Functions
 			assert editorController != null;
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
 			this.executionHandler.setAST(null);
@@ -279,19 +209,64 @@ public class MainController implements SelectionListener {
 		}
 	}
 
-	private void stopExecution() {
-		// Functions
+	private void runView() {
+		//Functions
+		this.editorController.removeMark();
+		//Images
+		Image image = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/run2.png"));
+		Image image2 = new Image(this.mainframe.getDisplay(),
+				MainFrame.class.getResourceAsStream("image/pause1.png"));
+		this.mainframe.switchIcon(image, image2);
+		//(De-)activations
+		this.mainframe.getPauseButton().setEnabled(true);
+		this.mainframe.getStepButton().setEnabled(false);
+		this.mainframe.getStopButton().setEnabled(true);
+		this.mainframe.getCheckSyntaxButton().setEnabled(false);
+		this.tableController.activateVarView();
+		this.tableController.deactivateBreakpointView();
+		this.tableController.getVarView().getVarTree().removeAll();
+		this.editorController.deactivateView();
+	}
+	
+	private void pauseView() {
+		//Functions
+		this.tableController.updateVarView();
+		this.editorController.removeMark();
+		if (this.executionHandler.getProgramExecution() != null) {
+			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();
+			this.editorController.markCurrentLine(line);
+		}
+		//Images
+		Image image = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/run1.png"));
+		Image image2 = new Image(this.mainframe.getDisplay(),
+				MainFrame.class.getResourceAsStream("image/pause2.png"));
+		//(De-)activations
+		this.mainframe.switchIcon(image, image2);
+		this.mainframe.getStepButton().setEnabled(true);
+		this.mainframe.getPauseButton().setEnabled(false);
+		this.mainframe.getStopButton().setEnabled(true);
+		this.mainframe.getCheckSyntaxButton().setEnabled(false);
+		this.editorController.deactivateView();
+		this.tableController.activateVarView();
+		this.tableController.deactivateBreakpointView();
+	}
+	
+	private void stopView() {
+		//Functions
+		this.editorController.removeMark();
 		this.tableController.updateVarView();
 		this.executionHandler.destroyProgramExecution();
 		this.executionHandler.setParameterValues(null);
 		this.executionHandler.setAST(null);
-
-		// Images
-		Image image = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/run1.png"));
-		Image image2 = new Image(this.mainframe.getDisplay(), MainFrame.class.getResourceAsStream("image/pause1.png"));
+		//Images
+		Image image = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/run1.png"));
+		Image image2 = new Image(this.mainframe.getDisplay(), 
+				MainFrame.class.getResourceAsStream("image/pause1.png"));
 		this.mainframe.switchIcon(image, image2);
-
-		// (De-)activations
+		//(De-)activations
 		this.mainframe.getStopButton().setEnabled(false);
 		this.mainframe.getPauseButton().setEnabled(false);
 		this.mainframe.getStepButton().setEnabled(true);
@@ -334,6 +309,5 @@ public class MainController implements SelectionListener {
 
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
 	}
 }
