@@ -19,40 +19,31 @@ public class MiscConsole extends Console {
 		
 		FillLayout fLayout = new FillLayout();
 		this.setLayout(fLayout);
-		this.table = new Table(this, SWT.BORDER | SWT.MULTI);		
+		this.table = new Table(this, SWT.BORDER);		
 		
 		TableColumn column1 = new TableColumn(this.table, SWT.CENTER);
 		column1.setWidth(30);
-		TableColumn column2 = new TableColumn(this.table, SWT.CENTER);
-		column2.setWidth(600);
-		column2.setText("Values");
-		TableColumn column3 = new TableColumn(this.table, SWT.CENTER);
-		column3.setWidth(150);
-		column3.setText("Result");
+		TableColumn column2 = new TableColumn(this.table, SWT.NONE);
+		column2.setWidth(170);
+		column2.setText("Result");
+		TableColumn column3 = new TableColumn(this.table, SWT.NONE);
+		column3.setWidth(600);
+		column3.setText("Values");
 		
 		this.table.setLinesVisible(true);
 		this.table.setHeaderVisible(true);
 	}
 	
-	/*public void printRandomTestResult(String[] result) {
-		TableItem item = new TableItem(this.table, SWT.NONE);
-		item.setText(result[0]);
-		item.setText(1, result[1]);
-		item.setText(2, result[2]);
-	}*/
-	
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
 		assert this.table != null;
-		this.table.clearAll();
-		//clearAll() doesn't work correct, so itemcount has to be set manually
-		this.table.setItemCount(0);
+		this.table.removeAll();
 		for(Message message : messages) {
 			if(message.getCategory() == MessageCategories.MISC) {
 				TableItem tableitem = new TableItem(this.table, SWT.NONE);
-				tableitem.setText(new String[] {Integer.toString(message.getPosition()),message.getText()});
+				tableitem.setText(new String[] {Integer.toString(message.getPosition()),
+						message.getResult(), message.getText()});
 			}
 		}	
 	}
-
 }
