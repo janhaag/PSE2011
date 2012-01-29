@@ -49,7 +49,7 @@ public class SMTLibTranslator implements ASTVisitor {
         program.addLast(new Constant("(pop)"));
     }
     
-    private static void replaceInAssignments(HashMap<String, S_Expression> map,
+    private static void replaceInAssignments(Map<String, S_Expression> map,
                                      String varName, S_Expression newExpr) {
         for (Map.Entry<String, S_Expression> oldEntry : map.entrySet()) {
             oldEntry.getValue().replace(varName,
@@ -63,6 +63,8 @@ public class SMTLibTranslator implements ASTVisitor {
     //TODO: fill in stubs
     @Override
     public void visit(Conditional conditional) {
+        Stack<S_Expression> tempExprStack = upScopeExpr;
+        Stack<HashMap<String, S_Expression>> tempReplacements = upScopeReplacements;
         upScopeExpr.push(tempExpr);
         upScopeReplacements.push(new HashMap<String, S_Expression>());
         conditional.getCondition().accept(this);
@@ -77,6 +79,8 @@ public class SMTLibTranslator implements ASTVisitor {
         }
         S_Expression trueBranch = new S_Expression("and",
                 new S_Expression[]{condition.deepCopy(), tempExpr});
+        upScopeExpr = tempExprStack;
+        upScopeReplacements = tempReplacements;
         upScopeReplacements.push(new HashMap<String, S_Expression>());
         tempExpr = new Constant("true");
         if (conditional.getFalseConditionBody() != null) {
@@ -88,32 +92,32 @@ public class SMTLibTranslator implements ASTVisitor {
             tempExpr.replace(entry.getKey(), entry.getValue());
             if (replacements.containsKey(entry.getKey())) {
                 replaceInAssignments(upScopeReplacements.lastElement(),
-                    entry.getKey(),
-                    new S_Expression("ite", new S_Expression[]{
-                            new S_Expression("not",
-                                    new S_Expression[]{condition.deepCopy()}),
-                            entry.getValue(),
-                            replacements.get(entry.getKey())
-                    }));
+                        entry.getKey(),
+                        new S_Expression("ite", new S_Expression[]{
+                                new S_Expression("not",
+                                        new S_Expression[]{condition.deepCopy()}),
+                                entry.getValue(),
+                                replacements.get(entry.getKey())
+                        }));
                 replacements.remove(entry.getKey());
             } else {
                 replaceInAssignments(upScopeReplacements.lastElement(),
-                    entry.getKey(),
-                    new S_Expression("ite", new S_Expression[]{
-                            condition.deepCopy(),
-                            new Variable(entry.getKey()),
-                            entry.getValue()
-                    }));
+                        entry.getKey(),
+                        new S_Expression("ite", new S_Expression[]{
+                                condition.deepCopy(),
+                                new Variable(entry.getKey()),
+                                entry.getValue()
+                        }));
             }
         }
         entries = replacements.entrySet();
         for (Map.Entry<String, S_Expression> entry : entries) {
             replaceInAssignments(upScopeReplacements.lastElement(),
-                entry.getKey(),
-                new S_Expression("ite", new S_Expression[]{
-                        condition.deepCopy(),
-                        replacements.get(entry.getKey()),
-                        new Variable(entry.getKey())}));
+                    entry.getKey(),
+                    new S_Expression("ite", new S_Expression[]{
+                            condition.deepCopy(),
+                            replacements.get(entry.getKey()),
+                            new Variable(entry.getKey())}));
         }
         S_Expression falseBranch = new S_Expression("and",
                 new S_Expression[]{new S_Expression("not",
@@ -125,7 +129,69 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(Loop loop) {
-
+        Ensure[] ensures = loop.getPostconditions();
+        LinkedList<S_Expression> program = new LinkedList<S_Expression>();
+        program.add(tempExpr);
+        programs.add(program);
+        for (Ensure ensure : ensures) {
+            ensure.accept(this);
+            program.set(program.size() - 1, new S_Expression("=>",
+                    new S_Expression[]{tempExpr, program.getLast()}));
+        }
+        program.set(program.size() - 1, new S_Expression("assert",
+                new S_Expression[]{ new S_Expression("not",
+                            new S_Expression[]{program.getLast()})}));
+        program = new LinkedList<S_Expression>();
+        programs.add(program);
+        program.add(new Constant("true"));
+        for (Ensure ensure : ensures) {
+            ensure.accept(this);
+            program.set(program.size() - 1, new S_Expression("and",
+                    new S_Expression[]{tempExpr, program.getLast()}));
+        }
+        Invariant[] invariants = loop.getInvariants();
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+            program.set(program.size() - 1, new S_Expression("=>",
+                    new S_Expression[]{tempExpr, program.getLast()}));
+        }
+        loop.getCondition().accept(this);
+        program.set(program.size() - 1, new S_Expression("=>",
+                new S_Expression[]{new S_Expression("not",
+                        new S_Expression[]{tempExpr}), program.getLast()}));
+        program.set(program.size() - 1, new S_Expression("assert",
+                new S_Expression[]{ new S_Expression("not",
+                            new S_Expression[]{program.getLast()})}));
+        program = new LinkedList<S_Expression>();
+        programs.add(program);
+        program.add(new Constant("true"));
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+            program.set(program.size() - 1, new S_Expression("and",
+                    new S_Expression[]{tempExpr, program.getLast()}));
+        }
+        tempExpr = program.getLast();
+        loop.getLoopBody().accept(this);
+        program.set(program.size() - 1, tempExpr);
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+            program.set(program.size() - 1, new S_Expression("=>",
+                    new S_Expression[]{tempExpr, program.getLast()}));
+        }
+        loop.getCondition().accept(this);
+        program.set(program.size() - 1, new S_Expression("=>",
+                new S_Expression[]{tempExpr, program.getLast()}));
+        program.set(program.size() - 1, new S_Expression("assert",
+                new S_Expression[]{ new S_Expression("not",
+                            new S_Expression[]{program.getLast()})}));
+        S_Expression saveTempExpr = new Constant("true");
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+            saveTempExpr = new S_Expression("and",
+                    new S_Expression[]{tempExpr, saveTempExpr});
+        }
+        tempExpr = saveTempExpr;
+        change = true;
     }
 
     @Override
@@ -207,18 +273,18 @@ public class SMTLibTranslator implements ASTVisitor {
         upScopeReplacements = new Stack<HashMap<String, S_Expression>>();
         upScopeReplacements.push(new HashMap<String, S_Expression>());
         upScopeExpr = new Stack<S_Expression>();
-        currentProgram = programs.size();
-        programs.add(new LinkedList<S_Expression>());
-        LinkedList<S_Expression> program = programs.get(currentProgram);
-        program.add(new Constant("true"));
+        S_Expression saveTempExpression = new Constant("true");
         Ensure[] ensures = function.getEnsures();
         for (Ensure ensure : ensures) {
             ensure.accept(this);
-            program.set(program.size() - 1, new S_Expression("and",
-                            new S_Expression[]{tempExpr, program.getLast()}));
+            saveTempExpression = new S_Expression("and",
+                            new S_Expression[]{tempExpr, saveTempExpression});
         }
-        tempExpr = program.getLast();
+        tempExpr = saveTempExpression;
         function.getFunctionBlock().accept(this);
+        LinkedList<S_Expression> program = new LinkedList<S_Expression>();
+        program.add(tempExpr);
+        programs.add(program);
         program.set(program.size() - 1, tempExpr);
         Assumption[] assumptions = function.getAssumptions();
         for (Assumption assumption : assumptions) {
@@ -323,6 +389,7 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(StatementBlock statementBlock) {
+        int saveCurrentProgram = currentProgram;
         S_Expression expression = tempExpr;
         Statement[] statements = statementBlock.getStatements();
         for (int i = statements.length - 1; i >= 0; i--) {
@@ -332,6 +399,7 @@ public class SMTLibTranslator implements ASTVisitor {
                 expression = tempExpr;
             }
             tempExpr = expression;
+            currentProgram = saveCurrentProgram;
         }
     }
 }
