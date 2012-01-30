@@ -135,20 +135,9 @@ public class ParameterController implements SelectionListener {
 			this.randomtestframe.getShell().dispose();
 		}
 	}
-	private void test(IntegerType type) {
-		System.out.println("int");
-	}
-	private void test(Type type) {
-		System.out.println("void");
-	}
-	private void test(BooleanType type) {
-		System.out.println("type");
-	}
 	private String[] createRandomTestValues(FunctionParameter[] parameters) {
 		String[] parameterValues = new String[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
-			System.out.println(parameters[i].getType().toString());
-			test(parameters[i].getType());
 			if (parameters[i].getType() instanceof IntegerType) {
 				String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();
 				String endString = this.getRandomtestframe().getIntervals()[i][1].getText();
