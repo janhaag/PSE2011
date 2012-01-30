@@ -1,5 +1,7 @@
 package gui.controller;
 
+import java.io.File;
+
 import gui.SettingsFrame;
 
 import misc.Settings;
@@ -46,6 +48,15 @@ public class SettingsController {
 	}
 	
 	/**
+	 * Returns the absolute path to the verifier.
+	 * 
+	 * @return the absolute path to the verifier
+	 */
+	public String getVerifierPath() {
+		return this.settings.getVerifierPath();
+	}
+	
+	/**
 	 * Add the specified frame as view.
 	 * @param frame specified view
 	 */
@@ -86,6 +97,10 @@ public class SettingsController {
 			}
 			settings.setTimeout(timeout);
 			settings.setMemoryLimit(memorylimit);
+			String path = frame.getVerifierPathTextField().getText();
+			if(new File(path).exists()) {
+				settings.setVerifierPath(frame.getVerifierPathTextField().getText());
+			}
 			frame.displayMessage(false, "Settings saved.");
 			frame.update();
 		}
