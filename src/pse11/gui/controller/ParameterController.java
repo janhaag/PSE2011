@@ -21,17 +21,17 @@ import gui.ParameterFrame;
 import gui.RandomTestFrame;
 
 /**
- * This class serves as a part of a MVC pattern. It is the controller 
- * for the views @see{ParameterFrame}, @see{RandomTestFrame} and the models 
- * @see{MessageSystem}, @see{ExecutionHandler}.
+ * This class is responsible for controlling the views @see{ParameterFrame},
+ * @see{RandomTestFrame} and uses the models @see{MessageSystem}, 
+ * @see{ExecutionHandler}.
  */
 public class ParameterController implements SelectionListener {
 	/**
-	 * view for parameter inputs
+	 * view for parameter input
 	 */
 	private ParameterFrame parameterframe;
 	/**
-	 * view for random test interval inputs
+	 * view for random test interval input
 	 */
 	private RandomTestFrame randomtestframe;
 	/**
@@ -44,9 +44,9 @@ public class ParameterController implements SelectionListener {
 	private ExecutionHandler executionHandler;
 	
 	/**
-	 * Construct a controller instance with the specified models.
-	 * @param executionHandler the specified model
-	 * @param messagesystem the specified model
+	 * Construct a parameter controller with the specified models.
+	 * @param executionHandler specified model
+	 * @param messagesystem specified model
 	 */
 	public ParameterController(ExecutionHandler executionHandler, MessageSystem messagesystem) {
 		this.messagesystem = messagesystem;
@@ -54,8 +54,8 @@ public class ParameterController implements SelectionListener {
 	}
 
 	/**
-	 * Add the specified frame as view and control functions.
-	 * @param parameterframe the specified view
+	 * Add the specified frame as view.
+	 * @param parameterframe specified view
 	 */
 	public void addParameterFrame(ParameterFrame parameterframe) {
 		if (this.executionHandler.getAST() != null && this.executionHandler.getAST().getMainFunction().getParameters() != null) {
@@ -66,11 +66,10 @@ public class ParameterController implements SelectionListener {
 	}
 	
 	/**
-	 * Add the specified frame as view and control functions. An empty
-	 * view might be created if the source code does not have correct syntax or
-	 * parameters.
-	 * @param randomtestframe the specified view
-	 * @param source the source code to be checked
+	 * Add the specified frame as view. An empty view might be created 
+	 * if the source code does not have correct syntax or parameters.
+	 * @param randomtestframe specified view
+	 * @param source program code to be checked
 	 */
 	public void addRandomTestFrame(RandomTestFrame randomtestframe, String source) {
 		this.randomtestframe = randomtestframe;
@@ -136,20 +135,9 @@ public class ParameterController implements SelectionListener {
 			this.randomtestframe.getShell().dispose();
 		}
 	}
-	private void test(IntegerType type) {
-		System.out.println("int");
-	}
-	private void test(Type type) {
-		System.out.println("void");
-	}
-	private void test(BooleanType type) {
-		System.out.println("type");
-	}
 	private String[] createRandomTestValues(FunctionParameter[] parameters) {
 		String[] parameterValues = new String[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
-			System.out.println(parameters[i].getType().toString());
-			test(parameters[i].getType());
 			if (parameters[i].getType() instanceof IntegerType) {
 				String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();
 				String endString = this.getRandomtestframe().getIntervals()[i][1].getText();
@@ -258,9 +246,9 @@ public class ParameterController implements SelectionListener {
 	
 	/**
 	 * Create a random integer number from the specified interval.
-	 * @param begin the start of the interval
-	 * @param end the end of the interval
-	 * @return the created number
+	 * @param begin start of the interval
+	 * @param end end of the interval
+	 * @return created number
 	 */
 	private int createRandomIntegerValue(int begin, int end) {
 		return (int) (Math.random() * (end - begin + 1)) + begin;
@@ -268,7 +256,7 @@ public class ParameterController implements SelectionListener {
 	
 	/**
 	 * Create a random boolean value.
-	 * @return the created value
+	 * @return created value
 	 */
 	private boolean createRandomBooleanValue() {
 		float random = (float) Math.random();
@@ -278,10 +266,10 @@ public class ParameterController implements SelectionListener {
 	/**
 	 * Create a random one dimensional array of integer numbers from 
 	 * the specified interval.
-	 * @param begin the start of the interval
-	 * @param end the end of the interval
-	 * @param size the size of the array
-	 * @return the created integer array
+	 * @param begin start of the interval
+	 * @param end end of the interval
+	 * @param size size of the array
+	 * @return created integer array
 	 */
 	private String createRandomIntegerArray(int begin, int end, int size) {
 		String random = "";
@@ -299,8 +287,8 @@ public class ParameterController implements SelectionListener {
 	
 	/**
 	 * Create a random one dimensional boolean array.
-	 * @param size the size of the array
-	 * @return the created boolean array
+	 * @param size size of the array
+	 * @return created boolean array
 	 */
 	private String createRandomBooleanArray(int size) {
 		String random = "";
@@ -318,7 +306,7 @@ public class ParameterController implements SelectionListener {
 
 	/**
 	 * Return the parameter frame of this controller.
-	 * @return the parameter frame
+	 * @return parameter frame
 	 */
 	public ParameterFrame getParameterframe() {
 		return this.parameterframe;
@@ -326,7 +314,7 @@ public class ParameterController implements SelectionListener {
 	
 	/**
 	 * Return the random test frame of this controller.
-	 * @return the random test frame
+	 * @return random test frame
 	 */
 	public RandomTestFrame getRandomtestframe() {
 		return this.randomtestframe;

@@ -5,8 +5,8 @@ import org.eclipse.swt.events.SelectionListener;
 import gui.MiscFrame;
 
 /**
- * This class serves as a part of a MVC pattern. It is the controller 
- * for the view @see{MiscFrame}.
+ * This class is responsible for controlling the views which 
+ * are subclasses of @see{MiscFrame}.
  */
 public class MiscController implements SelectionListener {
 	/**
@@ -15,8 +15,8 @@ public class MiscController implements SelectionListener {
 	MiscFrame frame;
 	
 	/**
-	 * Construct a controller instance with the specified view.
-	 * @param frame the specified view
+	 * Construct a miscellaneous controller with the specified view.
+	 * @param frame specified view
 	 */
 	public MiscController(MiscFrame frame) {
 		this.frame = frame;

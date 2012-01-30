@@ -8,8 +8,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
 /**
- * This class serves as a part of a MVC pattern. It is the controller 
- * for the views @see{HelpFrame}, @see{HelpBox} and the model @see{Help}.
+ * /**
+ * This class is responsible for controlling the views @see{HelpFrame},
+ * @see{HelpBox} and uses the model @see{Help}.
  */
 public class HelpController {
 	/**
@@ -17,19 +18,18 @@ public class HelpController {
 	 */
 	private Help help;
 	/**
-	 * view for displaying the whole documentation
+	 * view for displaying documentation
 	 */
 	private HelpFrame helpFrame;
 	/**
-	 * view for quick searches
+	 * view for quick search
 	 */
 	private HelpBox helpBox;
 
 	/**
-	 * Construct a controller instance with the specified view and model
-	 * and add view control.
-	 * @param help the specified model
-	 * @param helpBox the specified view
+	 * Construct a help controller with the specified view and model.
+	 * @param help specified model
+	 * @param helpBox specified view
 	 */
 	public HelpController(Help help, HelpBox helpBox) {
 		this.help = help;
@@ -39,7 +39,7 @@ public class HelpController {
 
 	/**
 	 * Set the specified frame as view.
-	 * @param helpFrame the specified view
+	 * @param helpFrame specified view
 	 */
 	public void setHelpFrame(HelpFrame helpFrame) {
 		this.helpFrame = helpFrame;
@@ -47,7 +47,7 @@ public class HelpController {
 
 	/**
 	 * Return the table of contents of the model @see{Help}
-	 * @return the table of contents
+	 * @return table of contents
 	 */
 	public String[] getTableOfContents() {
 		return this.help.getTableOfContents();
