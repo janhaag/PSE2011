@@ -24,7 +24,7 @@ public class SettingsFrame extends Frame {
 		this.controller = controller;
 		this.controller.addView(this);
 		
-		this.shell = new Shell();
+		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		//Please mind >all< components before resizing the view
 		this.shell.setSize(300,240);
 		this.shell.setText("Settings");
