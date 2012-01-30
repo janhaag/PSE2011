@@ -225,7 +225,6 @@ public class MainController implements SelectionListener {
 					return;
 				}
 			}
-			this.pauseView();
 			
 			//Execution
 			new Thread() {
@@ -242,6 +241,7 @@ public class MainController implements SelectionListener {
 							executionHandler.getGlobalBreakpoints());
 					mainframe.getDisplay().asyncExec(new Runnable() {
 						public void run() {
+							pauseView();
 							if (executionHandler.getAssertionFailureMessage() != null) {
 								executionHandler.printAssertionFailureMessage();
 								stopView();
@@ -302,7 +302,7 @@ public class MainController implements SelectionListener {
 		this.editorController.removeMark();
 		if (this.executionHandler.getProgramExecution() != null) {
 			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();
-			this.editorController.markCurrentLine(line);
+			this.editorController.markCurrentLine(line - 1);
 		}
 		//Images
 		Image image = new Image(this.mainframe.getDisplay(), 
