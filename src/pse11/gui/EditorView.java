@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.GlyphMetrics;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -174,6 +175,9 @@ public class EditorView extends Composite {
 	}
 	public void setText(String text) {
 		this.textfield.setText(text);
+	}
+	public Point getSelection() {
+		return this.textfield.getSelection();
 	}
 	
 	public StyledText getTextField() {
