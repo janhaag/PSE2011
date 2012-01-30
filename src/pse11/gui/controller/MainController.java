@@ -30,16 +30,46 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
+/**
+ * This class is the most important part of the GUI component. It initializes
+ * all of the other controllers and delegates user actions to their respective
+ * receiver controllers. As a part of MVC, it is responsible for the view
+ * @see{MainFrame}.
+ */
 public class MainController implements SelectionListener {
+	/**
+	 * model and connection with other components
+	 */
 	private ExecutionHandler executionHandler;
-
+	/**
+	 * main view for displaying all other views
+	 */
 	private MainFrame mainframe;
+	/**
+	 * controller for settings
+	 */
 	private SettingsController settingsController;
+	/**
+	 * controller for help
+	 */
 	private HelpController helpController;
+	/**
+	 * controller for parameter input
+	 */
 	private ParameterController parameterContoller;
+	/**
+	 * controller for editor
+	 */
 	private EditorController editorController;
+	/**
+	 * controller for variables and breakpoints
+	 */
 	private TableViewController tableController;
 
+	/**
+	 * Construct a main controller instance and initializes 
+	 * all other controllers.
+	 */
 	public MainController() {
 		MessageSystem messagesystem = new MessageSystem();
 		this.executionHandler = new ExecutionHandler(messagesystem);
@@ -56,6 +86,9 @@ public class MainController implements SelectionListener {
 		initMainFrame();
 	}
 
+	/**
+	 * Open the main frame.
+	 */
 	private void initMainFrame() {
 		/*
 		 * Very important to call this in a separated method because SWT uses an
@@ -237,6 +270,9 @@ public class MainController implements SelectionListener {
 		}
 	}
 
+	/**
+	 * Update the main frame when changed to running state.
+	 */
 	private void runView() {
 		//Functions
 		this.editorController.removeMark();
@@ -257,6 +293,9 @@ public class MainController implements SelectionListener {
 		this.editorController.deactivateView();
 	}
 	
+	/**
+	 * Update the main frame when changed to paused state.
+	 */
 	private void pauseView() {
 		//Functions
 		this.tableController.updateVarView();
@@ -281,6 +320,9 @@ public class MainController implements SelectionListener {
 		this.tableController.deactivateBreakpointView();
 	}
 	
+	/**
+	 * Update the view when changed to idle state.
+	 */
 	private void stopView() {
 		//Functions
 		this.editorController.removeMark();
