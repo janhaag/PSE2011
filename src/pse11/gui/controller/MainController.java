@@ -154,7 +154,7 @@ public class MainController implements SelectionListener {
 			this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {
 			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());
-			if(!paste.equals("")) {
+			if(paste != null && !paste.equals("")) {
 				Point selection = this.mainframe.getEditor().getSelection();
 				String source = this.mainframe.getEditor().getText();
 				String pastedSource = source.substring(0, selection.x) + paste + source.substring(selection.y); 
@@ -299,7 +299,8 @@ public class MainController implements SelectionListener {
 		//Functions
 		this.tableController.updateVarView();
 		this.editorController.removeMark();
-		if (this.executionHandler.getProgramExecution() != null) {
+		if (this.executionHandler.getProgramExecution() != null
+				&& this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() != null) {
 			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();
 			this.editorController.markCurrentLine(line - 1);
 		}
