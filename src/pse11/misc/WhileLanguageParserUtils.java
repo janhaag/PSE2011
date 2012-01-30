@@ -146,4 +146,19 @@ public final class WhileLanguageParserUtils {
         }
         return result;
     }
+
+    public static LinkedList<Assertion> possibleNotPositive(
+            LinkedList<Expression> expressions) {
+        LinkedList<Assertion> result = new LinkedList<Assertion>();
+        if (expressions == null) {
+            return result;
+        }
+        for (Expression p : expressions) {
+            result.add(new Assertion(p.getPosition(),
+                new LogicalExpression(p.getPosition(), p,
+                    new NumericLiteral(p.getPosition(), "0"), new Greater())
+                ));
+        }
+        return result;
+    }
 }

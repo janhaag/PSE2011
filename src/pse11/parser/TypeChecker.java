@@ -120,6 +120,7 @@ public class TypeChecker implements ASTVisitor {
                                            + "match the type of assigned value",
                                            arrayAssignment.getPosition());
         }
+        arrayAssignment.setDepth(currentScope.getDepth());
     }
 
     /**
@@ -399,6 +400,7 @@ public class TypeChecker implements ASTVisitor {
                                            + "the type of assigned value!",
                                            assignment.getPosition());
         }
+        assignment.setDepth(currentScope.getDepth());
     }
 
     /**
