@@ -3,7 +3,6 @@
 <style>
 <!--
 .code {
-	margin-left: 1.5em;
 	font-family: monospace;
 }
 -->
@@ -16,13 +15,14 @@
 The statement block following the while-statement is only executed if a specified condition is true. 
 If the condition is true after leaving that statement block, the statement block is entered again. 
 If the condition is false when encountering a while-statement during execution or after leaving the statement block after a 
-while-statement, the execution continues after that statement block.
+while-statement, the execution continues after that statement block. 
+A while-loop can be extended by the assertion statements <span class="code">invariant</span> and <span class="code">ensure</span>, which are optional. See the article about assertions for further information. 
 </p>
 <h2>Syntax</h2>
 <p class="code">
-while(condition) { <br />
+while(condition) invariant-statement { <br />
 <span class="code">while-block</span><br />
-}
+} ensure statement
 </p>
 </body>
 </html>
