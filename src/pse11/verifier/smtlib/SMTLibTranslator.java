@@ -37,12 +37,12 @@ public class SMTLibTranslator implements ASTVisitor {
                 result.add(j.next());
             }
         }
+        result.addFirst(new S_Expression("set-logic",
+                new S_Expression[]{new Constant("AUFNIRA")}));
         return result;
     }
     
     private static void createBlock(LinkedList<S_Expression> program) {
-        program.addFirst(new S_Expression("set-logic",
-                new S_Expression[]{new Constant("AUFNIRA")}));
         program.addFirst(new Constant("(push)"));
         program.addLast(new Constant("(check-sat)"));
         program.addLast(new Constant("(get-model)"));
