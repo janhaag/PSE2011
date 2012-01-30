@@ -8,8 +8,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
 /**
- * This class serves as a part of a MVC pattern. It is the controller 
- * for the view @see{SettingsFrame} and the model @see{Settings}.
+ * This class is responsible for controlling the view @see{SettingsFrame}
+ * and uses the models @see{Settings}.
  */
 public class SettingsController {
 	/**
@@ -22,8 +22,8 @@ public class SettingsController {
 	private Settings settings;
 	
 	/**
-	 * Construct a controller instance with the specified model.
-	 * @param settings the specified model
+	 * Construct a settings controller with the specified model.
+	 * @param settings specified model
 	 */
 	public SettingsController(Settings settings) {
 		this.settings = settings;
@@ -31,7 +31,7 @@ public class SettingsController {
 	
 	/**
 	 * Return the value of the timeout of the model @see{Settings}.
-	 * @return the timeout
+	 * @return timeout
 	 */
 	public String getTimeOut() {
 		return Integer.toString(this.settings.getTimeout());
@@ -39,7 +39,7 @@ public class SettingsController {
 	
 	/**
 	 * Return the value of the memory limit of the model @see{Settings}.
-	 * @return the memory limit
+	 * @return memory limit
 	 */
 	public String getMemoryLimit() {
 		return Integer.toString(this.settings.getMemoryLimit());
@@ -47,7 +47,7 @@ public class SettingsController {
 	
 	/**
 	 * Add the specified frame as view.
-	 * @param frame the specified view
+	 * @param frame specified view
 	 */
 	public void addView(SettingsFrame frame) {
 		this.frame = frame;
@@ -55,7 +55,7 @@ public class SettingsController {
 	
 	/**
 	 * Return a new listener instance to save settings.
-	 * @return the listener 
+	 * @return listener 
 	 */
 	public SaveSettings getSaveButtonListener() {
 		return new SaveSettings();

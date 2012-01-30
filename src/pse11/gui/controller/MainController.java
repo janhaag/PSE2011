@@ -33,8 +33,8 @@ import org.eclipse.swt.graphics.Point;
 /**
  * This class is the most important part of the GUI component. It initializes
  * all of the other controllers and delegates user actions to their respective
- * receiver controllers. As a part of MVC, it is responsible for the view
- * @see{MainFrame}.
+ * receiver controllers. It is also responsible for the view @see{MainFrame} 
+ * and uses @see{ExecutionHandler} as model.
  */
 public class MainController implements SelectionListener {
 	/**
@@ -67,8 +67,7 @@ public class MainController implements SelectionListener {
 	private TableViewController tableController;
 
 	/**
-	 * Construct a main controller instance and initializes 
-	 * all other controllers.
+	 * Construct a main controller and initializes all other controllers.
 	 */
 	public MainController() {
 		MessageSystem messagesystem = new MessageSystem();

@@ -15,8 +15,8 @@ import gui.EditorView;
 import misc.Editor;
 
 /**
- * This class serves as a part of a MVC pattern. It is the controller 
- * for the view @see{EditorFrame} and the model @see{Editor}.
+ * This class is responsible for controlling the view @see{EditorFrame} 
+ * and uses the model @see{Editor}.
  */
 public class EditorController implements MouseListener, ModifyListener, VerifyListener, VerifyKeyListener, FocusListener {
 	/**
@@ -29,10 +29,9 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 	private Editor editor;
        
 	/**
-     * Construct a controller instance with the specified view and model
-     * and add view control.
-     * @param editor the model of this controller
-     * @param editorframe the view of this controller
+     * Construct an editor controller with the specified view and model.
+     * @param editor specified model
+     * @param editorframe specified view
      */
     public EditorController(Editor editor, EditorView editorframe) {
         this.editorframe = editorframe;
@@ -61,7 +60,7 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     }
     
     /**
-     * Deactivate the view to avoid changes which are not valid.
+     * Deactivate the view to avoid invalid changes during program execution.
      */
     public void deactivateView() {
     	this.editorframe.getLineNumbers().removeMouseListener(this);
@@ -78,7 +77,7 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     
     /**
      * Highlight the specified line. 
-     * @param line the line to be highlighted 
+     * @param line specified line
      */
     public void markCurrentLine(int line) {
     	this.editorframe.markLine(line);

@@ -27,22 +27,51 @@ import org.eclipse.swt.widgets.ScrollBar;
 import misc.Editor;
 import misc.Keyword;
 
+/**
+ * This class represents the editor of the main frame. It displays
+ * the source code, receives changes to the source code and statement 
+ * breakpoints.
+ */
 public class EditorView extends Composite {
+	/**
+	 * model for program code
+	 */
 	private Editor editor;
+	/**
+	 * display of the parent composite
+	 */
 	private Display parentdisplay;
+	/**
+	 * text field for program code
+	 */
 	private StyledText textfield;
+	/**
+	 * text field for line numbers
+	 */
 	private StyledText linenumbers;
-	
+	/**
+	 * breakpoint icon
+	 */
 	private Image breakpoint;
-	
+	/**
+	 * max number of lines
+	 */
 	private static final int MAX_LINES = 500;
 	
+	/**
+	 * Construct an editor with the specified parent composite, definitions 
+	 * of its style and model.
+	 * @param parent specified composite
+	 * @param def specified definitions
+	 * @param editor specified model
+	 */
 	public EditorView(Composite parent, int def, Editor editor) {
 		super(parent, def);
 		this.editor = editor; 
 		this.editor.setView(this);
+		this.parentdisplay = parent.getDisplay();
 		
-		//Setting the Layout
+		//Set the Layout
 		GridLayout gLayout = new GridLayout();
 		gLayout.numColumns = 35;
 		gLayout.makeColumnsEqualWidth = true;
@@ -50,10 +79,7 @@ public class EditorView extends Composite {
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		this.setLayoutData(gData);
 		
-		//Initialize editor components
-		this.parentdisplay = parent.getDisplay();
-		
-		//Text field for line numbers
+		//Add text field for line numbers
 		final ScrolledComposite sc1 = new ScrolledComposite (this, SWT.V_SCROLL 
 				| SWT.H_SCROLL | SWT.RIGHT_TO_LEFT);
 		this.linenumbers = new StyledText(sc1, SWT.MULTI | SWT.WRAP);	
@@ -89,7 +115,7 @@ public class EditorView extends Composite {
 		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
 		sc1.setContent(this.linenumbers);
 		
-		//Text field for source code
+		//Add text field for program code
 		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.V_SCROLL | SWT.H_SCROLL);
 		this.textfield = new StyledText(sc2, SWT.NONE);
 		this.textfield.setLeftMargin(5);
@@ -118,8 +144,9 @@ public class EditorView extends Composite {
 		};
 		vBar2.addSelectionListener(listener); 
 		
-		this.breakpoint = new Image(parentdisplay, MainFrame.class.getResourceAsStream("image/breakpoint.png")); 
-		
+		//Add breakpoint icon
+		this.breakpoint = new Image(parentdisplay, 
+				MainFrame.class.getResourceAsStream("image/breakpoint.png")); 		
 		this.linenumbers.addPaintObjectListener(new PaintObjectListener() {
 	        public void paintObject(PaintObjectEvent event) {
 	          GC gc = event.gc;
@@ -133,6 +160,9 @@ public class EditorView extends Composite {
 	      }); 
 	}
 	
+	/**
+	 * Update the view for undo/redo and syntax highlighting.
+	 */
 	public void updateView() {
 		//Source updates (necessary because of undo/redo functions)
 		if(!this.textfield.getText().equals(this.editor.getSource())) {
@@ -150,6 +180,12 @@ public class EditorView extends Composite {
 		}
 	}
 	
+	/**
+	 * Draw the breakpoint icon in the specified line if set = 1,
+	 * otherwise remove the icon.
+	 * @param line specified line
+	 * @param set if the breakpoint is already set
+	 */
 	public void setStatementBreakpoint(int line, int set) {	
 		StyleRange style = new StyleRange();
 		style.start = line * 2 - 2;
@@ -162,27 +198,57 @@ public class EditorView extends Composite {
 		this.linenumbers.setStyleRange(style);
 	}
 	
+	/**
+	 * Highlight the specified line with another background color.
+	 * @param line specified line
+	 */
 	public void markLine(int line) {
 		this.textfield.setLineBackground(line, 1, new Color(this.parentdisplay, 249, 250, 158));
 	}
 	
+	/**
+	 * Remove all line highlighting.
+	 */
 	public void removeAllLineBackground() {
 		this.textfield.setLineBackground(0, this.textfield.getLineCount(), null);
 	}
 	
+	/**
+	 * Return the content of the editor text field.
+	 * @return editor text
+	 */
 	public String getText() {
 		return this.textfield.getText();
 	}
+	
+	/**
+	 * Set the text of the editor text field.
+	 * @param text text to be set
+	 */
 	public void setText(String text) {
 		this.textfield.setText(text);
 	}
+	
+	/**
+	 * Return the selection of the editor text field.
+	 * @return selection of the text field
+	 */
 	public Point getSelection() {
 		return this.textfield.getSelection();
 	}
 	
+	/**
+	 * Return the editor text field.
+	 * @return editor text field
+	 */
 	public StyledText getTextField() {
 		return this.textfield;
 	}
+	
+	/**
+	 * Return the text field for line numbers.
+	 * @return line numbers text field
+	 */
 	public StyledText getLineNumbers() {
 		return this.linenumbers;
 	}

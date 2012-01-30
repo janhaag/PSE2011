@@ -13,13 +13,34 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+/**
+ * This class represents an error console as a part of the main frame.
+ * It displays error messages caused by parsing, type checking and program
+ * execution.
+ */
 public class ErrorConsole extends Console {
+	/**
+	 * table column to show the position of the error
+	 */
 	private TableColumn positionColumn;
+	/**
+	 * table column to show the description of the error
+	 */
 	private TableColumn errormessageColumn;
+	
+	/**
+	 * Construct an error console with the specified parent composite,
+	 * definitions of its style and model.
+	 * @param parent specified composite
+	 * @param style specified definitions
+	 * @param messagesystem specified model
+	 */
 	public ErrorConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
 		FillLayout fLayout = new FillLayout();
 		this.setLayout(fLayout);
+		
+		//Add various components
 		this.table = new Table(this, SWT.BORDER);
 		this.positionColumn = new TableColumn(this.table, SWT.CENTER);
 		this.positionColumn.setText("Position");
