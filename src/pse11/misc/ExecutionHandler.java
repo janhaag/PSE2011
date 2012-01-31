@@ -115,7 +115,7 @@ public class ExecutionHandler {
 			return;
 		}
 		VerifierInterface verifier = new VerifierInterface(new Z3(
-				Settings.getInstance().getVerifierPath()
+				Settings.getInstance().getVerifierPath() + " ${FILE} -m"
 				));
 		try {
 			verifier.verify(this.ast);

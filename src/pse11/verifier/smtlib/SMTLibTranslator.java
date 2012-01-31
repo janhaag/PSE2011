@@ -88,19 +88,33 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(Conditional conditional) {
         upScopeExpr.push(tempExpr);
-        Stack<S_Expression> tempExprStack = (Stack<S_Expression>) upScopeExpr.clone();
-        Stack<HashMap<VarDef, S_Expression>> tempReplacements = upScopeReplacements;
+        Stack<S_Expression> tempExprStack = new Stack<S_Expression>();
+        for (S_Expression expression : upScopeExpr) {
+            tempExprStack.push(expression.deepCopy());
+        }
         upScopeReplacements.push(new HashMap<VarDef, S_Expression>());
+        Stack<HashMap<VarDef, S_Expression>> tempReplacements =
+                new Stack<HashMap<VarDef, S_Expression>>();
+        for (HashMap<VarDef, S_Expression> replacements : upScopeReplacements) {
+            tempReplacements.push(new HashMap<VarDef, S_Expression>());
+            for (Map.Entry<VarDef, S_Expression> entry : replacements.entrySet()) {
+                tempReplacements.lastElement().put(entry.getKey(),
+                        entry.getValue().deepCopy());
+            }
+        }
         conditional.getCondition().accept(this);
         S_Expression condition = tempExpr;
         tempExpr = new Constant("true");
         conditional.getTrueConditionBody().accept(this);
+        S_Expression result = tempExpr;
         HashMap<VarDef, S_Expression> replacements = upScopeReplacements.pop();
         Set<Map.Entry<VarDef, S_Expression>> entries = replacements.entrySet();
         tempExpr = upScopeExpr.lastElement().deepCopy();
         for (Map.Entry<VarDef, S_Expression> entry : entries) {
             tempExpr.replace(entry.getKey(), entry.getValue());
         }
+        tempExpr = new S_Expression("and", new S_Expression[]{
+                result.deepCopy(), tempExpr.deepCopy()});
         S_Expression trueBranch = new S_Expression("and",
                 new S_Expression[]{condition.deepCopy(), tempExpr});
         upScopeExpr = tempExprStack;
@@ -159,12 +173,12 @@ public class SMTLibTranslator implements ASTVisitor {
         LinkedList<S_Expression> program = new LinkedList<S_Expression>();
         program.add(tempExpr);
         programs.add(program);
+        prepareEndedLoop(program);
         for (Ensure ensure : ensures) {
             ensure.accept(this);
             program.set(program.size() - 1, new S_Expression("=>",
                     new S_Expression[]{tempExpr, program.getLast()}));
         }
-        prepareEndedLoop(program);
         program.set(program.size() - 1, new S_Expression("assert",
                 new S_Expression[]{new S_Expression("not",
                         new S_Expression[]{program.getLast()})}));

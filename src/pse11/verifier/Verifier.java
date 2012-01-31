@@ -55,7 +55,7 @@ public abstract class Verifier {
             }
         }
         channel.close();
-        return reader.toString();
+        return output.toString();
     }
 
     private void writeVerifierInputToFile(File out, String data) throws IOException {
@@ -75,7 +75,7 @@ public abstract class Verifier {
         File file = null;
         for (int i = 0; i < template.length; i++) {
             if ("${FILE}".equals(template[i])) {
-                file = File.createTempFile("PSE11", "");
+                file = File.createTempFile("PSE11", ".smt2");
                 file.deleteOnExit();
                 template[i] = file.getAbsolutePath();
             }
