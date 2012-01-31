@@ -3,6 +3,7 @@ package misc;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,18 +69,17 @@ public class ExecutionHandler {
 		boolean finished = false;
 		boolean success = true;
 		while (!paused && !finished && success) {
+			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
+				finished = true;
+				break;
+			}
+			success = this.singleStep(sbreakpoints, gbreakpoints);
 			try {
 				if (this.execution != null && this.execution.checkBreakpoints() != null) {
 					paused = true;
-					break;
 				}
-				if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
-					finished = true;
-				}
-				success = this.singleStep(sbreakpoints, gbreakpoints);
 			}
-			catch (FunctionCallNotAllowedException fce) {
-				this.messagesystem.addMessage(MessageCategories.ERROR, fce.getErrorPosition().getLine(), fce.getMessage());
+			catch (FunctionCallNotAllowedException ignored) {
 			}
 		}
 	}
@@ -113,8 +113,9 @@ public class ExecutionHandler {
 	}
 	
 	public void verify(String source) {
+		this.parse(source);
 		if(this.ast == null) {
-			this.parse(source);
+			return;
 		}
 		this.messagesystem.clear(MessageCategories.VERIFYERROR);
 		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {
@@ -125,23 +126,27 @@ public class ExecutionHandler {
 		VerifierInterface verifier = new VerifierInterface(new Z3(
 				Settings.getInstance().getVerifierPath() + " ${FILE} -m"
 				));
+		LinkedList<Pair<Boolean, String>> result = new LinkedList<Pair<Boolean, String>>();
 		try {
-			verifier.verify(this.ast);
+			result = verifier.verify(this.ast);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOException");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, e.getMessage());
 		} catch (RecognitionException e) {
-			// TODO Auto-generated catch block
+			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1 , e.getMessage());
 		} catch(NullPointerException e) {
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "NullPointer");
+		}
+		for(Pair<Boolean, String> entry : result) {
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0, entry.getValue1() + entry.getValue2());
 		}
 	}
 	
