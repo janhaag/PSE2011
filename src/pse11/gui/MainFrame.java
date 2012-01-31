@@ -14,6 +14,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
+/**
+ * This class represents the main frame which is a container for all
+ * of the other the views. 
+ */
 public class MainFrame extends Frame {
 	private Display display;
 	private Shell shell;
@@ -30,9 +34,16 @@ public class MainFrame extends Frame {
 	private Console console[];
 	private VariableView varView;
 	private BreakpointView breakpointView;
-	private HelpBox help;
+	private HelpBox help;	
 	private Clipboard clipboard;
 
+	/**
+	 * Construct a main frame with the specified controller and models.
+	 * Also create the views which are part of the main frame.
+	 * @param mainController specified controller
+	 * @param editor specified model
+	 * @param messagesystem specified model
+	 */
 	public MainFrame(MainController mainController, Editor editor, MessageSystem messagesystem) {
 		// Initialization and Configuration of the window
 		display = new Display();
@@ -161,11 +172,16 @@ public class MainFrame extends Frame {
 		ti3.setControl(console[2] = new MiscConsole(tf, SWT.BORDER, messagesystem));
 
 		// Adding help box
-		help = new HelpBox(shell, SWT.BORDER, editor);
+		help = new HelpBox(shell, SWT.BORDER);
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		help.setLayoutData(gData);
 	}
 
+	/**
+	 * Set the specified icons.
+	 * @param image specified icon
+	 * @param image2 specified icon
+	 */
 	public void switchIcon(Image image, Image image2) {
 		this.runIcon.setImage(image);
 		this.pauseIcon.setImage(image2);

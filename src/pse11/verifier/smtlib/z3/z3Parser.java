@@ -1,4 +1,4 @@
-// $ANTLR 3.4 ../src/grammar/z3.g 2012-01-28 17:35:42
+// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g 2012-01-31 13:42:51
 
     package verifier.smtlib.z3;
 
@@ -15,10 +15,15 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class z3Parser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "BOOL", "CHAR", "ESC_SEQ", "HEX_DIGIT", "IDENT", "INT", "OCTAL_ESC", "TYPE", "UNICODE_ESC", "WS", "'!'", "'('", "'()'", "'(='", "'(Array'", "'(_as-array'", "'(and'", "'(define-fun'", "'(model'", "')'", "'))'", "'Int'", "'sat'", "'unknown'", "'unsat'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "BOOL", "IDENT", "INT", "TYPE", "WS", "'!'", "'('", "'(Array'", "'(_as-array'", "'(and'", "'(define-fun'", "'(model'", "')'", "'='", "'sat'", "'unknown'", "'unsat'"
     };
 
     public static final int EOF=-1;
+    public static final int T__9=9;
+    public static final int T__10=10;
+    public static final int T__11=11;
+    public static final int T__12=12;
+    public static final int T__13=13;
     public static final int T__14=14;
     public static final int T__15=15;
     public static final int T__16=16;
@@ -26,24 +31,11 @@ public class z3Parser extends Parser {
     public static final int T__18=18;
     public static final int T__19=19;
     public static final int T__20=20;
-    public static final int T__21=21;
-    public static final int T__22=22;
-    public static final int T__23=23;
-    public static final int T__24=24;
-    public static final int T__25=25;
-    public static final int T__26=26;
-    public static final int T__27=27;
-    public static final int T__28=28;
     public static final int BOOL=4;
-    public static final int CHAR=5;
-    public static final int ESC_SEQ=6;
-    public static final int HEX_DIGIT=7;
-    public static final int IDENT=8;
-    public static final int INT=9;
-    public static final int OCTAL_ESC=10;
-    public static final int TYPE=11;
-    public static final int UNICODE_ESC=12;
-    public static final int WS=13;
+    public static final int IDENT=5;
+    public static final int INT=6;
+    public static final int TYPE=7;
+    public static final int WS=8;
 
     // delegates
     public Parser[] getDelegates() {
@@ -61,12 +53,12 @@ public class z3Parser extends Parser {
     }
 
     public String[] getTokenNames() { return z3Parser.tokenNames; }
-    public String getGrammarFileName() { return "../src/grammar/z3.g"; }
+    public String getGrammarFileName() { return "C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g"; }
 
 
 
     // $ANTLR start "start"
-    // ../src/grammar/z3.g:15:1: start returns [LinkedList<Pair<Boolean,String>> list] : (pair= block )+ ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:15:1: start returns [LinkedList<Pair<Boolean,String>> list] : (pair= block )+ ;
     public final LinkedList<Pair<Boolean,String>> start() throws RecognitionException {
         LinkedList<Pair<Boolean,String>> list = null;
 
@@ -74,26 +66,26 @@ public class z3Parser extends Parser {
         Pair<Boolean, String> pair =null;
 
 
-        list = new LinkedList();
+        list = new LinkedList<Pair<Boolean,String>>();
         try {
-            // ../src/grammar/z3.g:16:2: ( (pair= block )+ )
-            // ../src/grammar/z3.g:16:3: (pair= block )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:2: ( (pair= block )+ )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:3: (pair= block )+
             {
-            // ../src/grammar/z3.g:16:3: (pair= block )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:3: (pair= block )+
             int cnt1=0;
             loop1:
             do {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( ((LA1_0 >= 26 && LA1_0 <= 28)) ) {
+                if ( ((LA1_0 >= 18 && LA1_0 <= 20)) ) {
                     alt1=1;
                 }
 
 
                 switch (alt1) {
             	case 1 :
-            	    // ../src/grammar/z3.g:16:4: pair= block
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:4: pair= block
             	    {
             	    pushFollow(FOLLOW_block_in_start37);
             	    pair=block();
@@ -134,7 +126,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "block"
-    // ../src/grammar/z3.g:19:1: block returns [Pair<Boolean, String> result] : ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:19:1: block returns [Pair<Boolean, String> result] : ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* );
     public final Pair<Boolean, String> block() throws RecognitionException {
         Pair<Boolean, String> result = null;
 
@@ -143,20 +135,20 @@ public class z3Parser extends Parser {
 
 
         try {
-            // ../src/grammar/z3.g:20:2: ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:20:2: ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* )
             int alt4=3;
             switch ( input.LA(1) ) {
-            case 28:
+            case 20:
                 {
                 alt4=1;
                 }
                 break;
-            case 26:
+            case 18:
                 {
                 alt4=2;
                 }
                 break;
-            case 27:
+            case 19:
                 {
                 alt4=3;
                 }
@@ -171,11 +163,11 @@ public class z3Parser extends Parser {
 
             switch (alt4) {
                 case 1 :
-                    // ../src/grammar/z3.g:20:3: 'unsat' ( . )*
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:20:3: 'unsat' ( . )*
                     {
-                    match(input,28,FOLLOW_28_in_block53); 
+                    match(input,20,FOLLOW_20_in_block53); 
 
-                    // ../src/grammar/z3.g:21:5: ( . )*
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:21:5: ( . )*
                     loop2:
                     do {
                         int alt2=2;
@@ -185,43 +177,35 @@ public class z3Parser extends Parser {
                             alt2=2;
                             }
                             break;
-                        case 28:
+                        case 20:
                             {
                             alt2=2;
                             }
                             break;
-                        case 26:
+                        case 18:
                             {
                             alt2=2;
                             }
                             break;
-                        case 27:
+                        case 19:
                             {
                             alt2=2;
                             }
                             break;
                         case BOOL:
-                        case CHAR:
-                        case ESC_SEQ:
-                        case HEX_DIGIT:
                         case IDENT:
                         case INT:
-                        case OCTAL_ESC:
                         case TYPE:
-                        case UNICODE_ESC:
                         case WS:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
                         case 14:
                         case 15:
                         case 16:
                         case 17:
-                        case 18:
-                        case 19:
-                        case 20:
-                        case 21:
-                        case 22:
-                        case 23:
-                        case 24:
-                        case 25:
                             {
                             alt2=1;
                             }
@@ -231,7 +215,7 @@ public class z3Parser extends Parser {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // ../src/grammar/z3.g:21:5: .
+                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:21:5: .
                     	    {
                     	    matchAny(input); 
 
@@ -249,9 +233,9 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:22:5: 'sat' example= model
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:22:5: 'sat' example= model
                     {
-                    match(input,26,FOLLOW_26_in_block68); 
+                    match(input,18,FOLLOW_18_in_block68); 
 
                     pushFollow(FOLLOW_model_in_block78);
                     example=model();
@@ -264,11 +248,11 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ../src/grammar/z3.g:24:4: 'unknown' ( . )*
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:24:4: 'unknown' ( . )*
                     {
-                    match(input,27,FOLLOW_27_in_block85); 
+                    match(input,19,FOLLOW_19_in_block85); 
 
-                    // ../src/grammar/z3.g:25:3: ( . )*
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:25:3: ( . )*
                     loop3:
                     do {
                         int alt3=2;
@@ -278,43 +262,35 @@ public class z3Parser extends Parser {
                             alt3=2;
                             }
                             break;
-                        case 28:
+                        case 20:
                             {
                             alt3=2;
                             }
                             break;
-                        case 26:
+                        case 18:
                             {
                             alt3=2;
                             }
                             break;
-                        case 27:
+                        case 19:
                             {
                             alt3=2;
                             }
                             break;
                         case BOOL:
-                        case CHAR:
-                        case ESC_SEQ:
-                        case HEX_DIGIT:
                         case IDENT:
                         case INT:
-                        case OCTAL_ESC:
                         case TYPE:
-                        case UNICODE_ESC:
                         case WS:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
                         case 14:
                         case 15:
                         case 16:
                         case 17:
-                        case 18:
-                        case 19:
-                        case 20:
-                        case 21:
-                        case 22:
-                        case 23:
-                        case 24:
-                        case 25:
                             {
                             alt3=1;
                             }
@@ -324,7 +300,7 @@ public class z3Parser extends Parser {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // ../src/grammar/z3.g:25:3: .
+                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:25:3: .
                     	    {
                     	    matchAny(input); 
 
@@ -359,7 +335,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "model"
-    // ../src/grammar/z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )* ')' ;
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')' ;
     public final String model() throws RecognitionException {
         String example = null;
 
@@ -374,25 +350,40 @@ public class z3Parser extends Parser {
 
         example = "";
         try {
-            // ../src/grammar/z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )* ')' )
-            // ../src/grammar/z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )* ')'
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')'
             {
-            match(input,22,FOLLOW_22_in_model111); 
+            match(input,15,FOLLOW_15_in_model111); 
 
-            // ../src/grammar/z3.g:30:3: ( '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:3: ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )*
             loop6:
             do {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==21) ) {
+                if ( (LA6_0==14) ) {
                     int LA6_1 = input.LA(2);
 
                     if ( (LA6_1==IDENT) ) {
                         int LA6_3 = input.LA(3);
 
-                        if ( (LA6_3==15) ) {
-                            alt6=1;
+                        if ( (LA6_3==10) ) {
+                            int LA6_4 = input.LA(4);
+
+                            if ( (LA6_4==16) ) {
+                                int LA6_5 = input.LA(5);
+
+                                if ( (LA6_5==TYPE) ) {
+                                    alt6=1;
+                                }
+
+
+                            }
+                            else if ( (LA6_4==IDENT) ) {
+                                alt6=1;
+                            }
+
+
                         }
 
 
@@ -404,15 +395,15 @@ public class z3Parser extends Parser {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../src/grammar/z3.g:30:4: '(define-fun' id= IDENT '(' ( IDENT TYPE )* ')' TYPE val= value ')'
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:4: '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')'
             	    {
-            	    match(input,21,FOLLOW_21_in_model116); 
+            	    match(input,14,FOLLOW_14_in_model116); 
 
             	    id=(Token)match(input,IDENT,FOLLOW_IDENT_in_model122); 
 
-            	    match(input,15,FOLLOW_15_in_model125); 
+            	    match(input,10,FOLLOW_10_in_model125); 
 
-            	    // ../src/grammar/z3.g:30:33: ( IDENT TYPE )*
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:33: ( IDENT '!' TYPE )*
             	    loop5:
             	    do {
             	        int alt5=2;
@@ -425,11 +416,13 @@ public class z3Parser extends Parser {
 
             	        switch (alt5) {
             	    	case 1 :
-            	    	    // ../src/grammar/z3.g:30:34: IDENT TYPE
+            	    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:34: IDENT '!' TYPE
             	    	    {
             	    	    match(input,IDENT,FOLLOW_IDENT_in_model127); 
 
-            	    	    match(input,TYPE,FOLLOW_TYPE_in_model130); 
+            	    	    match(input,9,FOLLOW_9_in_model129); 
+
+            	    	    match(input,TYPE,FOLLOW_TYPE_in_model132); 
 
             	    	    }
             	    	    break;
@@ -440,17 +433,17 @@ public class z3Parser extends Parser {
             	    } while (true);
 
 
-            	    match(input,23,FOLLOW_23_in_model133); 
+            	    match(input,16,FOLLOW_16_in_model135); 
 
-            	    match(input,TYPE,FOLLOW_TYPE_in_model135); 
+            	    match(input,TYPE,FOLLOW_TYPE_in_model137); 
 
-            	    pushFollow(FOLLOW_value_in_model141);
+            	    pushFollow(FOLLOW_value_in_model143);
             	    val=value();
 
             	    state._fsp--;
 
 
-            	    match(input,23,FOLLOW_23_in_model143); 
+            	    match(input,16,FOLLOW_16_in_model145); 
 
             	    example += (id!=null?id.getText():null) + "=" + val + "\n";
 
@@ -465,19 +458,19 @@ public class z3Parser extends Parser {
 
             HashMap m = new HashMap();
 
-            // ../src/grammar/z3.g:32:31: ( '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:33:3: ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )*
             loop8:
             do {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==21) ) {
+                if ( (LA8_0==14) ) {
                     int LA8_1 = input.LA(2);
 
                     if ( (LA8_1==IDENT) ) {
                         int LA8_3 = input.LA(3);
 
-                        if ( (LA8_3==16) ) {
+                        if ( (LA8_3==10) ) {
                             alt8=1;
                         }
 
@@ -490,35 +483,43 @@ public class z3Parser extends Parser {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../src/grammar/z3.g:32:32: '(define-fun' id= IDENT '()' '(Array' ( 'Int' )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) '))'
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:33:4: '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')'
             	    {
-            	    match(input,21,FOLLOW_21_in_model162); 
+            	    match(input,14,FOLLOW_14_in_model170); 
 
-            	    id=(Token)match(input,IDENT,FOLLOW_IDENT_in_model169); 
+            	    id=(Token)match(input,IDENT,FOLLOW_IDENT_in_model177); 
 
-            	    match(input,16,FOLLOW_16_in_model171); 
+            	    match(input,10,FOLLOW_10_in_model179); 
+
+            	    match(input,16,FOLLOW_16_in_model181); 
 
             	    example = (id!=null?id.getText():null);
 
-            	    match(input,18,FOLLOW_18_in_model183); 
+            	    match(input,11,FOLLOW_11_in_model195); 
 
-            	    // ../src/grammar/z3.g:33:17: ( 'Int' )+
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:34:19: ( TYPE )+
             	    int cnt7=0;
             	    loop7:
             	    do {
             	        int alt7=2;
             	        int LA7_0 = input.LA(1);
 
-            	        if ( (LA7_0==25) ) {
-            	            alt7=1;
+            	        if ( (LA7_0==TYPE) ) {
+            	            int LA7_1 = input.LA(2);
+
+            	            if ( (LA7_1==TYPE) ) {
+            	                alt7=1;
+            	            }
+
+
             	        }
 
 
             	        switch (alt7) {
             	    	case 1 :
-            	    	    // ../src/grammar/z3.g:33:18: 'Int'
+            	    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:34:20: TYPE
             	    	    {
-            	    	    match(input,25,FOLLOW_25_in_model185); 
+            	    	    match(input,TYPE,FOLLOW_TYPE_in_model197); 
 
             	    	    example += "[ ]";
 
@@ -535,25 +536,27 @@ public class z3Parser extends Parser {
             	    } while (true);
 
 
-            	    match(input,TYPE,FOLLOW_TYPE_in_model190); 
+            	    match(input,TYPE,FOLLOW_TYPE_in_model203); 
 
-            	    match(input,23,FOLLOW_23_in_model193); 
+            	    match(input,16,FOLLOW_16_in_model206); 
 
-            	    match(input,19,FOLLOW_19_in_model197); 
+            	    match(input,12,FOLLOW_12_in_model210); 
 
-            	    // ../src/grammar/z3.g:34:23: ( IDENT '!' INT )
-            	    // ../src/grammar/z3.g:34:24: IDENT '!' INT
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:35:23: ( IDENT '!' INT )
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:35:24: IDENT '!' INT
             	    {
-            	    match(input,IDENT,FOLLOW_IDENT_in_model205); 
+            	    match(input,IDENT,FOLLOW_IDENT_in_model218); 
 
-            	    match(input,14,FOLLOW_14_in_model207); 
+            	    match(input,9,FOLLOW_9_in_model220); 
 
-            	    match(input,INT,FOLLOW_INT_in_model209); 
+            	    match(input,INT,FOLLOW_INT_in_model222); 
 
             	    }
 
 
-            	    match(input,24,FOLLOW_24_in_model211); 
+            	    match(input,16,FOLLOW_16_in_model224); 
+
+            	    match(input,16,FOLLOW_16_in_model225); 
 
             	    m.put((id2!=null?id2.getText():null),(id!=null?id.getText():null));
 
@@ -568,64 +571,64 @@ public class z3Parser extends Parser {
             } while (true);
 
 
-            // ../src/grammar/z3.g:35:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )*
             loop10:
             do {
                 int alt10=2;
                 int LA10_0 = input.LA(1);
 
-                if ( (LA10_0==21) ) {
+                if ( (LA10_0==14) ) {
                     alt10=1;
                 }
 
 
                 switch (alt10) {
             	case 1 :
-            	    // ../src/grammar/z3.g:35:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] '))'
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')'
             	    {
-            	    match(input,21,FOLLOW_21_in_model221); 
+            	    match(input,14,FOLLOW_14_in_model235); 
 
-            	    // ../src/grammar/z3.g:35:24: ( IDENT '!' INT )
-            	    // ../src/grammar/z3.g:35:25: IDENT '!' INT
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:24: ( IDENT '!' INT )
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:25: IDENT '!' INT
             	    {
-            	    match(input,IDENT,FOLLOW_IDENT_in_model228); 
+            	    match(input,IDENT,FOLLOW_IDENT_in_model242); 
 
-            	    match(input,14,FOLLOW_14_in_model230); 
+            	    match(input,9,FOLLOW_9_in_model244); 
 
-            	    match(input,INT,FOLLOW_INT_in_model232); 
+            	    match(input,INT,FOLLOW_INT_in_model246); 
 
             	    }
 
 
-            	    match(input,15,FOLLOW_15_in_model235); 
+            	    match(input,10,FOLLOW_10_in_model249); 
 
-            	    // ../src/grammar/z3.g:35:43: ( '(' IDENT '!' INT TYPE ')' )+
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:43: ( '(' IDENT '!' INT TYPE ')' )+
             	    int cnt9=0;
             	    loop9:
             	    do {
             	        int alt9=2;
             	        int LA9_0 = input.LA(1);
 
-            	        if ( (LA9_0==15) ) {
+            	        if ( (LA9_0==10) ) {
             	            alt9=1;
             	        }
 
 
             	        switch (alt9) {
             	    	case 1 :
-            	    	    // ../src/grammar/z3.g:35:44: '(' IDENT '!' INT TYPE ')'
+            	    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:44: '(' IDENT '!' INT TYPE ')'
             	    	    {
-            	    	    match(input,15,FOLLOW_15_in_model237); 
+            	    	    match(input,10,FOLLOW_10_in_model251); 
 
-            	    	    match(input,IDENT,FOLLOW_IDENT_in_model238); 
+            	    	    match(input,IDENT,FOLLOW_IDENT_in_model252); 
 
-            	    	    match(input,14,FOLLOW_14_in_model240); 
+            	    	    match(input,9,FOLLOW_9_in_model254); 
 
-            	    	    match(input,INT,FOLLOW_INT_in_model242); 
+            	    	    match(input,INT,FOLLOW_INT_in_model256); 
 
-            	    	    match(input,TYPE,FOLLOW_TYPE_in_model244); 
+            	    	    match(input,TYPE,FOLLOW_TYPE_in_model258); 
 
-            	    	    match(input,23,FOLLOW_23_in_model245); 
+            	    	    match(input,16,FOLLOW_16_in_model259); 
 
             	    	    }
             	    	    break;
@@ -640,13 +643,13 @@ public class z3Parser extends Parser {
             	    } while (true);
 
 
-            	    match(input,23,FOLLOW_23_in_model248); 
+            	    match(input,16,FOLLOW_16_in_model262); 
 
-            	    match(input,TYPE,FOLLOW_TYPE_in_model250); 
+            	    match(input,TYPE,FOLLOW_TYPE_in_model264); 
 
-            	    match(input,15,FOLLOW_15_in_model260); 
+            	    match(input,10,FOLLOW_10_in_model274); 
 
-            	    pushFollow(FOLLOW_ite_in_model265);
+            	    pushFollow(FOLLOW_ite_in_model279);
             	    ass=ite((String)m.get((id3!=null?id3.getText():null)));
 
             	    state._fsp--;
@@ -654,7 +657,9 @@ public class z3Parser extends Parser {
 
             	    example += ass;
 
-            	    match(input,24,FOLLOW_24_in_model269); 
+            	    match(input,16,FOLLOW_16_in_model283); 
+
+            	    match(input,16,FOLLOW_16_in_model284); 
 
             	    }
             	    break;
@@ -665,7 +670,7 @@ public class z3Parser extends Parser {
             } while (true);
 
 
-            match(input,23,FOLLOW_23_in_model275); 
+            match(input,16,FOLLOW_16_in_model290); 
 
             }
 
@@ -685,7 +690,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "ite"
-    // ../src/grammar/z3.g:40:1: ite[String id] returns [String assignment] : ( '(=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:41:1: ite[String id] returns [String assignment] : ( '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) );
     public final String ite(String id) throws RecognitionException {
         String assignment = null;
 
@@ -698,14 +703,14 @@ public class z3Parser extends Parser {
 
         assignment = id;
         try {
-            // ../src/grammar/z3.g:41:2: ( '(=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:42:2: ( '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
-            if ( (LA14_0==17) ) {
+            if ( (LA14_0==10) ) {
                 alt14=1;
             }
-            else if ( (LA14_0==20) ) {
+            else if ( (LA14_0==13) ) {
                 alt14=2;
             }
             else {
@@ -717,21 +722,23 @@ public class z3Parser extends Parser {
             }
             switch (alt14) {
                 case 1 :
-                    // ../src/grammar/z3.g:41:4: '(=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' )
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:42:4: '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' )
                     {
-                    match(input,17,FOLLOW_17_in_ite295); 
+                    match(input,10,FOLLOW_10_in_ite310); 
 
-                    match(input,IDENT,FOLLOW_IDENT_in_ite297); 
+                    match(input,17,FOLLOW_17_in_ite311); 
 
-                    match(input,14,FOLLOW_14_in_ite299); 
+                    match(input,IDENT,FOLLOW_IDENT_in_ite313); 
 
-                    match(input,INT,FOLLOW_INT_in_ite301); 
+                    match(input,9,FOLLOW_9_in_ite315); 
 
-                    i=(Token)match(input,INT,FOLLOW_INT_in_ite307); 
+                    match(input,INT,FOLLOW_INT_in_ite317); 
 
-                    match(input,23,FOLLOW_23_in_ite308); 
+                    i=(Token)match(input,INT,FOLLOW_INT_in_ite323); 
 
-                    pushFollow(FOLLOW_value_in_ite315);
+                    match(input,16,FOLLOW_16_in_ite324); 
+
+                    pushFollow(FOLLOW_value_in_ite331);
                     val=value();
 
                     state._fsp--;
@@ -739,14 +746,14 @@ public class z3Parser extends Parser {
 
                     assignment = "[" + (i!=null?i.getText():null) + "]" + "=" + val + "\n";
 
-                    // ../src/grammar/z3.g:43:9: ( value | '(' as= ite[id] ')' )
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:44:9: ( value | '(' as= ite[id] ')' )
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
                     if ( (LA11_0==BOOL||LA11_0==INT) ) {
                         alt11=1;
                     }
-                    else if ( (LA11_0==15) ) {
+                    else if ( (LA11_0==10) ) {
                         alt11=2;
                     }
                     else {
@@ -758,9 +765,9 @@ public class z3Parser extends Parser {
                     }
                     switch (alt11) {
                         case 1 :
-                            // ../src/grammar/z3.g:43:10: value
+                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:44:10: value
                             {
-                            pushFollow(FOLLOW_value_in_ite336);
+                            pushFollow(FOLLOW_value_in_ite352);
                             value();
 
                             state._fsp--;
@@ -769,17 +776,17 @@ public class z3Parser extends Parser {
                             }
                             break;
                         case 2 :
-                            // ../src/grammar/z3.g:43:18: '(' as= ite[id] ')'
+                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:44:18: '(' as= ite[id] ')'
                             {
-                            match(input,15,FOLLOW_15_in_ite340); 
+                            match(input,10,FOLLOW_10_in_ite356); 
 
-                            pushFollow(FOLLOW_ite_in_ite343);
+                            pushFollow(FOLLOW_ite_in_ite359);
                             as=ite(id);
 
                             state._fsp--;
 
 
-                            match(input,23,FOLLOW_23_in_ite345); 
+                            match(input,16,FOLLOW_16_in_ite361); 
 
                             assignment += as;
 
@@ -792,37 +799,39 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:44:4: '(and' ( '(=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' )
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:45:4: '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' )
                     {
-                    match(input,20,FOLLOW_20_in_ite352); 
+                    match(input,13,FOLLOW_13_in_ite368); 
 
-                    // ../src/grammar/z3.g:44:10: ( '(=' IDENT '!' INT i= INT ')' )+
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:45:10: ( '(' '=' IDENT '!' INT i= INT ')' )+
                     int cnt12=0;
                     loop12:
                     do {
                         int alt12=2;
                         int LA12_0 = input.LA(1);
 
-                        if ( (LA12_0==17) ) {
+                        if ( (LA12_0==10) ) {
                             alt12=1;
                         }
 
 
                         switch (alt12) {
                     	case 1 :
-                    	    // ../src/grammar/z3.g:44:11: '(=' IDENT '!' INT i= INT ')'
+                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:45:11: '(' '=' IDENT '!' INT i= INT ')'
                     	    {
-                    	    match(input,17,FOLLOW_17_in_ite354); 
+                    	    match(input,10,FOLLOW_10_in_ite370); 
 
-                    	    match(input,IDENT,FOLLOW_IDENT_in_ite356); 
+                    	    match(input,17,FOLLOW_17_in_ite371); 
 
-                    	    match(input,14,FOLLOW_14_in_ite358); 
+                    	    match(input,IDENT,FOLLOW_IDENT_in_ite373); 
 
-                    	    match(input,INT,FOLLOW_INT_in_ite360); 
+                    	    match(input,9,FOLLOW_9_in_ite375); 
 
-                    	    i=(Token)match(input,INT,FOLLOW_INT_in_ite366); 
+                    	    match(input,INT,FOLLOW_INT_in_ite377); 
 
-                    	    match(input,23,FOLLOW_23_in_ite367); 
+                    	    i=(Token)match(input,INT,FOLLOW_INT_in_ite383); 
+
+                    	    match(input,16,FOLLOW_16_in_ite384); 
 
                     	    assignment += "["+(i!=null?i.getText():null)+"]";
 
@@ -839,9 +848,9 @@ public class z3Parser extends Parser {
                     } while (true);
 
 
-                    match(input,23,FOLLOW_23_in_ite371); 
+                    match(input,16,FOLLOW_16_in_ite388); 
 
-                    pushFollow(FOLLOW_value_in_ite383);
+                    pushFollow(FOLLOW_value_in_ite400);
                     val=value();
 
                     state._fsp--;
@@ -849,14 +858,14 @@ public class z3Parser extends Parser {
 
                     assignment += "=" + val + "\n";
 
-                    // ../src/grammar/z3.g:45:62: ( value | '(' as= ite[id] ')' )
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:46:62: ( value | '(' as= ite[id] ')' )
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
                     if ( (LA13_0==BOOL||LA13_0==INT) ) {
                         alt13=1;
                     }
-                    else if ( (LA13_0==15) ) {
+                    else if ( (LA13_0==10) ) {
                         alt13=2;
                     }
                     else {
@@ -868,9 +877,9 @@ public class z3Parser extends Parser {
                     }
                     switch (alt13) {
                         case 1 :
-                            // ../src/grammar/z3.g:45:63: value
+                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:46:63: value
                             {
-                            pushFollow(FOLLOW_value_in_ite387);
+                            pushFollow(FOLLOW_value_in_ite404);
                             value();
 
                             state._fsp--;
@@ -879,17 +888,17 @@ public class z3Parser extends Parser {
                             }
                             break;
                         case 2 :
-                            // ../src/grammar/z3.g:45:71: '(' as= ite[id] ')'
+                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:46:71: '(' as= ite[id] ')'
                             {
-                            match(input,15,FOLLOW_15_in_ite391); 
+                            match(input,10,FOLLOW_10_in_ite408); 
 
-                            pushFollow(FOLLOW_ite_in_ite394);
+                            pushFollow(FOLLOW_ite_in_ite411);
                             as=ite(id);
 
                             state._fsp--;
 
 
-                            match(input,23,FOLLOW_23_in_ite396); 
+                            match(input,16,FOLLOW_16_in_ite413); 
 
                             assignment += as;
 
@@ -919,7 +928,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "value"
-    // ../src/grammar/z3.g:48:1: value returns [String content] : ( INT | BOOL );
+    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:49:1: value returns [String content] : ( INT | BOOL );
     public final String value() throws RecognitionException {
         String content = null;
 
@@ -928,7 +937,7 @@ public class z3Parser extends Parser {
         Token BOOL2=null;
 
         try {
-            // ../src/grammar/z3.g:49:2: ( INT | BOOL )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:50:2: ( INT | BOOL )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -947,18 +956,18 @@ public class z3Parser extends Parser {
             }
             switch (alt15) {
                 case 1 :
-                    // ../src/grammar/z3.g:49:4: INT
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:50:4: INT
                     {
-                    INT1=(Token)match(input,INT,FOLLOW_INT_in_value413); 
+                    INT1=(Token)match(input,INT,FOLLOW_INT_in_value430); 
 
                     content =(INT1!=null?INT1.getText():null);
 
                     }
                     break;
                 case 2 :
-                    // ../src/grammar/z3.g:50:4: BOOL
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:51:4: BOOL
                     {
-                    BOOL2=(Token)match(input,BOOL,FOLLOW_BOOL_in_value420); 
+                    BOOL2=(Token)match(input,BOOL,FOLLOW_BOOL_in_value437); 
 
                     content = (BOOL2!=null?BOOL2.getText():null);
 
@@ -984,75 +993,81 @@ public class z3Parser extends Parser {
 
  
 
-    public static final BitSet FOLLOW_block_in_start37 = new BitSet(new long[]{0x000000001C000002L});
-    public static final BitSet FOLLOW_28_in_block53 = new BitSet(new long[]{0x000000001FFFFFF2L});
-    public static final BitSet FOLLOW_26_in_block68 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_block_in_start37 = new BitSet(new long[]{0x00000000001C0002L});
+    public static final BitSet FOLLOW_20_in_block53 = new BitSet(new long[]{0x00000000001FFFF2L});
+    public static final BitSet FOLLOW_18_in_block68 = new BitSet(new long[]{0x0000000000008000L});
     public static final BitSet FOLLOW_model_in_block78 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_block85 = new BitSet(new long[]{0x000000001FFFFFF2L});
-    public static final BitSet FOLLOW_22_in_model111 = new BitSet(new long[]{0x0000000000A00000L});
-    public static final BitSet FOLLOW_21_in_model116 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_model122 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_model125 = new BitSet(new long[]{0x0000000000800100L});
-    public static final BitSet FOLLOW_IDENT_in_model127 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_TYPE_in_model130 = new BitSet(new long[]{0x0000000000800100L});
-    public static final BitSet FOLLOW_23_in_model133 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_TYPE_in_model135 = new BitSet(new long[]{0x0000000000000210L});
-    public static final BitSet FOLLOW_value_in_model141 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_model143 = new BitSet(new long[]{0x0000000000A00000L});
-    public static final BitSet FOLLOW_21_in_model162 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_model169 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_model171 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_model183 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_model185 = new BitSet(new long[]{0x0000000002000800L});
-    public static final BitSet FOLLOW_TYPE_in_model190 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_model193 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_model197 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_model205 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_model207 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_model209 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_model211 = new BitSet(new long[]{0x0000000000A00000L});
-    public static final BitSet FOLLOW_21_in_model221 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_model228 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_model230 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_model232 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_model235 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_model237 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_model238 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_model240 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_model242 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_TYPE_in_model244 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_model245 = new BitSet(new long[]{0x0000000000808000L});
-    public static final BitSet FOLLOW_23_in_model248 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_TYPE_in_model250 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_model260 = new BitSet(new long[]{0x0000000000120000L});
-    public static final BitSet FOLLOW_ite_in_model265 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_model269 = new BitSet(new long[]{0x0000000000A00000L});
-    public static final BitSet FOLLOW_23_in_model275 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_ite295 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_ite297 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_ite299 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_ite301 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_ite307 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ite308 = new BitSet(new long[]{0x0000000000000210L});
-    public static final BitSet FOLLOW_value_in_ite315 = new BitSet(new long[]{0x0000000000008210L});
-    public static final BitSet FOLLOW_value_in_ite336 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_ite340 = new BitSet(new long[]{0x0000000000120000L});
-    public static final BitSet FOLLOW_ite_in_ite343 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ite345 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_ite352 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ite354 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_IDENT_in_ite356 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_ite358 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_ite360 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_ite366 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ite367 = new BitSet(new long[]{0x0000000000820000L});
-    public static final BitSet FOLLOW_23_in_ite371 = new BitSet(new long[]{0x0000000000000210L});
-    public static final BitSet FOLLOW_value_in_ite383 = new BitSet(new long[]{0x0000000000008210L});
-    public static final BitSet FOLLOW_value_in_ite387 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_ite391 = new BitSet(new long[]{0x0000000000120000L});
-    public static final BitSet FOLLOW_ite_in_ite394 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ite396 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INT_in_value413 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOL_in_value420 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_block85 = new BitSet(new long[]{0x00000000001FFFF2L});
+    public static final BitSet FOLLOW_15_in_model111 = new BitSet(new long[]{0x0000000000014000L});
+    public static final BitSet FOLLOW_14_in_model116 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_model122 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_10_in_model125 = new BitSet(new long[]{0x0000000000010020L});
+    public static final BitSet FOLLOW_IDENT_in_model127 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_9_in_model129 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TYPE_in_model132 = new BitSet(new long[]{0x0000000000010020L});
+    public static final BitSet FOLLOW_16_in_model135 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TYPE_in_model137 = new BitSet(new long[]{0x0000000000000050L});
+    public static final BitSet FOLLOW_value_in_model143 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model145 = new BitSet(new long[]{0x0000000000014000L});
+    public static final BitSet FOLLOW_14_in_model170 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_model177 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_10_in_model179 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model181 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_model195 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TYPE_in_model197 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TYPE_in_model203 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model206 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_model210 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_model218 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_9_in_model220 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_model222 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model224 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model225 = new BitSet(new long[]{0x0000000000014000L});
+    public static final BitSet FOLLOW_14_in_model235 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_model242 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_9_in_model244 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_model246 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_10_in_model249 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_10_in_model251 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_model252 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_9_in_model254 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_model256 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TYPE_in_model258 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model259 = new BitSet(new long[]{0x0000000000010400L});
+    public static final BitSet FOLLOW_16_in_model262 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TYPE_in_model264 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_10_in_model274 = new BitSet(new long[]{0x0000000000002400L});
+    public static final BitSet FOLLOW_ite_in_model279 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model283 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_model284 = new BitSet(new long[]{0x0000000000014000L});
+    public static final BitSet FOLLOW_16_in_model290 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_10_in_ite310 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ite311 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_ite313 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_9_in_ite315 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_ite317 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_ite323 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ite324 = new BitSet(new long[]{0x0000000000000050L});
+    public static final BitSet FOLLOW_value_in_ite331 = new BitSet(new long[]{0x0000000000000450L});
+    public static final BitSet FOLLOW_value_in_ite352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_10_in_ite356 = new BitSet(new long[]{0x0000000000002400L});
+    public static final BitSet FOLLOW_ite_in_ite359 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ite361 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_ite368 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_10_in_ite370 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ite371 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_IDENT_in_ite373 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_9_in_ite375 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_ite377 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_INT_in_ite383 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ite384 = new BitSet(new long[]{0x0000000000010400L});
+    public static final BitSet FOLLOW_16_in_ite388 = new BitSet(new long[]{0x0000000000000050L});
+    public static final BitSet FOLLOW_value_in_ite400 = new BitSet(new long[]{0x0000000000000450L});
+    public static final BitSet FOLLOW_value_in_ite404 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_10_in_ite408 = new BitSet(new long[]{0x0000000000002400L});
+    public static final BitSet FOLLOW_ite_in_ite411 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ite413 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INT_in_value430 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOL_in_value437 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -120,7 +120,8 @@ public class TypeChecker implements ASTVisitor {
                                            + "match the type of assigned value",
                                            arrayAssignment.getPosition());
         }
-        arrayAssignment.setDepth(currentScope.getDepth());
+        arrayAssignment.setDepth(
+                currentScope.getDepthOfVariable(arrayAssignment.getIdentifier()));
     }
 
     /**
@@ -242,7 +243,8 @@ public class TypeChecker implements ASTVisitor {
         }
         if (!functionCallAllowed) {
             throw new FunctionCallNotAllowedException("Function call not "
-                                                      + "allowed here!");
+                                                      + "allowed here!",
+                                                    functionCall.getPosition());
         }
         String functionName = functionCall.getFunctionIdentifier().getName();
         Function callee = null;
@@ -287,6 +289,9 @@ public class TypeChecker implements ASTVisitor {
                                            variableRead.getPosition());
         }
         tempType = value.getType();
+        variableRead.setType(tempType);
+        variableRead.setDepth(currentScope.getDepthOfVariable(
+                variableRead.getVariable()));
     }
 
     /**
@@ -314,6 +319,8 @@ public class TypeChecker implements ASTVisitor {
         }
         tempType =
              baseType(value.getType(), indexes.length, arrayRead.getPosition());
+        arrayRead.setType(tempType);
+        arrayRead.setDepth(currentScope.getDepthOfVariable(arrayRead.getVariable()));
     }
 
     /**
@@ -400,7 +407,9 @@ public class TypeChecker implements ASTVisitor {
                                            + "the type of assigned value!",
                                            assignment.getPosition());
         }
-        assignment.setDepth(currentScope.getDepth());
+        assignment.setType(tempType);
+        assignment.setDepth(
+                currentScope.getDepthOfVariable(assignment.getIdentifier()));
     }
 
     /**

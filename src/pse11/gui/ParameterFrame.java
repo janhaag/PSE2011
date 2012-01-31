@@ -12,11 +12,27 @@ import org.eclipse.swt.widgets.Text;
 
 import ast.FunctionParameter;
 
-public class ParameterFrame extends Frame implements MiscFrame {	
+/**
+ * This class represents a frame for main() parameter inputs. 
+ */
+public class ParameterFrame extends Frame implements MiscFrame {
+	/**
+	 * shell of the frame
+	 */
 	private Shell shell;
+	/**
+	 * text fields for parameter values
+	 */
 	private Text[] values;
+	/**
+	 * button for execution start
+	 */
 	private Button okButton;
 
+	/**
+	 * Construct a parameter frame with the specified parent shell.
+	 * @param parentShell specified shell
+	 */
 	public ParameterFrame(Shell parentShell) {	
 		shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		shell.setText("Parameter");
@@ -51,6 +67,11 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		});
 	}
 	
+	/**
+	 * Add attributes to the shell of the frame and open it. The size
+	 * of the shell depends on the number of parameters.
+	 * @param parameters list of parameters
+	 */
 	public void createFrame(FunctionParameter[] parameters) {
 		if (parameters == null) {
 			return;
@@ -83,34 +104,40 @@ public class ParameterFrame extends Frame implements MiscFrame {
 		}	
 	}
 
+	/**
+	 * Return the shell of the frame.
+	 * @return shell of the frame
+	 */
 	public Shell getShell() {
 		return this.shell;
 	}
 	
+	/**
+	 * Return the text fields of the frame.
+	 * @return text fields of the frame
+	 */
 	public Text[] getValues() {
 		return this.values;
 	}
 	
+	/**
+	 * Return the start execution button of the frame.
+	 * @return button of the frame
+	 */
 	public Button getOkButton() {
 		return this.okButton;
 	}
 	
 	@Override
 	public Button getSaveButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 	@Override
 	public Button getCloseButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		
+	public void close() {	
 	}
 
 }

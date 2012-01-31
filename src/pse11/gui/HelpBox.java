@@ -1,7 +1,5 @@
 package gui;
 
-import misc.Editor;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,25 +13,41 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * This class represents the help box of the main frame. It displays
+ * the help document and enables searching for a keyword.
+ */
 public class HelpBox extends Composite {
-	// private Editor editor;
-
+	/**
+	 * browser containing the help document
+	 */
 	private Browser helpbox;
+	/**
+	 * text field for the keyword 
+	 */
 	private Text search;
+	/**
+	 * button for search
+	 */
 	private Button button;
 
-	public HelpBox(Shell parent, int style, Editor editor) {
+	/**
+	 * Construct a help box with the specified parent shell and definitions
+	 * about its behavior and style.
+	 * @param parent specified shell
+	 * @param style specified definitions
+	 */
+	public HelpBox(Shell parent, int style) {
 		super(parent, style);
-		// this.editor = editor;
-
-		// Setting the Layout
+		
+		//Set the Layout
 		GridLayout gLayout = new GridLayout();
 		gLayout.numColumns = 4;
 		this.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		this.setLayoutData(gData);
 
-		// Create components of the help box
+		//Add various components
 		Text helpboxheader = new Text(this, SWT.NONE);
 		helpboxheader.setEnabled(false);
 		helpboxheader.setBackground(new Color(helpboxheader.getDisplay(), 142, 189, 247));
@@ -43,10 +57,6 @@ public class HelpBox extends Composite {
 		gData.verticalSpan = 4;
 		helpboxheader.setLayoutData(gData);
 
-		// this.helpbox = new StyledText(this, SWT.MULTI | SWT.WRAP | SWT.BORDER
-		// | SWT.H_SCROLL | SWT.V_SCROLL);
-		// this.helpbox.setEditable(false);
-		// this.helpbox.setText("Please insert a key word (i.e. hallo, welt)");
 		this.helpbox = new Browser(this, SWT.NONE);
 		gData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gData.horizontalSpan = 4;
@@ -80,14 +90,26 @@ public class HelpBox extends Composite {
 		this.button.setLayoutData(gData);
 	}
 
+	/**
+	 * Add the specified listener to the search button.
+	 * @param listener specified listener
+	 */
 	public void addSelectionListener(SelectionListener listener) {
 		this.button.addSelectionListener(listener);
 	}
 
+	/**
+	 * Set the content of the text field.
+	 * @param text specified text to be set
+	 */
 	public void setText(String text) {
 		this.helpbox.setText(text);
 	}
 
+	/**
+	 * Return the key word to be searched for.
+	 * @return key word
+	 */
 	public String getSearchText() {
 		return this.search.getText();
 	}

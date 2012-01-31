@@ -11,6 +11,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+/**
+ * This class represents a frame for settings.
+ */
 public class SettingsFrame extends Frame {
 	private SettingsController controller;
 	Shell shell;
@@ -21,13 +24,19 @@ public class SettingsFrame extends Frame {
 	private Button closeButton;
 	private Label errorLabel;
 	
+	/**
+	 * Construct a settings frame with the specified parent shell and 
+	 * controller.
+	 * @param parentShell specified shell
+	 * @param controller specified controller
+	 */
 	public SettingsFrame(Shell parentShell, SettingsController controller) {
 		this.controller = controller;
 		this.controller.addView(this);
 		
 		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		//Please mind >all< components before resizing the view
-		this.shell.setSize(320,250);
+		this.shell.setSize(320,270);
 		this.shell.setText("Settings");
 		
 		//Setting layout

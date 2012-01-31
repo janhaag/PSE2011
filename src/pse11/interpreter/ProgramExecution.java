@@ -24,7 +24,6 @@ public class ProgramExecution {
      * list of this program's global breakpoints
      */
     private ArrayList<GlobalBreakpoint> globalBreakpoints;
-    
     //TODO: delete typeChecker if necessary
     /**
      * type checker to evaluate the type correctness of global statements
@@ -150,15 +149,15 @@ public class ProgramExecution {
 
     public Breakpoint checkBreakpoints() {
         for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {
-        	if ((currentState.getCurrentStatement().getPosition().getLine()
-                            == statementBreakpoint.getLine())) {
+        	if (currentState.getCurrentStatement().getPosition().getLine() 
+        			== statementBreakpoint.getLine()) {
                 return statementBreakpoint;
             }
         }
         for (GlobalBreakpoint globalBreakpoint : globalBreakpoints) {
         	if (globalBreakpoint.isActive()) {
-                typeChecker.setCurrentScope(currentState.getCurrentScope());
-                try {
+    			typeChecker.setCurrentScope(currentState.getCurrentScope());
+    			try {
                     Expression condition = globalBreakpoint.getExpression();
                     Ensure ensure = new Ensure(new Position(), condition);
                     typeChecker.setFunctionCallAllowed(false);
@@ -169,7 +168,7 @@ public class ProgramExecution {
                 } catch (IllegalTypeException ignored) {
                 } catch (AssertionFailureException ignored) {
                 }
-            }
+    		}
         }
         return null;
     }
