@@ -68,18 +68,16 @@ public class ExecutionHandler {
 		boolean finished = false;
 		boolean success = true;
 		while (!paused && !finished && success) {
+			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
+				finished = true;
+			}
+			success = this.singleStep(sbreakpoints, gbreakpoints);
 			try {
 				if (this.execution != null && this.execution.checkBreakpoints() != null) {
 					paused = true;
-					break;
 				}
-				if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
-					finished = true;
-				}
-				success = this.singleStep(sbreakpoints, gbreakpoints);
 			}
-			catch (FunctionCallNotAllowedException fce) {
-				this.messagesystem.addMessage(MessageCategories.ERROR, fce.getErrorPosition().getLine(), fce.getMessage());
+			catch (FunctionCallNotAllowedException ignored) {
 			}
 		}
 	}
