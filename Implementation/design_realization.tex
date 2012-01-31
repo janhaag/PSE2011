@@ -8,3 +8,5 @@ Es wurde bei der Implentierung der GUI stets auf das MVC-Pattern geachtet und es
 \item ExecutionHandler, BreakpointView/VariableView und TableViewController
 \item Settings, SettingsFrame und SettingsController
 \end{itemize}
+\subsection{Erweiterbarkeit der Beweiseranbindung}
+Auf die Möglichkeit einer einfachen Anbindung anderer Beweiser als Z3 wurde geachtet. Es ist nun sowohl möglich Z3 mit einer anderen \"{U}bersetzungsstrategie zu verwenden, indem der Klasse Z3 ein anderer ASTVisitor gegeben wird, als auch die Wiederverwendung des SMTLibTranslators f\"{u}r einen anderen Beweiser durch eine neue Klasse, die von Verifier erbt, und die Klasse SMTLibTranslator benutzt.
