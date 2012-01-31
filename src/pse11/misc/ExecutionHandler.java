@@ -130,23 +130,20 @@ public class ExecutionHandler {
 		try {
 			result = verifier.verify(this.ast);
 		} catch (IOException e) {
-			// TODO 
-			e.printStackTrace();
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOException");
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "Please insert a correct path under Edit->Settings!");
 		} catch (InterruptedException e) {
-			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, e.getMessage());
 		} catch (RecognitionException e) {
-			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1 , e.getMessage());
 		} catch(NullPointerException e) {
 			e.printStackTrace();
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "NullPointer");
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "Validate failed!");
 		}
 		for(Pair<Boolean, String> entry : result) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0, entry.getValue1() + entry.getValue2());
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0, 
+					 entry.getValue2(), entry.getValue1().toString());
 		}
 	}
 	
