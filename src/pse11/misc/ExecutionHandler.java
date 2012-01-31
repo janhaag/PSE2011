@@ -70,6 +70,7 @@ public class ExecutionHandler {
 		while (!paused && !finished && success) {
 			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
 				finished = true;
+				break;
 			}
 			success = this.singleStep(sbreakpoints, gbreakpoints);
 			try {
