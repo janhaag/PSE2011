@@ -1,0 +1,10 @@
+\section{Umsetzung der Entwurfsentscheidungen}
+\subsection{Visitor-Pattern}
+Das Visitor-Pattern bildet die Basis der Behandlungen des abstrakten Syntaxbaumes. So bilden der Interpreter, der TypeChecker und der SMTLibTranslator die Besucherklassen, die die Knoten des AST besuchen k\"{o}nnen.
+\subsection{MVC-Pattern}
+Es wurde bei der Implentierung der GUI stets auf das MVC-Pattern geachtet und es besteht nun eine klare Trennung zwischen den Modellen, Controllern und Views. Konkret bilden zum Beispiel die folgenden Klassen jeweils ein vollst"andiges MVC-System: 
+\begin{itemize}
+\item Editor, EditorView und EditorController
+\item ExecutionHandler, BreakpointView/VariableView und TableViewController
+\item Settings, SettingsFrame und SettingsController
+\end{itemize}
