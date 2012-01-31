@@ -15,12 +15,31 @@ import ast.FunctionParameter;
 import ast.IntegerType;
 import ast.Type;
 
+/**
+ * This class represents a frame for random tests.
+ */
 public class RandomTestFrame extends Frame implements MiscFrame {
+	/**
+	 * shell of the frame
+	 */
 	private Shell shell;
+	/**
+	 * text field for the number of random tests
+	 */
 	private Text count;
+	/**
+	 * text fields for intervals and array sizes
+	 */
 	private Text[][] intervals;
+	/**
+	 * button for starting execution
+	 */
 	private Button startButton;
 	
+	/**
+	 * Construct a random test frame with the specified parent shell.
+	 * @param parentShell specified shell
+	 */
 	public RandomTestFrame(Shell parentShell) {
 		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		this.shell.setText("Random Test");
@@ -34,7 +53,13 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 		shell.setLayout(gLayout);
 	}
 	
+	/**
+	 * Add attributes to the shell of the frame and open it. The size
+	 * of the shell depends on the number of parameters.
+	 * @param parameters list of parameters
+	 */
 	public void createFrame(FunctionParameter[] parameters) {
+		//Add various components
 		Label label = new Label(this.shell, SWT.NONE);
 		label.setText("Number of random tests: ");	
 		GridData gData = new GridData(GridData.FILL_HORIZONTAL);
@@ -53,6 +78,7 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 		new Label(this.shell, SWT.NONE).setText("End");
 		new Label(this.shell, SWT.NONE).setText("Array size");
 
+		//Add text fields for interval and array size depending on the parameter type
 		this.intervals = new Text[parameters.length][3];
 		int i;
 		for (i = 0; i < parameters.length; i++) {
@@ -111,6 +137,10 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 		this.shell.open();
 	}
 	
+	/**
+	 * Open an empty shell with the specified text.
+	 * @param s specified text
+	 */
 	public void createEmptyFrame(String s) {
 		Label label = new Label(this.shell, SWT.NONE);
 		label.setText(s);
@@ -122,18 +152,34 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 		this.shell.open();
 	}
 	
+	/**
+	 * Return the shell of the frame.
+	 * @return shell of the frame
+	 */
 	public Shell getShell() {
 		return this.shell;
 	}
 	
+	/**
+	 * Return the text field for the number of random tests
+	 * @return text field for the number of random tests
+	 */
 	public Text getCount() {
 		return this.count;
 	}
 	
+	/**
+	 * Return the text fields for the intervals and array sizes
+	 * @return text fields for the intervals and array sizes
+	 */
 	public Text[][] getIntervals() {
 		return this.intervals;
 	}
 	
+	/**
+	 * Return the start button for the random test.
+	 * @return start button
+	 */
 	public Button getStartButton() {
 		return this.startButton;
 	}
@@ -141,16 +187,13 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 	@Override
 	public Button getSaveButton() {
 		return null;
-	}
-	
+	}	
 	@Override
 	public void close() {
 		this.shell.close();
 	}
-
 	@Override
 	public Button getCloseButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

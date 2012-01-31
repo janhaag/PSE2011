@@ -7,15 +7,30 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * This class represents a frame for open or save files.
+ */
 public class FileFrame extends Frame implements MiscFrame {
+	/**
+	 * shell of the frame
+	 */
 	private Shell shell;
+	/**
+	 * chosen file for load
+	 */
 	private File chosenFile;
 
+	/**
+	 * Construct a file frame with the specified parent shell and 
+	 * definitions about its behavior and style.
+	 * @param parentShell specified shell
+	 * @param def specified definitions
+	 */
 	public FileFrame(Shell parentShell, int def) {
 		shell = new Shell(parentShell);
 		chosenFile = null;
 		String fileName = null;
-
+		
 		FileDialog dlg = new FileDialog(shell, def);
 		dlg.setOverwrite(true);
 		fileName = dlg.open();
@@ -28,19 +43,20 @@ public class FileFrame extends Frame implements MiscFrame {
 		}
 	}
 
+	/**
+	 * Return the chosen file for load option.
+	 * @return chosen file
+	 */
 	public File getChosenFile() {
 		return chosenFile;
 	}
 
 	@Override
 	public Button getSaveButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 	@Override
 	public Button getCloseButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -6,7 +6,9 @@ import gui.controller.MainController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
 
-
+/**
+ * This class represents the menu bar of the main frame.
+ */
 public class MenuBar {
 	private Menu menu;
 	private MenuItem newFileItem;
@@ -74,6 +76,12 @@ public class MenuBar {
 		return this.pasteItem;
 	}
 	
+	/**
+	 * Construct a menu bar with the specified controllers and parent shell.
+	 * @param controller specified controller
+	 * @param editorController specified controller
+	 * @param shell specified shell
+	 */
 	private void initiateMenuBar(MainController controller, EditorController editorController, Shell shell) {
 		menu = new Menu(shell,SWT.BAR);
 		

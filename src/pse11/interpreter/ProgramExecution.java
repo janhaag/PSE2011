@@ -24,7 +24,10 @@ public class ProgramExecution {
      * list of this program's global breakpoints
      */
     private ArrayList<GlobalBreakpoint> globalBreakpoints;
-    
+    /**
+     * list of breakpoints to be ignored for the next single step execution
+     */
+    private ArrayList<Breakpoint> ignoreList;
     //TODO: delete typeChecker if necessary
     /**
      * type checker to evaluate the type correctness of global statements
@@ -45,6 +48,8 @@ public class ProgramExecution {
     		ArrayList<GlobalBreakpoint> gbreakpoints, String[] parameterValues) {
         this.statementBreakpoints = sbreakpoints;
         this.globalBreakpoints = gbreakpoints;
+        this.ignoreList = new ArrayList<Breakpoint>();
+        this.ignoreList.add(new StatementBreakpoint(0));
         currentState = new State(ast);
         typeChecker = new TypeChecker();
         this.interpreter = interpreter;
@@ -149,29 +154,45 @@ public class ProgramExecution {
     }
 
     public Breakpoint checkBreakpoints() {
+    	int line = currentState.getCurrentStatement().getPosition().getLine();
         for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {
-        	if ((currentState.getCurrentStatement().getPosition().getLine()
-                            == statementBreakpoint.getLine())) {
+        	if ((this.ignoreList.get(0) == null 
+        			|| line != ((StatementBreakpoint) this.ignoreList.get(0)).getLine()) 
+        			&& line == statementBreakpoint.getLine()) {
+        		this.ignoreList.set(0, statementBreakpoint);
                 return statementBreakpoint;
             }
         }
+        GlobalBreakpoint hit = null;
         for (GlobalBreakpoint globalBreakpoint : globalBreakpoints) {
-        	if (globalBreakpoint.isActive()) {
-                typeChecker.setCurrentScope(currentState.getCurrentScope());
-                try {
+        	boolean ignoredBreakpoint = false;
+    		for (int i = 1; i < this.ignoreList.size(); i++) {
+    			if (this.ignoreList.get(i) != null 
+        				&& ((GlobalBreakpoint) this.ignoreList.get(i)).getExpression()
+        					.toString().equals(globalBreakpoint.getExpression().toString())) {
+    				ignoredBreakpoint = true;
+    				this.ignoreList.remove(i);
+    				break;
+    			}
+    		}
+        	if (!ignoredBreakpoint && globalBreakpoint.isActive()) {
+    			typeChecker.setCurrentScope(currentState.getCurrentScope());
+    			try {
                     Expression condition = globalBreakpoint.getExpression();
                     Ensure ensure = new Ensure(new Position(), condition);
                     typeChecker.setFunctionCallAllowed(false);
                     ensure.accept(typeChecker);
                     typeChecker.setFunctionCallAllowed(true);
                     ensure.accept(interpreter);
-                    return globalBreakpoint;
+                    this.ignoreList.add(globalBreakpoint);
+                    System.out.println(globalBreakpoint.getExpression().toString());
+                    hit = globalBreakpoint;
                 } catch (IllegalTypeException ignored) {
                 } catch (AssertionFailureException ignored) {
                 }
-            }
+    		}
         }
-        return null;
+        return hit;
     }
 
     public State getCurrentState() {

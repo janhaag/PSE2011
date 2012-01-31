@@ -13,7 +13,18 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+/**
+ * This class represents a miscellaneous console which displays results
+ * of random tests.
+ */
 public class MiscConsole extends Console {
+	/**
+	 * Construct a miscellaneous console with the specified parent composite,
+	 * definitions and model
+	 * @param parent specified composite
+	 * @param style specified definitions
+	 * @param messagesystem specified model
+	 */
 	public MiscConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
 		

@@ -14,24 +14,33 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * This class represents a frame for displaying the help documentation.
+ */
 public class HelpFrame extends Frame implements MiscFrame {
-	// private MiscController controller;
 	private HelpController controller;
 	private Shell shell;
 	private List list;
 	private Browser browser;
 	private Button closeButton;
 
+	/**
+	 * Construct a help frame with the specified parent shell and controller.
+	 * @param parentShell specified shell
+	 * @param helpController specified controller
+	 */
 	public HelpFrame(Shell parentShell, HelpController helpController) {
 		this.controller = helpController;
 		controller.setHelpFrame(this);
-
 		shell = new Shell(parentShell, SWT.SHELL_TRIM);
 		shell.setText("Help");
+		
+		//Set the layout
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		shell.setLayout(layout);
 
+		//Add various components
 		list = new List(shell, SWT.SIMPLE);
 		GridData listLayoutData = new GridData(SWT.FILL, SWT.FILL, false, false);
 		listLayoutData.widthHint = 100;
@@ -72,6 +81,10 @@ public class HelpFrame extends Frame implements MiscFrame {
 		shell.open();
 	}
 	
+	/**
+	 * Return the list of sections of the documentation.
+	 * @return list of sections
+	 */
 	public List getList() {
 		return list;
 	}
