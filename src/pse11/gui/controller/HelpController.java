@@ -7,21 +7,48 @@ import misc.Help;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
+/**
+ * /**
+ * This class is responsible for controlling the views @see{HelpFrame},
+ * @see{HelpBox} and uses the model @see{Help}.
+ */
 public class HelpController {
+	/**
+	 * model for help documentation
+	 */
 	private Help help;
+	/**
+	 * view for displaying documentation
+	 */
 	private HelpFrame helpFrame;
+	/**
+	 * view for quick search
+	 */
 	private HelpBox helpBox;
 
+	/**
+	 * Construct a help controller with the specified view and model.
+	 * @param help specified model
+	 * @param helpBox specified view
+	 */
 	public HelpController(Help help, HelpBox helpBox) {
 		this.help = help;
 		this.helpBox = helpBox;
 		helpBox.addSelectionListener(new HelpBoxSearchListener());
 	}
 
+	/**
+	 * Set the specified frame as view.
+	 * @param helpFrame specified view
+	 */
 	public void setHelpFrame(HelpFrame helpFrame) {
 		this.helpFrame = helpFrame;
 	}
 
+	/**
+	 * Return the table of contents of the model @see{Help}
+	 * @return table of contents
+	 */
 	public String[] getTableOfContents() {
 		return this.help.getTableOfContents();
 	}
@@ -35,7 +62,7 @@ public class HelpController {
 		public void widgetSelected(SelectionEvent e) {
 			String search = helpBox.getSearchText();
 			if (search != null && !(search.equals(""))) {
-				String similarTag = findSimilarTag(search, help.getTags());
+				String similarTag = findSimilarTag(search.toLowerCase(), help.getTags());
 				String helpText = help.getHelpByTag(similarTag);
 
 				String styleSheet = help.getSmallStyle();

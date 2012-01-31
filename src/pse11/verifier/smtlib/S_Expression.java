@@ -1,6 +1,8 @@
 package verifier.smtlib;
 
 
+import java.util.LinkedList;
+
 /**
  * This class represents a S-Expression.
  * It is identified by its operator.
@@ -46,17 +48,31 @@ public class S_Expression {
         return new S_Expression(op, newSubExpressions);
     }
 
-    public void replace(String varName, S_Expression newValue) {
-        if (this instanceof Constant || this instanceof Variable) {
+    public void replace(VarDef varDef, S_Expression newValue) {
+        if (subexpressions == null) {
             return;
         }
         for (int i = 0; i < subexpressions.length; i++) {
-            if (subexpressions[i] instanceof Variable) {
-                if (subexpressions[i].toString().equals(varName)) {
+            if (subexpressions[i] instanceof VarDef) {
+                if (subexpressions[i].equals(varDef)) {
                     subexpressions[i] = newValue.deepCopy();
                 }
             } else if (!(subexpressions[i] instanceof Constant)) {
-                subexpressions[i].replace(varName, newValue);
+                subexpressions[i].replace(varDef, newValue);
+            }
+        }
+    }
+    
+    public LinkedList<String> getUndefinedVars() {
+        LinkedList<String> result = new LinkedList<String>();
+        addVars(result);
+        return result;
+    }
+    
+    public void addVars(LinkedList<String> varList) {
+        if (subexpressions != null) {
+            for (S_Expression expression : subexpressions) {
+                expression.addVars(varList);
             }
         }
     }

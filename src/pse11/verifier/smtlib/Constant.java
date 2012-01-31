@@ -1,5 +1,7 @@
 package verifier.smtlib;
 
+import java.util.LinkedList;
+
 /**
  * This class represents a Constant,
  * which is a S-Expression without subexpressions
@@ -35,5 +37,10 @@ public class Constant extends S_Expression {
     @Override
     public S_Expression deepCopy() {
         return new Constant(stringRepresentation);
+    }
+
+    @Override
+    public void addVars(LinkedList<String> varList) {
+        //no-op
     }
 }

@@ -20,17 +20,43 @@ import misc.MessageSystem;
 import gui.ParameterFrame;
 import gui.RandomTestFrame;
 
+/**
+ * This class is responsible for controlling the views @see{ParameterFrame},
+ * @see{RandomTestFrame} and uses the models @see{MessageSystem}, 
+ * @see{ExecutionHandler}.
+ */
 public class ParameterController implements SelectionListener {
+	/**
+	 * view for parameter input
+	 */
 	private ParameterFrame parameterframe;
+	/**
+	 * view for random test interval input
+	 */
 	private RandomTestFrame randomtestframe;
+	/**
+	 * model for random test output
+	 */
 	private MessageSystem messagesystem;
+	/**
+	 * model for parameter input
+	 */
 	private ExecutionHandler executionHandler;
 	
+	/**
+	 * Construct a parameter controller with the specified models.
+	 * @param executionHandler specified model
+	 * @param messagesystem specified model
+	 */
 	public ParameterController(ExecutionHandler executionHandler, MessageSystem messagesystem) {
 		this.messagesystem = messagesystem;
 		this.executionHandler = executionHandler;
 	}
 
+	/**
+	 * Add the specified frame as view.
+	 * @param parameterframe specified view
+	 */
 	public void addParameterFrame(ParameterFrame parameterframe) {
 		if (this.executionHandler.getAST() != null && this.executionHandler.getAST().getMainFunction().getParameters() != null) {
 			this.parameterframe = parameterframe;
@@ -39,6 +65,12 @@ public class ParameterController implements SelectionListener {
 		}		
 	}
 	
+	/**
+	 * Add the specified frame as view. An empty view might be created 
+	 * if the source code does not have correct syntax or parameters.
+	 * @param randomtestframe specified view
+	 * @param source program code to be checked
+	 */
 	public void addRandomTestFrame(RandomTestFrame randomtestframe, String source) {
 		this.randomtestframe = randomtestframe;
 		this.executionHandler.parse(source);
@@ -103,20 +135,9 @@ public class ParameterController implements SelectionListener {
 			this.randomtestframe.getShell().dispose();
 		}
 	}
-	private void test(IntegerType type) {
-		System.out.println("int");
-	}
-	private void test(Type type) {
-		System.out.println("void");
-	}
-	private void test(BooleanType type) {
-		System.out.println("type");
-	}
 	private String[] createRandomTestValues(FunctionParameter[] parameters) {
 		String[] parameterValues = new String[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
-			System.out.println(parameters[i].getType().toString());
-			test(parameters[i].getType());
 			if (parameters[i].getType() instanceof IntegerType) {
 				String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();
 				String endString = this.getRandomtestframe().getIntervals()[i][1].getText();
@@ -223,15 +244,33 @@ public class ParameterController implements SelectionListener {
 		return parameterValues;
 	}
 	
+	/**
+	 * Create a random integer number from the specified interval.
+	 * @param begin start of the interval
+	 * @param end end of the interval
+	 * @return created number
+	 */
 	private int createRandomIntegerValue(int begin, int end) {
 		return (int) (Math.random() * (end - begin + 1)) + begin;
 	}
 	
+	/**
+	 * Create a random boolean value.
+	 * @return created value
+	 */
 	private boolean createRandomBooleanValue() {
 		float random = (float) Math.random();
 		return random > 0.5; 
 	}
 	
+	/**
+	 * Create a random one dimensional array of integer numbers from 
+	 * the specified interval.
+	 * @param begin start of the interval
+	 * @param end end of the interval
+	 * @param size size of the array
+	 * @return created integer array
+	 */
 	private String createRandomIntegerArray(int begin, int end, int size) {
 		String random = "";
 		for (int i = 0; i < size; i++) {
@@ -246,6 +285,11 @@ public class ParameterController implements SelectionListener {
 		return random;
 	}
 	
+	/**
+	 * Create a random one dimensional boolean array.
+	 * @param size size of the array
+	 * @return created boolean array
+	 */
 	private String createRandomBooleanArray(int size) {
 		String random = "";
 		for (int i = 0; i < size; i++) {
@@ -260,10 +304,18 @@ public class ParameterController implements SelectionListener {
 		return random;
 	}
 
+	/**
+	 * Return the parameter frame of this controller.
+	 * @return parameter frame
+	 */
 	public ParameterFrame getParameterframe() {
 		return this.parameterframe;
 	}
 	
+	/**
+	 * Return the random test frame of this controller.
+	 * @return random test frame
+	 */
 	public RandomTestFrame getRandomtestframe() {
 		return this.randomtestframe;
 	}

@@ -1,0 +1,31 @@
+<html>
+<head>
+<style>
+<!--
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+}
+-->
+</style>
+<title>Functions</title>
+</head>
+<body>
+<h1>Functions</h1>
+<p>Functions are a sequence of statements which can be executed separately when provided with specified parameters and returning a result.</p>
+<h2>Function Declaration</h2>
+<p>Functions are declared by the type of its return value, the function name, a parameter list and the function body:</p>
+<p class="code">
+return_type function_name(paramter1, parameter2, ...) assume-statement {<br />
+<span class="code">function_body</span><br />
+} ensure-statement <br />
+</p>
+<p>Both the assume-statement and ensure-statement are optional. See the article about assertions for further information.</p>
+<h2>Calling functions</h2>
+<p>Functions can be called by their name and the parameters in round brackets, which will execute the function with the specified parameters and return a value.</p>
+<h2>Return Statement</h2>
+<p>Every function (with the exception of the main function) returns a value specified by its return type. To do this, use the return keyword followed by the value to be returned. There can only be one return statement per function and it has to be the last statement in a function.</p>
+<h2>Main Function</h2>
+<p>Every runnable program must have a main function, which is a special function without a return type. Program execution will start at the beginning of the main function.</p>
+</body>
+</html>

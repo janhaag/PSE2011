@@ -1,5 +1,13 @@
 package gui.controller;
 
+import gui.AboutFrame;
+import gui.FileFrame;
+import gui.HelpFrame;
+import gui.MainFrame;
+import gui.ParameterFrame;
+import gui.RandomTestFrame;
+import gui.SettingsFrame;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,27 +23,52 @@ import misc.MessageSystem;
 import misc.Settings;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 
-import gui.AboutFrame;
-import gui.FileFrame;
-import gui.HelpFrame;
-import gui.MainFrame;
-import gui.ParameterFrame;
-import gui.SettingsFrame;
-import gui.RandomTestFrame;
-
+/**
+ * This class is the most important part of the GUI component. It initializes
+ * all of the other controllers and delegates user actions to their respective
+ * receiver controllers. It is also responsible for the view @see{MainFrame} 
+ * and uses @see{ExecutionHandler} as model.
+ */
 public class MainController implements SelectionListener {
+	/**
+	 * model and connection with other components
+	 */
 	private ExecutionHandler executionHandler;
-
+	/**
+	 * main view for displaying all other views
+	 */
 	private MainFrame mainframe;
+	/**
+	 * controller for settings
+	 */
 	private SettingsController settingsController;
+	/**
+	 * controller for help
+	 */
 	private HelpController helpController;
+	/**
+	 * controller for parameter input
+	 */
 	private ParameterController parameterContoller;
+	/**
+	 * controller for editor
+	 */
 	private EditorController editorController;
+	/**
+	 * controller for variables and breakpoints
+	 */
 	private TableViewController tableController;
 
+	/**
+	 * Construct a main controller and initializes all other controllers.
+	 */
 	public MainController() {
 		MessageSystem messagesystem = new MessageSystem();
 		this.executionHandler = new ExecutionHandler(messagesystem);
@@ -52,6 +85,9 @@ public class MainController implements SelectionListener {
 		initMainFrame();
 	}
 
+	/**
+	 * Open the main frame.
+	 */
 	private void initMainFrame() {
 		/*
 		 * Very important to call this in a separated method because SWT uses an
@@ -88,7 +124,7 @@ public class MainController implements SelectionListener {
 				writeStringToFile(this.mainframe.getEditor().getText(), saveFileFrame.getChosenFile());
 			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemNewFile()) {
-			this.mainframe.getEditor().setText("");
+			this.editorController.getEditor().setSource("");
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
@@ -102,6 +138,30 @@ public class MainController implements SelectionListener {
 			this.editorController.getEditor().undo();
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {
 			this.editorController.getEditor().redo();
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCut()) {
+			Point selection = this.mainframe.getEditor().getSelection();
+			String source = this.mainframe.getEditor().getText();
+			String cutSource = source.substring(0, selection.x) + source.substring(selection.y);
+			this.editorController.getEditor().setSource(cutSource);
+			this.mainframe.getEditor().getTextField().setSelection(selection.x);
+			
+			String cut = source.substring(selection.x, selection.y);
+			this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {
+			Point selection = this.mainframe.getEditor().getSelection();
+			String source = this.mainframe.getEditor().getText();
+			String copy = source.substring(selection.x, selection.y);
+			this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
+		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {
+			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());
+			if(paste != null && !paste.equals("")) {
+				Point selection = this.mainframe.getEditor().getSelection();
+				String source = this.mainframe.getEditor().getText();
+				String pastedSource = source.substring(0, selection.x) + paste + source.substring(selection.y); 
+				this.editorController.getEditor().setSource(pastedSource);
+				this.mainframe.getEditor().getTextField().setSelection(selection.x + paste.length());
+			}
+			//String pastedSource = source.substring(0, selection.x) + 
 		}
 		//button events
 		else if (e.getSource() == this.mainframe.getRunButton() 
@@ -164,7 +224,6 @@ public class MainController implements SelectionListener {
 					return;
 				}
 			}
-			this.pauseView();
 			
 			//Execution
 			new Thread() {
@@ -181,6 +240,7 @@ public class MainController implements SelectionListener {
 							executionHandler.getGlobalBreakpoints());
 					mainframe.getDisplay().asyncExec(new Runnable() {
 						public void run() {
+							pauseView();
 							if (executionHandler.getAssertionFailureMessage() != null) {
 								executionHandler.printAssertionFailureMessage();
 								stopView();
@@ -209,6 +269,9 @@ public class MainController implements SelectionListener {
 		}
 	}
 
+	/**
+	 * Update the main frame when changed to running state.
+	 */
 	private void runView() {
 		//Functions
 		this.editorController.removeMark();
@@ -229,13 +292,17 @@ public class MainController implements SelectionListener {
 		this.editorController.deactivateView();
 	}
 	
+	/**
+	 * Update the main frame when changed to paused state.
+	 */
 	private void pauseView() {
 		//Functions
 		this.tableController.updateVarView();
 		this.editorController.removeMark();
-		if (this.executionHandler.getProgramExecution() != null) {
+		if (this.executionHandler.getProgramExecution() != null
+				&& this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() != null) {
 			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();
-			this.editorController.markCurrentLine(line);
+			this.editorController.markCurrentLine(line - 1);
 		}
 		//Images
 		Image image = new Image(this.mainframe.getDisplay(), 
@@ -253,6 +320,9 @@ public class MainController implements SelectionListener {
 		this.tableController.deactivateBreakpointView();
 	}
 	
+	/**
+	 * Update the view when changed to idle state.
+	 */
 	private void stopView() {
 		//Functions
 		this.editorController.removeMark();

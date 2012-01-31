@@ -16,6 +16,7 @@ public class SettingsFrame extends Frame {
 	Shell shell;
 	private Text memoryLimitTextField;
 	private Text timeoutTextField;
+	private Text verifierPathTextField;
 	private Button saveButton;
 	private Button closeButton;
 	private Label errorLabel;
@@ -24,9 +25,9 @@ public class SettingsFrame extends Frame {
 		this.controller = controller;
 		this.controller.addView(this);
 		
-		this.shell = new Shell();
+		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		//Please mind >all< components before resizing the view
-		this.shell.setSize(300,240);
+		this.shell.setSize(320,250);
 		this.shell.setText("Settings");
 		
 		//Setting layout
@@ -65,6 +66,17 @@ public class SettingsFrame extends Frame {
 		this.memoryLimitTextField.setLayoutData(gData);
 		new Label(settingsGroup, SWT.NONE).setText("KB");
 		
+		Label templabel = new Label(settingsGroup, SWT.NONE);
+		templabel.setText("Path to the Verifier:");
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
+		templabel.setLayoutData(gData);
+		this.verifierPathTextField = new Text(settingsGroup, SWT.SINGLE | SWT.LEFT);
+		this.verifierPathTextField.setText(controller.getVerifierPath());
+		gData = new GridData(GridData.FILL_HORIZONTAL);
+		gData.horizontalSpan = 3;
+		this.verifierPathTextField.setLayoutData(gData);
+		
 		//Add buttons
 		final Composite buttoncomposite = new Composite(this.shell, SWT.NONE);
 		final GridLayout buttonlayout = new GridLayout();
@@ -80,10 +92,8 @@ public class SettingsFrame extends Frame {
 		buttoncomposite.setLayoutData(gData);
 		
 		//Add label for error message
-		//TODO Some work on the "layout"/design
 		this.errorLabel = new Label(this.shell, SWT.BORDER | SWT.BORDER_DOT);
 		this.errorLabel.setForeground(new Color(this.shell.getDisplay(), new RGB(0, 0, 0)));
-//		this.errorLabel.setFont(new Font(this.shell.getDisplay(), "arial", 10, SWT.BOLD));
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 2;
 		gData.verticalSpan = 1;
@@ -116,9 +126,13 @@ public class SettingsFrame extends Frame {
 	public Text getTimeoutTextField() {
 		return this.timeoutTextField;
 	}
+	public Text getVerifierPathTextField() {
+		return this.verifierPathTextField;
+	}
 	public void update() {
 		this.memoryLimitTextField.setText(this.controller.getMemoryLimit());
 		this.timeoutTextField.setText(this.controller.getTimeOut());
+		this.verifierPathTextField.setText(this.controller.getVerifierPath());
 	}
 	public void displayMessage(boolean error, String msg) {
 		this.errorLabel.setText(msg);

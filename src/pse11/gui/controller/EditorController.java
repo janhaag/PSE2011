@@ -14,10 +14,25 @@ import org.eclipse.swt.events.VerifyListener;
 import gui.EditorView;
 import misc.Editor;
 
+/**
+ * This class is responsible for controlling the view @see{EditorFrame} 
+ * and uses the model @see{Editor}.
+ */
 public class EditorController implements MouseListener, ModifyListener, VerifyListener, VerifyKeyListener, FocusListener {
-    private EditorView editorframe;
-    private Editor editor;
-        
+	/**
+	 * view for displaying source code and statement breakpoints
+	 */
+	private EditorView editorframe;
+	/**
+	 * model for source code and statement breakpoints
+	 */
+	private Editor editor;
+       
+	/**
+     * Construct an editor controller with the specified view and model.
+     * @param editor specified model
+     * @param editorframe specified view
+     */
     public EditorController(Editor editor, EditorView editorframe) {
         this.editorframe = editorframe;
         this.editor = editor;
@@ -28,28 +43,49 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
         this.editorframe.getLineNumbers().addFocusListener(this);
     }
     
+    /**
+     * Return the model of the controller.
+     * @return model of the controller
+     */
     public Editor getEditor() {
         return this.editor;
     }
     
+    /**
+     * Return the view of the controller.
+     * @return view of the controller
+     */
     public EditorView getEditorView() {
 		return this.editorframe;
     }
     
+    /**
+     * Deactivate the view to avoid invalid changes during program execution.
+     */
     public void deactivateView() {
     	this.editorframe.getLineNumbers().removeMouseListener(this);
     	this.editorframe.getTextField().setEditable(false);
     }
     
+    /**
+     * Reactivate the view.
+     */
     public void activateView() {
     	this.editorframe.getLineNumbers().addMouseListener(this);
     	this.editorframe.getTextField().setEditable(true);
     }
     
+    /**
+     * Highlight the specified line. 
+     * @param line specified line
+     */
     public void markCurrentLine(int line) {
     	this.editorframe.markLine(line);
     }
     
+    /**
+     * Remove all line highlighting.
+     */
     public void removeMark() {
     	this.editorframe.removeAllLineBackground();
     }
@@ -100,14 +136,11 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
     
     @Override
     public void focusLost(FocusEvent e) {
-
     }
 	@Override
 	public void mouseDown(MouseEvent arg0) {
-		
 	}
 	@Override
-	public void mouseUp(MouseEvent arg0) {
-		
+	public void mouseUp(MouseEvent arg0) {		
 	}		
 }

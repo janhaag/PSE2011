@@ -18,7 +18,7 @@ public class ParameterFrame extends Frame implements MiscFrame {
 	private Button okButton;
 
 	public ParameterFrame(Shell parentShell) {	
-		shell = new Shell(parentShell);
+		shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		shell.setText("Parameter");
 		
 		GridLayout gLayout = new GridLayout();

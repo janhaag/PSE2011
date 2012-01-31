@@ -13,6 +13,8 @@ public class Assignment extends Statement {
      * name of the variable
      */
     private final Identifier identifier;
+    private int depth;
+    private Type type;
 
     /**
      * Constructor.
@@ -27,6 +29,7 @@ public class Assignment extends Statement {
         super(position);
         this.value = value;
         this.identifier = identifier;
+        depth = 0;
     }
 
     /**
@@ -43,6 +46,22 @@ public class Assignment extends Statement {
      */
     public Identifier getIdentifier() {
         return identifier;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override

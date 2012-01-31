@@ -14,11 +14,31 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+/**
+ * This class represents the view for displaying global breakpoints as a
+ * part of the main frame. It is also important for adding new global 
+ * breakpoints and de-/activating those.
+ */
 public class BreakpointView extends Composite {
+	/**
+	 * table displaying added global breakpoints
+	 */
 	private Table global;
+	/**
+	 * text for global breakpoint expression input
+	 */
 	private StyledText addTextField;
+	/**
+	 * button for add and remove
+	 */
 	private Button button;
 	
+	/**
+	 * Construct a breakpoint view with the specified parent composite and 
+	 * definitions of its style and behavior.
+	 * @param parent specified composite
+	 * @param def specified definitions
+	 */
 	public BreakpointView(Composite parent, int def) {
 		super(parent, def);		
 		
@@ -28,6 +48,7 @@ public class BreakpointView extends Composite {
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		this.setLayoutData(gData);
 		
+		//Add the table
 		this.global = new Table (this, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL 
 				| SWT.H_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
 		
@@ -43,7 +64,7 @@ public class BreakpointView extends Composite {
 		column2.setWidth(200);
 		column2.setText("Expression");
 	
-		//Create text field and button for global breakpoint inserts
+		//Add text field and button
 		this.addTextField = new StyledText(this, SWT.SINGLE | SWT.BORDER);
 		this.addTextField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		gData = new GridData(GridData.FILL_HORIZONTAL); 
@@ -57,6 +78,11 @@ public class BreakpointView extends Composite {
 		this.button.setLayoutData(gData);
 	}
 	
+	/**
+	 * Update the table for displaying all added global breakpoints given
+	 * by the specified list of global breakpoints.
+	 * @param gbreakpoints specified list
+	 */
 	public void drawGlobalBreakpointItem(ArrayList<GlobalBreakpoint> gbreakpoints) {		
 		this.global.removeAll();
 		for (int i = 0; i < gbreakpoints.size(); i++) {
@@ -66,17 +92,26 @@ public class BreakpointView extends Composite {
 		}
 	}
 	
-	public void removeGlobalBreakpointItem() {
-	}
-	
+	/**
+	 * Return the table of the view.
+	 * @return table of the view
+	 */
 	public Table getGlobalBreakpoint() {
 		return this.global;
 	}
 	
+	/**
+	 * Return the expression text field of the view.
+	 * @return text field of the view
+	 */
 	public StyledText getAddTextField() {
 		return this.addTextField;
 	}
 	
+	/**
+	 * Return the add/remove button of the view.
+	 * @return button of the view
+	 */
 	public Button getAddButton() {
 		return this.button;
 	}

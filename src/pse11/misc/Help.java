@@ -19,10 +19,16 @@ public class Help {
 		// LinkedHashMap used for ordering
 		tableOfContents = new LinkedHashMap<String, String>();
 		tableOfContents.put("Introduction", "index.html");
+		tableOfContents.put("Comments", "comments.html");
 		tableOfContents.put("While-Loop", "while.html");
 		tableOfContents.put("If-Statement", "if.html");
 		tableOfContents.put("Assertion", "assertion.html");
+		tableOfContents.put("Quantified Expressions", "quantified_expression.html");
 		tableOfContents.put("Variables", "variables.html");
+		tableOfContents.put("Boolean Operations", "boolean_ops.html");
+		tableOfContents.put("Integer Operations", "integer_ops.html");
+		tableOfContents.put("Functions", "function.html");
+		
 
 		tags = new HashMap<String, String>();
 		tags.put("help", "index.html");
@@ -31,6 +37,24 @@ public class Help {
 		tags.put("if", "if.html");
 		tags.put("conditional", "if.html");
 		tags.put("assert", "assertion.html");
+		tags.put("ensure", "assertion.html");
+		tags.put("assume", "assertion.html");
+		tags.put("invariant", "assertion.html");
+		tags.put("axiom", "assertion.html");
+		tags.put("vars", "variables.html");
+		tags.put("variable", "variables.html");
+		tags.put("array", "variables.html");
+		tags.put("bool", "boolean_ops.html");
+		tags.put("boolean", "boolean_ops.html");
+		tags.put("logical", "boolean_ops.html");
+		tags.put("int", "integer_ops.html");
+		tags.put("integer", "integer_ops.html");
+		tags.put("function", "function.html");
+		tags.put("return", "function.html");
+		tags.put("quantifier", "quantified_expression.html");
+		tags.put("exists", "quantified_expression.html");
+		tags.put("forall", "quantified_expression.html");
+		tags.put("comment", "comments.html");
 	}
 
 	public String[] getTableOfContents() {

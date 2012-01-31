@@ -28,6 +28,10 @@ public class Settings {
 	 */
 	private int memoryLimit;
 	/**
+	 * the path to the verifier
+	 */
+	private String verifierPath;
+	/**
 	 * instance of this class
 	 */
 	private static Settings settings;
@@ -41,6 +45,9 @@ public class Settings {
 	 */
 	private Settings() {
 		this.settingsChanged = false;
+		this.memoryLimit = DEFAULT_MEMORYLIMIT;
+		this.timeout = DEFAULT_TIMEOUT;
+		this.verifierPath = "";
 		loadSettings();
 	}
 	/**
@@ -68,6 +75,14 @@ public class Settings {
 	 */
 	public int getMemoryLimit() {
 		return this.memoryLimit;
+	}
+	/**
+	 * Returns the path to the verifier.
+	 * 
+	 * @return the path to the verifier
+	 */
+	public String getVerifierPath() {
+		return this.verifierPath;
 	}
 	/**
 	 * Sets the timeout time to the specified value.
@@ -101,6 +116,25 @@ public class Settings {
 		}
 	}
 	/**
+	 * Sets the absolute path to the verifier to the specified String.
+	 * 
+	 * @param verifierPath the path to the verifier
+	 */
+	public void setVerifierPath(String verifierPath) {
+		if(verifierPath == null) {
+			throw new IllegalArgumentException("Illegal Argument!"
+					+ "The path to the verifier must not be null.");
+		}
+		if(!new File(verifierPath).exists()) {
+			throw new IllegalArgumentException("Illegal Argument!"
+					+ "The specified path doesn't exist.");
+		}
+		if(!verifierPath.equals(this.verifierPath)) {
+			this.verifierPath = verifierPath;
+			this.settingsChanged = true;
+		}
+	}
+	/**
 	 * Returns <code>true</code> when the settings have been changed and <code>false</code>
 	 * otherwise.
 	 * 
@@ -119,7 +153,8 @@ public class Settings {
 		}
 		String path = USERHOME + System.getProperty("file.separator") + FILENAME;
 		this.settingsChanged = false;
-		String settingString = this.timeout + System.getProperty("line.separator") + this.memoryLimit;
+		String settingString = this.timeout + System.getProperty("line.separator") + this.memoryLimit
+								+ System.getProperty("line.separator") + this.verifierPath;
 
     	File file = new File(path);
 		if(!file.exists()) {
@@ -141,15 +176,12 @@ public class Settings {
 	 */
 	private void loadSettings() {
 		if(USERHOME == null) {
-			this.memoryLimit = DEFAULT_MEMORYLIMIT;
-			this.timeout = DEFAULT_TIMEOUT;
 			return;
 		}
     	File file = new File(USERHOME + System.getProperty("file.separator") + FILENAME);
 		if(!file.exists()) {
-			this.memoryLimit = DEFAULT_MEMORYLIMIT;
-			this.timeout = DEFAULT_TIMEOUT;
 			this.settingsChanged = true;
+			return;
 		} else {
 			StringBuilder contents = new StringBuilder();
 			try {
@@ -164,16 +196,16 @@ public class Settings {
 					input.close();
 				}
 			} catch(IOException ioe) {
-				//TODO Fehlermeldung anlegen
-				this.memoryLimit = DEFAULT_MEMORYLIMIT;
-				this.timeout = DEFAULT_TIMEOUT;
+				return;
 			}
 			String elements[] = contents.toString().split(System.getProperty("line.separator"));
-			if(elements.length != 2) {
-				//TODO Fehlermeldung anlegen & evt dynamischer machen
+			if(elements.length != 3) {
+				file.delete();
+				return;
 			}
 			this.timeout = Integer.parseInt(elements[0]);
 			this.memoryLimit = Integer.parseInt(elements[1]);
+			this.verifierPath = elements[2];
 		}
 	}
 	

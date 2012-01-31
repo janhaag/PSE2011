@@ -14,6 +14,9 @@ public class MenuBar {
 	private MenuItem loadItem;
 	private MenuItem saveItem;
 	private MenuItem helpItem;
+	private MenuItem cutItem;
+	private MenuItem copyItem;
+	private MenuItem pasteItem;
 	private MenuItem undoItem;
 	private MenuItem redoItem;
 	private MenuItem settingsItem;
@@ -61,6 +64,15 @@ public class MenuBar {
 	public MenuItem getMenuBarItemRedo() {
 		return this.redoItem;
 	}
+	public MenuItem getMenuBarItemCut() {
+		return this.cutItem;
+	}
+	public MenuItem getMenuBarItemCopy() {
+		return this.copyItem;
+	}
+	public MenuItem getMenuBarItemPaste() {
+		return this.pasteItem;
+	}
 	
 	private void initiateMenuBar(MainController controller, EditorController editorController, Shell shell) {
 		menu = new Menu(shell,SWT.BAR);
@@ -95,12 +107,15 @@ public class MenuBar {
 		this.redoItem.setText("Redo");
 		this.redoItem.addSelectionListener(controller);
 		new MenuItem(editmenu, SWT.SEPARATOR);
-		final MenuItem cutItem = new MenuItem(editmenu, SWT.PUSH);
-		cutItem.setText("Cut");
-		final MenuItem copyItem = new MenuItem(editmenu, SWT.PUSH);
-		copyItem.setText("Copy");
-		final MenuItem pasteItem = new MenuItem(editmenu, SWT.PUSH);
-		pasteItem.setText("Paste");
+		this.cutItem = new MenuItem(editmenu, SWT.PUSH);
+		this.cutItem.setText("Cut");
+		this.cutItem.addSelectionListener(controller);
+		this.copyItem = new MenuItem(editmenu, SWT.PUSH);
+		this.copyItem.setText("Copy");
+		this.copyItem.addSelectionListener(controller);
+		this.pasteItem = new MenuItem(editmenu, SWT.PUSH);
+		this.pasteItem.setText("Paste");
+		this.pasteItem.addSelectionListener(controller);
 		new MenuItem(editmenu, SWT.SEPARATOR);
 		settingsItem = new MenuItem(editmenu, SWT.PUSH);
 		settingsItem.setText("Settings");

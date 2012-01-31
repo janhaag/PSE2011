@@ -26,11 +26,30 @@ import org.eclipse.swt.widgets.TreeItem;
 import ast.Expression;
 import ast.Identifier;
 
+/**
+ * This class is responsible for controlling the views @see{VariableView},
+ * @see{BreakpointView} and uses the model @see{ExecutionHandler}.
+ */
 public class TableViewController implements SelectionListener {
+	/**
+	 * view for displaying variables
+	 */
 	private VariableView varView;
+	/**
+	 * view for displaying global breakpoints
+	 */
 	private BreakpointView breakpointView;
+	/**
+	 * model for variables and global breakpoints
+	 */
 	private ExecutionHandler executionHandler;
 	
+	/**
+	 * Construct a table view controller with the specified views and model.
+	 * @param breakpointView specified view
+	 * @param varView specified view
+	 * @param executionHandler specified model
+	 */
 	public TableViewController(BreakpointView breakpointView, VariableView varView, ExecutionHandler executionHandler) {	
 		this.breakpointView = breakpointView;	
 		this.varView = varView;	
@@ -41,7 +60,9 @@ public class TableViewController implements SelectionListener {
 	}
 	
 
-	//update the variable view when in single step, paused or stopped state
+	/**
+	 * Update the variable view.
+	 */
 	public void updateVarView() {        		
         if (this.executionHandler == null || this.executionHandler.getProgramExecution() == null) {
         	return;
@@ -60,7 +81,13 @@ public class TableViewController implements SelectionListener {
 		}     
 	}
 	
-	//insert first level tree items
+	/**
+	 * Add variable items to the first level of the tree.
+	 * @param parent variable tree
+	 * @param type type of the variable
+	 * @param id name of the variable
+	 * @param tmp value of the variable
+	 */
 	private void checkValue(Tree parent, String type, String id, Value tmp) {
 		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {
 			this.varView.addTreeItem(parent, type, id, tmp.toString());
@@ -75,7 +102,13 @@ public class TableViewController implements SelectionListener {
 		}
 	}
 	
-	//insert tree items of level 2 and more
+	/**
+	 * Add variable items to the second or deeper levels of the tree.
+	 * @param parent variable tree item
+	 * @param type type of the variable
+	 * @param id name of the variable
+	 * @param tmp value of the variable
+	 */
 	private void checkValue(TreeItem parent, String type, String id, Value tmp) {
 		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {
 			this.varView.addTreeItem(parent, type, id, tmp.toString());
@@ -135,28 +168,48 @@ public class TableViewController implements SelectionListener {
 		}	
 	} 
 	
+	/**
+	 * Deactivate the variable view to show execution termination.
+	 */
 	public void deactivateVarView() {
 		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));
 		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));
 	}
 	
+	/**
+	 * Reactivate the variable view.
+	 */
 	public void activateVarView() {
 		this.varView.getVarTree().setBackground(null);
 		this.varView.getVarTree().setForeground(null);
 	}
 	
+	/**
+	 * Deactivate the breakpoint view to avoid invalid changes during program execution.
+	 */
 	public void deactivateBreakpointView() {
 		this.breakpointView.getAddButton().removeSelectionListener(this);
 	}
 	
+	/**
+	 * Reactivate the breakpoint view.
+	 */
 	public void activateBreakpointView() {
 		this.breakpointView.getAddButton().addSelectionListener(this);
 	}
 	
+	/**
+	 * Return the variable view of this controller.
+	 * @return variable view
+	 */
 	public VariableView getVarView() {
 		return this.varView;
 	}
 	
+	/**
+	 * Return the breakpoint view of the controller.
+	 * @return breakpoint view
+	 */
 	public BreakpointView getBreakpointView() {
 		return this.breakpointView;
 	}

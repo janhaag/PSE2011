@@ -10,19 +10,31 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * This class represents a frame which shows the "About" content.
+ */
 public class AboutFrame extends Frame implements MiscFrame {
+	/**
+	 * shell of the frame
+	 */
 	private Shell shell;
 
-	public AboutFrame(Shell parentShell) {
-		
-		shell = new Shell(parentShell);
+	/**
+	 * Construct an about frame with the specified shell.
+	 * @param parentShell specified shell
+	 */
+	public AboutFrame(Shell parentShell) {		
+		shell = new Shell(parentShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		shell.setSize(350,300);
 		shell.setText("About");
+		
+		//Set the layout
 		GridLayout gLayout = new GridLayout();
 		gLayout.marginTop = 20;
 		gLayout.marginWidth = 15;
 		shell.setLayout(gLayout);
 		
+		//Add various components
 		GridData gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
 		Label l1 = new Label(this.shell, SWT.NONE);
 		l1.setText("Praxis der Softwareentwicklung");
@@ -49,14 +61,13 @@ public class AboutFrame extends Frame implements MiscFrame {
 		l4.setLayoutData(gData);
 		shell.open();
 	}
+	
 	@Override
 	public Button getSaveButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public Button getCloseButton() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override

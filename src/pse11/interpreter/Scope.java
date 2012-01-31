@@ -34,6 +34,7 @@ public class Scope {
      * iterator over the statements in the current block
      */
     private final Iterator<Statement> statements;
+    private final int depth;
     /**
      * next statement in this scope
      */
@@ -60,12 +61,21 @@ public class Scope {
         variables = new HashMap<Identifier, Value>();
         returnValues = new IdentityHashMap<FunctionCall, Value>();
         variableSearch = (currentFunction == null) && upScope != null;
+        depth = variableSearch ? upScope.depth + 1 : 0;
         statements = (currentBlock != null)
                      ? currentBlock.getIterator() : null;
     }
 
     public boolean existsInScope(Identifier identifier) {
         return variables.containsKey(identifier);
+    }
+
+    public int getDepthOfVariable(Identifier variable) {
+        if (variables.containsKey(variable)) {
+            return depth;
+        } else {
+            return upScope.getDepthOfVariable(variable);
+        }
     }
 
     /**
