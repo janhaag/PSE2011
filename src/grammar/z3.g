@@ -27,7 +27,7 @@ block	returns[Pair<Boolean, String> result]
 
 model	returns [String example] @init{$example = "";}
 	:	'(model'
-		('(define-fun' id = IDENT  '('(IDENT  TYPE)*')' TYPE val = value ')'
+		('(define-fun' id = IDENT  '('(IDENT '!'  TYPE)*')' TYPE val = value ')'
         {$example += $id.text + "=" + $val.content + "\n";} )*
 		{HashMap m = new HashMap();}('(define-fun'  id = IDENT '()' {$example = $id.text;}
         '(Array'('Int'{$example += "[ ]";})+ TYPE  ')'

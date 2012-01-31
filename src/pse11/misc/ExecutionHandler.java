@@ -1,5 +1,6 @@
 package misc;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -107,19 +108,29 @@ public class ExecutionHandler {
 		if(this.ast == null) {
 			this.parse(source);
 		}
-		VerifierInterface verifier = new VerifierInterface(new Z3(""));
 		this.messagesystem.clear(MessageCategories.VERIFYERROR);
+		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, 
+					"Please specify a path to the verifier in the settings.");
+			return;
+		}
+		VerifierInterface verifier = new VerifierInterface(new Z3(
+				Settings.getInstance().getVerifierPath()
+				));
 		try {
 			verifier.verify(this.ast);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOException");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, e.getMessage());
 		} catch (RecognitionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1 , e.getMessage());
 		} catch(NullPointerException e) {
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "NullPointer");

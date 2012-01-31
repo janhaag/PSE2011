@@ -22,7 +22,7 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 	private Button startButton;
 	
 	public RandomTestFrame(Shell parentShell) {
-		this.shell = new Shell(parentShell);
+		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		this.shell.setText("Random Test");
 		
 		GridLayout gLayout = new GridLayout();

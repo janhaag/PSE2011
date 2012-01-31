@@ -19,6 +19,7 @@ public class Help {
 		// LinkedHashMap used for ordering
 		tableOfContents = new LinkedHashMap<String, String>();
 		tableOfContents.put("Introduction", "index.html");
+		tableOfContents.put("Comments", "comments.html");
 		tableOfContents.put("While-Loop", "while.html");
 		tableOfContents.put("If-Statement", "if.html");
 		tableOfContents.put("Assertion", "assertion.html");
@@ -49,9 +50,11 @@ public class Help {
 		tags.put("int", "integer_ops.html");
 		tags.put("integer", "integer_ops.html");
 		tags.put("function", "function.html");
+		tags.put("return", "function.html");
 		tags.put("quantifier", "quantified_expression.html");
 		tags.put("exists", "quantified_expression.html");
 		tags.put("forall", "quantified_expression.html");
+		tags.put("comment", "comments.html");
 	}
 
 	public String[] getTableOfContents() {

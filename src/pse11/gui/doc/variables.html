@@ -14,12 +14,14 @@
 <p>Variables are names that can be used to save certain values.	Variables can either hold an integer, a boolean 
 (true or false) or an array of values.</p>
 <h2>Integer Variables</h2>
-Integer variables are declared using the <span class="code">int</span> keyword. These variables can hold a signed integer of any size.
+<p>Integer variables are declared using the <span class="code">int</span> keyword. These variables can hold a signed integer of any size.</p>
 <h2>Boolean Variables</h2>
-Boolean variables are declared using the <span class="code">bool</span> keyword. These variables can hold one of the values <span class="code">true</span> or <span class="code">false</span>.
+<p>Boolean variables are declared using the <span class="code">bool</span> keyword. These variables can hold one of the values <span class="code">true</span> or <span class="code">false</span>.</p>
 <h2>Arrays</h2>
-Arrays can hold many values of a single type. 
-Arrays can be declared by adding square brackets (<span class="code">[]</span>) to the type of a variable declaration to specify the dimension of the array and specifying the size of each dimension by using the <span class="code">array</span> keyword followed by square brackets which contain the size of each dimension. 
+<p>Arrays can hold many values of a single type. 
+Arrays can be declared by adding square brackets (<span class="code">[]</span>) to the type of a variable declaration to specify the dimension of the array and specifying the size of each dimension by using the <span class="code">array</span> keyword followed by square brackets which contain the size of each dimension. Arrays will count their components starting with 0. 
+To access a component of an array, use the name of the array followed by one pair of square brackets containing the index for each dimension. When accessing array components, there will be an implicit check if the indices provided are inside of the array's bounds. 
+The length of an array can be obtained by using the <span class="code">len</span> function and providing the name of the array as parameter.</p>
 <h2>Examples</h2>
 <p class="code">
 int x;<br />
@@ -31,7 +33,7 @@ bool b;<br />
 </p>
 <p class="code">
 int[] s = array[5];<br />
-bool[][] t = bool[4][6];<br />
+bool[][] t = array[4][6];<br />
 </p>
 </body>
 </html>

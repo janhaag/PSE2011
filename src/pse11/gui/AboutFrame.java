@@ -24,7 +24,7 @@ public class AboutFrame extends Frame implements MiscFrame {
 	 * @param parentShell specified shell
 	 */
 	public AboutFrame(Shell parentShell) {		
-		shell = new Shell(parentShell);
+		shell = new Shell(parentShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		shell.setSize(350,300);
 		shell.setText("About");
 		
