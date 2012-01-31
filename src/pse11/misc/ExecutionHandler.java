@@ -3,6 +3,7 @@ package misc;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,9 +113,7 @@ public class ExecutionHandler {
 	}
 	
 	public void verify(String source) {
-		if(this.ast == null) {
-			this.parse(source);
-		}
+		this.parse(source);
 		this.messagesystem.clear(MessageCategories.VERIFYERROR);
 		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, 
@@ -124,8 +123,9 @@ public class ExecutionHandler {
 		VerifierInterface verifier = new VerifierInterface(new Z3(
 				Settings.getInstance().getVerifierPath() + " ${FILE} -m"
 				));
+		LinkedList<Pair<Boolean, String>> result = new LinkedList<Pair<Boolean, String>>();
 		try {
-			verifier.verify(this.ast);
+			result = verifier.verify(this.ast);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,6 +141,9 @@ public class ExecutionHandler {
 		} catch(NullPointerException e) {
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "NullPointer");
+		}
+		for(Pair<Boolean, String> entry : result) {
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0, entry.getValue1() + entry.getValue2());
 		}
 	}
 	
