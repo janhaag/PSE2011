@@ -24,7 +24,6 @@ public class ProgramExecution {
      * list of this program's global breakpoints
      */
     private ArrayList<GlobalBreakpoint> globalBreakpoints;
-    //TODO: delete typeChecker if necessary
     /**
      * type checker to evaluate the type correctness of global statements
      */

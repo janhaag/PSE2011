@@ -34,6 +34,9 @@ public class Scope {
      * iterator over the statements in the current block
      */
     private final Iterator<Statement> statements;
+    /**
+     * scope depth to top scope of the current function
+     */
     private final int depth;
     /**
      * next statement in this scope
@@ -66,10 +69,21 @@ public class Scope {
                      ? currentBlock.getIterator() : null;
     }
 
+    /**
+     * Returns whether the given identifier exists in this scope.
+     * @param identifier identifier to check
+     * @return whether the given identifier exists in this scope
+     */
     public boolean existsInScope(Identifier identifier) {
         return variables.containsKey(identifier);
     }
 
+    /**
+     * Returns the depth of the scope in which
+     * the given variable assigned to was declared.
+     * @param variable variable to check
+     * @return depth of declaration of the given variable
+     */
     public int getDepthOfVariable(Identifier variable) {
         if (variables.containsKey(variable)) {
             return depth;
@@ -86,6 +100,10 @@ public class Scope {
         return upScope;
     }
 
+    /**
+     * Returns whether this is a function scope.
+     * @return whether this is a function scope
+     */
     public boolean isFunctionScope() {
         return currentFunction != null;
     }
@@ -100,6 +118,10 @@ public class Scope {
                 ? currentFunction : upScope.getCurrentFunction();
     }
 
+    /**
+     * Returns the results of function calls.
+     * @return results of function calls
+     */
     public IdentityHashMap<FunctionCall, Value> getReturnValues() {
         return returnValues;
     }
@@ -142,6 +164,10 @@ public class Scope {
         return currentStatement;
     }
 
+    /**
+     * Returns the current statement.
+     * @return current statement
+     */
     public Statement getCurrentStatement() {
         return currentStatement;
     }
@@ -175,11 +201,19 @@ public class Scope {
         }
     }
 
+    /**
+     * Saves a new function result for a given function call.
+     * @param functionCall given function call
+     * @param returnValue return value to save
+     */
     public void createFunctionResult(FunctionCall functionCall,
                                      Value returnValue) {
         returnValues.put(functionCall, returnValue);
     }
 
+    /**
+     * Clears the list of function results.
+     */
     public void clearFunctionResults() {
         returnValues.clear();
     }

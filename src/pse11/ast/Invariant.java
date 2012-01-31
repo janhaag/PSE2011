@@ -21,6 +21,7 @@ public class Invariant extends Specification {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("invariant ");
         sb.append(getExpression().toString());

@@ -11,10 +11,25 @@ import java.util.Iterator;
  * This class checks the type correctness of a user program.
  */
 public class TypeChecker implements ASTVisitor {
+    /**
+     * temporarily saves the current function
+     */
     private Function currentFunction;
+    /**
+     * temporarily saves the current type
+     */
     private Type tempType;
+    /**
+     * temporarily saves the current scope
+     */
     private Scope currentScope;
+    /**
+     * temporarily saves whether function calls are allowed
+     */
     private boolean functionCallAllowed = true;
+    /**
+     * temporarily saves the functions of the program (except main)
+     */
     private Function[] functions;
 
     /**
@@ -34,10 +49,19 @@ public class TypeChecker implements ASTVisitor {
         this.currentScope = currentScope;
     }
 
+    /**
+     * Returns whether function calls are allowed.
+     * @return whether function calls are allowed
+     */
     public boolean isFunctionCallAllowed() {
         return functionCallAllowed;
     }
 
+    /**
+     * Sets whether function calls are allowed
+     * @param functionCallAllowed flag indicating whether
+     *                            function calls are allowed
+     */
     public void setFunctionCallAllowed(boolean functionCallAllowed) {
         this.functionCallAllowed = functionCallAllowed;
     }

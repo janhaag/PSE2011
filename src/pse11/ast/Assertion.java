@@ -22,6 +22,7 @@ public class Assertion extends Specification {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("assert ");
         sb.append(getExpression().toString());

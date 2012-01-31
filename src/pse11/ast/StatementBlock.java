@@ -39,6 +39,10 @@ public class StatementBlock extends ASTRoot {
         return Arrays.asList(statements).iterator();
     }
 
+    /**
+     * Returns the statements in this block.
+     * @return statements in this block
+     */
     public Statement[] getStatements() {
         return statements;
     }

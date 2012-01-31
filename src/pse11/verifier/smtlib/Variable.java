@@ -1,7 +1,5 @@
 package verifier.smtlib;
 
-import java.util.LinkedList;
-
 /**
  * This class represents a variable,
  * which can be replaced by another
