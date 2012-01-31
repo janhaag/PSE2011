@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-30 09:19:11
+// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-31 22:39:31
 
 	package parser;
     import java.util.LinkedList;
@@ -877,10 +877,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = INT_LITERAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:416:14: ( ( '0' .. '9' )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:416:16: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:426:14: ( ( '0' .. '9' )+ )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:426:16: ( '0' .. '9' )+
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:416:16: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:426:16: ( '0' .. '9' )+
             int cnt1=0;
             loop1:
             do {
@@ -935,7 +935,7 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = BOOL_LITERAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:417:14: ( 'true' | 'false' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:427:14: ( 'true' | 'false' )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -954,7 +954,7 @@ public class WhileLanguageLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:417:16: 'true'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:427:16: 'true'
                     {
                     match("true"); 
 
@@ -963,7 +963,7 @@ public class WhileLanguageLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:417:25: 'false'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:427:25: 'false'
                     {
                     match("false"); 
 
@@ -987,7 +987,7 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = QUANTIFIER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:419:9: ( 'forall' | 'exists' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:429:9: ( 'forall' | 'exists' )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1006,7 +1006,7 @@ public class WhileLanguageLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:419:11: 'forall'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:429:11: 'forall'
                     {
                     match("forall"); 
 
@@ -1015,7 +1015,7 @@ public class WhileLanguageLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:420:11: 'exists'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:430:11: 'exists'
                     {
                     match("exists"); 
 
@@ -1039,12 +1039,12 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:422:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:422:16: '#' ( . )* ( '\\n' | '\\r' )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:432:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:432:16: '#' ( . )* ( '\\n' | '\\r' )
             {
             match('#'); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:422:20: ( . )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:432:20: ( . )*
             loop4:
             do {
                 int alt4=2;
@@ -1060,7 +1060,7 @@ public class WhileLanguageLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:422:20: .
+            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:432:20: .
             	    {
             	    matchAny(); 
 
@@ -1101,10 +1101,10 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:423:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:423:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:433:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:433:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:423:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:433:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
             int cnt5=0;
             loop5:
             do {
@@ -1161,8 +1161,8 @@ public class WhileLanguageLexer extends Lexer {
         try {
             int _type = IDENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:424:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:424:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:434:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:434:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -1174,7 +1174,7 @@ public class WhileLanguageLexer extends Lexer {
             }
 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:424:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:434:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop6:
             do {
                 int alt6=2;

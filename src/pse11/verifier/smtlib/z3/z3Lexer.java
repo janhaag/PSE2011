@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g 2012-01-31 13:42:51
+// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g 2012-01-31 22:33:48
 
     package verifier.smtlib.z3;
 
@@ -421,69 +421,126 @@ public class z3Lexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:5: ( ( '-' )? ( '0' .. '9' )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:7: ( '-' )? ( '0' .. '9' )+
-            {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:7: ( '-' )?
-            int alt3=2;
-            int LA3_0 = input.LA(1);
+            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:5: ( ( '0' .. '9' )+ | ( '(- ' ( '0' .. '9' )+ ')' ) )
+            int alt5=2;
+            int LA5_0 = input.LA(1);
 
-            if ( (LA3_0=='-') ) {
-                alt3=1;
+            if ( ((LA5_0 >= '0' && LA5_0 <= '9')) ) {
+                alt5=1;
             }
-            switch (alt3) {
+            else if ( (LA5_0=='(') ) {
+                alt5=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 5, 0, input);
+
+                throw nvae;
+
+            }
+            switch (alt5) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:8: '-'
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:7: ( '0' .. '9' )+
                     {
-                    match('-'); 
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:7: ( '0' .. '9' )+
+                    int cnt3=0;
+                    loop3:
+                    do {
+                        int alt3=2;
+                        int LA3_0 = input.LA(1);
+
+                        if ( ((LA3_0 >= '0' && LA3_0 <= '9')) ) {
+                            alt3=1;
+                        }
+
+
+                        switch (alt3) {
+                    	case 1 :
+                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:
+                    	    {
+                    	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                    	        input.consume();
+                    	    }
+                    	    else {
+                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
+                    	        recover(mse);
+                    	        throw mse;
+                    	    }
+
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt3 >= 1 ) break loop3;
+                                EarlyExitException eee =
+                                    new EarlyExitException(3, input);
+                                throw eee;
+                        }
+                        cnt3++;
+                    } while (true);
+
+
+                    }
+                    break;
+                case 2 :
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:21: ( '(- ' ( '0' .. '9' )+ ')' )
+                    {
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:21: ( '(- ' ( '0' .. '9' )+ ')' )
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:22: '(- ' ( '0' .. '9' )+ ')'
+                    {
+                    match("(- "); 
+
+
+
+                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:28: ( '0' .. '9' )+
+                    int cnt4=0;
+                    loop4:
+                    do {
+                        int alt4=2;
+                        int LA4_0 = input.LA(1);
+
+                        if ( ((LA4_0 >= '0' && LA4_0 <= '9')) ) {
+                            alt4=1;
+                        }
+
+
+                        switch (alt4) {
+                    	case 1 :
+                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:
+                    	    {
+                    	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                    	        input.consume();
+                    	    }
+                    	    else {
+                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
+                    	        recover(mse);
+                    	        throw mse;
+                    	    }
+
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt4 >= 1 ) break loop4;
+                                EarlyExitException eee =
+                                    new EarlyExitException(4, input);
+                                throw eee;
+                        }
+                        cnt4++;
+                    } while (true);
+
+
+                    match(')'); 
+
+                    }
+
 
                     }
                     break;
 
             }
-
-
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:62:13: ( '0' .. '9' )+
-            int cnt4=0;
-            loop4:
-            do {
-                int alt4=2;
-                int LA4_0 = input.LA(1);
-
-                if ( ((LA4_0 >= '0' && LA4_0 <= '9')) ) {
-                    alt4=1;
-                }
-
-
-                switch (alt4) {
-            	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:
-            	    {
-            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-            	        input.consume();
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt4 >= 1 ) break loop4;
-                        EarlyExitException eee =
-                            new EarlyExitException(4, input);
-                        throw eee;
-                }
-                cnt4++;
-            } while (true);
-
-
-            }
-
             state.type = _type;
             state.channel = _channel;
         }
@@ -543,17 +600,17 @@ public class z3Lexer extends Lexer {
 
 
             // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:75:40: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )*
-            loop5:
+            loop6:
             do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
+                int alt6=2;
+                int LA6_0 = input.LA(1);
 
-                if ( ((LA5_0 >= '#' && LA5_0 <= '$')||(LA5_0 >= '0' && LA5_0 <= '9')||(LA5_0 >= 'A' && LA5_0 <= 'Z')||LA5_0=='_'||(LA5_0 >= 'a' && LA5_0 <= 'z')) ) {
-                    alt5=1;
+                if ( ((LA6_0 >= '#' && LA6_0 <= '$')||(LA6_0 >= '0' && LA6_0 <= '9')||(LA6_0 >= 'A' && LA6_0 <= 'Z')||LA6_0=='_'||(LA6_0 >= 'a' && LA6_0 <= 'z')) ) {
+                    alt6=1;
                 }
 
 
-                switch (alt5) {
+                switch (alt6) {
             	case 1 :
             	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:
             	    {
@@ -571,7 +628,7 @@ public class z3Lexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop5;
+            	    break loop6;
                 }
             } while (true);
 
@@ -589,11 +646,11 @@ public class z3Lexer extends Lexer {
 
     public void mTokens() throws RecognitionException {
         // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | TYPE | BOOL | INT | WS | IDENT )
-        int alt6=17;
+        int alt7=17;
         switch ( input.LA(1) ) {
         case '!':
             {
-            alt6=1;
+            alt7=1;
             }
             break;
         case '(':
@@ -601,286 +658,290 @@ public class z3Lexer extends Lexer {
             switch ( input.LA(2) ) {
             case 'A':
                 {
-                alt6=3;
+                alt7=3;
                 }
                 break;
             case '_':
                 {
-                alt6=4;
+                alt7=4;
                 }
                 break;
             case 'a':
                 {
-                alt6=5;
+                alt7=5;
                 }
                 break;
             case 'd':
                 {
-                alt6=6;
+                alt7=6;
                 }
                 break;
             case 'm':
                 {
-                alt6=7;
+                alt7=7;
+                }
+                break;
+            case '-':
+                {
+                alt7=15;
                 }
                 break;
             default:
-                alt6=2;
+                alt7=2;
             }
 
             }
             break;
         case ')':
             {
-            alt6=8;
+            alt7=8;
             }
             break;
         case '=':
             {
-            alt6=9;
+            alt7=9;
             }
             break;
         case 's':
             {
-            int LA6_5 = input.LA(2);
+            int LA7_5 = input.LA(2);
 
-            if ( (LA6_5=='a') ) {
-                int LA6_20 = input.LA(3);
+            if ( (LA7_5=='a') ) {
+                int LA7_20 = input.LA(3);
 
-                if ( (LA6_20=='t') ) {
-                    int LA6_26 = input.LA(4);
+                if ( (LA7_20=='t') ) {
+                    int LA7_26 = input.LA(4);
 
-                    if ( ((LA6_26 >= '#' && LA6_26 <= '$')||(LA6_26 >= '0' && LA6_26 <= '9')||(LA6_26 >= 'A' && LA6_26 <= 'Z')||LA6_26=='_'||(LA6_26 >= 'a' && LA6_26 <= 'z')) ) {
-                        alt6=17;
+                    if ( ((LA7_26 >= '#' && LA7_26 <= '$')||(LA7_26 >= '0' && LA7_26 <= '9')||(LA7_26 >= 'A' && LA7_26 <= 'Z')||LA7_26=='_'||(LA7_26 >= 'a' && LA7_26 <= 'z')) ) {
+                        alt7=17;
                     }
                     else {
-                        alt6=10;
+                        alt7=10;
                     }
                 }
                 else {
-                    alt6=17;
+                    alt7=17;
                 }
             }
             else {
-                alt6=17;
+                alt7=17;
             }
             }
             break;
         case 'u':
             {
-            int LA6_6 = input.LA(2);
+            int LA7_6 = input.LA(2);
 
-            if ( (LA6_6=='n') ) {
+            if ( (LA7_6=='n') ) {
                 switch ( input.LA(3) ) {
                 case 'k':
                     {
-                    int LA6_27 = input.LA(4);
+                    int LA7_27 = input.LA(4);
 
-                    if ( (LA6_27=='n') ) {
-                        int LA6_34 = input.LA(5);
+                    if ( (LA7_27=='n') ) {
+                        int LA7_34 = input.LA(5);
 
-                        if ( (LA6_34=='o') ) {
-                            int LA6_40 = input.LA(6);
+                        if ( (LA7_34=='o') ) {
+                            int LA7_40 = input.LA(6);
 
-                            if ( (LA6_40=='w') ) {
-                                int LA6_44 = input.LA(7);
+                            if ( (LA7_40=='w') ) {
+                                int LA7_44 = input.LA(7);
 
-                                if ( (LA6_44=='n') ) {
-                                    int LA6_46 = input.LA(8);
+                                if ( (LA7_44=='n') ) {
+                                    int LA7_46 = input.LA(8);
 
-                                    if ( ((LA6_46 >= '#' && LA6_46 <= '$')||(LA6_46 >= '0' && LA6_46 <= '9')||(LA6_46 >= 'A' && LA6_46 <= 'Z')||LA6_46=='_'||(LA6_46 >= 'a' && LA6_46 <= 'z')) ) {
-                                        alt6=17;
+                                    if ( ((LA7_46 >= '#' && LA7_46 <= '$')||(LA7_46 >= '0' && LA7_46 <= '9')||(LA7_46 >= 'A' && LA7_46 <= 'Z')||LA7_46=='_'||(LA7_46 >= 'a' && LA7_46 <= 'z')) ) {
+                                        alt7=17;
                                     }
                                     else {
-                                        alt6=11;
+                                        alt7=11;
                                     }
                                 }
                                 else {
-                                    alt6=17;
+                                    alt7=17;
                                 }
                             }
                             else {
-                                alt6=17;
+                                alt7=17;
                             }
                         }
                         else {
-                            alt6=17;
+                            alt7=17;
                         }
                     }
                     else {
-                        alt6=17;
+                        alt7=17;
                     }
                     }
                     break;
                 case 's':
                     {
-                    int LA6_28 = input.LA(4);
+                    int LA7_28 = input.LA(4);
 
-                    if ( (LA6_28=='a') ) {
-                        int LA6_35 = input.LA(5);
+                    if ( (LA7_28=='a') ) {
+                        int LA7_35 = input.LA(5);
 
-                        if ( (LA6_35=='t') ) {
-                            int LA6_41 = input.LA(6);
+                        if ( (LA7_35=='t') ) {
+                            int LA7_41 = input.LA(6);
 
-                            if ( ((LA6_41 >= '#' && LA6_41 <= '$')||(LA6_41 >= '0' && LA6_41 <= '9')||(LA6_41 >= 'A' && LA6_41 <= 'Z')||LA6_41=='_'||(LA6_41 >= 'a' && LA6_41 <= 'z')) ) {
-                                alt6=17;
+                            if ( ((LA7_41 >= '#' && LA7_41 <= '$')||(LA7_41 >= '0' && LA7_41 <= '9')||(LA7_41 >= 'A' && LA7_41 <= 'Z')||LA7_41=='_'||(LA7_41 >= 'a' && LA7_41 <= 'z')) ) {
+                                alt7=17;
                             }
                             else {
-                                alt6=12;
+                                alt7=12;
                             }
                         }
                         else {
-                            alt6=17;
+                            alt7=17;
                         }
                     }
                     else {
-                        alt6=17;
+                        alt7=17;
                     }
                     }
                     break;
                 default:
-                    alt6=17;
+                    alt7=17;
                 }
 
             }
             else {
-                alt6=17;
+                alt7=17;
             }
             }
             break;
         case 'I':
             {
-            int LA6_7 = input.LA(2);
+            int LA7_7 = input.LA(2);
 
-            if ( (LA6_7=='n') ) {
-                int LA6_22 = input.LA(3);
+            if ( (LA7_7=='n') ) {
+                int LA7_22 = input.LA(3);
 
-                if ( (LA6_22=='t') ) {
-                    int LA6_29 = input.LA(4);
+                if ( (LA7_22=='t') ) {
+                    int LA7_29 = input.LA(4);
 
-                    if ( ((LA6_29 >= '#' && LA6_29 <= '$')||(LA6_29 >= '0' && LA6_29 <= '9')||(LA6_29 >= 'A' && LA6_29 <= 'Z')||LA6_29=='_'||(LA6_29 >= 'a' && LA6_29 <= 'z')) ) {
-                        alt6=17;
+                    if ( ((LA7_29 >= '#' && LA7_29 <= '$')||(LA7_29 >= '0' && LA7_29 <= '9')||(LA7_29 >= 'A' && LA7_29 <= 'Z')||LA7_29=='_'||(LA7_29 >= 'a' && LA7_29 <= 'z')) ) {
+                        alt7=17;
                     }
                     else {
-                        alt6=13;
+                        alt7=13;
                     }
                 }
                 else {
-                    alt6=17;
+                    alt7=17;
                 }
             }
             else {
-                alt6=17;
+                alt7=17;
             }
             }
             break;
         case 'B':
             {
-            int LA6_8 = input.LA(2);
+            int LA7_8 = input.LA(2);
 
-            if ( (LA6_8=='o') ) {
-                int LA6_23 = input.LA(3);
+            if ( (LA7_8=='o') ) {
+                int LA7_23 = input.LA(3);
 
-                if ( (LA6_23=='o') ) {
-                    int LA6_30 = input.LA(4);
+                if ( (LA7_23=='o') ) {
+                    int LA7_30 = input.LA(4);
 
-                    if ( (LA6_30=='l') ) {
-                        int LA6_37 = input.LA(5);
+                    if ( (LA7_30=='l') ) {
+                        int LA7_37 = input.LA(5);
 
-                        if ( ((LA6_37 >= '#' && LA6_37 <= '$')||(LA6_37 >= '0' && LA6_37 <= '9')||(LA6_37 >= 'A' && LA6_37 <= 'Z')||LA6_37=='_'||(LA6_37 >= 'a' && LA6_37 <= 'z')) ) {
-                            alt6=17;
+                        if ( ((LA7_37 >= '#' && LA7_37 <= '$')||(LA7_37 >= '0' && LA7_37 <= '9')||(LA7_37 >= 'A' && LA7_37 <= 'Z')||LA7_37=='_'||(LA7_37 >= 'a' && LA7_37 <= 'z')) ) {
+                            alt7=17;
                         }
                         else {
-                            alt6=13;
+                            alt7=13;
                         }
                     }
                     else {
-                        alt6=17;
+                        alt7=17;
                     }
                 }
                 else {
-                    alt6=17;
+                    alt7=17;
                 }
             }
             else {
-                alt6=17;
+                alt7=17;
             }
             }
             break;
         case 't':
             {
-            int LA6_9 = input.LA(2);
+            int LA7_9 = input.LA(2);
 
-            if ( (LA6_9=='r') ) {
-                int LA6_24 = input.LA(3);
+            if ( (LA7_9=='r') ) {
+                int LA7_24 = input.LA(3);
 
-                if ( (LA6_24=='u') ) {
-                    int LA6_31 = input.LA(4);
+                if ( (LA7_24=='u') ) {
+                    int LA7_31 = input.LA(4);
 
-                    if ( (LA6_31=='e') ) {
-                        int LA6_38 = input.LA(5);
+                    if ( (LA7_31=='e') ) {
+                        int LA7_38 = input.LA(5);
 
-                        if ( ((LA6_38 >= '#' && LA6_38 <= '$')||(LA6_38 >= '0' && LA6_38 <= '9')||(LA6_38 >= 'A' && LA6_38 <= 'Z')||LA6_38=='_'||(LA6_38 >= 'a' && LA6_38 <= 'z')) ) {
-                            alt6=17;
+                        if ( ((LA7_38 >= '#' && LA7_38 <= '$')||(LA7_38 >= '0' && LA7_38 <= '9')||(LA7_38 >= 'A' && LA7_38 <= 'Z')||LA7_38=='_'||(LA7_38 >= 'a' && LA7_38 <= 'z')) ) {
+                            alt7=17;
                         }
                         else {
-                            alt6=14;
+                            alt7=14;
                         }
                     }
                     else {
-                        alt6=17;
+                        alt7=17;
                     }
                 }
                 else {
-                    alt6=17;
+                    alt7=17;
                 }
             }
             else {
-                alt6=17;
+                alt7=17;
             }
             }
             break;
         case 'f':
             {
-            int LA6_10 = input.LA(2);
+            int LA7_10 = input.LA(2);
 
-            if ( (LA6_10=='a') ) {
-                int LA6_25 = input.LA(3);
+            if ( (LA7_10=='a') ) {
+                int LA7_25 = input.LA(3);
 
-                if ( (LA6_25=='l') ) {
-                    int LA6_32 = input.LA(4);
+                if ( (LA7_25=='l') ) {
+                    int LA7_32 = input.LA(4);
 
-                    if ( (LA6_32=='s') ) {
-                        int LA6_39 = input.LA(5);
+                    if ( (LA7_32=='s') ) {
+                        int LA7_39 = input.LA(5);
 
-                        if ( (LA6_39=='e') ) {
-                            int LA6_43 = input.LA(6);
+                        if ( (LA7_39=='e') ) {
+                            int LA7_43 = input.LA(6);
 
-                            if ( ((LA6_43 >= '#' && LA6_43 <= '$')||(LA6_43 >= '0' && LA6_43 <= '9')||(LA6_43 >= 'A' && LA6_43 <= 'Z')||LA6_43=='_'||(LA6_43 >= 'a' && LA6_43 <= 'z')) ) {
-                                alt6=17;
+                            if ( ((LA7_43 >= '#' && LA7_43 <= '$')||(LA7_43 >= '0' && LA7_43 <= '9')||(LA7_43 >= 'A' && LA7_43 <= 'Z')||LA7_43=='_'||(LA7_43 >= 'a' && LA7_43 <= 'z')) ) {
+                                alt7=17;
                             }
                             else {
-                                alt6=14;
+                                alt7=14;
                             }
                         }
                         else {
-                            alt6=17;
+                            alt7=17;
                         }
                     }
                     else {
-                        alt6=17;
+                        alt7=17;
                     }
                 }
                 else {
-                    alt6=17;
+                    alt7=17;
                 }
             }
             else {
-                alt6=17;
+                alt7=17;
             }
             }
             break;
-        case '-':
         case '0':
         case '1':
         case '2':
@@ -892,7 +953,7 @@ public class z3Lexer extends Lexer {
         case '8':
         case '9':
             {
-            alt6=15;
+            alt7=15;
             }
             break;
         case '\t':
@@ -902,7 +963,7 @@ public class z3Lexer extends Lexer {
         case '\"':
         case ':':
             {
-            alt6=16;
+            alt7=16;
             }
             break;
         case '#':
@@ -955,18 +1016,18 @@ public class z3Lexer extends Lexer {
         case 'y':
         case 'z':
             {
-            alt6=17;
+            alt7=17;
             }
             break;
         default:
             NoViableAltException nvae =
-                new NoViableAltException("", 6, 0, input);
+                new NoViableAltException("", 7, 0, input);
 
             throw nvae;
 
         }
 
-        switch (alt6) {
+        switch (alt7) {
             case 1 :
                 // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:1:10: T__9
                 {

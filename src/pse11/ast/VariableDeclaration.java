@@ -64,6 +64,7 @@ public class VariableDeclaration extends Statement {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(type.toString());
         sb.append(' ').append(name);

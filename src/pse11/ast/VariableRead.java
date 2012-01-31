@@ -9,7 +9,13 @@ public class VariableRead extends Expression {
      * identifier belonging to the variable to be read
      */
     private final Identifier variable;
+    /**
+     * variable type
+     */
     private Type type;
+    /**
+     * depth of the declaration of this variable
+     */
     private int depth;
 
     /**
@@ -32,20 +38,38 @@ public class VariableRead extends Expression {
         return variable;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
+    /**
+     * Returns the depth of the scope in which
+     * the variable assigned to was declared.
+     * @return depth of declaration of this variable
+     */
     public int getDepth() {
         return depth;
     }
 
+    /**
+     * Sets the depth of the scope in which
+     * the variable assigned to was declared.
+     * @param depth depth of declaration of this variable
+     */
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    /**
+     * Returns the type of this variable.
+     * @return type of this variable
+     */
+    public Type getType() {
+        return type;
+    }
+
+    /**
+     * Sets the type of this variable
+     * @param type type of this variable
+     */
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override

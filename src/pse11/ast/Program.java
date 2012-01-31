@@ -1,7 +1,5 @@
 package ast;
 
-import java.util.Arrays;
-
 /**
  * This class symbolizes the user program.
  * The root of the AST is instanceof Program.

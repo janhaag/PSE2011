@@ -44,6 +44,7 @@ public class ArrayType extends Type {
         return type.equals(((ArrayType) o).type);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(type.toString());
         return sb.append("[]").toString();

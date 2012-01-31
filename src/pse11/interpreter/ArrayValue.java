@@ -47,6 +47,12 @@ public class ArrayValue extends Value {
         }
     }
 
+    /**
+     * Constructor.
+     *
+     * @param type base type of the array
+     * @param lengths length of the different array dimensions
+     */
     public ArrayValue(ArrayType type, int[] lengths) {
         this(type, lengths, 0);
     }
@@ -59,6 +65,12 @@ public class ArrayValue extends Value {
         return values;
     }
 
+    /**
+     * Sets the value at a specified position.
+     *
+     * @param value the new value
+     * @param indexes list of ints indicating the position
+     */
     public void setValue(String value, List<Integer> indexes) {
         setValue(value, indexes, 0);
     }
@@ -69,6 +81,7 @@ public class ArrayValue extends Value {
      * @param value new value (as String)
      * @param indexes indexes describing the position of the
      *                element that will be changed
+     * @param depth depth that the indexes were already evaluated to
      */
     public void setValue(String value, List<Integer> indexes, int depth) {
         int pos = indexes.get(depth);

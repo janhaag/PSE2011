@@ -24,9 +24,13 @@ public class Position {
         this.line = line;
         this.column = column;
     }
-     public Position() {
-         this(0, 0);
-     }
+
+    /**
+     * Constructor that sets line and column to 0.
+     */
+    public Position() {
+        this(0, 0);
+    }
 
     /**
      * Returns the line of the element.

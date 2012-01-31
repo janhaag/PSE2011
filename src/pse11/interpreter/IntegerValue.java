@@ -9,6 +9,9 @@ import java.util.regex.Pattern;
  * This class represents a value of integer type.
  */
 public class IntegerValue extends Value {
+    /**
+     * pattern that indicates that a number is valid
+     */
     private static final Pattern NUMBER = Pattern.compile("-?\\d+");
     /**
      * value this instance represents

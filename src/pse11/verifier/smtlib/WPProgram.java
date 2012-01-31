@@ -8,7 +8,7 @@ public class WPProgram {
     /**
      * The S-Expression.
      */
-    private S_Expression[] expressions;
+    private final S_Expression[] expressions;
     /**
      * Constructor.
      * @param expressions The S-Expression
