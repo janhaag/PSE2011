@@ -13,9 +13,20 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+/**
+ * This class represents a console for verifier results.
+ */
 public class VerifierConsole extends Console {
 	private TableColumn positionColumn;
 	private TableColumn errormessageColumn;
+	
+	/**
+	 * Construct a verifier console with the specified parent composite,
+	 * definitions of behavior and model.
+	 * @param parent specified composite
+	 * @param style specified style
+	 * @param messagesystem specified model
+	 */
 	public VerifierConsole(Composite parent, int style, MessageSystem messagesystem) {
 		super(parent, style, messagesystem);
 		FillLayout fLayout = new FillLayout();

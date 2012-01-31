@@ -10,6 +10,7 @@ import org.antlr.runtime.RecognitionException;
 
 import ast.Program;
 
+import parser.FunctionCallNotAllowedException;
 import parser.IllegalTypeException;
 import parser.ParserInterface;
 import verifier.smtlib.z3.Z3;
@@ -50,6 +51,8 @@ public class ExecutionHandler {
 			this.messagesystem.addMessage(MessageCategories.ERROR, -1, "AST creation not possible!");
 		} catch(IllegalTypeException ite) {
 			this.messagesystem.addMessage(MessageCategories.ERROR, ite.getErrorPosition().getLine(), ite.getMessage());
+		} catch(FunctionCallNotAllowedException fce) {
+			this.messagesystem.addMessage(MessageCategories.ERROR, fce.getErrorPosition().getLine(), fce.getMessage());
 		}
 		for(String error : parser.getErrors()) {
 			String[] parsedError = parseParserError(error);
@@ -65,14 +68,19 @@ public class ExecutionHandler {
 		boolean finished = false;
 		boolean success = true;
 		while (!paused && !finished && success) {
-			if (this.execution != null && this.execution.checkBreakpoints() != null) {
-				paused = true;
-				break;
+			try {
+				if (this.execution != null && this.execution.checkBreakpoints() != null) {
+					paused = true;
+					break;
+				}
+				if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
+					finished = true;
+				}
+				success = this.singleStep(sbreakpoints, gbreakpoints);
 			}
-			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
-				finished = true;
+			catch (FunctionCallNotAllowedException fce) {
+				this.messagesystem.addMessage(MessageCategories.ERROR, fce.getErrorPosition().getLine(), fce.getMessage());
 			}
-			success = this.singleStep(sbreakpoints, gbreakpoints);
 		}
 	}
 	

@@ -8,9 +8,19 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
+/**
+ * This class represents the variable view of the main frame. It displays
+ * all of the variables and their values during and after program execution.
+ */
 public class VariableView extends Composite {
 	private Tree tree;
 	
+	/**
+	 * Construct a variable view with the specified parent composite and
+	 * definitions of its style.
+	 * @param parent specified composite
+	 * @param def specified definition
+	 */
 	public VariableView(Composite parent, int def) {
 		super(parent, def);		
 	    
