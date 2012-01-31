@@ -113,6 +113,9 @@ public class ExecutionHandler {
 	
 	public void verify(String source) {
 		this.parse(source);
+		if(this.ast == null) {
+			return;
+		}
 		this.messagesystem.clear(MessageCategories.VERIFYERROR);
 		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, 
@@ -126,15 +129,15 @@ public class ExecutionHandler {
 		try {
 			result = verifier.verify(this.ast);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "IOException");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, e.getMessage());
 		} catch (RecognitionException e) {
-			// TODO Auto-generated catch block
+			// TODO 
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1 , e.getMessage());
 		} catch(NullPointerException e) {
