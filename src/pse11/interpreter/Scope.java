@@ -70,8 +70,12 @@ public class Scope {
         return variables.containsKey(identifier);
     }
 
-    public int getDepth() {
-        return depth;
+    public int getDepthOfVariable(Identifier variable) {
+        if (variables.containsKey(variable)) {
+            return depth;
+        } else {
+            return upScope.getDepthOfVariable(variable);
+        }
     }
 
     /**

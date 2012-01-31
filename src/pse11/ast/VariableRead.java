@@ -9,6 +9,8 @@ public class VariableRead extends Expression {
      * identifier belonging to the variable to be read
      */
     private final Identifier variable;
+    private Type type;
+    private int depth;
 
     /**
      * Constructor.
@@ -28,6 +30,22 @@ public class VariableRead extends Expression {
      */
     public Identifier getVariable() {
         return variable;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     @Override
