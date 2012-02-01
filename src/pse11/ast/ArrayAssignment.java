@@ -37,6 +37,7 @@ public class ArrayAssignment extends Assignment {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getIdentifier().toString());
         for (Expression index : indices) {

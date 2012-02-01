@@ -24,6 +24,7 @@ public class State {
 
     /**
      * Constructor.
+     * It initializes the program state.
      *
      * @param ast program that is executed
      */
@@ -32,8 +33,6 @@ public class State {
             throw new IllegalArgumentException("AST must be a program!");
         }
         Function main = ((Program) ast).getMainFunction();
-        /*TODO: erase following line if it is clear what to do at the beginning
-        of a program*/
         currentScope = new Scope(null, main.getFunctionBlock(), main);
         adjustStatement();
     }
@@ -145,14 +144,27 @@ public class State {
         return currentScope.getCurrentFunction();
     }
 
+    /**
+     * Returns whether the current scope is a function scope.
+     * @return whether the current scope is a function scope
+     */
     public boolean isFunctionScope() {
         return currentScope.isFunctionScope();
     }
 
+    /**
+     * Returns the results of function calls.
+     * @return results of function calls
+     */
     public IdentityHashMap<FunctionCall, Value> getReturnValues() {
         return currentScope.getReturnValues();
     }
 
+    /**
+     * Saves a new function result for a given function call.
+     * @param functionCall given function call
+     * @param returnValue return value to save
+     */
     public void createFunctionResult(FunctionCall functionCall,
                                      Value returnValue) {
         currentScope.createFunctionResult(functionCall, returnValue);

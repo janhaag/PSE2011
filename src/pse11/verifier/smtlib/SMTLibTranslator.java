@@ -5,17 +5,62 @@ import ast.*;
 import java.util.*;
 
 /**
- *
+ * This class translates a program given as AST into the smtlib format that can
+ * be given to certain verifiers.
  */
 public class SMTLibTranslator implements ASTVisitor {
+    /**
+     * temporarily saves the list of all programs,
+     * i.e. a list of all contracts to be verified
+     */
     private ArrayList<LinkedList<S_Expression>> programs;
+    /**
+     * temporarily saves the replacement that must be made in
+     * the upper scope after the current scope is evaluated
+     */
     private Stack<HashMap<VarDef, S_Expression>> upScopeReplacements;
+    /**
+     * temporarily saves the expression of the upper scope that will
+     * be integrated in the program at a later time
+     */
     private Stack<S_Expression> upScopeExpr;
+    /**
+     * Maps Array Names to tags
+     */
     private HashMap<String, Integer> arrays;
+    /**
+     * temporarily saves the current expression
+     */
     private S_Expression tempExpr;
+    /**
+     * temporarily saves the number of the current program
+     */
     private int currentProgram;
+    /**
+     * temporarily saves whether changes to tempExpression should be saved
+     */
     private boolean change;
+    /**
+     * temporarily saves whether a function call is evaluated
+     */
+    private boolean isFunctionCall;
+    /**
+     * temporarily saves the function called in the current statement
+     */
+    private ArrayList<FunctionCall> functionsCalled;
+    /**
+     * temporarily saves the number of the function call
+     * in the current statement
+     */
+    private int noOfFuncCall;
 
+    /**
+     * Translates the given AST into a formula
+     * and returns a WPProgram that contains all contracts to be verified.
+     *
+     * @param ast given AST
+     * @return WPProgram of all contracts to be verified
+     */
     public WPProgram getWPTree(ASTRoot ast) {
         programs = new ArrayList<LinkedList<S_Expression>>();
         ast.accept(this);
@@ -24,6 +69,11 @@ public class SMTLibTranslator implements ASTVisitor {
         return new WPProgram(result.toArray(new S_Expression[size]));
     }
 
+    /**
+     * Prepares the final program after the most translations.
+     * @param programs programs to be prepared to form the final program
+     * @return final program
+     */
     private static LinkedList<S_Expression> prepareFinalProgram(ArrayList<LinkedList<S_Expression>> programs) {
         ListIterator<LinkedList<S_Expression>> i = programs.listIterator();
         while(i.hasNext()) {
@@ -43,6 +93,10 @@ public class SMTLibTranslator implements ASTVisitor {
         return result;
     }
 
+    /**
+     * Creates a block, i.e. a single contract to be verified.
+     * @param program program to be formed to the final block
+     */
     private static void createBlock(LinkedList<S_Expression> program) {
         LinkedList<String> vars = program.getLast().getUndefinedVars();
         for (String var : vars) {
@@ -55,6 +109,12 @@ public class SMTLibTranslator implements ASTVisitor {
         program.addLast(new Constant("(pop)"));
     }
 
+    /**
+     * Replaces a variable in a given map with a new expression.
+     * @param map specified map for replacement
+     * @param varDef variable to be replaced
+     * @param newExpr new expression to replace varDef
+     */
     private static void replaceInAssignments(Map<VarDef, S_Expression> map,
                                      VarDef varDef, S_Expression newExpr) {
         for (Map.Entry<VarDef, S_Expression> oldEntry : map.entrySet()) {
@@ -66,6 +126,11 @@ public class SMTLibTranslator implements ASTVisitor {
         }
     }
 
+    /**
+     * Returns the string representation of the given type
+     * @param type given type
+     * @return string representation of the given type
+     */
     public static String getTypeString(Type type) {
         if (type instanceof IntegerType) return "Int";
         else if (type instanceof BooleanType) return "Bool";
@@ -81,6 +146,11 @@ public class SMTLibTranslator implements ASTVisitor {
         }
     }
 
+    /**
+     * Handles the replacements after a program
+     * is separated at a loop or function call
+     * @param program program that is prepared after separation
+     */
     private void prepareEndedLoop(LinkedList<S_Expression> program) {
         while (upScopeReplacements.size() > 1) {
             S_Expression upperExpr = upScopeExpr.pop();
@@ -88,14 +158,17 @@ public class SMTLibTranslator implements ASTVisitor {
                     upScopeReplacements.pop();
             for (Map.Entry<VarDef, S_Expression> entry :
                     replacements.entrySet()) {
-                upperExpr.replace(entry.getKey(), entry.getValue());
+                upperExpr.replace(entry.getKey(), entry.getValue().deepCopy());
+                if (entry.getKey().getDepth() < upScopeReplacements.size()) {
+                    upScopeReplacements.lastElement().put(entry.getKey(),
+                            entry.getValue().deepCopy());
+                }
             }
             program.set(program.size() - 1, new S_Expression("and",
                     new S_Expression[]{upperExpr, program.getLast()}));
         }
     }
 
-    //TODO: fill in stubs
     @Override
     public void visit(Conditional conditional) {
         upScopeExpr.push(tempExpr);
@@ -130,7 +203,6 @@ public class SMTLibTranslator implements ASTVisitor {
                 new S_Expression[]{condition.deepCopy(), tempExpr});
         upScopeExpr = tempExprStack;
         upScopeReplacements = tempReplacements;
-        upScopeReplacements.push(new HashMap<VarDef, S_Expression>());
         tempExpr = new Constant("true");
         if (conditional.getFalseConditionBody() != null) {
             conditional.getFalseConditionBody().accept(this);
@@ -174,6 +246,7 @@ public class SMTLibTranslator implements ASTVisitor {
         tempExpr = new S_Expression("or",
                 new S_Expression[]{trueBranch, falseBranch});
         change = true;
+        functionsCalled = new ArrayList<FunctionCall>();
     }
 
     @Override
@@ -259,6 +332,7 @@ public class SMTLibTranslator implements ASTVisitor {
         }
         tempExpr = saveTempExpr;
         change = true;
+        functionsCalled = new ArrayList<FunctionCall>();
     }
 
     @Override
@@ -329,17 +403,60 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(FunctionCall functionCall) {
+        noOfFuncCall += 1;
+        functionsCalled.add(functionCall);
+        isFunctionCall = true;
+        Statement[] statements = functionCall.getFunction().getFunctionBlock().getStatements();
+        (statements[statements.length - 1]).accept(this);
+        isFunctionCall = false;
+    }
+
+    /**
+     * Handles the work needed after a function call.
+     * @param functionCall function call that was evaluated
+     */
+    private void afterFunctionCall(FunctionCall functionCall) {
+        S_Expression saveTempExpr = tempExpr;
+        Ensure[] ensures = functionCall.getFunction().getEnsures();
+        //ensures=>rest
+        LinkedList<S_Expression> program = programs.get(programs.size() - 1);
+        for (Ensure ensure : ensures) {
+            isFunctionCall = true;
+            ensure.accept(this);
+            isFunctionCall = false;
+            program.set(program.size() - 1, new S_Expression("=>",
+                    new S_Expression[]{tempExpr, program.getLast()}));
+        }
+        //pre=>assumptions
+        noOfFuncCall = 0;
+        for (Assumption assumption : functionCall.getFunction().getAssumptions()) {
+            assumption.accept(this);
+            saveTempExpr = new S_Expression("and",
+                    new S_Expression[]{tempExpr, saveTempExpr});
+        }
+        FunctionParameter[] parameters = functionCall.getFunction().getParameters();
+        for (int i = 0; i < functionCall.getParameters().length; i++) {
+            functionCall.getParameters()[i].accept(this);
+            VarDef varDef = new VarDef(parameters[i].getName(),
+                    parameters[i].getType(), 0);
+            saveTempExpr.replace(varDef, tempExpr);
+        }
+        tempExpr = saveTempExpr;
     }
 
     @Override
     public void visit(VariableRead variableRead) {
-        tempExpr = new VarDef(variableRead.toString(), variableRead.getType(),
+        String variableName = variableRead.toString();
+        if (isFunctionCall) {
+            variableName = variableName + '$' + Integer.toString(noOfFuncCall);
+        }
+        tempExpr = new VarDef(variableName, variableRead.getType(),
                 variableRead.getDepth());
     }
 
     @Override
     public void visit(ArrayRead arrayRead) {
-        String name = getMangledArrayName(arrayRead.getVariable().getName());
+        String name = getMangledArrayName(arrayRead.getVariable().getName(), true);
         Expression[] indices = arrayRead.getIndices();
         S_Expression[] idx = new S_Expression[indices.length];
         for (int i = 0; i < indices.length; i++) {
@@ -378,19 +495,14 @@ public class SMTLibTranslator implements ASTVisitor {
         program.set(program.size() - 1, new S_Expression("assert",
                 new S_Expression[]{ new S_Expression("not",
                             new S_Expression[]{program.getLast()})}));
-        /*FunctionParameter[] parameters = function.getParameters();
-        for (FunctionParameter parameter : parameters) {
-            //TODO: check for arrays
-            String type = parameter.getType() instanceof BooleanType
-                    ? "Bool" : "Int";
-            program.addFirst(new S_Expression("declare-fun",
-                    new S_Expression[]{new Constant(parameter.getName()),
-                        new Constant("()"), new Constant(type)}));
-        }*/
     }
 
     @Override
     public void visit(Program program) {
+        Function[] functions = program.getFunctions();
+        for (Function function : functions) {
+            function.accept(this);
+        }
         program.getMainFunction().accept(this);
     }
 
@@ -406,8 +518,11 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(Assertion assertion) {
-        //TODO: insert in statements
+        S_Expression currentExpr = tempExpr;
         assertion.getExpression().accept(this);
+        tempExpr = new S_Expression("and", new S_Expression[]{
+                tempExpr, currentExpr});
+        change = true;
     }
 
     @Override
@@ -417,7 +532,7 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(Axiom axiom) {
-        //TODO
+        axiom.getExpression().accept(this);
     }
 
     @Override
@@ -432,6 +547,9 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ReturnStatement returnStatement) {
+        if (noOfFuncCall > 0) {
+            returnStatement.getReturnValue().accept(this);
+        }
     }
 
     @Override
@@ -485,13 +603,38 @@ public class SMTLibTranslator implements ASTVisitor {
         Statement[] statements = statementBlock.getStatements();
         for (int i = statements.length - 1; i >= 0; i--) {
             change = false;
+            functionsCalled = new ArrayList<FunctionCall>();
+            noOfFuncCall = 0;
             statements[i].accept(this);
+            if (!functionsCalled.isEmpty()) {
+                int depth = upScopeReplacements.size() - 1;
+                LinkedList<S_Expression> program = new LinkedList<S_Expression>();
+                program.add(expression);
+                programs.add(program);
+                prepareEndedLoop(program);
+                tempExpr = new Constant("true");
+                for (int j = 0; j < functionsCalled.size(); j++) {
+                    noOfFuncCall = j + 1;
+                    afterFunctionCall(functionsCalled.get(j));
+                }
+                program.set(program.size() - 1, new S_Expression("assert",
+                        new S_Expression[]{ new S_Expression("not",
+                            new S_Expression[]{program.getLast()})}));
+                upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
+                upScopeExpr = new Stack<S_Expression>();
+                for (int j = 0; j < depth; j++) {
+                    upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
+                    upScopeExpr.add(new Constant("true"));
+                }
+                change = true;
+            }
             if (change) {
                 expression = tempExpr;
             }
             tempExpr = expression;
             currentProgram = saveCurrentProgram;
         }
+        functionsCalled = new ArrayList<FunctionCall>();
     }
 
     private String getMangledArrayName(String name, boolean replace) {

@@ -1,7 +1,5 @@
 package ast;
 
-import java.util.Arrays;
-
 /**
  * This class symbolizes a function call.
  */

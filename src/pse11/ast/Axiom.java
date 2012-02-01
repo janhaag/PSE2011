@@ -21,6 +21,7 @@ public class Axiom extends Specification {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("assume ");
         sb.append(getExpression().toString());

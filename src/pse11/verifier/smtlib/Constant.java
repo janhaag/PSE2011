@@ -13,7 +13,7 @@ public class Constant extends S_Expression {
      * Its String representation.
      * It can be a number or a boolean value.
      */
-    private String stringRepresentation;
+    private final String stringRepresentation;
 
     /**
      * Constructor.
@@ -22,7 +22,7 @@ public class Constant extends S_Expression {
      * @param stringRepresentation Its String representation.
      */
     public Constant(String stringRepresentation) {
-         super(stringRepresentation, null);
+         super(stringRepresentation);
          this.stringRepresentation = stringRepresentation;
     }
     /**

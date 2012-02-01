@@ -11,11 +11,11 @@ public class S_Expression {
     /**
      * Its operator,e.g. "+" or "-".
      */
-    private String op;
+    private final String op;
     /**
      * Its operands.
      */
-    private S_Expression[] subexpressions;
+    private final S_Expression[] subexpressions;
     /**
      * Constructor
      * @param op The operator.
@@ -31,14 +31,18 @@ public class S_Expression {
      */
     @Override
     public String toString() {
-        StringBuilder output = new StringBuilder("(" + op);
-        for (int i = 0; i < subexpressions.length; i++) {
-            output.append(' ').append(subexpressions[i].toString());
+        StringBuilder output = new StringBuilder('(' + op);
+        for (S_Expression subexpression : subexpressions) {
+            output.append(' ').append(subexpression.toString());
         }
-        output.append(")");
+        output.append(')');
         return output.toString();
     }
 
+    /**
+     * Returns a deep copy of this instance.
+     * @return a deep copy of this instance
+     */
     public S_Expression deepCopy() {
         S_Expression[] newSubExpressions
                 = new S_Expression[subexpressions.length];
@@ -48,6 +52,11 @@ public class S_Expression {
         return new S_Expression(op, newSubExpressions);
     }
 
+    /**
+     * Replaces all variable definitions by a new value.
+     * @param varDef variable definition to be replaced
+     * @param newValue new value to replace varDef with
+     */
     public void replace(VarDef varDef, S_Expression newValue) {
         if (subexpressions == null) {
             return;
@@ -63,12 +72,21 @@ public class S_Expression {
         }
     }
 
+    /**
+     * Returns a list of the declaration of variables still
+     * present in the expression.
+     * @return declaration of variables still present in the expression
+     */
     public LinkedList<String> getUndefinedVars() {
         LinkedList<String> result = new LinkedList<String>();
         addVars(result);
         return result;
     }
 
+    /**
+     * Adds variable declaration strings to the given list.
+     * @param varList list to which the declaration strings are added
+     */
     public void addVars(LinkedList<String> varList) {
         if (subexpressions != null) {
             for (S_Expression expression : subexpressions) {

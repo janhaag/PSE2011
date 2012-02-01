@@ -13,7 +13,13 @@ public class Assignment extends Statement {
      * name of the variable
      */
     private final Identifier identifier;
+    /**
+     * depth of declaration of this variable
+     */
     private int depth;
+    /**
+     * type of this variable
+     */
     private Type type;
 
     /**
@@ -48,18 +54,36 @@ public class Assignment extends Statement {
         return identifier;
     }
 
+    /**
+     * Returns the depth of the scope in which
+     * the variable assigned to was declared.
+     * @return depth of declaration of this variable
+     */
     public int getDepth() {
         return depth;
     }
 
+    /**
+     * Sets the depth of the scope in which
+     * the variable assigned to was declared.
+     * @param depth depth of declaration of this variable
+     */
     public void setDepth(int depth) {
         this.depth = depth;
     }
 
+    /**
+     * Returns the type of this variable.
+     * @return type of this variable
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * Sets the type of this variable
+     * @param type type of this variable
+     */
     public void setType(Type type) {
         this.type = type;
     }
@@ -69,6 +93,7 @@ public class Assignment extends Statement {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(identifier.toString());
         sb.append(" = ").append(value.toString());

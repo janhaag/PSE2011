@@ -39,6 +39,7 @@ public class ArrayDeclaration extends VariableDeclaration {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getType().toString());
         sb.append(' ').append(getName());

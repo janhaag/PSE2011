@@ -7,14 +7,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
+ * This class interprets the user program step by step.
  */
-public class Interpreter implements ast.ASTVisitor {
+public class Interpreter implements ASTVisitor {
+    /**
+     * temporarily saved value
+     */
     private Value tempValue;
+    /**
+     * temporarily saved state
+     */
     private State currentState;
+    /**
+     * temporarily saved return value
+     */
     private Value returnValue;
+    /**
+     * temporarily saved function call parameters
+     */
     private Value[] parameters;
 
+    /**
+     * exception to stop the execution of a statement in case of a
+     * function call
+     */
     private static class StopStatementException extends RuntimeException {
     }
 
@@ -28,6 +44,11 @@ public class Interpreter implements ast.ASTVisitor {
         return state;
     }
 
+    /**
+     * Checks the assumptions, given a specified state.
+     * @param state state used to evaluate the assumptions
+     * @param assumptions assumtions to evaluate
+     */
     public void checkAssumptions(State state, Assumption[] assumptions) {
         currentState = state;
         for (Assumption assumption : assumptions) {
@@ -284,11 +305,24 @@ public class Interpreter implements ast.ASTVisitor {
         adjustStatement();
     }
 
+    /**
+     * Copies an array in case of a method call.
+     * @param varName new array name
+     * @param value array value to copy
+     * @param maxDepth depth of the array
+     */
     private void copyArray(String varName, Value value, int maxDepth) {
         Integer[] counters = new Integer[maxDepth];
         helpArrayCopy(varName, value, counters, 0);
     }
 
+    /**
+     *
+     * @param varName new array name
+     * @param value array value to copy
+     * @param counters counter for current position
+     * @param depth depth of the array
+     */
     private void helpArrayCopy(String varName, Value value,
                                Integer[] counters, int depth) {
         if (value instanceof ArrayValue) {
@@ -306,7 +340,7 @@ public class Interpreter implements ast.ASTVisitor {
 
     @Override
     public void visit(Program program) {
-        //TODO: is this needed?
+        //not needed
         program.getMainFunction().accept(this);
     }
 
@@ -339,7 +373,7 @@ public class Interpreter implements ast.ASTVisitor {
 
     @Override
     public void visit(Axiom axiom) {
-        //TODO: is this needed in interpreter?
+        //not needed in interpreter
     }
 
     @Override
@@ -426,7 +460,7 @@ public class Interpreter implements ast.ASTVisitor {
             tempValue = new BooleanValue(Boolean.toString(satisfied));
             currentState.destroyScope();
         } else {
-            //TODO: give to verifier
+            tempValue = new BooleanValue("true");
         }
     }
 
@@ -453,15 +487,18 @@ public class Interpreter implements ast.ASTVisitor {
             tempValue = new BooleanValue(Boolean.toString(valid));
             currentState.destroyScope();
         } else {
-            //TODO: give to verifier
+            tempValue = new BooleanValue("false");
         }
     }
 
     @Override
     public void visit(StatementBlock statementBlock) {
-        //TODO: is this needed?
+        //not needed
     }
 
+    /**
+     * Adjust the statement at the end of a step.
+     */
     private void adjustStatement() {
         returnValue = null;
         Function currentFunction = currentState.getCurrentFunction();

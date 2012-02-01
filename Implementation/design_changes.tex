@@ -64,11 +64,16 @@
 \end{itemize}
 
 \subsection{Paket verifier}
+Die Schnittstelle und Arbeitsweise des Beweiserpakets wurde w\"{a}hrend der Implementierungsphase ge\"{a}ndert, um eine h\"{o}here Flexibilit\"{a}t und Erweiterbarkeit erreichen.
 \begin{itemize}
+  \item Neue Klasse Verifier als Basisklasse und einheitliche Schnittstelle f\"{u}r einen Beweiser. Die Klasse Z3 erbt von dieser Klasse.
+  \item Neue Klasse VerifierInterface als Fassade des verifier-Pakets nach au\ss en.
   \item Neue Klassen VarDef und Variable, die von S\_Expression erben und zur Ersetzung im wp-Kalk\"{u}l dienen.
   \item Die Klasse S\_Expression hat eine neue Methode \code{deepCopy}, die referenzungleiche Kopien einer S\_Expression und ihrer Subexpressions erzeugt.
   \item Die Klasse SMTLibTranslator hat neue Methoden \code{prepareFinalProgram} und \code{createBlock} zum Abschluss des \"{U}bersetzungsvorgangs.
 \end{itemize}
+Aufgrund der gr\"{o}\ss eren \"{A}nderungen folgt ein vereinfachtes aktuelles Klassendiagramm des Paketes:\\
+\includegraphics[width=0.8\paperwidth]{images/Verifier.pdf}
 
 \subsection{Pakete gui und misc}
 Die Pakete der GUI-Komponente wurden w"ahrend der Implementierungsphase nochmals "uberarbeitet. Der urspr"ungliche Entwurf war nicht auf das verwendete Toolkit SWT ausgelegt, deswegen wurden die Attribute und Methoden der meisten Klassen des gui-Pakets angepasst. Auch an der gesamten Klassenstruktur mussten einige Ver"anderungen vorgenommen werden. Die Bestandteile des MVC-Patterns wurden zum Teil nicht klar getrennt und der Entwurf erschien dadurch inkonsistent. Die wichigsten "Anderungen sind im Folgenden aufgelistet. 
@@ -81,3 +86,7 @@ Die Pakete der GUI-Komponente wurden w"ahrend der Implementierungsphase nochmals
 \item Der MiscController hat an Bedeutung verloren und entsprach nicht mehr dem aktuellen Entwurf, deshalb wurde die Klasse entfernt. Stattdessen haben die Frames, die gesteuert werden m"ussen, ihren eigenen Controller bekommen. Deswegen wurde das gui-Paket durch die Klassen HelpController, ParameterController und SettingsController erg"anzt.
 \item Es wurden die Klassen ParameterFrame und ParameterController hinzugef"ugt, da nicht an die "Ubergabe der Parameter an die Main-Funktion gedacht wurde. Dies ist nun durch das "Offnen eines ParameterFrames m"oglich.
 \end{itemize}
+Aufgrund der gr\"{o}\ss eren \"{A}nderungen folgt ein aktuelles Klassendiagramm des Paketes:\\
+\begin{landscape}
+\includegraphics[width=0.85\paperheight]{images/coregui.pdf}
+\end{landscape}

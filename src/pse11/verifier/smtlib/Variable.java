@@ -1,7 +1,5 @@
 package verifier.smtlib;
 
-import java.util.LinkedList;
-
 /**
  * This class represents a variable,
  * which can be replaced by another
@@ -21,7 +19,7 @@ public class Variable extends S_Expression {
      * @param stringRepresentation Its String representation.
      */
     public Variable(String stringRepresentation) {
-         super(stringRepresentation, null);
+         super(stringRepresentation);
          this.stringRepresentation = stringRepresentation;
     }
     /**

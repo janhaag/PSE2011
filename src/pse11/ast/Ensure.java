@@ -21,6 +21,7 @@ public class Ensure extends Specification {
         visitor.visit(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ensure ");
         sb.append(getExpression().toString());

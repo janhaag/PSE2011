@@ -1,7 +1,5 @@
 package ast;
 
-import java.util.Arrays;
-
 /**
  * This class represents a function; it may be the main function.
  */

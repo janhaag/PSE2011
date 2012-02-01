@@ -78,13 +78,13 @@ function_declaration returns [ Function ast ]
         ;
 
 main returns [ Function ast ]
-        : 'main' '(' parameter_list? ')' function_body
+        : 'main' '(' parameter_list? ')' main_body
                 {LinkedList<FunctionParameter> params = error ? null :
         		$parameter_list.params != null ? $parameter_list.params : new LinkedList<FunctionParameter>();
         	$ast = error ? null : new Function(new Position($start.getLine(), $start.getCharPositionInLine()), null, "main",
         		params.toArray(new FunctionParameter[params.size()]),
-        		$function_body.ast, $function_body.pre.toArray(new Assumption[$function_body.pre.size()]),
-        		$function_body.post.toArray(new Ensure[$function_body.post.size()]));}
+        		$main_body.ast, $main_body.pre.toArray(new Assumption[$main_body.pre.size()]),
+        		$main_body.post.toArray(new Ensure[$main_body.post.size()]));}
         ;
 
 parameter_list returns [ LinkedList<FunctionParameter> params ]
@@ -97,6 +97,17 @@ parameter returns [ FunctionParameter ast ]
         ;
 
 function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
+	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
+        : a=assume_statement? {$pre = error ? null : $a.result != null ? $a.result : new LinkedList<Assumption>();}
+          '{' ( statement {if (!error) { s.addAll(possibleDivByZero($statement.divisors)); s.addAll(possibleNotPositive($statement.positive));
+            s.addAll(possibleArrayOutOfBounds($statement.arrayIndices)); s.add($statement.ast); }} )*
+            r=return_statement{s.addAll(possibleArrayOutOfBounds(r.arrayIndices)); s.add(r.ast);}  '}'
+              {$ast = error ?null : new StatementBlock(s.toArray(new Statement[s.size()]), new Position($start.getLine(), $start.getCharPositionInLine()));}
+          e=ensure_statement? {$post = error ? null : $e.result != null ? $e.result : new LinkedList<Ensure>();}
+        ;
+        
+
+main_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
         : a=assume_statement? {$pre = error ? null : $a.result != null ? $a.result : new LinkedList<Assumption>();}
           '{' ( statement {if (!error) { s.addAll(possibleDivByZero($statement.divisors)); s.addAll(possibleNotPositive($statement.positive));
@@ -132,7 +143,6 @@ statement returns [ Statement ast, LinkedList<Expression> divisors, LinkedList<P
         | e4=assignment {if (!error) {$ast = $e4.ast; $divisors = $e4.divisors; $arrayIndices = $e4.arrayIndices;}}
         | e5=if_statement {if (!error) {$ast = $e5.ast; $divisors = $e5.divisors; $arrayIndices = $e5.arrayIndices;}}
         | e6=while_statement {if (!error) {$ast = $e6.ast; $divisors = $e6.divisors; $arrayIndices = $e6.arrayIndices;}}
-        | e7=return_statement {if (!error) {$ast = $e7.ast; $divisors = $e7.divisors; $arrayIndices = $e7.arrayIndices;}}
         ;
 
 invariant_statement returns [ LinkedList<Invariant> result ]
@@ -215,7 +225,7 @@ array_declaration returns [ ArrayDeclaration ast, LinkedList<Expression> divisor
         ;
 
 array_init returns [ LinkedList<Expression> dim, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
-    @init {$divisors = new LinkedList<Expression>();$dim = new LinkedList<Expression>();}
+    @init {$divisors = new LinkedList<Expression>();$dim = new LinkedList<Expression>();$arrayIndices = new LinkedList<Pair<ArrayRead, Expression>>();}
 	: 'array' ( '[' expression {if (!error) {$dim.add($expression.ast); $divisors.addAll($expression.divisors);
         $arrayIndices.addAll($expression.arrayIndices);}} ']' )+
 	;
