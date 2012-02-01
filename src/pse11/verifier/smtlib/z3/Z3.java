@@ -19,7 +19,7 @@ public class Z3 extends Verifier {
     private SMTLibTranslator translator = new SMTLibTranslator();
 
     public Z3(String template) {
-        super(template);
+        super(template, "smt2");
     }
 
     /**

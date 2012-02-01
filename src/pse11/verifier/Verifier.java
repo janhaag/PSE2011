@@ -18,9 +18,11 @@ import misc.Pair;
 
 public abstract class Verifier {
     protected String[] template;
+    protected String fileExtension;
 
-    protected Verifier(String template) {
+    protected Verifier(String template, String fileExtension) {
         this.template = template.split("\\s+");
+        this.fileExtension = fileExtension;
     }
 
     protected abstract String translate(ASTRoot ast);
@@ -75,7 +77,7 @@ public abstract class Verifier {
         File file = null;
         for (int i = 0; i < template.length; i++) {
             if ("${FILE}".equals(template[i])) {
-                file = File.createTempFile("PSE11", ".smt2");
+                file = File.createTempFile("PSE11", fileExtension);
                 file.deleteOnExit();
                 template[i] = file.getAbsolutePath();
             }
