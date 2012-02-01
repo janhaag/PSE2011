@@ -76,12 +76,12 @@ Aufgrund der gr\"{o}\ss eren \"{A}nderungen folgt ein vereinfachtes aktuelles Kl
 \includegraphics[width=0.8\paperwidth]{images/Verifier.pdf}
 
 \subsection{Pakete gui und misc}
-Die Pakete der GUI-Komponente wurden w"ahrend der Implementierungsphase nochmals "uberarbeitet. Der urspr"ungliche Entwurf war nicht auf das verwendete Toolkit SWT ausgelegt, deswegen wurden die Attribute und Methoden der meisten Klassen des gui-Pakets angepasst. Auch an der gesamten Klassenstruktur mussten einige Ver"anderungen vorgenommen werden. Die Bestandteile des MVC-Patterns wurden zum Teil nicht klar getrennt und der Entwurf erschien dadurch inkonsistent. Die wichigsten "Anderungen sind im Folgenden aufgelistet. 
+Die Pakete der GUI-Komponente wurden w"ahrend der Implementierungsphase nochmals "uberarbeitet. Der urspr"ungliche Entwurf war nicht auf das verwendete Toolkit SWT ausgelegt, deswegen wurden die Attribute und Methoden der meisten Klassen des gui-Pakets angepasst. Auch an der gesamten Klassenstruktur mussten einige Ver"anderungen vorgenommen werden. Die Bestandteile des MVC-Patterns wurden zum Teil nicht klar getrennt und der Entwurf erschien dadurch inkonsistent. Die wichigsten "Anderungen sind im Folgenden aufgelistet.
 \begin{itemize}
 \item Die Klasse ExecutionController wurde zu ExecutionHandler umbenannt, da der alte Name leicht mit einem Controller des MVC-Patterns verwechselt werden konnte und die Klasse in Wirklichkeit nicht die Rolle des Controllers spielt. Auf Grund ihrer Teilfunktion als Modell wurde sie in das misc-Paket verschoben.
-\item Die Funktionen Parsen, Interpretieren und Validieren werden nun alle vom ExecutionHandler aufgerufen und nicht, wie im Entwurf, zum Teil vom MainController. Diese "Anderung war wichtig, da wir nun die Funktionen einheitlich behandeln k"onnen. So ist der MainController nur noch f"ur die Inizialiserung des MainFrames und aller anderen Controller zust"andig. 
+\item Die Funktionen Parsen, Interpretieren und Validieren werden nun alle vom ExecutionHandler aufgerufen und nicht, wie im Entwurf, zum Teil vom MainController. Diese "Anderung war wichtig, da wir nun die Funktionen einheitlich behandeln k"onnen. So ist der MainController nur noch f"ur die Inizialiserung des MainFrames und aller anderen Controller zust"andig.
 \item Assoziationen zwischen diversen Controllern und der ProgramExecution des interpreter-Pakets wurden aufgel"ost und durch eine ExecutionHandler-ProgramExecution-Assoziation ersetzt. So konnte die Verbindung zwischen der GUI und dem Rest des Systems gelockert werden.
-\item VariableViewController und BreakpointViewController wurden zusammen gefasst zu TableViewController, da sie das selbe Modell benutzen. 
+\item VariableViewController und BreakpointViewController wurden zusammen gefasst zu TableViewController, da sie das selbe Modell benutzen.
 \item Die urspr"ungliche Editor-Klasse war View, Controller und Modell zugleich. Dies wurde verbessert und dadurch sind die Klassen Editor (als Modell), EditorController und EditorView entstanden.
 \item Der MiscController hat an Bedeutung verloren und entsprach nicht mehr dem aktuellen Entwurf, deshalb wurde die Klasse entfernt. Stattdessen haben die Frames, die gesteuert werden m"ussen, ihren eigenen Controller bekommen. Deswegen wurde das gui-Paket durch die Klassen HelpController, ParameterController und SettingsController erg"anzt.
 \item Es wurden die Klassen ParameterFrame und ParameterController hinzugef"ugt, da nicht an die "Ubergabe der Parameter an die Main-Funktion gedacht wurde. Dies ist nun durch das "Offnen eines ParameterFrames m"oglich.
@@ -94,10 +94,10 @@ Aufgrund der gr\"{o}\ss eren \"{A}nderungen folgt ein aktuelles Klassendiagramm 
 \begin{itemize}
 \item Zur Vereinfachung der Behandlung von Funktionsaufrufen im SMTLibTranslator wird ein Return-Statement nur noch am Ende von Funktionen (die main-Funktion ausgeschlossen) erlaubt.
 An diesen Stellen muss dieses Statement sogar stehen, sonst ist das Programm nicht syntaktisch korrekt. Dies wird schon im Parser erkannt.
-\item Funktionsaufrufe in Assumptions, Axioms, Ensures, Invariants und QuantifiedExpressions werden verboten, nur noch die eingebaute \"length\"-Funktion ist erlaubt. 
-Neben einer Vereinfachung des Beweisers dient dies auch der Benutzerfreundlichkeit. 
-Durch die Funktionen müsste nämlich intern im Single-Step-Modus durchgegangen werden, um jederzeit eine Unterprechung des Programmablaufs zu erlauben.
-Da die QuantifiedExpression aber eventuell über einen sehr großen Bereich geprüft wird, ist dies für den Benutzer ein zu großer Aufwand. Die restlichen Statement-Arten
-werden außerhalb eines Statements gemeinsam geprüft. Ein Funktionsaufruf im Singlestep wäre gegen die Logik dieser Statements.
-\item Die Syntax der Arraydeklaration wurde geändert, da die Syntax im Entwurf unintuitiv war.
+\item Funktionsaufrufe in Assumptions, Axioms, Ensures, Invariants und QuantifiedExpressions werden verboten, nur noch die eingebaute \"length\"-Funktion ist erlaubt.
+Neben einer Vereinfachung des Beweisers dient dies auch der Benutzerfreundlichkeit.
+Durch die Funktionen m\"{u}sste n\"{a}mlich intern im Single-Step-Modus durchgegangen werden, um jederzeit eine Unterprechung des Programmablaufs zu erlauben.
+Da die QuantifiedExpression aber eventuell \"{u}ber einen sehr gro\ss{}en Bereich gepr\"{u}ft wird, ist dies f\"{u}r den Benutzer ein zu gro\ss{}er Aufwand. Die restlichen Statement-Arten
+werden au\ss{}erhalb eines Statements gemeinsam gepr\"{u}ft. Ein Funktionsaufruf im Singlestep w\"{a}re gegen die Logik dieser Statements.
+\item Die Syntax der Arraydeklaration wurde ge\"{a}ndert, da die Syntax im Entwurf unintuitiv war.
 \end{itemize}
