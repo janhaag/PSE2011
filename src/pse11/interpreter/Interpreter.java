@@ -14,10 +14,10 @@ public class Interpreter implements ast.ASTVisitor {
     private State currentState;
     private Value returnValue;
     private Value[] parameters;
-    
+
     private static class StopStatementException extends RuntimeException {
     }
-    
+
     public State step(State state) {
         currentState = state;
         try {
@@ -72,9 +72,9 @@ public class Interpreter implements ast.ASTVisitor {
 
     @Override
     public void visit(ArrayAssignment arrayAssignment) {
-        Expression[] indexes = arrayAssignment.getIndexes();
+        Expression[] indices = arrayAssignment.getIndices();
         ArrayList<Integer> lengths = new ArrayList<Integer>();
-        for (Expression index : indexes) {
+        for (Expression index : indices) {
             index.accept(this);
             int pos = ((IntegerValue) tempValue).getValue().intValue();
             lengths.add(pos);
@@ -237,8 +237,8 @@ public class Interpreter implements ast.ASTVisitor {
     @Override
     public void visit(ArrayRead arrayRead) {
         Value value = currentState.getVariables().get(arrayRead.getVariable());
-        Expression[] indexes = arrayRead.getIndexes();
-        for (Expression index : indexes) {
+        Expression[] indices = arrayRead.getIndices();
+        for (Expression index : indices) {
             index.accept(this);
             int pos = ((IntegerValue) tempValue).getValue().intValue();
             Value[] values = ((ArrayValue) value).getValues();
@@ -303,7 +303,7 @@ public class Interpreter implements ast.ASTVisitor {
                     Arrays.asList(counters));
         }
     }
-    
+
     @Override
     public void visit(Program program) {
         //TODO: is this needed?
@@ -392,10 +392,10 @@ public class Interpreter implements ast.ASTVisitor {
 
     @Override
     public void visit(ArrayDeclaration arrDec) {
-        Expression[] indexes = arrDec.getIndexes();
-        int[] lengths = new int[indexes.length];
-        for (int i = 0; i < indexes.length; i++) {
-            indexes[i].accept(this);
+        Expression[] indices = arrDec.getIndices();
+        int[] lengths = new int[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            indices[i].accept(this);
             int length = ((IntegerValue) tempValue).getValue().intValue();
             lengths[i] = (length > 0) ? length : 1;
         }

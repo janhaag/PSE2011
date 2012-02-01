@@ -21,7 +21,7 @@ public class S_Expression {
      * @param op The operator.
      * @param subexpressions The operands.
      */
-    public S_Expression(String op, S_Expression[] subexpressions) {
+    public S_Expression(String op, S_Expression... subexpressions) {
         this.op = op;
         this.subexpressions = subexpressions;
     }
@@ -62,13 +62,13 @@ public class S_Expression {
             }
         }
     }
-    
+
     public LinkedList<String> getUndefinedVars() {
         LinkedList<String> result = new LinkedList<String>();
         addVars(result);
         return result;
     }
-    
+
     public void addVars(LinkedList<String> varList) {
         if (subexpressions != null) {
             for (S_Expression expression : subexpressions) {

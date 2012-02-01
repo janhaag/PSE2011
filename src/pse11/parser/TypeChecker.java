@@ -98,8 +98,8 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
         Value value = vars.get(identifier);
-        Expression[] indexes = arrayAssignment.getIndexes();
-        for (Expression index : indexes) {
+        Expression[] indices = arrayAssignment.getIndices();
+        for (Expression index : indices) {
             index.accept(this);
             if (!(tempType instanceof IntegerType)) {
                 throw new IllegalTypeException("Index must be an integer "
@@ -108,12 +108,12 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         arrayAssignment.getValue().accept(this);
-        Type type = baseType(value.getType(), indexes.length,
+        Type type = baseType(value.getType(), indices.length,
                      arrayAssignment.getPosition());
         if (type instanceof ArrayType) {
             throw new IllegalTypeException("Cannot assign a value to an array "
                                            + "that is not fully indexed!",
-                                            arrayAssignment.getPosition());        
+                                            arrayAssignment.getPosition());
         }
         if (!type.equals(tempType)) {
             throw new IllegalTypeException("Base type of the array does not "
@@ -308,8 +308,8 @@ public class TypeChecker implements ASTVisitor {
                                            + " was read but not declared!",
                                            arrayRead.getPosition());
         }
-        Expression[] indexes = arrayRead.getIndexes();
-        for (Expression index : indexes) {
+        Expression[] indices = arrayRead.getIndices();
+        for (Expression index : indices) {
             index.accept(this);
             if (!(tempType instanceof IntegerType)) {
                 throw new IllegalTypeException("Index must be an integer "
@@ -318,7 +318,7 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         tempType =
-             baseType(value.getType(), indexes.length, arrayRead.getPosition());
+             baseType(value.getType(), indices.length, arrayRead.getPosition());
         arrayRead.setType(tempType);
         arrayRead.setDepth(currentScope.getDepthOfVariable(arrayRead.getVariable()));
     }
@@ -539,8 +539,8 @@ public class TypeChecker implements ASTVisitor {
             throw new IllegalTypeException("Array already declared in scope!",
                                            arrDec.getPosition());
         }
-        Expression[] indexes = arrDec.getIndexes();
-        for (Expression index : indexes) {
+        Expression[] indices = arrDec.getIndices();
+        for (Expression index : indices) {
             index.accept(this);
             if (!(tempType instanceof IntegerType)) {
                 throw new IllegalTypeException("Index must be an integer "
@@ -548,13 +548,13 @@ public class TypeChecker implements ASTVisitor {
                                                arrDec.getPosition());
             }
         }
-        if (baseType(arrDec.getType(), indexes.length, arrDec.getPosition())
+        if (baseType(arrDec.getType(), indices.length, arrDec.getPosition())
                 instanceof ArrayType) {
             throw new IllegalTypeException("Type of array declaration does not"
-                                           + "match the number of indexes",
+                                           + "match the number of indices",
                                            arrDec.getPosition());
         }
-        int[] lengths = new int[indexes.length];
+        int[] lengths = new int[indices.length];
         for (int i = 0; i < lengths.length; i++) {
             lengths[i] = 1;
         }
@@ -639,10 +639,10 @@ public class TypeChecker implements ASTVisitor {
      * Returns the type of the array in the specified depth.
      * For example, if i has type t, then baseType(t, 1, ...) returns the
      * type of i[], baseType(t, 2, ...) the type of i[][], ...
-     * 
+     *
      * An IllegalTypeException if thrown if the deconstruction of
      * the type goes too far and there is no array left.
-     * 
+     *
      * @param arrayType the original array type
      * @param depth specified depth
      * @param position position for the IllegalTypeException
@@ -655,7 +655,7 @@ public class TypeChecker implements ASTVisitor {
                 throw new IllegalTypeException("Variable was indexed although "
                                                 + "not an array!", position);
             }
-            type = ((ArrayType) type).getType();    
+            type = ((ArrayType) type).getType();
         }
         return type;
     }

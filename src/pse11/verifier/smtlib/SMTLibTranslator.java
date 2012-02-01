@@ -11,6 +11,7 @@ public class SMTLibTranslator implements ASTVisitor {
     private ArrayList<LinkedList<S_Expression>> programs;
     private Stack<HashMap<VarDef, S_Expression>> upScopeReplacements;
     private Stack<S_Expression> upScopeExpr;
+    private HashMap<String, Integer> arrays;
     private S_Expression tempExpr;
     private int currentProgram;
     private boolean change;
@@ -41,7 +42,7 @@ public class SMTLibTranslator implements ASTVisitor {
                 new S_Expression[]{new Constant("AUFNIRA")}));
         return result;
     }
-    
+
     private static void createBlock(LinkedList<S_Expression> program) {
         LinkedList<String> vars = program.getLast().getUndefinedVars();
         for (String var : vars) {
@@ -53,12 +54,12 @@ public class SMTLibTranslator implements ASTVisitor {
         program.addLast(new Constant("(get-model)"));
         program.addLast(new Constant("(pop)"));
     }
-    
+
     private static void replaceInAssignments(Map<VarDef, S_Expression> map,
                                      VarDef varDef, S_Expression newExpr) {
         for (Map.Entry<VarDef, S_Expression> oldEntry : map.entrySet()) {
             oldEntry.getValue().replace(varDef,
-                    newExpr.deepCopy());    
+                    newExpr.deepCopy());
         }
         if (!map.containsKey(varDef)) {
             map.put(varDef, newExpr.deepCopy());
@@ -66,8 +67,18 @@ public class SMTLibTranslator implements ASTVisitor {
     }
 
     public static String getTypeString(Type type) {
-        return type instanceof IntegerType ? "Int" : "Bool";
-        //TODO: Arrays
+        if (type instanceof IntegerType) return "Int";
+        else if (type instanceof BooleanType) return "Bool";
+        else {
+            Type t = type;
+            StringBuilder result = new StringBuilder().append("(");
+            while (((ArrayType) t).getType() instanceof ArrayType) {
+                t = ((ArrayType) t).getType();
+                result.append("Int ");
+            }
+            result.append(getTypeString(t)).append(")");
+            return result.toString();
+        }
     }
 
     private void prepareEndedLoop(LinkedList<S_Expression> program) {
@@ -252,6 +263,11 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayAssignment arrayAssignment) {
+        String oldName = getMangledArrayName(arrayAssignment.getIdentifier().getName(), false);
+        String name = getMangledArrayName(arrayAssignment.getIdentifier().getName(), true);
+        tempExpr = new S_Expression("define-function", new Constant(name),
+                new Constant(getTypeString(arrayAssignment.getType())),
+                new S_Expression("ite"));
     }
 
     @Override
@@ -323,6 +339,16 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayRead arrayRead) {
+        String name = getMangledArrayName(arrayRead.getVariable().getName());
+        Expression[] indices = arrayRead.getIndices();
+        S_Expression[] idx = new S_Expression[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            indices[i].accept(this);
+            idx[i] = tempExpr;
+        }
+        tempExpr = new S_Expression (name, new S_Expression[] {
+                new S_Expression("", idx)
+        });
     }
 
     @Override
@@ -429,6 +455,13 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayDeclaration arrDec) {
+        S_Expression exp = tempExpr;
+        String name = getMangledArrayName(arrDec.getName(), true);
+        VarDef varDef = new VarDef(name, arrDec.getType(), 0);
+        exp.replace(varDef, tempExpr);
+        replaceInAssignments(upScopeReplacements.lastElement(),
+                varDef, tempExpr);
+        upScopeReplacements.lastElement().remove(varDef);
     }
 
     @Override
@@ -459,5 +492,15 @@ public class SMTLibTranslator implements ASTVisitor {
             tempExpr = expression;
             currentProgram = saveCurrentProgram;
         }
+    }
+
+    private String getMangledArrayName(String name, boolean replace) {
+        Integer tag = arrays.get(name);
+        if (tag != null && replace) tag = arrays.put(name, tag + 1);
+        else {
+            arrays.put(name, 0);
+            tag = 0;
+        }
+        return name + "#" + tag;
     }
 }
