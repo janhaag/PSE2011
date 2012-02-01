@@ -22,7 +22,7 @@ public class Constant extends S_Expression {
      * @param stringRepresentation Its String representation.
      */
     public Constant(String stringRepresentation) {
-         super(stringRepresentation, null);
+         super(stringRepresentation);
          this.stringRepresentation = stringRepresentation;
     }
     /**

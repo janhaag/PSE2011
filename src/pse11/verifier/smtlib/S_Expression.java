@@ -21,7 +21,7 @@ public class S_Expression {
      * @param op The operator.
      * @param subexpressions The operands.
      */
-    public S_Expression(String op, S_Expression[] subexpressions) {
+    public S_Expression(String op, S_Expression... subexpressions) {
         this.op = op;
         this.subexpressions = subexpressions;
     }

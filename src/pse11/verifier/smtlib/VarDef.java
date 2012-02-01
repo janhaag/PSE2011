@@ -32,7 +32,7 @@ public class VarDef extends S_Expression {
      * @param depth the depth of the variable
      */
     public VarDef(String ident, Type type, int depth) {
-        super(ident, null);
+        super(ident);
         this.ident = ident;
         this.type = type;
         fullRepresentation = ident + " () "

@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g 2012-01-31 22:33:48
+// $ANTLR 3.4 ../src/grammar/z3.g 2012-02-01 10:40:47
 
     package verifier.smtlib.z3;
 
@@ -53,12 +53,12 @@ public class z3Parser extends Parser {
     }
 
     public String[] getTokenNames() { return z3Parser.tokenNames; }
-    public String getGrammarFileName() { return "C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g"; }
+    public String getGrammarFileName() { return "../src/grammar/z3.g"; }
 
 
 
     // $ANTLR start "start"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:15:1: start returns [LinkedList<Pair<Boolean,String>> list] : (pair= block )+ ;
+    // ../src/grammar/z3.g:15:1: start returns [LinkedList<Pair<Boolean,String>> list] : (pair= block )+ ;
     public final LinkedList<Pair<Boolean,String>> start() throws RecognitionException {
         LinkedList<Pair<Boolean,String>> list = null;
 
@@ -68,10 +68,10 @@ public class z3Parser extends Parser {
 
         list = new LinkedList<Pair<Boolean,String>>();
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:2: ( (pair= block )+ )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:3: (pair= block )+
+            // ../src/grammar/z3.g:16:2: ( (pair= block )+ )
+            // ../src/grammar/z3.g:16:3: (pair= block )+
             {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:3: (pair= block )+
+            // ../src/grammar/z3.g:16:3: (pair= block )+
             int cnt1=0;
             loop1:
             do {
@@ -85,7 +85,7 @@ public class z3Parser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:16:4: pair= block
+            	    // ../src/grammar/z3.g:16:4: pair= block
             	    {
             	    pushFollow(FOLLOW_block_in_start37);
             	    pair=block();
@@ -126,7 +126,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "block"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:19:1: block returns [Pair<Boolean, String> result] : ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* );
+    // ../src/grammar/z3.g:19:1: block returns [Pair<Boolean, String> result] : ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* );
     public final Pair<Boolean, String> block() throws RecognitionException {
         Pair<Boolean, String> result = null;
 
@@ -135,7 +135,7 @@ public class z3Parser extends Parser {
 
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:20:2: ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* )
+            // ../src/grammar/z3.g:20:2: ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* )
             int alt4=3;
             switch ( input.LA(1) ) {
             case 20:
@@ -163,11 +163,11 @@ public class z3Parser extends Parser {
 
             switch (alt4) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:20:3: 'unsat' ( . )*
+                    // ../src/grammar/z3.g:20:3: 'unsat' ( . )*
                     {
                     match(input,20,FOLLOW_20_in_block53); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:21:5: ( . )*
+                    // ../src/grammar/z3.g:21:5: ( . )*
                     loop2:
                     do {
                         int alt2=2;
@@ -215,7 +215,7 @@ public class z3Parser extends Parser {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:21:5: .
+                    	    // ../src/grammar/z3.g:21:5: .
                     	    {
                     	    matchAny(input); 
 
@@ -233,7 +233,7 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:22:5: 'sat' example= model
+                    // ../src/grammar/z3.g:22:5: 'sat' example= model
                     {
                     match(input,18,FOLLOW_18_in_block68); 
 
@@ -248,11 +248,11 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:24:4: 'unknown' ( . )*
+                    // ../src/grammar/z3.g:24:4: 'unknown' ( . )*
                     {
                     match(input,19,FOLLOW_19_in_block85); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:25:3: ( . )*
+                    // ../src/grammar/z3.g:25:3: ( . )*
                     loop3:
                     do {
                         int alt3=2;
@@ -300,7 +300,7 @@ public class z3Parser extends Parser {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:25:3: .
+                    	    // ../src/grammar/z3.g:25:3: .
                     	    {
                     	    matchAny(input); 
 
@@ -335,7 +335,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "model"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')' ;
+    // ../src/grammar/z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')' ;
     public final String model() throws RecognitionException {
         String example = null;
 
@@ -350,12 +350,12 @@ public class z3Parser extends Parser {
 
         example = "";
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')' )
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')'
+            // ../src/grammar/z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')' )
+            // ../src/grammar/z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )* ')'
             {
             match(input,15,FOLLOW_15_in_model111); 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:3: ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )*
+            // ../src/grammar/z3.g:30:3: ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )*
             loop6:
             do {
                 int alt6=2;
@@ -395,7 +395,7 @@ public class z3Parser extends Parser {
 
                 switch (alt6) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:4: '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')'
+            	    // ../src/grammar/z3.g:30:4: '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')'
             	    {
             	    match(input,14,FOLLOW_14_in_model116); 
 
@@ -403,7 +403,7 @@ public class z3Parser extends Parser {
 
             	    match(input,10,FOLLOW_10_in_model125); 
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:33: ( IDENT '!' TYPE )*
+            	    // ../src/grammar/z3.g:30:33: ( IDENT '!' TYPE )*
             	    loop5:
             	    do {
             	        int alt5=2;
@@ -416,7 +416,7 @@ public class z3Parser extends Parser {
 
             	        switch (alt5) {
             	    	case 1 :
-            	    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:30:34: IDENT '!' TYPE
+            	    	    // ../src/grammar/z3.g:30:34: IDENT '!' TYPE
             	    	    {
             	    	    match(input,IDENT,FOLLOW_IDENT_in_model127); 
 
@@ -458,7 +458,7 @@ public class z3Parser extends Parser {
 
             HashMap m = new HashMap();
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:33:3: ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )*
+            // ../src/grammar/z3.g:33:3: ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')' )*
             loop8:
             do {
                 int alt8=2;
@@ -483,7 +483,7 @@ public class z3Parser extends Parser {
 
                 switch (alt8) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:33:4: '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')'
+            	    // ../src/grammar/z3.g:33:4: '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(_as-array' id2= ( IDENT '!' INT ) ')' ')'
             	    {
             	    match(input,14,FOLLOW_14_in_model170); 
 
@@ -497,7 +497,7 @@ public class z3Parser extends Parser {
 
             	    match(input,11,FOLLOW_11_in_model195); 
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:34:19: ( TYPE )+
+            	    // ../src/grammar/z3.g:34:19: ( TYPE )+
             	    int cnt7=0;
             	    loop7:
             	    do {
@@ -517,7 +517,7 @@ public class z3Parser extends Parser {
 
             	        switch (alt7) {
             	    	case 1 :
-            	    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:34:20: TYPE
+            	    	    // ../src/grammar/z3.g:34:20: TYPE
             	    	    {
             	    	    match(input,TYPE,FOLLOW_TYPE_in_model197); 
 
@@ -542,8 +542,8 @@ public class z3Parser extends Parser {
 
             	    match(input,12,FOLLOW_12_in_model210); 
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:35:23: ( IDENT '!' INT )
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:35:24: IDENT '!' INT
+            	    // ../src/grammar/z3.g:35:23: ( IDENT '!' INT )
+            	    // ../src/grammar/z3.g:35:24: IDENT '!' INT
             	    {
             	    match(input,IDENT,FOLLOW_IDENT_in_model218); 
 
@@ -571,7 +571,7 @@ public class z3Parser extends Parser {
             } while (true);
 
 
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )*
+            // ../src/grammar/z3.g:36:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')' )*
             loop10:
             do {
                 int alt10=2;
@@ -584,12 +584,12 @@ public class z3Parser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')'
+            	    // ../src/grammar/z3.g:36:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE '(' ass= ite[(String)m.get($id3.text)] ')' ')'
             	    {
             	    match(input,14,FOLLOW_14_in_model235); 
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:24: ( IDENT '!' INT )
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:25: IDENT '!' INT
+            	    // ../src/grammar/z3.g:36:24: ( IDENT '!' INT )
+            	    // ../src/grammar/z3.g:36:25: IDENT '!' INT
             	    {
             	    match(input,IDENT,FOLLOW_IDENT_in_model242); 
 
@@ -602,7 +602,7 @@ public class z3Parser extends Parser {
 
             	    match(input,10,FOLLOW_10_in_model249); 
 
-            	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:43: ( '(' IDENT '!' INT TYPE ')' )+
+            	    // ../src/grammar/z3.g:36:43: ( '(' IDENT '!' INT TYPE ')' )+
             	    int cnt9=0;
             	    loop9:
             	    do {
@@ -616,7 +616,7 @@ public class z3Parser extends Parser {
 
             	        switch (alt9) {
             	    	case 1 :
-            	    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:36:44: '(' IDENT '!' INT TYPE ')'
+            	    	    // ../src/grammar/z3.g:36:44: '(' IDENT '!' INT TYPE ')'
             	    	    {
             	    	    match(input,10,FOLLOW_10_in_model251); 
 
@@ -690,7 +690,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "ite"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:41:1: ite[String id] returns [String assignment] : ( '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) );
+    // ../src/grammar/z3.g:41:1: ite[String id] returns [String assignment] : ( '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) );
     public final String ite(String id) throws RecognitionException {
         String assignment = null;
 
@@ -703,7 +703,7 @@ public class z3Parser extends Parser {
 
         assignment = id;
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:42:2: ( '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) )
+            // ../src/grammar/z3.g:42:2: ( '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -722,7 +722,7 @@ public class z3Parser extends Parser {
             }
             switch (alt14) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:42:4: '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' )
+                    // ../src/grammar/z3.g:42:4: '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' )
                     {
                     match(input,10,FOLLOW_10_in_ite310); 
 
@@ -746,7 +746,7 @@ public class z3Parser extends Parser {
 
                     assignment = "[" + (i!=null?i.getText():null) + "]" + "=" + val + "\n";
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:44:9: ( value | '(' as= ite[id] ')' )
+                    // ../src/grammar/z3.g:44:9: ( value | '(' as= ite[id] ')' )
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -765,7 +765,7 @@ public class z3Parser extends Parser {
                     }
                     switch (alt11) {
                         case 1 :
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:44:10: value
+                            // ../src/grammar/z3.g:44:10: value
                             {
                             pushFollow(FOLLOW_value_in_ite352);
                             value();
@@ -776,7 +776,7 @@ public class z3Parser extends Parser {
                             }
                             break;
                         case 2 :
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:44:18: '(' as= ite[id] ')'
+                            // ../src/grammar/z3.g:44:18: '(' as= ite[id] ')'
                             {
                             match(input,10,FOLLOW_10_in_ite356); 
 
@@ -799,11 +799,11 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:45:4: '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' )
+                    // ../src/grammar/z3.g:45:4: '(and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' )
                     {
                     match(input,13,FOLLOW_13_in_ite368); 
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:45:10: ( '(' '=' IDENT '!' INT i= INT ')' )+
+                    // ../src/grammar/z3.g:45:10: ( '(' '=' IDENT '!' INT i= INT ')' )+
                     int cnt12=0;
                     loop12:
                     do {
@@ -817,7 +817,7 @@ public class z3Parser extends Parser {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:45:11: '(' '=' IDENT '!' INT i= INT ')'
+                    	    // ../src/grammar/z3.g:45:11: '(' '=' IDENT '!' INT i= INT ')'
                     	    {
                     	    match(input,10,FOLLOW_10_in_ite370); 
 
@@ -858,7 +858,7 @@ public class z3Parser extends Parser {
 
                     assignment += "=" + val + "\n";
 
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:46:62: ( value | '(' as= ite[id] ')' )
+                    // ../src/grammar/z3.g:46:62: ( value | '(' as= ite[id] ')' )
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
@@ -877,7 +877,7 @@ public class z3Parser extends Parser {
                     }
                     switch (alt13) {
                         case 1 :
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:46:63: value
+                            // ../src/grammar/z3.g:46:63: value
                             {
                             pushFollow(FOLLOW_value_in_ite404);
                             value();
@@ -888,7 +888,7 @@ public class z3Parser extends Parser {
                             }
                             break;
                         case 2 :
-                            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:46:71: '(' as= ite[id] ')'
+                            // ../src/grammar/z3.g:46:71: '(' as= ite[id] ')'
                             {
                             match(input,10,FOLLOW_10_in_ite408); 
 
@@ -928,7 +928,7 @@ public class z3Parser extends Parser {
 
 
     // $ANTLR start "value"
-    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:49:1: value returns [String content] : ( INT | BOOL );
+    // ../src/grammar/z3.g:49:1: value returns [String content] : ( INT | BOOL );
     public final String value() throws RecognitionException {
         String content = null;
 
@@ -937,7 +937,7 @@ public class z3Parser extends Parser {
         Token BOOL2=null;
 
         try {
-            // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:50:2: ( INT | BOOL )
+            // ../src/grammar/z3.g:50:2: ( INT | BOOL )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -956,7 +956,7 @@ public class z3Parser extends Parser {
             }
             switch (alt15) {
                 case 1 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:50:4: INT
+                    // ../src/grammar/z3.g:50:4: INT
                     {
                     INT1=(Token)match(input,INT,FOLLOW_INT_in_value430); 
 
@@ -965,7 +965,7 @@ public class z3Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\z3.g:51:4: BOOL
+                    // ../src/grammar/z3.g:51:4: BOOL
                     {
                     BOOL2=(Token)match(input,BOOL,FOLLOW_BOOL_in_value437); 
 
