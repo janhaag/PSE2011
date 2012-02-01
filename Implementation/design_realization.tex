@@ -1,6 +1,16 @@
 \section{Umsetzung der Entwurfsentscheidungen}
 \subsection{Visitor-Pattern}
 Das Visitor-Pattern bildet die Basis der Behandlungen des abstrakten Syntaxbaumes. So bilden der Interpreter, der TypeChecker und der SMTLibTranslator die Besucherklassen, die die Knoten des AST besuchen k\"{o}nnen.
+
+Dazu besitzt die abstrakte Klasse ASTRoot, die Oberklasse jedes Element des AST ist, eine abstrakte Methode accept(ASTVisitor visitor), die einen Besucher entgegen nimmt. 
+Das Interface ASTVisitor besitzt für jede konkrete Unterklasse von ASTRoot eine eigene visit-Methode, die diese Klasse besucht. Als Beispiel seien hier
+visit(LogicalExpression logicalExpression) und visit(Loop loop) genannt.
+Diese Methode accept wird in allen konkreten Unterklassen des AST implementiert. Diese ruft mit visitor.visit(this) die entsprechende visit-Methode des Besuchers auf.
+Der Besucher seinerseits kann ein AST-Element element durch element.accept(this) besuchen, ohne die konkrete Klasse dieses Elements zu kennen.
+
+Dieses Entwurfsmuster fördert die Erweiterbarkeit, da neue Besucher ohne Änderung der AST-Klassen eingeführt werden können. Außerdem ist es möglich, neue
+Klassen zum AST hinzuzufügen. Dann muss jeder Besucher nur die zusätzliche visit-Methode implementieren.
+
 \subsection{MVC-Pattern}
 Es wurde bei der Implentierung der GUI stets auf das MVC-Pattern geachtet und es besteht nun eine klare Trennung zwischen den Modellen, Controllern und Views. Konkret bilden zum Beispiel die folgenden Klassen jeweils ein vollst"andiges MVC-System: 
 \begin{itemize}
@@ -9,4 +19,4 @@ Es wurde bei der Implentierung der GUI stets auf das MVC-Pattern geachtet und es
 \item Settings, SettingsFrame und SettingsController
 \end{itemize}
 \subsection{Erweiterbarkeit der Beweiseranbindung}
-Auf die M�glichkeit einer einfachen Anbindung anderer Beweiser als Z3 wurde geachtet. Es ist nun sowohl m�glich Z3 mit einer anderen \"{U}bersetzungsstrategie zu verwenden, indem der Klasse Z3 ein anderer ASTVisitor gegeben wird, als auch die Wiederverwendung des SMTLibTranslators f\"{u}r einen anderen Beweiser durch eine neue Klasse, die von Verifier erbt, und die Klasse SMTLibTranslator benutzt.
+Auf die M\"{o}glichkeit einer einfachen Anbindung anderer Beweiser als Z3 wurde geachtet. Es ist nun sowohl m\"{o}glich Z3 mit einer anderen \"{U}bersetzungsstrategie zu verwenden, indem der Klasse Z3 ein anderer ASTVisitor gegeben wird, als auch die Wiederverwendung des SMTLibTranslators f\"{u}r einen anderen Beweiser durch eine neue Klasse, die von Verifier erbt, und die Klasse SMTLibTranslator benutzt. Außerdem ist ein anderes Beweiserformat durch Änderung des Translator-Visitors möglich.

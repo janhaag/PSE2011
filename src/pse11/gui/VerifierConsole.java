@@ -32,11 +32,11 @@ public class VerifierConsole extends Console {
 		this.table = new Table(this, SWT.BORDER);
 		
 		TableColumn column1= new TableColumn(this.table, SWT.CENTER);
-		column1.setText("Result");
-		column1.setWidth(100);
+		column1.setText("Tested Contract");
+		column1.setWidth(250);
 		TableColumn column2 = new TableColumn(this.table, SWT.CENTER | SWT.FILL);
-		column2.setText("Message");
-		column2.setWidth(500);
+		column2.setText("Result");
+		column2.setWidth(350);
 		this.table.setHeaderVisible(true);
 	}
 

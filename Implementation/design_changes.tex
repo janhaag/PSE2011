@@ -1,6 +1,6 @@
 \section{\"{A}nderungen gegen\"{u}ber dem Entwurf}
 
-\subsection{Paktet\"{a}nderungen}
+\subsection{Paket\"{a}nderungen}
 \begin{itemize}
   \item Das Interface ASTVisitor wurde vom interpreter- in das ast-Paket verschoben, da das Interface logisch unabh\"{a}ngig vom Interpreter ist.
   \item Ebenso wurden der TypeChecker und die hiervon verwendete IllegalTypeException in das parser-Paket verschoben, da beide Klassen haupts\"{a}chlich beim Parse-Vorgang verwendet werden.
@@ -90,3 +90,14 @@ Aufgrund der gr\"{o}\ss eren \"{A}nderungen folgt ein aktuelles Klassendiagramm 
 \begin{landscape}
 \includegraphics[width=0.85\paperheight]{images/coregui.pdf}
 \end{landscape}
+\subsection{While-Sprache}
+\begin{itemize}
+\item Zur Vereinfachung der Behandlung von Funktionsaufrufen im SMTLibTranslator wird ein Return-Statement nur noch am Ende von Funktionen (die main-Funktion ausgeschlossen) erlaubt.
+An diesen Stellen muss dieses Statement sogar stehen, sonst ist das Programm nicht syntaktisch korrekt. Dies wird schon im Parser erkannt.
+\item Funktionsaufrufe in Assumptions, Axioms, Ensures, Invariants und QuantifiedExpressions werden verboten, nur noch die eingebaute \"length\"-Funktion ist erlaubt. 
+Neben einer Vereinfachung des Beweisers dient dies auch der Benutzerfreundlichkeit. 
+Durch die Funktionen müsste nämlich intern im Single-Step-Modus durchgegangen werden, um jederzeit eine Unterprechung des Programmablaufs zu erlauben.
+Da die QuantifiedExpression aber eventuell über einen sehr großen Bereich geprüft wird, ist dies für den Benutzer ein zu großer Aufwand. Die restlichen Statement-Arten
+werden außerhalb eines Statements gemeinsam geprüft. Ein Funktionsaufruf im Singlestep wäre gegen die Logik dieser Statements.
+\item Die Syntax der Arraydeklaration wurde geändert, da die Syntax im Entwurf unintuitiv war.
+\end{itemize}

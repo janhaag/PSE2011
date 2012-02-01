@@ -1,6 +1,8 @@
 package verifier.smtlib;
 
 import ast.*;
+import misc.Pair;
+import verifier.KindOfProgram;
 
 import java.util.*;
 
@@ -9,6 +11,10 @@ import java.util.*;
  * be given to certain verifiers.
  */
 public class SMTLibTranslator implements ASTVisitor {
+    /**
+     * list of descriptions for the programs
+     */
+    private LinkedList<Pair<KindOfProgram, Position>> descriptions;
     /**
      * temporarily saves the list of all programs,
      * i.e. a list of all contracts to be verified
@@ -63,10 +69,19 @@ public class SMTLibTranslator implements ASTVisitor {
      */
     public WPProgram getWPTree(ASTRoot ast) {
         programs = new ArrayList<LinkedList<S_Expression>>();
+        descriptions = new LinkedList<Pair<KindOfProgram, Position>>();
         ast.accept(this);
         LinkedList<S_Expression> result = prepareFinalProgram(programs);
         int size = result.size();
         return new WPProgram(result.toArray(new S_Expression[size]));
+    }
+
+    /**
+     * Returns a list of program descriptions.
+     * @return list of program descriptions
+     */
+    public LinkedList<Pair<KindOfProgram, Position>> getDescriptions() {
+        return descriptions;
     }
 
     /**
@@ -257,6 +272,8 @@ public class SMTLibTranslator implements ASTVisitor {
         LinkedList<S_Expression> program = new LinkedList<S_Expression>();
         program.add(tempExpr);
         programs.add(program);
+        descriptions.add(new Pair<KindOfProgram, Position>(
+                KindOfProgram.WhileEnsureToRemaining, loop.getPosition()));
         prepareEndedLoop(program);
         for (Ensure ensure : ensures) {
             ensure.accept(this);
@@ -269,6 +286,8 @@ public class SMTLibTranslator implements ASTVisitor {
         //invariants & !condition => ensures
         program = new LinkedList<S_Expression>();
         programs.add(program);
+        descriptions.add(new Pair<KindOfProgram, Position>(
+                KindOfProgram.InvariantAndNotConditionToEnsure, loop.getPosition()));
         program.add(new Constant("true"));
         for (Ensure ensure : ensures) {
             ensure.accept(this);
@@ -297,6 +316,8 @@ public class SMTLibTranslator implements ASTVisitor {
         }
         program = new LinkedList<S_Expression>();
         programs.add(program);
+        descriptions.add(new Pair<KindOfProgram, Position>(
+                KindOfProgram.InvariantAndConditionToInvariant, loop.getPosition()));
         program.add(new Constant("true"));
         for (Invariant invariant : invariants) {
             invariant.accept(this);
@@ -485,6 +506,8 @@ public class SMTLibTranslator implements ASTVisitor {
         LinkedList<S_Expression> program = new LinkedList<S_Expression>();
         program.add(tempExpr);
         programs.add(program);
+        descriptions.add(new Pair<KindOfProgram, Position>(
+                KindOfProgram.AssumeToRemaining, function.getPosition()));
         program.set(program.size() - 1, tempExpr);
         Assumption[] assumptions = function.getAssumptions();
         for (Assumption assumption : assumptions) {
@@ -611,6 +634,9 @@ public class SMTLibTranslator implements ASTVisitor {
                 LinkedList<S_Expression> program = new LinkedList<S_Expression>();
                 program.add(expression);
                 programs.add(program);
+                descriptions.add(new Pair<KindOfProgram, Position>(
+                    KindOfProgram.FunctionEnsureToRemaining,
+                    statements[i].getPosition()));
                 prepareEndedLoop(program);
                 tempExpr = new Constant("true");
                 for (int j = 0; j < functionsCalled.size(); j++) {

@@ -2,6 +2,7 @@ package verifier.smtlib.z3;
 
 import java.util.LinkedList;
 
+import ast.Position;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -11,6 +12,7 @@ import ast.ASTRoot;
 
 import misc.Pair;
 
+import verifier.KindOfProgram;
 import verifier.Verifier;
 
 import verifier.smtlib.SMTLibTranslator;
@@ -28,6 +30,14 @@ public class Z3 extends Verifier {
      */
     protected String translate(ASTRoot ast) {
         return translator.getWPTree(ast).toString();
+    }
+
+    /**
+     * Returns a list of program descriptions.
+     * @return list of program descriptions
+     */
+    public LinkedList<Pair<KindOfProgram, Position>> getDescriptions() {
+        return translator.getDescriptions();
     }
 
     /**
