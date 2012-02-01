@@ -225,7 +225,7 @@ array_declaration returns [ ArrayDeclaration ast, LinkedList<Expression> divisor
         ;
 
 array_init returns [ LinkedList<Expression> dim, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
-    @init {$divisors = new LinkedList<Expression>();$dim = new LinkedList<Expression>();}
+    @init {$divisors = new LinkedList<Expression>();$dim = new LinkedList<Expression>();$arrayIndices = new LinkedList<Pair<ArrayRead, Expression>>();}
 	: 'array' ( '[' expression {if (!error) {$dim.add($expression.ast); $divisors.addAll($expression.divisors);
         $arrayIndices.addAll($expression.arrayIndices);}} ']' )+
 	;

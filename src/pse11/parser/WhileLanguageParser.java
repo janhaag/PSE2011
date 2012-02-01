@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-01-31 22:39:31
+// $ANTLR 3.4 C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g 2012-02-01 08:55:20
 
 	package parser;
 	import ast.*;
@@ -2021,7 +2021,7 @@ public class WhileLanguageParser extends Parser {
         WhileLanguageParser.expression_return expression23 =null;
 
 
-        retval.divisors = new LinkedList<Expression>();retval.dim = new LinkedList<Expression>();
+        retval.divisors = new LinkedList<Expression>();retval.dim = new LinkedList<Expression>();retval.arrayIndices = new LinkedList<Pair<ArrayRead, Expression>>();
         try {
             // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:229:2: ( 'array' ( '[' expression ']' )+ )
             // C:\\Users\\simon\\Studium\\PSE\\src\\grammar\\WhileLanguage.g:229:4: 'array' ( '[' expression ']' )+
