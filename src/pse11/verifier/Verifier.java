@@ -14,6 +14,7 @@ import java.util.LinkedList;
 
 import ast.ASTRoot;
 
+import ast.Position;
 import misc.Pair;
 
 public abstract class Verifier {

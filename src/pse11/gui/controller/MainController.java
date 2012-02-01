@@ -264,8 +264,8 @@ public class MainController implements SelectionListener {
 			assert editorController != null;
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
 			this.executionHandler.setAST(null);
-		} else if (e.getSource() == mainframe.getValidateButton()) {
-			this.executionHandler.verify(this.editorController.getEditor().getSource());
+		} else if (e.getSource() == mainframe.getValidateButton() || e.getSource() == mainframe.getMenuBar().getVerItem()) {
+            this.executionHandler.verify(this.editorController.getEditor().getSource());
 			this.executionHandler.setAST(null);
 		}
 	}

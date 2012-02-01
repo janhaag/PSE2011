@@ -26,6 +26,7 @@ public class MenuBar {
 	private MenuItem stepItem;
 	private MenuItem aboutItem;
 	private MenuItem randomTestItem;
+    private MenuItem verItem;
 	
 	public MenuBar(MainController controller, Shell shell) {
 		initiateMenuBar(controller, null, shell);
@@ -76,6 +77,10 @@ public class MenuBar {
 		return this.pasteItem;
 	}
 	
+    public MenuItem getVerItem() {
+        return this.verItem;
+    }
+
 	/**
 	 * Construct a menu bar with the specified controllers and parent shell.
 	 * @param controller specified controller
@@ -144,8 +149,9 @@ public class MenuBar {
 		randomTestItem.setText("Random Tests");
 		randomTestItem.addSelectionListener(controller);
 		new MenuItem(runmenu, SWT.SEPARATOR);
-		final MenuItem verItem = new MenuItem(runmenu, SWT.PUSH);
-		verItem.setText("Verify");
+		this.verItem = new MenuItem(runmenu, SWT.PUSH);
+		this.verItem.setText("Verify");
+        this.verItem.addSelectionListener(controller);
 		
 		final MenuItem help = new MenuItem(menu, SWT.CASCADE);
 		help.setText("Help");

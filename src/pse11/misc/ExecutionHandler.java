@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ast.Position;
 import org.antlr.runtime.RecognitionException;
 
 import ast.Program;
@@ -14,6 +15,7 @@ import ast.Program;
 import parser.FunctionCallNotAllowedException;
 import parser.IllegalTypeException;
 import parser.ParserInterface;
+import verifier.KindOfProgram;
 import verifier.smtlib.z3.Z3;
 import verifier.VerifierInterface;
 import interpreter.AssertionFailureException;
@@ -113,11 +115,11 @@ public class ExecutionHandler {
 	}
 	
 	public void verify(String source) {
+        this.messagesystem.clear(MessageCategories.VERIFYERROR);
 		this.parse(source);
 		if(this.ast == null) {
 			return;
-		}
-		this.messagesystem.clear(MessageCategories.VERIFYERROR);
+        }
 		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, 
 					"Please specify a path to the verifier in the settings.");
@@ -127,8 +129,11 @@ public class ExecutionHandler {
 				Settings.getInstance().getVerifierPath() + " ${FILE} -m"
 				));
 		LinkedList<Pair<Boolean, String>> result = new LinkedList<Pair<Boolean, String>>();
+        LinkedList<Pair<KindOfProgram, Position>> descriptions
+                = new LinkedList<Pair<KindOfProgram, Position>>();
 		try {
 			result = verifier.verify(this.ast);
+            descriptions = verifier.getDescriptions();
 		} catch (IOException e) {
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "Please insert a correct path under Edit->Settings!");
 		} catch (InterruptedException e) {
@@ -141,9 +146,13 @@ public class ExecutionHandler {
 			e.printStackTrace();
 			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, "Validate failed!");
 		}
-		for(Pair<Boolean, String> entry : result) {
-			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0, 
-					 entry.getValue2(), entry.getValue1().toString());
+		for(int i = 0; i < result.size(); i++) {
+            Pair<Boolean, String> entry = result.get(i);
+            Pair<KindOfProgram, Position> description = descriptions.get(i);
+			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0,
+					  entry.getValue1().toString() + "; " + entry.getValue2(),
+                    description.getValue1().toString() + ", line " +
+                        description.getValue2().getLine());
 		}
 	}
 	
