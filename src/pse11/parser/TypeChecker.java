@@ -542,6 +542,11 @@ public class TypeChecker implements ASTVisitor {
             throw new IllegalTypeException("Variable already defined in scope!",
                                            varDec.getPosition());
         }
+        if (varDec.getType() instanceof ArrayType) {
+            throw new IllegalTypeException("Arrays must be initialized " +
+                                           "via \"array\" keyword!",
+                                           varDec.getPosition());
+        }
         if (varDec.getValue() != null) {
             varDec.getValue().accept(this);
             if (!varDec.getType().equals(tempType)) {
@@ -562,6 +567,11 @@ public class TypeChecker implements ASTVisitor {
         if (currentScope.existsInScope(new Identifier(arrDec.getName()))) {
             throw new IllegalTypeException("Array already declared in scope!",
                                            arrDec.getPosition());
+        }
+        if (!(arrDec.getType() instanceof ArrayType)) {
+            throw new IllegalTypeException("\"array\" keyword only allowed " +
+                                           "on array declaration!",
+                                           arrDec.getPosition());    
         }
         Expression[] indices = arrDec.getIndices();
         for (Expression index : indices) {
