@@ -132,7 +132,7 @@ public class Interpreter implements ASTVisitor {
                 if (value2.equals(BigInteger.ZERO)) {
                     newValue = BigInteger.ZERO;
                 } else {
-                    newValue = value1.divide(value2);
+                    newValue = divide(value1, value2);
                 }
                 tempValue = new IntegerValue(newValue.toString());
             }
@@ -141,7 +141,8 @@ public class Interpreter implements ASTVisitor {
                 if (value2.equals(BigInteger.ZERO)) {
                     newValue = value1;
                 } else {
-                    newValue = value1.remainder(value2);
+                    newValue = value2.multiply(divide(value1, value2));
+                    newValue = value1.subtract(newValue);
                 }
                 tempValue = new IntegerValue(newValue.toString());
             }
@@ -151,6 +152,16 @@ public class Interpreter implements ASTVisitor {
                     ((IntegerValue) tempValue).getValue().negate();
             tempValue = new IntegerValue(newValue.toString());
         }
+    }
+
+    public static BigInteger divide(BigInteger dividend, BigInteger divisor) {
+        BigInteger result = dividend.divide(divisor);
+        if (dividend.signum() == -1 &&
+                !dividend.remainder(divisor).equals(BigInteger.ZERO)) {
+            result = result.subtract(
+                    new BigInteger(divisor.signum(), new byte[]{1}));
+        }
+        return result;
     }
 
     @Override
