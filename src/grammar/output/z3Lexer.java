@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-02-21 19:06:38
+// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-02-21 19:21:24
 
     package verifier.smtlib.z3;
 
@@ -24,6 +24,7 @@ public class z3Lexer extends Lexer {
     public static final int T__19=19;
     public static final int T__20=20;
     public static final int T__21=21;
+    public static final int T__22=22;
     public static final int BOOL=4;
     public static final int IDENT=5;
     public static final int INT=6;
@@ -115,10 +116,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:9:7: ( '(and' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:9:9: '(and'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:9:7: ( '(define-fun' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:9:9: '(define-fun'
             {
-            match("(and"); 
+            match("(define-fun"); 
 
 
 
@@ -138,10 +139,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:10:7: ( '(define-fun' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:10:9: '(define-fun'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:10:7: ( '(model' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:10:9: '(model'
             {
-            match("(define-fun"); 
+            match("(model"); 
 
 
 
@@ -161,12 +162,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:11:7: ( '(model' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:11:9: '(model'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:11:7: ( ')' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:11:9: ')'
             {
-            match("(model"); 
-
-
+            match(')'); 
 
             }
 
@@ -184,10 +183,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:12:7: ( ')' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:12:9: ')'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:12:7: ( '=' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:12:9: '='
             {
-            match(')'); 
+            match('='); 
 
             }
 
@@ -205,10 +204,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:13:7: ( '=' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:13:9: '='
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:13:7: ( '_' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:13:9: '_'
             {
-            match('='); 
+            match('_'); 
 
             }
 
@@ -226,10 +225,12 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:14:7: ( '_' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:14:9: '_'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:14:7: ( 'and' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:14:9: 'and'
             {
-            match('_'); 
+            match("and"); 
+
+
 
             }
 
@@ -270,10 +271,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:16:7: ( 'sat' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:16:9: 'sat'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:16:7: ( 'ite' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:16:9: 'ite'
             {
-            match("sat"); 
+            match("ite"); 
 
 
 
@@ -293,10 +294,10 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:17:7: ( 'unknown' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:17:9: 'unknown'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:17:7: ( 'sat' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:17:9: 'sat'
             {
-            match("unknown"); 
+            match("sat"); 
 
 
 
@@ -316,8 +317,31 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:18:7: ( 'unsat' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:18:9: 'unsat'
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:18:7: ( 'unknown' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:18:9: 'unknown'
+            {
+            match("unknown"); 
+
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "T__21"
+
+    // $ANTLR start "T__22"
+    public final void mT__22() throws RecognitionException {
+        try {
+            int _type = T__22;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:19:7: ( 'unsat' )
+            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:19:9: 'unsat'
             {
             match("unsat"); 
 
@@ -332,7 +356,7 @@ public class z3Lexer extends Lexer {
         	// do for sure before leaving
         }
     }
-    // $ANTLR end "T__21"
+    // $ANTLR end "T__22"
 
     // $ANTLR start "TYPE"
     public final void mTYPE() throws RecognitionException {
@@ -667,8 +691,8 @@ public class z3Lexer extends Lexer {
     // $ANTLR end "IDENT"
 
     public void mTokens() throws RecognitionException {
-        // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | TYPE | BOOL | INT | WS | IDENT )
-        int alt7=18;
+        // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | TYPE | BOOL | INT | WS | IDENT )
+        int alt7=19;
         switch ( input.LA(1) ) {
         case '!':
             {
@@ -683,24 +707,19 @@ public class z3Lexer extends Lexer {
                 alt7=3;
                 }
                 break;
-            case 'a':
+            case 'd':
                 {
                 alt7=4;
                 }
                 break;
-            case 'd':
+            case 'm':
                 {
                 alt7=5;
                 }
                 break;
-            case 'm':
-                {
-                alt7=6;
-                }
-                break;
             case '-':
                 {
-                alt7=16;
+                alt7=17;
                 }
                 break;
             default:
@@ -711,12 +730,12 @@ public class z3Lexer extends Lexer {
             break;
         case ')':
             {
-            alt7=7;
+            alt7=6;
             }
             break;
         case '=':
             {
-            alt7=8;
+            alt7=7;
             }
             break;
         case '_':
@@ -724,269 +743,316 @@ public class z3Lexer extends Lexer {
             int LA7_5 = input.LA(2);
 
             if ( ((LA7_5 >= '#' && LA7_5 <= '$')||(LA7_5 >= '0' && LA7_5 <= '9')||(LA7_5 >= 'A' && LA7_5 <= 'Z')||LA7_5=='_'||(LA7_5 >= 'a' && LA7_5 <= 'z')) ) {
-                alt7=18;
+                alt7=19;
             }
             else {
-                alt7=9;
+                alt7=8;
             }
             }
             break;
         case 'a':
             {
-            int LA7_6 = input.LA(2);
-
-            if ( (LA7_6=='s') ) {
+            switch ( input.LA(2) ) {
+            case 'n':
+                {
                 int LA7_22 = input.LA(3);
 
-                if ( (LA7_22=='-') ) {
+                if ( (LA7_22=='d') ) {
+                    int LA7_31 = input.LA(4);
+
+                    if ( ((LA7_31 >= '#' && LA7_31 <= '$')||(LA7_31 >= '0' && LA7_31 <= '9')||(LA7_31 >= 'A' && LA7_31 <= 'Z')||LA7_31=='_'||(LA7_31 >= 'a' && LA7_31 <= 'z')) ) {
+                        alt7=19;
+                    }
+                    else {
+                        alt7=9;
+                    }
+                }
+                else {
+                    alt7=19;
+                }
+                }
+                break;
+            case 's':
+                {
+                int LA7_23 = input.LA(3);
+
+                if ( (LA7_23=='-') ) {
                     alt7=10;
                 }
                 else {
-                    alt7=18;
+                    alt7=19;
                 }
+                }
+                break;
+            default:
+                alt7=19;
             }
-            else {
-                alt7=18;
-            }
+
             }
             break;
-        case 's':
+        case 'i':
             {
             int LA7_7 = input.LA(2);
 
-            if ( (LA7_7=='a') ) {
-                int LA7_23 = input.LA(3);
+            if ( (LA7_7=='t') ) {
+                int LA7_24 = input.LA(3);
 
-                if ( (LA7_23=='t') ) {
-                    int LA7_30 = input.LA(4);
+                if ( (LA7_24=='e') ) {
+                    int LA7_33 = input.LA(4);
 
-                    if ( ((LA7_30 >= '#' && LA7_30 <= '$')||(LA7_30 >= '0' && LA7_30 <= '9')||(LA7_30 >= 'A' && LA7_30 <= 'Z')||LA7_30=='_'||(LA7_30 >= 'a' && LA7_30 <= 'z')) ) {
-                        alt7=18;
+                    if ( ((LA7_33 >= '#' && LA7_33 <= '$')||(LA7_33 >= '0' && LA7_33 <= '9')||(LA7_33 >= 'A' && LA7_33 <= 'Z')||LA7_33=='_'||(LA7_33 >= 'a' && LA7_33 <= 'z')) ) {
+                        alt7=19;
                     }
                     else {
                         alt7=11;
                     }
                 }
                 else {
-                    alt7=18;
+                    alt7=19;
                 }
             }
             else {
-                alt7=18;
+                alt7=19;
+            }
+            }
+            break;
+        case 's':
+            {
+            int LA7_8 = input.LA(2);
+
+            if ( (LA7_8=='a') ) {
+                int LA7_25 = input.LA(3);
+
+                if ( (LA7_25=='t') ) {
+                    int LA7_34 = input.LA(4);
+
+                    if ( ((LA7_34 >= '#' && LA7_34 <= '$')||(LA7_34 >= '0' && LA7_34 <= '9')||(LA7_34 >= 'A' && LA7_34 <= 'Z')||LA7_34=='_'||(LA7_34 >= 'a' && LA7_34 <= 'z')) ) {
+                        alt7=19;
+                    }
+                    else {
+                        alt7=12;
+                    }
+                }
+                else {
+                    alt7=19;
+                }
+            }
+            else {
+                alt7=19;
             }
             }
             break;
         case 'u':
             {
-            int LA7_8 = input.LA(2);
+            int LA7_9 = input.LA(2);
 
-            if ( (LA7_8=='n') ) {
+            if ( (LA7_9=='n') ) {
                 switch ( input.LA(3) ) {
                 case 'k':
                     {
-                    int LA7_31 = input.LA(4);
+                    int LA7_35 = input.LA(4);
 
-                    if ( (LA7_31=='n') ) {
-                        int LA7_38 = input.LA(5);
+                    if ( (LA7_35=='n') ) {
+                        int LA7_44 = input.LA(5);
 
-                        if ( (LA7_38=='o') ) {
-                            int LA7_44 = input.LA(6);
+                        if ( (LA7_44=='o') ) {
+                            int LA7_50 = input.LA(6);
 
-                            if ( (LA7_44=='w') ) {
-                                int LA7_48 = input.LA(7);
+                            if ( (LA7_50=='w') ) {
+                                int LA7_54 = input.LA(7);
 
-                                if ( (LA7_48=='n') ) {
-                                    int LA7_50 = input.LA(8);
+                                if ( (LA7_54=='n') ) {
+                                    int LA7_56 = input.LA(8);
 
-                                    if ( ((LA7_50 >= '#' && LA7_50 <= '$')||(LA7_50 >= '0' && LA7_50 <= '9')||(LA7_50 >= 'A' && LA7_50 <= 'Z')||LA7_50=='_'||(LA7_50 >= 'a' && LA7_50 <= 'z')) ) {
-                                        alt7=18;
+                                    if ( ((LA7_56 >= '#' && LA7_56 <= '$')||(LA7_56 >= '0' && LA7_56 <= '9')||(LA7_56 >= 'A' && LA7_56 <= 'Z')||LA7_56=='_'||(LA7_56 >= 'a' && LA7_56 <= 'z')) ) {
+                                        alt7=19;
                                     }
                                     else {
-                                        alt7=12;
+                                        alt7=13;
                                     }
                                 }
                                 else {
-                                    alt7=18;
+                                    alt7=19;
                                 }
                             }
                             else {
-                                alt7=18;
+                                alt7=19;
                             }
                         }
                         else {
-                            alt7=18;
+                            alt7=19;
                         }
                     }
                     else {
-                        alt7=18;
+                        alt7=19;
                     }
                     }
                     break;
                 case 's':
                     {
-                    int LA7_32 = input.LA(4);
+                    int LA7_36 = input.LA(4);
 
-                    if ( (LA7_32=='a') ) {
-                        int LA7_39 = input.LA(5);
+                    if ( (LA7_36=='a') ) {
+                        int LA7_45 = input.LA(5);
 
-                        if ( (LA7_39=='t') ) {
-                            int LA7_45 = input.LA(6);
+                        if ( (LA7_45=='t') ) {
+                            int LA7_51 = input.LA(6);
 
-                            if ( ((LA7_45 >= '#' && LA7_45 <= '$')||(LA7_45 >= '0' && LA7_45 <= '9')||(LA7_45 >= 'A' && LA7_45 <= 'Z')||LA7_45=='_'||(LA7_45 >= 'a' && LA7_45 <= 'z')) ) {
-                                alt7=18;
+                            if ( ((LA7_51 >= '#' && LA7_51 <= '$')||(LA7_51 >= '0' && LA7_51 <= '9')||(LA7_51 >= 'A' && LA7_51 <= 'Z')||LA7_51=='_'||(LA7_51 >= 'a' && LA7_51 <= 'z')) ) {
+                                alt7=19;
                             }
                             else {
-                                alt7=13;
+                                alt7=14;
                             }
                         }
                         else {
-                            alt7=18;
+                            alt7=19;
                         }
                     }
                     else {
-                        alt7=18;
+                        alt7=19;
                     }
                     }
                     break;
                 default:
-                    alt7=18;
+                    alt7=19;
                 }
 
             }
             else {
-                alt7=18;
+                alt7=19;
             }
             }
             break;
         case 'I':
             {
-            int LA7_9 = input.LA(2);
+            int LA7_10 = input.LA(2);
 
-            if ( (LA7_9=='n') ) {
-                int LA7_25 = input.LA(3);
+            if ( (LA7_10=='n') ) {
+                int LA7_27 = input.LA(3);
 
-                if ( (LA7_25=='t') ) {
-                    int LA7_33 = input.LA(4);
+                if ( (LA7_27=='t') ) {
+                    int LA7_37 = input.LA(4);
 
-                    if ( ((LA7_33 >= '#' && LA7_33 <= '$')||(LA7_33 >= '0' && LA7_33 <= '9')||(LA7_33 >= 'A' && LA7_33 <= 'Z')||LA7_33=='_'||(LA7_33 >= 'a' && LA7_33 <= 'z')) ) {
-                        alt7=18;
+                    if ( ((LA7_37 >= '#' && LA7_37 <= '$')||(LA7_37 >= '0' && LA7_37 <= '9')||(LA7_37 >= 'A' && LA7_37 <= 'Z')||LA7_37=='_'||(LA7_37 >= 'a' && LA7_37 <= 'z')) ) {
+                        alt7=19;
                     }
                     else {
-                        alt7=14;
+                        alt7=15;
                     }
                 }
                 else {
-                    alt7=18;
+                    alt7=19;
                 }
             }
             else {
-                alt7=18;
+                alt7=19;
             }
             }
             break;
         case 'B':
             {
-            int LA7_10 = input.LA(2);
-
-            if ( (LA7_10=='o') ) {
-                int LA7_26 = input.LA(3);
-
-                if ( (LA7_26=='o') ) {
-                    int LA7_34 = input.LA(4);
-
-                    if ( (LA7_34=='l') ) {
-                        int LA7_41 = input.LA(5);
-
-                        if ( ((LA7_41 >= '#' && LA7_41 <= '$')||(LA7_41 >= '0' && LA7_41 <= '9')||(LA7_41 >= 'A' && LA7_41 <= 'Z')||LA7_41=='_'||(LA7_41 >= 'a' && LA7_41 <= 'z')) ) {
-                            alt7=18;
-                        }
-                        else {
-                            alt7=14;
-                        }
-                    }
-                    else {
-                        alt7=18;
-                    }
-                }
-                else {
-                    alt7=18;
-                }
-            }
-            else {
-                alt7=18;
-            }
-            }
-            break;
-        case 't':
-            {
             int LA7_11 = input.LA(2);
 
-            if ( (LA7_11=='r') ) {
-                int LA7_27 = input.LA(3);
+            if ( (LA7_11=='o') ) {
+                int LA7_28 = input.LA(3);
 
-                if ( (LA7_27=='u') ) {
-                    int LA7_35 = input.LA(4);
+                if ( (LA7_28=='o') ) {
+                    int LA7_38 = input.LA(4);
 
-                    if ( (LA7_35=='e') ) {
-                        int LA7_42 = input.LA(5);
+                    if ( (LA7_38=='l') ) {
+                        int LA7_47 = input.LA(5);
 
-                        if ( ((LA7_42 >= '#' && LA7_42 <= '$')||(LA7_42 >= '0' && LA7_42 <= '9')||(LA7_42 >= 'A' && LA7_42 <= 'Z')||LA7_42=='_'||(LA7_42 >= 'a' && LA7_42 <= 'z')) ) {
-                            alt7=18;
+                        if ( ((LA7_47 >= '#' && LA7_47 <= '$')||(LA7_47 >= '0' && LA7_47 <= '9')||(LA7_47 >= 'A' && LA7_47 <= 'Z')||LA7_47=='_'||(LA7_47 >= 'a' && LA7_47 <= 'z')) ) {
+                            alt7=19;
                         }
                         else {
                             alt7=15;
                         }
                     }
                     else {
-                        alt7=18;
+                        alt7=19;
                     }
                 }
                 else {
-                    alt7=18;
+                    alt7=19;
                 }
             }
             else {
-                alt7=18;
+                alt7=19;
+            }
+            }
+            break;
+        case 't':
+            {
+            int LA7_12 = input.LA(2);
+
+            if ( (LA7_12=='r') ) {
+                int LA7_29 = input.LA(3);
+
+                if ( (LA7_29=='u') ) {
+                    int LA7_39 = input.LA(4);
+
+                    if ( (LA7_39=='e') ) {
+                        int LA7_48 = input.LA(5);
+
+                        if ( ((LA7_48 >= '#' && LA7_48 <= '$')||(LA7_48 >= '0' && LA7_48 <= '9')||(LA7_48 >= 'A' && LA7_48 <= 'Z')||LA7_48=='_'||(LA7_48 >= 'a' && LA7_48 <= 'z')) ) {
+                            alt7=19;
+                        }
+                        else {
+                            alt7=16;
+                        }
+                    }
+                    else {
+                        alt7=19;
+                    }
+                }
+                else {
+                    alt7=19;
+                }
+            }
+            else {
+                alt7=19;
             }
             }
             break;
         case 'f':
             {
-            int LA7_12 = input.LA(2);
+            int LA7_13 = input.LA(2);
 
-            if ( (LA7_12=='a') ) {
-                int LA7_28 = input.LA(3);
+            if ( (LA7_13=='a') ) {
+                int LA7_30 = input.LA(3);
 
-                if ( (LA7_28=='l') ) {
-                    int LA7_36 = input.LA(4);
+                if ( (LA7_30=='l') ) {
+                    int LA7_40 = input.LA(4);
 
-                    if ( (LA7_36=='s') ) {
-                        int LA7_43 = input.LA(5);
+                    if ( (LA7_40=='s') ) {
+                        int LA7_49 = input.LA(5);
 
-                        if ( (LA7_43=='e') ) {
-                            int LA7_47 = input.LA(6);
+                        if ( (LA7_49=='e') ) {
+                            int LA7_53 = input.LA(6);
 
-                            if ( ((LA7_47 >= '#' && LA7_47 <= '$')||(LA7_47 >= '0' && LA7_47 <= '9')||(LA7_47 >= 'A' && LA7_47 <= 'Z')||LA7_47=='_'||(LA7_47 >= 'a' && LA7_47 <= 'z')) ) {
-                                alt7=18;
+                            if ( ((LA7_53 >= '#' && LA7_53 <= '$')||(LA7_53 >= '0' && LA7_53 <= '9')||(LA7_53 >= 'A' && LA7_53 <= 'Z')||LA7_53=='_'||(LA7_53 >= 'a' && LA7_53 <= 'z')) ) {
+                                alt7=19;
                             }
                             else {
-                                alt7=15;
+                                alt7=16;
                             }
                         }
                         else {
-                            alt7=18;
+                            alt7=19;
                         }
                     }
                     else {
-                        alt7=18;
+                        alt7=19;
                     }
                 }
                 else {
-                    alt7=18;
+                    alt7=19;
                 }
             }
             else {
-                alt7=18;
+                alt7=19;
             }
             }
             break;
@@ -1001,7 +1067,7 @@ public class z3Lexer extends Lexer {
         case '8':
         case '9':
             {
-            alt7=16;
+            alt7=17;
             }
             break;
         case '\t':
@@ -1011,7 +1077,7 @@ public class z3Lexer extends Lexer {
         case '\"':
         case ':':
             {
-            alt7=17;
+            alt7=18;
             }
             break;
         case '#':
@@ -1046,7 +1112,6 @@ public class z3Lexer extends Lexer {
         case 'e':
         case 'g':
         case 'h':
-        case 'i':
         case 'j':
         case 'k':
         case 'l':
@@ -1062,7 +1127,7 @@ public class z3Lexer extends Lexer {
         case 'y':
         case 'z':
             {
-            alt7=18;
+            alt7=19;
             }
             break;
         default:
@@ -1179,39 +1244,47 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 14 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:87: TYPE
+                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:87: T__22
+                {
+                mT__22(); 
+
+
+                }
+                break;
+            case 15 :
+                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:93: TYPE
                 {
                 mTYPE(); 
 
 
                 }
                 break;
-            case 15 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:92: BOOL
+            case 16 :
+                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:98: BOOL
                 {
                 mBOOL(); 
 
 
                 }
                 break;
-            case 16 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:97: INT
+            case 17 :
+                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:103: INT
                 {
                 mINT(); 
 
 
                 }
                 break;
-            case 17 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:101: WS
+            case 18 :
+                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:107: WS
                 {
                 mWS(); 
 
 
                 }
                 break;
-            case 18 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:104: IDENT
+            case 19 :
+                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:110: IDENT
                 {
                 mIDENT(); 
 
