@@ -32,9 +32,9 @@ model	returns [String example] @init{$example = "";}
 		{HashMap m = new HashMap();}
 		('(define-fun'  id = IDENT '(' ')' {$example = $id.text;}
         		'(Array'(TYPE {$example += "[ ]";})+ TYPE  ')'
-		'(_as-array'  id2 = (IDENT '!' INT)')'')' {m.put($id2.text,$id.text);}{$example += "\n";})*
+		'(' '_' 'as-array'  id2 = (IDENT '!' INT)')'')' {m.put($id2.text,$id.text);}{$example += "\n";})*
 		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE
-        '('ass = ite[(String)m.get($id3.text)] {$example += $ass.assignment;}')'')')*
+       ( '('ass = ite[(String)m.get($id3.text)] {$example += $ass.assignment;}')')?(i = INT{$example +=(String)m.get($id3.text) + "=" + $i.text})?')')*
 		')'
 	;
 
