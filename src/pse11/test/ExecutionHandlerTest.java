@@ -36,9 +36,9 @@ public class ExecutionHandlerTest {
 
     @Test
     public void testLoop() {
-        executionHandler.parse("main() {int i; while (i<1000000)" +
+        executionHandler.parse("main() {int i; int limit=1000; while (i<limit)" +
                 "invariant i>= 0;{i=i+1;}ensure i>= 0;}" +
-                "ensure i == 1000000;");
+                "ensure i == limit;");
         executionHandler.run(stmtBps, glblBps);
 		assertNull(executionHandler.getAssertionFailureMessage());
     }
@@ -90,6 +90,16 @@ public class ExecutionHandlerTest {
                 new String[]{"2", "{{20},{11},{9}}"});
         executionHandler.run(stmtBps, glblBps);
 		assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testArraySum() {
+        executionHandler.parse("int sum(int[] i){int j = 0;int res = 0;" +
+                "while(j<length(i)){res = res+i[j]; j=j+1;} return res;}" +
+                "main() {int[] x = array[3]; x[0]=2;x[1]=-1;x[2]=2;" +
+                "int h = sum(x);} ensure h == 3;");
+        executionHandler.run(stmtBps, glblBps);
+        assertNull(executionHandler.getAssertionFailureMessage());
     }
 
     @Test
@@ -186,7 +196,7 @@ public class ExecutionHandlerTest {
     @Test
     public void testArrayIndexAssign() {
         executionHandler.parse("main()" +
-                "{int[][][] j = array[2][1][3]; j[1][-1][1] = j;}");
+                "{int[][][] j = array[2][1][3]; j[1][-1][1] = 2;}");
         executionHandler.run(stmtBps, glblBps);
 		assertNotNull(executionHandler.getAssertionFailureMessage());
 	}
@@ -310,6 +320,24 @@ public class ExecutionHandlerTest {
     public void testMethodAssumeFail() {
         executionHandler.parse("int f(int i) assume i>0;{return 0;}" +
                 "main() {int x = f(-2);} ensure x > 0;");
+        executionHandler.run(stmtBps, glblBps);
+        assertNotNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testArrayParameterFail() {
+        executionHandler.parse("int f(int[] i) assume length(i) > 3;{return 0;}" +
+                "main() {int[] x = array[3]; x[1] = f(x);} ensure x[1] > 0;");
+        executionHandler.run(stmtBps, glblBps);
+        assertNotNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testArraySumFail() {
+        executionHandler.parse("int sum(int[] i){int j = 0;int res = 0;" +
+                "while(j<length(i)){res = res+i[j]; j=j+1;} return res;}" +
+                "main() {int[] x = array[3]; x[0]=2;x[1]=-1;x[2]=2;" +
+                "int h = sum(x);} ensure h < 0;");
         executionHandler.run(stmtBps, glblBps);
         assertNotNull(executionHandler.getAssertionFailureMessage());
     }
