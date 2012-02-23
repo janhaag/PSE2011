@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-02-23 20:23:18
+// $ANTLR 3.4 ../src/grammar/z3.g 2012-02-23 23:02:18
 
     package verifier.smtlib.z3;
 
@@ -44,15 +44,15 @@ public class z3Lexer extends Lexer {
     public z3Lexer(CharStream input, RecognizerSharedState state) {
         super(input,state);
     }
-    public String getGrammarFileName() { return "/Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g"; }
+    public String getGrammarFileName() { return "../src/grammar/z3.g"; }
 
     // $ANTLR start "T__9"
     public final void mT__9() throws RecognitionException {
         try {
             int _type = T__9;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:6:6: ( '!' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:6:8: '!'
+            // ../src/grammar/z3.g:6:6: ( '!' )
+            // ../src/grammar/z3.g:6:8: '!'
             {
             match('!'); 
 
@@ -72,8 +72,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__10;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:7:7: ( '(' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:7:9: '('
+            // ../src/grammar/z3.g:7:7: ( '(' )
+            // ../src/grammar/z3.g:7:9: '('
             {
             match('('); 
 
@@ -93,8 +93,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__11;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:8:7: ( '(Array' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:8:9: '(Array'
+            // ../src/grammar/z3.g:8:7: ( '(Array' )
+            // ../src/grammar/z3.g:8:9: '(Array'
             {
             match("(Array"); 
 
@@ -116,8 +116,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:9:7: ( '(define-fun' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:9:9: '(define-fun'
+            // ../src/grammar/z3.g:9:7: ( '(define-fun' )
+            // ../src/grammar/z3.g:9:9: '(define-fun'
             {
             match("(define-fun"); 
 
@@ -139,8 +139,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:10:7: ( '(model' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:10:9: '(model'
+            // ../src/grammar/z3.g:10:7: ( '(model' )
+            // ../src/grammar/z3.g:10:9: '(model'
             {
             match("(model"); 
 
@@ -162,8 +162,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:11:7: ( ')' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:11:9: ')'
+            // ../src/grammar/z3.g:11:7: ( ')' )
+            // ../src/grammar/z3.g:11:9: ')'
             {
             match(')'); 
 
@@ -183,8 +183,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:12:7: ( '=' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:12:9: '='
+            // ../src/grammar/z3.g:12:7: ( '=' )
+            // ../src/grammar/z3.g:12:9: '='
             {
             match('='); 
 
@@ -204,8 +204,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:13:7: ( '_' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:13:9: '_'
+            // ../src/grammar/z3.g:13:7: ( '_' )
+            // ../src/grammar/z3.g:13:9: '_'
             {
             match('_'); 
 
@@ -225,8 +225,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:14:7: ( 'and' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:14:9: 'and'
+            // ../src/grammar/z3.g:14:7: ( 'and' )
+            // ../src/grammar/z3.g:14:9: 'and'
             {
             match("and"); 
 
@@ -248,8 +248,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:15:7: ( 'as-array' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:15:9: 'as-array'
+            // ../src/grammar/z3.g:15:7: ( 'as-array' )
+            // ../src/grammar/z3.g:15:9: 'as-array'
             {
             match("as-array"); 
 
@@ -271,8 +271,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:16:7: ( 'ite' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:16:9: 'ite'
+            // ../src/grammar/z3.g:16:7: ( 'ite' )
+            // ../src/grammar/z3.g:16:9: 'ite'
             {
             match("ite"); 
 
@@ -294,8 +294,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:17:7: ( 'sat' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:17:9: 'sat'
+            // ../src/grammar/z3.g:17:7: ( 'sat' )
+            // ../src/grammar/z3.g:17:9: 'sat'
             {
             match("sat"); 
 
@@ -317,8 +317,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:18:7: ( 'unknown' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:18:9: 'unknown'
+            // ../src/grammar/z3.g:18:7: ( 'unknown' )
+            // ../src/grammar/z3.g:18:9: 'unknown'
             {
             match("unknown"); 
 
@@ -340,8 +340,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:19:7: ( 'unsat' )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:19:9: 'unsat'
+            // ../src/grammar/z3.g:19:7: ( 'unsat' )
+            // ../src/grammar/z3.g:19:9: 'unsat'
             {
             match("unsat"); 
 
@@ -363,7 +363,7 @@ public class z3Lexer extends Lexer {
         try {
             int _type = TYPE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:54:6: ( 'Int' | 'Bool' )
+            // ../src/grammar/z3.g:54:6: ( 'Int' | 'Bool' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -382,7 +382,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:54:8: 'Int'
+                    // ../src/grammar/z3.g:54:8: 'Int'
                     {
                     match("Int"); 
 
@@ -391,7 +391,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:55:4: 'Bool'
+                    // ../src/grammar/z3.g:55:4: 'Bool'
                     {
                     match("Bool"); 
 
@@ -415,7 +415,7 @@ public class z3Lexer extends Lexer {
         try {
             int _type = BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:59:6: ( 'true' | 'false' )
+            // ../src/grammar/z3.g:59:6: ( 'true' | 'false' )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -434,7 +434,7 @@ public class z3Lexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:59:8: 'true'
+                    // ../src/grammar/z3.g:59:8: 'true'
                     {
                     match("true"); 
 
@@ -443,7 +443,7 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:59:17: 'false'
+                    // ../src/grammar/z3.g:59:17: 'false'
                     {
                     match("false"); 
 
@@ -467,7 +467,7 @@ public class z3Lexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:5: ( ( '0' .. '9' )+ | ( '(- ' ( '0' .. '9' )+ ')' ) )
+            // ../src/grammar/z3.g:62:5: ( ( '0' .. '9' )+ | ( '(- ' ( '0' .. '9' )+ ')' ) )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -486,9 +486,9 @@ public class z3Lexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:7: ( '0' .. '9' )+
+                    // ../src/grammar/z3.g:62:7: ( '0' .. '9' )+
                     {
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:7: ( '0' .. '9' )+
+                    // ../src/grammar/z3.g:62:7: ( '0' .. '9' )+
                     int cnt3=0;
                     loop3:
                     do {
@@ -502,7 +502,7 @@ public class z3Lexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:
+                    	    // ../src/grammar/z3.g:
                     	    {
                     	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
                     	        input.consume();
@@ -530,16 +530,16 @@ public class z3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:21: ( '(- ' ( '0' .. '9' )+ ')' )
+                    // ../src/grammar/z3.g:62:21: ( '(- ' ( '0' .. '9' )+ ')' )
                     {
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:21: ( '(- ' ( '0' .. '9' )+ ')' )
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:22: '(- ' ( '0' .. '9' )+ ')'
+                    // ../src/grammar/z3.g:62:21: ( '(- ' ( '0' .. '9' )+ ')' )
+                    // ../src/grammar/z3.g:62:22: '(- ' ( '0' .. '9' )+ ')'
                     {
                     match("(- "); 
 
 
 
-                    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:62:28: ( '0' .. '9' )+
+                    // ../src/grammar/z3.g:62:28: ( '0' .. '9' )+
                     int cnt4=0;
                     loop4:
                     do {
@@ -553,7 +553,7 @@ public class z3Lexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:
+                    	    // ../src/grammar/z3.g:
                     	    {
                     	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
                     	        input.consume();
@@ -601,8 +601,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:65:5: ( ( ' ' | '\\t' | '\\r' | '\\n' | '\"' | ':' ) )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:65:9: ( ' ' | '\\t' | '\\r' | '\\n' | '\"' | ':' )
+            // ../src/grammar/z3.g:65:5: ( ( ' ' | '\\t' | '\\r' | '\\n' | '\"' | ':' ) )
+            // ../src/grammar/z3.g:65:9: ( ' ' | '\\t' | '\\r' | '\\n' | '\"' | ':' )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' '||input.LA(1)=='\"'||input.LA(1)==':' ) {
                 input.consume();
@@ -632,8 +632,8 @@ public class z3Lexer extends Lexer {
         try {
             int _type = IDENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:75:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '#' | '$' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )* )
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:75:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '#' | '$' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )*
+            // ../src/grammar/z3.g:75:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '#' | '$' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )* )
+            // ../src/grammar/z3.g:75:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '#' | '$' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )*
             {
             if ( (input.LA(1) >= '#' && input.LA(1) <= '$')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -645,7 +645,7 @@ public class z3Lexer extends Lexer {
             }
 
 
-            // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:75:40: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )*
+            // ../src/grammar/z3.g:75:40: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '#' | '$' )*
             loop6:
             do {
                 int alt6=2;
@@ -658,7 +658,7 @@ public class z3Lexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:
+            	    // ../src/grammar/z3.g:
             	    {
             	    if ( (input.LA(1) >= '#' && input.LA(1) <= '$')||(input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
             	        input.consume();
@@ -691,7 +691,7 @@ public class z3Lexer extends Lexer {
     // $ANTLR end "IDENT"
 
     public void mTokens() throws RecognitionException {
-        // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | TYPE | BOOL | INT | WS | IDENT )
+        // ../src/grammar/z3.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | TYPE | BOOL | INT | WS | IDENT )
         int alt7=19;
         switch ( input.LA(1) ) {
         case '!':
@@ -1140,7 +1140,7 @@ public class z3Lexer extends Lexer {
 
         switch (alt7) {
             case 1 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:10: T__9
+                // ../src/grammar/z3.g:1:10: T__9
                 {
                 mT__9(); 
 
@@ -1148,7 +1148,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 2 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:15: T__10
+                // ../src/grammar/z3.g:1:15: T__10
                 {
                 mT__10(); 
 
@@ -1156,7 +1156,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 3 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:21: T__11
+                // ../src/grammar/z3.g:1:21: T__11
                 {
                 mT__11(); 
 
@@ -1164,7 +1164,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 4 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:27: T__12
+                // ../src/grammar/z3.g:1:27: T__12
                 {
                 mT__12(); 
 
@@ -1172,7 +1172,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 5 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:33: T__13
+                // ../src/grammar/z3.g:1:33: T__13
                 {
                 mT__13(); 
 
@@ -1180,7 +1180,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 6 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:39: T__14
+                // ../src/grammar/z3.g:1:39: T__14
                 {
                 mT__14(); 
 
@@ -1188,7 +1188,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 7 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:45: T__15
+                // ../src/grammar/z3.g:1:45: T__15
                 {
                 mT__15(); 
 
@@ -1196,7 +1196,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 8 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:51: T__16
+                // ../src/grammar/z3.g:1:51: T__16
                 {
                 mT__16(); 
 
@@ -1204,7 +1204,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 9 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:57: T__17
+                // ../src/grammar/z3.g:1:57: T__17
                 {
                 mT__17(); 
 
@@ -1212,7 +1212,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 10 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:63: T__18
+                // ../src/grammar/z3.g:1:63: T__18
                 {
                 mT__18(); 
 
@@ -1220,7 +1220,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 11 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:69: T__19
+                // ../src/grammar/z3.g:1:69: T__19
                 {
                 mT__19(); 
 
@@ -1228,7 +1228,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 12 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:75: T__20
+                // ../src/grammar/z3.g:1:75: T__20
                 {
                 mT__20(); 
 
@@ -1236,7 +1236,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 13 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:81: T__21
+                // ../src/grammar/z3.g:1:81: T__21
                 {
                 mT__21(); 
 
@@ -1244,7 +1244,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 14 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:87: T__22
+                // ../src/grammar/z3.g:1:87: T__22
                 {
                 mT__22(); 
 
@@ -1252,7 +1252,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 15 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:93: TYPE
+                // ../src/grammar/z3.g:1:93: TYPE
                 {
                 mTYPE(); 
 
@@ -1260,7 +1260,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 16 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:98: BOOL
+                // ../src/grammar/z3.g:1:98: BOOL
                 {
                 mBOOL(); 
 
@@ -1268,7 +1268,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 17 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:103: INT
+                // ../src/grammar/z3.g:1:103: INT
                 {
                 mINT(); 
 
@@ -1276,7 +1276,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 18 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:107: WS
+                // ../src/grammar/z3.g:1:107: WS
                 {
                 mWS(); 
 
@@ -1284,7 +1284,7 @@ public class z3Lexer extends Lexer {
                 }
                 break;
             case 19 :
-                // /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g:1:110: IDENT
+                // ../src/grammar/z3.g:1:110: IDENT
                 {
                 mIDENT(); 
 

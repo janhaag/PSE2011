@@ -53,7 +53,7 @@ grammar WhileLanguage;
 program returns [Program p]
 	@init {LinkedList<Axiom> axiom = new LinkedList<Axiom>();
 	       LinkedList<Function> function = new LinkedList<Function>();}
-        : (a=axiom_statement {if (!error) axiom.addAll($a.result);})*
+        : (a=axiom_statement {if (!error) axiom.add($a.result);})*
             (f=function_declaration {if (!error) function.add($f.ast);})* main
         	{$p = error ? null : new Program(new Position(),
                 function.toArray(new Function[function.size()]), $main.ast,
@@ -105,12 +105,13 @@ function_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedLi
               {$ast = error ?null : new StatementBlock(s.toArray(new Statement[s.size()]), new Position($start.getLine(), $start.getCharPositionInLine()));}
           e=ensure_statement? {$post = error ? null : $e.result != null ? $e.result : new LinkedList<Ensure>();}
         ;
-        
+
 
 main_body returns [ StatementBlock ast, LinkedList<Assumption> pre, LinkedList<Ensure> post ]
 	@init {LinkedList<Statement> s = new LinkedList<Statement>();}
         : a=assume_statement? {$pre = error ? null : $a.result != null ? $a.result : new LinkedList<Assumption>();}
-          '{' ( statement {if (!error) { s.addAll(possibleDivByZero($statement.divisors)); s.addAll(possibleNotPositive($statement.positive));
+          '{' {s.add(new Assertion(new Position($start.getLine(), $start.getCharPositionInLine()), new BooleanLiteral(new Position($start.getLine(), $start.getCharPositionInLine()), "true")));}
+            ( statement {if (!error) { s.addAll(possibleDivByZero($statement.divisors)); s.addAll(possibleNotPositive($statement.positive));
             s.addAll(possibleArrayOutOfBounds($statement.arrayIndices)); s.add($statement.ast); }} )* '}'
               {$ast = error ?null : new StatementBlock(s.toArray(new Statement[s.size()]), new Position($start.getLine(), $start.getCharPositionInLine()));}
           e=ensure_statement? {$post = error ? null : $e.result != null ? $e.result : new LinkedList<Ensure>();}
@@ -137,7 +138,8 @@ loop_body returns [ StatementBlock ast, LinkedList<Invariant> pre, LinkedList<En
 
 statement returns [ Statement ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices,
 				LinkedList<Expression> positive ]
-        : e1=assert_statement {if (!error) {$ast = $e1.ast; $divisors = $e1.divisors; $arrayIndices = $e1.arrayIndices;}}
+        : e1=assert_statement {if (!error) {$ast = $e1.ast; $divisors = new LinkedList<Expression>();
+                                $arrayIndices = new LinkedList<Pair<ArrayRead, Expression>>();}}
         | e2=variable_declaration {if (!error) {$ast = $e2.ast; $divisors = $e2.divisors; $arrayIndices = $e2.arrayIndices;}}
         | e3=array_declaration {if (!error) {$ast = $e3.ast; $divisors = $e3.divisors; $arrayIndices = $e3.arrayIndices; $positive = $e3.positive;}}
         | e4=assignment {if (!error) {$ast = $e4.ast; $divisors = $e4.divisors; $arrayIndices = $e4.arrayIndices;}}
@@ -147,45 +149,35 @@ statement returns [ Statement ast, LinkedList<Expression> divisors, LinkedList<P
 
 invariant_statement returns [ LinkedList<Invariant> result ]
 	@init {$result = new LinkedList<Invariant>();}
-        : 'invariant' e1=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroI($e1.divisors));
-            $result.addAll(possibleArrayOutOfBoundsI($e1.arrayIndices));
+        : 'invariant' e1=quantified_expression ';' {if (!error) {
             $result.add(new Invariant(new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast));}}
-        | 'invariant' '{' (e2=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroI($e2.divisors));
-            $result.addAll(possibleArrayOutOfBoundsI($e2.arrayIndices));
+        | 'invariant' '{' (e2=quantified_expression ';' {if (!error) {
             $result.add(new Invariant(new Position($start.getLine(), $start.getCharPositionInLine()), $e2.ast));}} )+ '}'
         ;
 
-axiom_statement returns [ LinkedList<Axiom> result ]
-    @init {$result = new LinkedList<Axiom>();}
-        : 'axiom' e1=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroAx($e1.divisors));
-            $result.addAll(possibleArrayOutOfBoundsAx($e1.arrayIndices));
-            $result.add(new Axiom(new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast));}}
+axiom_statement returns [ Axiom result ]
+        : 'axiom' e1=quantified_expression ';' {if (!error) {
+            $result = new Axiom(new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast);}}
         ;
 
-assert_statement returns [ Assertion ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
+assert_statement returns [ Assertion ast ]
         : 'assert' e1=quantified_expression ';' {if (!error) {$ast = new Assertion(
-                    new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast);
-                $divisors = $e1.divisors;
-                $arrayIndices = $e1.arrayIndices;}}
+                    new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast);}}
         ;
 
 assume_statement returns [ LinkedList<Assumption> result ]
 	@init {$result = new LinkedList<Assumption>();}
-        : 'assume' e1=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroA($e1.divisors));
-            $result.addAll(possibleArrayOutOfBoundsA($e1.arrayIndices));
+        : 'assume' e1=quantified_expression ';' {if (!error) {
             $result.add(new Assumption(new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast));}}
-        | 'assume' '{' (e2=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroA($e2.divisors));
-            $result.addAll(possibleArrayOutOfBoundsA($e2.arrayIndices));
+        | 'assume' '{' (e2=quantified_expression ';' {if (!error) {
             $result.add(new Assumption(new Position($start.getLine(), $start.getCharPositionInLine()), $e2.ast));}} )+ '}'
         ;
 
 ensure_statement returns [ LinkedList<Ensure> result ]
 	@init {$result = new LinkedList<Ensure>();}
-       	: 'ensure' e1=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroE($e1.divisors));
-            $result.addAll(possibleArrayOutOfBoundsE($e1.arrayIndices));
+       	: 'ensure' e1=quantified_expression ';' {if (!error) {
             $result.add(new Ensure(new Position($start.getLine(), $start.getCharPositionInLine()), $e1.ast));}}
-        | 'ensure' '{' (e2=quantified_expression ';' {if (!error) {$result.addAll(possibleDivByZeroE($e2.divisors));
-            $result.addAll(possibleArrayOutOfBoundsE($e2.arrayIndices));
+        | 'ensure' '{' (e2=quantified_expression ';' {if (!error) {
             $result.add(new Ensure(new Position($start.getLine(), $start.getCharPositionInLine()), $e2.ast));}} )+ '}'
         ;
 
@@ -252,26 +244,43 @@ return_statement returns [ ReturnStatement ast, LinkedList<Expression> divisors,
         $divisors = $expression.divisors;$arrayIndices = $expression.arrayIndices;}}
 	;
 
-quantified_expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
-        : QUANTIFIER IDENT '(' range? ')' e=quantified_expression {if (!error) {
-        	Range r = null;
-        	$divisors = $e.divisors;
-            $arrayIndices = $e.arrayIndices;
-        	if ($range.e1 != null) {
+quantified_expression returns [ Expression ast ]
+        : qe_helper[new LinkedList<Expression>(), new LinkedList<Pair<ArrayRead, Expression>>()]
+          { if (!error) $ast = $qe_helper.ast; }
+        ;
+
+qe_helper [ LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ] returns [ Expression ast ]
+       @init {Range r = null;}
+        : QUANTIFIER IDENT '(' (range {if (!error) {
         		r = new Range($range.e1, $range.e2);
         		$divisors.addAll($range.divisors);
                 $arrayIndices.addAll($range.arrayIndices);
-        	}
+        	}})? ')' ex=qe_helper[divisors, arrayIndices] {if (!error) {
         	if ("forall".equals($QUANTIFIER.text))
-        			$ast = new ForAllQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
-        				$e.ast);
+        	    $ast = new ForAllQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
+        				$ex.ast);
             else $ast = new ExistsQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
-        				$e.ast);
+        				$ex.ast);
         	}}
         | expression {if (!error) {
-            $divisors = $expression.divisors;
-        	$ast = $expression.ast;
-            $arrayIndices = $expression.arrayIndices;
+            $divisors.addAll($expression.divisors);
+            $arrayIndices.addAll($expression.arrayIndices);
+            $ast = $expression.ast;
+            for (Expression e : divisors) {
+                $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), e,
+                    new NumericLiteral(e.getPosition(), "0"), new NotEqual()), $ast, new Conjunction());
+            }
+            for (Pair<ArrayRead, Expression> p : arrayIndices) {
+                Expression e = p.getValue2();
+                ArrayRead a = p.getValue1();
+                LogicalExpression lower = new LogicalExpression(e.getPosition(), e,
+                        new NumericLiteral(e.getPosition(), "0"), new GreaterEqual());
+                LogicalExpression upper = new LogicalExpression(e.getPosition(), e,
+                        new FunctionCall(new Identifier("length"), new Expression[] {a},
+                            e.getPosition()), new Less());
+                $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), lower, upper, new Conjunction()),
+                        $ast, new Conjunction());
+            }
         }}
         ;
 
