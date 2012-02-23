@@ -25,7 +25,7 @@ def build(bld):
         srcdir   = 'pse11/',
         outdir   = 'pse11',
         basedir  = 'pse11',
-	jaropts  = ['-C', '../src/pse11', 'gui/image'],
+	jaropts  = ['-C', '../src/pse11', 'gui/image', '-C', '../src/pse11', 'gui/doc'],
         destfile = 'pse11.jar'
     )
 
