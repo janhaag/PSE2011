@@ -1,7 +1,5 @@
 bin
 output
-*Lexer.java
-*Parser.java
 *.aux
 *.idx
 *.bib
