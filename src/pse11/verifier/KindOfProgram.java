@@ -7,15 +7,15 @@ public enum KindOfProgram {
         /**
          * indicates a program to prove that assume=>rest
          */
-        AssumeToRemaining,
+        FunctionAssumeToRemainingProgram,
         /**
          * indicates a program to prove that whileEnsure=>rest
          */
-        WhileEnsureToRemaining,
+        WhileEnsureToRemainingProgram,
         /**
          * indicates a program to prove that functionEnsure=>rest
          */
-        FunctionEnsureToRemaining,
+        FunctionEnsureToRemainingProgram,
         /**
          * indicates a program to prove that invariant & condition => invariant
          */
@@ -23,5 +23,5 @@ public enum KindOfProgram {
         /**
          * indicates a program to prove that invariant & !condition => ensure
          */
-        InvariantAndNotConditionToEnsure
+        InvariantAndNotConditionToWhileEnsure
     }
