@@ -195,8 +195,8 @@ public class MainController implements SelectionListener {
 							executionHandler.getGlobalBreakpoints());
 					mainframe.getDisplay().asyncExec(new Runnable() {
 						public void run() {
-							if (executionHandler.getAssertionFailureMessage() != null) {
-								executionHandler.printAssertionFailureMessage();
+							if (executionHandler.getMessage() != null) {
+								executionHandler.printMessage();
 								stopView();
 								return;
 							}
@@ -241,8 +241,8 @@ public class MainController implements SelectionListener {
 					mainframe.getDisplay().asyncExec(new Runnable() {
 						public void run() {
 							pauseView();
-							if (executionHandler.getAssertionFailureMessage() != null) {
-								executionHandler.printAssertionFailureMessage();
+							if (executionHandler.getMessage() != null) {
+								executionHandler.printMessage();
 								stopView();
 								return;
 							}
@@ -263,6 +263,9 @@ public class MainController implements SelectionListener {
 			//Functions
 			assert editorController != null;
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
+			if (this.executionHandler.getAST() != null) {
+				this.executionHandler.addCorrectSyntaxMessage();
+			}
 			this.executionHandler.setAST(null);
 		} else if (e.getSource() == mainframe.getValidateButton() || e.getSource() == mainframe.getMenuBar().getVerItem()) {
             this.executionHandler.verify(this.editorController.getEditor().getSource());

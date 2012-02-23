@@ -46,7 +46,7 @@ public class ErrorConsole extends Console {
 		this.positionColumn.setText("Position");
 		this.positionColumn.setWidth(100);
 		this.errormessageColumn = new TableColumn(this.table, SWT.CENTER | SWT.FILL);
-		this.errormessageColumn.setText("Error Message");
+		this.errormessageColumn.setText("Message");
 		this.errormessageColumn.setWidth(500);
 		this.table.setHeaderVisible(true);
 	}
@@ -54,9 +54,7 @@ public class ErrorConsole extends Console {
 	@Override
 	public void updateConsole(ArrayList<Message> messages) {
 		assert this.table != null;
-		this.table.clearAll();
-		//clearAll() doesn't work correct, so itemcount has to be set manually
-		this.table.setItemCount(0);
+		this.table.removeAll();
 		for(Message message : messages) {
 			if(message.getCategory() == MessageCategories.ERROR) {
 				TableItem tableitem = new TableItem(this.table, SWT.NONE);

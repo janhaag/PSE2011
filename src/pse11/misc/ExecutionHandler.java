@@ -33,7 +33,7 @@ public class ExecutionHandler {
 	private Program ast;
 	private ArrayList<GlobalBreakpoint> globalBreakpoints;
 	private String[] parameterValues;
-	private String[] assertionFailureMessage;
+	private String[] message;
 	private boolean paused;
 	
 	public ExecutionHandler(MessageSystem messagesystem) {
@@ -73,6 +73,8 @@ public class ExecutionHandler {
 		while (!paused && !finished && success) {
 			if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() == null) {
 				finished = true;
+				this.message = new String[2];
+				this.message[1] = "Program execution successful.";
 				break;
 			}
 			success = this.singleStep(sbreakpoints, gbreakpoints);
@@ -102,13 +104,17 @@ public class ExecutionHandler {
 			if (this.execution.getCurrentState().getCurrentStatement() != null) {
 				this.interpreter.step(this.execution.getCurrentState());
 				success = true;
+				if (this.execution.getCurrentState().getCurrentStatement() == null) {
+					this.message = new String[2];
+					this.message[1] = "Program execution successful.";
+				}
 			}
 		}
 		catch (AssertionFailureException e) {
-			this.assertionFailureMessage = new String[2];
+			this.message = new String[2];
 			success = false;
-			this.assertionFailureMessage[0] = "" + e.getPosition().getLine();
-			this.assertionFailureMessage[1] = e.getMessage();
+			this.message[0] = "" + e.getPosition().getLine();
+			this.message[1] = e.getMessage();
 			this.destroyProgramExecution();
 	    }
 		return success;
@@ -170,21 +176,26 @@ public class ExecutionHandler {
 		return parsedError;
 	}
 	
-	public void printAssertionFailureMessage() {
+	public void printMessage() {
 		int position;
 		try {
-			position = Integer.parseInt(this.assertionFailureMessage[0]);
+			position = Integer.parseInt(this.message[0]);
 		}
 		catch (NumberFormatException e) {
-			position = -1;
+			position = 0;
 		}
 		this.messagesystem.addMessage(MessageCategories.ERROR, position, 
-				this.assertionFailureMessage[1]);
-		this.assertionFailureMessage = null;
+				this.message[1]);
+		this.message = null;
 	}
 	
-	public void clearAssertionFailureMessage() {
-		this.assertionFailureMessage = null;
+	public void clearMessage() {
+		this.message = null;
+	}
+	
+	public void addCorrectSyntaxMessage() {
+		this.messagesystem.addMessage(MessageCategories.ERROR, 0, 
+				"Syntax is correct!");
 	}
 	
 	public void destroyProgramExecution() {
@@ -215,8 +226,8 @@ public class ExecutionHandler {
 		return this.messagesystem;
 	}
 	
-	public String[] getAssertionFailureMessage() {
-		return this.assertionFailureMessage;
+	public String[] getMessage() {
+		return this.message;
 	}
 	
 	public Program getAST() {
