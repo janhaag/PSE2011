@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-02-21 19:21:24
+// $ANTLR 3.4 /Users/DavAdi/Documents/Adrian/PSE/PSE2011/src/grammar/z3.g 2012-02-23 20:23:17
 
     package verifier.smtlib.z3;
 
@@ -705,7 +705,7 @@ public class z3Parser extends Parser {
             	            state._fsp--;
 
 
-            	            example +=(String)m.get((id3!=null?id3.getText():null)) + "=" + v
+            	            example +=(String)m.get((id3!=null?id3.getText():null)) + "=" + v;
 
             	            }
             	            break;

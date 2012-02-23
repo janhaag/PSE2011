@@ -34,7 +34,7 @@ model	returns [String example] @init{$example = "";}
         		'(Array'(TYPE {$example += "[ ]";})+ TYPE  ')'
 		'(' '_' 'as-array'  id2 = (IDENT '!' INT)')'')' {m.put($id2.text,$id.text);}{$example += "\n";})*
 		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE
-       ( '('ass = ite[(String)m.get($id3.text)] {$example += $ass.assignment;}')')?(v = value{$example +=(String)m.get($id3.text) + "=" + $v.content})?')')*
+       ( '('ass = ite[(String)m.get($id3.text)] {$example += $ass.assignment;}')')?(v = value{$example +=(String)m.get($id3.text) + "=" + $v.content;})?')')*
 		')'
 	;
 
