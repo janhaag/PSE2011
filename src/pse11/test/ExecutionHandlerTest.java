@@ -40,7 +40,7 @@ public class ExecutionHandlerTest {
                 "invariant i>= 0;{i=i+1;}ensure i>= 0;}" +
                 "ensure i == 1000000;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ExecutionHandlerTest {
                 "assert 4/(-2)==-2; assert 5/(-3)==-1;" +
                 "assert (-4)/(-2)==2; assert (-5)/(-3)==2;}");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ExecutionHandlerTest {
                 "assert 4%(-2)==0; assert 5%(-3)==2;" +
                 "assert (-4)%(-2)==0; assert (-5)%(-3)==1;}");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ExecutionHandlerTest {
                 "{int i = -1;}}" +
                 "ensure i == 00000;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ExecutionHandlerTest {
                 "else {i=2;}}" +
                 "ensure i == 000002;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -89,21 +89,21 @@ public class ExecutionHandlerTest {
         executionHandler.setParameterValues(
                 new String[]{"2", "{{20},{11},{9}}"});
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
     public void testEmptyProgramEnsureTrue() {
         executionHandler.parse("main(){} ensure true;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
 	}
 
     @Test
     public void testAssignmentAndEnsure() {
         executionHandler.parse("main() {int x = 1;} ensure x > 0;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -112,7 +112,7 @@ public class ExecutionHandlerTest {
                 "{int j = 4;}" +
                 "ensure forall x(2,j) exists z(1,2) (j==x+z) | (j==x*z);");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -129,7 +129,7 @@ public class ExecutionHandlerTest {
                             "int f = rek(n,k);" +
                     "} ensure f==6;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class ExecutionHandlerTest {
                         "}i=i+1;" +
                     "}} ensure table[n][k] == r;");
         executionHandler.run(stmtBps, glblBps);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNull(executionHandler.getMessage());
     }
 
     @Test
@@ -156,7 +156,7 @@ public class ExecutionHandlerTest {
                 "{int j = 4;}" +
                 "ensure forall x(2,j) exists z(1,2) (j==x*z);");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -164,7 +164,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int j = 4; j = j/(j-4);}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -172,7 +172,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int[][][] j = array[2][0][3];}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -180,7 +180,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int[][][] j = array[2][1][3]; int i = j[2][0][1];}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -188,7 +188,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int[][][] j = array[2][1][3]; j[1][-1][1] = j;}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -196,7 +196,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int j = 2%0;}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -205,7 +205,7 @@ public class ExecutionHandlerTest {
                 "{int j = 4;}" +
                 "ensure exists z(1,2) (j==3*z);");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -214,7 +214,7 @@ public class ExecutionHandlerTest {
                 "{int j = 4;}" +
                 "ensure forall x() (j==x*2);");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -223,7 +223,7 @@ public class ExecutionHandlerTest {
                 "{int j = 4;}" +
                 "ensure exists z(j,2) true;");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -231,7 +231,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int j = 4; while (j < 20) invariant j != 15; {j=j+1;}}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -239,7 +239,7 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int j = 4; while (j < 20) invariant j > 4; {j=j+1;}}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -247,28 +247,28 @@ public class ExecutionHandlerTest {
         executionHandler.parse("main()" +
                 "{int j = 4; while (j < 20) invariant j < 20; {j=j+1;}}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
     public void testEmptyProgram() {
         executionHandler.parse("main(){}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
     public void testEmptyProgramEnsureFalse() {
         executionHandler.parse("main(){} ensure false;");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
     public void testAssumeFalse() {
         executionHandler.parse("main() assume false;{}");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -285,7 +285,7 @@ public class ExecutionHandlerTest {
                             "int f = rek(n,k);" +
                     "} ensure f==5;");
         executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getMessage());
 	}
 
     @Test
@@ -303,7 +303,7 @@ public class ExecutionHandlerTest {
                         "}i=i+1;" +
                     "}} ensure table[n][k] == r;");
         executionHandler.run(stmtBps, glblBps);
-        assertNotNull(executionHandler.getAssertionFailureMessage());
+        assertNotNull(executionHandler.getMessage());
     }
 
     @Test
@@ -311,6 +311,6 @@ public class ExecutionHandlerTest {
         executionHandler.parse("int f(int i) assume i>0;{return 0;}" +
                 "main() {int x = f(-2);} ensure x > 0;");
         executionHandler.run(stmtBps, glblBps);
-        assertNotNull(executionHandler.getAssertionFailureMessage());
+        assertNotNull(executionHandler.getMessage());
     }
 }
