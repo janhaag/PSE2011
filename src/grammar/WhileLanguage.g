@@ -295,10 +295,10 @@ range returns [ Expression e1, Expression e2, LinkedList<Expression> divisors, L
 
 expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
         : e1=rel_expression {if (!error) {$ast = e1.ast; $divisors = $e1.divisors; $arrayIndices = $e1.arrayIndices;}} (
-        	  '==' e2=rel_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	  '==' e2=rel_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Equal());
         	  	$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
-        	| '!=' e2=rel_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '!=' e2=rel_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new NotEqual());
         		$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
         )*
@@ -307,16 +307,16 @@ expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList
 
 rel_expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
         : e1=add_expression {if (!error) {$ast = e1.ast; $divisors = $e1.divisors; $arrayIndices = $e1.arrayIndices;}} (
-        	  '<'  e2=add_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	  '<'  e2=add_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Less());
         	  	$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
-        	| '<=' e2=add_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '<=' e2=add_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new LessEqual());
         		$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
-        	| '>'  e2=add_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '>'  e2=add_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Greater());
         		$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
-        	| '>=' e2=add_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '>=' e2=add_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new GreaterEqual());
         		$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
         )*
@@ -324,13 +324,13 @@ rel_expression returns [ Expression ast, LinkedList<Expression> divisors, Linked
 
 add_expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
         : e1=mul_expression {if (!error) {$ast = e1.ast; $divisors = $e1.divisors; $arrayIndices = $e1.arrayIndices;}} (
-        	  '|' e2=mul_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	  '|' e2=mul_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Disjunction());
         	  	$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
-        	| '+' e2=mul_expression {if (!error) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '+' e2=mul_expression {if (!error && $e2.ast != null) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Addition());
         		$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
-        	| '-' e2=mul_expression {if (!error) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '-' e2=mul_expression {if (!error && $e2.ast != null) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Subtraction());
         		$divisors.addAll(e2.divisors);$arrayIndices.addAll($e2.arrayIndices);}}
         )*
@@ -338,20 +338,20 @@ add_expression returns [ Expression ast, LinkedList<Expression> divisors, Linked
 
 mul_expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
         : e1=unary_expression {if (!error) {$ast = e1.ast; $divisors = $e1.divisors; $arrayIndices = $e1.arrayIndices;}} (
-        	  '&' e2=unary_expression {if (!error) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	  '&' e2=unary_expression {if (!error && $e2.ast != null) {$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Conjunction());
         	  	$divisors.addAll(e2.divisors);
                 $arrayIndices.addAll($e2.arrayIndices);}}
-        	| '*' e2=unary_expression {if (!error) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '*' e2=unary_expression {if (!error && $e2.ast != null) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Multiplication());
         		$divisors.addAll(e2.divisors);
                 $arrayIndices.addAll($e2.arrayIndices);}}
-        	| '/' e2=unary_expression {if (!error) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
+        	| '/' e2=unary_expression {if (!error && $e2.ast != null) {$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()),
                     $ast, $e2.ast, new Division());
         		$divisors.addAll(e2.divisors);
         		$divisors.add($e2.ast);
                 $arrayIndices.addAll($e2.arrayIndices);}}
-        	| '%' e2=unary_expression {if (!error) {
+        	| '%' e2=unary_expression {if (!error && $e2.ast != null) {
         		$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()), $ast, $e2.ast, new Modulo());
         		$divisors.addAll(e2.divisors);
         		$divisors.add($e2.ast);
