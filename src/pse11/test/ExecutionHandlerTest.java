@@ -83,9 +83,9 @@ public class ExecutionHandlerTest {
 
     @Test
     public void testParams() {
-        executionHandler.parse("main(int i, bool[][] r)" +
+        executionHandler.parse("main(int i, int[][] r)" +
                 "{int j = 0; while (j < length(r)){i=i+r[j][0]; j=j+1;}}" +
-                "ensure i = 42;");
+                "ensure i == 42;");
         executionHandler.setParameterValues(
                 new String[]{"2", "{{20},{11},{9}}"});
         executionHandler.run(stmtBps, glblBps);
