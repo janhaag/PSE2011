@@ -148,9 +148,9 @@ public class TableViewController implements SelectionListener {
 			Expression exp = null;
 			try {
 				exp = this.executionHandler.getParserInterface().parseExpression(expression);
-			} catch (RecognitionException e1) {
-				return;
-			}		
+			} catch (RecognitionException ignored) {
+			}	
+			if (exp == null) return;
 			for (i = 0; i < this.executionHandler.getGlobalBreakpoints().size(); i++) {
 				if (this.executionHandler.getGlobalBreakpoints().get(i).getExpression().toString().equals(exp.toString())) {
 					break;
