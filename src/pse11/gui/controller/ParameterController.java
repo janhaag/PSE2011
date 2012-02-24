@@ -120,14 +120,14 @@ public class ParameterController implements SelectionListener {
 				}
 				this.executionHandler.setParameterValues(parameterValues);
 				this.executionHandler.run(new ArrayList<StatementBreakpoint>(), new ArrayList<GlobalBreakpoint>());
-				if (this.executionHandler.getMessage()[0] == null) {
+				if (this.executionHandler.getAssertionFailureMessage() == null) {
 					result[1] = "success";
 				}
 				else {
-					result[1] = this.executionHandler.getMessage()[1]
-					+ " (line " + this.executionHandler.getMessage()[0] + ")";
+					result[1] = this.executionHandler.getAssertionFailureMessage()[1]
+					+ " (line " + this.executionHandler.getAssertionFailureMessage()[0] + ")";
+					this.executionHandler.clearAssertionFailureMessage();
 				}
-				this.executionHandler.clearMessage();
 				this.executionHandler.destroyProgramExecution();
 				this.messagesystem.addMessage(MessageCategories.MISC, (i + 1), result[0], result[1]);
 			}

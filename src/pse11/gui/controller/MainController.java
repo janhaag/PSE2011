@@ -195,8 +195,8 @@ public class MainController implements SelectionListener {
 							executionHandler.getGlobalBreakpoints());
 					mainframe.getDisplay().asyncExec(new Runnable() {
 						public void run() {
-							if (executionHandler.getMessage() != null) {
-								executionHandler.printMessage();
+							if (executionHandler.getAssertionFailureMessage() != null) {
+								executionHandler.printAssertionFailureMessage();
 								stopView();
 								return;
 							}
@@ -205,6 +205,7 @@ public class MainController implements SelectionListener {
 							}
 							else {
 								stopView();
+								executionHandler.addSuccessMessage("Program execution successful!");
 							}
 						}
 					});
@@ -241,8 +242,8 @@ public class MainController implements SelectionListener {
 					mainframe.getDisplay().asyncExec(new Runnable() {
 						public void run() {
 							pauseView();
-							if (executionHandler.getMessage() != null) {
-								executionHandler.printMessage();
+							if (executionHandler.getAssertionFailureMessage() != null) {
+								executionHandler.printAssertionFailureMessage();
 								stopView();
 								return;
 							}
@@ -250,6 +251,7 @@ public class MainController implements SelectionListener {
 							if (executionHandler.getProgramExecution() != null
 									&& executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
 								stopView();
+								executionHandler.addSuccessMessage("Program execution successful!");
 							}
 						}
 					});
@@ -264,7 +266,7 @@ public class MainController implements SelectionListener {
 			assert editorController != null;
 			this.executionHandler.parse(this.editorController.getEditor().getSource());
 			if (this.executionHandler.getAST() != null) {
-				this.executionHandler.addCorrectSyntaxMessage();
+				this.executionHandler.addSuccessMessage("Syntax is correct!");
 			}
 			this.executionHandler.setAST(null);
 		} else if (e.getSource() == mainframe.getValidateButton() || e.getSource() == mainframe.getMenuBar().getVerItem()) {
