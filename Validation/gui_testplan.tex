@@ -1,0 +1,374 @@
+\section{GUI Testplan}
+\subsection{Menubar}
+\subsubsection{"`File"' $\rightarrow$ "`New"'}
+\begin{enumerate}
+\item "Offnen einer neuen Datei
+\begin{itemize}
+\item Erwartetes Ereignis: der Inhalt des Editors wird ohne zu speichern gel"oscht. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`File"' $\rightarrow$ "`Load"'}
+\begin{enumerate}
+\item Laden einer nichtexistenten Datei
+\begin{itemize}
+\item Erwartetes Ereignis: Die Datei wird nicht geladen. 
+\item Status: \textcolor{green}{OK} 
+\end{itemize}
+\item Laden einer Datei, die vom Programm erzeugt wurde
+\begin{itemize}
+\item Erwartetes Ereignis: die ausgew"ahlte Datei wird in den Editor geladen. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Laden einer reinen Textdatei (Getestet: txt, tex)
+\begin{itemize}
+\item Erwartetes Ereignis: die ausgew"ahlte Datei wird in den Editor geladen. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Laden einer durch Textbearbeitungsprogramme erstellten Textdatei (Getestet: docx, pdf)
+\begin{itemize}
+\item Erwartetes Ereignis: Die Datei wird nicht geladen. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+docx-Dateien werden geladen, Programm h"angt sich auf bei pdf-Dateien
+\end{itemize}
+\item Laden einer Nichttextdatei (Getestet: exe)
+\begin{itemize}
+\item Erwartetes Ereignis: Die Datei wird nicht geladen. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Programm h"angt sich auf
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`File"' $\rightarrow$ "`Save"'}
+\begin{enumerate}
+\item Speichern in einer nichtexistenten Datei
+\begin{itemize}
+\item Erwartetes Ereignis: Die Datei wird erzeugt, der Inhalt des Editors darin gespreichert. 
+\item Status: \textcolor{green}{OK} 
+\end{itemize}
+\item Speichern in einer vom Programm erzeugten Datei
+\begin{itemize}
+\item Erwartetes Ereignis: Der Inhalt der Datei wird durch den des Editors ersetzt. 
+\item Status: \textcolor{green}{OK} 
+\end{itemize}
+\item Speichern in einer reinen Textdatei
+\begin{itemize}
+\item Erwartetes Ereignis: Der Inhalt der Datei wird durch den des Editors ersetzt. 
+\item Status: \textcolor{green}{OK} 
+\end{itemize}
+\item Speichern in einer durch Textbearbeitungsprogramme erstellten Textdatei (Getestet: docx, pdf)
+\begin{itemize}
+\item Erwartetes Ereignis: Die Datei wird nicht gespeichert. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Die Datei wird gespeichert.
+\end{itemize}
+\item Speichern in einer Nichttextdatei (Getestet: exe)
+\begin{itemize}
+\item Erwartetes Ereignis: Die Datei wird nicht gespeichert. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Die Datei wird gespeichert.
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`File"' $\rightarrow$ "`Exit"'}
+\begin{enumerate}
+\item Beenden des Programms
+\begin{itemize}
+\item Erwartetes Ereignis: das Programm wird sofort beendet. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Edit"' $\rightarrow$ "`Undo"'}
+\begin{enumerate}
+\item R"uckg"angigmachen des zuletzt eingetippten Zeichen
+\begin{itemize}
+\item Erwartetes Ereignis: das zuletzt eingetippte Zeichen wird gel"oscht. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 1
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt eingetippten Zeichen werden gel"oscht. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item R"uckg"angigmachen des zuletzt gel"oschten Zeichen
+\begin{itemize}
+\item Erwartetes Ereignis: das zuletzt gel"oschte Zeichen wird wieder hergestellt. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Punkt 4 funktioniert bis auf das zuerst gel"oschte Zeichen
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 3
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt gel"oschten Zeichen werden wieder hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item R"uckg"angigmachen der letzten Paste-Aktion
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt eingef"ugte Zeichenkette wird gel"oscht. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 5
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt eingef"ugten Zeichenketten werden gel"oscht. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item R"uckg"angigmachen der letzten Cut-Aktion
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt gel"oschte Zeichenkette wird wieder hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 7
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt gel"oschten Zeichenketten werden wieder hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item R"uckg"angigmachen der Funktion "`File"' $\rightarrow$ "`New"'
+\begin{itemize}
+\item Erwartetes Ereignis: der alte Inhalt des Editors wird wieder hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Punkt 9 nachdem mehrmals auf "`File"' $\rightarrow$ "`New"' geclickt wurde
+\begin{itemize}
+\item Erwartetes Ereignis: der alte Inhalt des Editors wird wieder hergestellt. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Das erwartete Ereignis passiert erst nach dem zweiten Undo
+\end{itemize}
+\item R"uckg"angigmachen der Funktion "`File"' $\rightarrow$ "`Load"'
+\begin{itemize}
+\item Erwartetes Ereignis: der alte Inhalt des Editors wird wieder hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Punkt 11 nachdem mehrmals "`File"' $\rightarrow$ "`Load"' benutzt wurde
+\begin{itemize}
+\item Erwartetes Ereignis: der Inhalt der zuletzt geladenen Datei wird im Editor hergestellt. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Der Inhalt vor den Load-Vorg"angen wird nach dem zweiten Undo hergestellt
+\end{itemize}
+\item Undo, obwohl noch keine Aktion aufgef"uhrt wurde
+\begin{itemize}
+\item Erwartetes Ereignis: es passiert nichts. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Edit"' $\rightarrow$ "`Redo"'}
+\begin{enumerate}
+\item R"uckg"angigmachen der letzten Undo-Aktion
+\begin{itemize}
+\item Erwartetes Ereignis: die r"uckg"angig gemachte Aktion wird hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 1
+\begin{itemize}
+\item Erwartetes Ereignis: die r"uckg"angig gemachten Aktionen werden hergestellt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Edit"' $\rightarrow$ "`Cut"'}
+\begin{enumerate}
+\item L"oschen der markierten Zeichenkette
+\begin{itemize}
+\item Erwartetes Ereignis: die markierte Zeichenkette wird gel"oscht. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Cut ohne markierte Zeichenkette
+\begin{itemize}
+\item Erwartetes Ereignis: es passiert nichts. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Programm st"urzt ab.
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Edit"' $\rightarrow$ "`Copy"'}
+\begin{enumerate}
+\item Kopieren der markierten Zeichenkette
+\begin{itemize}
+\item Erwartetes Ereignis: die markierte Zeichenkette wird zum Kopieren gespeichert. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 1
+\begin{itemize}
+\item Erwartetes Ereignis: die zuletzt kopierte Zeichenkette wird gespeichert. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Copy ohne markierte Zeichenkette
+\begin{itemize}
+\item Erwartetes Ereignis: es passiert nichts. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Programm st"urzt ab.
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Edit"' $\rightarrow$ "`Paste"'}
+\begin{enumerate}
+\item Einf"ugen der aus dem Programm kopierten Zeichenkette
+\begin{itemize}
+\item Erwartetes Ereignis: die kopierte Zeichenkette wird im Editor eingef"ugt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Einf"ugen der aus einem anderen Programm kopierten Zeichenkette
+\begin{itemize}
+\item Erwartetes Ereignis: die kopierte Zeichenkette wird im Editor eingef"ugt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Beliebige Wiederholung von Punkt 1 oder 2
+\begin{itemize}
+\item Erwartetes Ereignis: die kopierte Zeichenkette wird jedes Mal im Editor eingef"ugt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Edit"' $\rightarrow$ "`Settings"'}
+\begin{enumerate}
+\item "Offnen des Settingsfensters
+\begin{itemize}
+\item Erwartetes Ereignis: das Fenster zur Einstellung von Z3-Settings wird ge"offnet. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Run"' $\rightarrow$ "`Run"'}
+Siehe Abschnitt 1.4.2
+\subsubsection{"`Run"' $\rightarrow$ "`Single Step"'}
+Siehe Abschnitt 1.4.3
+\subsubsection{"`Run"' $\rightarrow$ "`Random Test"'}
+\begin{enumerate}
+\item "Offnen des Randomtestfensters
+\begin{itemize}
+\item Erwartetes Ereignis: das Fenster f"ur Randomtests wird ge"offnet. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Run"' $\rightarrow$ "`Verify"'}
+Siehe Abschnitt 1.4.6
+\subsubsection{"`Help"' $\rightarrow$ "`Help"'}
+\begin{enumerate}
+\item "Offnen des Helpfensters und Anzeigen der Helpdokumentation
+\begin{itemize}
+\item Erwartetes Ereignis: die Helpdokumentation wird ge"offnet. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{"`Help"' $\rightarrow$ "`About"'}
+\begin{enumerate}
+\item "Offnen des Aboutfensters
+\begin{itemize}
+\item Erwartetes Ereignis: das Aboutfenster wird ge"offnet. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+
+\subsection{Frames}
+\subsubsection{Settingsframe}
+\begin{enumerate}
+\item Speichern von korrekten Eingaben
+\begin{itemize}
+\item Erwartetes Ereignis: die Eingaben werden in der Settingsdatei gespeichert, falls diese nicht existiert, so wird sie erzeugt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Speichern von inkorrekten Eingaben
+\begin{itemize}
+\item Erwartetes Ereignis: die Eingaben werden nicht gespeichert, die alten Werte werden hergestellt.  
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Randomtestframe}
+\begin{enumerate}
+\item "Offnen bei einem syntaktisch inkorrekten Programm
+\begin{itemize}
+\item Erwartetes Ereignis: es erscheint die Meldung im Randomtestfenster und in der Errorkonsole, dass das Programm syntaktisch inkorrekt ist.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item "Offnen bei einem Programm ohne Parameter
+\begin{itemize}
+\item Erwartetes Ereignis: es erscheint die Meldung im Randomtestfenster, dass das Programm keine Parameter hat.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item "Offnen bei einem Programm mit Parameter
+\begin{itemize}
+\item Erwartetes Ereignis: der Benutzer hat nun die M"oglichkeit, Anzahl der Tests und Werte f"ur die Parameter einzugeben. Werte, die f"ur die Variable nicht sinnvoll sind, werden grau angezeigt und sind nicht editierbar.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Durchf"uhrung der Tests mit korrekten Eingaben
+\begin{itemize}
+\item Erwartetes Ereignis: die Tests werden durchgef"uhrt und das Ergebnis wird zusammen mit den zuf"allig ausgew"ahlten Werten in der Misckonsole angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Durchf"uhrung der Tests mit inkorrekten Eingaben
+\begin{itemize}
+\item Erwartetes Ereignis: falls die Anzahl der Tests eine ung"ultige Eingabe oder kleiner als 1 ist, wird kein Test durchgef"uhrt. Ansonsten werden ung"ultige Werte durch "`0"' bzw. "`false"' ersetzt. Das Ergebnis wird zusammen mit den zuf"allig ausgew"ahlten Werten in der Misckonsole angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Helpframe}
+\begin{enumerate}
+\item Ausw"ahlen der einzelnen Abschnitte
+\begin{itemize}
+\item Erwartetes Ereignis: der ausgew"ahlte Abschnitt wird angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+
+\subsection{Views}
+\subsubsection{Editor}
+\begin{enumerate}
+\item Eingabe, Modifikation von Quelltext im idle-Zustand
+\begin{itemize}
+\item Erwartetes Ereignis: der Inhalt des Editors kann beliebig ver"andert werden, solange es kein Programm l"auft oder pausiert ist. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Eingabe, Modifikation von Quelltext im nicht-idle-Zustand
+\begin{itemize}
+\item Erwartetes Ereignis: der Inhalt des Editors kann nicht ver"andert werden, solange ein Programm l"auft oder pausiert ist. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Syntaxhighlighting
+\begin{itemize}
+\item Erwartetes Ereignis: die Keywords "`int, bool, array, true, false, main, while, if, else, return, assert, assume, ensure, invariant"' und Zahlen werden farbig hervorgehoben. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Setzen oder Entfernen von Statementbreakpoints im nicht-idle-Zustand
+\begin{itemize}
+\item Erwartetes Ereignis: Breakpoints k"onnen nicht gesetzt oder entfernt werden, solange ein Programm l"auft oder pausiert ist. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Setzen von Statementbreakpoints im idle-Zustand
+\begin{itemize}
+\item Erwartetes Ereignis: Statementbreakpoints k"onnen nur gesetzt werden, wenn in der Zeile ein Statement steht.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Entfernen von Statementbreakpoints im idle-Zustand
+\begin{itemize}
+\item Erwartetes Ereignis: Breakpoint wird entfernt.
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Breakpoint kann nicht mehr entfernt werden, wenn die Zeile so modifiziert wurde, dass sie keinen Statement mehr enth"ahlt
+\end{itemize}
+\end{enumerate}
+\subsubsection{Globalbreakpointview}
+\begin{enumerate}
+\item Einf"ugen, Entfernen, Aktivieren, Deaktivieren von Globalbreakpoints im nicht-idle-Zustand
+\begin{itemize}
+\item Erwartetes Ereignis: Globalbreakpoints k"onnen nicht ver"andert werden, solange ein Programm l"auft oder pausiert ist. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Einf"ugen und Entfernen von syntaktisch korrekten Globalbreakpoints
+\begin{itemize}
+\item Erwartetes Ereignis: der Breakpoint wird eingef"ugt bzw. entfernt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Einf"ugen von syntaktisch inkorrekten Globalbreakpoints
+\begin{itemize}
+\item Erwartetes Ereignis: der Breakpoint wird nicht eingef"ugt. 
+\item Status: \textcolor{blue}{BEHOBEN} \\
+Einf"ugen nach einem korrekt eingef"ugten Breakpoint bringt das Programm zum Absturz.
+\end{itemize}
+\end{enumerate}
+\subsubsection{Helpbox}
+\begin{enumerate}
+\item Es wird eine Stringkette eingegeben und nach Hilfe gesucht
+\begin{itemize}
+\item Erwartetes Ereignis: der zur Stringkette am relevanteste Abschnitt wird in der Helpbox angezeigt. 
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Wenn nach "`else"' gesucht wird, erscheint die Einleitung
+\end{itemize}
+\end{enumerate}
+
+\subsection{Buttons}
+\subsubsection{CheckSyntax}
+\subsubsection{Run}
+\subsubsection{Single Step}
+\subsubsection{Pause}
+\subsubsection{Stop}
+\subsubsection{Validate}

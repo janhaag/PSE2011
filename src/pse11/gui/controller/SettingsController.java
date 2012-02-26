@@ -100,6 +100,9 @@ public class SettingsController {
 			String path = frame.getVerifierPathTextField().getText();
 			if(new File(path).exists()) {
 				settings.setVerifierPath(frame.getVerifierPathTextField().getText());
+			} else {
+				invalidInput();
+				return;
 			}
 			frame.displayMessage(false, "Settings saved.");
 			frame.update();
