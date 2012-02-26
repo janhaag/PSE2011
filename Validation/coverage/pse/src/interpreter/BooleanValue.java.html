@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BooleanValue.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">BooleanValue.java</span></div><h1>BooleanValue.java</h1><pre class="source lang-java linenums">package interpreter;
+
+import ast.BooleanType;
+
+/**
+ * This class represents a value of boolean type.
+ */
+public class BooleanValue extends Value {
+    /**
+     * value this instance represents
+     */
+    private boolean value;
+
+    /**
+     * Constructor.
+     * If value == null, the default value is false.
+     *
+     * @param value value this instance represents (as String)
+     */
+    public BooleanValue(String value) {
+<span class="fc" id="L21">        super(new BooleanType());</span>
+<span class="fc" id="L22">        this.value = (&quot;true&quot;.equals(value));</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Returns the value this instance represents.
+     * @return value this instance represents
+     */
+    public boolean getValue() {
+<span class="fc" id="L30">        return value;</span>
+    }
+
+    /**
+     * Changes the value of this instance.
+     * @param value new value (as String)
+     */
+    public void setValue(String value) {
+<span class="nc" id="L38">        this.value = (&quot;true&quot;.equals(value));</span>
+<span class="nc" id="L39">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L43">        return Boolean.toString(value);</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L49">            return true;</span>
+        }
+<span class="nc bnc" id="L51" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L52">            return false;</span>
+        }
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        return value == ((BooleanValue) o).value;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

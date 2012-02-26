@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>FileFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">FileFrame.java</span></div><h1>FileFrame.java</h1><pre class="source lang-java linenums">package gui;
+
+import java.io.File;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+
+/**
+ * This class represents a frame for open or save files.
+ */
+public class FileFrame extends Frame implements MiscFrame {
+	/**
+	 * shell of the frame
+	 */
+	private Shell shell;
+	/**
+	 * chosen file for load
+	 */
+	private File chosenFile;
+
+	/**
+	 * Construct a file frame with the specified parent shell and 
+	 * definitions about its behavior and style.
+	 * @param parentShell specified shell
+	 * @param def specified definitions
+	 */
+<span class="nc" id="L29">	public FileFrame(Shell parentShell, int def) {</span>
+<span class="nc" id="L30">		shell = new Shell(parentShell);</span>
+<span class="nc" id="L31">		chosenFile = null;</span>
+<span class="nc" id="L32">		String fileName = null;</span>
+		
+<span class="nc" id="L34">		FileDialog dlg = new FileDialog(shell, def);</span>
+<span class="nc" id="L35">		dlg.setOverwrite(true);</span>
+<span class="nc" id="L36">		fileName = dlg.open();</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		if (fileName != null) {</span>
+<span class="nc" id="L38">			File file = new File(fileName);</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">			if ((def == SWT.OPEN &amp;&amp; file.canRead())</span>
+<span class="nc bnc" id="L40" title="All 8 branches missed.">					|| (def == SWT.SAVE &amp;&amp; (!file.exists() || (file.exists() &amp;&amp; file.canWrite())))) {</span>
+<span class="nc" id="L41">				chosenFile = file;</span>
+			}
+		}
+<span class="nc" id="L44">	}</span>
+
+	/**
+	 * Return the chosen file for load option.
+	 * @return chosen file
+	 */
+	public File getChosenFile() {
+<span class="nc" id="L51">		return chosenFile;</span>
+	}
+
+	@Override
+	public Button getSaveButton() {
+<span class="nc" id="L56">		return null;</span>
+	}
+	@Override
+	public Button getCloseButton() {
+<span class="nc" id="L60">		return null;</span>
+	}
+
+	@Override
+	public void close() {
+<span class="nc" id="L65">		this.shell.close();</span>
+<span class="nc" id="L66">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

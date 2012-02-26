@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>KindOfProgram.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">verifier</a> &gt; <span class="el_source">KindOfProgram.java</span></div><h1>KindOfProgram.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package verifier;</span>
+
+/**
+ * describes the sort of a program
+ */
+<span class="nc" id="L6">public enum KindOfProgram {</span>
+        /**
+         * indicates a program to prove that assume=&gt;rest
+         */
+<span class="nc" id="L10">        FunctionAssumeToRemainingProgram,</span>
+        /**
+         * indicates a program to prove that whileEnsure=&gt;rest
+         */
+<span class="nc" id="L14">        WhileEnsureToRemainingProgram,</span>
+        /**
+         * indicates a program to prove that functionEnsure=&gt;rest
+         */
+<span class="nc" id="L18">        FunctionEnsureToRemainingProgram,</span>
+        /**
+         * indicates a program to prove that invariant &amp; condition =&gt; invariant
+         */
+<span class="nc" id="L22">        InvariantAndConditionToInvariant,</span>
+        /**
+         * indicates a program to prove that invariant &amp; !condition =&gt; ensure
+         */
+<span class="nc" id="L26">        InvariantAndNotConditionToWhileEnsure</span>
+    }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

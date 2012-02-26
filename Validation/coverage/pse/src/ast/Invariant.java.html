@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Invariant.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">Invariant.java</span></div><h1>Invariant.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ * This class symbolizes an invariant, i.e. a condition that stays
+ * true during different loop cycles.
+ */
+public class Invariant extends Specification {
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     * @param expression expression that must hold true
+     */
+    public Invariant(Position position, Expression expression) {
+<span class="fc" id="L16">        super(position, expression);</span>
+<span class="fc" id="L17">    }</span>
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L21">        visitor.visit(this);</span>
+<span class="fc" id="L22">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L26">        StringBuilder sb = new StringBuilder(&quot;invariant &quot;);</span>
+<span class="nc" id="L27">        sb.append(getExpression().toString());</span>
+<span class="nc" id="L28">        sb.append(&quot;;\n&quot;);</span>
+<span class="nc" id="L29">        return sb.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

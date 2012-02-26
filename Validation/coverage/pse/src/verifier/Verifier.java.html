@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Verifier.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">verifier</a> &gt; <span class="el_source">Verifier.java</span></div><h1>Verifier.java</h1><pre class="source lang-java linenums">package verifier;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+import java.util.LinkedList;
+
+import ast.ASTRoot;
+
+import ast.Position;
+import misc.Pair;
+
+public abstract class Verifier {
+    protected String[] template;
+    protected String fileExtension;
+
+<span class="nc" id="L24">    protected Verifier(String template, String fileExtension) {</span>
+<span class="nc" id="L25">        this.template = template.split(&quot;\\s+&quot;);</span>
+<span class="nc" id="L26">        this.fileExtension = fileExtension;</span>
+<span class="nc" id="L27">    }</span>
+
+    protected abstract String translate(ASTRoot ast);
+
+    public LinkedList&lt;Pair&lt;Boolean, String&gt;&gt; parseVerifierOutput(String verifierOutput) {
+<span class="nc" id="L32">        return null;</span>
+    }
+
+    public final String call(ASTRoot ast) throws IOException, InterruptedException {
+<span class="nc" id="L36">        String verifierInput = translate(ast);</span>
+<span class="nc" id="L37">        Pair&lt;String, File&gt; target = getVerifierCmdLine();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (target.getValue2() != null) {</span>
+<span class="nc" id="L39">            writeVerifierInputToFile(target.getValue2(), verifierInput);</span>
+        }
+<span class="nc" id="L41">        Process verifierProcess = Runtime.getRuntime().exec(target.getValue1());</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (target.getValue2() == null) {</span>
+<span class="nc" id="L43">            pipeVerifierInput(verifierProcess.getOutputStream(), verifierInput);</span>
+        }
+<span class="nc" id="L45">        verifierProcess.waitFor();</span>
+<span class="nc" id="L46">        return readVerifierOutput(verifierProcess.getInputStream());</span>
+    }
+
+    private String readVerifierOutput(InputStream channel) throws IOException {
+<span class="nc" id="L50">        InputStreamReader reader = new InputStreamReader(channel);</span>
+<span class="nc" id="L51">        BufferedReader bReader = new BufferedReader(reader);</span>
+<span class="nc" id="L52">        StringBuilder output = new StringBuilder(&quot;&quot;);</span>
+<span class="nc" id="L53">        int lastRead = 0;</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        while(lastRead != -1) {</span>
+<span class="nc" id="L55">            lastRead = bReader.read();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            if (lastRead != -1) {</span>
+<span class="nc" id="L57">               output.append(Character.toChars(lastRead));</span>
+            }
+        }
+<span class="nc" id="L60">        channel.close();</span>
+<span class="nc" id="L61">        return output.toString();</span>
+    }
+
+    private void writeVerifierInputToFile(File out, String data) throws IOException {
+<span class="nc" id="L65">        BufferedWriter writer = new BufferedWriter(new FileWriter(out));</span>
+<span class="nc" id="L66">        writer.write(data);</span>
+<span class="nc" id="L67">        writer.close();</span>
+<span class="nc" id="L68">    }</span>
+
+    private void pipeVerifierInput(OutputStream channel, String data) throws IOException {
+<span class="nc" id="L71">        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(channel));</span>
+<span class="nc" id="L72">        writer.append(data);</span>
+<span class="nc" id="L73">        writer.close();</span>
+<span class="nc" id="L74">    }</span>
+
+    private Pair&lt;String, File&gt; getVerifierCmdLine() throws IOException {
+<span class="nc" id="L77">        StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L78">        File file = null;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        for (int i = 0; i &lt; template.length; i++) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            if (&quot;${FILE}&quot;.equals(template[i])) {</span>
+<span class="nc" id="L81">                file = File.createTempFile(&quot;PSE11&quot;, fileExtension);</span>
+<span class="nc" id="L82">                file.deleteOnExit();</span>
+<span class="nc" id="L83">                template[i] = file.getAbsolutePath();</span>
+            }
+<span class="nc" id="L85">            result.append(template[i]).append(' ');</span>
+        }
+<span class="nc" id="L87">        return new Pair&lt;String, File&gt;(result.toString(), file);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

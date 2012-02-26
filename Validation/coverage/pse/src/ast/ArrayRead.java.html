@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ArrayRead.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">ArrayRead.java</span></div><h1>ArrayRead.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ * This class symbolizes a reading access to an array element
+ * with the provided position.
+ */
+public class ArrayRead extends VariableRead {
+    /**
+     * Indexes used to determine the position of the read array element.
+     */
+    private final Expression[] indices;
+
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     * @param variable name of the array that is read
+     * @param indices position from which the element is read
+     */
+    public ArrayRead(Position position, Identifier variable,
+                     Expression[] indices) {
+<span class="fc" id="L23">        super(position, variable);</span>
+<span class="fc" id="L24">        this.indices = indices;</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Returns the list of array indices for the element to be read
+     * @return list of array indices
+     */
+    public Expression[] getIndices() {
+<span class="fc" id="L32">        return indices;</span>
+    }
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L37">        visitor.visit(this);</span>
+<span class="fc" id="L38">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L42">        StringBuilder sb = new StringBuilder(getVariable().toString());</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        for (Expression index : indices) {</span>
+<span class="nc" id="L44">            sb.append('[');</span>
+<span class="nc" id="L45">            sb.append(index.toString());</span>
+<span class="nc" id="L46">            sb.append(']');</span>
+        }
+<span class="nc" id="L48">        return sb.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

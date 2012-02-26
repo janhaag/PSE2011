@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Function.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">Function.java</span></div><h1>Function.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ * This class represents a function; it may be the main function.
+ */
+public class Function extends ASTRoot {
+    /**
+     * Function name. 'main' is reserved for main method.
+     */
+    private final String name;
+    /**
+     * the function body
+     */
+    private final StatementBlock functionBody;
+    /**
+     * list of function parameters
+     */
+    private final FunctionParameter[] parameters;
+    /**
+     * list of assumptions about parameter values
+     */
+    private final Assumption[] assumptions;
+    /**
+     * list of assurances for the value of variables
+     */
+    private final Ensure[] ensures;
+    /**
+     * type of return value. returnType is null iff this is the main function.
+     */
+    private final Type returnType;
+    
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L34">        visitor.visit(this);</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     * @param returnType type of return value
+     * @param name the function name
+     * @param parameters the function parameters
+     * @param functionBody the body of the function
+     * @param assumptions list of assumptions for this functions
+     * @param ensures list of assurances for this functions
+     */
+    public Function(Position position, Type returnType, String name,
+                    FunctionParameter[] parameters,
+                    StatementBlock functionBody,
+                    Assumption[] assumptions,
+                    Ensure[] ensures) {
+<span class="fc" id="L54">        super(position);</span>
+<span class="fc" id="L55">        this.returnType = returnType;</span>
+<span class="fc" id="L56">        this.name = name;</span>
+<span class="fc" id="L57">        this.functionBody = functionBody;</span>
+<span class="fc" id="L58">        this.parameters = parameters;</span>
+<span class="fc" id="L59">        this.assumptions = assumptions;</span>
+<span class="fc" id="L60">        this.ensures = ensures;</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Returns the name of the function.
+     * @return function name
+     */
+    public String getName() {
+<span class="fc" id="L68">        return name;</span>
+    }
+
+    /**
+     * Returns the function body.
+     * @return function body
+     */
+    public StatementBlock getFunctionBlock() {
+<span class="fc" id="L76">        return functionBody;</span>
+    }
+
+    /**
+     * Returns the list of parameters.
+     * @return list of parameters
+     */
+    public FunctionParameter[] getParameters() {
+<span class="fc" id="L84">        return parameters;</span>
+    }
+
+    /**
+     * Returns the type of the function
+     * @return function type
+     */
+    public Type getReturnType() {
+<span class="fc" id="L92">        return returnType;</span>
+    }
+
+    /**
+     * Returns the list of assumptions.
+     * @return list of assumptions
+     */
+    public Assumption[] getAssumptions() {
+<span class="fc" id="L100">        return assumptions;</span>
+    }
+
+    /**
+     * Returns the list of assurances.
+     * @return list of assurances
+     */
+    public Ensure[] getEnsures() {
+<span class="fc" id="L108">        return ensures;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L113">        StringBuilder sb = new StringBuilder(&quot;&quot;);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (returnType != null) {</span>
+<span class="nc" id="L115">            sb.append(returnType).append(' ');</span>
+        }
+<span class="nc" id="L117">        sb.append(name).append('(');</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (parameters.length != 0) {</span>
+<span class="nc" id="L119">            sb.append(parameters[0]);</span>
+        }
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        for (int i = 1; i &lt; parameters.length; i++) {</span>
+<span class="nc" id="L122">            sb.append(&quot;, &quot;).append(parameters[i]);</span>
+        }
+<span class="nc" id="L124">        sb.append(&quot;) {\n&quot;);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        for (Assumption assumption : assumptions) {</span>
+<span class="nc" id="L126">            sb.append(assumption);</span>
+        }
+<span class="nc" id="L128">        sb.append(functionBody);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for (Ensure ensure : ensures) {</span>
+<span class="nc" id="L130">            sb.append(ensure);</span>
+        }
+<span class="nc" id="L132">        return sb.append('}').toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

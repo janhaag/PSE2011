@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>StatementBlock.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">StatementBlock.java</span></div><h1>StatementBlock.java</h1><pre class="source lang-java linenums">package ast;
+
+import java.util.Arrays;
+import java.util.Iterator;
+
+/**
+ * This class symbolizes a statement block in a user program.
+ * This is an ordered list of statements with its own scope.
+ */
+public class StatementBlock extends ASTRoot {
+    /**
+     * The list of statements this block contains
+     */
+    private final Statement[] statements;
+    
+    /**
+     * Constructor.
+     * 
+     * @param statements statements this block contains
+     * @param position indicates the position of this element
+     *                 in the original source code
+     */
+    public StatementBlock(Statement[] statements, Position position) {
+<span class="fc" id="L24">        super(position);</span>
+<span class="fc" id="L25">        this.statements = statements;</span>
+<span class="fc" id="L26">    }</span>
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L30">        visitor.visit(this);</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Returns the next statement of this statement block.
+     * @return next statement of this statement block
+     */
+
+    public Iterator&lt;Statement&gt; getIterator() {
+<span class="fc" id="L39">        return Arrays.asList(statements).iterator();</span>
+    }
+
+    /**
+     * Returns the statements in this block.
+     * @return statements in this block
+     */
+    public Statement[] getStatements() {
+<span class="nc" id="L47">        return statements;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L52">        StringBuilder sb = new StringBuilder(&quot;&quot;);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for (Statement statement : statements) {</span>
+<span class="nc" id="L54">            sb.append(statement);</span>
+        }
+<span class="nc" id="L56">        return sb.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

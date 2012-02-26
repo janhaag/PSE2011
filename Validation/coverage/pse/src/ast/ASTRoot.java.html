@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ASTRoot.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">ASTRoot.java</span></div><h1>ASTRoot.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ * This class is the inheritance root for all the classes in the AST.
+ * For every logical part of the program there is a dedicates
+ * subclass of ASTRoot.
+ * All its subclasses can be visited by an ASTVisitor.
+ */
+public abstract class ASTRoot {
+    /**
+     * indicates the position of the element
+     * in the original source code
+     */
+    private final Position position;
+
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     */
+<span class="fc" id="L22">    protected ASTRoot(Position position) {</span>
+<span class="fc" id="L23">        this.position = position;</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * Returns the position of this element.
+     * @return position of this element
+     */
+    public Position getPosition() {
+<span class="fc" id="L31">        return position;</span>
+    }
+
+    /**
+     * Accepts a visitor that encapsulates calculations on an AST.
+     * @param visitor the visitor visiting this element
+     */
+    public abstract void accept(ASTVisitor visitor);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

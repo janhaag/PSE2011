@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>HelpFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">HelpFrame.java</span></div><h1>HelpFrame.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package gui;</span>
+
+import gui.controller.HelpController;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
+
+/**
+ * This class represents a frame for displaying the help documentation.
+ */
+public class HelpFrame extends Frame implements MiscFrame {
+	private HelpController controller;
+	private Shell shell;
+	private List list;
+	private Browser browser;
+	private Button closeButton;
+
+	/**
+	 * Construct a help frame with the specified parent shell and controller.
+	 * @param parentShell specified shell
+	 * @param helpController specified controller
+	 */
+<span class="nc" id="L32">	public HelpFrame(Shell parentShell, HelpController helpController) {</span>
+<span class="nc" id="L33">		this.controller = helpController;</span>
+<span class="nc" id="L34">		controller.setHelpFrame(this);</span>
+<span class="nc" id="L35">		shell = new Shell(parentShell, SWT.SHELL_TRIM);</span>
+<span class="nc" id="L36">		shell.setText(&quot;Help&quot;);</span>
+		
+		//Set the layout
+<span class="nc" id="L39">		GridLayout layout = new GridLayout();</span>
+<span class="nc" id="L40">		layout.numColumns = 2;</span>
+<span class="nc" id="L41">		shell.setLayout(layout);</span>
+
+		//Add various components
+<span class="nc" id="L44">		list = new List(shell, SWT.SIMPLE);</span>
+<span class="nc" id="L45">		GridData listLayoutData = new GridData(SWT.FILL, SWT.FILL, false, false);</span>
+<span class="nc" id="L46">		listLayoutData.widthHint = 100;</span>
+<span class="nc" id="L47">		list.setLayoutData(listLayoutData);</span>
+<span class="nc" id="L48">		list.setItems(controller.getTableOfContents());</span>
+<span class="nc" id="L49">		list.addSelectionListener(controller.getHelpFrameListSelectionListener());</span>
+
+		try {
+<span class="nc" id="L52">			browser = new Browser(shell, SWT.NONE);</span>
+<span class="nc" id="L53">		} catch (SWTError e) {</span>
+			// TODO: handle error nicely
+<span class="nc" id="L55">			System.out.println(&quot;Could not instantiate Browser: &quot; + e.getMessage());</span>
+<span class="nc" id="L56">			shell.dispose();</span>
+<span class="nc" id="L57">			return;</span>
+		}
+<span class="nc" id="L59">		GridData browserLayoutData = new GridData(SWT.FILL, SWT.FILL, true, true);</span>
+<span class="nc" id="L60">		browserLayoutData.widthHint = 450;</span>
+<span class="nc" id="L61">		browserLayoutData.heightHint = 400;</span>
+<span class="nc" id="L62">		browser.setLayoutData(browserLayoutData);</span>
+<span class="nc" id="L63">		list.select(0);</span>
+<span class="nc" id="L64">		list.notifyListeners(SWT.Selection, new Event());</span>
+		// TODO: Browser location listener for links inside help documents
+
+<span class="nc" id="L67">		closeButton = new Button(shell, SWT.PUSH);</span>
+<span class="nc" id="L68">		closeButton.setText(&quot;Close&quot;);</span>
+<span class="nc" id="L69">		GridData closeButtonLayoutData = new GridData(GridData.END, GridData.END, false, false);</span>
+<span class="nc" id="L70">		closeButtonLayoutData.horizontalSpan = 2;</span>
+<span class="nc" id="L71">		closeButton.setLayoutData(closeButtonLayoutData);</span>
+
+<span class="nc" id="L73">		this.closeButton.addSelectionListener(new SelectionAdapter() {</span>
+			public void widgetSelected(SelectionEvent e) {
+<span class="nc" id="L75">				close();</span>
+<span class="nc" id="L76">			}</span>
+		});
+		
+<span class="nc" id="L79">		shell.setMinimumSize(400, 320);</span>
+<span class="nc" id="L80">		shell.pack();</span>
+<span class="nc" id="L81">		shell.open();</span>
+<span class="nc" id="L82">	}</span>
+	
+	/**
+	 * Return the list of sections of the documentation.
+	 * @return list of sections
+	 */
+	public List getList() {
+<span class="nc" id="L89">		return list;</span>
+	}
+
+	@Override
+	public Button getSaveButton() {
+<span class="nc" id="L94">		return null;</span>
+	}
+
+	@Override
+	public Button getCloseButton() {
+<span class="nc" id="L99">		return closeButton;</span>
+	}
+
+	@Override
+	public void close() {
+<span class="nc" id="L104">		this.shell.close();</span>
+<span class="nc" id="L105">	}</span>
+
+	public void setText(String helpByTOC) {
+<span class="nc" id="L108">		this.browser.setText(helpByTOC);</span>
+<span class="nc" id="L109">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

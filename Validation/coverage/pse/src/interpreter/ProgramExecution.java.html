@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ProgramExecution.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">ProgramExecution.java</span></div><h1>ProgramExecution.java</h1><pre class="source lang-java linenums">package interpreter;
+
+import ast.*;
+import parser.IllegalTypeException;
+import parser.TypeChecker;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+/**
+ * This class encapsulates the context of a program execution.
+ */
+public class ProgramExecution {
+    /**
+     * state the program currently is in
+     */
+    private final State currentState;
+    /**
+     * list of this program's statement breakpoints
+     */
+    private ArrayList&lt;StatementBreakpoint&gt; statementBreakpoints;
+    /**
+     * list of this program's global breakpoints
+     */
+    private ArrayList&lt;GlobalBreakpoint&gt; globalBreakpoints;
+    /**
+     * type checker to evaluate the type correctness of global statements
+     */
+    private final TypeChecker typeChecker;
+    /**
+     * interpreter to evaluate breakpoint expressions 
+     */
+    private final Interpreter interpreter;
+
+    /**
+     * Constructor.
+     * 
+     * @param ast program whose execution context is saved
+     * @param interpreter interpreter to evaluate breakpoint expressions
+     */
+<span class="fc" id="L42">    public ProgramExecution(ASTRoot ast, Interpreter interpreter, ArrayList&lt;StatementBreakpoint&gt; sbreakpoints,</span>
+    		ArrayList&lt;GlobalBreakpoint&gt; gbreakpoints, String[] parameterValues) {
+<span class="fc" id="L44">        this.statementBreakpoints = sbreakpoints;</span>
+<span class="fc" id="L45">        this.globalBreakpoints = gbreakpoints;</span>
+<span class="fc" id="L46">        currentState = new State(ast);</span>
+<span class="fc" id="L47">        typeChecker = new TypeChecker();</span>
+<span class="fc" id="L48">        this.interpreter = interpreter;</span>
+<span class="fc" id="L49">        initParams(parameterValues);</span>
+<span class="fc" id="L50">        interpreter.checkAssumptions(currentState,</span>
+<span class="fc" id="L51">                ((Program) ast).getMainFunction().getAssumptions());</span>
+<span class="fc" id="L52">    }</span>
+
+    private void initParams(String[] values) {
+<span class="fc" id="L55">        FunctionParameter[] parameters = currentState.getCurrentFunction().getParameters();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (values == null)return;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (parameters[i].getType() instanceof ArrayType) {</span>
+<span class="fc" id="L59">                initArray(parameters[i], values[i]);</span>
+            } else {
+<span class="fc" id="L61">                currentState.createVar(parameters[i].getName(),</span>
+<span class="fc" id="L62">                        values[i], parameters[i].getType());</span>
+            }
+        }
+<span class="fc" id="L65">    }</span>
+
+    public void initArray(FunctionParameter parameter, String value) {
+<span class="fc" id="L68">    	Type type = parameter.getType();</span>
+<span class="fc" id="L69">        int depth = 0;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        while (type instanceof ArrayType) {</span>
+<span class="fc" id="L71">            type = ((ArrayType) type).getType();</span>
+<span class="fc" id="L72">            depth += 1;</span>
+        }
+<span class="fc" id="L74">        int[] maxIndex = new int[depth];</span>
+<span class="fc" id="L75">        Integer[] counters = new Integer[depth];</span>
+<span class="fc" id="L76">        depth = 0;</span>
+<span class="fc" id="L77">        boolean valid = true;</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">        for (int i = 0; (i &lt; value.length()) &amp;&amp; valid; i++) {</span>
+<span class="fc bfc" id="L79" title="All 4 branches covered.">            switch (value.charAt(i)) {</span>
+                case '{':
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">                    if (depth &lt; maxIndex.length) {</span>
+<span class="fc" id="L82">                        depth += 1;</span>
+<span class="fc" id="L83">                        counters[depth - 1] = 1;</span>
+                    } else {
+<span class="nc" id="L85">                        valid = false;</span>
+                    }
+<span class="nc" id="L87">                    break;</span>
+                case ',':
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">                    if (depth &gt; 0) {</span>
+<span class="fc" id="L90">                        counters[depth - 1] += 1;</span>
+                    } else {
+<span class="nc" id="L92">                        valid = false;</span>
+                    }
+<span class="nc" id="L94">                    break;</span>
+                case '}':
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">                    if (depth &gt; 0) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                        if (counters[depth - 1] &gt; maxIndex[depth - 1]) {</span>
+<span class="fc" id="L98">                            maxIndex[depth - 1] = counters[depth - 1];</span>
+                        }
+<span class="fc" id="L100">                        depth -= 1;</span>
+                    } else {
+<span class="nc" id="L102">                        valid = false;</span>
+                    }
+                    break;
+            }
+        }
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (int i = 0; i &lt; maxIndex.length; i++) {</span>
+<span class="pc bpc" id="L108" title="2 of 4 branches missed.">            if (maxIndex[i] &lt;= 0 || !valid) {</span>
+<span class="nc" id="L109">                maxIndex[i] = 1;</span>
+            }
+        }
+<span class="fc" id="L112">        currentState.createArray(parameter.getName(), parameter.getType(),</span>
+<span class="fc" id="L113">                maxIndex);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (!valid) {</span>
+<span class="nc" id="L115">            return;</span>
+        }
+<span class="fc" id="L117">        depth = 0;</span>
+<span class="fc" id="L118">        counters = new Integer[maxIndex.length];</span>
+<span class="fc" id="L119">        StringBuilder temp = new StringBuilder(&quot;&quot;);</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">        for (int i = 0; (i &lt; value.length()) &amp;&amp; valid; i++) {</span>
+<span class="fc bfc" id="L121" title="All 4 branches covered.">            switch (value.charAt(i)) {</span>
+                case '{':
+<span class="fc" id="L123">                    temp = new StringBuilder(&quot;&quot;);</span>
+<span class="fc" id="L124">                    depth += 1;</span>
+<span class="fc" id="L125">                    counters[depth - 1] = 0;</span>
+<span class="fc" id="L126">                    break;</span>
+                case ',':
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">                    if (depth == counters.length) {</span>
+<span class="nc" id="L129">                        currentState.setArray(parameter.getName(), temp.toString(),</span>
+<span class="nc" id="L130">                                Arrays.asList(counters));</span>
+                    }
+<span class="fc" id="L132">                    temp = new StringBuilder(&quot;&quot;);</span>
+<span class="fc" id="L133">                    counters[depth - 1] += 1;</span>
+<span class="fc" id="L134">                    break;</span>
+                case '}':
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                    if (depth == counters.length) {</span>
+<span class="fc" id="L137">                        currentState.setArray(parameter.getName(), temp.toString(),</span>
+<span class="fc" id="L138">                                Arrays.asList(counters));</span>
+                    }
+<span class="fc" id="L140">                    temp = new StringBuilder(&quot;&quot;);</span>
+<span class="fc" id="L141">                    depth -= 1;</span>
+<span class="fc" id="L142">                    break;</span>
+                default:
+<span class="fc" id="L144">                    temp.append(value.charAt(i));</span>
+            }
+        }
+<span class="fc" id="L147">    }</span>
+
+    public Breakpoint checkBreakpoints() {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        for (StatementBreakpoint statementBreakpoint : statementBreakpoints) {</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        	if (currentState.getCurrentStatement().getPosition().getLine() </span>
+<span class="nc" id="L152">        			== statementBreakpoint.getLine()) {</span>
+<span class="nc" id="L153">                return statementBreakpoint;</span>
+            }
+        }
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        for (GlobalBreakpoint globalBreakpoint : globalBreakpoints) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        	if (globalBreakpoint.isActive()) {</span>
+<span class="nc" id="L158">    			typeChecker.setCurrentScope(currentState.getCurrentScope());</span>
+    			try {
+<span class="nc" id="L160">                    Expression condition = globalBreakpoint.getExpression();</span>
+<span class="nc" id="L161">                    Ensure ensure = new Ensure(new Position(), condition);</span>
+<span class="nc" id="L162">                    typeChecker.setFunctionCallAllowed(false);</span>
+<span class="nc" id="L163">                    ensure.accept(typeChecker);</span>
+<span class="nc" id="L164">                    typeChecker.setFunctionCallAllowed(true);</span>
+<span class="nc" id="L165">                    ensure.accept(interpreter);</span>
+<span class="nc" id="L166">                    return globalBreakpoint;</span>
+<span class="nc" id="L167">                } catch (IllegalTypeException ignored) {</span>
+<span class="nc" id="L168">                } catch (AssertionFailureException ignored) {</span>
+                }
+    		}
+        }
+<span class="fc" id="L172">        return null;</span>
+    }
+
+    public State getCurrentState() {
+<span class="fc" id="L176">        return currentState;</span>
+    }
+
+    public ArrayList&lt;StatementBreakpoint&gt; getStatementBreakpoints() {
+<span class="nc" id="L180">        return statementBreakpoints;</span>
+    }
+
+    public ArrayList&lt;GlobalBreakpoint&gt; getGlobalBreakpoints() {
+<span class="nc" id="L184">        return globalBreakpoints;</span>
+    }
+
+    public void setStatementBreakpoints(
+            ArrayList&lt;StatementBreakpoint&gt; statementBreakpoints) {
+<span class="nc" id="L189">        this.statementBreakpoints = statementBreakpoints;</span>
+<span class="nc" id="L190">    }</span>
+
+    public void setGlobalBreakpoints(
+            ArrayList&lt;GlobalBreakpoint&gt; globalBreakpoints) {
+<span class="nc" id="L194">        this.globalBreakpoints = globalBreakpoints;</span>
+<span class="nc" id="L195">    }</span>
+    
+    public HashMap&lt;Identifier, Value&gt; getVariables() {
+<span class="nc" id="L198">        return currentState.getVariables();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

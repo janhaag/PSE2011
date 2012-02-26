@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Editor.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Editor.java</span></div><h1>Editor.java</h1><pre class="source lang-java linenums">package misc;
+
+import interpreter.StatementBreakpoint;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+import gui.EditorView;
+
+/**
+ * This class provides an instance of an editor with several features:&lt;ul&gt;
+ * &lt;li&gt;undo/redo function&lt;/li&gt;
+ * &lt;li&gt;Syntax HL&lt;/li&gt;
+ * &lt;li&gt;interface for one view&lt;/li&gt;
+ * &lt;li&gt;statement breakpoints&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * @version 1.0
+ */
+public class Editor {
+	/**
+	 * the source the editor is working with
+	 */
+	private String source;
+	/**
+	 * the of the editor
+	 */
+	private EditorView editorview;
+	/**
+	 * a list of keywords
+	 */
+	private ArrayList&lt;Keyword&gt; colorArray;
+	/**
+	 * a list of past versions which have been changed trough user action or through
+	 * the redo function
+	 */
+	private Stack&lt;EditorMemento&gt; undoMemento;
+	/**
+	 * a list of past versions which have been changed trough the undo function
+	 */
+	private Stack&lt;EditorMemento&gt; redoMemento;
+	/**
+	 * a list of statement breakpoints
+	 */
+	private ArrayList&lt;StatementBreakpoint&gt; statementBreakpoints;
+
+	/**
+	 * Constructs a new instance of Editor.
+	 *
+	 * The source will be initialized to an empty String.
+	 */
+<span class="nc" id="L52">	public Editor() {</span>
+<span class="nc" id="L53">		this.source = &quot;&quot;;</span>
+<span class="nc" id="L54">		this.colorArray = new ArrayList&lt;Keyword&gt;();</span>
+<span class="nc" id="L55">		this.undoMemento = new Stack&lt;EditorMemento&gt;();</span>
+<span class="nc" id="L56">		this.redoMemento = new Stack&lt;EditorMemento&gt;();</span>
+		
+<span class="nc" id="L58">		this.statementBreakpoints = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="nc" id="L59">	}</span>
+	public void setView(EditorView view) {
+<span class="nc" id="L61">		this.editorview = view;</span>
+<span class="nc" id="L62">	}</span>
+	public ArrayList&lt;Keyword&gt; getColorArray() {
+<span class="nc" id="L64">		return this.colorArray;</span>
+	}
+	public String getSource() {
+<span class="nc" id="L67">		return this.source;</span>
+	}
+	public void setSource(String source) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if(!this.undoMemento.empty()) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if(!this.undoMemento.peek().getSource().equals(source)) {</span>
+<span class="nc" id="L72">				this.undoMemento.push(this.createMemento());</span>
+			}
+		} else {
+<span class="nc" id="L75">			this.undoMemento.push(this.createMemento());</span>
+		}
+<span class="nc" id="L77">		this.source = source;</span>
+<span class="nc" id="L78">		findKeywords(source);</span>
+<span class="nc" id="L79">		this.editorview.updateView();</span>
+<span class="nc" id="L80">	}</span>
+	public void undo() {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if(!this.undoMemento.empty()) {</span>
+<span class="nc" id="L83">			EditorMemento memento = this.undoMemento.pop();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if(!this.redoMemento.empty()) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if(!this.redoMemento.peek().equals(this.createMemento()))</span>
+<span class="nc" id="L86">					this.redoMemento.push(this.createMemento());</span>
+			} else {
+<span class="nc" id="L88">				this.redoMemento.push(this.createMemento());</span>
+			}
+<span class="nc" id="L90">			this.source = memento.getSource();</span>
+<span class="nc" id="L91">			findKeywords(source);</span>
+<span class="nc" id="L92">			this.editorview.updateView();</span>
+		}
+<span class="nc" id="L94">	}</span>
+	public void redo() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if(!this.redoMemento.empty()) {</span>
+<span class="nc" id="L97">			EditorMemento memento = this.redoMemento.pop();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if(!this.undoMemento.empty()) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">				if(!this.undoMemento.peek().equals(this.createMemento()))</span>
+<span class="nc" id="L100">					this.undoMemento.push(this.createMemento());</span>
+			} else {
+<span class="nc" id="L102">				this.undoMemento.push(this.createMemento());</span>
+			}
+<span class="nc" id="L104">			this.source = memento.getSource();</span>
+<span class="nc" id="L105">			findKeywords(source);</span>
+<span class="nc" id="L106">			this.editorview.updateView();</span>
+		}
+<span class="nc" id="L108">	}</span>
+	private EditorMemento createMemento() {
+<span class="nc" id="L110">		return new EditorMemento(this.source);</span>
+	}
+	/**
+	 * Find the keywords in the given source and add them to the list of keywords
+	 * (@see {@link Editor#colorArray}).
+	 *
+	 * @param source the text which should be searched
+	 */
+	private void findKeywords(String source) {
+<span class="nc" id="L119">		this.colorArray.clear();</span>
+<span class="nc" id="L120">		int position = 0;</span>
+<span class="nc" id="L121">		String word = &quot;&quot;;</span>
+<span class="nc" id="L122">		ArrayList &lt;Keyword&gt; tmplist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for(int i = 0; i &lt; source.length(); i++) {</span>
+<span class="nc" id="L124">			char currentchar = source.charAt(i);</span>
+<span class="nc bnc" id="L125" title="All 8 branches missed.">			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n' || currentchar == '\t') {</span>
+<span class="nc" id="L126">				String[] keywords = word.split(&quot;\\W&quot;);</span>
+<span class="nc" id="L127">				int positionplus = 0;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				for(String subword : keywords) {</span>
+<span class="nc" id="L129">					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);</span>
+<span class="nc" id="L130">					positionplus += (subword.length() + 1);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">					if(keyword != null) {</span>
+<span class="nc" id="L132">						this.colorArray.add(keyword);</span>
+					}
+				}
+<span class="nc" id="L135">				word = &quot;&quot;;</span>
+<span class="nc" id="L136">				position = i+1;</span>
+<span class="nc" id="L137">				tmplist.clear();</span>
+			} else {
+<span class="nc" id="L139">				this.colorArray.removeAll(tmplist);</span>
+<span class="nc" id="L140">				word += source.charAt(i);</span>
+<span class="nc" id="L141">				String[] keywords = word.split(&quot;\\W&quot;);</span>
+<span class="nc" id="L142">				int positionplus = 0;</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">				for(String subword : keywords) {</span>
+<span class="nc" id="L144">					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);</span>
+<span class="nc" id="L145">					positionplus += (subword.length() + 1);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					if(keyword != null) {</span>
+<span class="nc" id="L147">						this.colorArray.add(keyword);</span>
+<span class="nc" id="L148">						tmplist.add(keyword);</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L153">		Keyword keyword = this.addKeyWordColor(position, word);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if(keyword != null) {</span>
+<span class="nc" id="L155">			this.colorArray.add(keyword);</span>
+		}
+<span class="nc" id="L157">	}</span>
+	/**
+	 * Checks if the given &lt;code&gt;String&lt;/code&gt; is a &quot;keyword&quot; and in case of success
+	 * returns an instance of {@link Keyword}.
+	 * If the given &lt;code&gt;String&lt;/code&gt; is not a &quot;keyword&quot; the function returns &lt;code&gt;null&lt;/code&gt;.
+	 * &lt;br&gt;Auxiliary function for: {@link Editor#findKeywords(String)}
+	 * 
+	 * @param position the position of the first letter of the word in the source
+	 * @param keyword the &lt;code&gt;String&lt;/code&gt; which should be checked
+	 * @return an instance of {@link Keyword} or &lt;code&gt;null&lt;/code&gt;
+	 */
+	private Keyword addKeyWordColor(int position, String keyword) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if(keyword.equals(&quot;if&quot;)) {</span>
+<span class="nc" id="L170">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		} else if(keyword.equals(&quot;while&quot;)) {</span>
+<span class="nc" id="L172">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		} else if(keyword.equals(&quot;true&quot;)) {</span>
+<span class="nc" id="L174">			return new Keyword(position,keyword.length(),&quot;00FF00&quot;);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		} else if(keyword.equals(&quot;false&quot;)) {</span>
+<span class="nc" id="L176">			return new Keyword(position,keyword.length(),&quot;FF0000&quot;);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		} else if(keyword.equals(&quot;int&quot;)) {</span>
+<span class="nc" id="L178">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		} else if(keyword.equals(&quot;bool&quot;)) {</span>
+<span class="nc" id="L180">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        } else if(keyword.equals(&quot;array&quot;)) {</span>
+<span class="nc" id="L182">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		} else if(keyword.equals(&quot;else&quot;)) {</span>
+<span class="nc" id="L184">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		} else if(keyword.equals(&quot;return&quot;)) {</span>
+<span class="nc" id="L186">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		} else if(keyword.equals(&quot;assert&quot;)) {</span>
+<span class="nc" id="L188">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		} else if(keyword.equals(&quot;assume&quot;)) {</span>
+<span class="nc" id="L190">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		} else if(keyword.equals(&quot;axiom&quot;)) {</span>
+<span class="nc" id="L192">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		} else if(keyword.equals(&quot;ensure&quot;)) {</span>
+<span class="nc" id="L194">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		} else if(keyword.equals(&quot;invariant&quot;)) {</span>
+<span class="nc" id="L196">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		} else if(keyword.equals(&quot;forall&quot;)) {</span>
+<span class="nc" id="L198">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		} else if(keyword.equals(&quot;exists&quot;)) {</span>
+<span class="nc" id="L200">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		}else if(keyword.equals(&quot;main&quot;)) {</span>
+<span class="nc" id="L202">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		} else if(keyword.matches(&quot;\\d+&quot;)) {</span>
+<span class="nc" id="L204">			return new Keyword(position,keyword.length(),&quot;FF8000&quot;);</span>
+		}  else {
+<span class="nc" id="L206">			return null;</span>
+		}
+	}
+	
+	public int addBreakpoint(int line) {
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		for (int i = 0; i &lt; this.statementBreakpoints.size(); i++) {</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">			if (this.statementBreakpoints.get(i).getLine() == line) {</span>
+<span class="nc" id="L213">				this.statementBreakpoints.remove(i);</span>
+<span class="nc" id="L214">				return 0;</span>
+			}
+		}
+<span class="nc" id="L217">		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);</span>
+<span class="nc" id="L218">		this.statementBreakpoints.add(newStatementBreakpoint);</span>
+<span class="nc" id="L219">		return 1;</span>
+	}
+	
+	public ArrayList&lt;StatementBreakpoint&gt; getStatementBreakpoints() {
+<span class="nc" id="L223">		return this.statementBreakpoints;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

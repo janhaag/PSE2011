@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>LogicalExpression.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">LogicalExpression.java</span></div><h1>LogicalExpression.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ *  This class symbolizes an expression in the user program which result
+ *  is from type BooleanType.
+ */
+public class LogicalExpression extends Expression {
+    /**
+     *  The first operand of the expression (may only be null if
+     *  this instanceof BooleanLiteral), which may be an expression itself.
+     */
+    private final Expression subexpression1;
+    /**
+     *  The second operand of the expression (may only be null if
+     *  this instanceof BooleanLiteral or in case of a unary operator),
+     *  which may be an expression itself.
+     */
+    private final Expression subexpression2;
+    /**
+     *  The operator of this calculation (may only be null if
+     *  this instanceof BooleanLiteral).
+     */
+    private final LogicalOperator logicalOperator;
+
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     * @param subexpression1 the first operand
+     * @param subexpression2 the second operand
+     * @param logicalOperator the operator
+     */
+    public LogicalExpression(Position position, Expression subexpression1,
+                             Expression subexpression2,
+                             LogicalOperator logicalOperator) {
+<span class="fc" id="L37">        super(position);</span>
+<span class="fc" id="L38">        this.subexpression1 = subexpression1;</span>
+<span class="fc" id="L39">        this.subexpression2 = subexpression2;</span>
+<span class="fc" id="L40">        this.logicalOperator = logicalOperator;</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Returns the first operand of this expression.
+     * @return the first operand
+     */
+    public Expression getSubexpression1() {
+<span class="fc" id="L48">        return subexpression1;</span>
+    }
+
+    /**
+     * Returns the second operand of this expression.
+     * @return the second operand
+     */
+    public Expression getSubexpression2() {
+<span class="fc" id="L56">        return subexpression2;</span>
+    }
+
+    /**
+     * Returns the operator of this expression.
+     * @return the operator of this expression
+     */
+    public LogicalOperator getLogicalOperator() {
+<span class="fc" id="L64">        return logicalOperator;</span>
+    }
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L69">        visitor.visit(this);</span>
+<span class="fc" id="L70">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L74">        StringBuilder sb = new StringBuilder(&quot;(&quot;);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (logicalOperator instanceof BinaryOperator) {</span>
+<span class="nc" id="L76">            sb.append(subexpression1.toString()).append(' ');</span>
+<span class="nc" id="L77">            sb.append(logicalOperator.toString());</span>
+<span class="nc" id="L78">            sb.append(' ').append(subexpression2.toString());</span>
+        } else {
+<span class="nc" id="L80">            sb.append(logicalOperator.toString());</span>
+<span class="nc" id="L81">            sb.append(' ').append(subexpression1.toString());</span>
+        }
+<span class="nc" id="L83">        sb.append(')');</span>
+<span class="nc" id="L84">        return sb.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

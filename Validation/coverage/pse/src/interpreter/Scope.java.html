@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Scope.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">Scope.java</span></div><h1>Scope.java</h1><pre class="source lang-java linenums">package interpreter;
+
+import ast.*;
+
+import java.util.*;
+
+/**
+ * This class represents a scope in a user program,
+ * i.e. a domain of visibility for variables.
+ * A scope may have a parent scope which surrounds it.
+ * A variable not available in the scope is searched for
+ * in the parent scope.
+ * Variables in this scope hide variables in the parent
+ * scope that have the same name.
+ */
+public class Scope {
+    /**
+     * parent scope of this instance
+     */
+    private final Scope upScope;
+    /**
+     * list of all variables mapped to their current value
+     */
+    private final HashMap&lt;Identifier, Value&gt; variables;
+    /**
+     * temporarily saves the result of function calls
+     */
+    private final IdentityHashMap&lt;FunctionCall, Value&gt; returnValues;
+    /**
+     * function associated with this scope, if there is any
+     */
+    private final Function currentFunction;
+    /**
+     * iterator over the statements in the current block
+     */
+    private final Iterator&lt;Statement&gt; statements;
+    /**
+     * scope depth to top scope of the current function
+     */
+    private final int depth;
+    /**
+     * next statement in this scope
+     */
+    private Statement currentStatement;
+    /**
+     * This flag indicates whether variables may searched for in
+     * the parent scope. This must be prevented if this scope is
+     * associated to a complete function.
+     */
+    private final boolean variableSearch;
+
+    /**
+     * Constructor.
+     *
+     * @param upScope parent scope of this instance
+     * @param currentBlock statement block associated with this scope
+     * @param currentFunction function associated with this scope,
+     *                        if there is any
+     */
+<span class="fc" id="L60">    public Scope(Scope upScope, StatementBlock currentBlock,</span>
+                 Function currentFunction) {
+<span class="fc" id="L62">        this.upScope = upScope;</span>
+<span class="fc" id="L63">        this.currentFunction = currentFunction;</span>
+<span class="fc" id="L64">        variables = new HashMap&lt;Identifier, Value&gt;();</span>
+<span class="fc" id="L65">        returnValues = new IdentityHashMap&lt;FunctionCall, Value&gt;();</span>
+<span class="pc bpc" id="L66" title="1 of 4 branches missed.">        variableSearch = (currentFunction == null) &amp;&amp; upScope != null;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        depth = variableSearch ? upScope.depth + 1 : 0;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        statements = (currentBlock != null)</span>
+<span class="fc" id="L69">                     ? currentBlock.getIterator() : null;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Returns whether the given identifier exists in this scope.
+     * @param identifier identifier to check
+     * @return whether the given identifier exists in this scope
+     */
+    public boolean existsInScope(Identifier identifier) {
+<span class="fc" id="L78">        return variables.containsKey(identifier);</span>
+    }
+
+    /**
+     * Returns the depth of the scope in which
+     * the given variable assigned to was declared.
+     * @param variable variable to check
+     * @return depth of declaration of the given variable
+     */
+    public int getDepthOfVariable(Identifier variable) {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (variables.containsKey(variable)) {</span>
+<span class="fc" id="L89">            return depth;</span>
+        } else {
+<span class="fc" id="L91">            return upScope.getDepthOfVariable(variable);</span>
+        }
+    }
+
+    /**
+     * Returns the parent scope.
+     * @return parent scope
+     */
+    public Scope getParent() {
+<span class="fc" id="L100">        return upScope;</span>
+    }
+
+    /**
+     * Returns whether this is a function scope.
+     * @return whether this is a function scope
+     */
+    public boolean isFunctionScope() {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        return currentFunction != null;</span>
+    }
+
+    /**
+     * Returns the function this scope belongs to.
+     *
+     * @return function this scope belongs to
+     */
+    public Function getCurrentFunction() {
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        return currentFunction != null</span>
+<span class="fc" id="L118">                ? currentFunction : upScope.getCurrentFunction();</span>
+    }
+
+    /**
+     * Returns the results of function calls.
+     * @return results of function calls
+     */
+    public IdentityHashMap&lt;FunctionCall, Value&gt; getReturnValues() {
+<span class="fc" id="L126">        return returnValues;</span>
+    }
+
+    /**
+     * Returns a list of all values that are currently mapped to
+     * variables in this or - if not hidden - the parent scopes.
+     * @return list of all values mapped to variables in this (or parent) scope
+     */
+    public HashMap&lt;Identifier, Value&gt; getVariables() {
+<span class="fc" id="L135">        HashMap&lt;Identifier, Value&gt; vars = new HashMap&lt;Identifier, Value&gt;();</span>
+<span class="fc" id="L136">        addVars(vars);</span>
+<span class="fc" id="L137">        return vars;</span>
+    }
+
+    /**
+     * Adds all non-shadowed variables to parameter vars and searches
+     * the parent scope for more (if variableSearch is true).
+     * @param vars HashMap to which found variables are mapped
+     */
+    private void addVars(HashMap&lt;Identifier, Value&gt; vars) {
+<span class="fc" id="L146">        Set&lt;Identifier&gt; identifiers = variables.keySet();</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for (Identifier identifier : identifiers) {</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">            if (!vars.containsKey(identifier)) {</span>
+<span class="fc" id="L149">                vars.put(identifier, variables.get(identifier));</span>
+            }
+        }
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (variableSearch) {</span>
+<span class="fc" id="L153">            upScope.addVars(vars);</span>
+        }
+<span class="fc" id="L155">    }</span>
+
+    /**
+     * Returns the statement followed by the current statement
+     * or null if the block was traversed completely.
+     * @return next statement
+     */
+    public Statement getNextStatement() {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        currentStatement = statements.hasNext() ? statements.next() : null;</span>
+<span class="fc" id="L164">        return currentStatement;</span>
+    }
+
+    /**
+     * Returns the current statement.
+     * @return current statement
+     */
+    public Statement getCurrentStatement() {
+<span class="fc" id="L172">        return currentStatement;</span>
+    }
+
+    /**
+     * Assigns a new value to a variable.
+     * @param name variable name
+     * @param value new value (as String)
+     */
+    public void setVar(String name, String value) {
+<span class="fc" id="L181">        Value oldValue = getVariables().get(new Identifier(name));</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (oldValue instanceof BooleanValue) {</span>
+<span class="nc" id="L183">            ((BooleanValue) oldValue).setValue(value);</span>
+        } else {
+<span class="fc" id="L185">            ((IntegerValue) oldValue).setValue(value);</span>
+        }
+<span class="fc" id="L187">    }</span>
+
+    /**
+     * Assigns a new value to an element in an array.
+     * @param name array name
+     * @param value new value (as String)
+     * @param indexes indexes describing the position of the
+     *                element that will be changed
+     */
+    public void setArray(String name, String value,
+                         List&lt;Integer&gt; indexes) {
+<span class="fc" id="L198">        Value array = getVariables().get(new Identifier(name));</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (array instanceof ArrayValue) {</span>
+<span class="fc" id="L200">            ((ArrayValue) array).setValue(value, indexes);</span>
+        }
+<span class="fc" id="L202">    }</span>
+
+    /**
+     * Saves a new function result for a given function call.
+     * @param functionCall given function call
+     * @param returnValue return value to save
+     */
+    public void createFunctionResult(FunctionCall functionCall,
+                                     Value returnValue) {
+<span class="fc" id="L211">        returnValues.put(functionCall, returnValue);</span>
+<span class="fc" id="L212">    }</span>
+
+    /**
+     * Clears the list of function results.
+     */
+    public void clearFunctionResults() {
+<span class="fc" id="L218">        returnValues.clear();</span>
+<span class="fc" id="L219">    }</span>
+
+    /**
+     * Creates a new variable with the specified name and type.
+     * @param name variable name
+     * @param value initial value of this variable (as String)
+     * @param typeOfValue type of the new variable
+     */
+    public void createVar(String name, String value, Type typeOfValue) {
+<span class="fc" id="L228">        Identifier identifier = new Identifier(name);</span>
+        Value newValue;
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (typeOfValue instanceof BooleanType) {</span>
+<span class="fc" id="L231">            newValue = new BooleanValue(value);</span>
+        } else {
+<span class="fc" id="L233">            newValue = new IntegerValue(value);</span>
+        }
+<span class="fc" id="L235">        variables.put(identifier, newValue);</span>
+<span class="fc" id="L236">    }</span>
+
+    /**
+     * Creates an array with the specified name, lengths and type.
+     * @param name array name
+     * @param typeOfValue type of the array to be created
+     * @param lengths lengths of the different array dimensions
+     */
+    public void createArray(String name, Type typeOfValue, int[] lengths) {
+<span class="fc" id="L245">        Identifier identifier = new Identifier(name);</span>
+<span class="fc" id="L246">        Value newValue = new ArrayValue((ArrayType) typeOfValue, lengths);</span>
+<span class="fc" id="L247">        variables.put(identifier, newValue);</span>
+<span class="fc" id="L248">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

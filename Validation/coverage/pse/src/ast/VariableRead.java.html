@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VariableRead.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">VariableRead.java</span></div><h1>VariableRead.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ * This class symbolizes a reading access to a variable.
+ * For reading access from arrays there is a subclass @see{ArrayRead}.
+ */
+public class VariableRead extends Expression {
+    /**
+     * identifier belonging to the variable to be read
+     */
+    private final Identifier variable;
+    /**
+     * variable type
+     */
+    private Type type;
+    /**
+     * depth of the declaration of this variable
+     */
+    private int depth;
+
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     * @param variable identifier to be read from
+     */
+    public VariableRead(Position position, Identifier variable) {
+<span class="fc" id="L29">        super(position);</span>
+<span class="fc" id="L30">        this.variable = variable;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Returns the identifier belonging to the variable to be read.
+     * @return identifier to be read from
+     */
+    public Identifier getVariable() {
+<span class="fc" id="L38">        return variable;</span>
+    }
+
+    /**
+     * Returns the depth of the scope in which
+     * the variable assigned to was declared.
+     * @return depth of declaration of this variable
+     */
+    public int getDepth() {
+<span class="nc" id="L47">        return depth;</span>
+    }
+
+    /**
+     * Sets the depth of the scope in which
+     * the variable assigned to was declared.
+     * @param depth depth of declaration of this variable
+     */
+    public void setDepth(int depth) {
+<span class="fc" id="L56">        this.depth = depth;</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Returns the type of this variable.
+     * @return type of this variable
+     */
+    public Type getType() {
+<span class="nc" id="L64">        return type;</span>
+    }
+
+    /**
+     * Sets the type of this variable
+     * @param type type of this variable
+     */
+    public void setType(Type type) {
+<span class="fc" id="L72">        this.type = type;</span>
+<span class="fc" id="L73">    }</span>
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L77">        visitor.visit(this);</span>
+<span class="fc" id="L78">    }</span>
+
+    public String toString() {
+<span class="nc" id="L81">        return variable.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

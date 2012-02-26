@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ArrayValue.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">ArrayValue.java</span></div><h1>ArrayValue.java</h1><pre class="source lang-java linenums">package interpreter;
+
+import ast.ArrayType;
+import ast.BooleanType;
+import ast.IntegerType;
+import ast.Type;
+
+import java.util.List;
+
+/**
+ * This class represents a value of array type,
+ * i.e. a collection of other values that share the same type.
+ */
+public class ArrayValue extends Value {
+    /**
+     * values this array saves
+     */
+    private final Value[] values;
+
+    /**
+     * Constructor.
+     *
+     * @param type base type of the array
+     * @param lengths length of the different array dimensions
+     * @param pos array dimension that is currently constructed
+     */
+    public ArrayValue(ArrayType type, int[] lengths, int pos) {
+<span class="fc" id="L28">        super(type);</span>
+<span class="fc" id="L29">        Type baseType = type.getType();</span>
+<span class="fc" id="L30">        int length = lengths[pos];</span>
+<span class="fc" id="L31">        values = new Value[length];</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (baseType instanceof ArrayType) {</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L34">                values[i] = new ArrayValue((ArrayType) baseType,</span>
+<span class="fc" id="L35">                                            lengths, pos + 1);</span>
+            }
+        }
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (baseType instanceof BooleanType) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L40">                values[i] = new BooleanValue(null);</span>
+            }
+        }
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (baseType instanceof IntegerType) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L45">                values[i] = new IntegerValue(null);</span>
+            }
+        }
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param type base type of the array
+     * @param lengths length of the different array dimensions
+     */
+    public ArrayValue(ArrayType type, int[] lengths) {
+<span class="fc" id="L57">        this(type, lengths, 0);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Returns the collection of values that this array saves.
+     * @return collection of values that this array saves
+     */
+    public Value[] getValues() {
+<span class="fc" id="L65">        return values;</span>
+    }
+
+    /**
+     * Sets the value at a specified position.
+     *
+     * @param value the new value
+     * @param indexes list of ints indicating the position
+     */
+    public void setValue(String value, List&lt;Integer&gt; indexes) {
+<span class="fc" id="L75">        setValue(value, indexes, 0);</span>
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Changes the value of one element in this array
+     * at the specified position.
+     * @param value new value (as String)
+     * @param indexes indexes describing the position of the
+     *                element that will be changed
+     * @param depth depth that the indexes were already evaluated to
+     */
+    public void setValue(String value, List&lt;Integer&gt; indexes, int depth) {
+<span class="fc" id="L87">        int pos = indexes.get(depth);</span>
+<span class="pc bpc" id="L88" title="2 of 4 branches missed.">        if (pos &lt; 0 || pos &gt;= values.length) {</span>
+<span class="nc" id="L89">            pos = 0;</span>
+        }
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (values[pos] instanceof BooleanValue) {</span>
+<span class="nc" id="L92">            ((BooleanValue) values[pos]).setValue(value);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        } else if (values[pos] instanceof IntegerValue) {</span>
+<span class="fc" id="L94">            ((IntegerValue) values[pos]).setValue(value);</span>
+        } else {
+<span class="fc" id="L96">            ((ArrayValue) values[pos]).setValue(value, indexes, depth + 1);</span>
+        }
+<span class="fc" id="L98">    }</span>
+    
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L103">            return true;</span>
+        }
+<span class="nc bnc" id="L105" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L106">            return false;</span>
+        }
+<span class="nc" id="L108">        ArrayValue arrayValue = (ArrayValue) o;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (arrayValue.values.length != values.length) {</span>
+<span class="nc" id="L110">            return false;</span>
+        }
+<span class="nc" id="L112">        boolean equal = true;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">            equal = equal &amp;&amp; values[i].equals(arrayValue.values[i]);</span>
+        }
+<span class="nc" id="L116">        return equal;</span>
+    }
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L121">        StringBuilder sb = new StringBuilder(&quot;{&quot;);</span>
+<span class="nc" id="L122">        sb.append(values[0].toString());</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        for (int i = 1; i &lt; values.length; i++) {</span>
+<span class="nc" id="L124">            sb.append(',').append(values[i].toString());</span>
+        }
+<span class="nc" id="L126">        return sb.append('}').toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

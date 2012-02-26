@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">MainController.java</span></div><h1>MainController.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package gui.controller;</span>
+
+import gui.AboutFrame;
+import gui.FileFrame;
+import gui.HelpFrame;
+import gui.MainFrame;
+import gui.ParameterFrame;
+import gui.RandomTestFrame;
+import gui.SettingsFrame;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import misc.Editor;
+import misc.ExecutionHandler;
+import misc.Help;
+import misc.MessageSystem;
+import misc.Settings;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+
+/**
+ * This class is the most important part of the GUI component. It initializes
+ * all of the other controllers and delegates user actions to their respective
+ * receiver controllers. It is also responsible for the view @see{MainFrame} 
+ * and uses @see{ExecutionHandler} as model.
+ */
+<span class="nc bnc" id="L39" title="All 2 branches missed.">public class MainController implements SelectionListener {</span>
+	/**
+	 * model and connection with other components
+	 */
+	private ExecutionHandler executionHandler;
+	/**
+	 * main view for displaying all other views
+	 */
+	private MainFrame mainframe;
+	/**
+	 * controller for settings
+	 */
+	private SettingsController settingsController;
+	/**
+	 * controller for help
+	 */
+	private HelpController helpController;
+	/**
+	 * controller for parameter input
+	 */
+	private ParameterController parameterContoller;
+	/**
+	 * controller for editor
+	 */
+	private EditorController editorController;
+	/**
+	 * controller for variables and breakpoints
+	 */
+	private TableViewController tableController;
+
+	/**
+	 * Construct a main controller and initializes all other controllers.
+	 */
+<span class="nc" id="L72">	public MainController() {</span>
+<span class="nc" id="L73">		MessageSystem messagesystem = new MessageSystem();</span>
+<span class="nc" id="L74">		this.executionHandler = new ExecutionHandler(messagesystem);</span>
+<span class="nc" id="L75">		Editor editor = new Editor();</span>
+<span class="nc" id="L76">		this.mainframe = new MainFrame(this, editor, messagesystem);</span>
+<span class="nc" id="L77">		this.editorController = new EditorController(editor, this.mainframe.getEditor());</span>
+<span class="nc" id="L78">		this.settingsController = new SettingsController(Settings.getInstance());</span>
+<span class="nc" id="L79">		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());</span>
+<span class="nc" id="L80">		this.parameterContoller = new ParameterController(this.executionHandler, messagesystem);</span>
+<span class="nc" id="L81">		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), </span>
+<span class="nc" id="L82">				this.mainframe.getVarView(), this.executionHandler);</span>
+
+		// Has to be the last call in the constructor
+<span class="nc" id="L85">		initMainFrame();</span>
+<span class="nc" id="L86">	}</span>
+
+	/**
+	 * Open the main frame.
+	 */
+	private void initMainFrame() {
+		/*
+		 * Very important to call this in a separated method because SWT uses an
+		 * infinite loop for its window management and we need the instance of
+		 * MainFrame.
+		 */
+<span class="nc" id="L97">		this.mainframe.openWindow();</span>
+<span class="nc" id="L98">	}</span>
+
+	@Override
+	public void widgetSelected(SelectionEvent e) {
+		//menu bar button events
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (e.getSource() == this.mainframe.getMenuBar().getMenuBarItemExit()) {</span>
+			//Save modified settings
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if(Settings.getInstance().settingsChanged()) {</span>
+				try {
+<span class="nc" id="L107">					Settings.getInstance().saveSettings();</span>
+<span class="nc" id="L108">				} catch (IOException ioe) {</span>
+					//The default settings will be loaded at the next program start
+				}
+			}
+<span class="nc" id="L112">			System.exit(0);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()) {</span>
+<span class="nc" id="L114">			FileFrame openFileFrame = new FileFrame(this.mainframe.getShell(), SWT.OPEN);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (openFileFrame.getChosenFile() != null) {</span>
+<span class="nc" id="L116">				String fileText = getFileAsString(openFileFrame.getChosenFile());</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">				if (fileText != null) {</span>
+<span class="nc" id="L118">					this.mainframe.getEditor().setText(fileText);</span>
+				}
+			}
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSave()) {</span>
+<span class="nc" id="L122">			FileFrame saveFileFrame = new FileFrame(this.mainframe.getShell(), SWT.SAVE);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (saveFileFrame.getChosenFile() != null) {</span>
+<span class="nc" id="L124">				writeStringToFile(this.mainframe.getEditor().getText(), saveFileFrame.getChosenFile());</span>
+			}
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemNewFile()) {</span>
+<span class="nc" id="L127">			this.editorController.getEditor().setSource(&quot;&quot;);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {</span>
+<span class="nc" id="L129">			new SettingsFrame(this.mainframe.getShell(), this.settingsController);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {</span>
+<span class="nc" id="L131">			RandomTestFrame randomtestframe = new RandomTestFrame(this.mainframe.getShell());</span>
+<span class="nc" id="L132">			this.parameterContoller.addRandomTestFrame(randomtestframe, this.editorController.getEditor().getSource());</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenurBarItemAbout()) {</span>
+<span class="nc" id="L134">			new AboutFrame(this.mainframe.getShell());</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemHelp()) {</span>
+<span class="nc" id="L136">			new HelpFrame(this.mainframe.getShell(), this.helpController);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenurBarItemUndo()) {</span>
+<span class="nc" id="L138">			this.editorController.getEditor().undo();</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRedo()) {</span>
+<span class="nc" id="L140">			this.editorController.getEditor().redo();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCut()) {</span>
+<span class="nc" id="L142">			Point selection = this.mainframe.getEditor().getSelection();</span>
+<span class="nc" id="L143">			String source = this.mainframe.getEditor().getText();</span>
+<span class="nc" id="L144">			String cutSource = source.substring(0, selection.x) + source.substring(selection.y);</span>
+<span class="nc" id="L145">			this.editorController.getEditor().setSource(cutSource);</span>
+<span class="nc" id="L146">			this.mainframe.getEditor().getTextField().setSelection(selection.x);</span>
+			
+<span class="nc" id="L148">			String cut = source.substring(selection.x, selection.y);</span>
+<span class="nc" id="L149">			this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {</span>
+<span class="nc" id="L151">			Point selection = this.mainframe.getEditor().getSelection();</span>
+<span class="nc" id="L152">			String source = this.mainframe.getEditor().getText();</span>
+<span class="nc" id="L153">			String copy = source.substring(selection.x, selection.y);</span>
+<span class="nc" id="L154">			this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {</span>
+<span class="nc" id="L156">			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());</span>
+<span class="nc bnc" id="L157" title="All 4 branches missed.">			if(paste != null &amp;&amp; !paste.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L158">				Point selection = this.mainframe.getEditor().getSelection();</span>
+<span class="nc" id="L159">				String source = this.mainframe.getEditor().getText();</span>
+<span class="nc" id="L160">				String pastedSource = source.substring(0, selection.x) + paste + source.substring(selection.y); </span>
+<span class="nc" id="L161">				this.editorController.getEditor().setSource(pastedSource);</span>
+<span class="nc" id="L162">				this.mainframe.getEditor().getTextField().setSelection(selection.x + paste.length());</span>
+			}
+			//String pastedSource = source.substring(0, selection.x) + 
+		}
+		//button events
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		else if (e.getSource() == this.mainframe.getRunButton() </span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemRun()) {</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">			assert editorController != null;</span>
+<span class="nc" id="L170">			this.executionHandler.setPaused(false);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (this.executionHandler.getAST() == null) {</span>
+<span class="nc" id="L172">				this.tableController.getVarView().getVarTree().removeAll();</span>
+<span class="nc" id="L173">				this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">				if (this.executionHandler.getAST() != null) {</span>
+<span class="nc" id="L175">					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());</span>
+<span class="nc" id="L176">					parameterContoller.addParameterFrame(parameterframe);</span>
+				} else {
+<span class="nc" id="L178">					return;</span>
+				}
+			}			
+<span class="nc" id="L181">			this.runView();</span>
+			
+			//Execution
+<span class="nc" id="L184">			new Thread() {</span>
+				public void run() {
+<span class="nc bnc" id="L186" title="All 2 branches missed.">					while (!parameterContoller.getParameterframe().getShell().isDisposed()</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">							&amp;&amp; !(executionHandler.getAST().getMainFunction().getParameters() == null</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {</span>
+						try {
+<span class="nc" id="L190">							sleep(100);</span>
+<span class="nc" id="L191">						} catch (InterruptedException ignored) {</span>
+						}
+					}
+<span class="nc" id="L194">					executionHandler.run(editorController.getEditor().getStatementBreakpoints(),</span>
+<span class="nc" id="L195">							executionHandler.getGlobalBreakpoints());</span>
+<span class="nc" id="L196">					mainframe.getDisplay().asyncExec(new Runnable() {</span>
+						public void run() {
+<span class="nc bnc" id="L198" title="All 2 branches missed.">							if (executionHandler.getAssertionFailureMessage() != null) {</span>
+<span class="nc" id="L199">								executionHandler.printAssertionFailureMessage();</span>
+<span class="nc" id="L200">								stopView();</span>
+<span class="nc" id="L201">								return;</span>
+							}
+<span class="nc bnc" id="L203" title="All 2 branches missed.">							if (executionHandler.getPaused()) {</span>
+<span class="nc" id="L204">								pauseView();</span>
+							}
+							else {
+<span class="nc" id="L207">								stopView();</span>
+<span class="nc" id="L208">								executionHandler.addSuccessMessage(&quot;Program execution successful!&quot;);</span>
+							}
+<span class="nc" id="L210">						}</span>
+					});
+<span class="nc" id="L212">				}</span>
+<span class="nc" id="L213">			}.start();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		} else if (e.getSource() == this.mainframe.getStepButton() </span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemStep()) {</span>
+			//Functions
+<span class="nc bnc" id="L217" title="All 4 branches missed.">			assert editorController != null;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">			if (this.executionHandler.getAST() == null) {</span>
+<span class="nc" id="L219">				this.tableController.getVarView().getVarTree().removeAll();</span>
+<span class="nc" id="L220">				this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">				if (this.executionHandler.getAST() != null) {</span>
+<span class="nc" id="L222">					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());</span>
+<span class="nc" id="L223">					this.parameterContoller.addParameterFrame(parameterframe);</span>
+				} else {
+<span class="nc" id="L225">					return;</span>
+				}
+			}
+			
+			//Execution
+<span class="nc" id="L230">			new Thread() {</span>
+				public void run() {
+<span class="nc bnc" id="L232" title="All 2 branches missed.">					while (!parameterContoller.getParameterframe().getShell().isDisposed()</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">							&amp;&amp; !(executionHandler.getAST().getMainFunction().getParameters() == null</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {</span>
+						try {
+<span class="nc" id="L236">							sleep(100);</span>
+<span class="nc" id="L237">						} catch (InterruptedException ignored) {</span>
+						}
+					}
+<span class="nc" id="L240">					executionHandler.singleStep(editorController.getEditor().getStatementBreakpoints(),</span>
+<span class="nc" id="L241">							executionHandler.getGlobalBreakpoints());</span>
+<span class="nc" id="L242">					mainframe.getDisplay().asyncExec(new Runnable() {</span>
+						public void run() {
+<span class="nc" id="L244">							pauseView();</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">							if (executionHandler.getAssertionFailureMessage() != null) {</span>
+<span class="nc" id="L246">								executionHandler.printAssertionFailureMessage();</span>
+<span class="nc" id="L247">								stopView();</span>
+<span class="nc" id="L248">								return;</span>
+							}
+<span class="nc" id="L250">							tableController.updateVarView();</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">							if (executionHandler.getProgramExecution() != null</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">									&amp;&amp; executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {</span>
+<span class="nc" id="L253">								stopView();</span>
+<span class="nc" id="L254">								executionHandler.addSuccessMessage(&quot;Program execution successful!&quot;);</span>
+							}
+<span class="nc" id="L256">						}</span>
+					});
+<span class="nc" id="L258">				}</span>
+<span class="nc" id="L259">			}.start();</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getPauseButton()) {</span>
+<span class="nc" id="L261">			this.executionHandler.setPaused(true);</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getStopButton()) {</span>
+<span class="nc" id="L263">			this.stopView();</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getCheckSyntaxButton()) {</span>
+			//Functions
+<span class="nc bnc" id="L266" title="All 4 branches missed.">			assert editorController != null;</span>
+<span class="nc" id="L267">			this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">			if (this.executionHandler.getAST() != null) {</span>
+<span class="nc" id="L269">				this.executionHandler.addSuccessMessage(&quot;Syntax is correct!&quot;);</span>
+			}
+<span class="nc" id="L271">			this.executionHandler.setAST(null);</span>
+<span class="nc bnc" id="L272" title="All 4 branches missed.">		} else if (e.getSource() == mainframe.getValidateButton() || e.getSource() == mainframe.getMenuBar().getVerItem()) {</span>
+<span class="nc" id="L273">            this.executionHandler.verify(this.editorController.getEditor().getSource());</span>
+<span class="nc" id="L274">			this.executionHandler.setAST(null);</span>
+		}
+<span class="nc" id="L276">	}</span>
+
+	/**
+	 * Update the main frame when changed to running state.
+	 */
+	private void runView() {
+		//Functions
+<span class="nc" id="L283">		this.editorController.removeMark();</span>
+		//Images
+<span class="nc" id="L285">		Image image = new Image(this.mainframe.getDisplay(), </span>
+<span class="nc" id="L286">				MainFrame.class.getResourceAsStream(&quot;image/run2.png&quot;));</span>
+<span class="nc" id="L287">		Image image2 = new Image(this.mainframe.getDisplay(),</span>
+<span class="nc" id="L288">				MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
+<span class="nc" id="L289">		this.mainframe.switchIcon(image, image2);</span>
+		//(De-)activations
+<span class="nc" id="L291">		this.mainframe.getPauseButton().setEnabled(true);</span>
+<span class="nc" id="L292">		this.mainframe.getStepButton().setEnabled(false);</span>
+<span class="nc" id="L293">		this.mainframe.getStopButton().setEnabled(true);</span>
+<span class="nc" id="L294">		this.mainframe.getCheckSyntaxButton().setEnabled(false);</span>
+<span class="nc" id="L295">		this.tableController.activateVarView();</span>
+<span class="nc" id="L296">		this.tableController.deactivateBreakpointView();</span>
+<span class="nc" id="L297">		this.tableController.getVarView().getVarTree().removeAll();</span>
+<span class="nc" id="L298">		this.editorController.deactivateView();</span>
+<span class="nc" id="L299">	}</span>
+	
+	/**
+	 * Update the main frame when changed to paused state.
+	 */
+	private void pauseView() {
+		//Functions
+<span class="nc" id="L306">		this.tableController.updateVarView();</span>
+<span class="nc" id="L307">		this.editorController.removeMark();</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">		if (this.executionHandler.getProgramExecution() != null</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">				&amp;&amp; this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() != null) {</span>
+<span class="nc" id="L310">			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();</span>
+<span class="nc" id="L311">			this.editorController.markCurrentLine(line - 1);</span>
+		}
+		//Images
+<span class="nc" id="L314">		Image image = new Image(this.mainframe.getDisplay(), </span>
+<span class="nc" id="L315">				MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
+<span class="nc" id="L316">		Image image2 = new Image(this.mainframe.getDisplay(),</span>
+<span class="nc" id="L317">				MainFrame.class.getResourceAsStream(&quot;image/pause2.png&quot;));</span>
+		//(De-)activations
+<span class="nc" id="L319">		this.mainframe.switchIcon(image, image2);</span>
+<span class="nc" id="L320">		this.mainframe.getStepButton().setEnabled(true);</span>
+<span class="nc" id="L321">		this.mainframe.getPauseButton().setEnabled(false);</span>
+<span class="nc" id="L322">		this.mainframe.getStopButton().setEnabled(true);</span>
+<span class="nc" id="L323">		this.mainframe.getCheckSyntaxButton().setEnabled(false);</span>
+<span class="nc" id="L324">		this.editorController.deactivateView();</span>
+<span class="nc" id="L325">		this.tableController.activateVarView();</span>
+<span class="nc" id="L326">		this.tableController.deactivateBreakpointView();</span>
+<span class="nc" id="L327">	}</span>
+	
+	/**
+	 * Update the view when changed to idle state.
+	 */
+	private void stopView() {
+		//Functions
+<span class="nc" id="L334">		this.editorController.removeMark();</span>
+<span class="nc" id="L335">		this.tableController.updateVarView();</span>
+<span class="nc" id="L336">		this.executionHandler.destroyProgramExecution();</span>
+<span class="nc" id="L337">		this.executionHandler.setParameterValues(null);</span>
+<span class="nc" id="L338">		this.executionHandler.setAST(null);</span>
+		//Images
+<span class="nc" id="L340">		Image image = new Image(this.mainframe.getDisplay(), </span>
+<span class="nc" id="L341">				MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
+<span class="nc" id="L342">		Image image2 = new Image(this.mainframe.getDisplay(), </span>
+<span class="nc" id="L343">				MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
+<span class="nc" id="L344">		this.mainframe.switchIcon(image, image2);</span>
+		//(De-)activations
+<span class="nc" id="L346">		this.mainframe.getStopButton().setEnabled(false);</span>
+<span class="nc" id="L347">		this.mainframe.getPauseButton().setEnabled(false);</span>
+<span class="nc" id="L348">		this.mainframe.getStepButton().setEnabled(true);</span>
+<span class="nc" id="L349">		this.mainframe.getCheckSyntaxButton().setEnabled(true);</span>
+<span class="nc" id="L350">		this.tableController.deactivateVarView();</span>
+<span class="nc" id="L351">		this.tableController.activateBreakpointView();</span>
+<span class="nc" id="L352">		this.editorController.activateView();</span>
+<span class="nc" id="L353">	}</span>
+
+	private static String getFileAsString(File file) {
+<span class="nc" id="L356">		BufferedReader fileReader = null;</span>
+		try {
+<span class="nc" id="L358">			fileReader = new BufferedReader(new FileReader(file));</span>
+<span class="nc" id="L359">		} catch (FileNotFoundException e1) {</span>
+<span class="nc" id="L360">			e1.printStackTrace();</span>
+		}
+<span class="nc" id="L362">		String line = null;</span>
+<span class="nc" id="L363">		String fileText = new String();</span>
+		try {
+<span class="nc bnc" id="L365" title="All 2 branches missed.">			while ((line = fileReader.readLine()) != null) {</span>
+<span class="nc" id="L366">				fileText += line + '\n';</span>
+			}
+<span class="nc" id="L368">		} catch (IOException e1) {</span>
+<span class="nc" id="L369">			e1.printStackTrace();</span>
+		}
+<span class="nc" id="L371">		return fileText;</span>
+	}
+
+	private static void writeStringToFile(String content, File file) {
+<span class="nc" id="L375">		BufferedWriter fileWriter = null;</span>
+		try {
+<span class="nc" id="L377">			fileWriter = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L378">			fileWriter.write(content);</span>
+<span class="nc" id="L379">			fileWriter.close();</span>
+
+<span class="nc" id="L381">		} catch (IOException e) {</span>
+<span class="nc" id="L382">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L384">	}</span>
+
+	@Override
+	public void widgetDefaultSelected(SelectionEvent e) {
+<span class="nc" id="L388">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

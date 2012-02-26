@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParserUtils.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">WhileLanguageParserUtils.java</span></div><h1>WhileLanguageParserUtils.java</h1><pre class="source lang-java linenums">package misc;
+
+import ast.*;
+import java.util.LinkedList;
+
+
+public final class WhileLanguageParserUtils {
+<span class="nc" id="L8">    private WhileLanguageParserUtils(){}</span>
+
+    public static LinkedList&lt;Assertion&gt; possibleDivByZero(LinkedList&lt;Expression&gt; expressions) {
+<span class="fc" id="L11">        LinkedList&lt;Assertion&gt; result = new LinkedList&lt;Assertion&gt;();</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (expressions == null) {</span>
+<span class="fc" id="L13">            return result;</span>
+        }
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        for (Expression e : expressions) {</span>
+<span class="fc" id="L16">            result.add(new Assertion(e.getPosition(),</span>
+<span class="fc" id="L17">                new LogicalExpression(e.getPosition(), e,</span>
+<span class="fc" id="L18">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new NotEqual())</span>
+                ));
+        }
+<span class="fc" id="L21">        return result;</span>
+    }
+
+    public static LinkedList&lt;Invariant&gt; possibleDivByZeroI(LinkedList&lt;Expression&gt; expressions) {
+<span class="nc" id="L25">        LinkedList&lt;Invariant&gt; result = new LinkedList&lt;Invariant&gt;();</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L27">            return result;</span>
+        }
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        for (Expression e : expressions) {</span>
+<span class="nc" id="L30">            result.add(new Invariant(e.getPosition(),</span>
+<span class="nc" id="L31">                new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L32">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new NotEqual())</span>
+                ));
+        }
+<span class="nc" id="L35">        return result;</span>
+    }
+
+    public static LinkedList&lt;Assumption&gt; possibleDivByZeroA(LinkedList&lt;Expression&gt; expressions) {
+<span class="nc" id="L39">        LinkedList&lt;Assumption&gt; result = new LinkedList&lt;Assumption&gt;();</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L41">            return result;</span>
+        }
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        for (Expression e : expressions) {</span>
+<span class="nc" id="L44">            result.add(new Assumption(e.getPosition(),</span>
+<span class="nc" id="L45">                new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L46">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new NotEqual())</span>
+                ));
+        }
+<span class="nc" id="L49">        return result;</span>
+    }
+
+    public static LinkedList&lt;Axiom&gt; possibleDivByZeroAx(LinkedList&lt;Expression&gt; expressions) {
+<span class="nc" id="L53">        LinkedList&lt;Axiom&gt; result = new LinkedList&lt;Axiom&gt;();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L55">            return result;</span>
+        }
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (Expression e : expressions) {</span>
+<span class="nc" id="L58">            result.add(new Axiom(e.getPosition(),</span>
+<span class="nc" id="L59">                new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L60">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new NotEqual())</span>
+                ));
+        }
+<span class="nc" id="L63">        return result;</span>
+    }
+
+    public static LinkedList&lt;Ensure&gt; possibleDivByZeroE(LinkedList&lt;Expression&gt; expressions) {
+<span class="nc" id="L67">        LinkedList&lt;Ensure&gt; result = new LinkedList&lt;Ensure&gt;();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L69">            return result;</span>
+        }
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for (Expression e : expressions) {</span>
+<span class="nc" id="L72">            result.add(new Ensure(e.getPosition(),</span>
+<span class="nc" id="L73">                new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L74">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new NotEqual())</span>
+                ));
+        }
+<span class="nc" id="L77">        return result;</span>
+    }
+
+    public static LinkedList&lt;Assertion&gt; possibleArrayOutOfBounds(
+            LinkedList&lt;Pair&lt;ArrayRead, Expression&gt;&gt; expressions) {
+<span class="fc" id="L82">        LinkedList&lt;Assertion&gt; result = new LinkedList&lt;Assertion&gt;();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (expressions == null) {</span>
+<span class="fc" id="L84">            return result;</span>
+        }
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (Pair&lt;ArrayRead, Expression&gt; p : expressions) {</span>
+<span class="fc" id="L87">            Expression e = p.getValue2();</span>
+<span class="fc" id="L88">            ArrayRead a = p.getValue1();</span>
+<span class="fc" id="L89">            LogicalExpression lower = new LogicalExpression(e.getPosition(), e,</span>
+<span class="fc" id="L90">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new GreaterEqual());</span>
+<span class="fc" id="L91">            LogicalExpression upper = new LogicalExpression(e.getPosition(), e,</span>
+<span class="fc" id="L92">                    new FunctionCall(new Identifier(&quot;length&quot;), new Expression[] {a},</span>
+<span class="fc" id="L93">                        e.getPosition()), new Less());</span>
+<span class="fc" id="L94">            result.add(new Assertion(e.getPosition(),</span>
+<span class="fc" id="L95">                new LogicalExpression(e.getPosition(), lower, upper, new Conjunction())));</span>
+        }
+<span class="fc" id="L97">        return result;</span>
+    }
+
+    public static LinkedList&lt;Invariant&gt; possibleArrayOutOfBoundsI(
+            LinkedList&lt;Pair&lt;ArrayRead, Expression&gt;&gt; expressions) {
+<span class="nc" id="L102">        LinkedList&lt;Invariant&gt; result = new LinkedList&lt;Invariant&gt;();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L104">            return result;</span>
+        }
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        for (Pair&lt;ArrayRead, Expression&gt; p : expressions) {</span>
+<span class="nc" id="L107">            Expression e = p.getValue2();</span>
+<span class="nc" id="L108">            ArrayRead a = p.getValue1();</span>
+<span class="nc" id="L109">            LogicalExpression lower = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L110">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new GreaterEqual());</span>
+<span class="nc" id="L111">            LogicalExpression upper = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L112">                    new FunctionCall(new Identifier(&quot;length&quot;), new Expression[] {a},</span>
+<span class="nc" id="L113">                        e.getPosition()), new Less());</span>
+<span class="nc" id="L114">            result.add(new Invariant(e.getPosition(),</span>
+<span class="nc" id="L115">                new LogicalExpression(e.getPosition(), lower, upper, new Conjunction())));</span>
+        }
+<span class="nc" id="L117">        return result;</span>
+    }
+
+    public static LinkedList&lt;Assumption&gt; possibleArrayOutOfBoundsA(
+            LinkedList&lt;Pair&lt;ArrayRead, Expression&gt;&gt; expressions) {
+<span class="nc" id="L122">        LinkedList&lt;Assumption&gt; result = new LinkedList&lt;Assumption&gt;();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L124">            return result;</span>
+        }
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        for (Pair&lt;ArrayRead, Expression&gt; p : expressions) {</span>
+<span class="nc" id="L127">            Expression e = p.getValue2();</span>
+<span class="nc" id="L128">            ArrayRead a = p.getValue1();</span>
+<span class="nc" id="L129">            LogicalExpression lower = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L130">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new GreaterEqual());</span>
+<span class="nc" id="L131">            LogicalExpression upper = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L132">                    new FunctionCall(new Identifier(&quot;length&quot;), new Expression[] {a},</span>
+<span class="nc" id="L133">                        e.getPosition()), new Less());</span>
+<span class="nc" id="L134">            result.add(new Assumption(e.getPosition(),</span>
+<span class="nc" id="L135">                new LogicalExpression(e.getPosition(), lower, upper, new Conjunction())));</span>
+        }
+<span class="nc" id="L137">        return result;</span>
+    }
+
+    public static LinkedList&lt;Axiom&gt; possibleArrayOutOfBoundsAx(
+            LinkedList&lt;Pair&lt;ArrayRead, Expression&gt;&gt; expressions) {
+<span class="nc" id="L142">        LinkedList&lt;Axiom&gt; result = new LinkedList&lt;Axiom&gt;();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L144">            return result;</span>
+        }
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        for (Pair&lt;ArrayRead, Expression&gt; p : expressions) {</span>
+<span class="nc" id="L147">            Expression e = p.getValue2();</span>
+<span class="nc" id="L148">            ArrayRead a = p.getValue1();</span>
+<span class="nc" id="L149">            LogicalExpression lower = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L150">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new GreaterEqual());</span>
+<span class="nc" id="L151">            LogicalExpression upper = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L152">                    new FunctionCall(new Identifier(&quot;length&quot;), new Expression[] {a},</span>
+<span class="nc" id="L153">                        e.getPosition()), new Less());</span>
+<span class="nc" id="L154">            result.add(new Axiom(e.getPosition(),</span>
+<span class="nc" id="L155">                new LogicalExpression(e.getPosition(), lower, upper, new Conjunction())));</span>
+        }
+<span class="nc" id="L157">        return result;</span>
+    }
+
+    public static LinkedList&lt;Ensure&gt; possibleArrayOutOfBoundsE(
+            LinkedList&lt;Pair&lt;ArrayRead, Expression&gt;&gt; expressions) {
+<span class="nc" id="L162">        LinkedList&lt;Ensure&gt; result = new LinkedList&lt;Ensure&gt;();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (expressions == null) {</span>
+<span class="nc" id="L164">            return result;</span>
+        }
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        for (Pair&lt;ArrayRead, Expression&gt; p : expressions) {</span>
+<span class="nc" id="L167">            Expression e = p.getValue2();</span>
+<span class="nc" id="L168">            ArrayRead a = p.getValue1();</span>
+<span class="nc" id="L169">            LogicalExpression lower = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L170">                    new NumericLiteral(e.getPosition(), &quot;0&quot;), new GreaterEqual());</span>
+<span class="nc" id="L171">            LogicalExpression upper = new LogicalExpression(e.getPosition(), e,</span>
+<span class="nc" id="L172">                    new FunctionCall(new Identifier(&quot;length&quot;), new Expression[] {a},</span>
+<span class="nc" id="L173">                        e.getPosition()), new Less());</span>
+<span class="nc" id="L174">            result.add(new Ensure(e.getPosition(),</span>
+<span class="nc" id="L175">                new LogicalExpression(e.getPosition(), lower, upper, new Conjunction())));</span>
+        }
+<span class="nc" id="L177">        return result;</span>
+    }
+
+    public static LinkedList&lt;Assertion&gt; possibleNotPositive(
+            LinkedList&lt;Expression&gt; expressions) {
+<span class="fc" id="L182">        LinkedList&lt;Assertion&gt; result = new LinkedList&lt;Assertion&gt;();</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (expressions == null) {</span>
+<span class="fc" id="L184">            return result;</span>
+        }
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        for (Expression p : expressions) {</span>
+<span class="fc" id="L187">            result.add(new Assertion(p.getPosition(),</span>
+<span class="fc" id="L188">                new LogicalExpression(p.getPosition(), p,</span>
+<span class="fc" id="L189">                    new NumericLiteral(p.getPosition(), &quot;0&quot;), new Greater())</span>
+                ));
+        }
+<span class="fc" id="L192">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

@@ -1,0 +1,1162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>z3Parser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">verifier.smtlib.z3</a> &gt; <span class="el_source">z3Parser.java</span></div><h1>z3Parser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g 2012-02-26 19:05:40
+
+    package verifier.smtlib.z3;
+
+    import java.util.LinkedList;
+    import java.util.HashMap;
+    import misc.Pair;
+
+
+import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+
+@SuppressWarnings({&quot;all&quot;, &quot;warnings&quot;, &quot;unchecked&quot;})
+<span class="nc" id="L16">public class z3Parser extends Parser {</span>
+<span class="nc" id="L17">    public static final String[] tokenNames = new String[] {</span>
+<span class="nc" id="L18">        &quot;&lt;invalid&gt;&quot;, &quot;&lt;EOR&gt;&quot;, &quot;&lt;DOWN&gt;&quot;, &quot;&lt;UP&gt;&quot;, &quot;BOOL&quot;, &quot;IDENT&quot;, &quot;INT&quot;, &quot;TYPE&quot;, &quot;WS&quot;, &quot;'!'&quot;, &quot;'('&quot;, &quot;'(Array'&quot;, &quot;'(define-fun'&quot;, &quot;'(model'&quot;, &quot;')'&quot;, &quot;'='&quot;, &quot;'_'&quot;, &quot;'and'&quot;, &quot;'as-array'&quot;, &quot;'ite'&quot;, &quot;'sat'&quot;, &quot;'unknown'&quot;, &quot;'unsat'&quot;</span>
+    };
+
+    public static final int EOF=-1;
+    public static final int T__9=9;
+    public static final int T__10=10;
+    public static final int T__11=11;
+    public static final int T__12=12;
+    public static final int T__13=13;
+    public static final int T__14=14;
+    public static final int T__15=15;
+    public static final int T__16=16;
+    public static final int T__17=17;
+    public static final int T__18=18;
+    public static final int T__19=19;
+    public static final int T__20=20;
+    public static final int T__21=21;
+    public static final int T__22=22;
+    public static final int BOOL=4;
+    public static final int IDENT=5;
+    public static final int INT=6;
+    public static final int TYPE=7;
+    public static final int WS=8;
+
+    // delegates
+    public Parser[] getDelegates() {
+<span class="nc" id="L44">        return new Parser[] {};</span>
+    }
+
+    // delegators
+
+
+    public z3Parser(TokenStream input) {
+<span class="nc" id="L51">        this(input, new RecognizerSharedState());</span>
+<span class="nc" id="L52">    }</span>
+    public z3Parser(TokenStream input, RecognizerSharedState state) {
+<span class="nc" id="L54">        super(input, state);</span>
+<span class="nc" id="L55">    }</span>
+
+<span class="nc" id="L57">    public String[] getTokenNames() { return z3Parser.tokenNames; }</span>
+<span class="nc" id="L58">    public String getGrammarFileName() { return &quot;C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g&quot;; }</span>
+
+
+
+    // $ANTLR start &quot;start&quot;
+    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:15:1: start returns [LinkedList&lt;Pair&lt;Boolean,String&gt;&gt; list] : (pair= block )+ ;
+    public final LinkedList&lt;Pair&lt;Boolean,String&gt;&gt; start() throws RecognitionException {
+<span class="nc" id="L65">        LinkedList&lt;Pair&lt;Boolean,String&gt;&gt; list = null;</span>
+
+
+<span class="nc" id="L68">        Pair&lt;Boolean, String&gt; pair =null;</span>
+
+
+<span class="nc" id="L71">        list = new LinkedList&lt;Pair&lt;Boolean,String&gt;&gt;();</span>
+        try {
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:16:2: ( (pair= block )+ )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:16:3: (pair= block )+
+            {
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:16:3: (pair= block )+
+<span class="nc" id="L77">            int cnt1=0;</span>
+            loop1:
+            do {
+<span class="nc" id="L80">                int alt1=2;</span>
+<span class="nc" id="L81">                int LA1_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L83" title="All 4 branches missed.">                if ( ((LA1_0 &gt;= 20 &amp;&amp; LA1_0 &lt;= 22)) ) {</span>
+<span class="nc" id="L84">                    alt1=1;</span>
+                }
+
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                switch (alt1) {</span>
+            	case 1 :
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:16:4: pair= block
+            	    {
+<span class="nc" id="L92">            	    pushFollow(FOLLOW_block_in_start37);</span>
+<span class="nc" id="L93">            	    pair=block();</span>
+
+<span class="nc" id="L95">            	    state._fsp--;</span>
+
+
+<span class="nc" id="L98">            	    list.add(pair);</span>
+
+            	    }
+<span class="nc" id="L101">            	    break;</span>
+
+            	default :
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            	    if ( cnt1 &gt;= 1 ) break loop1;</span>
+<span class="nc" id="L105">                        EarlyExitException eee =</span>
+<span class="nc" id="L106">                            new EarlyExitException(1, input);</span>
+<span class="nc" id="L107">                        throw eee;</span>
+                }
+<span class="nc" id="L109">                cnt1++;</span>
+<span class="nc" id="L110">            } while (true);</span>
+
+
+            }
+
+        }
+<span class="nc" id="L116">        catch (RecognitionException re) {</span>
+<span class="nc" id="L117">            reportError(re);</span>
+<span class="nc" id="L118">            recover(input,re);</span>
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+<span class="nc" id="L124">        return list;</span>
+    }
+    // $ANTLR end &quot;start&quot;
+
+
+
+    // $ANTLR start &quot;block&quot;
+    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:19:1: block returns [Pair&lt;Boolean, String&gt; result] : ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* );
+    public final Pair&lt;Boolean, String&gt; block() throws RecognitionException {
+<span class="nc" id="L133">        Pair&lt;Boolean, String&gt; result = null;</span>
+
+
+<span class="nc" id="L136">        String example =null;</span>
+
+
+        try {
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:20:2: ( 'unsat' ( . )* | 'sat' example= model | 'unknown' ( . )* )
+<span class="nc" id="L141">            int alt4=3;</span>
+<span class="nc bnc" id="L142" title="All 4 branches missed.">            switch ( input.LA(1) ) {</span>
+            case 22:
+                {
+<span class="nc" id="L145">                alt4=1;</span>
+                }
+<span class="nc" id="L147">                break;</span>
+            case 20:
+                {
+<span class="nc" id="L150">                alt4=2;</span>
+                }
+<span class="nc" id="L152">                break;</span>
+            case 21:
+                {
+<span class="nc" id="L155">                alt4=3;</span>
+                }
+<span class="nc" id="L157">                break;</span>
+            default:
+<span class="nc" id="L159">                NoViableAltException nvae =</span>
+<span class="nc" id="L160">                    new NoViableAltException(&quot;&quot;, 4, 0, input);</span>
+
+<span class="nc" id="L162">                throw nvae;</span>
+
+            }
+
+<span class="nc bnc" id="L166" title="All 4 branches missed.">            switch (alt4) {</span>
+                case 1 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:20:3: 'unsat' ( . )*
+                    {
+<span class="nc" id="L170">                    match(input,22,FOLLOW_22_in_block53); </span>
+
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:21:5: ( . )*
+                    loop2:
+                    do {
+<span class="nc" id="L175">                        int alt2=2;</span>
+<span class="nc bnc" id="L176" title="All 6 branches missed.">                        switch ( input.LA(1) ) {</span>
+                        case EOF:
+                            {
+<span class="nc" id="L179">                            alt2=2;</span>
+                            }
+<span class="nc" id="L181">                            break;</span>
+                        case 22:
+                            {
+<span class="nc" id="L184">                            alt2=2;</span>
+                            }
+<span class="nc" id="L186">                            break;</span>
+                        case 20:
+                            {
+<span class="nc" id="L189">                            alt2=2;</span>
+                            }
+<span class="nc" id="L191">                            break;</span>
+                        case 21:
+                            {
+<span class="nc" id="L194">                            alt2=2;</span>
+                            }
+<span class="nc" id="L196">                            break;</span>
+                        case BOOL:
+                        case IDENT:
+                        case INT:
+                        case TYPE:
+                        case WS:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:
+                            {
+<span class="nc" id="L214">                            alt2=1;</span>
+                            }
+                            break;
+
+                        }
+
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                        switch (alt2) {</span>
+                    	case 1 :
+                    	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:21:5: .
+                    	    {
+<span class="nc" id="L224">                    	    matchAny(input); </span>
+
+                    	    }
+<span class="nc" id="L227">                    	    break;</span>
+
+                    	default :
+                    	    break loop2;
+                        }
+                    } while (true);
+
+
+<span class="nc" id="L235">                    result = new Pair(true,&quot;&quot;);</span>
+
+                    }
+<span class="nc" id="L238">                    break;</span>
+                case 2 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:22:5: 'sat' example= model
+                    {
+<span class="nc" id="L242">                    match(input,20,FOLLOW_20_in_block68); </span>
+
+<span class="nc" id="L244">                    pushFollow(FOLLOW_model_in_block78);</span>
+<span class="nc" id="L245">                    example=model();</span>
+
+<span class="nc" id="L247">                    state._fsp--;</span>
+
+
+<span class="nc" id="L250">                    result = new Pair(false, example);</span>
+
+                    }
+<span class="nc" id="L253">                    break;</span>
+                case 3 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:24:4: 'unknown' ( . )*
+                    {
+<span class="nc" id="L257">                    match(input,21,FOLLOW_21_in_block85); </span>
+
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:25:3: ( . )*
+                    loop3:
+                    do {
+<span class="nc" id="L262">                        int alt3=2;</span>
+<span class="nc bnc" id="L263" title="All 6 branches missed.">                        switch ( input.LA(1) ) {</span>
+                        case EOF:
+                            {
+<span class="nc" id="L266">                            alt3=2;</span>
+                            }
+<span class="nc" id="L268">                            break;</span>
+                        case 22:
+                            {
+<span class="nc" id="L271">                            alt3=2;</span>
+                            }
+<span class="nc" id="L273">                            break;</span>
+                        case 20:
+                            {
+<span class="nc" id="L276">                            alt3=2;</span>
+                            }
+<span class="nc" id="L278">                            break;</span>
+                        case 21:
+                            {
+<span class="nc" id="L281">                            alt3=2;</span>
+                            }
+<span class="nc" id="L283">                            break;</span>
+                        case BOOL:
+                        case IDENT:
+                        case INT:
+                        case TYPE:
+                        case WS:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:
+                            {
+<span class="nc" id="L301">                            alt3=1;</span>
+                            }
+                            break;
+
+                        }
+
+<span class="nc bnc" id="L307" title="All 2 branches missed.">                        switch (alt3) {</span>
+                    	case 1 :
+                    	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:25:3: .
+                    	    {
+<span class="nc" id="L311">                    	    matchAny(input); </span>
+
+                    	    }
+<span class="nc" id="L314">                    	    break;</span>
+
+                    	default :
+                    	    break loop3;
+                        }
+                    } while (true);
+
+
+<span class="nc" id="L322">                    result = new Pair(true,&quot;unknown&quot;);</span>
+
+                    }
+                    break;
+
+<span class="nc" id="L327">            }</span>
+        }
+<span class="nc" id="L329">        catch (RecognitionException re) {</span>
+<span class="nc" id="L330">            reportError(re);</span>
+<span class="nc" id="L331">            recover(input,re);</span>
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+<span class="nc" id="L337">        return result;</span>
+    }
+    // $ANTLR end &quot;block&quot;
+
+
+
+    // $ANTLR start &quot;model&quot;
+    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:28:1: model returns [String example] : '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(' '_' 'as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE ( '(' ass= ite[(String)m.get($id3.text)] ')' )? (v= value )? ')' )* ')' ;
+    public final String model() throws RecognitionException {
+<span class="nc" id="L346">        String example = null;</span>
+
+
+<span class="nc" id="L349">        Token id=null;</span>
+<span class="nc" id="L350">        Token id2=null;</span>
+<span class="nc" id="L351">        Token id3=null;</span>
+<span class="nc" id="L352">        String val =null;</span>
+
+<span class="nc" id="L354">        String ass =null;</span>
+
+<span class="nc" id="L356">        String v =null;</span>
+
+
+<span class="nc" id="L359">        example = &quot;&quot;;</span>
+        try {
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:29:2: ( '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(' '_' 'as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE ( '(' ass= ite[(String)m.get($id3.text)] ')' )? (v= value )? ')' )* ')' )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:29:4: '(model' ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )* ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(' '_' 'as-array' id2= ( IDENT '!' INT ) ')' ')' )* ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE ( '(' ass= ite[(String)m.get($id3.text)] ')' )? (v= value )? ')' )* ')'
+            {
+<span class="nc" id="L364">            match(input,13,FOLLOW_13_in_model111); </span>
+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:30:3: ( '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')' )*
+            loop6:
+            do {
+<span class="nc" id="L369">                int alt6=2;</span>
+<span class="nc" id="L370">                int LA6_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L372" title="All 2 branches missed.">                if ( (LA6_0==12) ) {</span>
+<span class="nc" id="L373">                    int LA6_1 = input.LA(2);</span>
+
+<span class="nc bnc" id="L375" title="All 2 branches missed.">                    if ( (LA6_1==IDENT) ) {</span>
+<span class="nc" id="L376">                        int LA6_3 = input.LA(3);</span>
+
+<span class="nc bnc" id="L378" title="All 2 branches missed.">                        if ( (LA6_3==10) ) {</span>
+<span class="nc" id="L379">                            int LA6_4 = input.LA(4);</span>
+
+<span class="nc bnc" id="L381" title="All 2 branches missed.">                            if ( (LA6_4==14) ) {</span>
+<span class="nc" id="L382">                                int LA6_5 = input.LA(5);</span>
+
+<span class="nc bnc" id="L384" title="All 2 branches missed.">                                if ( (LA6_5==TYPE) ) {</span>
+<span class="nc" id="L385">                                    alt6=1;</span>
+                                }
+
+
+                            }
+<span class="nc bnc" id="L390" title="All 2 branches missed.">                            else if ( (LA6_4==IDENT) ) {</span>
+<span class="nc" id="L391">                                alt6=1;</span>
+                            }
+
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+<span class="nc bnc" id="L404" title="All 2 branches missed.">                switch (alt6) {</span>
+            	case 1 :
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:30:4: '(define-fun' id= IDENT '(' ( IDENT '!' TYPE )* ')' TYPE val= value ')'
+            	    {
+<span class="nc" id="L408">            	    match(input,12,FOLLOW_12_in_model116); </span>
+
+<span class="nc" id="L410">            	    id=(Token)match(input,IDENT,FOLLOW_IDENT_in_model122); </span>
+
+<span class="nc" id="L412">            	    match(input,10,FOLLOW_10_in_model125); </span>
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:30:33: ( IDENT '!' TYPE )*
+            	    loop5:
+            	    do {
+<span class="nc" id="L417">            	        int alt5=2;</span>
+<span class="nc" id="L418">            	        int LA5_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L420" title="All 2 branches missed.">            	        if ( (LA5_0==IDENT) ) {</span>
+<span class="nc" id="L421">            	            alt5=1;</span>
+            	        }
+
+
+<span class="nc bnc" id="L425" title="All 2 branches missed.">            	        switch (alt5) {</span>
+            	    	case 1 :
+            	    	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:30:34: IDENT '!' TYPE
+            	    	    {
+<span class="nc" id="L429">            	    	    match(input,IDENT,FOLLOW_IDENT_in_model127); </span>
+
+<span class="nc" id="L431">            	    	    match(input,9,FOLLOW_9_in_model129); </span>
+
+<span class="nc" id="L433">            	    	    match(input,TYPE,FOLLOW_TYPE_in_model132); </span>
+
+            	    	    }
+<span class="nc" id="L436">            	    	    break;</span>
+
+            	    	default :
+            	    	    break loop5;
+            	        }
+            	    } while (true);
+
+
+<span class="nc" id="L444">            	    match(input,14,FOLLOW_14_in_model135); </span>
+
+<span class="nc" id="L446">            	    match(input,TYPE,FOLLOW_TYPE_in_model137); </span>
+
+<span class="nc" id="L448">            	    pushFollow(FOLLOW_value_in_model143);</span>
+<span class="nc" id="L449">            	    val=value();</span>
+
+<span class="nc" id="L451">            	    state._fsp--;</span>
+
+
+<span class="nc" id="L454">            	    match(input,14,FOLLOW_14_in_model145); </span>
+
+<span class="nc bnc" id="L456" title="All 2 branches missed.">            	    example += (id!=null?id.getText():null) + &quot;=&quot; + val + &quot;\n&quot;;</span>
+
+            	    }
+<span class="nc" id="L459">            	    break;</span>
+
+            	default :
+            	    break loop6;
+                }
+            } while (true);
+
+
+<span class="nc" id="L467">            HashMap m = new HashMap();</span>
+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:33:3: ( '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(' '_' 'as-array' id2= ( IDENT '!' INT ) ')' ')' )*
+            loop8:
+            do {
+<span class="nc" id="L472">                int alt8=2;</span>
+<span class="nc" id="L473">                int LA8_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L475" title="All 2 branches missed.">                if ( (LA8_0==12) ) {</span>
+<span class="nc" id="L476">                    int LA8_1 = input.LA(2);</span>
+
+<span class="nc bnc" id="L478" title="All 2 branches missed.">                    if ( (LA8_1==IDENT) ) {</span>
+<span class="nc" id="L479">                        int LA8_3 = input.LA(3);</span>
+
+<span class="nc bnc" id="L481" title="All 2 branches missed.">                        if ( (LA8_3==10) ) {</span>
+<span class="nc" id="L482">                            alt8=1;</span>
+                        }
+
+
+                    }
+
+
+                }
+
+
+<span class="nc bnc" id="L492" title="All 2 branches missed.">                switch (alt8) {</span>
+            	case 1 :
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:33:4: '(define-fun' id= IDENT '(' ')' '(Array' ( TYPE )+ TYPE ')' '(' '_' 'as-array' id2= ( IDENT '!' INT ) ')' ')'
+            	    {
+<span class="nc" id="L496">            	    match(input,12,FOLLOW_12_in_model170); </span>
+
+<span class="nc" id="L498">            	    id=(Token)match(input,IDENT,FOLLOW_IDENT_in_model177); </span>
+
+<span class="nc" id="L500">            	    match(input,10,FOLLOW_10_in_model179); </span>
+
+<span class="nc" id="L502">            	    match(input,14,FOLLOW_14_in_model181); </span>
+
+<span class="nc bnc" id="L504" title="All 2 branches missed.">            	    example = (id!=null?id.getText():null);</span>
+
+<span class="nc" id="L506">            	    match(input,11,FOLLOW_11_in_model195); </span>
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:34:19: ( TYPE )+
+<span class="nc" id="L509">            	    int cnt7=0;</span>
+            	    loop7:
+            	    do {
+<span class="nc" id="L512">            	        int alt7=2;</span>
+<span class="nc" id="L513">            	        int LA7_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L515" title="All 2 branches missed.">            	        if ( (LA7_0==TYPE) ) {</span>
+<span class="nc" id="L516">            	            int LA7_1 = input.LA(2);</span>
+
+<span class="nc bnc" id="L518" title="All 2 branches missed.">            	            if ( (LA7_1==TYPE) ) {</span>
+<span class="nc" id="L519">            	                alt7=1;</span>
+            	            }
+
+
+            	        }
+
+
+<span class="nc bnc" id="L526" title="All 2 branches missed.">            	        switch (alt7) {</span>
+            	    	case 1 :
+            	    	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:34:20: TYPE
+            	    	    {
+<span class="nc" id="L530">            	    	    match(input,TYPE,FOLLOW_TYPE_in_model197); </span>
+
+<span class="nc" id="L532">            	    	    example += &quot;[ ]&quot;;</span>
+
+            	    	    }
+<span class="nc" id="L535">            	    	    break;</span>
+
+            	    	default :
+<span class="nc bnc" id="L538" title="All 2 branches missed.">            	    	    if ( cnt7 &gt;= 1 ) break loop7;</span>
+<span class="nc" id="L539">            	                EarlyExitException eee =</span>
+<span class="nc" id="L540">            	                    new EarlyExitException(7, input);</span>
+<span class="nc" id="L541">            	                throw eee;</span>
+            	        }
+<span class="nc" id="L543">            	        cnt7++;</span>
+<span class="nc" id="L544">            	    } while (true);</span>
+
+
+<span class="nc" id="L547">            	    match(input,TYPE,FOLLOW_TYPE_in_model203); </span>
+
+<span class="nc" id="L549">            	    match(input,14,FOLLOW_14_in_model206); </span>
+
+<span class="nc" id="L551">            	    match(input,10,FOLLOW_10_in_model210); </span>
+
+<span class="nc" id="L553">            	    match(input,16,FOLLOW_16_in_model212); </span>
+
+<span class="nc" id="L555">            	    match(input,18,FOLLOW_18_in_model214); </span>
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:35:29: ( IDENT '!' INT )
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:35:30: IDENT '!' INT
+            	    {
+<span class="nc" id="L560">            	    match(input,IDENT,FOLLOW_IDENT_in_model222); </span>
+
+<span class="nc" id="L562">            	    match(input,9,FOLLOW_9_in_model224); </span>
+
+<span class="nc" id="L564">            	    match(input,INT,FOLLOW_INT_in_model226); </span>
+
+            	    }
+
+
+<span class="nc" id="L569">            	    match(input,14,FOLLOW_14_in_model228); </span>
+
+<span class="nc" id="L571">            	    match(input,14,FOLLOW_14_in_model229); </span>
+
+<span class="nc bnc" id="L573" title="All 4 branches missed.">            	    m.put((id2!=null?id2.getText():null),(id!=null?id.getText():null));</span>
+
+<span class="nc" id="L575">            	    example += &quot;\n&quot;;</span>
+
+            	    }
+<span class="nc" id="L578">            	    break;</span>
+
+            	default :
+            	    break loop8;
+                }
+            } while (true);
+
+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:36:3: ( '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE ( '(' ass= ite[(String)m.get($id3.text)] ')' )? (v= value )? ')' )*
+            loop12:
+            do {
+<span class="nc" id="L589">                int alt12=2;</span>
+<span class="nc" id="L590">                int LA12_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L592" title="All 2 branches missed.">                if ( (LA12_0==12) ) {</span>
+<span class="nc" id="L593">                    alt12=1;</span>
+                }
+
+
+<span class="nc bnc" id="L597" title="All 2 branches missed.">                switch (alt12) {</span>
+            	case 1 :
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:36:4: '(define-fun' id3= ( IDENT '!' INT ) '(' ( '(' IDENT '!' INT TYPE ')' )+ ')' TYPE ( '(' ass= ite[(String)m.get($id3.text)] ')' )? (v= value )? ')'
+            	    {
+<span class="nc" id="L601">            	    match(input,12,FOLLOW_12_in_model239); </span>
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:36:24: ( IDENT '!' INT )
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:36:25: IDENT '!' INT
+            	    {
+<span class="nc" id="L606">            	    match(input,IDENT,FOLLOW_IDENT_in_model246); </span>
+
+<span class="nc" id="L608">            	    match(input,9,FOLLOW_9_in_model248); </span>
+
+<span class="nc" id="L610">            	    match(input,INT,FOLLOW_INT_in_model250); </span>
+
+            	    }
+
+
+<span class="nc" id="L615">            	    match(input,10,FOLLOW_10_in_model253); </span>
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:36:43: ( '(' IDENT '!' INT TYPE ')' )+
+<span class="nc" id="L618">            	    int cnt9=0;</span>
+            	    loop9:
+            	    do {
+<span class="nc" id="L621">            	        int alt9=2;</span>
+<span class="nc" id="L622">            	        int LA9_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L624" title="All 2 branches missed.">            	        if ( (LA9_0==10) ) {</span>
+<span class="nc" id="L625">            	            alt9=1;</span>
+            	        }
+
+
+<span class="nc bnc" id="L629" title="All 2 branches missed.">            	        switch (alt9) {</span>
+            	    	case 1 :
+            	    	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:36:44: '(' IDENT '!' INT TYPE ')'
+            	    	    {
+<span class="nc" id="L633">            	    	    match(input,10,FOLLOW_10_in_model255); </span>
+
+<span class="nc" id="L635">            	    	    match(input,IDENT,FOLLOW_IDENT_in_model256); </span>
+
+<span class="nc" id="L637">            	    	    match(input,9,FOLLOW_9_in_model258); </span>
+
+<span class="nc" id="L639">            	    	    match(input,INT,FOLLOW_INT_in_model260); </span>
+
+<span class="nc" id="L641">            	    	    match(input,TYPE,FOLLOW_TYPE_in_model262); </span>
+
+<span class="nc" id="L643">            	    	    match(input,14,FOLLOW_14_in_model263); </span>
+
+            	    	    }
+<span class="nc" id="L646">            	    	    break;</span>
+
+            	    	default :
+<span class="nc bnc" id="L649" title="All 2 branches missed.">            	    	    if ( cnt9 &gt;= 1 ) break loop9;</span>
+<span class="nc" id="L650">            	                EarlyExitException eee =</span>
+<span class="nc" id="L651">            	                    new EarlyExitException(9, input);</span>
+<span class="nc" id="L652">            	                throw eee;</span>
+            	        }
+<span class="nc" id="L654">            	        cnt9++;</span>
+<span class="nc" id="L655">            	    } while (true);</span>
+
+
+<span class="nc" id="L658">            	    match(input,14,FOLLOW_14_in_model266); </span>
+
+<span class="nc" id="L660">            	    match(input,TYPE,FOLLOW_TYPE_in_model268); </span>
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:37:8: ( '(' ass= ite[(String)m.get($id3.text)] ')' )?
+<span class="nc" id="L663">            	    int alt10=2;</span>
+<span class="nc" id="L664">            	    int LA10_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L666" title="All 2 branches missed.">            	    if ( (LA10_0==10) ) {</span>
+<span class="nc" id="L667">            	        alt10=1;</span>
+            	    }
+<span class="nc bnc" id="L669" title="All 2 branches missed.">            	    switch (alt10) {</span>
+            	        case 1 :
+            	            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:37:10: '(' ass= ite[(String)m.get($id3.text)] ')'
+            	            {
+<span class="nc" id="L673">            	            match(input,10,FOLLOW_10_in_model279); </span>
+
+<span class="nc" id="L675">            	            pushFollow(FOLLOW_ite_in_model284);</span>
+<span class="nc bnc" id="L676" title="All 2 branches missed.">            	            ass=ite((String)m.get((id3!=null?id3.getText():null)));</span>
+
+<span class="nc" id="L678">            	            state._fsp--;</span>
+
+
+<span class="nc" id="L681">            	            example += ass;</span>
+
+<span class="nc" id="L683">            	            match(input,14,FOLLOW_14_in_model288); </span>
+
+            	            }
+            	            break;
+
+            	    }
+
+
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:37:84: (v= value )?
+<span class="nc" id="L692">            	    int alt11=2;</span>
+<span class="nc" id="L693">            	    int LA11_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L695" title="All 4 branches missed.">            	    if ( (LA11_0==BOOL||LA11_0==INT) ) {</span>
+<span class="nc" id="L696">            	        alt11=1;</span>
+            	    }
+<span class="nc bnc" id="L698" title="All 2 branches missed.">            	    switch (alt11) {</span>
+            	        case 1 :
+            	            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:37:85: v= value
+            	            {
+<span class="nc" id="L702">            	            pushFollow(FOLLOW_value_in_model296);</span>
+<span class="nc" id="L703">            	            v=value();</span>
+
+<span class="nc" id="L705">            	            state._fsp--;</span>
+
+
+<span class="nc bnc" id="L708" title="All 2 branches missed.">            	            example +=(String)m.get((id3!=null?id3.getText():null)) + &quot;=&quot; + v;</span>
+
+            	            }
+            	            break;
+
+            	    }
+
+
+<span class="nc" id="L716">            	    match(input,14,FOLLOW_14_in_model300); </span>
+
+            	    }
+<span class="nc" id="L719">            	    break;</span>
+
+            	default :
+            	    break loop12;
+                }
+            } while (true);
+
+
+<span class="nc" id="L727">            match(input,14,FOLLOW_14_in_model306); </span>
+
+            }
+
+        }
+<span class="nc" id="L732">        catch (RecognitionException re) {</span>
+<span class="nc" id="L733">            reportError(re);</span>
+<span class="nc" id="L734">            recover(input,re);</span>
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+<span class="nc" id="L740">        return example;</span>
+    }
+    // $ANTLR end &quot;model&quot;
+
+
+
+    // $ANTLR start &quot;ite&quot;
+    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:41:1: ite[String id] returns [String assignment] : ( 'ite' '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | 'ite' '(' 'and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) );
+    public final String ite(String id) throws RecognitionException {
+<span class="nc" id="L749">        String assignment = null;</span>
+
+
+<span class="nc" id="L752">        Token i=null;</span>
+<span class="nc" id="L753">        String val =null;</span>
+
+<span class="nc" id="L755">        String as =null;</span>
+
+
+<span class="nc" id="L758">        assignment = id;</span>
+        try {
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:42:2: ( 'ite' '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' ) | 'ite' '(' 'and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' ) )
+<span class="nc" id="L761">            int alt16=2;</span>
+<span class="nc" id="L762">            int LA16_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L764" title="All 2 branches missed.">            if ( (LA16_0==19) ) {</span>
+<span class="nc" id="L765">                int LA16_1 = input.LA(2);</span>
+
+<span class="nc bnc" id="L767" title="All 2 branches missed.">                if ( (LA16_1==10) ) {</span>
+<span class="nc" id="L768">                    int LA16_2 = input.LA(3);</span>
+
+<span class="nc bnc" id="L770" title="All 2 branches missed.">                    if ( (LA16_2==15) ) {</span>
+<span class="nc" id="L771">                        alt16=1;</span>
+                    }
+<span class="nc bnc" id="L773" title="All 2 branches missed.">                    else if ( (LA16_2==17) ) {</span>
+<span class="nc" id="L774">                        alt16=2;</span>
+                    }
+                    else {
+<span class="nc" id="L777">                        NoViableAltException nvae =</span>
+<span class="nc" id="L778">                            new NoViableAltException(&quot;&quot;, 16, 2, input);</span>
+
+<span class="nc" id="L780">                        throw nvae;</span>
+
+                    }
+                }
+                else {
+<span class="nc" id="L785">                    NoViableAltException nvae =</span>
+<span class="nc" id="L786">                        new NoViableAltException(&quot;&quot;, 16, 1, input);</span>
+
+<span class="nc" id="L788">                    throw nvae;</span>
+
+                }
+            }
+            else {
+<span class="nc" id="L793">                NoViableAltException nvae =</span>
+<span class="nc" id="L794">                    new NoViableAltException(&quot;&quot;, 16, 0, input);</span>
+
+<span class="nc" id="L796">                throw nvae;</span>
+
+            }
+<span class="nc bnc" id="L799" title="All 3 branches missed.">            switch (alt16) {</span>
+                case 1 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:42:4: 'ite' '(' '=' IDENT '!' INT i= INT ')' val= value ( value | '(' as= ite[id] ')' )
+                    {
+<span class="nc" id="L803">                    match(input,19,FOLLOW_19_in_ite326); </span>
+
+<span class="nc" id="L805">                    match(input,10,FOLLOW_10_in_ite327); </span>
+
+<span class="nc" id="L807">                    match(input,15,FOLLOW_15_in_ite328); </span>
+
+<span class="nc" id="L809">                    match(input,IDENT,FOLLOW_IDENT_in_ite330); </span>
+
+<span class="nc" id="L811">                    match(input,9,FOLLOW_9_in_ite332); </span>
+
+<span class="nc" id="L813">                    match(input,INT,FOLLOW_INT_in_ite334); </span>
+
+<span class="nc" id="L815">                    i=(Token)match(input,INT,FOLLOW_INT_in_ite340); </span>
+
+<span class="nc" id="L817">                    match(input,14,FOLLOW_14_in_ite341); </span>
+
+<span class="nc" id="L819">                    pushFollow(FOLLOW_value_in_ite348);</span>
+<span class="nc" id="L820">                    val=value();</span>
+
+<span class="nc" id="L822">                    state._fsp--;</span>
+
+
+<span class="nc bnc" id="L825" title="All 2 branches missed.">                    assignment = &quot;[&quot; + (i!=null?i.getText():null) + &quot;]&quot; + &quot;=&quot; + val + &quot;\n&quot;;</span>
+
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:44:9: ( value | '(' as= ite[id] ')' )
+<span class="nc" id="L828">                    int alt13=2;</span>
+<span class="nc" id="L829">                    int LA13_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L831" title="All 4 branches missed.">                    if ( (LA13_0==BOOL||LA13_0==INT) ) {</span>
+<span class="nc" id="L832">                        alt13=1;</span>
+                    }
+<span class="nc bnc" id="L834" title="All 2 branches missed.">                    else if ( (LA13_0==10) ) {</span>
+<span class="nc" id="L835">                        alt13=2;</span>
+                    }
+                    else {
+<span class="nc" id="L838">                        NoViableAltException nvae =</span>
+<span class="nc" id="L839">                            new NoViableAltException(&quot;&quot;, 13, 0, input);</span>
+
+<span class="nc" id="L841">                        throw nvae;</span>
+
+                    }
+<span class="nc bnc" id="L844" title="All 3 branches missed.">                    switch (alt13) {</span>
+                        case 1 :
+                            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:44:10: value
+                            {
+<span class="nc" id="L848">                            pushFollow(FOLLOW_value_in_ite369);</span>
+<span class="nc" id="L849">                            value();</span>
+
+<span class="nc" id="L851">                            state._fsp--;</span>
+
+
+                            }
+<span class="nc" id="L855">                            break;</span>
+                        case 2 :
+                            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:44:18: '(' as= ite[id] ')'
+                            {
+<span class="nc" id="L859">                            match(input,10,FOLLOW_10_in_ite373); </span>
+
+<span class="nc" id="L861">                            pushFollow(FOLLOW_ite_in_ite376);</span>
+<span class="nc" id="L862">                            as=ite(id);</span>
+
+<span class="nc" id="L864">                            state._fsp--;</span>
+
+
+<span class="nc" id="L867">                            match(input,14,FOLLOW_14_in_ite378); </span>
+
+<span class="nc" id="L869">                            assignment += as;</span>
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+<span class="nc" id="L878">                    break;</span>
+                case 2 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:45:4: 'ite' '(' 'and' ( '(' '=' IDENT '!' INT i= INT ')' )+ ')' val= value ( value | '(' as= ite[id] ')' )
+                    {
+<span class="nc" id="L882">                    match(input,19,FOLLOW_19_in_ite385); </span>
+
+<span class="nc" id="L884">                    match(input,10,FOLLOW_10_in_ite386); </span>
+
+<span class="nc" id="L886">                    match(input,17,FOLLOW_17_in_ite387); </span>
+
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:45:17: ( '(' '=' IDENT '!' INT i= INT ')' )+
+<span class="nc" id="L889">                    int cnt14=0;</span>
+                    loop14:
+                    do {
+<span class="nc" id="L892">                        int alt14=2;</span>
+<span class="nc" id="L893">                        int LA14_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L895" title="All 2 branches missed.">                        if ( (LA14_0==10) ) {</span>
+<span class="nc" id="L896">                            alt14=1;</span>
+                        }
+
+
+<span class="nc bnc" id="L900" title="All 2 branches missed.">                        switch (alt14) {</span>
+                    	case 1 :
+                    	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:45:18: '(' '=' IDENT '!' INT i= INT ')'
+                    	    {
+<span class="nc" id="L904">                    	    match(input,10,FOLLOW_10_in_ite389); </span>
+
+<span class="nc" id="L906">                    	    match(input,15,FOLLOW_15_in_ite390); </span>
+
+<span class="nc" id="L908">                    	    match(input,IDENT,FOLLOW_IDENT_in_ite392); </span>
+
+<span class="nc" id="L910">                    	    match(input,9,FOLLOW_9_in_ite394); </span>
+
+<span class="nc" id="L912">                    	    match(input,INT,FOLLOW_INT_in_ite396); </span>
+
+<span class="nc" id="L914">                    	    i=(Token)match(input,INT,FOLLOW_INT_in_ite402); </span>
+
+<span class="nc" id="L916">                    	    match(input,14,FOLLOW_14_in_ite403); </span>
+
+<span class="nc bnc" id="L918" title="All 2 branches missed.">                    	    assignment += &quot;[&quot;+(i!=null?i.getText():null)+&quot;]&quot;;</span>
+
+                    	    }
+<span class="nc" id="L921">                    	    break;</span>
+
+                    	default :
+<span class="nc bnc" id="L924" title="All 2 branches missed.">                    	    if ( cnt14 &gt;= 1 ) break loop14;</span>
+<span class="nc" id="L925">                                EarlyExitException eee =</span>
+<span class="nc" id="L926">                                    new EarlyExitException(14, input);</span>
+<span class="nc" id="L927">                                throw eee;</span>
+                        }
+<span class="nc" id="L929">                        cnt14++;</span>
+<span class="nc" id="L930">                    } while (true);</span>
+
+
+<span class="nc" id="L933">                    match(input,14,FOLLOW_14_in_ite407); </span>
+
+<span class="nc" id="L935">                    pushFollow(FOLLOW_value_in_ite419);</span>
+<span class="nc" id="L936">                    val=value();</span>
+
+<span class="nc" id="L938">                    state._fsp--;</span>
+
+
+<span class="nc" id="L941">                    assignment += &quot;=&quot; + val + &quot;\n&quot;;</span>
+
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:46:62: ( value | '(' as= ite[id] ')' )
+<span class="nc" id="L944">                    int alt15=2;</span>
+<span class="nc" id="L945">                    int LA15_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L947" title="All 4 branches missed.">                    if ( (LA15_0==BOOL||LA15_0==INT) ) {</span>
+<span class="nc" id="L948">                        alt15=1;</span>
+                    }
+<span class="nc bnc" id="L950" title="All 2 branches missed.">                    else if ( (LA15_0==10) ) {</span>
+<span class="nc" id="L951">                        alt15=2;</span>
+                    }
+                    else {
+<span class="nc" id="L954">                        NoViableAltException nvae =</span>
+<span class="nc" id="L955">                            new NoViableAltException(&quot;&quot;, 15, 0, input);</span>
+
+<span class="nc" id="L957">                        throw nvae;</span>
+
+                    }
+<span class="nc bnc" id="L960" title="All 3 branches missed.">                    switch (alt15) {</span>
+                        case 1 :
+                            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:46:63: value
+                            {
+<span class="nc" id="L964">                            pushFollow(FOLLOW_value_in_ite423);</span>
+<span class="nc" id="L965">                            value();</span>
+
+<span class="nc" id="L967">                            state._fsp--;</span>
+
+
+                            }
+<span class="nc" id="L971">                            break;</span>
+                        case 2 :
+                            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:46:71: '(' as= ite[id] ')'
+                            {
+<span class="nc" id="L975">                            match(input,10,FOLLOW_10_in_ite427); </span>
+
+<span class="nc" id="L977">                            pushFollow(FOLLOW_ite_in_ite430);</span>
+<span class="nc" id="L978">                            as=ite(id);</span>
+
+<span class="nc" id="L980">                            state._fsp--;</span>
+
+
+<span class="nc" id="L983">                            match(input,14,FOLLOW_14_in_ite432); </span>
+
+<span class="nc" id="L985">                            assignment += as;</span>
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+                    break;
+
+<span class="nc" id="L996">            }</span>
+        }
+<span class="nc" id="L998">        catch (RecognitionException re) {</span>
+<span class="nc" id="L999">            reportError(re);</span>
+<span class="nc" id="L1000">            recover(input,re);</span>
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+<span class="nc" id="L1006">        return assignment;</span>
+    }
+    // $ANTLR end &quot;ite&quot;
+
+
+
+    // $ANTLR start &quot;value&quot;
+    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:49:1: value returns [String content] : ( INT | BOOL );
+    public final String value() throws RecognitionException {
+<span class="nc" id="L1015">        String content = null;</span>
+
+
+<span class="nc" id="L1018">        Token INT1=null;</span>
+<span class="nc" id="L1019">        Token BOOL2=null;</span>
+
+        try {
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:50:2: ( INT | BOOL )
+<span class="nc" id="L1023">            int alt17=2;</span>
+<span class="nc" id="L1024">            int LA17_0 = input.LA(1);</span>
+
+<span class="nc bnc" id="L1026" title="All 2 branches missed.">            if ( (LA17_0==INT) ) {</span>
+<span class="nc" id="L1027">                alt17=1;</span>
+            }
+<span class="nc bnc" id="L1029" title="All 2 branches missed.">            else if ( (LA17_0==BOOL) ) {</span>
+<span class="nc" id="L1030">                alt17=2;</span>
+            }
+            else {
+<span class="nc" id="L1033">                NoViableAltException nvae =</span>
+<span class="nc" id="L1034">                    new NoViableAltException(&quot;&quot;, 17, 0, input);</span>
+
+<span class="nc" id="L1036">                throw nvae;</span>
+
+            }
+<span class="nc bnc" id="L1039" title="All 3 branches missed.">            switch (alt17) {</span>
+                case 1 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:50:4: INT
+                    {
+<span class="nc" id="L1043">                    INT1=(Token)match(input,INT,FOLLOW_INT_in_value449); </span>
+
+<span class="nc bnc" id="L1045" title="All 2 branches missed.">                    content =(INT1!=null?INT1.getText():null);</span>
+
+                    }
+<span class="nc" id="L1048">                    break;</span>
+                case 2 :
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\z3.g:51:4: BOOL
+                    {
+<span class="nc" id="L1052">                    BOOL2=(Token)match(input,BOOL,FOLLOW_BOOL_in_value456); </span>
+
+<span class="nc bnc" id="L1054" title="All 2 branches missed.">                    content = (BOOL2!=null?BOOL2.getText():null);</span>
+
+                    }
+                    break;
+
+<span class="nc" id="L1059">            }</span>
+        }
+<span class="nc" id="L1061">        catch (RecognitionException re) {</span>
+<span class="nc" id="L1062">            reportError(re);</span>
+<span class="nc" id="L1063">            recover(input,re);</span>
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+<span class="nc" id="L1069">        return content;</span>
+    }
+    // $ANTLR end &quot;value&quot;
+
+    // Delegated rules
+
+
+ 
+
+<span class="nc" id="L1078">    public static final BitSet FOLLOW_block_in_start37 = new BitSet(new long[]{0x0000000000700002L});</span>
+<span class="nc" id="L1079">    public static final BitSet FOLLOW_22_in_block53 = new BitSet(new long[]{0x00000000007FFFF2L});</span>
+<span class="nc" id="L1080">    public static final BitSet FOLLOW_20_in_block68 = new BitSet(new long[]{0x0000000000002000L});</span>
+<span class="nc" id="L1081">    public static final BitSet FOLLOW_model_in_block78 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1082">    public static final BitSet FOLLOW_21_in_block85 = new BitSet(new long[]{0x00000000007FFFF2L});</span>
+<span class="nc" id="L1083">    public static final BitSet FOLLOW_13_in_model111 = new BitSet(new long[]{0x0000000000005000L});</span>
+<span class="nc" id="L1084">    public static final BitSet FOLLOW_12_in_model116 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1085">    public static final BitSet FOLLOW_IDENT_in_model122 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1086">    public static final BitSet FOLLOW_10_in_model125 = new BitSet(new long[]{0x0000000000004020L});</span>
+<span class="nc" id="L1087">    public static final BitSet FOLLOW_IDENT_in_model127 = new BitSet(new long[]{0x0000000000000200L});</span>
+<span class="nc" id="L1088">    public static final BitSet FOLLOW_9_in_model129 = new BitSet(new long[]{0x0000000000000080L});</span>
+<span class="nc" id="L1089">    public static final BitSet FOLLOW_TYPE_in_model132 = new BitSet(new long[]{0x0000000000004020L});</span>
+<span class="nc" id="L1090">    public static final BitSet FOLLOW_14_in_model135 = new BitSet(new long[]{0x0000000000000080L});</span>
+<span class="nc" id="L1091">    public static final BitSet FOLLOW_TYPE_in_model137 = new BitSet(new long[]{0x0000000000000050L});</span>
+<span class="nc" id="L1092">    public static final BitSet FOLLOW_value_in_model143 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1093">    public static final BitSet FOLLOW_14_in_model145 = new BitSet(new long[]{0x0000000000005000L});</span>
+<span class="nc" id="L1094">    public static final BitSet FOLLOW_12_in_model170 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1095">    public static final BitSet FOLLOW_IDENT_in_model177 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1096">    public static final BitSet FOLLOW_10_in_model179 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1097">    public static final BitSet FOLLOW_14_in_model181 = new BitSet(new long[]{0x0000000000000800L});</span>
+<span class="nc" id="L1098">    public static final BitSet FOLLOW_11_in_model195 = new BitSet(new long[]{0x0000000000000080L});</span>
+<span class="nc" id="L1099">    public static final BitSet FOLLOW_TYPE_in_model197 = new BitSet(new long[]{0x0000000000000080L});</span>
+<span class="nc" id="L1100">    public static final BitSet FOLLOW_TYPE_in_model203 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1101">    public static final BitSet FOLLOW_14_in_model206 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1102">    public static final BitSet FOLLOW_10_in_model210 = new BitSet(new long[]{0x0000000000010000L});</span>
+<span class="nc" id="L1103">    public static final BitSet FOLLOW_16_in_model212 = new BitSet(new long[]{0x0000000000040000L});</span>
+<span class="nc" id="L1104">    public static final BitSet FOLLOW_18_in_model214 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1105">    public static final BitSet FOLLOW_IDENT_in_model222 = new BitSet(new long[]{0x0000000000000200L});</span>
+<span class="nc" id="L1106">    public static final BitSet FOLLOW_9_in_model224 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1107">    public static final BitSet FOLLOW_INT_in_model226 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1108">    public static final BitSet FOLLOW_14_in_model228 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1109">    public static final BitSet FOLLOW_14_in_model229 = new BitSet(new long[]{0x0000000000005000L});</span>
+<span class="nc" id="L1110">    public static final BitSet FOLLOW_12_in_model239 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1111">    public static final BitSet FOLLOW_IDENT_in_model246 = new BitSet(new long[]{0x0000000000000200L});</span>
+<span class="nc" id="L1112">    public static final BitSet FOLLOW_9_in_model248 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1113">    public static final BitSet FOLLOW_INT_in_model250 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1114">    public static final BitSet FOLLOW_10_in_model253 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1115">    public static final BitSet FOLLOW_10_in_model255 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1116">    public static final BitSet FOLLOW_IDENT_in_model256 = new BitSet(new long[]{0x0000000000000200L});</span>
+<span class="nc" id="L1117">    public static final BitSet FOLLOW_9_in_model258 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1118">    public static final BitSet FOLLOW_INT_in_model260 = new BitSet(new long[]{0x0000000000000080L});</span>
+<span class="nc" id="L1119">    public static final BitSet FOLLOW_TYPE_in_model262 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1120">    public static final BitSet FOLLOW_14_in_model263 = new BitSet(new long[]{0x0000000000004400L});</span>
+<span class="nc" id="L1121">    public static final BitSet FOLLOW_14_in_model266 = new BitSet(new long[]{0x0000000000000080L});</span>
+<span class="nc" id="L1122">    public static final BitSet FOLLOW_TYPE_in_model268 = new BitSet(new long[]{0x0000000000004450L});</span>
+<span class="nc" id="L1123">    public static final BitSet FOLLOW_10_in_model279 = new BitSet(new long[]{0x0000000000080000L});</span>
+<span class="nc" id="L1124">    public static final BitSet FOLLOW_ite_in_model284 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1125">    public static final BitSet FOLLOW_14_in_model288 = new BitSet(new long[]{0x0000000000004050L});</span>
+<span class="nc" id="L1126">    public static final BitSet FOLLOW_value_in_model296 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1127">    public static final BitSet FOLLOW_14_in_model300 = new BitSet(new long[]{0x0000000000005000L});</span>
+<span class="nc" id="L1128">    public static final BitSet FOLLOW_14_in_model306 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1129">    public static final BitSet FOLLOW_19_in_ite326 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1130">    public static final BitSet FOLLOW_10_in_ite327 = new BitSet(new long[]{0x0000000000008000L});</span>
+<span class="nc" id="L1131">    public static final BitSet FOLLOW_15_in_ite328 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1132">    public static final BitSet FOLLOW_IDENT_in_ite330 = new BitSet(new long[]{0x0000000000000200L});</span>
+<span class="nc" id="L1133">    public static final BitSet FOLLOW_9_in_ite332 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1134">    public static final BitSet FOLLOW_INT_in_ite334 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1135">    public static final BitSet FOLLOW_INT_in_ite340 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1136">    public static final BitSet FOLLOW_14_in_ite341 = new BitSet(new long[]{0x0000000000000050L});</span>
+<span class="nc" id="L1137">    public static final BitSet FOLLOW_value_in_ite348 = new BitSet(new long[]{0x0000000000000450L});</span>
+<span class="nc" id="L1138">    public static final BitSet FOLLOW_value_in_ite369 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1139">    public static final BitSet FOLLOW_10_in_ite373 = new BitSet(new long[]{0x0000000000080000L});</span>
+<span class="nc" id="L1140">    public static final BitSet FOLLOW_ite_in_ite376 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1141">    public static final BitSet FOLLOW_14_in_ite378 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1142">    public static final BitSet FOLLOW_19_in_ite385 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1143">    public static final BitSet FOLLOW_10_in_ite386 = new BitSet(new long[]{0x0000000000020000L});</span>
+<span class="nc" id="L1144">    public static final BitSet FOLLOW_17_in_ite387 = new BitSet(new long[]{0x0000000000000400L});</span>
+<span class="nc" id="L1145">    public static final BitSet FOLLOW_10_in_ite389 = new BitSet(new long[]{0x0000000000008000L});</span>
+<span class="nc" id="L1146">    public static final BitSet FOLLOW_15_in_ite390 = new BitSet(new long[]{0x0000000000000020L});</span>
+<span class="nc" id="L1147">    public static final BitSet FOLLOW_IDENT_in_ite392 = new BitSet(new long[]{0x0000000000000200L});</span>
+<span class="nc" id="L1148">    public static final BitSet FOLLOW_9_in_ite394 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1149">    public static final BitSet FOLLOW_INT_in_ite396 = new BitSet(new long[]{0x0000000000000040L});</span>
+<span class="nc" id="L1150">    public static final BitSet FOLLOW_INT_in_ite402 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1151">    public static final BitSet FOLLOW_14_in_ite403 = new BitSet(new long[]{0x0000000000004400L});</span>
+<span class="nc" id="L1152">    public static final BitSet FOLLOW_14_in_ite407 = new BitSet(new long[]{0x0000000000000050L});</span>
+<span class="nc" id="L1153">    public static final BitSet FOLLOW_value_in_ite419 = new BitSet(new long[]{0x0000000000000450L});</span>
+<span class="nc" id="L1154">    public static final BitSet FOLLOW_value_in_ite423 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1155">    public static final BitSet FOLLOW_10_in_ite427 = new BitSet(new long[]{0x0000000000080000L});</span>
+<span class="nc" id="L1156">    public static final BitSet FOLLOW_ite_in_ite430 = new BitSet(new long[]{0x0000000000004000L});</span>
+<span class="nc" id="L1157">    public static final BitSet FOLLOW_14_in_ite432 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1158">    public static final BitSet FOLLOW_INT_in_value449 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L1159">    public static final BitSet FOLLOW_BOOL_in_value456 = new BitSet(new long[]{0x0000000000000002L});</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

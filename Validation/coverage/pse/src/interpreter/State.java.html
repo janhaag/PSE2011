@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>State.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">State.java</span></div><h1>State.java</h1><pre class="source lang-java linenums">package interpreter;
+
+import ast.*;
+
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
+
+/**
+ * This class encapsulates a state during program execution.
+ * It contains the current scope
+ * (which saves the variables and all other scopes)
+ * and the reference to the statement that will be executed.
+ */
+public class State {
+    /**
+     * current scope during program execution
+     */
+    private Scope currentScope;
+    /**
+     * statement that will be executed next
+     */
+    private Statement currentStatement;
+
+    /**
+     * Constructor.
+     * It initializes the program state.
+     *
+     * @param ast program that is executed
+     */
+<span class="fc" id="L31">    public State(ASTRoot ast) {</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (!(ast instanceof Program)) {</span>
+<span class="nc" id="L33">            throw new IllegalArgumentException(&quot;AST must be a program!&quot;);</span>
+        }
+<span class="fc" id="L35">        Function main = ((Program) ast).getMainFunction();</span>
+<span class="fc" id="L36">        currentScope = new Scope(null, main.getFunctionBlock(), main);</span>
+<span class="fc" id="L37">        adjustStatement();</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Destroys the currently most inner scope.
+     */
+    public void destroyScope() {
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (currentScope.getParent() != null) {</span>
+<span class="fc" id="L45">            currentScope = currentScope.getParent();</span>
+<span class="fc" id="L46">            currentStatement = currentScope.getCurrentStatement();</span>
+        }
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Creates a new scope with the given parameters. The old scope
+     * will become parent scope of this new one.
+     * @param statementBlock statement block belonging to this scope
+     * @param currentFunction function associated with this scope,
+     *                        if there is any
+     */
+    public void createScope(StatementBlock statementBlock,
+                            Function currentFunction) {
+<span class="fc" id="L59">        currentScope = new Scope(currentScope, statementBlock, currentFunction);</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Changes the value of a variable.
+     * @param name name of the variable that should be changed
+     * @param value new value (as String)
+     */
+    public void setVar(String name, String value) {
+<span class="fc" id="L68">        currentScope.setVar(name, value);</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Changes the value of an array element.
+     * @param name name of the array that contains the element
+     * @param value new value (as String)
+     * @param indexes position of this element
+     */
+    public void setArray(String name, String value,
+                         List&lt;Integer&gt; indexes) {
+<span class="fc" id="L79">        currentScope.setArray(name, value, indexes);</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Creates a new variable with the given values.
+     * @param name name of the new variable
+     * @param value initial value (as String)
+     * @param typeOfValue type of the variable
+     */
+    public void createVar(String name, String value, Type typeOfValue) {
+<span class="fc" id="L89">        currentScope.createVar(name, value, typeOfValue);</span>
+<span class="fc" id="L90">    }</span>
+
+    /**
+     * Creates a new array and initializes all its elements to the
+     * default value that is specified within the base type of the array.
+     * @param name name of the new array
+     * @param typeOfValue type of the new array
+     * @param lengths length of the different array dimensions
+     */
+    public void createArray(String name, Type typeOfValue, int[] lengths) {
+<span class="fc" id="L100">        currentScope.createArray(name, typeOfValue, lengths);</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * Returns a map of all variables and their values
+     * that are saved within the current scope.
+     * @return map of all saved variables and their values
+     */
+    public HashMap&lt;Identifier, Value&gt; getVariables() {
+<span class="fc" id="L109">        return currentScope.getVariables();</span>
+    }
+
+    /**
+     * Returns the current scope.
+     * @return current scope
+     */
+    public Scope getCurrentScope() {
+<span class="nc" id="L117">        return currentScope;</span>
+    }
+
+    /**
+     * Returns the current statement.
+     * @return current statement
+     */
+    public Statement getCurrentStatement() {
+<span class="fc" id="L125">        return currentStatement;</span>
+    }
+
+    /**
+     * Sets the current statement reference to the next statement;
+     * destroys the current scope if it is evaluated completely and
+     * not a function scope.
+     */
+    public void adjustStatement() {
+<span class="fc" id="L134">        currentScope.clearFunctionResults();</span>
+<span class="fc" id="L135">        currentStatement = currentScope.getNextStatement();</span>
+<span class="fc" id="L136">    }</span>
+
+    /**
+     * Returns the function associated with the current scope.
+     * Returns null if this scope is not a function's scope.
+     * @return function associated with the current scope
+     */
+    public Function getCurrentFunction() {
+<span class="fc" id="L144">        return currentScope.getCurrentFunction();</span>
+    }
+
+    /**
+     * Returns whether the current scope is a function scope.
+     * @return whether the current scope is a function scope
+     */
+    public boolean isFunctionScope() {
+<span class="fc" id="L152">        return currentScope.isFunctionScope();</span>
+    }
+
+    /**
+     * Returns the results of function calls.
+     * @return results of function calls
+     */
+    public IdentityHashMap&lt;FunctionCall, Value&gt; getReturnValues() {
+<span class="fc" id="L160">        return currentScope.getReturnValues();</span>
+    }
+
+    /**
+     * Saves a new function result for a given function call.
+     * @param functionCall given function call
+     * @param returnValue return value to save
+     */
+    public void createFunctionResult(FunctionCall functionCall,
+                                     Value returnValue) {
+<span class="fc" id="L170">        currentScope.createFunctionResult(functionCall, returnValue);</span>
+<span class="fc" id="L171">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

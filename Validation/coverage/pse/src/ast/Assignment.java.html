@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Assignment.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">Assignment.java</span></div><h1>Assignment.java</h1><pre class="source lang-java linenums">package ast;
+
+/**
+ * This class symbolizes an assignment of a value to a variable.
+ * For assignments to arrays there is a subclass @see{ArrayAssignment}.
+ */
+public class Assignment extends Statement {
+    /**
+     * value that should be assigned to the variable
+     */
+    private final Expression value;
+    /**
+     * name of the variable
+     */
+    private final Identifier identifier;
+    /**
+     * depth of declaration of this variable
+     */
+    private int depth;
+    /**
+     * type of this variable
+     */
+    private Type type;
+
+    /**
+     * Constructor.
+     *
+     * @param position indicates the position of this element
+     *                 in the original source code
+     * @param value the value to be assigned
+     * @param identifier the variable to be assigned to
+     */
+    public Assignment(Position position, Expression value,
+                      Identifier identifier) {
+<span class="fc" id="L35">        super(position);</span>
+<span class="fc" id="L36">        this.value = value;</span>
+<span class="fc" id="L37">        this.identifier = identifier;</span>
+<span class="fc" id="L38">        depth = 0;</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * Returns the expression that is assigned to the variable
+     * @return expression that is assigned to the variable
+     */
+    public Expression getValue() {
+<span class="fc" id="L46">        return value;</span>
+    }
+
+    /**
+     * Returns the identifier that the value is assigned to
+     * @return identifier that the value is assigned to
+     */
+    public Identifier getIdentifier() {
+<span class="fc" id="L54">        return identifier;</span>
+    }
+
+    /**
+     * Returns the depth of the scope in which
+     * the variable assigned to was declared.
+     * @return depth of declaration of this variable
+     */
+    public int getDepth() {
+<span class="nc" id="L63">        return depth;</span>
+    }
+
+    /**
+     * Sets the depth of the scope in which
+     * the variable assigned to was declared.
+     * @param depth depth of declaration of this variable
+     */
+    public void setDepth(int depth) {
+<span class="fc" id="L72">        this.depth = depth;</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Returns the type of this variable.
+     * @return type of this variable
+     */
+    public Type getType() {
+<span class="nc" id="L80">        return type;</span>
+    }
+
+    /**
+     * Sets the type of this variable
+     * @param type type of this variable
+     */
+    public void setType(Type type) {
+<span class="fc" id="L88">        this.type = type;</span>
+<span class="fc" id="L89">    }</span>
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+<span class="fc" id="L93">        visitor.visit(this);</span>
+<span class="fc" id="L94">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L98">        StringBuilder sb = new StringBuilder(identifier.toString());</span>
+<span class="nc" id="L99">        sb.append(&quot; = &quot;).append(value.toString());</span>
+<span class="nc" id="L100">        sb.append(&quot;;\n&quot;);</span>
+<span class="nc" id="L101">        return sb.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

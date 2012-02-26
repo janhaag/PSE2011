@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>RandomTestFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">RandomTestFrame.java</span></div><h1>RandomTestFrame.java</h1><pre class="source lang-java linenums">package gui;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+import ast.ArrayType;
+import ast.BooleanType;
+import ast.FunctionParameter;
+import ast.IntegerType;
+import ast.Type;
+
+/**
+ * This class represents a frame for random tests.
+ */
+public class RandomTestFrame extends Frame implements MiscFrame {
+	/**
+	 * shell of the frame
+	 */
+	private Shell shell;
+	/**
+	 * text field for the number of random tests
+	 */
+	private Text count;
+	/**
+	 * text fields for intervals and array sizes
+	 */
+	private Text[][] intervals;
+	/**
+	 * button for starting execution
+	 */
+	private Button startButton;
+	
+	/**
+	 * Construct a random test frame with the specified parent shell.
+	 * @param parentShell specified shell
+	 */
+<span class="nc" id="L43">	public RandomTestFrame(Shell parentShell) {</span>
+<span class="nc" id="L44">		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);</span>
+<span class="nc" id="L45">		this.shell.setText(&quot;Random Test&quot;);</span>
+		
+<span class="nc" id="L47">		GridLayout gLayout = new GridLayout();</span>
+<span class="nc" id="L48">		gLayout.numColumns = 4;</span>
+<span class="nc" id="L49">		gLayout.makeColumnsEqualWidth = true;</span>
+<span class="nc" id="L50">		gLayout.marginTop = 10;</span>
+<span class="nc" id="L51">		gLayout.marginLeft = 10;</span>
+<span class="nc" id="L52">		gLayout.marginRight = 10;</span>
+<span class="nc" id="L53">		shell.setLayout(gLayout);</span>
+<span class="nc" id="L54">	}</span>
+	
+	/**
+	 * Add attributes to the shell of the frame and open it. The size
+	 * of the shell depends on the number of parameters.
+	 * @param parameters list of parameters
+	 */
+	public void createFrame(FunctionParameter[] parameters) {
+		//Add various components
+<span class="nc" id="L63">		Label label = new Label(this.shell, SWT.NONE);</span>
+<span class="nc" id="L64">		label.setText(&quot;Number of random tests: &quot;);	</span>
+<span class="nc" id="L65">		GridData gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L66">		gData.horizontalSpan = 2;</span>
+<span class="nc" id="L67">		label.setLayoutData(gData);</span>
+<span class="nc" id="L68">		this.count = new Text(this.shell, SWT.NONE);</span>
+<span class="nc" id="L69">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L70">		gData.horizontalSpan = 2;</span>
+<span class="nc" id="L71">		this.count.setLayoutData(gData);</span>
+<span class="nc" id="L72">		Label label2 = new Label(this.shell, SWT.NONE);</span>
+<span class="nc" id="L73">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L74">		gData.horizontalSpan = 4;</span>
+<span class="nc" id="L75">		label2.setLayoutData(gData);</span>
+<span class="nc" id="L76">		new Label(this.shell, SWT.NONE).setText(&quot;ID&quot;);</span>
+<span class="nc" id="L77">		new Label(this.shell, SWT.NONE).setText(&quot;Begin&quot;);</span>
+<span class="nc" id="L78">		new Label(this.shell, SWT.NONE).setText(&quot;End&quot;);</span>
+<span class="nc" id="L79">		new Label(this.shell, SWT.NONE).setText(&quot;Array size&quot;);</span>
+
+		//Add text fields for interval and array size depending on the parameter type
+<span class="nc" id="L82">		this.intervals = new Text[parameters.length][3];</span>
+		int i;
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (i = 0; i &lt; parameters.length; i++) {</span>
+<span class="nc" id="L85">			new Label(this.shell, SWT.NONE).setText(parameters[i].toString());</span>
+<span class="nc" id="L86">			Text begin = new Text(this.shell, SWT.NONE);</span>
+<span class="nc" id="L87">			gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L88">			begin.setLayoutData(gData);	</span>
+<span class="nc" id="L89">			Text end = new Text(this.shell, SWT.NONE);</span>
+<span class="nc" id="L90">			gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L91">			end.setLayoutData(gData);	</span>
+<span class="nc" id="L92">			Text size = new Text(this.shell, SWT.NONE);</span>
+<span class="nc" id="L93">			gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L94">			size.setLayoutData(gData);</span>
+			
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (parameters[i].getType() instanceof IntegerType) {</span>
+<span class="nc" id="L97">				size.setEditable(false);</span>
+<span class="nc" id="L98">				size.setBackground(new Color(this.shell.getDisplay(), 210, 210, 210));</span>
+			}
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			else if (parameters[i].getType() instanceof BooleanType) {</span>
+<span class="nc" id="L101">				begin.setEditable(false);</span>
+<span class="nc" id="L102">				begin.setBackground(new Color(this.shell.getDisplay(), 210, 210, 210));</span>
+<span class="nc" id="L103">				end.setEditable(false);</span>
+<span class="nc" id="L104">				end.setBackground(new Color(this.shell.getDisplay(), 210, 210, 210));</span>
+<span class="nc" id="L105">				size.setEditable(false);</span>
+<span class="nc" id="L106">				size.setBackground(new Color(this.shell.getDisplay(), 210, 210, 210));</span>
+			}
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			else if (parameters[i].getType() instanceof ArrayType) {</span>
+<span class="nc" id="L109">				Type tmp = parameters[i].getType();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				while (tmp instanceof ArrayType) {</span>
+<span class="nc" id="L111">					tmp = ((ArrayType) tmp).getType();</span>
+				}
+<span class="nc bnc" id="L113" title="All 2 branches missed.">				if (tmp instanceof BooleanType) {</span>
+<span class="nc" id="L114">					begin.setEditable(false);</span>
+<span class="nc" id="L115">					begin.setBackground(new Color(this.shell.getDisplay(), 210, 210, 210));</span>
+<span class="nc" id="L116">					end.setEditable(false);</span>
+<span class="nc" id="L117">					end.setBackground(new Color(this.shell.getDisplay(), 210, 210, 210));</span>
+				}
+			}
+			
+<span class="nc" id="L121">			this.intervals[i][0] = begin; </span>
+<span class="nc" id="L122">			this.intervals[i][1] = end;</span>
+<span class="nc" id="L123">			this.intervals[i][2] = size;</span>
+		}
+		
+<span class="nc" id="L126">		Label label3 = new Label(this.shell, SWT.NONE);</span>
+<span class="nc" id="L127">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L128">		gData.horizontalSpan = 4;</span>
+<span class="nc" id="L129">		label3.setLayoutData(gData);</span>
+<span class="nc" id="L130">		this.startButton = new Button(this.shell, SWT.NONE);</span>
+<span class="nc" id="L131">		this.startButton.setText(&quot;Start&quot;);</span>
+<span class="nc" id="L132">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
+<span class="nc" id="L133">		gData.horizontalSpan = 4;</span>
+<span class="nc" id="L134">		this.startButton.setLayoutData(gData);</span>
+		
+<span class="nc" id="L136">		this.shell.setSize(400, 180 + 20 * i);</span>
+<span class="nc" id="L137">		this.shell.open();</span>
+<span class="nc" id="L138">	}</span>
+	
+	/**
+	 * Open an empty shell with the specified text.
+	 * @param s specified text
+	 */
+	public void createEmptyFrame(String s) {
+<span class="nc" id="L145">		Label label = new Label(this.shell, SWT.NONE);</span>
+<span class="nc" id="L146">		label.setText(s);</span>
+<span class="nc" id="L147">		GridData gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="nc" id="L148">		gData.horizontalSpan = 5;</span>
+<span class="nc" id="L149">		label.setForeground(new Color(this.shell.getDisplay(), 150, 0, 0));</span>
+<span class="nc" id="L150">		label.setLayoutData(gData);</span>
+<span class="nc" id="L151">		this.shell.setSize(275, 80);</span>
+<span class="nc" id="L152">		this.shell.open();</span>
+<span class="nc" id="L153">	}</span>
+	
+	/**
+	 * Return the shell of the frame.
+	 * @return shell of the frame
+	 */
+	public Shell getShell() {
+<span class="nc" id="L160">		return this.shell;</span>
+	}
+	
+	/**
+	 * Return the text field for the number of random tests
+	 * @return text field for the number of random tests
+	 */
+	public Text getCount() {
+<span class="nc" id="L168">		return this.count;</span>
+	}
+	
+	/**
+	 * Return the text fields for the intervals and array sizes
+	 * @return text fields for the intervals and array sizes
+	 */
+	public Text[][] getIntervals() {
+<span class="nc" id="L176">		return this.intervals;</span>
+	}
+	
+	/**
+	 * Return the start button for the random test.
+	 * @return start button
+	 */
+	public Button getStartButton() {
+<span class="nc" id="L184">		return this.startButton;</span>
+	}
+	
+	@Override
+	public Button getSaveButton() {
+<span class="nc" id="L189">		return null;</span>
+	}	
+	@Override
+	public void close() {
+<span class="nc" id="L193">		this.shell.close();</span>
+<span class="nc" id="L194">	}</span>
+	@Override
+	public Button getCloseButton() {
+<span class="nc" id="L197">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

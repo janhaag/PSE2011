@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TableViewController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">TableViewController.java</span></div><h1>TableViewController.java</h1><pre class="source lang-java linenums">package gui.controller;
+
+import gui.BreakpointView;
+import gui.VariableView;
+import interpreter.ArrayValue;
+import interpreter.BooleanValue;
+import interpreter.GlobalBreakpoint;
+import interpreter.IntegerValue;
+import interpreter.Value;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import misc.ExecutionHandler;
+
+import org.antlr.runtime.RecognitionException;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+
+import ast.Expression;
+import ast.Identifier;
+
+/**
+ * This class is responsible for controlling the views @see{VariableView},
+ * @see{BreakpointView} and uses the model @see{ExecutionHandler}.
+ */
+public class TableViewController implements SelectionListener {
+	/**
+	 * view for displaying variables
+	 */
+	private VariableView varView;
+	/**
+	 * view for displaying global breakpoints
+	 */
+	private BreakpointView breakpointView;
+	/**
+	 * model for variables and global breakpoints
+	 */
+	private ExecutionHandler executionHandler;
+	
+	/**
+	 * Construct a table view controller with the specified views and model.
+	 * @param breakpointView specified view
+	 * @param varView specified view
+	 * @param executionHandler specified model
+	 */
+<span class="nc" id="L53">	public TableViewController(BreakpointView breakpointView, VariableView varView, ExecutionHandler executionHandler) {	</span>
+<span class="nc" id="L54">		this.breakpointView = breakpointView;	</span>
+<span class="nc" id="L55">		this.varView = varView;	</span>
+<span class="nc" id="L56">		this.executionHandler = executionHandler;</span>
+		
+<span class="nc" id="L58">		this.breakpointView.getGlobalBreakpoint().addSelectionListener(this);</span>
+<span class="nc" id="L59">		this.breakpointView.getAddButton().addSelectionListener(this);</span>
+<span class="nc" id="L60">	}</span>
+	
+
+	/**
+	 * Update the variable view.
+	 */
+	public void updateVarView() {        		
+<span class="nc bnc" id="L67" title="All 4 branches missed.">        if (this.executionHandler == null || this.executionHandler.getProgramExecution() == null) {</span>
+<span class="nc" id="L68">        	return;</span>
+        }
+<span class="nc" id="L70">        HashMap&lt;Identifier, Value&gt; vars = this.executionHandler.getProgramExecution().getVariables();</span>
+      
+        //insert Tree items       
+<span class="nc" id="L73">        this.varView.getVarTree().removeAll();       </span>
+<span class="nc" id="L74">		Iterator&lt;Map.Entry&lt;Identifier, Value&gt;&gt; it = vars.entrySet().iterator();		</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L76">			Map.Entry&lt;Identifier, Value&gt; entry = it.next();</span>
+<span class="nc" id="L77">			String type = entry.getValue().getType().toString();</span>
+<span class="nc" id="L78">			String id = entry.getKey().toString();</span>
+<span class="nc" id="L79">			Value tmp = entry.getValue();</span>
+<span class="nc" id="L80">			this.checkValue(this.varView.getVarTree(), type, id, tmp);</span>
+		}     
+<span class="nc" id="L82">	}</span>
+	
+	/**
+	 * Add variable items to the first level of the tree.
+	 * @param parent variable tree
+	 * @param type type of the variable
+	 * @param id name of the variable
+	 * @param tmp value of the variable
+	 */
+	private void checkValue(Tree parent, String type, String id, Value tmp) {
+<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {</span>
+<span class="nc" id="L93">			this.varView.addTreeItem(parent, type, id, tmp.toString());</span>
+		}
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		else if (tmp instanceof ArrayValue) {</span>
+<span class="nc" id="L96">			TreeItem item = this.varView.addTreeItem(parent, type, id, &quot;-&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			for (int i = 0; i &lt; ((ArrayValue) tmp).getValues().length; i++) {</span>
+<span class="nc" id="L98">				String newId = id + &quot;[&quot; + i + &quot;]&quot;;</span>
+<span class="nc" id="L99">				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), </span>
+<span class="nc" id="L100">						newId, ((ArrayValue) tmp).getValues()[i]);</span>
+			}
+		}
+<span class="nc" id="L103">	}</span>
+	
+	/**
+	 * Add variable items to the second or deeper levels of the tree.
+	 * @param parent variable tree item
+	 * @param type type of the variable
+	 * @param id name of the variable
+	 * @param tmp value of the variable
+	 */
+	private void checkValue(TreeItem parent, String type, String id, Value tmp) {
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {</span>
+<span class="nc" id="L114">			this.varView.addTreeItem(parent, type, id, tmp.toString());</span>
+		}
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		else if (tmp instanceof ArrayValue) {</span>
+<span class="nc" id="L117">            TreeItem item = this.varView.addTreeItem(parent, type, id, &quot;-&quot;);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			for (int i = 0; i &lt; ((ArrayValue) tmp).getValues().length; i++) {</span>
+<span class="nc" id="L119">				String newId = id + &quot;[&quot; + i + &quot;]&quot;;</span>
+<span class="nc" id="L120">				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), </span>
+<span class="nc" id="L121">						newId, ((ArrayValue) tmp).getValues()[i]);</span>
+			}
+		}
+<span class="nc" id="L124">	}</span>
+
+	@Override
+	public void widgetSelected(SelectionEvent e) {
+<span class="nc bnc" id="L128" title="All 4 branches missed.">		if(e.getSource() == this.breakpointView.getGlobalBreakpoint() &amp;&amp; e.detail == SWT.CHECK) {</span>
+<span class="nc" id="L129">			Table table = this.breakpointView.getGlobalBreakpoint();		</span>
+			int i;
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			for (i = 0; i &lt; table.getItemCount(); i++) {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				if (e.item == table.getItem(i)) {</span>
+<span class="nc" id="L133">					break;</span>
+				}
+			}	
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (this.executionHandler.getProgramExecution() != null) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">				table.getItem(i).setChecked(!table.getItem(i).getChecked());</span>
+<span class="nc" id="L138">				return;</span>
+			} 			
+<span class="nc" id="L140">			this.executionHandler.getGlobalBreakpoints().get(i).setActive(</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">					!this.executionHandler.getGlobalBreakpoints().get(i).isActive());</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		} else if(e.getSource() == this.breakpointView.getAddButton()) {</span>
+<span class="nc" id="L143">			String expression = this.breakpointView.getAddTextField().getText();</span>
+<span class="nc bnc" id="L144" title="All 4 branches missed.">			if (expression == null || expression.length() == 0) {</span>
+<span class="nc" id="L145">				return;</span>
+			}		
+			int i;
+<span class="nc" id="L148">			Expression exp = null;</span>
+			try {
+<span class="nc" id="L150">				exp = this.executionHandler.getParserInterface().parseExpression(expression);</span>
+<span class="nc" id="L151">			} catch (RecognitionException ignored) {</span>
+			}	
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (exp == null) return;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			for (i = 0; i &lt; this.executionHandler.getGlobalBreakpoints().size(); i++) {</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">				if (this.executionHandler.getGlobalBreakpoints().get(i).getExpression().toString().equals(exp.toString())) {</span>
+<span class="nc" id="L156">					break;</span>
+				}
+			}	
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (i &gt;= this.executionHandler.getGlobalBreakpoints().size()) {</span>
+				if (exp != null) {
+<span class="nc" id="L161">					GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(exp);</span>
+<span class="nc" id="L162">					this.executionHandler.getGlobalBreakpoints().add(gBreakpoint);</span>
+				}
+			} else {
+<span class="nc" id="L165">				this.executionHandler.getGlobalBreakpoints().remove(i);</span>
+			}
+<span class="nc" id="L167">			this.breakpointView.drawGlobalBreakpointItem(this.executionHandler.getGlobalBreakpoints());</span>
+		}	
+<span class="nc" id="L169">	} </span>
+	
+	/**
+	 * Deactivate the variable view to show execution termination.
+	 */
+	public void deactivateVarView() {
+<span class="nc" id="L175">		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));</span>
+<span class="nc" id="L176">		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));</span>
+<span class="nc" id="L177">	}</span>
+	
+	/**
+	 * Reactivate the variable view.
+	 */
+	public void activateVarView() {
+<span class="nc" id="L183">		this.varView.getVarTree().setBackground(null);</span>
+<span class="nc" id="L184">		this.varView.getVarTree().setForeground(null);</span>
+<span class="nc" id="L185">	}</span>
+	
+	/**
+	 * Deactivate the breakpoint view to avoid invalid changes during program execution.
+	 */
+	public void deactivateBreakpointView() {
+<span class="nc" id="L191">		this.breakpointView.getAddButton().removeSelectionListener(this);</span>
+<span class="nc" id="L192">	}</span>
+	
+	/**
+	 * Reactivate the breakpoint view.
+	 */
+	public void activateBreakpointView() {
+<span class="nc" id="L198">		this.breakpointView.getAddButton().addSelectionListener(this);</span>
+<span class="nc" id="L199">	}</span>
+	
+	/**
+	 * Return the variable view of this controller.
+	 * @return variable view
+	 */
+	public VariableView getVarView() {
+<span class="nc" id="L206">		return this.varView;</span>
+	}
+	
+	/**
+	 * Return the breakpoint view of the controller.
+	 * @return breakpoint view
+	 */
+	public BreakpointView getBreakpointView() {
+<span class="nc" id="L214">		return this.breakpointView;</span>
+	}
+	
+	@Override
+	public void widgetDefaultSelected(SelectionEvent arg0) {
+		// TODO Auto-generated method stub			
+<span class="nc" id="L220">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>

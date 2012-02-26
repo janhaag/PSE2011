@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Message.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Message.java</span></div><h1>Message.java</h1><pre class="source lang-java linenums">package misc;
+
+/**
+ * The instances of this class represent a message from the model (parser, type checker,
+ * verifier, ...).
+ * 
+ * Each message has a defined type. For the possible types see:
+ * @see {@link MessageCategories}
+ * 
+ * @version 1.0
+ */
+public class Message {
+	/**
+	 * the category of the message
+	 */
+	private MessageCategories category;
+	/**
+	 * the position in the source the message relates to
+	 */
+	private int position;
+	/**
+	 * the text of the message
+	 */
+	private String text;
+	
+	private String result;
+	/**
+	 * Constructs a new instance of Message with the specified values.
+	 * 
+	 * @param category the category of the message (@see {@link MessageCategories})
+	 * @param position the position in the source the message relates to
+	 * @param text the text of the message
+	 */
+<span class="nc" id="L34">	public Message(MessageCategories category, int position, String text) {</span>
+<span class="nc" id="L35">		this.category = category;</span>
+<span class="nc" id="L36">		this.position = position;</span>
+<span class="nc" id="L37">		this.text = text;</span>
+<span class="nc" id="L38">	}</span>
+	
+<span class="nc" id="L40">	public Message(MessageCategories category, int position, String text, String result) {</span>
+<span class="nc" id="L41">		this.category = category;</span>
+<span class="nc" id="L42">		this.position = position;</span>
+<span class="nc" id="L43">		this.text = text;</span>
+<span class="nc" id="L44">		this.result = result;</span>
+<span class="nc" id="L45">	}</span>
+	
+	/**
+	 * Returns the category of the message.
+	 * 
+	 * @return the category of the message
+	 */
+	public MessageCategories getCategory() {
+<span class="nc" id="L53">		return this.category;</span>
+	}
+	public int getPosition() {
+<span class="nc" id="L56">		return this.position;</span>
+	}
+	/**
+	 * Returns the text of the message.
+	 * 
+	 * @return the text of the message
+	 */
+	public String getText() {
+<span class="nc" id="L64">		return this.text;</span>
+	}
+	
+	public String getResult() {
+<span class="nc" id="L68">		return this.result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
