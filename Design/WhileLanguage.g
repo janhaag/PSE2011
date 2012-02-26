@@ -1,15 +1,15 @@
 grammar WhileLanguage;
 
 program
-        : assume_statement* method_declaration* main_method
+        : axiom_statement* function_declaration* main
         ;
 
-method_declaration
-        : type IDENT '(' parameter_list? ')' method_body
+function_declaration
+        : type IDENT '(' parameter_list? ')' function_body
         ;
 
-main_method
-        : 'main' '(' parameter_list? ')' method_body
+main
+        : 'main' '(' parameter_list? ')' main_body
         ;
 
 parameter_list
@@ -20,22 +20,39 @@ parameter
         : type IDENT
         ;
 
-method_body
-        : '{' assume_statement* statement* ensure_statement* '}'
+function_body
+        : assume_statement? '{' statement* return_statement '}' ensure_statement?
+        ;
+
+
+main_body
+        : assume_statement? '{' statement* '}' ensure_statement?
+        ;
+
+if_body
+        : '{' statement* '}'
+        ;
+
+loop_body
+        : invariant_statement? '{' statement* '}' ensure_statement?
         ;
 
 statement
-        : assert_statement
-        | variable_declaration
-        | array_declaration
-        | assignment
-        | if_statement
-        | while_statement
-        | 'return' expression ';'
+        : e1=assert_statement
+        | e2=variable_declaration
+        | e3=array_declaration
+        | e4=assignment
+        | e5=if_statement
+        | e6=while_statement
         ;
 
 invariant_statement
         : 'invariant' quantified_expression ';'
+        | 'invariant' '{' ( quantified_expression ';' )+ '}'
+        ;
+
+axiom_statement
+        : 'axiom' quantified_expression ';'
         ;
 
 assert_statement
@@ -44,14 +61,17 @@ assert_statement
 
 assume_statement
         : 'assume' quantified_expression ';'
+        | 'assume' '{' ( quantified_expression ';' )+ '}'
         ;
 
 ensure_statement
-        : 'ensure' quantified_expression ';'
+       	: 'ensure' equantified_expression ';'
+        | 'ensure' '{' ( quantified_expression ';' )+ '}'
         ;
 
 assignment
-        : IDENT ( '[' expression ']' )* '=' expression ';'
+        : IDENT '=' expression ';'
+        | IDENT ( '[' expression ']' )+ '=' expression ';'
         ;
 
 variable_declaration
@@ -59,68 +79,66 @@ variable_declaration
         ;
 
 array_declaration
-        : type IDENT ( '[' ']' )+ ';'
+        : type IDENT '=' array_init ';'
         ;
+
+array_init
+	: 'array' ( '[' expression ']' )+
+	;
 
 if_statement
-        : 'if' '(' expression ')' statement_block ( 'else' statement_block )?
-        ;
-
-statement_block
-        : '{' statement* '}'
+        : 'if' '(' expression ')' if_body ( 'else' if_body )?
         ;
 
 while_statement
         : 'while' '(' expression ')' loop_body
         ;
 
-loop_body
-        : '{' invariant_statement* statement* ensure_statement* '}'
-        ;
+return_statement
+	: 'return' expression ';'
+	;
 
 quantified_expression
-        : quantifier IDENT '(' range? ')' quantified_expression
+        : QUANTIFIER IDENT '(' range? ')' quantified_expression
         | expression
-        ;
-
-quantifier
-        : 'forall'
-        | 'exists'
         ;
 
 range
         : expression ',' expression
+        ;
 
 expression
-        : rel_expression ( ( '==' | '!=' ) rel_expression )*
+        : rel_expression ( '==' rel_expression | '!=' rel_expression )*
         ;
 
 
 rel_expression
-        : add_expression ( ( '<' | '<=' | '>' | '>=' ) add_expression )*
+        : add_expression ( '<' add_expression | '<=' add_expression | '>'  add_expression | '>=' add_expression )*
         ;
 
 add_expression
-        : mul_expression ( ( '|' | '+' | '-' ) mul_expression )*
+        : mul_expression ( '|' mul_expression  | '+' mul_expression | '-' mul_expression )*
         ;
 
 mul_expression
-        : unary_expression ( ('&' | '*' | '/' | '%') unary_expression )*
+        : unary_expression ( '&' unary_expression | '*' unary_expression  | '/' unary_expression | '%' unary_expression )*
         ;
 
 unary_expression
-        : ( '!' | '+' | '-' )? parenthesized_expression
+        : '!' parenthesized_expression
+        | '-'  parenthesized_expression
+        | '+'? parenthesized_expression
         ;
 
 parenthesized_expression
         : '(' expression ')'
-        | method_call
-        | array_access
+        | function_call
+        | array_read
         | IDENT
         | literal_expression
         ;
 
-method_call
+function_call
         : IDENT '(' arglist? ')'
         ;
 
@@ -128,7 +146,7 @@ arglist
         : expression ( ',' expression )*
         ;
 
-array_access
+array_read
         : IDENT '[' expression ']' ( '[' expression ']' )*
         ;
 
@@ -137,12 +155,16 @@ literal_expression
         | BOOL_LITERAL
         ;
 
-type
-        : ('int' | 'bool') ( '[' ']')*
+type returns [ Type ast ]
+        : ('int' | 'bool' ) ( '[' ']' )*
         ;
 
-INT_LITERAL  : ('0'..'9' )+;
+INT_LITERAL  : ( '0'..'9' )+;
 BOOL_LITERAL : 'true' | 'false';
+QUANTIFIER
+        : 'forall'
+        | 'exists'
+        ;
 COMMENT      : '#' .* ( '\n' | '\r' ) {skip();};
 WS           : ('\n' | '\r' | ' ' | '\t')+ {skip();};
 IDENT        : ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

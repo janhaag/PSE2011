@@ -161,6 +161,13 @@ public class ExecutionHandlerTest {
     }
 
     @Test
+    public void testEmptyProgram() {
+        executionHandler.parse("main(){}");
+        executionHandler.run(stmtBps, glblBps);
+		assertNull(executionHandler.getAssertionFailureMessage());
+	}
+
+    @Test
     public void testQuantifierFail() {
         executionHandler.parse("main()" +
                 "{int j = 4;}" +
@@ -256,13 +263,6 @@ public class ExecutionHandlerTest {
     public void testInvariantFailEnd() {
         executionHandler.parse("main()" +
                 "{int j = 4; while (j < 20) invariant j < 20; {j=j+1;}}");
-        executionHandler.run(stmtBps, glblBps);
-		assertNotNull(executionHandler.getAssertionFailureMessage());
-	}
-
-    @Test
-    public void testEmptyProgram() {
-        executionHandler.parse("main(){}");
         executionHandler.run(stmtBps, glblBps);
 		assertNotNull(executionHandler.getAssertionFailureMessage());
 	}

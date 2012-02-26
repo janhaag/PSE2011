@@ -1,11 +1,13 @@
 package test;
 
+import ast.*;
 import org.antlr.runtime.RecognitionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import parser.IllegalTypeException;
 import parser.ParserInterface;
+import parser.TypeChecker;
 
 import static org.junit.Assert.*;
 
@@ -14,31 +16,298 @@ import static org.junit.Assert.*;
  */
 public class TypeCheckerTest {
     private ParserInterface parserInterface;
+    private TypeChecker typeChecker;
+    private Program program;
+    private Position p = new Position();
 
     @Before
     public void setUp() {
         parserInterface = new ParserInterface();
+        typeChecker = new TypeChecker();
     }
 
     @After
     public void tearDown() {
         parserInterface = null;
+        typeChecker = null;
     }
 
     @Test
-    public void testCorrectProgram() {
+    public void testCorrectAssume() {
+        program = new Program(p, new Function[0], new Function(
+                p, null, "main", new FunctionParameter[0], new StatementBlock(
+                    new Statement[0], p), new Assumption[]{
+                        new Assumption(p, new BooleanLiteral(p, "true"))},
+                    new Ensure[0]),
+                new Axiom[0]);
         boolean success = true;
         try {
-            parserInterface.parseProgram("int m(int a, bool c, int[][] d)" +
-                    "{int b; a = 4*b%4+2+d[d[1][2]][a];" +
-                    "c = (3<length(d))|(4== length(d[3])); return 2;}" +
-                    "ensure forall x(a,b) x != 2;" +
-                    "main() assume true;{" +
-                    "if (true) {bool c; while (c) {}}" +
-                    "int[][][] s = array[2][1][2];" +
-                    "int w = m(2,true,s[0]);" +
+            typeChecker.checkTypes(program);
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectEnsure() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){} ensure false;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectInvariant() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){" +
+                    "while(true)invariant true;{}}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectAxiom() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("axiom false; main(){}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectAssert() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){assert true;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectLength() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {int[] s = array[2];}" +
+                    "ensure length(s)!=1;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectFuncCall() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("int m(int a, bool c)" +
+                    "{return 2;};" +
+                    "main() {int w = m(2,true);}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectArrayFuncCall() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("int m(int[][] d)" +
+                    "{return 2;}" +
+                    "main() {int[][][] s = array[2][1][2]; int w = m(s[0]); }");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectLengthSubArray() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {" +
+                    "int[][][] s = array[2][1][2];} ensure length(s[1])!=1;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectQuantifier() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {int a; int b = 7;" +
+                    "} ensure exists x(a,b) x != 2;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectIf() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){if (true) {}}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectWhile() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){bool c; while (c) {}}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectArrayRead() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){" +
+                    "int[][] s = array[2][1]; int a = 1;" +
+                    "a = s[s[1][1]][a];" +
                     "} ensure length(s)!=1;");
         } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectArrayAssign() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {int a;" +
+                    "int[][][] s = array[2][1][2];" +
+                    "s[1][1][a] = 2;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectEqualBasicTypes() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {" +
+                    "bool c; int a; int b; c = c == (a==b);}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectEqualArrays() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {" +
+                    "int[] a = array[0]; int[] b = array[0]; bool c = a==b;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectNotEqualBasicTypes() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {" +
+                    "bool c; int a; int b; c = c != (a!=b);}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectNotEqualArrays() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {" +
+                    "int[] a = array[0]; int[] b = array[0]; bool c = a!=b;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectLess() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {bool a = 2<2;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectOr() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {bool c = true | false;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
             success = false;
         }
         assertTrue(success);
@@ -72,11 +341,6 @@ public class TypeCheckerTest {
     @Test (expected = IllegalTypeException.class)
     public void testAssignIntegerToBoolean() throws RecognitionException {
         parserInterface.parseProgram("main() {bool i = 42;}");
-    }
-
-    @Test (expected = IllegalTypeException.class)
-    public void testAssignIntegerToBooleanqe() throws RecognitionException {
-        parserInterface.parseProgram("main() {bool i = 42&;}");
     }
 
     @Test (expected = IllegalTypeException.class)
