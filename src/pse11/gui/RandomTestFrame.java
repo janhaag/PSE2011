@@ -148,7 +148,7 @@ public class RandomTestFrame extends Frame implements MiscFrame {
 		gData.horizontalSpan = 5;
 		label.setForeground(new Color(this.shell.getDisplay(), 150, 0, 0));
 		label.setLayoutData(gData);
-		this.shell.setSize(260, 80);
+		this.shell.setSize(280, 80);
 		this.shell.open();
 	}
 	
