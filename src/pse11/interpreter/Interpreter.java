@@ -351,8 +351,7 @@ public class Interpreter implements ASTVisitor {
 
     @Override
     public void visit(Program program) {
-        //not needed
-        program.getMainFunction().accept(this);
+        //no-op
     }
 
     @Override
@@ -409,18 +408,7 @@ public class Interpreter implements ASTVisitor {
     public void visit(ReturnStatement returnStatement) {
         returnStatement.getReturnValue().accept(this);
         returnValue = tempValue;
-        Ensure[] ensures = currentState.getCurrentFunction().getEnsures();
-        currentState.adjustStatement();
-        try {
-            for (Ensure ensure : ensures) {
-                ensure.accept(this);
-            }
-        } finally {
-            while (!currentState.isFunctionScope()) {
-                currentState.destroyScope();
-            }
-            currentState.destroyScope();
-        }
+        adjustStatement();
     }
 
     @Override
@@ -511,14 +499,10 @@ public class Interpreter implements ASTVisitor {
      * Adjust the statement at the end of a step.
      */
     private void adjustStatement() {
-        returnValue = null;
         Function currentFunction = currentState.getCurrentFunction();
         currentState.adjustStatement();
         if (currentState.getCurrentStatement() == null) {
             if (currentState.isFunctionScope()) {
-                 returnValue = (currentFunction.getReturnType()
-                                    instanceof BooleanType)
-                              ? new BooleanValue(null) : new IntegerValue(null);
                 Ensure[] ensures = currentFunction.getEnsures();
                 try {
                     for (Ensure ensure : ensures) {

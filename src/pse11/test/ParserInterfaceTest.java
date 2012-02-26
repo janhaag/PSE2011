@@ -53,6 +53,12 @@ public class ParserInterfaceTest {
     }
 
     @Test
+    public void testParseInvalidProgram4() throws RecognitionException {
+        parserInterface.parseProgram("main(){int a[] = array[2];}");
+        assertNotSame(0, parserInterface.getErrors().length);
+    }
+
+    @Test
     public void testParseExpression() {
         boolean success = true;
         try {

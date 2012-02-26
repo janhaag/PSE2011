@@ -70,6 +70,7 @@ public class SMTLibTranslator implements ASTVisitor {
     public WPProgram getWPTree(ASTRoot ast) {
         programs = new ArrayList<LinkedList<S_Expression>>();
         descriptions = new LinkedList<Pair<KindOfProgram, Position>>();
+        arrays = new HashMap<String, Integer>();
         ast.accept(this);
         LinkedList<S_Expression> result = prepareFinalProgram(programs);
         int size = result.size();
@@ -152,7 +153,7 @@ public class SMTLibTranslator implements ASTVisitor {
         else {
             Type t = type;
             StringBuilder result = new StringBuilder().append("(");
-            while (((ArrayType) t).getType() instanceof ArrayType) {
+            while (t instanceof ArrayType) {
                 t = ((ArrayType) t).getType();
                 result.append("Int ");
             }

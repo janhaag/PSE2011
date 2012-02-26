@@ -146,6 +146,7 @@ public class TypeChecker implements ASTVisitor {
         }
         arrayAssignment.setDepth(
                 currentScope.getDepthOfVariable(arrayAssignment.getIdentifier()));
+        arrayAssignment.setType(value.getType());
     }
 
     /**
@@ -382,10 +383,6 @@ public class TypeChecker implements ASTVisitor {
             assumption.accept(this);
         }
         function.getFunctionBlock().accept(this);
-        Ensure[] ensures = function.getEnsures();
-        for (Ensure ensure : ensures) {
-            ensure.accept(this);
-        }
         currentScope = currentScope.getParent();
     }
 
