@@ -168,6 +168,40 @@ public class ExecutionHandlerTest {
 	}
 
     @Test
+    public void testAssumptions() {
+        executionHandler.parse("main(bool i) assume i; {}");
+        executionHandler.setParameterValues(
+                new String[]{"true"});
+        executionHandler.run(stmtBps, glblBps);
+		assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testNegation() {
+        executionHandler.parse("main(bool i) {}ensure !i;");
+        executionHandler.setParameterValues(
+                new String[]{"false"});
+        executionHandler.run(stmtBps, glblBps);
+		assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testEmptyExists() {
+        executionHandler.parse("main() {}ensure exists() false;");
+        executionHandler.run(stmtBps, glblBps);
+		assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testAssumptionsFail() {
+        executionHandler.parse("main(bool i) assume i; {}");
+        executionHandler.setParameterValues(
+                new String[]{"false"});
+        executionHandler.run(stmtBps, glblBps);
+		assertNotNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
     public void testQuantifierFail() {
         executionHandler.parse("main()" +
                 "{int j = 4;}" +

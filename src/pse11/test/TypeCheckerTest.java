@@ -5,6 +5,7 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import parser.FunctionCallNotAllowedException;
 import parser.IllegalTypeException;
 import parser.ParserInterface;
 import parser.TypeChecker;
@@ -18,7 +19,7 @@ public class TypeCheckerTest {
     private ParserInterface parserInterface;
     private TypeChecker typeChecker;
     private Program program;
-    private Position p = new Position();
+    private final Position p = new Position();
 
     @Before
     public void setUp() {
@@ -43,6 +44,73 @@ public class TypeCheckerTest {
         boolean success = true;
         try {
             typeChecker.checkTypes(program);
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectNegation() {
+        program = new Program(p, new Function[0], new Function(
+                p, null, "main", new FunctionParameter[0], new StatementBlock(
+                    new Statement[]{new VariableDeclaration(
+                            p, "i", new LogicalExpression(
+                            p, new BooleanLiteral(p, "true"), null, new Negation()
+
+                    ), new BooleanType()
+                    )}, p), new Assumption[0],
+                    new Ensure[0]),
+                new Axiom[0]);
+        boolean success = true;
+        try {
+            typeChecker.checkTypes(program);
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectFunctions() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("int f(){return 0;}" +
+                    "int g(){return 0;}" +
+                    "int h(){return 0;}" +
+                    "int i(){return 0;}" +
+                    "main(){}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectAssertFuncCall() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("bool f(){return true;}" +
+                    "main(){assert f();}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectFunctionEnsures() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("int f(){return 0;}" +
+                    "ensure{true;false;}" +
+                    "main(){}");
+        } catch (RecognitionException e) {
+            success = false;
         } catch (IllegalTypeException e) {
             success = false;
         }
@@ -121,7 +189,7 @@ public class TypeCheckerTest {
         boolean success = true;
         try {
             parserInterface.parseProgram("int m(int a, bool c)" +
-                    "{return 2;};" +
+                    "{return 2;}" +
                     "main() {int w = m(2,true);}");
         } catch (RecognitionException e) {
             success = false;
@@ -313,9 +381,53 @@ public class TypeCheckerTest {
         assertTrue(success);
     }
 
+    @Test
+    public void testCorrectExistsDivZero() throws RecognitionException {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {} ensure exists x(1,2) 1/x==0;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectExistsUnbounded() throws RecognitionException {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {} ensure exists x() true;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testCorrectForAllUnbounded() throws RecognitionException {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {} ensure forall x() true;");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
     @Test (expected = IllegalTypeException.class)
-    public void testConditionNotBoolean() throws RecognitionException {
+    public void testWhileConditionNotBoolean() throws RecognitionException {
         parserInterface.parseProgram("main() {int c; while (c){}}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testIfConditionNotBoolean() throws RecognitionException {
+        parserInterface.parseProgram("main() {int c; if (c){}}");
     }
 
     @Test (expected = IllegalTypeException.class)
@@ -324,8 +436,33 @@ public class TypeCheckerTest {
     }
 
     @Test (expected = IllegalTypeException.class)
+    public void testInvariantConditionNotBoolean() throws RecognitionException {
+        parserInterface.parseProgram("main() {while(true)invariant 1;{}}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssumeConditionNotBoolean() throws RecognitionException {
+        parserInterface.parseProgram("main() assume 1;{}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAxiomConditionNotBoolean() throws RecognitionException {
+        parserInterface.parseProgram("axiom 1; main() {}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testEnsureConditionNotBoolean() throws RecognitionException {
+        parserInterface.parseProgram("main() {}ensure 1;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
     public void testBooleanOnIntegerOperator() throws RecognitionException {
         parserInterface.parseProgram("main() {int i = 1*true;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testBooleanOnIntegerOperator2() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = true*1;}");
     }
 
     @Test (expected = IllegalTypeException.class)
@@ -334,8 +471,28 @@ public class TypeCheckerTest {
     }
 
     @Test (expected = IllegalTypeException.class)
+    public void testIntegerOnBooleanOperator2() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = true|1;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongMinus() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = -true;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongNegation() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = !1;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
     public void testAssignBooleanToInteger() throws RecognitionException {
         parserInterface.parseProgram("main() {int i = true;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssignBooleanToInteger2() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = 1; i = true;}");
     }
 
     @Test (expected = IllegalTypeException.class)
@@ -377,6 +534,11 @@ public class TypeCheckerTest {
     @Test (expected = IllegalTypeException.class)
     public void testVariableDeclaredAsArray2() throws RecognitionException {
         parserInterface.parseProgram("main() {bool i = array;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotFullyIndexed() throws RecognitionException {
+        parserInterface.parseProgram("main() {bool[] i = array[6];i=true;}");
     }
 
     @Test (expected = IllegalTypeException.class)
@@ -438,5 +600,77 @@ public class TypeCheckerTest {
     public void testWrongArrayIndexNumber3() throws RecognitionException {
         parserInterface.parseProgram("main() {bool[] i = array[5];" +
                                      "i = true;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongExistsRange1() throws RecognitionException {
+        parserInterface.parseProgram("main() {}ensure exists x(true,2) true;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongExistsRange2() throws RecognitionException {
+        parserInterface.parseProgram("main() {}ensure exists x(2,true) true;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongExistsExpr() throws RecognitionException {
+        parserInterface.parseProgram("main() {} ensure exists x(2, 3) 1;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongForAllRange1() throws RecognitionException {
+        parserInterface.parseProgram("main() {}ensure forall x(true,2) true;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongForAllRange2() throws RecognitionException {
+        parserInterface.parseProgram("main() {}ensure forall x(2,true) true;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongForAllExpr() throws RecognitionException {
+        parserInterface.parseProgram("main() {} ensure forall x(2, 3) 1;");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testNoSuchFunction() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = f(a);}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testFunctionOverloaded() throws RecognitionException {
+        parserInterface.parseProgram("int f(){return 0;}" +
+                    "int f(){return 0;}" +
+                    "main(){}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongParamType() throws RecognitionException {
+        parserInterface.parseProgram("int f(bool a){return 0;}main() {int i = f(1);}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayReturn() throws RecognitionException {
+        parserInterface.parseProgram("int[] f(){return 0;}main() {}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongReturn() throws RecognitionException {
+        parserInterface.parseProgram("int f(){return true;}main() {}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testVarNotDeclared() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = w;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotDeclared() throws RecognitionException {
+        parserInterface.parseProgram("main() {int i = w[1];}");
+    }
+
+    @Test (expected = FunctionCallNotAllowedException.class)
+    public void testFunctionCallNotAllowed() throws RecognitionException {
+        parserInterface.parseProgram("int f(){return 0;} main() {} ensure g();");
     }
 }
