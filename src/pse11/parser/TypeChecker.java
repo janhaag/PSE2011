@@ -50,14 +50,6 @@ public class TypeChecker implements ASTVisitor {
     }
 
     /**
-     * Returns whether function calls are allowed.
-     * @return whether function calls are allowed
-     */
-    public boolean isFunctionCallAllowed() {
-        return functionCallAllowed;
-    }
-
-    /**
      * Sets whether function calls are allowed
      * @param functionCallAllowed flag indicating whether
      *                            function calls are allowed
@@ -383,6 +375,10 @@ public class TypeChecker implements ASTVisitor {
             assumption.accept(this);
         }
         function.getFunctionBlock().accept(this);
+        Ensure[] ensures = currentFunction.getEnsures();
+        for (Ensure ensure : ensures) {
+            ensure.accept(this);
+        }
         currentScope = currentScope.getParent();
     }
 
@@ -393,6 +389,9 @@ public class TypeChecker implements ASTVisitor {
     @Override
     public void visit(Program program) {
         functionCallAllowed = true;
+        for (Axiom axiom : program.getAxioms()) {
+            axiom.accept(this);
+        }
         functions = program.getFunctions();
         for (int i = 0; i < functions.length - 1; i++) {
             for (int j = i + 1; j < functions.length; j++) {
@@ -513,19 +512,11 @@ public class TypeChecker implements ASTVisitor {
     @Override
     public void visit(ReturnStatement returnStatement) {
         Type currentReturnType = currentFunction.getReturnType();
-        if (currentReturnType == null) {
-            throw new IllegalTypeException("Main must not have a "
-                           + "return statement!", returnStatement.getPosition());
-        }
         returnStatement.getReturnValue().accept(this);
         if (!currentReturnType.equals(tempType)) {
             throw new IllegalTypeException("Type of returned expression does "
                                 + "not match type that the function returns!",
                                 returnStatement.getPosition());
-        }
-        Ensure[] ensures = currentFunction.getEnsures();
-        for (Ensure ensure : ensures) {
-            ensure.accept(this);
         }
     }
 

@@ -35,6 +35,18 @@ public class ParserInterfaceTest {
     }
 
     @Test
+    public void testCorrectAssertFuncCall() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("bool f(){return true;}" +
+                    "main(){assert f();}");
+        } catch (RecognitionException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
     public void testParseInvalidProgram1() throws RecognitionException {
         parserInterface.parseProgram("main(){int a = 3+4(*5+2);}");
         assertNotSame(0, parserInterface.getErrors().length);

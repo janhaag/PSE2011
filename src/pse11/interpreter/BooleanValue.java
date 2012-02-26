@@ -19,7 +19,7 @@ public class BooleanValue extends Value {
      */
     public BooleanValue(String value) {
         super(new BooleanType());
-        this.value = ("true".equals(value));
+        setValue(value);
     }
 
     /**
