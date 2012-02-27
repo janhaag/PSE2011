@@ -148,20 +148,19 @@ public class Settings {
 	 * are unchanged (@see {@link Settings#settingsChanged()}).
 	 */
 	public void saveSettings() throws IOException {
-		if(USERHOME == null) {
+		if(PATH == null) {
 			return;
 		}
-		String path = USERHOME + System.getProperty("file.separator") + FILENAME;
 		this.settingsChanged = false;
 		String settingString = this.timeout + System.getProperty("line.separator") + this.memoryLimit
 								+ System.getProperty("line.separator") + this.verifierPath;
 
-    	File file = new File(path);
+    	File file = new File(FILEPATH);
 		if(!file.exists()) {
 			file.createNewFile();
 		}
 		
-		Writer output = new BufferedWriter(new FileWriter(path));
+		Writer output = new BufferedWriter(new FileWriter(FILEPATH));
 	    try {
 	    	output.write(settingString);
 	    } finally {
@@ -175,10 +174,10 @@ public class Settings {
 	 * Loads the settings from an external file.
 	 */
 	private void loadSettings() {
-		if(USERHOME == null) {
+		if(PATH == null) {
 			return;
 		}
-    	File file = new File(USERHOME + System.getProperty("file.separator") + FILENAME);
+    	File file = new File(FILEPATH);
 		if(!file.exists()) {
 			this.settingsChanged = true;
 			return;
@@ -212,5 +211,6 @@ public class Settings {
 	private static final int DEFAULT_TIMEOUT = 60;
 	private static final int DEFAULT_MEMORYLIMIT = 100;
 	private static final String FILENAME = ".psesettings";
-	private static final String USERHOME = System.getProperty("user.home");
+	private static final String PATH = System.getProperty("user.home");
+	private static final String FILEPATH = PATH + System.getProperty("file.separator") + FILENAME;
 }
