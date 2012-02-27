@@ -42,30 +42,45 @@ public class Help {
 		
 
 		tags = new HashMap<String, String>();
-		tags.put("help", "index.html");
-		tags.put("loop", "while.html");
-		tags.put("while", "while.html");
+		tags.put("assert", "assert.html");
+		tags.put("assertion", "assert.html");
+		tags.put("assign", "assignment.html");
+		tags.put("assignment", "assignment.html");
+		tags.put("write", "assignment.html");
+		tags.put("assume", "assume.html");
+		tags.put("axiom", "axiom.html");
+		tags.put("bool", "boolean_operations.html");
+		tags.put("boolean", "boolean_operations.html");
+		tags.put("logical", "boolean_operations.html");
+		tags.put("comment", "comments.html");
+		tags.put("ensure", "ensure.html");
+		tags.put("expression", "expression.html");
+		tags.put("function", "functions.html");
+		tags.put("main", "functions.html");
+		tags.put("return", "functions.html");
+		tags.put("identifier", "identifier.html");
+		tags.put("name", "identifier.html");
 		tags.put("if", "if.html");
+		tags.put("else", "if.html");
 		tags.put("conditional", "if.html");
-		tags.put("assert", "assertion.html");
-		tags.put("ensure", "assertion.html");
-		tags.put("assume", "assertion.html");
-		tags.put("invariant", "assertion.html");
-		tags.put("axiom", "assertion.html");
-		tags.put("vars", "variables.html");
-		tags.put("variable", "variables.html");
-		tags.put("array", "variables.html");
-		tags.put("bool", "boolean_ops.html");
-		tags.put("boolean", "boolean_ops.html");
-		tags.put("logical", "boolean_ops.html");
-		tags.put("int", "integer_ops.html");
-		tags.put("integer", "integer_ops.html");
-		tags.put("function", "function.html");
-		tags.put("return", "function.html");
+		tags.put("help", "index.html");
+		tags.put("integer", "integer_operations.html");
+		tags.put("interpret", "interpreting.html");
+		tags.put("run", "interpreting.html");
+		tags.put("invariant", "invariant.html");
+		tags.put("literal", "literal.html");
+		tags.put("constant", "literal.html");
+		tags.put("program", "program.html");
+		tags.put("syntax", "program.html");
 		tags.put("quantifier", "quantified_expression.html");
 		tags.put("exists", "quantified_expression.html");
 		tags.put("forall", "quantified_expression.html");
-		tags.put("comment", "comments.html");
+		tags.put("statement", "statement.html");
+		tags.put("variable", "variables.html");
+		tags.put("array", "variables.html");
+		tags.put("declaration", "variables.html");
+		tags.put("loop", "while.html");
+		tags.put("while", "while.html");
 	}
 
 	public String[] getTableOfContents() {
