@@ -1,0 +1,63 @@
+<html>
+<head>
+<style>
+<!--
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+-->
+</style>
+<title>Functions</title>
+</head>
+<body>
+<h1>Functions</h1>
+<p>Functions are a sequence of statements which can be executed separately when provided with specified parameters and returning a result.</p>
+<h2>Function Declaration</h2>
+<p>Functions are declared by the type of its return value, the function name, a parameter list and the function body.</p>
+<h3>Syntax</h3>
+<div class="code">
+<span class="code_element">type</span> <span class="code_element">identifier</span> ( [<span class="code_element">type</span> <span class="code_element">identifier</span> [, <span class="code_element">type</span> <span class="code_element">identifier</span>]* ] ) [<span class="code_element">assume</span>] {
+	[<span class="code_element">statement</span>]*
+	return<span class="code_element">expression</span>;
+} [<span class="code_element">ensure</span>]
+</div>
+<h3>Example</h3>
+<div class="code">
+bool f (int x) {
+	return x &gt; 5;
+}
+</div>
+<h2>Main Function</h2>
+<p>Every runnable program must have a main function, which is a special function without a return type. Program execution will start at the beginning of the main function.</p>
+<div class="code">
+main ( [<span class="code_element">type</span> <span class="code_element">identifier</span> [, <span class="code_element">type</span> <span class="code_element">identifier</span>]* ] ) <span class="code_element">assume</span> {
+	[<span class="code_element">statement</span>]*
+} [<span class="code_element">ensure</span>]
+</div>
+<h3>Example</h3>
+<div class="code">
+main() {
+	int x = 4;
+	if(x &lt; 0) {
+		x = -x;
+	}
+}
+</div>
+<h2>Function Call</h2>
+<p>Functions can be called by their name and the parameters in round brackets, which will execute the function with the specified parameters and return a value. Function calls are expressions.</p>
+<h3>Syntax</h3>
+<div class="code">
+<span class="code_element">identifier</span> ( [<span class="code_element">expression</span> [, <span class="code_element">expression</span>]* ] )
+</div>
+<h3>Example</h3>
+<div class="code">
+f(x+3);
+</div>
+</body>
+</html>

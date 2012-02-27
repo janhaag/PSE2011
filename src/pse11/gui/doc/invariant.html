@@ -1,0 +1,39 @@
+<html>
+<head>
+<style>
+<!--
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+-->
+</style>
+<title>Invariant</title>
+</head>
+<body>
+<h1>Invariant</h1>
+<p>An invariant is an assertion which is specific to while statements. The condition of an invariant is checked every time the loop body execution of a while statement is finished.</p>
+<h2>Syntax</h2>
+<div class="code">
+invariant <span class="code_element">quantified expression</span>;
+</div>
+<hr />
+<div class="code">
+invariant { <span class="code_element">quantified expression</span>; [<span class="code_element">quantified expression</span>;]* }
+</div>
+<h2>Example</h2>
+<div class="code">
+int i = 0;
+int s = 0;
+while(i &lt; 5) invariant s == i*(i+1)/2; {
+	i = i + 1;
+	s = s + i;
+}
+</div>
+</body>
+</html>

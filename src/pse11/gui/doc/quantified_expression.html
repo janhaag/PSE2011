@@ -5,6 +5,14 @@
 .code {
 	margin-left: 1.5em;
 	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+.code_inline {
+	font-family: monospace;
 }
 -->
 </style>
@@ -13,19 +21,22 @@
 <body>
 <h1>Quantified Expression</h1>
 <p>Quantified expressions can be used to extend assertion conditions. There are two quantifiers available to use: the exists quantifier and the for all quantifier.</p>
+<p>Every quantified expression can be substituted by an expression.</p>
+
 <h2>Exists</h2>
 <p>The exists quantifier can be used to check if there is at least one value for an integer variable for which a condition is true.</p>
 <h2>For All</h2>
 <p>The for all quantifier can be used to check if all values for an integer variable match a condition.</p>
 <h2>Range</h2>
-<p>Both quantifiers can be supplemented with a range in which the value of the variable has to be in to match the condition. If no range is given, a verification tool will be used to determine if the condition is true or false.</p>
-<h2>Examples</h2>
-<p class="code">
-int x = 4;<br />
-assert exists y(3,6) y == x;
-</p>
-<p class="code">
-assert forall x(0,10) x/2 == (x+1)/2;
-</p>
+<p>Both quantifiers can be supplemented with a range in which the value of the variable has to be in to match the condition.</p>
+<h2>Syntax</h2>
+<div class="code">
+[<span class="code_element">quantifier</span> <span class="code_element">identifier</span>( [<span class="code_element">expression</span>, <span class="code_element">expression</span>] )]*
+</div>
+<p>where <span class="code_inline">quantifier</span> is one of <span class="code_inline">exists</span> or <span class="code_inline">forall</span>.</p>
+<h2>Example</h2>
+<div class="code">
+assert exists j(0,15) j==s;
+</div>
 </body>
 </html>

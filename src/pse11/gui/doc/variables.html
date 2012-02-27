@@ -3,37 +3,64 @@
 <style>
 <!--
 .code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+.code_inline {
 	font-family: monospace;
 }
 -->
 </style>
-<title>Variables</title>
+<title>Variable Declaration</title>
 </head>
 <body>
-<h1>Variables</h1>
+<h1>Variable Declaration</h1>
 <p>Variables are names that can be used to save certain values.	Variables can either hold an integer, a boolean 
 (true or false) or an array of values.</p>
 <h2>Integer Variables</h2>
-<p>Integer variables are declared using the <span class="code">int</span> keyword. These variables can hold a signed integer of any size.</p>
+<p>Integer variables are declared using the int keyword. These variables can hold a signed integer of any size.</p>
+<p>Integer variables are initialized with a default value of 0 if no value is given.</p>
+<h3>Syntax</h3>
+<div class="code">
+int <span class="code_element">identifier</span> [= <span class="code_element">expression</span>];
+</div>
+<h3>Example</h3>
+<div class="code">
+int x;
+int y = -3;
+</div>
 <h2>Boolean Variables</h2>
-<p>Boolean variables are declared using the <span class="code">bool</span> keyword. These variables can hold one of the values <span class="code">true</span> or <span class="code">false</span>.</p>
+<p>Boolean variables are declared using the bool keyword. These variables can hold one of the values true or false.</p>
+<p>Boolean variables are initialized with a default value of false if no value is given.<p>
+<h3>Syntax</h3>
+<div class="code">
+bool <span class="code_element">identifier</span> [= <span class="code_element">expression</span>];
+</div>
+<h3>Example</h3>
+<div class="code">
+bool r;
+bool s = true;
+</div>
 <h2>Arrays</h2>
-<p>Arrays can hold many values of a single type. 
-Arrays can be declared by adding square brackets (<span class="code">[]</span>) to the type of a variable declaration to specify the dimension of the array and specifying the size of each dimension by using the <span class="code">array</span> keyword followed by square brackets which contain the size of each dimension. Arrays will count their components starting with 0. 
+<p>Arrays can hold many values of a single type.
+Arrays can be declared by adding square brackets (<span class="code_inline">[]</span>) to the type of a variable declaration to specify the dimension of the array and specifying the size of each dimension by using the <span class="code_inline">array</span> keyword followed by square brackets which contain the size of each dimension. Arrays will count their components starting with 0. 
 To access a component of an array, use the name of the array followed by one pair of square brackets containing the index for each dimension. When accessing array components, there will be an implicit check if the indices provided are inside of the array's bounds. 
-The length of an array can be obtained by using the <span class="code">len</span> function and providing the name of the array as parameter.</p>
-<h2>Examples</h2>
-<p class="code">
-int x;<br />
-int y = 5;<br />
-</p>
-<p class="code">
-bool a = true;<br />
-bool b;<br />
-</p>
-<p class="code">
-int[] s = array[5];<br />
-bool[][] t = array[4][6];<br />
-</p>
+The length of an array can be obtained by using the <span class="code_inline">len</span> function and providing the name of the array as parameter.</p>
+<p>Every component of an array is initialized to the default value of the component's type, i.e. 0 for integer variables and false for boolean variables.
+<h3>Syntax</h3>
+<div class="code">
+<span class="code_element">type</span>[[]]+ <span class="code_element">identifier</span> = array[[<span class="code_element">expression</span>]]+;
+</div>
+<p>where <span class="code_inline">type</span> is one of <span class="code_inline">int</span> or <span class="code_inline">bool</span>.</p>
+<h3>Example</h3>
+<div class="code">
+int[] a = array[4];
+bool[][] b = array[6][4];
+</div>
 </body>
 </html>

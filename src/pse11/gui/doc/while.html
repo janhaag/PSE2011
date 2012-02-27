@@ -3,26 +3,40 @@
 <style>
 <!--
 .code {
+	margin-left: 1.5em;
 	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
 }
 -->
 </style>
-<title>While-Loop</title>
+<title>While Statement</title>
 </head>
 <body>
-<h1>While-Loop</h1>
-<p>A while-Loop is control flow statement. 
+<h1>While Statement</h1>
+<p>A while statement is a control flow statement. 
 The statement block following the while-statement is only executed if a specified condition is true. 
 If the condition is true after leaving that statement block, the statement block is entered again. 
 If the condition is false when encountering a while-statement during execution or after leaving the statement block after a 
 while-statement, the execution continues after that statement block. 
-A while-loop can be extended by the assertion statements <span class="code">invariant</span> and <span class="code">ensure</span>, which are optional. See the article about assertions for further information. 
-</p>
+A while-loop can be extended by the assertion statements invariant and ensure, which are optional. See the article about assertions for further information.
 <h2>Syntax</h2>
-<p class="code">
-while(condition) invariant-statement { <br />
-<span class="code">while-block</span><br />
-} ensure statement
-</p>
+<div class="code">
+while ( <span class="code_element">expression</span> ) [<span class="code_element">invariant</span>] {
+	[<span class="code_element">statement</span>]*
+} [<span class="code_element">ensure</span>]
+</div>
+<h2>Example</h2>
+<div class="code">
+int i = 0;
+int s = 0;
+while(i &lt; 5) {
+	i = i + 1;
+	s = s + i;
+}
+</div>
 </body>
 </html>

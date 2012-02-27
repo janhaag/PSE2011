@@ -1,0 +1,39 @@
+<html>
+<head>
+<style>
+<!--
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+-->
+</style>
+<title>Assume</title>
+</head>
+<body>
+<h1>Assume</h1>
+<p>Functions (including the main function) can be extended by using assumes. Assumes are special assertions that are checked once on function body entry.</p>
+<h2>Syntax</h2>
+<div class="code">
+assume <span class="code_element">quantified expression</span>;
+</div>
+<hr />
+<div class="code">
+assume { <span class="code_element">quantified expression</span>; [<span class="code_element">quantified expression</span>;]* }
+</div>
+<h2>Example</h2>
+<div class="code">
+bool f (int x) assume x &gt; 3; {
+	return x &gt; 5;
+}
+int g (int x) assume {x &gt; 3; x &lt; 10;} {
+	return x * 2;
+}
+</div>
+</body>
+</html>

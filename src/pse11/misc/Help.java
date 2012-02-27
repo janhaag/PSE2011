@@ -19,15 +19,26 @@ public class Help {
 		// LinkedHashMap used for ordering
 		tableOfContents = new LinkedHashMap<String, String>();
 		tableOfContents.put("Introduction", "index.html");
+		tableOfContents.put("Interpreting", "interpreting.html");
 		tableOfContents.put("Comments", "comments.html");
-		tableOfContents.put("While-Loop", "while.html");
-		tableOfContents.put("If-Statement", "if.html");
-		tableOfContents.put("Assertion", "assertion.html");
+		tableOfContents.put("Program", "program.html");
+		tableOfContents.put("Functions", "functions.html");
+		tableOfContents.put("Statement", "statement.html");
+		tableOfContents.put("Expression", "expression.html");
+		tableOfContents.put("Assignment", "assignment.html");
+		tableOfContents.put("While Statement", "while.html");
+		tableOfContents.put("If Statement", "if.html");
+		tableOfContents.put("Assert", "assert.html");
+		tableOfContents.put("Assume", "assume.html");
+		tableOfContents.put("Ensure", "ensure.html");
+		tableOfContents.put("Axiom", "axiom.html");
+		tableOfContents.put("Invariant", "invariant.html");
 		tableOfContents.put("Quantified Expressions", "quantified_expression.html");
 		tableOfContents.put("Variables", "variables.html");
-		tableOfContents.put("Boolean Operations", "boolean_ops.html");
-		tableOfContents.put("Integer Operations", "integer_ops.html");
-		tableOfContents.put("Functions", "function.html");
+		tableOfContents.put("Literal", "literal.html");
+		tableOfContents.put("Identifier", "identifier.html");
+		tableOfContents.put("Boolean Operations", "boolean_operations.html");
+		tableOfContents.put("Integer Operations", "integer_operations.html");
 		
 
 		tags = new HashMap<String, String>();

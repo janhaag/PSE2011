@@ -1,0 +1,36 @@
+<html>
+<head>
+<style>
+<!--
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+-->
+</style>
+<title>Assert</title>
+</head>
+<body>
+<h1>Assert</h1>
+<p>An assertion is a predicate that describes the current state of a program.</p>
+<p>
+If an assertion is encountered while running a program, the condition of that assertion will be checked.
+If the condition is false, the program execution will halt; otherwise, the program execution will continue.
+The condition of an assertion is an expression that is evaluated to a boolean, allowing the usage of quantified expressions. 
+</p>
+<h2>Syntax</h2>
+<div class="code">
+assert <span class="code_element">quantified expression</span>;
+</div>
+<h2>Example</h2>
+<div class="code">
+int x = 5;
+assert x > 0;
+</div>
+</body>
+</html>

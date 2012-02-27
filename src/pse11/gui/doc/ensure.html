@@ -1,0 +1,39 @@
+<html>
+<head>
+<style>
+<!--
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
+}
+-->
+</style>
+<title>Ensure</title>
+</head>
+<body>
+<h1>Ensure</h1>
+<p>Ensure statements can be added to functions or while statements. Ensures are special assertions that are checked once the execution of the function body or the loop body is finished.</p>
+<h2>Syntax</h2>
+<div class="code">
+ensure <span class="code_element">quantified expression</span>;
+</div>
+<hr />
+<div class="code">
+ensure { <span class="code_element">quantified expression</span>; [<span class="code_element">quantified expression</span>;]* }
+</div>
+<h2>Example</h2>
+<div class="code">
+main() {
+	int x = 4;
+	if(x &lt; 0) {
+		x = -x;
+	}
+} ensure x > 0;
+</div>
+</body>
+</html>

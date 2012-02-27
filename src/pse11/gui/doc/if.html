@@ -5,24 +5,36 @@
 .code {
 	margin-left: 1.5em;
 	font-family: monospace;
+	white-space: pre;
+	line-height: 1.5em;
+}
+.code_element {
+	border: 1px solid black;
 }
 -->
 </style>
-<title>If-Statement</title>
+<title>If Statement</title>
 </head>
 <body>
-<h1>If-Statement</h1>
+<h1>If Statement</h1>
 <p>An If-Statement is a control flow statement. 
 The statement block following an if-statement is only executed if a specified condition is true. 
-Additionally, there can be a statement block following an "else", which will be executed if the specified condition is false.
-</p>
+Additionally, there can be a statement block following an "else", which will be executed if the specified condition is false.</p>
 <h2>Syntax</h2>
-<p class="code">
-if(condition) {<br />
-<span class="code">if-block</span><br />
-} else {<br />
-<span class="code">else-block</span><br />
+<div class="code">
+if ( <span class="code_element">expression</span> ) {
+	[<span class="code_element">statement</span>]*
+} [else {
+	[<span class="code_element">statement</span>]*
+}]
+</div>
+<h2>Example</h2>
+<div class="code">
+if (x &lt; 0) {
+	x = -x;
+} else {
+	x = x * x;
 }
-<p>
+</div>
 </body>
 </html>
