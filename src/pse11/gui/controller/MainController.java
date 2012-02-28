@@ -146,12 +146,16 @@ public class MainController implements SelectionListener {
 			this.mainframe.getEditor().getTextField().setSelection(selection.x);
 			
 			String cut = source.substring(selection.x, selection.y);
-			this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});
+			if(cut != null && cut != "") {
+				this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});
+			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {
 			Point selection = this.mainframe.getEditor().getSelection();
 			String source = this.mainframe.getEditor().getText();
 			String copy = source.substring(selection.x, selection.y);
-			this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
+			if(copy != null && copy != "") {
+				this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
+			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {
 			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());
 			if(paste != null && !paste.equals("")) {
