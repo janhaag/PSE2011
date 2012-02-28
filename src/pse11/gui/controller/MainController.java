@@ -1,12 +1,15 @@
 package gui.controller;
 
 import gui.AboutFrame;
+import gui.Console;
 import gui.FileFrame;
 import gui.HelpFrame;
 import gui.MainFrame;
 import gui.ParameterFrame;
 import gui.RandomTestFrame;
 import gui.SettingsFrame;
+
+import interpreter.StatementBreakpoint;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,10 +18,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import misc.Editor;
 import misc.ExecutionHandler;
 import misc.Help;
+import misc.Message;
 import misc.MessageSystem;
 import misc.Settings;
 
@@ -115,16 +120,55 @@ public class MainController implements SelectionListener {
 			if (openFileFrame.getChosenFile() != null) {
 				String fileText = getFileAsString(openFileFrame.getChosenFile());
 				if (fileText != null) {
-					this.mainframe.getEditor().setText(fileText);
+					this.editorController.getEditor().setSource(fileText);
+
+					//clear consoles
+					for(Console console : this.mainframe.getConsole()) {
+						console.updateConsole(new ArrayList<Message>());
+					}
+					
+					//delete breakpoints
+					//save all lines first, otherwise there will be an exception because of concurrent modification
+					ArrayList<StatementBreakpoint> breakpoints = this.editorController.getEditor().getStatementBreakpoints();
+					int[] lines = new int[breakpoints.size()];
+					for(int i = 0; i < breakpoints.size(); i++) {
+						lines[i] = breakpoints.get(i).getLine();
+					}
+					for(int i = 0; i < lines.length; i++) {
+						this.editorController.getEditor().addBreakpoint(lines[i]);
+						this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);
+					}
+					
+					//stop execution
+					this.stopView();
 				}
 			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSave()) {
 			FileFrame saveFileFrame = new FileFrame(this.mainframe.getShell(), SWT.SAVE);
 			if (saveFileFrame.getChosenFile() != null) {
-				writeStringToFile(this.mainframe.getEditor().getText(), saveFileFrame.getChosenFile());
+				writeStringToFile(this.editorController.getEditor().getSource(), saveFileFrame.getChosenFile());
 			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemNewFile()) {
 			this.editorController.getEditor().setSource("");
+			//clear consoles
+			for(Console console : this.mainframe.getConsole()) {
+				console.updateConsole(new ArrayList<Message>());
+			}
+			
+			//delete breakpoints
+			//save all lines first, otherwise there will be an exception because of concurrent modification
+			ArrayList<StatementBreakpoint> breakpoints = this.editorController.getEditor().getStatementBreakpoints();
+			int[] lines = new int[breakpoints.size()];
+			for(int i = 0; i < breakpoints.size(); i++) {
+				lines[i] = breakpoints.get(i).getLine();
+			}
+			for(int i = 0; i < lines.length; i++) {
+				this.editorController.getEditor().addBreakpoint(lines[i]);
+				this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);
+			}
+			
+			//stop execution
+			this.stopView();
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
@@ -146,12 +190,16 @@ public class MainController implements SelectionListener {
 			this.mainframe.getEditor().getTextField().setSelection(selection.x);
 			
 			String cut = source.substring(selection.x, selection.y);
-			this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});
+			if(cut != null && cut != "") {
+				this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});
+			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {
 			Point selection = this.mainframe.getEditor().getSelection();
 			String source = this.mainframe.getEditor().getText();
 			String copy = source.substring(selection.x, selection.y);
-			this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
+			if(copy != null && copy != "") {
+				this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});
+			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {
 			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());
 			if(paste != null && !paste.equals("")) {
