@@ -47,7 +47,7 @@ public class Interpreter implements ASTVisitor {
     /**
      * Checks the assumptions, given a specified state.
      * @param state state used to evaluate the assumptions
-     * @param assumptions assumtions to evaluate
+     * @param assumptions assumptions to evaluate
      */
     public void checkAssumptions(State state, Assumption[] assumptions) {
         currentState = state;
@@ -128,22 +128,12 @@ public class Interpreter implements ASTVisitor {
                 tempValue = new IntegerValue(newValue.toString());
             }
             if (operator instanceof Division) {
-                BigInteger newValue;
-                if (value2.equals(BigInteger.ZERO)) {
-                    newValue = BigInteger.ZERO;
-                } else {
-                    newValue = divide(value1, value2);
-                }
+                BigInteger newValue = divide(value1, value2);
                 tempValue = new IntegerValue(newValue.toString());
             }
             if (operator instanceof Modulo) {
-                BigInteger newValue;
-                if (value2.equals(BigInteger.ZERO)) {
-                    newValue = value1;
-                } else {
-                    newValue = value2.multiply(divide(value1, value2));
-                    newValue = value1.subtract(newValue);
-                }
+                BigInteger newValue = value2.multiply(divide(value1, value2));
+                newValue = value1.subtract(newValue);
                 tempValue = new IntegerValue(newValue.toString());
             }
         } else {
@@ -274,9 +264,6 @@ public class Interpreter implements ASTVisitor {
             index.accept(this);
             int pos = ((IntegerValue) tempValue).getValue().intValue();
             Value[] values = ((ArrayValue) value).getValues();
-            if (pos < 0 || pos >= values.length) {
-                pos = 0;
-            }
             value = values[pos];
         }
         tempValue = value;
@@ -429,8 +416,7 @@ public class Interpreter implements ASTVisitor {
         int[] lengths = new int[indices.length];
         for (int i = 0; i < indices.length; i++) {
             indices[i].accept(this);
-            int length = ((IntegerValue) tempValue).getValue().intValue();
-            lengths[i] = (length > 0) ? length : 1;
+            lengths[i] = ((IntegerValue) tempValue).getValue().intValue();
         }
         currentState.createArray(arrDec.getName(), arrDec.getType(), lengths);
         adjustStatement();

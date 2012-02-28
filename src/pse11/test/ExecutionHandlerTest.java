@@ -44,6 +44,30 @@ public class ExecutionHandlerTest {
     }
 
     @Test
+    public void testArrayEqual() {
+        executionHandler.parse("main() {bool[] x = array[3];" +
+                "bool[] y = array[3];} ensure x == y;");
+        executionHandler.run(stmtBps, glblBps);
+        assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testArrayNotEqualValues() {
+        executionHandler.parse("main() {bool[] x = array[3];" +
+                "bool[] y = array[3]; y[2] = true;} ensure x != y;");
+        executionHandler.run(stmtBps, glblBps);
+        assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
+    public void testArrayNotEqualLength() {
+        executionHandler.parse("main() {bool[] x = array[3];" +
+                "bool[] y = array[4];} ensure x != y;");
+        executionHandler.run(stmtBps, glblBps);
+        assertNull(executionHandler.getAssertionFailureMessage());
+    }
+
+    @Test
     public void testDivision() {
         executionHandler.parse("main() {assert 4/2==2; assert 5/3==1;" +
                 "assert (-4)/2==-2; assert (-5)/3==-2;" +
@@ -187,7 +211,7 @@ public class ExecutionHandlerTest {
 
     @Test
     public void testEmptyExists() {
-        executionHandler.parse("main() {}ensure exists() false;");
+        executionHandler.parse("main() {}ensure exists h() false;");
         executionHandler.run(stmtBps, glblBps);
 		assertNull(executionHandler.getAssertionFailureMessage());
     }
