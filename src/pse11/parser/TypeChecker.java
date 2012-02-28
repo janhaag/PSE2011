@@ -114,17 +114,13 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
         Value value = vars.get(identifier);
-        Expression[] indices = arrayAssignment.getIndices();
-        for (Expression index : indices) {
-            index.accept(this);
-            if (!(tempType instanceof IntegerType)) {
-                throw new IllegalTypeException("Index must be an integer "
-                                               + "expression!",
-                                               arrayAssignment.getPosition());
-            }
+        if (value == null) {
+            throw new IllegalTypeException("Variable " + identifier.getName()
+                                           + " was read but not declared!",
+                                           arrayAssignment.getPosition());
         }
         arrayAssignment.getValue().accept(this);
-        Type type = baseType(value.getType(), indices.length,
+        Type type = baseType(value.getType(), arrayAssignment.getIndices().length,
                      arrayAssignment.getPosition());
         if (type instanceof ArrayType) {
             throw new IllegalTypeException("Cannot assign a value to an array "
@@ -325,17 +321,8 @@ public class TypeChecker implements ASTVisitor {
                                            + " was read but not declared!",
                                            arrayRead.getPosition());
         }
-        Expression[] indices = arrayRead.getIndices();
-        for (Expression index : indices) {
-            index.accept(this);
-            if (!(tempType instanceof IntegerType)) {
-                throw new IllegalTypeException("Index must be an integer "
-                                               + "expression!",
-                                               arrayRead.getPosition());
-            }
-        }
-        tempType =
-             baseType(value.getType(), indices.length, arrayRead.getPosition());
+        tempType = baseType(value.getType(), arrayRead.getIndices().length,
+                     arrayRead.getPosition());
         arrayRead.setType(tempType);
         arrayRead.setDepth(currentScope.getDepthOfVariable(arrayRead.getVariable()));
     }
@@ -417,6 +404,11 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = assignment.getIdentifier();
         Value value = vars.get(identifier);
+        if (value == null) {
+            throw new IllegalTypeException("Variable " + identifier.getName()
+                                           + " was read but not declared!",
+                                           assignment.getPosition());
+        }
         if (value.getType() instanceof ArrayType) {
             throw new IllegalTypeException("Cannot assign a value to an array "
                                            + "that is not fully indexed!",
@@ -562,14 +554,6 @@ public class TypeChecker implements ASTVisitor {
                                            arrDec.getPosition());    
         }
         Expression[] indices = arrDec.getIndices();
-        for (Expression index : indices) {
-            index.accept(this);
-            if (!(tempType instanceof IntegerType)) {
-                throw new IllegalTypeException("Index must be an integer "
-                                               + "expression!",
-                                               arrDec.getPosition());
-            }
-        }
         if (baseType(arrDec.getType(), indices.length, arrDec.getPosition())
                 instanceof ArrayType) {
             throw new IllegalTypeException("Type of array declaration does not"

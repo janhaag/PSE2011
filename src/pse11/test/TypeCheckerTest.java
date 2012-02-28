@@ -420,6 +420,20 @@ public class TypeCheckerTest {
         assertTrue(success);
     }
 
+    @Test
+    public void testCorrectScoping() throws RecognitionException {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main() {bool i;if(i){" +
+                    "i=true;int i;i=9;}i=false;}");
+        } catch (RecognitionException e) {
+            success = false;
+        } catch (IllegalTypeException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
     @Test (expected = IllegalTypeException.class)
     public void testWhileConditionNotBoolean() throws RecognitionException {
         parserInterface.parseProgram("main() {int c; while (c){}}");
@@ -538,7 +552,7 @@ public class TypeCheckerTest {
 
     @Test (expected = IllegalTypeException.class)
     public void testArrayNotFullyIndexed() throws RecognitionException {
-        parserInterface.parseProgram("main() {bool[] i = array[6];i=true;}");
+        parserInterface.parseProgram("main() {bool[][] i = array[6][1];i[1]=true;}");
     }
 
     @Test (expected = IllegalTypeException.class)
@@ -555,6 +569,11 @@ public class TypeCheckerTest {
     @Test (expected = IllegalTypeException.class)
     public void testArrayAlreadyDeclared() throws RecognitionException {
         parserInterface.parseProgram("main() {bool i; bool[] i = array[7];}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayWrongBaseType() throws RecognitionException {
+        parserInterface.parseProgram("main() {bool[] i = array[7];i[1]=1;}");
     }
 
     @Test (expected = IllegalTypeException.class)
@@ -669,8 +688,25 @@ public class TypeCheckerTest {
         parserInterface.parseProgram("main() {int i = w[1];}");
     }
 
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongScoping1() throws RecognitionException {
+        parserInterface.parseProgram("main() {if(true){}else{int i;} i=2;}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongScoping2() throws RecognitionException {
+        parserInterface.parseProgram("main() {bool i;if(i){int i;i=true;}}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongScoping3() throws RecognitionException {
+        parserInterface.parseProgram("main() {" +
+                "if(true){}else{int[] i=array[1];} i[1]=2;}");
+    }
+
     @Test (expected = FunctionCallNotAllowedException.class)
     public void testFunctionCallNotAllowed() throws RecognitionException {
-        parserInterface.parseProgram("int f(){return 0;} main() {} ensure g();");
+        parserInterface.parseProgram("int g(int x){return 0;}" +
+                "main() {} ensure g(1);");
     }
 }
