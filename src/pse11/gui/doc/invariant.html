@@ -1,18 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-<!--
-.code {
-	margin-left: 1.5em;
-	font-family: monospace;
-	white-space: pre;
-	line-height: 1.5em;
-}
-.code_element {
-	border: 1px solid black;
-}
--->
-</style>
 <title>Invariant</title>
 </head>
 <body>
@@ -24,7 +12,7 @@ invariant <span class="code_element">quantified expression</span>;
 </div>
 <hr />
 <div class="code">
-invariant { <span class="code_element">quantified expression</span>; [<span class="code_element">quantified expression</span>;]* }
+invariant { <span class="code_element">quantified expression</span>; <span class="code_optional"><span class="code_element">quantified expression</span>;<span class="code_mult">*</span></span> }
 </div>
 <h2>Example</h2>
 <div class="code">

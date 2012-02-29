@@ -2,3 +2,28 @@ body {
 	font-family: sans-serif;
 	font-size: 0.8em;
 }
+.code {
+	margin-left: 1.5em;
+	font-family: monospace;
+	white-space: pre;
+	line-height:1.7em;
+}
+.code_inline {
+	font-family: monospace;
+	white-space: pre;
+}
+.code_element {
+	position:relative;
+	border: 1px solid black;
+}
+.code_optional {
+	position:relative;
+	border: 1px dashed black;
+	padding: 2px;
+	margin: 2px;
+}
+.code_mult {
+	position:absolute;
+	line-height:1em;
+	bottom:1.3em;
+}

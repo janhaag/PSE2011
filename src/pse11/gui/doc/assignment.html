@@ -1,18 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-<!--
-.code {
-	margin-left: 1.5em;
-	font-family: monospace;
-	white-space: pre;
-	line-height: 1.5em;
-}
-.code_element {
-	border: 1px solid black;
-}
--->
-</style>
 <title>Assignment</title>
 </head>
 <body>
@@ -20,7 +8,11 @@
 <p>Assignments are statements that assign a new value to a variable. A variable must be declared before it can be assigned a value.</p>
 <h2>Syntax</h2>
 <div class="code">
-<span class="code_element">identifier</span>[[<span class="code_element">expression</span>]]* = <span class="code_element">expression</span>;
+<span class="code_element">identifier</span> = <span class="code_element">expression</span>;
+</div>
+<p>When using an array variable, you have to specify the index of each dimension:</p>
+<div class="code" style="margin-top:0.5em">
+<span class="code_element">identifier</span><span class="code_optional"><span class="code_element">expression</span><span class="code_mult">*</span></span> = <span class="code_element">expression</span>;
 </div>
 <h2>Example</h2>
 <div class="code">

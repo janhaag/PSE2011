@@ -1,18 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-<!--
-.code {
-	margin-left: 1.5em;
-	font-family: monospace;
-	white-space: pre;
-	line-height: 1.5em;
-}
-.code_element {
-	border: 1px solid black;
-}
--->
-</style>
 <title>While Statement</title>
 </head>
 <body>
@@ -25,9 +13,9 @@ while-statement, the execution continues after that statement block.
 A while-loop can be extended by the assertion statements invariant and ensure, which are optional. See the article about assertions for further information.
 <h2>Syntax</h2>
 <div class="code">
-while ( <span class="code_element">expression</span> ) [<span class="code_element">invariant</span>] {
-	[<span class="code_element">statement</span>]*
-} [<span class="code_element">ensure</span>]
+while ( <span class="code_element">expression</span> ) <span class="code_optional"><span class="code_element">invariant</span></span> {
+	<span class="code_optional" style="line-height:3em"><span class="code_element">statement</span><span class="code_mult">*</span></span>
+} <span class="code_optional"><span class="code_element">ensure</span></span>
 </div>
 <h2>Example</h2>
 <div class="code">

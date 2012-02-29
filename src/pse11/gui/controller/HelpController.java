@@ -65,7 +65,7 @@ public class HelpController {
 				String similarTag = findSimilarTag(search.toLowerCase(), help.getTags());
 				String helpText = help.getHelpByTag(similarTag);
 
-				String styleSheet = help.getSmallStyle();
+				String styleSheet = help.getSmallStyle() + help.getDefaultStyle();
 				helpText = helpText.replaceAll("<head>", "<head><style type=\"text/css\"><!--" + styleSheet + "--></style>");
 				helpBox.setText(helpText);
 			}

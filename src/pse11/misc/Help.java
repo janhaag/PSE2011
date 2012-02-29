@@ -111,7 +111,7 @@ public class Help {
 			String fileText = new String();
 			try {
 				while ((line = inReader.readLine()) != null) {
-					fileText += line;
+					fileText += line + System.getProperty("line.separator");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

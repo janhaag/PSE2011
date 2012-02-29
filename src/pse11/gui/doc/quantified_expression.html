@@ -1,21 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-<!--
-.code {
-	margin-left: 1.5em;
-	font-family: monospace;
-	white-space: pre;
-	line-height: 1.5em;
-}
-.code_element {
-	border: 1px solid black;
-}
-.code_inline {
-	font-family: monospace;
-}
--->
-</style>
 <title>Quantified Expression</title>
 </head>
 <body>
@@ -31,7 +16,7 @@
 <p>Both quantifiers can be supplemented with a range in which the value of the variable has to be in to match the condition.</p>
 <h2>Syntax</h2>
 <div class="code">
-[<span class="code_element">quantifier</span> <span class="code_element">identifier</span>( [<span class="code_element">expression</span>, <span class="code_element">expression</span>] )]*
+<span class="code_optional"><span class="code_element">quantifier</span> <span class="code_element">identifier</span>( <span class="code_optional"><span class="code_element">expression</span>, <span class="code_element">expression</span></span> )<span class="code_mult">*</span></span>
 </div>
 <p>where <span class="code_inline">quantifier</span> is one of <span class="code_inline">exists</span> or <span class="code_inline">forall</span>.</p>
 <h2>Example</h2>

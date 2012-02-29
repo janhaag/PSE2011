@@ -1,21 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-<!--
-.code {
-	margin-left: 1.5em;
-	font-family: monospace;
-	white-space: pre;
-	line-height: 1.5em;
-}
-.code_element {
-	border: 1px solid black;
-}
-.code_inline {
-	font-family: monospace;
-}
--->
-</style>
 <title>Variable Declaration</title>
 </head>
 <body>
@@ -27,7 +12,7 @@
 <p>Integer variables are initialized with a default value of 0 if no value is given.</p>
 <h3>Syntax</h3>
 <div class="code">
-int <span class="code_element">identifier</span> [= <span class="code_element">expression</span>];
+int <span class="code_element">identifier</span> <span class="code_optional">= <span class="code_element">expression</span></span>;
 </div>
 <h3>Example</h3>
 <div class="code">
@@ -39,7 +24,7 @@ int y = -3;
 <p>Boolean variables are initialized with a default value of false if no value is given.<p>
 <h3>Syntax</h3>
 <div class="code">
-bool <span class="code_element">identifier</span> [= <span class="code_element">expression</span>];
+bool <span class="code_element">identifier</span> <span class="code_optional">= <span class="code_element">expression</span></span>;
 </div>
 <h3>Example</h3>
 <div class="code">
@@ -54,7 +39,7 @@ The length of an array can be obtained by using the <span class="code_inline">le
 <p>Every component of an array is initialized to the default value of the component's type, i.e. 0 for integer variables and false for boolean variables.
 <h3>Syntax</h3>
 <div class="code">
-<span class="code_element">type</span>[[]]+ <span class="code_element">identifier</span> = array[[<span class="code_element">expression</span>]]+;
+<span class="code_element">type</span>[]<span class="code_optional">[]<span class="code_mult">*</span></span> <span class="code_element">identifier</span> = array[<span class="code_element">expression</span>]<span class="code_optional">[<span class="code_element">expression</span>]<span class="code_mult">*</span></span>;
 </div>
 <p>where <span class="code_inline">type</span> is one of <span class="code_inline">int</span> or <span class="code_inline">bool</span>.</p>
 <h3>Example</h3>

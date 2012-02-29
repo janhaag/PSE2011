@@ -1,18 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-<!--
-.code {
-	margin-left: 1.5em;
-	font-family: monospace;
-	white-space: pre;
-	line-height: 1.5em;
-}
-.code_element {
-	border: 1px solid black;
-}
--->
-</style>
 <title>Functions</title>
 </head>
 <body>
@@ -22,10 +10,10 @@
 <p>Functions are declared by the type of its return value, the function name, a parameter list and the function body.</p>
 <h3>Syntax</h3>
 <div class="code">
-<span class="code_element">type</span> <span class="code_element">identifier</span> ( [<span class="code_element">type</span> <span class="code_element">identifier</span> [, <span class="code_element">type</span> <span class="code_element">identifier</span>]* ] ) [<span class="code_element">assume</span>] {
-	[<span class="code_element">statement</span>]*
-	return<span class="code_element">expression</span>;
-} [<span class="code_element">ensure</span>]
+<span class="code_element">type</span> <span class="code_element">identifier</span> ( <span class="code_optional" style="padding-top:6px"><span class="code_element">type</span> <span class="code_element">identifier</span> <span class="code_optional">, <span class="code_element">type</span> <span class="code_element">identifier</span><span class="code_mult">*</span></span> </span> ) <span class="code_optional"><span class="code_element">assume</span></span> {
+	<span class="code_optional" style="line-height:4em;"><span class="code_element">statement</span><span class="code_mult">*</span></span>
+	return <span class="code_element">expression</span>;
+} <span class="code_optional"><span class="code_element">ensure</span></span>
 </div>
 <h3>Example</h3>
 <div class="code">
@@ -36,9 +24,9 @@ bool f (int x) {
 <h2>Main Function</h2>
 <p>Every runnable program must have a main function, which is a special function without a return type. Program execution will start at the beginning of the main function.</p>
 <div class="code">
-main ( [<span class="code_element">type</span> <span class="code_element">identifier</span> [, <span class="code_element">type</span> <span class="code_element">identifier</span>]* ] ) <span class="code_element">assume</span> {
-	[<span class="code_element">statement</span>]*
-} [<span class="code_element">ensure</span>]
+main ( <span class="code_optional" style="padding-top:6px"><span class="code_element">type</span> <span class="code_element">identifier</span> <span class="code_optional">, <span class="code_element">type</span> <span class="code_element">identifier</span><span class="code_mult">*</span></span> </span> ) <span class="code_optional"><span class="code_element">assume</span></span> {
+	<span class="code_optional" style="line-height:4em;"><span class="code_element">statement</span><span class="code_mult">*</span></span>
+} <span class="code_optional"><span class="code_element">ensure</span></span>
 </div>
 <h3>Example</h3>
 <div class="code">
@@ -53,11 +41,11 @@ main() {
 <p>Functions can be called by their name and the parameters in round brackets, which will execute the function with the specified parameters and return a value. Function calls are expressions.</p>
 <h3>Syntax</h3>
 <div class="code">
-<span class="code_element">identifier</span> ( [<span class="code_element">expression</span> [, <span class="code_element">expression</span>]* ] )
+<span class="code_element">identifier</span> ( <span class="code_optional" style="padding-top:6px"><span class="code_element">expression</span> <span class="code_optional">, <span class="code_element">expression</span><span class="code_mult">*</span></span> </span> )
 </div>
 <h3>Example</h3>
 <div class="code">
-f(x+3);
+f(x+3)
 </div>
 </body>
 </html>
