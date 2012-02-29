@@ -14,6 +14,8 @@
 <div class="code" style="margin-top:0.5em">
 <span class="code_element">identifier</span><span class="code_optional"><span class="code_element">expression</span><span class="code_mult">*</span></span> = <span class="code_element">expression</span>;
 </div>
+<p>Note that there is an implicit check if array indices are valid (greater than or equal to zero and lower than the length of the dimension) for an array when assigning values to it, so the interpreter will stop twice for array assignments in single step mode.<p>
+<p>Also note that an array assignment is only valid on completely indexed arrays, i.e. every dimension of an array has to be indexed. Assignments to non-completely indexed arrays (e.g. 'a = ...', where a is an int[]) are not possible.</p>
 <h2>Example</h2>
 <div class="code">
 int x;
