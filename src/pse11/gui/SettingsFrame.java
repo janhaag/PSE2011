@@ -22,6 +22,7 @@ public class SettingsFrame extends Frame {
 	private Text verifierPathTextField;
 	private Button saveButton;
 	private Button closeButton;
+	private Button browseButton;
 	private Label errorLabel;
 	
 	/**
@@ -36,7 +37,7 @@ public class SettingsFrame extends Frame {
 		
 		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 		//Please mind >all< components before resizing the view
-		this.shell.setSize(320,270);
+		this.shell.setSize(340,300);
 		this.shell.setText("Settings");
 		
 		//Setting layout
@@ -85,6 +86,11 @@ public class SettingsFrame extends Frame {
 		gData = new GridData(GridData.FILL_HORIZONTAL);
 		gData.horizontalSpan = 3;
 		this.verifierPathTextField.setLayoutData(gData);
+		this.browseButton = new Button(settingsGroup, SWT.PUSH | SWT.RIGHT);
+		this.browseButton.setText(" Browse ");
+		gData = new GridData();
+		gData.horizontalSpan = 3;
+		this.browseButton.setLayoutData(gData);
 		
 		//Add buttons
 		final Composite buttoncomposite = new Composite(this.shell, SWT.NONE);
@@ -112,6 +118,7 @@ public class SettingsFrame extends Frame {
 		
 		//Add event listeners
 		this.saveButton.addSelectionListener(this.controller.getSaveButtonListener());
+		this.browseButton.addSelectionListener(this.controller.getBrowseButtonListener());
 		this.closeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				close();
@@ -151,5 +158,19 @@ public class SettingsFrame extends Frame {
 			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(0, 255, 0)));
 		}
 		this.errorLabel.setVisible(true);
+	}
+	public void hideMessage() {
+		this.errorLabel.setVisible(false);
+	}
+	public void openFileDialog() {
+		FileDialog fd = new FileDialog(this.shell, SWT.OPEN);
+		fd.setText("Choose verifier path");
+		String[] filterExt = {"*.*", ".exe"};
+		fd.setFilterExtensions(filterExt);
+		String selected = null;
+		if((selected = fd.open()) != null) {
+			this.verifierPathTextField.setText(selected);
+			this.hideMessage();
+		}
 	}
 }
