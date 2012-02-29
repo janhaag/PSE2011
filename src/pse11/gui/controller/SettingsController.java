@@ -73,6 +73,15 @@ public class SettingsController {
 	}
 	
 	/**
+	 * Return a new listener instance to browse the verifier path.
+	 * 
+	 * @return listener
+	 */
+	public BrowseVerifierPath getBrowseButtonListener() {
+		return new BrowseVerifierPath();
+	}
+	
+	/**
 	 * Display error message.
 	 */
 	private void invalidInput() {
@@ -107,6 +116,17 @@ public class SettingsController {
 			frame.displayMessage(false, "Settings saved.");
 			frame.update();
 		}
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+		}
+	}
+	
+	private class BrowseVerifierPath implements SelectionListener {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			frame.openFileDialog();
+		}
+
 		@Override
 		public void widgetDefaultSelected(SelectionEvent e) {
 		}
