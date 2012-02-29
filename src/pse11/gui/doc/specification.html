@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Specification</title>
+</head>
+<body>
+<h1>Specification</h1>
+<p>A specification is one of the following:</p>
+<ul>
+	<li>assert</li>
+	<li>assume</li>
+	<li>ensure</li>
+	<li>invariant</li>
+	<li>axiom</li>
+</ul>
+<h2>Interpreting</h2>
+<p>When interpreting a progam, all specifications that are encountered during execution (with the exception of axioms) will be checked.
+If a specification fails, the program execution will stop; otherwise, the execution will continue as normal.</p>
+<h2>Validating</h2>
+<p>When validating a program, specifications (with the exception of axioms and assumes) are used to generate proof obligations.
+Axioms and assumes will be used to proof other specifications.</p>
+</body>
+</html>

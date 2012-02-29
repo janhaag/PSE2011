@@ -5,7 +5,8 @@
 </head>
 <body>
 <h1>Assume</h1>
-<p>Functions (including the main function) can be extended by using assumes. Assumes are special assertions that are checked once on function body entry.</p>
+<p>Functions (including the main function) can be extended by using assumes. Assumes are special assertions that are checked once on function body entry. 
+Regarding the interpretation or validation, see the article about specifications.</p>
 <h2>Syntax</h2>
 <div class="code">
 assume <span class="code_element">quantified expression</span>;
@@ -21,6 +22,9 @@ bool f (int x) assume x &gt; 3; {
 }
 int g (int x) assume {x &gt; 3; x &lt; 10;} {
 	return x * 2;
+}
+main(int a, int b) assume a &gt; 0; {
+	int c = a * b;
 }
 </div>
 </body>

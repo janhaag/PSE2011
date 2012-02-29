@@ -5,7 +5,8 @@
 </head>
 <body>
 <h1>Ensure</h1>
-<p>Ensure statements can be added to functions or while statements. Ensures are special assertions that are checked once the execution of the function body or the loop body is finished.</p>
+<p>Ensure statements can be added to functions or while statements. Ensures are special assertions that are checked once the execution of the function body or the loop body is finished. 
+Regarding the interpretation or validation, see the article about specifications.</p>
 <h2>Syntax</h2>
 <div class="code">
 ensure <span class="code_element">quantified expression</span>;
@@ -18,9 +19,9 @@ ensure { <span class="code_element">quantified expression</span>; <span class="c
 <div class="code">
 main() {
 	int x = 4;
-	if(x &lt; 0) {
-		x = -x;
-	}
+	while (x &lt; 0) {
+		x = x + 1;
+	} ensure x &gt;= 0;
 } ensure x > 0;
 </div>
 </body>
