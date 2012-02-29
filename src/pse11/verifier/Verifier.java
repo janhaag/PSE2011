@@ -14,12 +14,13 @@ import java.util.LinkedList;
 
 import ast.ASTRoot;
 
-import ast.Position;
 import misc.Pair;
 
 public abstract class Verifier {
     protected String[] template;
     protected String fileExtension;
+    protected String timeout;
+    protected String memoryLimit;
 
     protected Verifier(String template, String fileExtension) {
         this.template = template.split("\\s+");
@@ -44,6 +45,14 @@ public abstract class Verifier {
         }
         verifierProcess.waitFor();
         return readVerifierOutput(verifierProcess.getInputStream());
+    }
+
+    public final void setTimeout(String timeout) {
+        this.timeout = timeout;
+    }
+
+    public final void setMemoryLimit(String memoryLimit) {
+        this.memoryLimit = memoryLimit;
     }
 
     private String readVerifierOutput(InputStream channel) throws IOException {
@@ -81,6 +90,10 @@ public abstract class Verifier {
                 file = File.createTempFile("PSE11", fileExtension);
                 file.deleteOnExit();
                 template[i] = file.getAbsolutePath();
+            } else if ("${MEMORY_LIMIT}".equals(template[i])) {
+                template[i] = memoryLimit;
+            } else if ("${TIMEOUT}".equals(template[i])) {
+                template[i] = timeout;
             }
             result.append(template[i]).append(' ');
         }
