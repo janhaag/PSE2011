@@ -77,7 +77,8 @@ public class ExecutionHandler {
 			}
 			success = this.singleStep(sbreakpoints, gbreakpoints);
 			try {
-				if (this.execution != null && this.execution.checkBreakpoints() != null) {
+				if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() != null
+						&& this.execution.checkBreakpoints() != null) {
 					paused = true;
 				}
 			}

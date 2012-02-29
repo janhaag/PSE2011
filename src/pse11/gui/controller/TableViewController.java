@@ -165,7 +165,15 @@ public class TableViewController implements SelectionListener {
 				this.executionHandler.getGlobalBreakpoints().remove(i);
 			}
 			this.breakpointView.drawGlobalBreakpointItem(this.executionHandler.getGlobalBreakpoints());
-		}	
+		} else if (e.getSource() == this.breakpointView.getGlobalBreakpoint()) {
+			Table table = this.breakpointView.getGlobalBreakpoint();		
+			int i;
+			for (i = 0; i < table.getItemCount(); i++) {
+				if (e.item == table.getItem(i)) {
+					this.breakpointView.getAddTextField().setText(table.getItem(i).getText(1));
+				}
+			}	
+		}
 	} 
 	
 	/**
@@ -221,7 +229,6 @@ public class TableViewController implements SelectionListener {
 	}
 	
 	@Override
-	public void widgetDefaultSelected(SelectionEvent arg0) {
-		// TODO Auto-generated method stub			
+	public void widgetDefaultSelected(SelectionEvent arg0) {	
 	}
 }
