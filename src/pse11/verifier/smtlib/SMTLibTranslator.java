@@ -578,7 +578,7 @@ public class SMTLibTranslator implements ASTVisitor {
             varDec.getValue().accept(this);
         } else {
             if (varDec.getType() instanceof BooleanType) {
-                tempExpr = new Constant("true");
+                tempExpr = new Constant("false");
             } else {
                 tempExpr = new Constant("0");
             }
