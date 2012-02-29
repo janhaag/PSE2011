@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ArrayValue.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">ArrayValue.java</span></div><h1>ArrayValue.java</h1><pre class="source lang-java linenums">package interpreter;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ArrayValue.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">ArrayValue.java</span></div><h1>ArrayValue.java</h1><pre class="source lang-java linenums">package interpreter;
 
 import ast.ArrayType;
 import ast.BooleanType;
@@ -88,8 +88,8 @@ public class ArrayValue extends Value {
 <span class="pc bpc" id="L88" title="2 of 4 branches missed.">        if (pos &lt; 0 || pos &gt;= values.length) {</span>
 <span class="nc" id="L89">            pos = 0;</span>
         }
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (values[pos] instanceof BooleanValue) {</span>
-<span class="nc" id="L92">            ((BooleanValue) values[pos]).setValue(value);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (values[pos] instanceof BooleanValue) {</span>
+<span class="fc" id="L92">            ((BooleanValue) values[pos]).setValue(value);</span>
 <span class="fc bfc" id="L93" title="All 2 branches covered.">        } else if (values[pos] instanceof IntegerValue) {</span>
 <span class="fc" id="L94">            ((IntegerValue) values[pos]).setValue(value);</span>
         } else {
@@ -99,21 +99,21 @@ public class ArrayValue extends Value {
     
     @Override
     public boolean equals(Object o) {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (this == o) {</span>
 <span class="nc" id="L103">            return true;</span>
         }
-<span class="nc bnc" id="L105" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
 <span class="nc" id="L106">            return false;</span>
         }
-<span class="nc" id="L108">        ArrayValue arrayValue = (ArrayValue) o;</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (arrayValue.values.length != values.length) {</span>
-<span class="nc" id="L110">            return false;</span>
+<span class="fc" id="L108">        ArrayValue arrayValue = (ArrayValue) o;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (arrayValue.values.length != values.length) {</span>
+<span class="fc" id="L110">            return false;</span>
         }
-<span class="nc" id="L112">        boolean equal = true;</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (int i = 0; i &lt; values.length; i++) {</span>
-<span class="nc bnc" id="L114" title="All 4 branches missed.">            equal = equal &amp;&amp; values[i].equals(arrayValue.values[i]);</span>
+<span class="fc" id="L112">        boolean equal = true;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">            equal = equal &amp;&amp; values[i].equals(arrayValue.values[i]);</span>
         }
-<span class="nc" id="L116">        return equal;</span>
+<span class="fc" id="L116">        return equal;</span>
     }
     
     @Override
@@ -126,4 +126,4 @@ public class ArrayValue extends Value {
 <span class="nc" id="L126">        return sb.append('}').toString();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>

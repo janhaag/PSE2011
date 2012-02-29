@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageParser.java</span></div><h1>WhileLanguageParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-02-26 19:05:28
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageParser.java</span></div><h1>WhileLanguageParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-02-29 15:57:06
 
 	package parser;
 	import ast.*;
@@ -99,8 +99,8 @@ import java.util.ArrayList;
                                                     int ttype,
                                                     BitSet follow)
                                                     throws RecognitionException {
-<span class="fc" id="L102">            error = true;</span>
-<span class="fc" id="L103">            return super.recoverFromMismatchedToken(input, ttype, follow);</span>
+<span class="nc" id="L102">            error = true;</span>
+<span class="nc" id="L103">            return super.recoverFromMismatchedToken(input, ttype, follow);</span>
         }
 
 
@@ -290,7 +290,7 @@ import java.util.ArrayList;
 <span class="fc" id="L290">            int alt3=2;</span>
 <span class="fc" id="L291">            int LA3_0 = input.LA(1);</span>
 
-<span class="pc bpc" id="L293" title="1 of 4 branches missed.">            if ( (LA3_0==34||LA3_0==38) ) {</span>
+<span class="fc bfc" id="L293" title="All 4 branches covered.">            if ( (LA3_0==34||LA3_0==38) ) {</span>
 <span class="fc" id="L294">                alt3=1;</span>
             }
 <span class="fc bfc" id="L296" title="All 2 branches covered.">            switch (alt3) {</span>
@@ -375,7 +375,7 @@ import java.util.ArrayList;
 <span class="fc" id="L375">            int alt4=2;</span>
 <span class="fc" id="L376">            int LA4_0 = input.LA(1);</span>
 
-<span class="pc bpc" id="L378" title="1 of 4 branches missed.">            if ( (LA4_0==34||LA4_0==38) ) {</span>
+<span class="fc bfc" id="L378" title="All 4 branches covered.">            if ( (LA4_0==34||LA4_0==38) ) {</span>
 <span class="fc" id="L379">                alt4=1;</span>
             }
 <span class="fc bfc" id="L381" title="All 2 branches covered.">            switch (alt4) {</span>
@@ -415,9 +415,9 @@ import java.util.ArrayList;
 
 
         }
-<span class="nc" id="L418">        catch (RecognitionException re) {</span>
-<span class="nc" id="L419">            reportError(re);</span>
-<span class="nc" id="L420">            recover(input,re);</span>
+<span class="fc" id="L418">        catch (RecognitionException re) {</span>
+<span class="fc" id="L419">            reportError(re);</span>
+<span class="fc" id="L420">            recover(input,re);</span>
         }
 
         finally {
@@ -648,17 +648,17 @@ import java.util.ArrayList;
 <span class="fc" id="L648">            int alt8=2;</span>
 <span class="fc" id="L649">            int LA8_0 = input.LA(1);</span>
 
-<span class="pc bpc" id="L651" title="1 of 2 branches missed.">            if ( (LA8_0==36) ) {</span>
-<span class="nc" id="L652">                alt8=1;</span>
+<span class="fc bfc" id="L651" title="All 2 branches covered.">            if ( (LA8_0==36) ) {</span>
+<span class="fc" id="L652">                alt8=1;</span>
             }
-<span class="pc bpc" id="L654" title="1 of 2 branches missed.">            switch (alt8) {</span>
+<span class="fc bfc" id="L654" title="All 2 branches covered.">            switch (alt8) {</span>
                 case 1 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:106:12: e= ensure_statement
                     {
-<span class="nc" id="L658">                    pushFollow(FOLLOW_ensure_statement_in_function_body421);</span>
-<span class="nc" id="L659">                    e=ensure_statement();</span>
+<span class="fc" id="L658">                    pushFollow(FOLLOW_ensure_statement_in_function_body421);</span>
+<span class="fc" id="L659">                    e=ensure_statement();</span>
 
-<span class="nc" id="L661">                    state._fsp--;</span>
+<span class="fc" id="L661">                    state._fsp--;</span>
 
 
                     }
@@ -667,7 +667,7 @@ import java.util.ArrayList;
             }
 
 
-<span class="pc bpc" id="L670" title="5 of 8 branches missed.">            retval.post = error ? null : (e!=null?e.result:null) != null ? (e!=null?e.result:null) : new LinkedList&lt;Ensure&gt;();</span>
+<span class="pc bpc" id="L670" title="2 of 8 branches missed.">            retval.post = error ? null : (e!=null?e.result:null) != null ? (e!=null?e.result:null) : new LinkedList&lt;Ensure&gt;();</span>
 
             }
 
@@ -1570,10 +1570,10 @@ import java.util.ArrayList;
 <span class="pc bpc" id="L1570" title="1 of 2 branches missed.">            if ( (LA22_0==36) ) {</span>
 <span class="fc" id="L1571">                int LA22_1 = input.LA(2);</span>
 
-<span class="pc bpc" id="L1573" title="1 of 2 branches missed.">                if ( (LA22_1==43) ) {</span>
-<span class="nc" id="L1574">                    alt22=2;</span>
+<span class="fc bfc" id="L1573" title="All 2 branches covered.">                if ( (LA22_1==43) ) {</span>
+<span class="fc" id="L1574">                    alt22=2;</span>
                 }
-<span class="pc bpc" id="L1576" title="10 of 14 branches missed.">                else if ( (LA22_1==BOOL_LITERAL||(LA22_1 &gt;= IDENT &amp;&amp; LA22_1 &lt;= QUANTIFIER)||LA22_1==10||LA22_1==14||LA22_1==17||LA22_1==19) ) {</span>
+<span class="pc bpc" id="L1576" title="8 of 14 branches missed.">                else if ( (LA22_1==BOOL_LITERAL||(LA22_1 &gt;= IDENT &amp;&amp; LA22_1 &lt;= QUANTIFIER)||LA22_1==10||LA22_1==14||LA22_1==17||LA22_1==19) ) {</span>
 <span class="fc" id="L1577">                    alt22=1;</span>
                 }
                 else {
@@ -1591,7 +1591,7 @@ import java.util.ArrayList;
 <span class="nc" id="L1591">                throw nvae;</span>
 
             }
-<span class="pc bpc" id="L1594" title="2 of 3 branches missed.">            switch (alt22) {</span>
+<span class="pc bpc" id="L1594" title="1 of 3 branches missed.">            switch (alt22) {</span>
                 case 1 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:178:11: 'ensure' e1= quantified_expression ';'
                     {
@@ -1613,51 +1613,51 @@ import java.util.ArrayList;
                 case 2 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:180:11: 'ensure' '{' (e2= quantified_expression ';' )+ '}'
                     {
-<span class="nc" id="L1616">                    match(input,36,FOLLOW_36_in_ensure_statement1075); </span>
+<span class="fc" id="L1616">                    match(input,36,FOLLOW_36_in_ensure_statement1075); </span>
 
-<span class="nc" id="L1618">                    match(input,43,FOLLOW_43_in_ensure_statement1077); </span>
+<span class="fc" id="L1618">                    match(input,43,FOLLOW_43_in_ensure_statement1077); </span>
 
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:180:24: (e2= quantified_expression ';' )+
-<span class="nc" id="L1621">                    int cnt21=0;</span>
+<span class="fc" id="L1621">                    int cnt21=0;</span>
                     loop21:
                     do {
-<span class="nc" id="L1624">                        int alt21=2;</span>
-<span class="nc" id="L1625">                        int LA21_0 = input.LA(1);</span>
+<span class="fc" id="L1624">                        int alt21=2;</span>
+<span class="fc" id="L1625">                        int LA21_0 = input.LA(1);</span>
 
-<span class="nc bnc" id="L1627" title="All 14 branches missed.">                        if ( (LA21_0==BOOL_LITERAL||(LA21_0 &gt;= IDENT &amp;&amp; LA21_0 &lt;= QUANTIFIER)||LA21_0==10||LA21_0==14||LA21_0==17||LA21_0==19) ) {</span>
-<span class="nc" id="L1628">                            alt21=1;</span>
+<span class="pc bpc" id="L1627" title="6 of 14 branches missed.">                        if ( (LA21_0==BOOL_LITERAL||(LA21_0 &gt;= IDENT &amp;&amp; LA21_0 &lt;= QUANTIFIER)||LA21_0==10||LA21_0==14||LA21_0==17||LA21_0==19) ) {</span>
+<span class="fc" id="L1628">                            alt21=1;</span>
                         }
 
 
-<span class="nc bnc" id="L1632" title="All 2 branches missed.">                        switch (alt21) {</span>
+<span class="fc bfc" id="L1632" title="All 2 branches covered.">                        switch (alt21) {</span>
                     	case 1 :
                     	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:180:25: e2= quantified_expression ';'
                     	    {
-<span class="nc" id="L1636">                    	    pushFollow(FOLLOW_quantified_expression_in_ensure_statement1082);</span>
-<span class="nc" id="L1637">                    	    e2=quantified_expression();</span>
+<span class="fc" id="L1636">                    	    pushFollow(FOLLOW_quantified_expression_in_ensure_statement1082);</span>
+<span class="fc" id="L1637">                    	    e2=quantified_expression();</span>
 
-<span class="nc" id="L1639">                    	    state._fsp--;</span>
+<span class="fc" id="L1639">                    	    state._fsp--;</span>
 
 
-<span class="nc" id="L1642">                    	    match(input,21,FOLLOW_21_in_ensure_statement1084); </span>
+<span class="fc" id="L1642">                    	    match(input,21,FOLLOW_21_in_ensure_statement1084); </span>
 
-<span class="nc bnc" id="L1644" title="All 2 branches missed.">                    	    if (!error) {</span>
-<span class="nc" id="L1645">                    	                retval.result.add(new Ensure(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), e2));}</span>
+<span class="pc bpc" id="L1644" title="1 of 2 branches missed.">                    	    if (!error) {</span>
+<span class="fc" id="L1645">                    	                retval.result.add(new Ensure(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), e2));}</span>
 
                     	    }
-<span class="nc" id="L1648">                    	    break;</span>
+<span class="fc" id="L1648">                    	    break;</span>
 
                     	default :
-<span class="nc bnc" id="L1651" title="All 2 branches missed.">                    	    if ( cnt21 &gt;= 1 ) break loop21;</span>
+<span class="pc bpc" id="L1651" title="1 of 2 branches missed.">                    	    if ( cnt21 &gt;= 1 ) break loop21;</span>
 <span class="nc" id="L1652">                                EarlyExitException eee =</span>
 <span class="nc" id="L1653">                                    new EarlyExitException(21, input);</span>
 <span class="nc" id="L1654">                                throw eee;</span>
                         }
-<span class="nc" id="L1656">                        cnt21++;</span>
-<span class="nc" id="L1657">                    } while (true);</span>
+<span class="fc" id="L1656">                        cnt21++;</span>
+<span class="fc" id="L1657">                    } while (true);</span>
 
 
-<span class="nc" id="L1660">                    match(input,45,FOLLOW_45_in_ensure_statement1091); </span>
+<span class="fc" id="L1660">                    match(input,45,FOLLOW_45_in_ensure_statement1091); </span>
 
                     }
                     break;
@@ -1903,7 +1903,7 @@ import java.util.ArrayList;
 
 <span class="fc" id="L1904">            match(input,21,FOLLOW_21_in_variable_declaration1249); </span>
 
-<span class="fc bfc" id="L1906" title="All 2 branches covered.">            if (!error) {</span>
+<span class="pc bpc" id="L1906" title="1 of 2 branches missed.">            if (!error) {</span>
 <span class="pc bpc" id="L1907" title="1 of 6 branches missed.">                    	Expression init = (expression17!=null?expression17.ast:null) != null ? (expression17!=null?expression17.ast:null) : null;</span>
 <span class="pc bpc" id="L1908" title="1 of 2 branches missed.">                    	retval.ast = new VariableDeclaration(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), (IDENT18!=null?IDENT18.getText():null), init, type19);</span>
 <span class="pc bpc" id="L1909" title="1 of 6 branches missed.">                        retval.divisors = (expression17!=null?expression17.ast:null) != null ? (expression17!=null?expression17.divisors:null) : new LinkedList&lt;Expression&gt;();</span>
@@ -2361,7 +2361,7 @@ import java.util.ArrayList;
 <span class="fc bfc" id="L2361" title="All 2 branches covered.">            if ( (LA29_0==QUANTIFIER) ) {</span>
 <span class="fc" id="L2362">                alt29=1;</span>
             }
-<span class="pc bpc" id="L2364" title="7 of 14 branches missed.">            else if ( (LA29_0==BOOL_LITERAL||(LA29_0 &gt;= IDENT &amp;&amp; LA29_0 &lt;= INT_LITERAL)||LA29_0==10||LA29_0==14||LA29_0==17||LA29_0==19) ) {</span>
+<span class="pc bpc" id="L2364" title="6 of 14 branches missed.">            else if ( (LA29_0==BOOL_LITERAL||(LA29_0 &gt;= IDENT &amp;&amp; LA29_0 &lt;= INT_LITERAL)||LA29_0==10||LA29_0==14||LA29_0==17||LA29_0==19) ) {</span>
 <span class="fc" id="L2365">                alt29=2;</span>
             }
             else {
@@ -2385,7 +2385,7 @@ import java.util.ArrayList;
 <span class="fc" id="L2385">                    int alt28=2;</span>
 <span class="fc" id="L2386">                    int LA28_0 = input.LA(1);</span>
 
-<span class="pc bpc" id="L2388" title="6 of 14 branches missed.">                    if ( (LA28_0==BOOL_LITERAL||(LA28_0 &gt;= IDENT &amp;&amp; LA28_0 &lt;= INT_LITERAL)||LA28_0==10||LA28_0==14||LA28_0==17||LA28_0==19) ) {</span>
+<span class="pc bpc" id="L2388" title="5 of 14 branches missed.">                    if ( (LA28_0==BOOL_LITERAL||(LA28_0 &gt;= IDENT &amp;&amp; LA28_0 &lt;= INT_LITERAL)||LA28_0==10||LA28_0==14||LA28_0==17||LA28_0==19) ) {</span>
 <span class="fc" id="L2389">                        alt28=1;</span>
                     }
 <span class="fc bfc" id="L2391" title="All 2 branches covered.">                    switch (alt28) {</span>
@@ -2572,7 +2572,7 @@ import java.util.ArrayList;
 <span class="fc" id="L2572">            state._fsp--;</span>
 
 
-<span class="pc bpc" id="L2575" title="2 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
+<span class="pc bpc" id="L2575" title="3 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
 
             // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:297:120: ( '==' e2= rel_expression | '!=' e2= rel_expression )*
             loop30:
@@ -2678,7 +2678,7 @@ import java.util.ArrayList;
 <span class="fc" id="L2678">            state._fsp--;</span>
 
 
-<span class="pc bpc" id="L2681" title="2 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
+<span class="pc bpc" id="L2681" title="3 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
 
             // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:309:120: ( '&lt;' e2= add_expression | '&lt;=' e2= add_expression | '&gt;' e2= add_expression | '&gt;=' e2= add_expression )*
             loop31:
@@ -2832,7 +2832,7 @@ import java.util.ArrayList;
 <span class="fc" id="L2832">            state._fsp--;</span>
 
 
-<span class="pc bpc" id="L2835" title="2 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
+<span class="pc bpc" id="L2835" title="3 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
 
             // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:326:120: ( '|' e2= mul_expression | '+' e2= mul_expression | '-' e2= mul_expression )*
             loop32:
@@ -2964,7 +2964,7 @@ import java.util.ArrayList;
 <span class="fc" id="L2964">            state._fsp--;</span>
 
 
-<span class="pc bpc" id="L2967" title="2 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
+<span class="pc bpc" id="L2967" title="3 of 6 branches missed.">            if (!error) {retval.ast = e1.ast; retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
 
             // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:340:122: ( '&amp;' e2= unary_expression | '*' e2= unary_expression | '/' e2= unary_expression | '%' e2= unary_expression )*
             loop33:
@@ -3115,12 +3115,12 @@ import java.util.ArrayList;
         try {
             // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:363:9: ( '!' e= parenthesized_expression | '-' e= parenthesized_expression | ( '+' )? e= parenthesized_expression )
 <span class="fc" id="L3117">            int alt35=3;</span>
-<span class="pc bpc" id="L3118" title="1 of 4 branches missed.">            switch ( input.LA(1) ) {</span>
+<span class="fc bfc" id="L3118" title="All 4 branches covered.">            switch ( input.LA(1) ) {</span>
             case 10:
                 {
-<span class="nc" id="L3121">                alt35=1;</span>
+<span class="fc" id="L3121">                alt35=1;</span>
                 }
-<span class="nc" id="L3123">                break;</span>
+<span class="fc" id="L3123">                break;</span>
             case 19:
                 {
 <span class="fc" id="L3126">                alt35=2;</span>
@@ -3143,24 +3143,24 @@ import java.util.ArrayList;
 
             }
 
-<span class="pc bpc" id="L3146" title="2 of 4 branches missed.">            switch (alt35) {</span>
+<span class="pc bpc" id="L3146" title="1 of 4 branches missed.">            switch (alt35) {</span>
                 case 1 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:363:11: '!' e= parenthesized_expression
                     {
-<span class="nc" id="L3150">                    match(input,10,FOLLOW_10_in_unary_expression2060); </span>
+<span class="fc" id="L3150">                    match(input,10,FOLLOW_10_in_unary_expression2060); </span>
 
-<span class="nc" id="L3152">                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression2065);</span>
-<span class="nc" id="L3153">                    e=parenthesized_expression();</span>
+<span class="fc" id="L3152">                    pushFollow(FOLLOW_parenthesized_expression_in_unary_expression2065);</span>
+<span class="fc" id="L3153">                    e=parenthesized_expression();</span>
 
-<span class="nc" id="L3155">                    state._fsp--;</span>
+<span class="fc" id="L3155">                    state._fsp--;</span>
 
 
-<span class="nc bnc" id="L3158" title="All 2 branches missed.">                    if (!error) {</span>
-<span class="nc bnc" id="L3159" title="All 2 branches missed.">                            	retval.ast = new LogicalExpression(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), (e!=null?e.ast:null), null, new Negation());</span>
-<span class="nc bnc" id="L3160" title="All 2 branches missed.">                            	retval.divisors = e.divisors; retval.arrayIndices = (e!=null?e.arrayIndices:null);}</span>
+<span class="pc bpc" id="L3158" title="1 of 2 branches missed.">                    if (!error) {</span>
+<span class="pc bpc" id="L3159" title="1 of 2 branches missed.">                            	retval.ast = new LogicalExpression(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), (e!=null?e.ast:null), null, new Negation());</span>
+<span class="pc bpc" id="L3160" title="1 of 2 branches missed.">                            	retval.divisors = e.divisors; retval.arrayIndices = (e!=null?e.arrayIndices:null);}</span>
 
                     }
-<span class="nc" id="L3163">                    break;</span>
+<span class="fc" id="L3163">                    break;</span>
                 case 2 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:366:11: '-' e= parenthesized_expression
                     {
@@ -3206,7 +3206,7 @@ import java.util.ArrayList;
 <span class="fc" id="L3206">                    state._fsp--;</span>
 
 
-<span class="fc bfc" id="L3209" title="All 2 branches covered.">                    if (!error) {</span>
+<span class="pc bpc" id="L3209" title="1 of 2 branches missed.">                    if (!error) {</span>
 <span class="pc bpc" id="L3210" title="1 of 2 branches missed.">                            	retval.ast = (e!=null?e.ast:null);</span>
 <span class="fc" id="L3211">                            	retval.divisors = e.divisors;</span>
 <span class="pc bpc" id="L3212" title="1 of 2 branches missed.">                                retval.arrayIndices = (e!=null?e.arrayIndices:null);}</span>
@@ -3267,7 +3267,7 @@ import java.util.ArrayList;
 <span class="fc" id="L3267">                break;</span>
             case IDENT:
                 {
-<span class="pc bpc" id="L3270" title="1 of 4 branches missed.">                switch ( input.LA(2) ) {</span>
+<span class="fc bfc" id="L3270" title="All 4 branches covered.">                switch ( input.LA(2) ) {</span>
                 case 14:
                     {
 <span class="fc" id="L3273">                    alt36=2;</span>
@@ -3301,10 +3301,10 @@ import java.util.ArrayList;
                     }
 <span class="fc" id="L3302">                    break;</span>
                 default:
-<span class="nc" id="L3304">                    NoViableAltException nvae =</span>
-<span class="nc" id="L3305">                        new NoViableAltException(&quot;&quot;, 36, 2, input);</span>
+<span class="fc" id="L3304">                    NoViableAltException nvae =</span>
+<span class="fc" id="L3305">                        new NoViableAltException(&quot;&quot;, 36, 2, input);</span>
 
-<span class="nc" id="L3307">                    throw nvae;</span>
+<span class="fc" id="L3307">                    throw nvae;</span>
 
                 }
 
@@ -3352,7 +3352,7 @@ import java.util.ArrayList;
 <span class="fc" id="L3352">                    state._fsp--;</span>
 
 
-<span class="pc bpc" id="L3355" title="2 of 6 branches missed.">                    if (!error) {retval.ast = (function_call34!=null?function_call34.ast:null); retval.divisors = (function_call34!=null?function_call34.divisors:null);</span>
+<span class="pc bpc" id="L3355" title="3 of 6 branches missed.">                    if (!error) {retval.ast = (function_call34!=null?function_call34.ast:null); retval.divisors = (function_call34!=null?function_call34.divisors:null);</span>
 <span class="pc bpc" id="L3356" title="1 of 2 branches missed.">                                                retval.arrayIndices = (function_call34!=null?function_call34.arrayIndices:null);}</span>
 
                     }
@@ -3391,7 +3391,7 @@ import java.util.ArrayList;
 <span class="fc" id="L3391">                    state._fsp--;</span>
 
 
-<span class="pc bpc" id="L3394" title="2 of 6 branches missed.">                    if (!error) {retval.ast = (literal_expression37!=null?literal_expression37.ast:null); retval.divisors = (literal_expression37!=null?literal_expression37.divisors:null);</span>
+<span class="pc bpc" id="L3394" title="3 of 6 branches missed.">                    if (!error) {retval.ast = (literal_expression37!=null?literal_expression37.ast:null); retval.divisors = (literal_expression37!=null?literal_expression37.divisors:null);</span>
 <span class="pc bpc" id="L3395" title="1 of 2 branches missed.">                                retval.arrayIndices = (literal_expression37!=null?literal_expression37.arrayIndices:null);}</span>
 
                     }
@@ -3402,9 +3402,9 @@ import java.util.ArrayList;
 
 
         }
-<span class="nc" id="L3405">        catch (RecognitionException re) {</span>
-<span class="nc" id="L3406">            reportError(re);</span>
-<span class="nc" id="L3407">            recover(input,re);</span>
+<span class="fc" id="L3405">        catch (RecognitionException re) {</span>
+<span class="fc" id="L3406">            reportError(re);</span>
+<span class="fc" id="L3407">            recover(input,re);</span>
         }
 
         finally {
@@ -3445,10 +3445,10 @@ import java.util.ArrayList;
 <span class="fc" id="L3445">            int alt37=2;</span>
 <span class="fc" id="L3446">            int LA37_0 = input.LA(1);</span>
 
-<span class="pc bpc" id="L3448" title="5 of 14 branches missed.">            if ( (LA37_0==BOOL_LITERAL||(LA37_0 &gt;= IDENT &amp;&amp; LA37_0 &lt;= INT_LITERAL)||LA37_0==10||LA37_0==14||LA37_0==17||LA37_0==19) ) {</span>
+<span class="pc bpc" id="L3448" title="4 of 14 branches missed.">            if ( (LA37_0==BOOL_LITERAL||(LA37_0 &gt;= IDENT &amp;&amp; LA37_0 &lt;= INT_LITERAL)||LA37_0==10||LA37_0==14||LA37_0==17||LA37_0==19) ) {</span>
 <span class="fc" id="L3449">                alt37=1;</span>
             }
-<span class="pc bpc" id="L3451" title="1 of 2 branches missed.">            switch (alt37) {</span>
+<span class="fc bfc" id="L3451" title="All 2 branches covered.">            switch (alt37) {</span>
                 case 1 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:390:21: arglist
                     {
@@ -3466,12 +3466,12 @@ import java.util.ArrayList;
 
 <span class="fc" id="L3467">            match(input,15,FOLLOW_15_in_function_call2232); </span>
 
-<span class="fc bfc" id="L3469" title="All 2 branches covered.">            if (!error) {</span>
+<span class="pc bpc" id="L3469" title="1 of 2 branches missed.">            if (!error) {</span>
 <span class="fc" id="L3470">                    	Expression[] params = new Expression[0];</span>
-<span class="pc bpc" id="L3471" title="4 of 8 branches missed.">                    	if ((arglist38!=null?arglist38.params:null) != null) params = (arglist38!=null?arglist38.params:null).toArray(new Expression[(arglist38!=null?arglist38.params:null).size()]);</span>
+<span class="pc bpc" id="L3471" title="2 of 8 branches missed.">                    	if ((arglist38!=null?arglist38.params:null) != null) params = (arglist38!=null?arglist38.params:null).toArray(new Expression[(arglist38!=null?arglist38.params:null).size()]);</span>
 <span class="pc bpc" id="L3472" title="1 of 2 branches missed.">                    	retval.ast = new FunctionCall(new Identifier((IDENT39!=null?IDENT39.getText():null)), params , new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()));</span>
-<span class="pc bpc" id="L3473" title="1 of 2 branches missed.">                    	retval.divisors = (arglist38!=null?arglist38.divisors:null);</span>
-<span class="pc bpc" id="L3474" title="1 of 2 branches missed.">                        retval.arrayIndices = (arglist38!=null?arglist38.arrayIndices:null);}</span>
+<span class="fc bfc" id="L3473" title="All 2 branches covered.">                    	retval.divisors = (arglist38!=null?arglist38.divisors:null);</span>
+<span class="fc bfc" id="L3474" title="All 2 branches covered.">                        retval.arrayIndices = (arglist38!=null?arglist38.arrayIndices:null);}</span>
 
             }
 
@@ -3522,7 +3522,7 @@ import java.util.ArrayList;
 <span class="fc" id="L3522">            state._fsp--;</span>
 
 
-<span class="pc bpc" id="L3525" title="2 of 6 branches missed.">            if (!error) {retval.params.add((Expression) e1.ast); retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
+<span class="pc bpc" id="L3525" title="3 of 6 branches missed.">            if (!error) {retval.params.add((Expression) e1.ast); retval.divisors = (e1!=null?e1.divisors:null); retval.arrayIndices = (e1!=null?e1.arrayIndices:null);}</span>
 
             // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:401:10: ( ',' e2= expression )*
             loop38:
@@ -3547,7 +3547,7 @@ import java.util.ArrayList;
 <span class="fc" id="L3547">            	    state._fsp--;</span>
 
 
-<span class="pc bpc" id="L3550" title="2 of 6 branches missed.">            	    if (!error) {retval.params.add((Expression) (e2!=null?e2.ast:null)); retval.divisors.addAll((e2!=null?e2.divisors:null));</span>
+<span class="pc bpc" id="L3550" title="3 of 6 branches missed.">            	    if (!error) {retval.params.add((Expression) (e2!=null?e2.ast:null)); retval.divisors.addAll((e2!=null?e2.divisors:null));</span>
 <span class="pc bpc" id="L3551" title="1 of 2 branches missed.">            	                                    retval.arrayIndices.addAll((e2!=null?e2.arrayIndices:null));}</span>
 
             	    }
@@ -3726,7 +3726,7 @@ import java.util.ArrayList;
                     {
 <span class="fc" id="L3727">                    INT_LITERAL41=(Token)match(input,INT_LITERAL,FOLLOW_INT_LITERAL_in_literal_expression2412); </span>
 
-<span class="fc bfc" id="L3729" title="All 2 branches covered.">                    if (!error) {retval.ast = new NumericLiteral(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()),</span>
+<span class="pc bpc" id="L3729" title="1 of 2 branches missed.">                    if (!error) {retval.ast = new NumericLiteral(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()),</span>
 <span class="pc bpc" id="L3730" title="1 of 2 branches missed.">                                (INT_LITERAL41!=null?INT_LITERAL41.getText():null));}</span>
 
                     }
@@ -3736,7 +3736,7 @@ import java.util.ArrayList;
                     {
 <span class="fc" id="L3737">                    BOOL_LITERAL42=(Token)match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal_expression2426); </span>
 
-<span class="fc bfc" id="L3739" title="All 2 branches covered.">                    if (!error) {retval.ast = new BooleanLiteral(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()),</span>
+<span class="pc bpc" id="L3739" title="1 of 2 branches missed.">                    if (!error) {retval.ast = new BooleanLiteral(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()),</span>
 <span class="pc bpc" id="L3740" title="1 of 2 branches missed.">                                (BOOL_LITERAL42!=null?BOOL_LITERAL42.getText():null));}</span>
 
                     }
@@ -3794,7 +3794,7 @@ import java.util.ArrayList;
                     {
 <span class="fc" id="L3795">                    match(input,38,FOLLOW_38_in_type2458); </span>
 
-<span class="fc bfc" id="L3797" title="All 2 branches covered.">                    ast = error ? null : new IntegerType();</span>
+<span class="pc bpc" id="L3797" title="1 of 2 branches missed.">                    ast = error ? null : new IntegerType();</span>
 
                     }
 <span class="fc" id="L3800">                    break;</span>
@@ -4115,4 +4115,4 @@ import java.util.ArrayList;
 <span class="fc" id="L4115">    public static final BitSet FOLLOW_29_in_type2480 = new BitSet(new long[]{0x0000000010000002L});</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>

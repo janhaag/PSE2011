@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SettingsFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">SettingsFrame.java</span></div><h1>SettingsFrame.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package gui;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SettingsFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">SettingsFrame.java</span></div><h1>SettingsFrame.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui;</span>
 
 import gui.controller.SettingsController;
 
@@ -22,6 +22,7 @@ public class SettingsFrame extends Frame {
 	private Text verifierPathTextField;
 	private Button saveButton;
 	private Button closeButton;
+	private Button browseButton;
 	private Label errorLabel;
 	
 	/**
@@ -30,127 +31,147 @@ public class SettingsFrame extends Frame {
 	 * @param parentShell specified shell
 	 * @param controller specified controller
 	 */
-<span class="nc" id="L33">	public SettingsFrame(Shell parentShell, SettingsController controller) {</span>
-<span class="nc" id="L34">		this.controller = controller;</span>
-<span class="nc" id="L35">		this.controller.addView(this);</span>
+<span class="fc" id="L34">	public SettingsFrame(Shell parentShell, SettingsController controller) {</span>
+<span class="fc" id="L35">		this.controller = controller;</span>
+<span class="fc" id="L36">		this.controller.addView(this);</span>
 		
-<span class="nc" id="L37">		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);</span>
+<span class="fc" id="L38">		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);</span>
 		//Please mind &gt;all&lt; components before resizing the view
-<span class="nc" id="L39">		this.shell.setSize(320,270);</span>
-<span class="nc" id="L40">		this.shell.setText(&quot;Settings&quot;);</span>
+<span class="fc" id="L40">		this.shell.setSize(340,300);</span>
+<span class="fc" id="L41">		this.shell.setText(&quot;Settings&quot;);</span>
 		
 		//Setting layout
-<span class="nc" id="L43">		GridLayout gLayout = new GridLayout();</span>
-<span class="nc" id="L44">		gLayout.numColumns = 2;</span>
-<span class="nc" id="L45">		gLayout.makeColumnsEqualWidth = true;</span>
-<span class="nc" id="L46">		gLayout.marginTop = 20;</span>
-<span class="nc" id="L47">		gLayout.marginLeft = 20;</span>
-<span class="nc" id="L48">		gLayout.marginRight = 20;</span>
-<span class="nc" id="L49">		this.shell.setLayout(gLayout);</span>
+<span class="fc" id="L44">		GridLayout gLayout = new GridLayout();</span>
+<span class="fc" id="L45">		gLayout.numColumns = 2;</span>
+<span class="fc" id="L46">		gLayout.makeColumnsEqualWidth = true;</span>
+<span class="fc" id="L47">		gLayout.marginTop = 20;</span>
+<span class="fc" id="L48">		gLayout.marginLeft = 20;</span>
+<span class="fc" id="L49">		gLayout.marginRight = 20;</span>
+<span class="fc" id="L50">		this.shell.setLayout(gLayout);</span>
 		
 		//Add the group
-<span class="nc" id="L52">		final Group settingsGroup = new Group(this.shell, SWT.SHADOW_ETCHED_IN);</span>
-<span class="nc" id="L53">		settingsGroup.setText(&quot;Settings for Z3&quot;);</span>
-<span class="nc" id="L54">		gLayout = new GridLayout();</span>
-<span class="nc" id="L55">		gLayout.numColumns = 3;</span>
-<span class="nc" id="L56">		gLayout.makeColumnsEqualWidth = true;</span>
-<span class="nc" id="L57">		gLayout.marginTop = 10;</span>
-<span class="nc" id="L58">		gLayout.marginLeft = 10;</span>
-<span class="nc" id="L59">		gLayout.marginRight = 10;</span>
-<span class="nc" id="L60">		settingsGroup.setLayout(gLayout);</span>
-<span class="nc" id="L61">		GridData gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L62">		gData.horizontalSpan = 2;</span>
-<span class="nc" id="L63">		settingsGroup.setLayoutData(gData);</span>
+<span class="fc" id="L53">		final Group settingsGroup = new Group(this.shell, SWT.SHADOW_ETCHED_IN);</span>
+<span class="fc" id="L54">		settingsGroup.setText(&quot;Settings for Z3&quot;);</span>
+<span class="fc" id="L55">		gLayout = new GridLayout();</span>
+<span class="fc" id="L56">		gLayout.numColumns = 3;</span>
+<span class="fc" id="L57">		gLayout.makeColumnsEqualWidth = true;</span>
+<span class="fc" id="L58">		gLayout.marginTop = 10;</span>
+<span class="fc" id="L59">		gLayout.marginLeft = 10;</span>
+<span class="fc" id="L60">		gLayout.marginRight = 10;</span>
+<span class="fc" id="L61">		settingsGroup.setLayout(gLayout);</span>
+<span class="fc" id="L62">		GridData gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L63">		gData.horizontalSpan = 2;</span>
+<span class="fc" id="L64">		settingsGroup.setLayoutData(gData);</span>
 		
-<span class="nc" id="L65">		new Label(settingsGroup, SWT.NONE).setText(&quot;Timeout:&quot;);</span>
-<span class="nc" id="L66">		this.timeoutTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);</span>
-<span class="nc" id="L67">		this.timeoutTextField.setText(controller.getTimeOut());</span>
-<span class="nc" id="L68">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L69">		this.timeoutTextField.setLayoutData(gData);</span>
-<span class="nc" id="L70">		new Label(settingsGroup, SWT.NONE).setText(&quot;sec&quot;);</span>
+<span class="fc" id="L66">		new Label(settingsGroup, SWT.NONE).setText(&quot;Timeout:&quot;);</span>
+<span class="fc" id="L67">		this.timeoutTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);</span>
+<span class="fc" id="L68">		this.timeoutTextField.setText(controller.getTimeOut());</span>
+<span class="fc" id="L69">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L70">		this.timeoutTextField.setLayoutData(gData);</span>
+<span class="fc" id="L71">		new Label(settingsGroup, SWT.NONE).setText(&quot;sec&quot;);</span>
 		
-<span class="nc" id="L72">		new Label(settingsGroup, SWT.NONE).setText(&quot;Memory limit:&quot;);</span>
-<span class="nc" id="L73">		this.memoryLimitTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);</span>
-<span class="nc" id="L74">		this.memoryLimitTextField.setText(controller.getMemoryLimit());</span>
-<span class="nc" id="L75">		this.memoryLimitTextField.setLayoutData(gData);</span>
-<span class="nc" id="L76">		new Label(settingsGroup, SWT.NONE).setText(&quot;KB&quot;);</span>
+<span class="fc" id="L73">		new Label(settingsGroup, SWT.NONE).setText(&quot;Memory limit:&quot;);</span>
+<span class="fc" id="L74">		this.memoryLimitTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);</span>
+<span class="fc" id="L75">		this.memoryLimitTextField.setText(controller.getMemoryLimit());</span>
+<span class="fc" id="L76">		this.memoryLimitTextField.setLayoutData(gData);</span>
+<span class="fc" id="L77">		new Label(settingsGroup, SWT.NONE).setText(&quot;KB&quot;);</span>
 		
-<span class="nc" id="L78">		Label templabel = new Label(settingsGroup, SWT.NONE);</span>
-<span class="nc" id="L79">		templabel.setText(&quot;Path to the Verifier:&quot;);</span>
-<span class="nc" id="L80">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L81">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L82">		templabel.setLayoutData(gData);</span>
-<span class="nc" id="L83">		this.verifierPathTextField = new Text(settingsGroup, SWT.SINGLE | SWT.LEFT);</span>
-<span class="nc" id="L84">		this.verifierPathTextField.setText(controller.getVerifierPath());</span>
-<span class="nc" id="L85">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L86">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L87">		this.verifierPathTextField.setLayoutData(gData);</span>
+<span class="fc" id="L79">		Label templabel = new Label(settingsGroup, SWT.NONE);</span>
+<span class="fc" id="L80">		templabel.setText(&quot;Path to the Verifier:&quot;);</span>
+<span class="fc" id="L81">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L82">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L83">		templabel.setLayoutData(gData);</span>
+<span class="fc" id="L84">		this.verifierPathTextField = new Text(settingsGroup, SWT.SINGLE | SWT.LEFT);</span>
+<span class="fc" id="L85">		this.verifierPathTextField.setText(controller.getVerifierPath());</span>
+<span class="fc" id="L86">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L87">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L88">		this.verifierPathTextField.setLayoutData(gData);</span>
+<span class="fc" id="L89">		this.browseButton = new Button(settingsGroup, SWT.PUSH | SWT.RIGHT);</span>
+<span class="fc" id="L90">		this.browseButton.setText(&quot; Browse &quot;);</span>
+<span class="fc" id="L91">		gData = new GridData();</span>
+<span class="fc" id="L92">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L93">		this.browseButton.setLayoutData(gData);</span>
 		
 		//Add buttons
-<span class="nc" id="L90">		final Composite buttoncomposite = new Composite(this.shell, SWT.NONE);</span>
-<span class="nc" id="L91">		final GridLayout buttonlayout = new GridLayout();</span>
-<span class="nc" id="L92">		buttonlayout.numColumns = 2;</span>
-<span class="nc" id="L93">		buttoncomposite.setLayout(buttonlayout);</span>
-<span class="nc" id="L94">		this.saveButton = new Button(buttoncomposite, SWT.PUSH);</span>
-<span class="nc" id="L95">		this.saveButton.setText(&quot; Save &quot;);</span>
-<span class="nc" id="L96">		this.closeButton = new Button(buttoncomposite, SWT.PUSH);</span>
-<span class="nc" id="L97">		this.closeButton.setText(&quot; Close &quot;);</span>
-<span class="nc" id="L98">		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);</span>
-<span class="nc" id="L99">		gData.verticalSpan = 10;</span>
-<span class="nc" id="L100">		gData.horizontalSpan = 2;</span>
-<span class="nc" id="L101">		buttoncomposite.setLayoutData(gData);</span>
+<span class="fc" id="L96">		final Composite buttoncomposite = new Composite(this.shell, SWT.NONE);</span>
+<span class="fc" id="L97">		final GridLayout buttonlayout = new GridLayout();</span>
+<span class="fc" id="L98">		buttonlayout.numColumns = 2;</span>
+<span class="fc" id="L99">		buttoncomposite.setLayout(buttonlayout);</span>
+<span class="fc" id="L100">		this.saveButton = new Button(buttoncomposite, SWT.PUSH);</span>
+<span class="fc" id="L101">		this.saveButton.setText(&quot; Save &quot;);</span>
+<span class="fc" id="L102">		this.closeButton = new Button(buttoncomposite, SWT.PUSH);</span>
+<span class="fc" id="L103">		this.closeButton.setText(&quot; Close &quot;);</span>
+<span class="fc" id="L104">		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);</span>
+<span class="fc" id="L105">		gData.verticalSpan = 10;</span>
+<span class="fc" id="L106">		gData.horizontalSpan = 2;</span>
+<span class="fc" id="L107">		buttoncomposite.setLayoutData(gData);</span>
 		
 		//Add label for error message
-<span class="nc" id="L104">		this.errorLabel = new Label(this.shell, SWT.BORDER | SWT.BORDER_DOT);</span>
-<span class="nc" id="L105">		this.errorLabel.setForeground(new Color(this.shell.getDisplay(), new RGB(0, 0, 0)));</span>
-<span class="nc" id="L106">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L107">		gData.horizontalSpan = 2;</span>
-<span class="nc" id="L108">		gData.verticalSpan = 1;</span>
-<span class="nc" id="L109">		gData.minimumHeight = 100;</span>
-<span class="nc" id="L110">		this.errorLabel.setLayoutData(gData);</span>
-<span class="nc" id="L111">		this.errorLabel.setVisible(false);</span>
+<span class="fc" id="L110">		this.errorLabel = new Label(this.shell, SWT.BORDER | SWT.BORDER_DOT);</span>
+<span class="fc" id="L111">		this.errorLabel.setForeground(new Color(this.shell.getDisplay(), new RGB(0, 0, 0)));</span>
+<span class="fc" id="L112">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L113">		gData.horizontalSpan = 2;</span>
+<span class="fc" id="L114">		gData.verticalSpan = 1;</span>
+<span class="fc" id="L115">		gData.minimumHeight = 100;</span>
+<span class="fc" id="L116">		this.errorLabel.setLayoutData(gData);</span>
+<span class="fc" id="L117">		this.errorLabel.setVisible(false);</span>
 		
 		//Add event listeners
-<span class="nc" id="L114">		this.saveButton.addSelectionListener(this.controller.getSaveButtonListener());</span>
-<span class="nc" id="L115">		this.closeButton.addSelectionListener(new SelectionAdapter() {</span>
+<span class="fc" id="L120">		this.saveButton.addSelectionListener(this.controller.getSaveButtonListener());</span>
+<span class="fc" id="L121">		this.browseButton.addSelectionListener(this.controller.getBrowseButtonListener());</span>
+<span class="fc" id="L122">		this.closeButton.addSelectionListener(new SelectionAdapter() {</span>
 			public void widgetSelected(SelectionEvent e) {
-<span class="nc" id="L117">				close();</span>
-<span class="nc" id="L118">			}</span>
+<span class="fc" id="L124">				close();</span>
+<span class="fc" id="L125">			}</span>
 		});
 	    
-<span class="nc" id="L121">		this.shell.open();</span>
-<span class="nc" id="L122">	}</span>
+<span class="fc" id="L128">		this.shell.open();</span>
+<span class="fc" id="L129">	}</span>
 	public void close() {
-<span class="nc" id="L124">		this.shell.close();</span>
-<span class="nc" id="L125">	}</span>
+<span class="fc" id="L131">		this.shell.close();</span>
+<span class="fc" id="L132">	}</span>
 	public Button getSaveButton() {
-<span class="nc" id="L127">		return this.saveButton;</span>
+<span class="nc" id="L134">		return this.saveButton;</span>
 	}
 	public Button getCloseButton() {
-<span class="nc" id="L130">		return this.closeButton;</span>
+<span class="nc" id="L137">		return this.closeButton;</span>
 	}
 	public Text getMemoryLimitTextField() {
-<span class="nc" id="L133">		return this.memoryLimitTextField;</span>
+<span class="fc" id="L140">		return this.memoryLimitTextField;</span>
 	}
 	public Text getTimeoutTextField() {
-<span class="nc" id="L136">		return this.timeoutTextField;</span>
+<span class="fc" id="L143">		return this.timeoutTextField;</span>
 	}
 	public Text getVerifierPathTextField() {
-<span class="nc" id="L139">		return this.verifierPathTextField;</span>
+<span class="fc" id="L146">		return this.verifierPathTextField;</span>
 	}
 	public void update() {
-<span class="nc" id="L142">		this.memoryLimitTextField.setText(this.controller.getMemoryLimit());</span>
-<span class="nc" id="L143">		this.timeoutTextField.setText(this.controller.getTimeOut());</span>
-<span class="nc" id="L144">		this.verifierPathTextField.setText(this.controller.getVerifierPath());</span>
-<span class="nc" id="L145">	}</span>
+<span class="fc" id="L149">		this.memoryLimitTextField.setText(this.controller.getMemoryLimit());</span>
+<span class="fc" id="L150">		this.timeoutTextField.setText(this.controller.getTimeOut());</span>
+<span class="fc" id="L151">		this.verifierPathTextField.setText(this.controller.getVerifierPath());</span>
+<span class="fc" id="L152">	}</span>
 	public void displayMessage(boolean error, String msg) {
-<span class="nc" id="L147">		this.errorLabel.setText(msg);</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		if(error) {</span>
-<span class="nc" id="L149">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(255, 0, 0)));</span>
+<span class="fc" id="L154">		this.errorLabel.setText(msg);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if(error) {</span>
+<span class="fc" id="L156">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(255, 0, 0)));</span>
 		} else {
-<span class="nc" id="L151">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(0, 255, 0)));</span>
+<span class="fc" id="L158">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(0, 255, 0)));</span>
 		}
-<span class="nc" id="L153">		this.errorLabel.setVisible(true);</span>
-<span class="nc" id="L154">	}</span>
+<span class="fc" id="L160">		this.errorLabel.setVisible(true);</span>
+<span class="fc" id="L161">	}</span>
+	public void hideMessage() {
+<span class="nc" id="L163">		this.errorLabel.setVisible(false);</span>
+<span class="nc" id="L164">	}</span>
+	public void openFileDialog() {
+<span class="fc" id="L166">		FileDialog fd = new FileDialog(this.shell, SWT.OPEN);</span>
+<span class="fc" id="L167">		fd.setText(&quot;Choose verifier path&quot;);</span>
+<span class="fc" id="L168">		String[] filterExt = {&quot;*.*&quot;, &quot;.exe&quot;};</span>
+<span class="fc" id="L169">		fd.setFilterExtensions(filterExt);</span>
+<span class="fc" id="L170">		String selected = null;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if((selected = fd.open()) != null) {</span>
+<span class="nc" id="L172">			this.verifierPathTextField.setText(selected);</span>
+<span class="nc" id="L173">			this.hideMessage();</span>
+		}
+<span class="fc" id="L175">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>

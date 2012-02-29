@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BreakpointView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">BreakpointView.java</span></div><h1>BreakpointView.java</h1><pre class="source lang-java linenums">package gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BreakpointView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">BreakpointView.java</span></div><h1>BreakpointView.java</h1><pre class="source lang-java linenums">package gui;
 
 import interpreter.GlobalBreakpoint;
 
@@ -32,7 +32,7 @@ public class BreakpointView extends Composite {
 	 * button for add and remove
 	 */
 	private Button button;
-	
+	private boolean active;
 	/**
 	 * Construct a breakpoint view with the specified parent composite and 
 	 * definitions of its style and behavior.
@@ -40,43 +40,44 @@ public class BreakpointView extends Composite {
 	 * @param def specified definitions
 	 */
 	public BreakpointView(Composite parent, int def) {
-<span class="nc" id="L43">		super(parent, def);		</span>
+<span class="fc" id="L43">		super(parent, def);		</span>
+<span class="fc" id="L44">		this.active = true;</span>
 		
 		//Setting layout
-<span class="nc" id="L46">		GridLayout gLayout = new GridLayout();</span>
-<span class="nc" id="L47">		this.setLayout(gLayout);</span>
-<span class="nc" id="L48">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L49">		this.setLayoutData(gData);</span>
+<span class="fc" id="L47">		GridLayout gLayout = new GridLayout();</span>
+<span class="fc" id="L48">		this.setLayout(gLayout);</span>
+<span class="fc" id="L49">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L50">		this.setLayoutData(gData);</span>
 		
 		//Add the table
-<span class="nc" id="L52">		this.global = new Table (this, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL </span>
+<span class="fc" id="L53">		this.global = new Table (this, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL </span>
 				| SWT.H_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
 		
-<span class="nc" id="L55">		this.global.setLinesVisible(true);</span>
-<span class="nc" id="L56">		this.global.setHeaderVisible(true);</span>
-<span class="nc" id="L57">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L58">		this.global.setLayoutData(gData);</span>
+<span class="fc" id="L56">		this.global.setLinesVisible(true);</span>
+<span class="fc" id="L57">		this.global.setHeaderVisible(true);</span>
+<span class="fc" id="L58">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L59">		this.global.setLayoutData(gData);</span>
 				
-<span class="nc" id="L60">		TableColumn column1 = new TableColumn(this.global, SWT.CENTER);</span>
-<span class="nc" id="L61">		column1.setWidth(50);</span>
-<span class="nc" id="L62">		column1.setText(&quot;Active&quot;);</span>
-<span class="nc" id="L63">		TableColumn column2 = new TableColumn(this.global, SWT.CENTER);</span>
-<span class="nc" id="L64">		column2.setWidth(200);</span>
-<span class="nc" id="L65">		column2.setText(&quot;Expression&quot;);</span>
+<span class="fc" id="L61">		TableColumn column1 = new TableColumn(this.global, SWT.CENTER);</span>
+<span class="fc" id="L62">		column1.setWidth(50);</span>
+<span class="fc" id="L63">		column1.setText(&quot;Active&quot;);</span>
+<span class="fc" id="L64">		TableColumn column2 = new TableColumn(this.global, SWT.CENTER);</span>
+<span class="fc" id="L65">		column2.setWidth(200);</span>
+<span class="fc" id="L66">		column2.setText(&quot;Expression&quot;);</span>
 	
 		//Add text field and button
-<span class="nc" id="L68">		this.addTextField = new StyledText(this, SWT.SINGLE | SWT.BORDER);</span>
-<span class="nc" id="L69">		this.addTextField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));</span>
-<span class="nc" id="L70">		gData = new GridData(GridData.FILL_HORIZONTAL); </span>
-<span class="nc" id="L71">		gData.verticalSpan = 5;</span>
-<span class="nc" id="L72">		this.addTextField.setLayoutData(gData);</span>
+<span class="fc" id="L69">		this.addTextField = new StyledText(this, SWT.SINGLE | SWT.BORDER);</span>
+<span class="fc" id="L70">		this.addTextField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));</span>
+<span class="fc" id="L71">		gData = new GridData(GridData.FILL_HORIZONTAL); </span>
+<span class="fc" id="L72">		gData.verticalSpan = 5;</span>
+<span class="fc" id="L73">		this.addTextField.setLayoutData(gData);</span>
     
-<span class="nc" id="L74">		this.button = new Button(this, SWT.PUSH);</span>
-<span class="nc" id="L75">		this.button.setText(&quot;Add/Remove&quot;);</span>
-<span class="nc" id="L76">		gData = new GridData(GridData.FILL_HORIZONTAL);  </span>
-<span class="nc" id="L77">		gData.verticalSpan = 5;</span>
-<span class="nc" id="L78">		this.button.setLayoutData(gData);</span>
-<span class="nc" id="L79">	}</span>
+<span class="fc" id="L75">		this.button = new Button(this, SWT.PUSH);</span>
+<span class="fc" id="L76">		this.button.setText(&quot;Add/Remove&quot;);</span>
+<span class="fc" id="L77">		gData = new GridData(GridData.FILL_HORIZONTAL);  </span>
+<span class="fc" id="L78">		gData.verticalSpan = 5;</span>
+<span class="fc" id="L79">		this.button.setLayoutData(gData);</span>
+<span class="fc" id="L80">	}</span>
 	
 	/**
 	 * Update the table for displaying all added global breakpoints given
@@ -84,20 +85,20 @@ public class BreakpointView extends Composite {
 	 * @param gbreakpoints specified list
 	 */
 	public void drawGlobalBreakpointItem(ArrayList&lt;GlobalBreakpoint&gt; gbreakpoints) {		
-<span class="nc" id="L87">		this.global.removeAll();</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (int i = 0; i &lt; gbreakpoints.size(); i++) {</span>
-<span class="nc" id="L89">			TableItem item = new TableItem(this.global, SWT.NONE);</span>
-<span class="nc" id="L90">			item.setText(1, gbreakpoints.get(i).getExpression().toString());</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (gbreakpoints.get(i).isActive()) item.setChecked(true);</span>
+<span class="fc" id="L88">		this.global.removeAll();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (int i = 0; i &lt; gbreakpoints.size(); i++) {</span>
+<span class="fc" id="L90">			TableItem item = new TableItem(this.global, SWT.NONE);</span>
+<span class="fc" id="L91">			item.setText(1, gbreakpoints.get(i).getExpression().toString());</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (gbreakpoints.get(i).isActive()) item.setChecked(true);</span>
 		}
-<span class="nc" id="L93">	}</span>
+<span class="fc" id="L94">	}</span>
 	
 	/**
 	 * Return the table of the view.
 	 * @return table of the view
 	 */
 	public Table getGlobalBreakpoint() {
-<span class="nc" id="L100">		return this.global;</span>
+<span class="fc" id="L101">		return this.global;</span>
 	}
 	
 	/**
@@ -105,7 +106,7 @@ public class BreakpointView extends Composite {
 	 * @return text field of the view
 	 */
 	public StyledText getAddTextField() {
-<span class="nc" id="L108">		return this.addTextField;</span>
+<span class="fc" id="L109">		return this.addTextField;</span>
 	}
 	
 	/**
@@ -113,7 +114,15 @@ public class BreakpointView extends Composite {
 	 * @return button of the view
 	 */
 	public Button getAddButton() {
-<span class="nc" id="L116">		return this.button;</span>
+<span class="fc" id="L117">		return this.button;</span>
 	}
+	
+	public boolean getActive() {
+<span class="nc" id="L121">		return this.active;</span>
+	}
+	
+	public void setActive(boolean active) {
+<span class="nc" id="L125">		this.active = active;</span>
+<span class="nc" id="L126">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>HelpBox.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">HelpBox.java</span></div><h1>HelpBox.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package gui;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>HelpBox.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">HelpBox.java</span></div><h1>HelpBox.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui;</span>
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -38,39 +38,39 @@ public class HelpBox extends Composite {
 	 * @param style specified definitions
 	 */
 	public HelpBox(Shell parent, int style) {
-<span class="nc" id="L41">		super(parent, style);</span>
+<span class="fc" id="L41">		super(parent, style);</span>
 		
 		//Set the Layout
-<span class="nc" id="L44">		GridLayout gLayout = new GridLayout();</span>
-<span class="nc" id="L45">		gLayout.numColumns = 4;</span>
-<span class="nc" id="L46">		this.setLayout(gLayout);</span>
-<span class="nc" id="L47">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L48">		this.setLayoutData(gData);</span>
+<span class="fc" id="L44">		GridLayout gLayout = new GridLayout();</span>
+<span class="fc" id="L45">		gLayout.numColumns = 4;</span>
+<span class="fc" id="L46">		this.setLayout(gLayout);</span>
+<span class="fc" id="L47">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L48">		this.setLayoutData(gData);</span>
 
 		//Add various components
-<span class="nc" id="L51">		Text helpboxheader = new Text(this, SWT.NONE);</span>
-<span class="nc" id="L52">		helpboxheader.setEnabled(false);</span>
-<span class="nc" id="L53">		helpboxheader.setBackground(new Color(helpboxheader.getDisplay(), 142, 189, 247));</span>
-<span class="nc" id="L54">		helpboxheader.setText(&quot;Help&quot;);</span>
-<span class="nc" id="L55">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L56">		gData.horizontalSpan = 4;</span>
-<span class="nc" id="L57">		gData.verticalSpan = 4;</span>
-<span class="nc" id="L58">		helpboxheader.setLayoutData(gData);</span>
+<span class="fc" id="L51">		Text helpboxheader = new Text(this, SWT.NONE);</span>
+<span class="fc" id="L52">		helpboxheader.setEnabled(false);</span>
+<span class="fc" id="L53">		helpboxheader.setBackground(new Color(helpboxheader.getDisplay(), 142, 189, 247));</span>
+<span class="fc" id="L54">		helpboxheader.setText(&quot;Help&quot;);</span>
+<span class="fc" id="L55">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L56">		gData.horizontalSpan = 4;</span>
+<span class="fc" id="L57">		gData.verticalSpan = 4;</span>
+<span class="fc" id="L58">		helpboxheader.setLayoutData(gData);</span>
 
-<span class="nc" id="L60">		this.helpbox = new Browser(this, SWT.NONE);</span>
-<span class="nc" id="L61">		gData = new GridData(SWT.FILL, SWT.FILL, true, true);</span>
-<span class="nc" id="L62">		gData.horizontalSpan = 4;</span>
-<span class="nc" id="L63">		gData.verticalSpan = 18;</span>
-<span class="nc" id="L64">		this.helpbox.setLayoutData(gData);</span>
-<span class="nc" id="L65">		this.setText(&quot;&lt;html&gt;&lt;body style=\&quot;margin:0;font-family:sans-serif;font-size:0.8em;\&quot;&gt;Insert a term to search for.&lt;/body&gt;&lt;/html&gt;&quot;);</span>
+<span class="fc" id="L60">		this.helpbox = new Browser(this, SWT.NONE);</span>
+<span class="fc" id="L61">		gData = new GridData(SWT.FILL, SWT.FILL, true, true);</span>
+<span class="fc" id="L62">		gData.horizontalSpan = 4;</span>
+<span class="fc" id="L63">		gData.verticalSpan = 18;</span>
+<span class="fc" id="L64">		this.helpbox.setLayoutData(gData);</span>
+<span class="fc" id="L65">		this.setText(&quot;&lt;html&gt;&lt;body style=\&quot;margin:0;font-family:sans-serif;font-size:0.8em;\&quot;&gt;Insert a term to search for.&lt;/body&gt;&lt;/html&gt;&quot;);</span>
 
-<span class="nc" id="L67">		this.search = new Text(this, SWT.SINGLE | SWT.BORDER);</span>
-<span class="nc" id="L68">		this.search.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));</span>
-<span class="nc" id="L69">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L70">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L71">		gData.verticalSpan = 5;</span>
-<span class="nc" id="L72">		this.search.setLayoutData(gData);</span>
-<span class="nc" id="L73">		this.search.addSelectionListener(new SelectionListener() {</span>
+<span class="fc" id="L67">		this.search = new Text(this, SWT.SINGLE | SWT.BORDER);</span>
+<span class="fc" id="L68">		this.search.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));</span>
+<span class="fc" id="L69">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L70">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L71">		gData.verticalSpan = 5;</span>
+<span class="fc" id="L72">		this.search.setLayoutData(gData);</span>
+<span class="fc" id="L73">		this.search.addSelectionListener(new SelectionListener() {</span>
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -83,35 +83,35 @@ public class HelpBox extends Composite {
 <span class="nc" id="L83">			}</span>
 		});
 
-<span class="nc" id="L86">		this.button = new Button(this, SWT.PUSH);</span>
-<span class="nc" id="L87">		this.button.setText(&quot;Search&quot;);</span>
-<span class="nc" id="L88">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L89">		gData.verticalSpan = 5;</span>
-<span class="nc" id="L90">		this.button.setLayoutData(gData);</span>
-<span class="nc" id="L91">	}</span>
+<span class="fc" id="L86">		this.button = new Button(this, SWT.PUSH);</span>
+<span class="fc" id="L87">		this.button.setText(&quot;Search&quot;);</span>
+<span class="fc" id="L88">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L89">		gData.verticalSpan = 5;</span>
+<span class="fc" id="L90">		this.button.setLayoutData(gData);</span>
+<span class="fc" id="L91">	}</span>
 
 	/**
 	 * Add the specified listener to the search button.
 	 * @param listener specified listener
 	 */
 	public void addSelectionListener(SelectionListener listener) {
-<span class="nc" id="L98">		this.button.addSelectionListener(listener);</span>
-<span class="nc" id="L99">	}</span>
+<span class="fc" id="L98">		this.button.addSelectionListener(listener);</span>
+<span class="fc" id="L99">	}</span>
 
 	/**
 	 * Set the content of the text field.
 	 * @param text specified text to be set
 	 */
 	public void setText(String text) {
-<span class="nc" id="L106">		this.helpbox.setText(text);</span>
-<span class="nc" id="L107">	}</span>
+<span class="fc" id="L106">		this.helpbox.setText(text);</span>
+<span class="fc" id="L107">	}</span>
 
 	/**
 	 * Return the key word to be searched for.
 	 * @return key word
 	 */
 	public String getSearchText() {
-<span class="nc" id="L114">		return this.search.getText();</span>
+<span class="fc" id="L114">		return this.search.getText();</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>

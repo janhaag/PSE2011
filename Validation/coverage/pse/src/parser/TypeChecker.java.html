@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TypeChecker.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">TypeChecker.java</span></div><h1>TypeChecker.java</h1><pre class="source lang-java linenums">package parser;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TypeChecker.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">TypeChecker.java</span></div><h1>TypeChecker.java</h1><pre class="source lang-java linenums">package parser;
 
 import ast.*;
 import interpreter.Scope;
@@ -50,21 +50,13 @@ import java.util.Iterator;
 <span class="nc" id="L50">    }</span>
 
     /**
-     * Returns whether function calls are allowed.
-     * @return whether function calls are allowed
-     */
-    public boolean isFunctionCallAllowed() {
-<span class="nc" id="L57">        return functionCallAllowed;</span>
-    }
-
-    /**
      * Sets whether function calls are allowed
      * @param functionCallAllowed flag indicating whether
      *                            function calls are allowed
      */
     public void setFunctionCallAllowed(boolean functionCallAllowed) {
-<span class="nc" id="L66">        this.functionCallAllowed = functionCallAllowed;</span>
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L58">        this.functionCallAllowed = functionCallAllowed;</span>
+<span class="nc" id="L59">    }</span>
 
     /**
      * Checks the type correctness of a given conditional statement.
@@ -72,22 +64,22 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Conditional conditional) {
-<span class="fc" id="L75">        conditional.getCondition().accept(this);</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L77">            throw new IllegalTypeException(&quot;Condition must be of boolean type!&quot;,</span>
-<span class="nc" id="L78">                                           conditional.getPosition());</span>
+<span class="fc" id="L67">        conditional.getCondition().accept(this);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L69">            throw new IllegalTypeException(&quot;Condition must be of boolean type!&quot;,</span>
+<span class="fc" id="L70">                                           conditional.getPosition());</span>
         }
-<span class="fc" id="L80">        currentScope = new Scope(currentScope,</span>
-<span class="fc" id="L81">                                 conditional.getTrueConditionBody(), null);</span>
-<span class="fc" id="L82">        conditional.getTrueConditionBody().accept(this);</span>
-<span class="fc" id="L83">        currentScope = currentScope.getParent();</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (conditional.getFalseConditionBody() != null) {</span>
-<span class="fc" id="L85">            currentScope = new Scope(currentScope,</span>
-<span class="fc" id="L86">                                     conditional.getFalseConditionBody(), null);</span>
-<span class="fc" id="L87">            conditional.getFalseConditionBody().accept(this);</span>
-<span class="fc" id="L88">            currentScope = currentScope.getParent();</span>
+<span class="fc" id="L72">        currentScope = new Scope(currentScope,</span>
+<span class="fc" id="L73">                                 conditional.getTrueConditionBody(), null);</span>
+<span class="fc" id="L74">        conditional.getTrueConditionBody().accept(this);</span>
+<span class="fc" id="L75">        currentScope = currentScope.getParent();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (conditional.getFalseConditionBody() != null) {</span>
+<span class="fc" id="L77">            currentScope = new Scope(currentScope,</span>
+<span class="fc" id="L78">                                     conditional.getFalseConditionBody(), null);</span>
+<span class="fc" id="L79">            conditional.getFalseConditionBody().accept(this);</span>
+<span class="fc" id="L80">            currentScope = currentScope.getParent();</span>
         }
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L82">    }</span>
 
     /**
      * Checks the type correctness of a given loop statement.
@@ -95,23 +87,23 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Loop loop) {
-<span class="fc" id="L98">        loop.getCondition().accept(this);</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="fc" id="L100">            throw new IllegalTypeException(&quot;Condition must be of boolean type!&quot;,</span>
-<span class="fc" id="L101">                                           loop.getPosition());</span>
+<span class="fc" id="L90">        loop.getCondition().accept(this);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L92">            throw new IllegalTypeException(&quot;Condition must be of boolean type!&quot;,</span>
+<span class="fc" id="L93">                                           loop.getPosition());</span>
         }
-<span class="fc" id="L103">        Invariant[] invariants = loop.getInvariants();</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        for (Invariant invariant : invariants) {</span>
-<span class="fc" id="L105">            invariant.accept(this);</span>
+<span class="fc" id="L95">        Invariant[] invariants = loop.getInvariants();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        for (Invariant invariant : invariants) {</span>
+<span class="fc" id="L97">            invariant.accept(this);</span>
         }
-<span class="fc" id="L107">        currentScope = new Scope(currentScope, loop.getLoopBody(), null);</span>
-<span class="fc" id="L108">        loop.getLoopBody().accept(this);</span>
-<span class="fc" id="L109">        currentScope = currentScope.getParent();</span>
-<span class="fc" id="L110">        Ensure[] ensures = loop.getPostconditions();</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
-<span class="fc" id="L112">            ensure.accept(this);</span>
+<span class="fc" id="L99">        currentScope = new Scope(currentScope, loop.getLoopBody(), null);</span>
+<span class="fc" id="L100">        loop.getLoopBody().accept(this);</span>
+<span class="fc" id="L101">        currentScope = currentScope.getParent();</span>
+<span class="fc" id="L102">        Ensure[] ensures = loop.getPostconditions();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L104">            ensure.accept(this);</span>
         }
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L106">    }</span>
 
     /**
      * Checks the type correctness of a given array assignment statement.
@@ -119,35 +111,31 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ArrayAssignment arrayAssignment) {
-<span class="fc" id="L122">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
-<span class="fc" id="L123">        Identifier identifier = arrayAssignment.getIdentifier();</span>
-<span class="fc" id="L124">        Value value = vars.get(identifier);</span>
-<span class="fc" id="L125">        Expression[] indices = arrayAssignment.getIndices();</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">        for (Expression index : indices) {</span>
-<span class="fc" id="L127">            index.accept(this);</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            if (!(tempType instanceof IntegerType)) {</span>
-<span class="nc" id="L129">                throw new IllegalTypeException(&quot;Index must be an integer &quot;</span>
-                                               + &quot;expression!&quot;,
-<span class="nc" id="L131">                                               arrayAssignment.getPosition());</span>
-            }
+<span class="fc" id="L114">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
+<span class="fc" id="L115">        Identifier identifier = arrayAssignment.getIdentifier();</span>
+<span class="fc" id="L116">        Value value = vars.get(identifier);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (value == null) {</span>
+<span class="nc" id="L118">            throw new IllegalTypeException(&quot;Variable &quot; + identifier.getName()</span>
+<span class="nc" id="L119">                                           + &quot; was read but not declared!&quot;,</span>
+<span class="nc" id="L120">                                           arrayAssignment.getPosition());</span>
         }
-<span class="fc" id="L134">        arrayAssignment.getValue().accept(this);</span>
-<span class="fc" id="L135">        Type type = baseType(value.getType(), indices.length,</span>
-<span class="fc" id="L136">                     arrayAssignment.getPosition());</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (type instanceof ArrayType) {</span>
-<span class="nc" id="L138">            throw new IllegalTypeException(&quot;Cannot assign a value to an array &quot;</span>
+<span class="fc" id="L122">        arrayAssignment.getValue().accept(this);</span>
+<span class="fc" id="L123">        Type type = baseType(value.getType(), arrayAssignment.getIndices().length,</span>
+<span class="fc" id="L124">                     arrayAssignment.getPosition());</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (type instanceof ArrayType) {</span>
+<span class="fc" id="L126">            throw new IllegalTypeException(&quot;Cannot assign a value to an array &quot;</span>
                                            + &quot;that is not fully indexed!&quot;,
-<span class="nc" id="L140">                                            arrayAssignment.getPosition());</span>
+<span class="fc" id="L128">                                            arrayAssignment.getPosition());</span>
         }
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (!type.equals(tempType)) {</span>
-<span class="nc" id="L143">            throw new IllegalTypeException(&quot;Base type of the array does not &quot;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (!type.equals(tempType)) {</span>
+<span class="fc" id="L131">            throw new IllegalTypeException(&quot;Base type of the array does not &quot;</span>
                                            + &quot;match the type of assigned value&quot;,
-<span class="nc" id="L145">                                           arrayAssignment.getPosition());</span>
+<span class="fc" id="L133">                                           arrayAssignment.getPosition());</span>
         }
-<span class="fc" id="L147">        arrayAssignment.setDepth(</span>
-<span class="fc" id="L148">                currentScope.getDepthOfVariable(arrayAssignment.getIdentifier()));</span>
-<span class="fc" id="L149">        arrayAssignment.setType(value.getType());</span>
-<span class="fc" id="L150">    }</span>
+<span class="fc" id="L135">        arrayAssignment.setDepth(</span>
+<span class="fc" id="L136">                currentScope.getDepthOfVariable(arrayAssignment.getIdentifier()));</span>
+<span class="fc" id="L137">        arrayAssignment.setType(value.getType());</span>
+<span class="fc" id="L138">    }</span>
 
     /**
      * Checks the type correctness of a given numeric literal.
@@ -156,8 +144,8 @@ import java.util.Iterator;
      */
     @Override
     public void visit(NumericLiteral number) {
-<span class="fc" id="L159">        tempType = new IntegerType();</span>
-<span class="fc" id="L160">    }</span>
+<span class="fc" id="L147">        tempType = new IntegerType();</span>
+<span class="fc" id="L148">    }</span>
 
     /**
      * Checks the type correctness of a given arithmetic expression.
@@ -165,28 +153,28 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ArithmeticExpression arithmeticExpression) {
-<span class="fc" id="L168">        arithmeticExpression.getSubexpression1().accept(this);</span>
-<span class="fc" id="L169">        ArithmeticOperator operator =</span>
-<span class="fc" id="L170">                arithmeticExpression.getArithmeticOperator();</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (operator instanceof BinaryOperator) {</span>
-<span class="fc" id="L172">            Type tempType1 = tempType;</span>
-<span class="fc" id="L173">            arithmeticExpression.getSubexpression2().accept(this);</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">            if (!(tempType instanceof IntegerType)</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">               || !(tempType1 instanceof IntegerType)) {</span>
-<span class="fc" id="L176">                throw new IllegalTypeException(&quot;Operands must be integer &quot;</span>
+<span class="fc" id="L156">        arithmeticExpression.getSubexpression1().accept(this);</span>
+<span class="fc" id="L157">        ArithmeticOperator operator =</span>
+<span class="fc" id="L158">                arithmeticExpression.getArithmeticOperator();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (operator instanceof BinaryOperator) {</span>
+<span class="fc" id="L160">            Type tempType1 = tempType;</span>
+<span class="fc" id="L161">            arithmeticExpression.getSubexpression2().accept(this);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (!(tempType instanceof IntegerType)</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">               || !(tempType1 instanceof IntegerType)) {</span>
+<span class="fc" id="L164">                throw new IllegalTypeException(&quot;Operands must be integer &quot;</span>
                                                + &quot;expressions!&quot;,
-<span class="fc" id="L178">                                            arithmeticExpression.getPosition());</span>
+<span class="fc" id="L166">                                            arithmeticExpression.getPosition());</span>
             }
         } else {
             //UnaryMinus
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            if (!(tempType instanceof IntegerType)) {</span>
-<span class="nc" id="L183">                throw new IllegalTypeException(&quot;Operand must be an integer &quot;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (!(tempType instanceof IntegerType)) {</span>
+<span class="fc" id="L171">                throw new IllegalTypeException(&quot;Operand must be an integer &quot;</span>
                                                + &quot;expression!&quot;,
-<span class="nc" id="L185">                                            arithmeticExpression.getPosition());</span>
+<span class="fc" id="L173">                                            arithmeticExpression.getPosition());</span>
             }
         }
-<span class="fc" id="L188">        tempType = new IntegerType();</span>
-<span class="fc" id="L189">    }</span>
+<span class="fc" id="L176">        tempType = new IntegerType();</span>
+<span class="fc" id="L177">    }</span>
 
     /**
      * Checks the type correctness of a given boolean literal.
@@ -195,8 +183,8 @@ import java.util.Iterator;
      */
     @Override
     public void visit(BooleanLiteral bool) {
-<span class="fc" id="L198">        tempType = new BooleanType();</span>
-<span class="fc" id="L199">    }</span>
+<span class="fc" id="L186">        tempType = new BooleanType();</span>
+<span class="fc" id="L187">    }</span>
 
     /**
      * Checks the type correctness of a given logical expression.
@@ -204,46 +192,46 @@ import java.util.Iterator;
      */
     @Override
     public void visit(LogicalExpression logicalExpression) {
-<span class="fc" id="L207">        Position position = logicalExpression.getPosition();</span>
-<span class="fc" id="L208">        logicalExpression.getSubexpression1().accept(this);</span>
-<span class="fc" id="L209">        LogicalOperator operator = logicalExpression.getLogicalOperator();</span>
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (operator instanceof BinaryOperator) {</span>
-<span class="fc" id="L211">            Type tempType1 = tempType;</span>
-<span class="fc" id="L212">            logicalExpression.getSubexpression2().accept(this);</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">            if (operator instanceof Conjunction</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">                    || operator instanceof Disjunction) {</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">                if (!(tempType instanceof BooleanType)</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">                        || !(tempType1 instanceof BooleanType)) {</span>
-<span class="fc" id="L217">                    throw new IllegalTypeException(&quot;Operands must be &quot;</span>
+<span class="fc" id="L195">        Position position = logicalExpression.getPosition();</span>
+<span class="fc" id="L196">        logicalExpression.getSubexpression1().accept(this);</span>
+<span class="fc" id="L197">        LogicalOperator operator = logicalExpression.getLogicalOperator();</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        if (operator instanceof BinaryOperator) {</span>
+<span class="fc" id="L199">            Type tempType1 = tempType;</span>
+<span class="fc" id="L200">            logicalExpression.getSubexpression2().accept(this);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            if (operator instanceof Conjunction</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">                    || operator instanceof Disjunction) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">                if (!(tempType instanceof BooleanType)</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                        || !(tempType1 instanceof BooleanType)) {</span>
+<span class="fc" id="L205">                    throw new IllegalTypeException(&quot;Operands must be &quot;</span>
                                                     + &quot;boolean expressions!&quot;,
-<span class="fc" id="L219">                                                    position);</span>
+<span class="fc" id="L207">                                                    position);</span>
                 }
-<span class="fc bfc" id="L221" title="All 2 branches covered.">            } else if (operator instanceof Equal</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">                       || operator instanceof NotEqual) {</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">                if (!tempType.equals(tempType1)) {</span>
-<span class="fc" id="L224">                    throw new IllegalTypeException(&quot;Operands must be of &quot;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">            } else if (operator instanceof Equal</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                       || operator instanceof NotEqual) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">                if (!tempType.equals(tempType1)) {</span>
+<span class="fc" id="L212">                    throw new IllegalTypeException(&quot;Operands must be of &quot;</span>
                                                     + &quot;equal types!&quot;,
-<span class="fc" id="L226">                                                    position);</span>
+<span class="fc" id="L214">                                                    position);</span>
                 }
             } else {
                 //greater, greater equal, less, less equal
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">                if (!(tempType instanceof IntegerType)</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">                        || !(tempType1 instanceof IntegerType)) {</span>
-<span class="fc" id="L232">                    throw new IllegalTypeException(&quot;Operands must be &quot;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                if (!(tempType instanceof IntegerType)</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">                        || !(tempType1 instanceof IntegerType)) {</span>
+<span class="fc" id="L220">                    throw new IllegalTypeException(&quot;Operands must be &quot;</span>
                                                    + &quot;integer expressions!&quot;,
-<span class="fc" id="L234">                                                    position);</span>
+<span class="fc" id="L222">                                                    position);</span>
                 }
             }
         } else {
             //Negation
-<span class="nc bnc" id="L239" title="All 2 branches missed.">            if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L240">                throw new</span>
-<span class="nc" id="L241">                  IllegalTypeException(&quot;Operand must be a logical expression!&quot;,</span>
-<span class="nc" id="L242">                                       position);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L228">                throw new</span>
+<span class="fc" id="L229">                  IllegalTypeException(&quot;Operand must be a logical expression!&quot;,</span>
+<span class="fc" id="L230">                                       position);</span>
             }
         }
-<span class="fc" id="L245">        tempType = new BooleanType();</span>
-<span class="fc" id="L246">    }</span>
+<span class="fc" id="L233">        tempType = new BooleanType();</span>
+<span class="fc" id="L234">    }</span>
 
     /**
      * Checks the type correctness of a given function call
@@ -252,52 +240,52 @@ import java.util.Iterator;
      */
     @Override
     public void visit(FunctionCall functionCall) {
-<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (&quot;length&quot;.equals(functionCall.getFunctionIdentifier().toString())) {</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">            if (functionCall.getParameters().length != 1</span>
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">                    || !(functionCall.getParameters()[0] instanceof VariableRead)) {</span>
-<span class="fc" id="L258">                throw new IllegalTypeException(&quot;Parameter of 'length' must be exactly &quot;</span>
-<span class="fc" id="L259">                                               + &quot;one array!&quot;, functionCall.getPosition());</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (&quot;length&quot;.equals(functionCall.getFunctionIdentifier().toString())) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">            if (functionCall.getParameters().length != 1</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">                    || !(functionCall.getParameters()[0] instanceof VariableRead)) {</span>
+<span class="fc" id="L246">                throw new IllegalTypeException(&quot;Parameter of 'length' must be exactly &quot;</span>
+<span class="fc" id="L247">                                               + &quot;one array!&quot;, functionCall.getPosition());</span>
             }
-<span class="fc" id="L261">            functionCall.getParameters()[0].accept(this);</span>
-<span class="fc bfc" id="L262" title="All 2 branches covered.">            if (!(tempType instanceof ArrayType)) {</span>
-<span class="fc" id="L263">                throw new IllegalTypeException(&quot;Parameter of 'length' must be an &quot;</span>
-<span class="fc" id="L264">                                               + &quot;array!&quot;, functionCall.getPosition());</span>
+<span class="fc" id="L249">            functionCall.getParameters()[0].accept(this);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">            if (!(tempType instanceof ArrayType)) {</span>
+<span class="fc" id="L251">                throw new IllegalTypeException(&quot;Parameter of 'length' must be an &quot;</span>
+<span class="fc" id="L252">                                               + &quot;array!&quot;, functionCall.getPosition());</span>
             }
-<span class="fc" id="L266">            tempType = new IntegerType();</span>
-<span class="fc" id="L267">            return;</span>
+<span class="fc" id="L254">            tempType = new IntegerType();</span>
+<span class="fc" id="L255">            return;</span>
         }
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">        if (!functionCallAllowed) {</span>
-<span class="nc" id="L270">            throw new FunctionCallNotAllowedException(&quot;Function call not &quot;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (!functionCallAllowed) {</span>
+<span class="fc" id="L258">            throw new FunctionCallNotAllowedException(&quot;Function call not &quot;</span>
                                                       + &quot;allowed here!&quot;,
-<span class="nc" id="L272">                                                    functionCall.getPosition());</span>
+<span class="fc" id="L260">                                                    functionCall.getPosition());</span>
         }
-<span class="fc" id="L274">        String functionName = functionCall.getFunctionIdentifier().getName();</span>
-<span class="fc" id="L275">        Function callee = null;</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">        for (Function function : functions) {</span>
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">            if (function.getName().equals(functionName)) {</span>
-<span class="fc" id="L278">                callee = function;</span>
+<span class="fc" id="L262">        String functionName = functionCall.getFunctionIdentifier().getName();</span>
+<span class="fc" id="L263">        Function callee = null;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">        for (Function function : functions) {</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">            if (function.getName().equals(functionName)) {</span>
+<span class="fc" id="L266">                callee = function;</span>
             }
         }
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (callee == null) {</span>
-<span class="nc" id="L282">            throw new IllegalTypeException(&quot;No such function:&quot; + functionName,</span>
-<span class="nc" id="L283">                                           functionCall.getPosition());</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        if (callee == null) {</span>
+<span class="fc" id="L270">            throw new IllegalTypeException(&quot;No such function:&quot; + functionName,</span>
+<span class="fc" id="L271">                                           functionCall.getPosition());</span>
         }
-<span class="fc" id="L285">        functionCall.setFunction(callee);</span>
-<span class="fc" id="L286">        Expression[] parameterExpressions = functionCall.getParameters();</span>
-<span class="fc" id="L287">        FunctionParameter[] parameters = callee.getParameters();</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (parameterExpressions.length != parameters.length) {</span>
-<span class="fc" id="L289">            throw new IllegalTypeException(&quot;Wrong number of parameters used!&quot;,</span>
-<span class="fc" id="L290">                                            functionCall.getPosition());</span>
+<span class="fc" id="L273">        functionCall.setFunction(callee);</span>
+<span class="fc" id="L274">        Expression[] parameterExpressions = functionCall.getParameters();</span>
+<span class="fc" id="L275">        FunctionParameter[] parameters = callee.getParameters();</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">        if (parameterExpressions.length != parameters.length) {</span>
+<span class="fc" id="L277">            throw new IllegalTypeException(&quot;Wrong number of parameters used!&quot;,</span>
+<span class="fc" id="L278">                                            functionCall.getPosition());</span>
         }
-<span class="fc bfc" id="L292" title="All 2 branches covered.">        for (int i = 0; i &lt; parameters.length; i++) {</span>
-<span class="fc" id="L293">            parameterExpressions[i].accept(this);</span>
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">            if (!tempType.equals(parameters[i].getType())) {</span>
-<span class="nc" id="L295">                throw new IllegalTypeException(&quot;Wrong type used as parameter!&quot;,</span>
-<span class="nc" id="L296">                                               functionCall.getPosition());</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        for (int i = 0; i &lt; parameters.length; i++) {</span>
+<span class="fc" id="L281">            parameterExpressions[i].accept(this);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">            if (!tempType.equals(parameters[i].getType())) {</span>
+<span class="fc" id="L283">                throw new IllegalTypeException(&quot;Wrong type used as parameter!&quot;,</span>
+<span class="fc" id="L284">                                               functionCall.getPosition());</span>
             }
         }
-<span class="fc" id="L299">        tempType = callee.getReturnType();</span>
-<span class="fc" id="L300">    }</span>
+<span class="fc" id="L287">        tempType = callee.getReturnType();</span>
+<span class="fc" id="L288">    }</span>
 
     /**
      * Checks the type correctness of a given reading variable access.
@@ -305,19 +293,19 @@ import java.util.Iterator;
      */
     @Override
     public void visit(VariableRead variableRead) {
-<span class="fc" id="L308">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
-<span class="fc" id="L309">        Identifier identifier = variableRead.getVariable();</span>
-<span class="fc" id="L310">        Value value = vars.get(identifier);</span>
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L312">            throw new IllegalTypeException(&quot;Variable &quot; + identifier.getName()</span>
-<span class="nc" id="L313">                                           + &quot; was read but not declared!&quot;,</span>
-<span class="nc" id="L314">                                           variableRead.getPosition());</span>
+<span class="fc" id="L296">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
+<span class="fc" id="L297">        Identifier identifier = variableRead.getVariable();</span>
+<span class="fc" id="L298">        Value value = vars.get(identifier);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L300">            throw new IllegalTypeException(&quot;Variable &quot; + identifier.getName()</span>
+<span class="fc" id="L301">                                           + &quot; was read but not declared!&quot;,</span>
+<span class="fc" id="L302">                                           variableRead.getPosition());</span>
         }
-<span class="fc" id="L316">        tempType = value.getType();</span>
-<span class="fc" id="L317">        variableRead.setType(tempType);</span>
-<span class="fc" id="L318">        variableRead.setDepth(currentScope.getDepthOfVariable(</span>
-<span class="fc" id="L319">                variableRead.getVariable()));</span>
-<span class="fc" id="L320">    }</span>
+<span class="fc" id="L304">        tempType = value.getType();</span>
+<span class="fc" id="L305">        variableRead.setType(tempType);</span>
+<span class="fc" id="L306">        variableRead.setDepth(currentScope.getDepthOfVariable(</span>
+<span class="fc" id="L307">                variableRead.getVariable()));</span>
+<span class="fc" id="L308">    }</span>
 
     /**
      * Checks the type correctness of a given reading array access.
@@ -325,28 +313,19 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ArrayRead arrayRead) {
-<span class="fc" id="L328">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
-<span class="fc" id="L329">        Identifier identifier = arrayRead.getVariable();</span>
-<span class="fc" id="L330">        Value value = vars.get(identifier);</span>
-<span class="pc bpc" id="L331" title="1 of 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L332">            throw new IllegalTypeException(&quot;Variable &quot; + identifier.getName()</span>
-<span class="nc" id="L333">                                           + &quot; was read but not declared!&quot;,</span>
-<span class="nc" id="L334">                                           arrayRead.getPosition());</span>
+<span class="fc" id="L316">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
+<span class="fc" id="L317">        Identifier identifier = arrayRead.getVariable();</span>
+<span class="fc" id="L318">        Value value = vars.get(identifier);</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L320">            throw new IllegalTypeException(&quot;Variable &quot; + identifier.getName()</span>
+<span class="fc" id="L321">                                           + &quot; was read but not declared!&quot;,</span>
+<span class="fc" id="L322">                                           arrayRead.getPosition());</span>
         }
-<span class="fc" id="L336">        Expression[] indices = arrayRead.getIndices();</span>
-<span class="fc bfc" id="L337" title="All 2 branches covered.">        for (Expression index : indices) {</span>
-<span class="fc" id="L338">            index.accept(this);</span>
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">            if (!(tempType instanceof IntegerType)) {</span>
-<span class="nc" id="L340">                throw new IllegalTypeException(&quot;Index must be an integer &quot;</span>
-                                               + &quot;expression!&quot;,
-<span class="nc" id="L342">                                               arrayRead.getPosition());</span>
-            }
-        }
-<span class="fc" id="L345">        tempType =</span>
-<span class="fc" id="L346">             baseType(value.getType(), indices.length, arrayRead.getPosition());</span>
-<span class="fc" id="L347">        arrayRead.setType(tempType);</span>
-<span class="fc" id="L348">        arrayRead.setDepth(currentScope.getDepthOfVariable(arrayRead.getVariable()));</span>
-<span class="fc" id="L349">    }</span>
+<span class="fc" id="L324">        tempType = baseType(value.getType(), arrayRead.getIndices().length,</span>
+<span class="fc" id="L325">                     arrayRead.getPosition());</span>
+<span class="fc" id="L326">        arrayRead.setType(tempType);</span>
+<span class="fc" id="L327">        arrayRead.setDepth(currentScope.getDepthOfVariable(arrayRead.getVariable()));</span>
+<span class="fc" id="L328">    }</span>
 
     /**
      * Checks the type correctness of a given function.
@@ -354,37 +333,41 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Function function) {
-<span class="fc" id="L357">        currentFunction = function;</span>
-<span class="fc" id="L358">        currentScope = new Scope(null, function.getFunctionBlock(), function);</span>
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">        if (currentFunction.getReturnType() instanceof ArrayType) {</span>
-<span class="nc" id="L360">            throw new IllegalTypeException(&quot;Functions must not return arrays.&quot;,</span>
-<span class="nc" id="L361">                                           function.getPosition());</span>
+<span class="fc" id="L336">        currentFunction = function;</span>
+<span class="fc" id="L337">        currentScope = new Scope(null, function.getFunctionBlock(), function);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (currentFunction.getReturnType() instanceof ArrayType) {</span>
+<span class="fc" id="L339">            throw new IllegalTypeException(&quot;Functions must not return arrays.&quot;,</span>
+<span class="fc" id="L340">                                           function.getPosition());</span>
         }
-<span class="fc" id="L363">        FunctionParameter[] params = function.getParameters();</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">        for (FunctionParameter param : params) {</span>
-<span class="fc bfc" id="L365" title="All 2 branches covered.">            if (param.getType() instanceof ArrayType) {</span>
-<span class="fc" id="L366">                int dimension = 0;</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">                for (Type type = param.getType(); type instanceof ArrayType;</span>
-<span class="fc" id="L368">                     type = ((ArrayType) type).getType()) {</span>
-<span class="fc" id="L369">                    dimension += 1;</span>
+<span class="fc" id="L342">        FunctionParameter[] params = function.getParameters();</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">        for (FunctionParameter param : params) {</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">            if (param.getType() instanceof ArrayType) {</span>
+<span class="fc" id="L345">                int dimension = 0;</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">                for (Type type = param.getType(); type instanceof ArrayType;</span>
+<span class="fc" id="L347">                     type = ((ArrayType) type).getType()) {</span>
+<span class="fc" id="L348">                    dimension += 1;</span>
                 }
-<span class="fc" id="L371">                int[] lengths = new int[dimension];</span>
-<span class="fc bfc" id="L372" title="All 2 branches covered.">                for (int i = 0; i &lt; lengths.length; i++) {</span>
-<span class="fc" id="L373">                    lengths[i] = 1;</span>
+<span class="fc" id="L350">                int[] lengths = new int[dimension];</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">                for (int i = 0; i &lt; lengths.length; i++) {</span>
+<span class="fc" id="L352">                    lengths[i] = 1;</span>
                 }
-<span class="fc" id="L375">                currentScope.createArray(param.getName(), param.getType(),</span>
-<span class="fc" id="L376">                        lengths);</span>
+<span class="fc" id="L354">                currentScope.createArray(param.getName(), param.getType(),</span>
+<span class="fc" id="L355">                        lengths);</span>
             } else {
-<span class="fc" id="L378">                currentScope.createVar(param.getName(), null, param.getType());</span>
+<span class="fc" id="L357">                currentScope.createVar(param.getName(), null, param.getType());</span>
             }
         }
-<span class="fc" id="L381">        Assumption[] assumptions = function.getAssumptions();</span>
-<span class="fc bfc" id="L382" title="All 2 branches covered.">        for (Assumption assumption : assumptions) {</span>
-<span class="fc" id="L383">            assumption.accept(this);</span>
+<span class="fc" id="L360">        Assumption[] assumptions = function.getAssumptions();</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        for (Assumption assumption : assumptions) {</span>
+<span class="fc" id="L362">            assumption.accept(this);</span>
         }
-<span class="fc" id="L385">        function.getFunctionBlock().accept(this);</span>
-<span class="fc" id="L386">        currentScope = currentScope.getParent();</span>
-<span class="fc" id="L387">    }</span>
+<span class="fc" id="L364">        function.getFunctionBlock().accept(this);</span>
+<span class="fc" id="L365">        Ensure[] ensures = currentFunction.getEnsures();</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L367">            ensure.accept(this);</span>
+        }
+<span class="fc" id="L369">        currentScope = currentScope.getParent();</span>
+<span class="fc" id="L370">    }</span>
 
     /**
      * Checks the type correctness of a given program.
@@ -392,21 +375,24 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Program program) {
-<span class="fc" id="L395">        functionCallAllowed = true;</span>
-<span class="fc" id="L396">        functions = program.getFunctions();</span>
-<span class="pc bpc" id="L397" title="1 of 2 branches missed.">        for (int i = 0; i &lt; functions.length - 1; i++) {</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">            for (int j = i + 1; j &lt; functions.length; j++) {</span>
-<span class="nc bnc" id="L399" title="All 2 branches missed.">                if (functions[i].getName().equals(functions[j].getName())) {</span>
-<span class="nc" id="L400">                    throw new IllegalTypeException(&quot;Function overloaded!&quot;,</span>
-<span class="nc" id="L401">                                                   program.getPosition());</span>
+<span class="fc" id="L378">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">        for (Axiom axiom : program.getAxioms()) {</span>
+<span class="fc" id="L380">            axiom.accept(this);</span>
+        }
+<span class="fc" id="L382">        functions = program.getFunctions();</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        for (int i = 0; i &lt; functions.length - 1; i++) {</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">            for (int j = i + 1; j &lt; functions.length; j++) {</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">                if (functions[i].getName().equals(functions[j].getName())) {</span>
+<span class="fc" id="L386">                    throw new IllegalTypeException(&quot;Function overloaded!&quot;,</span>
+<span class="fc" id="L387">                                                   program.getPosition());</span>
                 }
             }
         }
-<span class="fc bfc" id="L405" title="All 2 branches covered.">        for (Function function : functions) {</span>
-<span class="fc" id="L406">            function.accept(this);</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">        for (Function function : functions) {</span>
+<span class="fc" id="L392">            function.accept(this);</span>
         }
-<span class="fc" id="L408">        program.getMainFunction().accept(this);</span>
-<span class="fc" id="L409">    }</span>
+<span class="fc" id="L394">        program.getMainFunction().accept(this);</span>
+<span class="fc" id="L395">    }</span>
 
     /**
      * Checks the type correctness of a given variable assignment.
@@ -414,24 +400,29 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Assignment assignment) {
-<span class="fc" id="L417">        assignment.getValue().accept(this);</span>
-<span class="fc" id="L418">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
-<span class="fc" id="L419">        Identifier identifier = assignment.getIdentifier();</span>
-<span class="fc" id="L420">        Value value = vars.get(identifier);</span>
-<span class="fc bfc" id="L421" title="All 2 branches covered.">        if (value.getType() instanceof ArrayType) {</span>
-<span class="fc" id="L422">            throw new IllegalTypeException(&quot;Cannot assign a value to an array &quot;</span>
+<span class="fc" id="L403">        assignment.getValue().accept(this);</span>
+<span class="fc" id="L404">        HashMap&lt;Identifier, Value&gt; vars = currentScope.getVariables();</span>
+<span class="fc" id="L405">        Identifier identifier = assignment.getIdentifier();</span>
+<span class="fc" id="L406">        Value value = vars.get(identifier);</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L408">            throw new IllegalTypeException(&quot;Variable &quot; + identifier.getName()</span>
+<span class="fc" id="L409">                                           + &quot; was read but not declared!&quot;,</span>
+<span class="fc" id="L410">                                           assignment.getPosition());</span>
+        }
+<span class="fc bfc" id="L412" title="All 2 branches covered.">        if (value.getType() instanceof ArrayType) {</span>
+<span class="fc" id="L413">            throw new IllegalTypeException(&quot;Cannot assign a value to an array &quot;</span>
                                            + &quot;that is not fully indexed!&quot;,
-<span class="fc" id="L424">                                           assignment.getPosition());</span>
+<span class="fc" id="L415">                                           assignment.getPosition());</span>
         }
-<span class="pc bpc" id="L426" title="1 of 2 branches missed.">        if (!value.getType().equals(tempType)) {</span>
-<span class="nc" id="L427">            throw new IllegalTypeException(&quot;Type of variable does not match &quot;</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">        if (!value.getType().equals(tempType)) {</span>
+<span class="fc" id="L418">            throw new IllegalTypeException(&quot;Type of variable does not match &quot;</span>
                                            + &quot;the type of assigned value!&quot;,
-<span class="nc" id="L429">                                           assignment.getPosition());</span>
+<span class="fc" id="L420">                                           assignment.getPosition());</span>
         }
-<span class="fc" id="L431">        assignment.setType(tempType);</span>
-<span class="fc" id="L432">        assignment.setDepth(</span>
-<span class="fc" id="L433">                currentScope.getDepthOfVariable(assignment.getIdentifier()));</span>
-<span class="fc" id="L434">    }</span>
+<span class="fc" id="L422">        assignment.setType(tempType);</span>
+<span class="fc" id="L423">        assignment.setDepth(</span>
+<span class="fc" id="L424">                currentScope.getDepthOfVariable(assignment.getIdentifier()));</span>
+<span class="fc" id="L425">    }</span>
 
     /**
      * Checks the type correctness of a given assertion.
@@ -439,12 +430,12 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Assertion assertion) {
-<span class="fc" id="L442">        assertion.getExpression().accept(this);</span>
-<span class="fc bfc" id="L443" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="fc" id="L444">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
-<span class="fc" id="L445">                                            assertion.getPosition());</span>
+<span class="fc" id="L433">        assertion.getExpression().accept(this);</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L435">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
+<span class="fc" id="L436">                                            assertion.getPosition());</span>
         }
-<span class="fc" id="L447">    }</span>
+<span class="fc" id="L438">    }</span>
 
     /**
      * Checks the type correctness of a given assumption.
@@ -452,14 +443,14 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Assumption assumption) {
-<span class="fc" id="L455">        functionCallAllowed = false;</span>
-<span class="fc" id="L456">        assumption.getExpression().accept(this);</span>
-<span class="fc" id="L457">        functionCallAllowed = true;</span>
-<span class="pc bpc" id="L458" title="1 of 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L459">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
-<span class="nc" id="L460">                                            assumption.getPosition());</span>
+<span class="fc" id="L446">        functionCallAllowed = false;</span>
+<span class="fc" id="L447">        assumption.getExpression().accept(this);</span>
+<span class="fc" id="L448">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L450">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
+<span class="fc" id="L451">                                            assumption.getPosition());</span>
         }
-<span class="fc" id="L462">    }</span>
+<span class="fc" id="L453">    }</span>
 
     /**
      * Checks the type correctness of a given axiom.
@@ -467,14 +458,14 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Axiom axiom) {
-<span class="nc" id="L470">        functionCallAllowed = false;</span>
-<span class="nc" id="L471">        axiom.getExpression().accept(this);</span>
-<span class="nc" id="L472">        functionCallAllowed = true;</span>
-<span class="nc bnc" id="L473" title="All 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L474">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
-<span class="nc" id="L475">                                            axiom.getPosition());</span>
+<span class="fc" id="L461">        functionCallAllowed = false;</span>
+<span class="fc" id="L462">        axiom.getExpression().accept(this);</span>
+<span class="fc" id="L463">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L465">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
+<span class="fc" id="L466">                                            axiom.getPosition());</span>
         }
-<span class="nc" id="L477">    }</span>
+<span class="fc" id="L468">    }</span>
 
     /**
      * Checks the type correctness of a given ensure.
@@ -482,14 +473,14 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Ensure ensure) {
-<span class="fc" id="L485">        functionCallAllowed = false;</span>
-<span class="fc" id="L486">        ensure.getExpression().accept(this);</span>
-<span class="fc" id="L487">        functionCallAllowed = true;</span>
-<span class="pc bpc" id="L488" title="1 of 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L489">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
-<span class="nc" id="L490">                                            ensure.getPosition());</span>
+<span class="fc" id="L476">        functionCallAllowed = false;</span>
+<span class="fc" id="L477">        ensure.getExpression().accept(this);</span>
+<span class="fc" id="L478">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L480">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
+<span class="fc" id="L481">                                            ensure.getPosition());</span>
         }
-<span class="fc" id="L492">    }</span>
+<span class="fc" id="L483">    }</span>
 
     /**
      * Checks the type correctness of a given invariant.
@@ -497,14 +488,14 @@ import java.util.Iterator;
      */
     @Override
     public void visit(Invariant invariant) {
-<span class="fc" id="L500">        functionCallAllowed = false;</span>
-<span class="fc" id="L501">        invariant.getExpression().accept(this);</span>
-<span class="fc" id="L502">        functionCallAllowed = true;</span>
-<span class="pc bpc" id="L503" title="1 of 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L504">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
-<span class="nc" id="L505">                                            invariant.getPosition());</span>
+<span class="fc" id="L491">        functionCallAllowed = false;</span>
+<span class="fc" id="L492">        invariant.getExpression().accept(this);</span>
+<span class="fc" id="L493">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L494" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L495">            throw new IllegalTypeException(&quot;Expression must have bool type!&quot;,</span>
+<span class="fc" id="L496">                                            invariant.getPosition());</span>
         }
-<span class="fc" id="L507">    }</span>
+<span class="fc" id="L498">    }</span>
 
     /**
      * Checks the type correctness of a given return statement.
@@ -512,22 +503,14 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ReturnStatement returnStatement) {
-<span class="fc" id="L515">        Type currentReturnType = currentFunction.getReturnType();</span>
-<span class="pc bpc" id="L516" title="1 of 2 branches missed.">        if (currentReturnType == null) {</span>
-<span class="nc" id="L517">            throw new IllegalTypeException(&quot;Main must not have a &quot;</span>
-<span class="nc" id="L518">                           + &quot;return statement!&quot;, returnStatement.getPosition());</span>
-        }
-<span class="fc" id="L520">        returnStatement.getReturnValue().accept(this);</span>
-<span class="pc bpc" id="L521" title="1 of 2 branches missed.">        if (!currentReturnType.equals(tempType)) {</span>
-<span class="nc" id="L522">            throw new IllegalTypeException(&quot;Type of returned expression does &quot;</span>
+<span class="fc" id="L506">        Type currentReturnType = currentFunction.getReturnType();</span>
+<span class="fc" id="L507">        returnStatement.getReturnValue().accept(this);</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (!currentReturnType.equals(tempType)) {</span>
+<span class="fc" id="L509">            throw new IllegalTypeException(&quot;Type of returned expression does &quot;</span>
                                 + &quot;not match type that the function returns!&quot;,
-<span class="nc" id="L524">                                returnStatement.getPosition());</span>
+<span class="fc" id="L511">                                returnStatement.getPosition());</span>
         }
-<span class="fc" id="L526">        Ensure[] ensures = currentFunction.getEnsures();</span>
-<span class="pc bpc" id="L527" title="1 of 2 branches missed.">        for (Ensure ensure : ensures) {</span>
-<span class="nc" id="L528">            ensure.accept(this);</span>
-        }
-<span class="fc" id="L530">    }</span>
+<span class="fc" id="L513">    }</span>
 
     /**
      * Checks the type correctness of a given variable declaration.
@@ -535,25 +518,25 @@ import java.util.Iterator;
      */
     @Override
     public void visit(VariableDeclaration varDec) {
-<span class="fc bfc" id="L538" title="All 2 branches covered.">        if (currentScope.existsInScope(new Identifier(varDec.getName()))) {</span>
-<span class="fc" id="L539">            throw new IllegalTypeException(&quot;Variable already defined in scope!&quot;,</span>
-<span class="fc" id="L540">                                           varDec.getPosition());</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">        if (currentScope.existsInScope(new Identifier(varDec.getName()))) {</span>
+<span class="fc" id="L522">            throw new IllegalTypeException(&quot;Variable already defined in scope!&quot;,</span>
+<span class="fc" id="L523">                                           varDec.getPosition());</span>
         }
-<span class="fc bfc" id="L542" title="All 2 branches covered.">        if (varDec.getType() instanceof ArrayType) {</span>
-<span class="fc" id="L543">            throw new IllegalTypeException(&quot;Arrays must be initialized &quot; +</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        if (varDec.getType() instanceof ArrayType) {</span>
+<span class="fc" id="L526">            throw new IllegalTypeException(&quot;Arrays must be initialized &quot; +</span>
                                            &quot;via \&quot;array\&quot; keyword!&quot;,
-<span class="fc" id="L545">                                           varDec.getPosition());</span>
+<span class="fc" id="L528">                                           varDec.getPosition());</span>
         }
-<span class="fc bfc" id="L547" title="All 2 branches covered.">        if (varDec.getValue() != null) {</span>
-<span class="fc" id="L548">            varDec.getValue().accept(this);</span>
-<span class="fc bfc" id="L549" title="All 2 branches covered.">            if (!varDec.getType().equals(tempType)) {</span>
-<span class="fc" id="L550">                throw new IllegalTypeException(&quot;Type of variable does not match&quot;</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        if (varDec.getValue() != null) {</span>
+<span class="fc" id="L531">            varDec.getValue().accept(this);</span>
+<span class="fc bfc" id="L532" title="All 2 branches covered.">            if (!varDec.getType().equals(tempType)) {</span>
+<span class="fc" id="L533">                throw new IllegalTypeException(&quot;Type of variable does not match&quot;</span>
                                                + &quot; the type of initial value&quot;,
-<span class="fc" id="L552">                                               varDec.getPosition());</span>
+<span class="fc" id="L535">                                               varDec.getPosition());</span>
             }
         }
-<span class="fc" id="L555">        currentScope.createVar(varDec.getName(), null, varDec.getType());</span>
-<span class="fc" id="L556">    }</span>
+<span class="fc" id="L538">        currentScope.createVar(varDec.getName(), null, varDec.getType());</span>
+<span class="fc" id="L539">    }</span>
 
     /**
      * Checks the type correctness of a given array declaration.
@@ -561,36 +544,28 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ArrayDeclaration arrDec) {
-<span class="fc bfc" id="L564" title="All 2 branches covered.">        if (currentScope.existsInScope(new Identifier(arrDec.getName()))) {</span>
-<span class="fc" id="L565">            throw new IllegalTypeException(&quot;Array already declared in scope!&quot;,</span>
-<span class="fc" id="L566">                                           arrDec.getPosition());</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">        if (currentScope.existsInScope(new Identifier(arrDec.getName()))) {</span>
+<span class="fc" id="L548">            throw new IllegalTypeException(&quot;Array already declared in scope!&quot;,</span>
+<span class="fc" id="L549">                                           arrDec.getPosition());</span>
         }
-<span class="fc bfc" id="L568" title="All 2 branches covered.">        if (!(arrDec.getType() instanceof ArrayType)) {</span>
-<span class="fc" id="L569">            throw new IllegalTypeException(&quot;\&quot;array\&quot; keyword only allowed &quot; +</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">        if (!(arrDec.getType() instanceof ArrayType)) {</span>
+<span class="fc" id="L552">            throw new IllegalTypeException(&quot;\&quot;array\&quot; keyword only allowed &quot; +</span>
                                            &quot;on array declaration!&quot;,
-<span class="fc" id="L571">                                           arrDec.getPosition());    </span>
+<span class="fc" id="L554">                                           arrDec.getPosition());    </span>
         }
-<span class="fc" id="L573">        Expression[] indices = arrDec.getIndices();</span>
-<span class="fc bfc" id="L574" title="All 2 branches covered.">        for (Expression index : indices) {</span>
-<span class="fc" id="L575">            index.accept(this);</span>
-<span class="pc bpc" id="L576" title="1 of 2 branches missed.">            if (!(tempType instanceof IntegerType)) {</span>
-<span class="nc" id="L577">                throw new IllegalTypeException(&quot;Index must be an integer &quot;</span>
-                                               + &quot;expression!&quot;,
-<span class="nc" id="L579">                                               arrDec.getPosition());</span>
-            }
-        }
-<span class="fc bfc" id="L582" title="All 2 branches covered.">        if (baseType(arrDec.getType(), indices.length, arrDec.getPosition())</span>
+<span class="fc" id="L556">        Expression[] indices = arrDec.getIndices();</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">        if (baseType(arrDec.getType(), indices.length, arrDec.getPosition())</span>
                 instanceof ArrayType) {
-<span class="fc" id="L584">            throw new IllegalTypeException(&quot;Type of array declaration does not&quot;</span>
+<span class="fc" id="L559">            throw new IllegalTypeException(&quot;Type of array declaration does not&quot;</span>
                                            + &quot;match the number of indices&quot;,
-<span class="fc" id="L586">                                           arrDec.getPosition());</span>
+<span class="fc" id="L561">                                           arrDec.getPosition());</span>
         }
-<span class="fc" id="L588">        int[] lengths = new int[indices.length];</span>
-<span class="fc bfc" id="L589" title="All 2 branches covered.">        for (int i = 0; i &lt; lengths.length; i++) {</span>
-<span class="fc" id="L590">            lengths[i] = 1;</span>
+<span class="fc" id="L563">        int[] lengths = new int[indices.length];</span>
+<span class="fc bfc" id="L564" title="All 2 branches covered.">        for (int i = 0; i &lt; lengths.length; i++) {</span>
+<span class="fc" id="L565">            lengths[i] = 1;</span>
         }
-<span class="fc" id="L592">        currentScope.createArray(arrDec.getName(), arrDec.getType(), lengths);</span>
-<span class="fc" id="L593">    }</span>
+<span class="fc" id="L567">        currentScope.createArray(arrDec.getName(), arrDec.getType(), lengths);</span>
+<span class="fc" id="L568">    }</span>
 
     /**
      * Checks the type correctness of a given exists quantifier.
@@ -598,30 +573,30 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
-<span class="nc bnc" id="L601" title="All 2 branches missed.">        if (existsQuantifier.getRange() != null) {</span>
-<span class="nc" id="L602">            existsQuantifier.getRange().getLowerBound().accept(this);</span>
-<span class="nc" id="L603">            Type tempType1 = tempType;</span>
-<span class="nc" id="L604">            existsQuantifier.getRange().getUpperBound().accept(this);</span>
-<span class="nc bnc" id="L605" title="All 2 branches missed.">            if (!(tempType instanceof IntegerType)</span>
-<span class="nc bnc" id="L606" title="All 2 branches missed.">                        || !(tempType1 instanceof IntegerType)) {</span>
-<span class="nc" id="L607">                throw new IllegalTypeException(&quot;Range bounds must be integer &quot;</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">        if (existsQuantifier.getRange() != null) {</span>
+<span class="fc" id="L577">            existsQuantifier.getRange().getLowerBound().accept(this);</span>
+<span class="fc" id="L578">            Type tempType1 = tempType;</span>
+<span class="fc" id="L579">            existsQuantifier.getRange().getUpperBound().accept(this);</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">            if (!(tempType instanceof IntegerType)</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">                        || !(tempType1 instanceof IntegerType)) {</span>
+<span class="fc" id="L582">                throw new IllegalTypeException(&quot;Range bounds must be integer &quot;</span>
                                                + &quot;expressions!&quot;,
-<span class="nc" id="L609">                                                existsQuantifier.getPosition());</span>
+<span class="fc" id="L584">                                                existsQuantifier.getPosition());</span>
             }
         }
-<span class="nc" id="L612">        currentScope = new Scope(currentScope, null, null);</span>
-<span class="nc" id="L613">        currentScope.createVar(existsQuantifier.getIdentifier().getName(),</span>
-<span class="nc" id="L614">                                null, new IntegerType());</span>
-<span class="nc" id="L615">        functionCallAllowed = false;</span>
-<span class="nc" id="L616">        existsQuantifier.getSubexpression1().accept(this);</span>
-<span class="nc" id="L617">        functionCallAllowed = true;</span>
-<span class="nc bnc" id="L618" title="All 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L619">            throw new IllegalTypeException(&quot;Subexpression must have bool type!&quot;,</span>
-<span class="nc" id="L620">                                            existsQuantifier.getPosition());</span>
+<span class="fc" id="L587">        currentScope = new Scope(currentScope, null, null);</span>
+<span class="fc" id="L588">        currentScope.createVar(existsQuantifier.getIdentifier().getName(),</span>
+<span class="fc" id="L589">                                null, new IntegerType());</span>
+<span class="fc" id="L590">        functionCallAllowed = false;</span>
+<span class="fc" id="L591">        existsQuantifier.getSubexpression1().accept(this);</span>
+<span class="fc" id="L592">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L594">            throw new IllegalTypeException(&quot;Subexpression must have bool type!&quot;,</span>
+<span class="fc" id="L595">                                            existsQuantifier.getPosition());</span>
         }
-<span class="nc" id="L622">        currentScope = currentScope.getParent();</span>
-<span class="nc" id="L623">        tempType = new BooleanType();</span>
-<span class="nc" id="L624">    }</span>
+<span class="fc" id="L597">        currentScope = currentScope.getParent();</span>
+<span class="fc" id="L598">        tempType = new BooleanType();</span>
+<span class="fc" id="L599">    }</span>
 
     /**
      * Checks the type correctness of a given for all quantifier.
@@ -629,30 +604,30 @@ import java.util.Iterator;
      */
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
-<span class="nc bnc" id="L632" title="All 2 branches missed.">        if (forAllQuantifier.getRange() != null) {</span>
-<span class="nc" id="L633">            forAllQuantifier.getRange().getLowerBound().accept(this);</span>
-<span class="nc" id="L634">            Type tempType1 = tempType;</span>
-<span class="nc" id="L635">            forAllQuantifier.getRange().getUpperBound().accept(this);</span>
-<span class="nc bnc" id="L636" title="All 2 branches missed.">            if (!(tempType instanceof IntegerType)</span>
-<span class="nc bnc" id="L637" title="All 2 branches missed.">                        || !(tempType1 instanceof IntegerType)) {</span>
-<span class="nc" id="L638">                throw new IllegalTypeException(&quot;Range bounds must be integer &quot;</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">        if (forAllQuantifier.getRange() != null) {</span>
+<span class="fc" id="L608">            forAllQuantifier.getRange().getLowerBound().accept(this);</span>
+<span class="fc" id="L609">            Type tempType1 = tempType;</span>
+<span class="fc" id="L610">            forAllQuantifier.getRange().getUpperBound().accept(this);</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">            if (!(tempType instanceof IntegerType)</span>
+<span class="fc bfc" id="L612" title="All 2 branches covered.">                        || !(tempType1 instanceof IntegerType)) {</span>
+<span class="fc" id="L613">                throw new IllegalTypeException(&quot;Range bounds must be integer &quot;</span>
                                                + &quot;expressions!&quot;,
-<span class="nc" id="L640">                                                forAllQuantifier.getPosition());</span>
+<span class="fc" id="L615">                                                forAllQuantifier.getPosition());</span>
             }
         }
-<span class="nc" id="L643">        currentScope = new Scope(currentScope, null, null);</span>
-<span class="nc" id="L644">        currentScope.createVar(forAllQuantifier.getIdentifier().getName(),</span>
-<span class="nc" id="L645">                                null, new IntegerType());</span>
-<span class="nc" id="L646">        functionCallAllowed = false;</span>
-<span class="nc" id="L647">        forAllQuantifier.getSubexpression1().accept(this);</span>
-<span class="nc" id="L648">        functionCallAllowed = true;</span>
-<span class="nc bnc" id="L649" title="All 2 branches missed.">        if (!(tempType instanceof BooleanType)) {</span>
-<span class="nc" id="L650">            throw new IllegalTypeException(&quot;Subexpression must have bool type!&quot;,</span>
-<span class="nc" id="L651">                                            forAllQuantifier.getPosition());</span>
+<span class="fc" id="L618">        currentScope = new Scope(currentScope, null, null);</span>
+<span class="fc" id="L619">        currentScope.createVar(forAllQuantifier.getIdentifier().getName(),</span>
+<span class="fc" id="L620">                                null, new IntegerType());</span>
+<span class="fc" id="L621">        functionCallAllowed = false;</span>
+<span class="fc" id="L622">        forAllQuantifier.getSubexpression1().accept(this);</span>
+<span class="fc" id="L623">        functionCallAllowed = true;</span>
+<span class="fc bfc" id="L624" title="All 2 branches covered.">        if (!(tempType instanceof BooleanType)) {</span>
+<span class="fc" id="L625">            throw new IllegalTypeException(&quot;Subexpression must have bool type!&quot;,</span>
+<span class="fc" id="L626">                                            forAllQuantifier.getPosition());</span>
         }
-<span class="nc" id="L653">        currentScope = currentScope.getParent();</span>
-<span class="nc" id="L654">        tempType = new BooleanType();</span>
-<span class="nc" id="L655">    }</span>
+<span class="fc" id="L628">        currentScope = currentScope.getParent();</span>
+<span class="fc" id="L629">        tempType = new BooleanType();</span>
+<span class="fc" id="L630">    }</span>
 
     /**
      * Checks the type correctness of a given statement block.
@@ -660,11 +635,11 @@ import java.util.Iterator;
      */
     @Override
     public void visit(StatementBlock statementBlock) {
-<span class="fc" id="L663">        Iterator&lt;Statement&gt; statements = statementBlock.getIterator();</span>
-<span class="fc bfc" id="L664" title="All 2 branches covered.">        while (statements.hasNext()) {</span>
-<span class="fc" id="L665">            statements.next().accept(this);</span>
+<span class="fc" id="L638">        Iterator&lt;Statement&gt; statements = statementBlock.getIterator();</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">        while (statements.hasNext()) {</span>
+<span class="fc" id="L640">            statements.next().accept(this);</span>
         }
-<span class="fc" id="L667">    }</span>
+<span class="fc" id="L642">    }</span>
 
     /**
      * Returns the type of the array in the specified depth.
@@ -680,15 +655,15 @@ import java.util.Iterator;
      * @return type of the array in the specified depth
      */
     private static Type baseType(Type arrayType, int depth, Position position) {
-<span class="fc" id="L683">        Type type = arrayType;</span>
-<span class="fc bfc" id="L684" title="All 2 branches covered.">        for (int i = 0; i &lt; depth; i++) {</span>
-<span class="fc bfc" id="L685" title="All 2 branches covered.">            if (!(type instanceof ArrayType)) {</span>
-<span class="fc" id="L686">                throw new IllegalTypeException(&quot;Variable was indexed although &quot;</span>
-<span class="fc" id="L687">                                                + &quot;not an array!&quot;, position);</span>
+<span class="fc" id="L658">        Type type = arrayType;</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">        for (int i = 0; i &lt; depth; i++) {</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">            if (!(type instanceof ArrayType)) {</span>
+<span class="fc" id="L661">                throw new IllegalTypeException(&quot;Variable was indexed although &quot;</span>
+<span class="fc" id="L662">                                                + &quot;not an array!&quot;, position);</span>
             }
-<span class="fc" id="L689">            type = ((ArrayType) type).getType();</span>
+<span class="fc" id="L664">            type = ((ArrayType) type).getType();</span>
         }
-<span class="fc" id="L691">        return type;</span>
+<span class="fc" id="L666">        return type;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
