@@ -24,24 +24,27 @@ public class Help {
 		tableOfContents.put("Program", "program.html");
 		tableOfContents.put("Functions", "functions.html");
 		tableOfContents.put("Statement", "statement.html");
-		tableOfContents.put("Expression", "expression.html");
+		tableOfContents.put("Variables", "variables.html");
 		tableOfContents.put("Assignment", "assignment.html");
-		tableOfContents.put("While Statement", "while.html");
 		tableOfContents.put("If Statement", "if.html");
+		tableOfContents.put("While Statement", "while.html");
+		tableOfContents.put("Expression", "expression.html");
+		tableOfContents.put("Identifier", "identifier.html");
+		tableOfContents.put("Literal", "literal.html");
+		tableOfContents.put("Boolean Operations", "boolean_operations.html");
+		tableOfContents.put("Integer Operations", "integer_operations.html");
+		tableOfContents.put("Array Operations", "array_operations.html");
+		tableOfContents.put("Specifications", "specifications.html");
 		tableOfContents.put("Assert", "assert.html");
 		tableOfContents.put("Assume", "assume.html");
 		tableOfContents.put("Ensure", "ensure.html");
-		tableOfContents.put("Axiom", "axiom.html");
 		tableOfContents.put("Invariant", "invariant.html");
+		tableOfContents.put("Axiom", "axiom.html");
 		tableOfContents.put("Quantified Expressions", "quantified_expression.html");
-		tableOfContents.put("Variables", "variables.html");
-		tableOfContents.put("Literal", "literal.html");
-		tableOfContents.put("Identifier", "identifier.html");
-		tableOfContents.put("Boolean Operations", "boolean_operations.html");
-		tableOfContents.put("Integer Operations", "integer_operations.html");
 		
 
 		tags = new HashMap<String, String>();
+		tags.put("length", "array_operations.html");
 		tags.put("assert", "assert.html");
 		tags.put("assertion", "assert.html");
 		tags.put("assign", "assignment.html");
@@ -65,6 +68,8 @@ public class Help {
 		tags.put("conditional", "if.html");
 		tags.put("help", "index.html");
 		tags.put("integer", "integer_operations.html");
+		tags.put("division", "integer_operations.html");
+		tags.put("modulo", "integer_operations.html");
 		tags.put("interpret", "interpreting.html");
 		tags.put("run", "interpreting.html");
 		tags.put("invariant", "invariant.html");
