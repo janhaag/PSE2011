@@ -43,10 +43,11 @@ public class ParserInterface {
         if (typeChecker == null) {
             typeChecker = new TypeChecker();
         }
-        if (p != null) {
+        System.out.println(errors);
+        if (errors.isEmpty()) {
             typeChecker.checkTypes(p);
         }
-        return p;
+        return errors.isEmpty() ? p : null;
     }
 
     /**
