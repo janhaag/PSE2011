@@ -207,16 +207,19 @@ public class Editor {
 		}
 	}
 	
-	public int addBreakpoint(int line) {
+	public void addBreakpoint(int line) {
+		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
+		this.statementBreakpoints.add(newStatementBreakpoint);
+	}
+	
+	public int removeBreakpoint(int line) {
 		for (int i = 0; i < this.statementBreakpoints.size(); i++) {
 			if (this.statementBreakpoints.get(i).getLine() == line) {
 				this.statementBreakpoints.remove(i);
-				return 0;
+				return 1;
 			}
 		}
-		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
-		this.statementBreakpoints.add(newStatementBreakpoint);
-		return 1;
+		return 0;
 	}
 	
 	public ArrayList<StatementBreakpoint> getStatementBreakpoints() {

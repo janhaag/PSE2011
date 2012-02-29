@@ -188,14 +188,20 @@ public class TableViewController implements SelectionListener {
 	 * Deactivate the breakpoint view to avoid invalid changes during program execution.
 	 */
 	public void deactivateBreakpointView() {
-		this.breakpointView.getAddButton().removeSelectionListener(this);
+		if (this.breakpointView.getActive()) {
+			this.breakpointView.getAddButton().removeSelectionListener(this);
+			this.breakpointView.setActive(false);
+		}
 	}
 	
 	/**
 	 * Reactivate the breakpoint view.
 	 */
 	public void activateBreakpointView() {
-		this.breakpointView.getAddButton().addSelectionListener(this);
+		if (!this.breakpointView.getActive()) {
+			this.breakpointView.getAddButton().addSelectionListener(this);
+			this.breakpointView.setActive(true);
+		}
 	}
 	
 	/**

@@ -135,12 +135,14 @@ public class MainController implements SelectionListener {
 						lines[i] = breakpoints.get(i).getLine();
 					}
 					for(int i = 0; i < lines.length; i++) {
-						this.editorController.getEditor().addBreakpoint(lines[i]);
+						this.editorController.getEditor().removeBreakpoint(lines[i]);
 						this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);
 					}
 					
 					//stop execution
-					this.stopView();
+					if (this.executionHandler.getProgramExecution() != null) {
+						this.stopView();
+					}
 				}
 			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSave()) {
@@ -168,7 +170,9 @@ public class MainController implements SelectionListener {
 			}
 			
 			//stop execution
-			this.stopView();
+			if (this.executionHandler.getProgramExecution() != null) {
+				this.stopView();
+			}
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemSettings()) {
 			new SettingsFrame(this.mainframe.getShell(), this.settingsController);
 		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemRandomTest()) {
@@ -252,8 +256,14 @@ public class MainController implements SelectionListener {
 								pauseView();
 							}
 							else {
+								if (executionHandler.getProgramExecution() != null 
+										&& executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {
+									executionHandler.addSuccessMessage("Program execution successful!");
+								}
+								else {
+									executionHandler.addSuccessMessage("stopped execution");
+								}
 								stopView();
-								executionHandler.addSuccessMessage("Program execution successful!");
 							}
 						}
 					});

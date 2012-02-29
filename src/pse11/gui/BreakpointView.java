@@ -32,7 +32,7 @@ public class BreakpointView extends Composite {
 	 * button for add and remove
 	 */
 	private Button button;
-	
+	private boolean active;
 	/**
 	 * Construct a breakpoint view with the specified parent composite and 
 	 * definitions of its style and behavior.
@@ -41,6 +41,7 @@ public class BreakpointView extends Composite {
 	 */
 	public BreakpointView(Composite parent, int def) {
 		super(parent, def);		
+		this.active = true;
 		
 		//Setting layout
 		GridLayout gLayout = new GridLayout();
@@ -114,5 +115,13 @@ public class BreakpointView extends Composite {
 	 */
 	public Button getAddButton() {
 		return this.button;
+	}
+	
+	public boolean getActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }
