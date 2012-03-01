@@ -1,0 +1,9 @@
+# compute the square of x
+main(int x) {
+	int i = 0;
+	int y = 0;
+	while(i < x) {
+		y = y + 2 * i + 1;
+		i = i + 1;
+	}
+} ensure y == x * x;

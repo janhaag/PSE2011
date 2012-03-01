@@ -1,0 +1,50 @@
+int foo() {
+	return 0;
+}
+
+int foo2(int[][] a) {
+	int i;
+	if (a[0][0] >= a[1][1]) {
+		i = 5;
+	}
+	return i;
+}
+
+main(int[][] a) {
+	#Parsertests:
+	#int b[] = {2};
+	#int[] b = array;
+	#int[] = array;
+	#int[] b = array[];
+	#bool b[][] = array[2][3];
+
+	int[][] b = array[2][2];
+
+	#a[0] = a[1];
+	#a[][0] = a[][1];
+	#a[[0]]= a[[1]];
+	#a[0][0][0]= a[1][1][1];
+	#a[0][0] = a[1][foo()];
+
+	#Typecheckertests
+	#a[0][0] = true;
+
+	#Interpretertests
+	#a[0][0] = a[1][1];
+	#a[0][0] = b[3];
+
+	int i = length(a);
+	int j = length(a[0]);
+	if (a == b) {
+		a[0][0] = 5;
+	}
+	else  {
+		a[0][0] = 42;
+	}
+
+	while (a != b) {
+		a[0][0] = a[0][0] - 1;
+	}
+
+	a[0][0] = foo2(a);
+}
