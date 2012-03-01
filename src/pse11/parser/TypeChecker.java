@@ -114,11 +114,6 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
         Value value = vars.get(identifier);
-        if (value == null) {
-            throw new IllegalTypeException("Variable " + identifier.getName()
-                                           + " was read but not declared!",
-                                           arrayAssignment.getPosition());
-        }
         arrayAssignment.getValue().accept(this);
         Type type = baseType(value.getType(), arrayAssignment.getIndices().length,
                      arrayAssignment.getPosition());

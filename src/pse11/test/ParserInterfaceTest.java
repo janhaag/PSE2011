@@ -35,6 +35,29 @@ public class ParserInterfaceTest {
     }
 
     @Test
+    public void testParseIdentifier() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){int test;bool _aS10;" +
+                    "int A_;int _; int a1d;}");
+        } catch (RecognitionException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testParseComment() {
+        boolean success = true;
+        try {
+            parserInterface.parseProgram("main(){#=§98t0d, test-#2\n}");
+        } catch (RecognitionException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
     public void testCorrectAssertFuncCall() {
         boolean success = true;
         try {
@@ -67,6 +90,18 @@ public class ParserInterfaceTest {
     @Test
     public void testParseInvalidProgram4() throws RecognitionException {
         parserInterface.parseProgram("main(){int a[] = array[2];}");
+        assertNotSame(0, parserInterface.getErrors().length);
+    }
+
+    @Test
+    public void testParseWrongIdentifier() throws RecognitionException {
+        parserInterface.parseProgram("main(){int tes§t;}");
+        assertNotSame(0, parserInterface.getErrors().length);
+    }
+
+    @Test
+    public void testParseWrongIntLiteral() throws RecognitionException {
+        parserInterface.parseProgram("main(){int flag = 1q;}");
         assertNotSame(0, parserInterface.getErrors().length);
     }
 

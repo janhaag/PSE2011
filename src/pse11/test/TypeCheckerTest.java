@@ -541,13 +541,8 @@ public class TypeCheckerTest {
     }
 
     @Test (expected = IllegalTypeException.class)
-    public void testVariableDeclaredAsArray1() throws RecognitionException {
+    public void testVariableDeclaredAsArray() throws RecognitionException {
         parserInterface.parseProgram("main() {bool i = array[6];}");
-    }
-
-    @Test (expected = IllegalTypeException.class)
-    public void testVariableDeclaredAsArray2() throws RecognitionException {
-        parserInterface.parseProgram("main() {bool i = array;}");
     }
 
     @Test (expected = IllegalTypeException.class)

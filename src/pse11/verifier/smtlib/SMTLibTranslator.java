@@ -604,13 +604,17 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         existsQuantifier.getSubexpression1().accept(this);
-        tempExpr = new S_Expression("exists", new VarDef(existsQuantifier.getIdentifier().getName(), new IntegerType(), 0), tempExpr);
+        tempExpr = new S_Expression("exists", new Constant(
+                "((" + existsQuantifier.getIdentifier().toString() + " Int))"
+        ), tempExpr);
     }
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         forAllQuantifier.getSubexpression1().accept(this);
-        tempExpr = new S_Expression("forall", new VarDef(forAllQuantifier.getIdentifier().getName(), new IntegerType(), 0), tempExpr);
+        tempExpr = new S_Expression("forall", new Constant(
+                "((" + forAllQuantifier.getIdentifier().toString() + " Int))"
+        ), tempExpr);
     }
 
     @Override
