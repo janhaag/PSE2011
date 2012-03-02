@@ -43,10 +43,6 @@ public class FunctionCall extends Expression {
      * @param function function to be called
      */
     public void setFunction(Function function) {
-        if (this.function != null) {
-            //function cannot be set again
-            throw new IllegalStateException("Function may only be set once!");
-        }
         this.function = function;
     }
 
