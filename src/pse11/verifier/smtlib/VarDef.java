@@ -33,7 +33,7 @@ public class VarDef extends S_Expression {
      */
     public VarDef(String ident, Type type, int depth) {
         super(ident);
-        this.ident = ident;
+        this.ident = ident + '$' + depth;
         this.type = type;
         fullRepresentation = ident + " () "
                 + SMTLibTranslator.getTypeString(type);
