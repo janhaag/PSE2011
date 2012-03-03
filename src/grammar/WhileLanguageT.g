@@ -131,8 +131,8 @@ mul_expression
 
 unary_expression
         : '!'^ parenthesized_expression
-        | '-'^ parenthesized_expression
-        | '+'^? parenthesized_expression
+        | '-' parenthesized_expression
+        | '+'? parenthesized_expression
         ;
 
 parenthesized_expression
@@ -144,7 +144,7 @@ parenthesized_expression
         ;
 
 function_call
-        : IDENT '('! arglist? ')'!
+        : IDENT '(' arglist? ')'
         ;
 
 arglist
@@ -152,7 +152,7 @@ arglist
         ;
 
 array_read
-        : IDENT '['! expression ']'! ( '['! expression ']'! )*
+        : IDENT '[' expression ']' ( '[' expression ']' )*
         ;
 
 literal_expression
@@ -161,7 +161,7 @@ literal_expression
         ;
 
 type returns [ Type ast ]
-        : ('int'^ | 'bool'^ ) ( '['! ']'! )*
+        : ('int' | 'bool' ) ( '[' ']' )*
         ;
 
 INT_LITERAL  : ( '0'..'9' )+;
