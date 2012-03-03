@@ -33,16 +33,16 @@ public class VarDef extends S_Expression {
      */
     public VarDef(String ident, Type type, int depth) {
         super(ident);
-        this.ident = ident + '$' + depth;
+        this.ident = ident;
         this.type = type;
-        fullRepresentation = this.ident + " () "
-                + SMTLibTranslator.getTypeString(type);
         this.depth = depth;
+        fullRepresentation = toString() + " () "
+                + SMTLibTranslator.getTypeString(type);
     }
 
     @Override
     public String toString() {
-        return ident;
+        return ident + '$' + depth;
     }
 
     /**
@@ -76,7 +76,7 @@ public class VarDef extends S_Expression {
 
         VarDef varDef = (VarDef) o;
 
-        return ident.equals(varDef.ident);
+        return ident.equals(varDef.ident) && depth == varDef.depth;
     }
 
     @Override

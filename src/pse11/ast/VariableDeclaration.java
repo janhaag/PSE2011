@@ -17,6 +17,7 @@ public class VariableDeclaration extends Statement {
      * name of the new variable
      */
     private final String name;
+    private int depth;
 
     /**
      * Constructor.
@@ -57,6 +58,14 @@ public class VariableDeclaration extends Statement {
      */
     public String getName() {
         return name;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     @Override

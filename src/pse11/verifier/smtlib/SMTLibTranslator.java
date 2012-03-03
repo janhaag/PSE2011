@@ -24,12 +24,12 @@ public class SMTLibTranslator implements ASTVisitor {
      * temporarily saves the replacement that must be made in
      * the upper scope after the current scope is evaluated
      */
-    private Stack<HashMap<VarDef, S_Expression>> upScopeReplacements;
+    //private Stack<HashMap<VarDef, S_Expression>> upScopeReplacements;
     /**
      * temporarily saves the expression of the upper scope that will
      * be integrated in the program at a later time
      */
-    private Stack<S_Expression> upScopeExpr;
+    //private Stack<S_Expression> upScopeExpr;
     /**
      * Maps Array Names to tags
      */
@@ -131,7 +131,7 @@ public class SMTLibTranslator implements ASTVisitor {
      * @param varDef variable to be replaced
      * @param newExpr new expression to replace varDef
      */
-    private static void replaceInAssignments(Map<VarDef, S_Expression> map,
+    /*private static void replaceInAssignments(Map<VarDef, S_Expression> map,
                                      VarDef varDef, S_Expression newExpr) {
         for (Map.Entry<VarDef, S_Expression> oldEntry : map.entrySet()) {
             oldEntry.getValue().replace(varDef,
@@ -140,7 +140,7 @@ public class SMTLibTranslator implements ASTVisitor {
         if (!map.containsKey(varDef)) {
             map.put(varDef, newExpr.deepCopy());
         }
-    }
+    }*/
 
     /**
      * Returns the string representation of the given type
@@ -165,9 +165,8 @@ public class SMTLibTranslator implements ASTVisitor {
     /**
      * Handles the replacements after a program
      * is separated at a loop or function call
-     * @param program program that is prepared after separation
      */
-    private void prepareEndedLoop(LinkedList<S_Expression> program) {
+    /*private void prepareEndedLoop(LinkedList<S_Expression> program) {
         while (upScopeReplacements.size() > 1) {
             S_Expression upperExpr = upScopeExpr.pop();
             HashMap<VarDef, S_Expression> replacements =
@@ -183,11 +182,11 @@ public class SMTLibTranslator implements ASTVisitor {
             program.set(program.size() - 1, new S_Expression("and",
                     upperExpr, program.getLast()));
         }
-    }
+    }*/
 
     @Override
     public void visit(Conditional conditional) {
-        upScopeExpr.push(tempExpr);
+        /*upScopeExpr.push(tempExpr);
         Stack<S_Expression> tempExprStack = new Stack<S_Expression>();
         for (S_Expression expression : upScopeExpr) {
             tempExprStack.push(expression.deepCopy());
@@ -256,20 +255,38 @@ public class SMTLibTranslator implements ASTVisitor {
         tempExpr = new S_Expression("or",
                 trueBranch, falseBranch);
         change = true;
+        functionsCalled = new ArrayList<FunctionCall>();*/
+        S_Expression saveExpression = tempExpr;
+        conditional.getCondition().accept(this);
+        S_Expression condition = tempExpr;
+        tempExpr = saveExpression.deepCopy();
+        conditional.getTrueConditionBody().accept(this);
+        S_Expression trueBranch = new S_Expression("and",
+                condition.deepCopy(), tempExpr);
+        tempExpr = saveExpression.deepCopy();
+        if (conditional.getFalseConditionBody() != null) {
+            conditional.getFalseConditionBody().accept(this);
+        }
+        S_Expression falseBranch = new S_Expression("and",
+                new S_Expression("not",
+                        condition), tempExpr);
+        tempExpr = new S_Expression("or",
+                trueBranch, falseBranch);
+        change = true;
         functionsCalled = new ArrayList<FunctionCall>();
     }
 
     @Override
     public void visit(Loop loop) {
         Ensure[] ensures = loop.getPostconditions();
-        int depth = upScopeReplacements.size();
+        //int depth = upScopeReplacements.size();
         //ensures=>rest
         LinkedList<S_Expression> program = new LinkedList<S_Expression>();
         program.add(tempExpr);
         programs.add(program);
         descriptions.add(new Pair<KindOfProgram, Position>(
                 KindOfProgram.WhileEnsureToRemainingProgram, loop.getPosition()));
-        prepareEndedLoop(program);
+        //prepareEndedLoop(program);
         for (Ensure ensure : ensures) {
             ensure.accept(this);
             program.set(program.size() - 1, new S_Expression("=>",
@@ -303,12 +320,12 @@ public class SMTLibTranslator implements ASTVisitor {
                 new S_Expression("not",
                         program.getLast())));
         //invariants & condition => invariant
-        upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
+        /*upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
         upScopeExpr = new Stack<S_Expression>();
         for (int i = 0; i < depth; i++) {
             upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
             upScopeExpr.add(new Constant("true"));
-        }
+        }*/
         program = new LinkedList<S_Expression>();
         programs.add(program);
         descriptions.add(new Pair<KindOfProgram, Position>(
@@ -334,12 +351,12 @@ public class SMTLibTranslator implements ASTVisitor {
                 new S_Expression("not",
                         program.getLast())));
         //pre=>invariants
-        upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
+        /*upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
         upScopeExpr = new Stack<S_Expression>();
         for (int i = 0; i < depth; i++) {
             upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
             upScopeExpr.add(new Constant("true"));
-        }
+        }*/
         S_Expression saveTempExpr = new Constant("true");
         for (Invariant invariant : invariants) {
             invariant.accept(this);
@@ -488,9 +505,9 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(Function function) {
-        upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
+        /*upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
         upScopeReplacements.push(new HashMap<VarDef, S_Expression>());
-        upScopeExpr = new Stack<S_Expression>();
+        upScopeExpr = new Stack<S_Expression>();*/
         S_Expression saveTempExpression = new Constant("true");
         Ensure[] ensures = function.getEnsures();
         for (Ensure ensure : ensures) {
@@ -533,7 +550,7 @@ public class SMTLibTranslator implements ASTVisitor {
         VarDef varDef = new VarDef(assignment.getIdentifier().toString(),
                 assignment.getType(), assignment.getDepth());
         expression.replace(varDef, tempExpr);
-        replaceInAssignments(upScopeReplacements.lastElement(), varDef, tempExpr);
+        //replaceInAssignments(upScopeReplacements.lastElement(), varDef, tempExpr);
     }
 
     @Override
@@ -583,38 +600,38 @@ public class SMTLibTranslator implements ASTVisitor {
                 tempExpr = new Constant("0");
             }
         }
-        VarDef varDef = new VarDef(varDec.getName(), varDec.getType(), 0);
+        VarDef varDef = new VarDef(varDec.getName(), varDec.getType(), varDec.getDepth());
         expression.replace(varDef, tempExpr);
-        replaceInAssignments(upScopeReplacements.lastElement(),
-                varDef, tempExpr);
-        upScopeReplacements.lastElement().remove(varDef);
+        //replaceInAssignments(upScopeReplacements.lastElement(),
+        //        varDef, tempExpr);
+        //upScopeReplacements.lastElement().remove(varDef);
     }
 
     @Override
     public void visit(ArrayDeclaration arrDec) {
         S_Expression exp = tempExpr;
         String name = getMangledArrayName(arrDec.getName(), true);
-        VarDef varDef = new VarDef(name, arrDec.getType(), 0);
+        VarDef varDef = new VarDef(name, arrDec.getType(), arrDec.getDepth());
         exp.replace(varDef, tempExpr);
-        replaceInAssignments(upScopeReplacements.lastElement(),
-                varDef, tempExpr);
-        upScopeReplacements.lastElement().remove(varDef);
+        //replaceInAssignments(upScopeReplacements.lastElement(),
+        //        varDef, tempExpr);
+        //upScopeReplacements.lastElement().remove(varDef);
     }
 
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         existsQuantifier.getSubexpression1().accept(this);
-        tempExpr = new S_Expression("exists", new Constant(
-                "((" + existsQuantifier.getIdentifier().toString() + " Int))"
-        ), tempExpr);
+        String variable = "((" + existsQuantifier.getIdentifier().toString()
+                + '$' + existsQuantifier.getDepth() + " Int))";
+        tempExpr = new S_Expression("exists", new Constant(variable), tempExpr);
     }
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         forAllQuantifier.getSubexpression1().accept(this);
-        tempExpr = new S_Expression("forall", new Constant(
-                "((" + forAllQuantifier.getIdentifier().toString() + " Int))"
-        ), tempExpr);
+        String variable = "((" + forAllQuantifier.getIdentifier().toString()
+                + '$' + forAllQuantifier.getDepth() + " Int))";
+        tempExpr = new S_Expression("forall", new Constant(variable), tempExpr);
     }
 
     @Override
@@ -628,14 +645,14 @@ public class SMTLibTranslator implements ASTVisitor {
             noOfFuncCall = 0;
             statements[i].accept(this);
             if (!functionsCalled.isEmpty()) {
-                int depth = upScopeReplacements.size() - 1;
+                //int depth = upScopeReplacements.size() - 1;
                 LinkedList<S_Expression> program = new LinkedList<S_Expression>();
                 program.add(expression);
                 programs.add(program);
                 descriptions.add(new Pair<KindOfProgram, Position>(
                     KindOfProgram.FunctionEnsureToRemainingProgram,
                     statements[i].getPosition()));
-                prepareEndedLoop(program);
+                //prepareEndedLoop(program);
                 tempExpr = new Constant("true");
                 for (int j = 0; j < functionsCalled.size(); j++) {
                     noOfFuncCall = j + 1;
@@ -644,12 +661,12 @@ public class SMTLibTranslator implements ASTVisitor {
                 program.set(program.size() - 1, new S_Expression("assert",
                         new S_Expression("not",
                                 program.getLast())));
-                upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
+                /*upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
                 upScopeExpr = new Stack<S_Expression>();
                 for (int j = 0; j < depth; j++) {
                     upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
                     upScopeExpr.add(new Constant("true"));
-                }
+                }*/
                 change = true;
             }
             if (change) {

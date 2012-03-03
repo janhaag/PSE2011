@@ -15,6 +15,7 @@ public abstract class QuantifiedExpression extends LogicalExpression {
      * identifier that is varied in the quantified expression
      */
     private final Identifier identifier;
+    private int depth;
 
     /**
      * Constructor.
@@ -48,5 +49,13 @@ public abstract class QuantifiedExpression extends LogicalExpression {
      */
     public Range getRange() {
         return range;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 }

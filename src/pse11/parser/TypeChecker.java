@@ -531,6 +531,8 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         currentScope.createVar(varDec.getName(), null, varDec.getType());
+        varDec.setDepth(currentScope.getDepthOfVariable(
+                new Identifier(varDec.getName())));
     }
 
     /**
@@ -560,6 +562,8 @@ public class TypeChecker implements ASTVisitor {
             lengths[i] = 1;
         }
         currentScope.createArray(arrDec.getName(), arrDec.getType(), lengths);
+        arrDec.setDepth(currentScope.getDepthOfVariable(
+                new Identifier(arrDec.getName())));
     }
 
     /**
@@ -580,8 +584,9 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         currentScope = new Scope(currentScope, null, null);
-        currentScope.createVar(existsQuantifier.getIdentifier().getName(),
-                                null, new IntegerType());
+        Identifier ident = existsQuantifier.getIdentifier();
+        currentScope.createVar(ident.getName(), null, new IntegerType());
+        existsQuantifier.setDepth(currentScope.getDepthOfVariable(ident));
         functionCallAllowed = false;
         existsQuantifier.getSubexpression1().accept(this);
         functionCallAllowed = true;
@@ -611,8 +616,9 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         currentScope = new Scope(currentScope, null, null);
-        currentScope.createVar(forAllQuantifier.getIdentifier().getName(),
-                                null, new IntegerType());
+        Identifier ident = forAllQuantifier.getIdentifier();
+        currentScope.createVar(ident.getName(), null, new IntegerType());
+        forAllQuantifier.setDepth(currentScope.getDepthOfVariable(ident));
         functionCallAllowed = false;
         forAllQuantifier.getSubexpression1().accept(this);
         functionCallAllowed = true;
