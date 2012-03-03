@@ -76,7 +76,6 @@ public class Editor {
 		}
 		this.source = source;
 		findKeywords(source);
-		System.out.println(this.colorArray.size());
 		if(this.editorview != null)
 			this.editorview.updateView();
 	}
