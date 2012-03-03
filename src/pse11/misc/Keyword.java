@@ -81,4 +81,16 @@ public class Keyword {
 				Integer.valueOf(colorstring.substring(2, 4), 16).intValue(), 
 				Integer.valueOf(colorstring.substring(4, 6), 16).intValue());
 	}
+	
+	@Override
+	public boolean equals(Object keyword) {
+		if(keyword instanceof Keyword) {
+			if(((Keyword) keyword).getStart() == this.start
+					&& ((Keyword) keyword).getLength() == this.length
+					&& ((Keyword) keyword).getColor().equals(this.color))
+				return true;
+			return false;
+		}
+		return false;
+	}
 }

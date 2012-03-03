@@ -76,7 +76,9 @@ public class Editor {
 		}
 		this.source = source;
 		findKeywords(source);
-		this.editorview.updateView();
+		System.out.println(this.colorArray.size());
+		if(this.editorview != null)
+			this.editorview.updateView();
 	}
 	public void undo() {
 		if(!this.undoMemento.empty()) {
@@ -89,7 +91,8 @@ public class Editor {
 			}
 			this.source = memento.getSource();
 			findKeywords(source);
-			this.editorview.updateView();
+			if(this.editorview != null)
+				this.editorview.updateView();
 		}
 	}
 	public void redo() {
@@ -103,7 +106,8 @@ public class Editor {
 			}
 			this.source = memento.getSource();
 			findKeywords(source);
-			this.editorview.updateView();
+			if(this.editorview != null)
+				this.editorview.updateView();
 		}
 	}
 	private EditorMemento createMemento() {
@@ -129,7 +133,8 @@ public class Editor {
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
 					positionplus += (subword.length() + 1);
 					if(keyword != null) {
-						this.colorArray.add(keyword);
+						if(!colorArray.contains(keyword))
+							this.colorArray.add(keyword);
 					}
 				}
 				word = "";
@@ -144,7 +149,8 @@ public class Editor {
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
 					positionplus += (subword.length() + 1);
 					if(keyword != null) {
-						this.colorArray.add(keyword);
+						if(!colorArray.contains(keyword))
+							this.colorArray.add(keyword);
 						tmplist.add(keyword);
 					}
 				}
@@ -152,7 +158,8 @@ public class Editor {
 		}
 		Keyword keyword = this.addKeyWordColor(position, word);
 		if(keyword != null) {
-			this.colorArray.add(keyword);
+			if(!colorArray.contains(keyword))
+				this.colorArray.add(keyword);
 		}
 	}
 	/**
