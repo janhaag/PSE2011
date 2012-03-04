@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ParameterController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">ParameterController.java</span></div><h1>ParameterController.java</h1><pre class="source lang-java linenums">package gui.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ParameterController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">ParameterController.java</span></div><h1>ParameterController.java</h1><pre class="source lang-java linenums">package gui.controller;
 
 import java.util.ArrayList;
 
@@ -58,12 +58,12 @@ public class ParameterController implements SelectionListener {
 	 * @param parameterframe specified view
 	 */
 	public void addParameterFrame(ParameterFrame parameterframe) {
-<span class="nc bnc" id="L61" title="All 4 branches missed.">		if (this.executionHandler.getAST() != null &amp;&amp; this.executionHandler.getAST().getMainFunction().getParameters() != null) {</span>
-<span class="nc" id="L62">			this.parameterframe = parameterframe;</span>
-<span class="nc" id="L63">			this.parameterframe.createFrame(this.executionHandler.getAST().getMainFunction().getParameters());</span>
-<span class="nc" id="L64">			this.parameterframe.getOkButton().addSelectionListener(this);</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">		if (this.executionHandler.getAST() != null &amp;&amp; this.executionHandler.getAST().getMainFunction().getParameters() != null) {</span>
+<span class="fc" id="L62">			this.parameterframe = parameterframe;</span>
+<span class="fc" id="L63">			this.parameterframe.createFrame(this.executionHandler.getAST().getMainFunction().getParameters());</span>
+<span class="fc" id="L64">			this.parameterframe.getOkButton().addSelectionListener(this);</span>
 		}		
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L66">	}</span>
 	
 	/**
 	 * Add the specified frame as view. An empty view might be created 
@@ -90,14 +90,14 @@ public class ParameterController implements SelectionListener {
 	
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-<span class="pc bpc" id="L93" title="3 of 4 branches missed.">		if (this.parameterframe != null &amp;&amp; e.getSource() == this.parameterframe.getOkButton()) {</span>
-<span class="nc" id="L94">			String[] parameterValues = new String[this.parameterframe.getValues().length];</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			for (int i = 0; i &lt; this.parameterframe.getValues().length; i++) {</span>
-<span class="nc" id="L96">				parameterValues[i] = &quot;&quot;;</span>
-<span class="nc" id="L97">				parameterValues[i] += this.parameterframe.getValues()[i].getText();</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">		if (this.parameterframe != null &amp;&amp; e.getSource() == this.parameterframe.getOkButton()) {</span>
+<span class="fc" id="L94">			String[] parameterValues = new String[this.parameterframe.getValues().length];</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			for (int i = 0; i &lt; this.parameterframe.getValues().length; i++) {</span>
+<span class="fc" id="L96">				parameterValues[i] = &quot;&quot;;</span>
+<span class="fc" id="L97">				parameterValues[i] += this.parameterframe.getValues()[i].getText();</span>
 			}
-<span class="nc" id="L99">			this.executionHandler.setParameterValues(parameterValues);</span>
-<span class="nc" id="L100">			this.parameterframe.getShell().dispose();</span>
+<span class="fc" id="L99">			this.executionHandler.setParameterValues(parameterValues);</span>
+<span class="fc" id="L100">			this.parameterframe.getShell().dispose();</span>
 		}
 <span class="pc bpc" id="L102" title="2 of 4 branches missed.">		else if (this.randomtestframe != null &amp;&amp; e.getSource() == this.randomtestframe.getStartButton()) {			</span>
 <span class="fc" id="L103">			String s = this.getRandomtestframe().getCount().getText();</span>
@@ -120,8 +120,8 @@ public class ParameterController implements SelectionListener {
 				}
 <span class="fc" id="L121">				this.executionHandler.setParameterValues(parameterValues);</span>
 <span class="fc" id="L122">				this.executionHandler.run(new ArrayList&lt;StatementBreakpoint&gt;(), new ArrayList&lt;GlobalBreakpoint&gt;());</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">				if (this.executionHandler.getAssertionFailureMessage() == null) {</span>
-<span class="nc" id="L124">					result[1] = &quot;success&quot;;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if (this.executionHandler.getAssertionFailureMessage() == null) {</span>
+<span class="fc" id="L124">					result[1] = &quot;success&quot;;</span>
 				}
 				else {
 <span class="fc" id="L127">					result[1] = this.executionHandler.getAssertionFailureMessage()[1]</span>
@@ -138,7 +138,7 @@ public class ParameterController implements SelectionListener {
 	private String[] createRandomTestValues(FunctionParameter[] parameters) {
 <span class="fc" id="L139">		String[] parameterValues = new String[parameters.length];</span>
 <span class="fc bfc" id="L140" title="All 2 branches covered.">		for (int i = 0; i &lt; parameters.length; i++) {</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">			if (parameters[i].getType() instanceof IntegerType) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (parameters[i].getType() instanceof IntegerType) {</span>
 <span class="fc" id="L142">				String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();</span>
 <span class="fc" id="L143">				String endString = this.getRandomtestframe().getIntervals()[i][1].getText();</span>
 				int begin;
@@ -154,53 +154,53 @@ public class ParameterController implements SelectionListener {
 <span class="nc" id="L154">						random = 0;</span>
 					}
 				}
-<span class="nc" id="L157">				catch (NumberFormatException ne) {</span>
-<span class="nc" id="L158">					random = 0;</span>
+<span class="fc" id="L157">				catch (NumberFormatException ne) {</span>
+<span class="fc" id="L158">					random = 0;</span>
 				}
 <span class="fc" id="L160">				parameterValues[i] = random + &quot;&quot;;</span>
 			}
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			else if (parameters[i].getType() instanceof BooleanType) {</span>
-<span class="nc" id="L163">				parameterValues[i] = this.createRandomBooleanValue() + &quot;&quot;;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			else if (parameters[i].getType() instanceof BooleanType) {</span>
+<span class="fc" id="L163">				parameterValues[i] = this.createRandomBooleanValue() + &quot;&quot;;</span>
 			}
-<span class="nc bnc" id="L165" title="All 2 branches missed.">			else if (parameters[i].getType() instanceof ArrayType) {</span>
-<span class="nc" id="L166">				String sizeString = this.getRandomtestframe().getIntervals()[i][2].getText();</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			else if (parameters[i].getType() instanceof ArrayType) {</span>
+<span class="fc" id="L166">				String sizeString = this.getRandomtestframe().getIntervals()[i][2].getText();</span>
 				int size;
 				try {
-<span class="nc" id="L169">					size = Integer.parseInt(sizeString);</span>
+<span class="fc" id="L169">					size = Integer.parseInt(sizeString);</span>
 				}
-<span class="nc" id="L171">				catch (NumberFormatException ne) {</span>
-<span class="nc" id="L172">					size = 1;</span>
+<span class="fc" id="L171">				catch (NumberFormatException ne) {</span>
+<span class="fc" id="L172">					size = 1;</span>
 				}
-<span class="nc" id="L174">				Type tmp = parameters[i].getType();</span>
-<span class="nc" id="L175">				int dimension = 0;</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">				while (tmp instanceof ArrayType) {</span>
-<span class="nc" id="L177">					tmp = ((ArrayType) tmp).getType();</span>
-<span class="nc" id="L178">					dimension++;</span>
+<span class="fc" id="L174">				Type tmp = parameters[i].getType();</span>
+<span class="fc" id="L175">				int dimension = 0;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">				while (tmp instanceof ArrayType) {</span>
+<span class="fc" id="L177">					tmp = ((ArrayType) tmp).getType();</span>
+<span class="fc" id="L178">					dimension++;</span>
 				}
-<span class="nc" id="L180">				String value = &quot;&quot;;</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">				if (tmp instanceof IntegerType) {</span>
-<span class="nc" id="L182">					String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();</span>
-<span class="nc" id="L183">					String endString = this.getRandomtestframe().getIntervals()[i][1].getText();</span>
+<span class="fc" id="L180">				String value = &quot;&quot;;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">				if (tmp instanceof IntegerType) {</span>
+<span class="fc" id="L182">					String beginString = this.getRandomtestframe().getIntervals()[i][0].getText();</span>
+<span class="fc" id="L183">					String endString = this.getRandomtestframe().getIntervals()[i][1].getText();</span>
 					int begin;
 					int end;
 					try {
-<span class="nc" id="L187">						begin = Integer.parseInt(beginString);</span>
-<span class="nc" id="L188">						end = Integer.parseInt(endString);</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">						if (begin &lt; end) {</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">							for (int j = 0; j &lt; Math.pow(size, dimension - 1); j++) {</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">								for (int k = 1; k &lt; dimension; k++) {</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">									if (j % Math.pow(size, k) == 0) {</span>
-<span class="nc" id="L193">										value += &quot;{&quot;;</span>
+<span class="fc" id="L187">						begin = Integer.parseInt(beginString);</span>
+<span class="fc" id="L188">						end = Integer.parseInt(endString);</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">						if (begin &lt; end) {</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">							for (int j = 0; j &lt; Math.pow(size, dimension - 1); j++) {</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">								for (int k = 1; k &lt; dimension; k++) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">									if (j % Math.pow(size, k) == 0) {</span>
+<span class="fc" id="L193">										value += &quot;{&quot;;</span>
 									}
 								}
-<span class="nc" id="L196">								value += this.createRandomIntegerArray(begin, end, size);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">								for (int l = 1; l &lt; dimension; l++) {</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">									if (j % Math.pow(size, l) == Math.pow(size, l) - 1) {</span>
-<span class="nc" id="L199">										value += &quot;}&quot;;</span>
+<span class="fc" id="L196">								value += this.createRandomIntegerArray(begin, end, size);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">								for (int l = 1; l &lt; dimension; l++) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">									if (j % Math.pow(size, l) == Math.pow(size, l) - 1) {</span>
+<span class="fc" id="L199">										value += &quot;}&quot;;</span>
 									}
 									else {
-<span class="nc" id="L202">										value += &quot;,&quot;;</span>
-<span class="nc" id="L203">										l = dimension;</span>
+<span class="fc" id="L202">										value += &quot;,&quot;;</span>
+<span class="fc" id="L203">										l = dimension;</span>
 									}
 								}
 							}
@@ -212,33 +212,33 @@ public class ParameterController implements SelectionListener {
 							}
 						}
 					}
-<span class="nc" id="L215">					catch (NumberFormatException ne) {</span>
-<span class="nc" id="L216">						value = &quot;0&quot;;</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">						for (int a = 0; a &lt; size; a++) {</span>
-<span class="nc" id="L218">							value = &quot;{&quot; + value +&quot;}&quot;;</span>
+<span class="fc" id="L215">					catch (NumberFormatException ne) {</span>
+<span class="fc" id="L216">						value = &quot;0&quot;;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">						for (int a = 0; a &lt; size; a++) {</span>
+<span class="fc" id="L218">							value = &quot;{&quot; + value +&quot;}&quot;;</span>
 						}
 					}
 				}
-<span class="nc bnc" id="L222" title="All 2 branches missed.">				else if (tmp instanceof BooleanType) {</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">					for (int j = 0; j &lt; Math.pow(size, dimension - 1); j++) {</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">						for (int k = 1; k &lt; dimension; k++) {</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">							if (j % Math.pow(size, k) == 0) {</span>
-<span class="nc" id="L226">								value += &quot;{&quot;;</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">				else if (tmp instanceof BooleanType) {</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">					for (int j = 0; j &lt; Math.pow(size, dimension - 1); j++) {</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">						for (int k = 1; k &lt; dimension; k++) {</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">							if (j % Math.pow(size, k) == 0) {</span>
+<span class="fc" id="L226">								value += &quot;{&quot;;</span>
 							}
 						}
-<span class="nc" id="L229">						value += this.createRandomBooleanArray(size);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">						for (int l = 1; l &lt; dimension; l++) {</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">							if (j % Math.pow(size, l) == Math.pow(size, l) - 1) {</span>
-<span class="nc" id="L232">								value += &quot;}&quot;;</span>
+<span class="fc" id="L229">						value += this.createRandomBooleanArray(size);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">						for (int l = 1; l &lt; dimension; l++) {</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">							if (j % Math.pow(size, l) == Math.pow(size, l) - 1) {</span>
+<span class="fc" id="L232">								value += &quot;}&quot;;</span>
 							}
 							else {
-<span class="nc" id="L235">								value += &quot;,&quot;;</span>
-<span class="nc" id="L236">								l = dimension;</span>
+<span class="fc" id="L235">								value += &quot;,&quot;;</span>
+<span class="fc" id="L236">								l = dimension;</span>
 							}
 						}
 					}
 				}
-<span class="nc" id="L241">				parameterValues[i] = value;</span>
+<span class="fc" id="L241">				parameterValues[i] = value;</span>
 			}
 		}
 <span class="fc" id="L244">		return parameterValues;</span>
@@ -259,8 +259,8 @@ public class ParameterController implements SelectionListener {
 	 * @return created value
 	 */
 	private boolean createRandomBooleanValue() {
-<span class="nc" id="L262">		float random = (float) Math.random();</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		return random &gt; 0.5; </span>
+<span class="fc" id="L262">		float random = (float) Math.random();</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		return random &gt; 0.5; </span>
 	}
 	
 	/**
@@ -272,17 +272,17 @@ public class ParameterController implements SelectionListener {
 	 * @return created integer array
 	 */
 	private String createRandomIntegerArray(int begin, int end, int size) {
-<span class="nc" id="L275">		String random = &quot;&quot;;</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (i == size - 1) {</span>
-<span class="nc" id="L278">				random += this.createRandomIntegerValue(begin, end);</span>
+<span class="fc" id="L275">		String random = &quot;&quot;;</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">			if (i == size - 1) {</span>
+<span class="fc" id="L278">				random += this.createRandomIntegerValue(begin, end);</span>
 			}
 			else {
-<span class="nc" id="L281">				random += this.createRandomIntegerValue(begin, end) + &quot;,&quot;;</span>
+<span class="fc" id="L281">				random += this.createRandomIntegerValue(begin, end) + &quot;,&quot;;</span>
 			}
 		}
-<span class="nc" id="L284">		random = &quot;{&quot; + random + &quot;}&quot;;</span>
-<span class="nc" id="L285">		return random;</span>
+<span class="fc" id="L284">		random = &quot;{&quot; + random + &quot;}&quot;;</span>
+<span class="fc" id="L285">		return random;</span>
 	}
 	
 	/**
@@ -291,17 +291,17 @@ public class ParameterController implements SelectionListener {
 	 * @return created boolean array
 	 */
 	private String createRandomBooleanArray(int size) {
-<span class="nc" id="L294">		String random = &quot;&quot;;</span>
-<span class="nc bnc" id="L295" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc bnc" id="L296" title="All 2 branches missed.">			if (i == size - 1) {</span>
-<span class="nc" id="L297">				random += this.createRandomBooleanValue();</span>
+<span class="fc" id="L294">		String random = &quot;&quot;;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">			if (i == size - 1) {</span>
+<span class="fc" id="L297">				random += this.createRandomBooleanValue();</span>
 			}
 			else {
-<span class="nc" id="L300">				random += this.createRandomBooleanValue() + &quot;,&quot;;</span>
+<span class="fc" id="L300">				random += this.createRandomBooleanValue() + &quot;,&quot;;</span>
 			}
 		}
-<span class="nc" id="L303">		random = &quot;{&quot; + random + &quot;}&quot;;</span>
-<span class="nc" id="L304">		return random;</span>
+<span class="fc" id="L303">		random = &quot;{&quot; + random + &quot;}&quot;;</span>
+<span class="fc" id="L304">		return random;</span>
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class ParameterController implements SelectionListener {
 	 * @return parameter frame
 	 */
 	public ParameterFrame getParameterframe() {
-<span class="nc" id="L312">		return this.parameterframe;</span>
+<span class="fc" id="L312">		return this.parameterframe;</span>
 	}
 	
 	/**
@@ -324,4 +324,4 @@ public class ParameterController implements SelectionListener {
 	public void widgetDefaultSelected(SelectionEvent arg0) {
 <span class="nc" id="L325">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>

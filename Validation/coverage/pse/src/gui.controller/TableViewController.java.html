@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TableViewController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">TableViewController.java</span></div><h1>TableViewController.java</h1><pre class="source lang-java linenums">package gui.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TableViewController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">TableViewController.java</span></div><h1>TableViewController.java</h1><pre class="source lang-java linenums">package gui.controller;
 
 import gui.BreakpointView;
 import gui.VariableView;
@@ -64,22 +64,22 @@ public class TableViewController implements SelectionListener {
 	 * Update the variable view.
 	 */
 	public void updateVarView() {        		
-<span class="nc bnc" id="L67" title="All 4 branches missed.">        if (this.executionHandler == null || this.executionHandler.getProgramExecution() == null) {</span>
-<span class="nc" id="L68">        	return;</span>
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">        if (this.executionHandler == null || this.executionHandler.getProgramExecution() == null) {</span>
+<span class="fc" id="L68">        	return;</span>
         }
-<span class="nc" id="L70">        HashMap&lt;Identifier, Value&gt; vars = this.executionHandler.getProgramExecution().getVariables();</span>
+<span class="fc" id="L70">        HashMap&lt;Identifier, Value&gt; vars = this.executionHandler.getProgramExecution().getVariables();</span>
       
         //insert Tree items       
-<span class="nc" id="L73">        this.varView.getVarTree().removeAll();       </span>
-<span class="nc" id="L74">		Iterator&lt;Map.Entry&lt;Identifier, Value&gt;&gt; it = vars.entrySet().iterator();		</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L76">			Map.Entry&lt;Identifier, Value&gt; entry = it.next();</span>
-<span class="nc" id="L77">			String type = entry.getValue().getType().toString();</span>
-<span class="nc" id="L78">			String id = entry.getKey().toString();</span>
-<span class="nc" id="L79">			Value tmp = entry.getValue();</span>
-<span class="nc" id="L80">			this.checkValue(this.varView.getVarTree(), type, id, tmp);</span>
+<span class="fc" id="L73">        this.varView.getVarTree().removeAll();       </span>
+<span class="fc" id="L74">		Iterator&lt;Map.Entry&lt;Identifier, Value&gt;&gt; it = vars.entrySet().iterator();		</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L76">			Map.Entry&lt;Identifier, Value&gt; entry = it.next();</span>
+<span class="fc" id="L77">			String type = entry.getValue().getType().toString();</span>
+<span class="fc" id="L78">			String id = entry.getKey().toString();</span>
+<span class="fc" id="L79">			Value tmp = entry.getValue();</span>
+<span class="fc" id="L80">			this.checkValue(this.varView.getVarTree(), type, id, tmp);</span>
 		}     
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L82">	}</span>
 	
 	/**
 	 * Add variable items to the first level of the tree.
@@ -89,18 +89,18 @@ public class TableViewController implements SelectionListener {
 	 * @param tmp value of the variable
 	 */
 	private void checkValue(Tree parent, String type, String id, Value tmp) {
-<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {</span>
-<span class="nc" id="L93">			this.varView.addTreeItem(parent, type, id, tmp.toString());</span>
+<span class="fc bfc" id="L92" title="All 4 branches covered.">		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {</span>
+<span class="fc" id="L93">			this.varView.addTreeItem(parent, type, id, tmp.toString());</span>
 		}
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		else if (tmp instanceof ArrayValue) {</span>
-<span class="nc" id="L96">			TreeItem item = this.varView.addTreeItem(parent, type, id, &quot;-&quot;);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			for (int i = 0; i &lt; ((ArrayValue) tmp).getValues().length; i++) {</span>
-<span class="nc" id="L98">				String newId = id + &quot;[&quot; + i + &quot;]&quot;;</span>
-<span class="nc" id="L99">				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), </span>
-<span class="nc" id="L100">						newId, ((ArrayValue) tmp).getValues()[i]);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		else if (tmp instanceof ArrayValue) {</span>
+<span class="fc" id="L96">			TreeItem item = this.varView.addTreeItem(parent, type, id, &quot;-&quot;);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			for (int i = 0; i &lt; ((ArrayValue) tmp).getValues().length; i++) {</span>
+<span class="fc" id="L98">				String newId = id + &quot;[&quot; + i + &quot;]&quot;;</span>
+<span class="fc" id="L99">				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), </span>
+<span class="fc" id="L100">						newId, ((ArrayValue) tmp).getValues()[i]);</span>
 			}
 		}
-<span class="nc" id="L103">	}</span>
+<span class="fc" id="L103">	}</span>
 	
 	/**
 	 * Add variable items to the second or deeper levels of the tree.
@@ -110,18 +110,18 @@ public class TableViewController implements SelectionListener {
 	 * @param tmp value of the variable
 	 */
 	private void checkValue(TreeItem parent, String type, String id, Value tmp) {
-<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {</span>
-<span class="nc" id="L114">			this.varView.addTreeItem(parent, type, id, tmp.toString());</span>
+<span class="pc bpc" id="L113" title="1 of 4 branches missed.">		if (tmp instanceof IntegerValue || tmp instanceof BooleanValue) {</span>
+<span class="fc" id="L114">			this.varView.addTreeItem(parent, type, id, tmp.toString());</span>
 		}
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		else if (tmp instanceof ArrayValue) {</span>
-<span class="nc" id="L117">            TreeItem item = this.varView.addTreeItem(parent, type, id, &quot;-&quot;);</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			for (int i = 0; i &lt; ((ArrayValue) tmp).getValues().length; i++) {</span>
-<span class="nc" id="L119">				String newId = id + &quot;[&quot; + i + &quot;]&quot;;</span>
-<span class="nc" id="L120">				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), </span>
-<span class="nc" id="L121">						newId, ((ArrayValue) tmp).getValues()[i]);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		else if (tmp instanceof ArrayValue) {</span>
+<span class="fc" id="L117">            TreeItem item = this.varView.addTreeItem(parent, type, id, &quot;-&quot;);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			for (int i = 0; i &lt; ((ArrayValue) tmp).getValues().length; i++) {</span>
+<span class="fc" id="L119">				String newId = id + &quot;[&quot; + i + &quot;]&quot;;</span>
+<span class="fc" id="L120">				this.checkValue(item, ((ArrayValue) tmp).getValues()[i].getType().toString(), </span>
+<span class="fc" id="L121">						newId, ((ArrayValue) tmp).getValues()[i]);</span>
 			}
 		}
-<span class="nc" id="L124">	}</span>
+<span class="fc" id="L124">	}</span>
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
@@ -129,16 +129,16 @@ public class TableViewController implements SelectionListener {
 <span class="fc" id="L129">			Table table = this.breakpointView.getGlobalBreakpoint();		</span>
 			int i;
 <span class="pc bpc" id="L131" title="1 of 2 branches missed.">			for (i = 0; i &lt; table.getItemCount(); i++) {</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">				if (e.item == table.getItem(i)) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">				if (e.item == table.getItem(i)) {</span>
 <span class="fc" id="L133">					break;</span>
 				}
 			}	
 <span class="pc bpc" id="L136" title="1 of 2 branches missed.">			if (this.executionHandler.getProgramExecution() != null) {</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">				table.getItem(i).setChecked(!table.getItem(i).getChecked());</span>
-<span class="nc" id="L138">				return;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">				table.getItem(i).setChecked(!table.getItem(i).getChecked());</span>
+<span class="fc" id="L138">				return;</span>
 			} 			
-<span class="fc" id="L140">			this.executionHandler.getGlobalBreakpoints().get(i).setActive(</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">					!this.executionHandler.getGlobalBreakpoints().get(i).isActive());</span>
+<span class="nc" id="L140">			this.executionHandler.getGlobalBreakpoints().get(i).setActive(</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">					!this.executionHandler.getGlobalBreakpoints().get(i).isActive());</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">		} else if(e.getSource() == this.breakpointView.getAddButton()) {</span>
 <span class="fc" id="L143">			String expression = this.breakpointView.getAddTextField().getText();</span>
 <span class="pc bpc" id="L144" title="2 of 4 branches missed.">			if (expression == null || expression.length() == 0) {</span>
@@ -180,44 +180,44 @@ public class TableViewController implements SelectionListener {
 	 * Deactivate the variable view to show execution termination.
 	 */
 	public void deactivateVarView() {
-<span class="nc" id="L183">		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));</span>
-<span class="nc" id="L184">		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));</span>
-<span class="nc" id="L185">	}</span>
+<span class="fc" id="L183">		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));</span>
+<span class="fc" id="L184">		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));</span>
+<span class="fc" id="L185">	}</span>
 	
 	/**
 	 * Reactivate the variable view.
 	 */
 	public void activateVarView() {
-<span class="nc" id="L191">		this.varView.getVarTree().setBackground(null);</span>
-<span class="nc" id="L192">		this.varView.getVarTree().setForeground(null);</span>
-<span class="nc" id="L193">	}</span>
+<span class="fc" id="L191">		this.varView.getVarTree().setBackground(null);</span>
+<span class="fc" id="L192">		this.varView.getVarTree().setForeground(null);</span>
+<span class="fc" id="L193">	}</span>
 	
 	/**
 	 * Deactivate the breakpoint view to avoid invalid changes during program execution.
 	 */
 	public void deactivateBreakpointView() {
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (this.breakpointView.getActive()) {</span>
-<span class="nc" id="L200">			this.breakpointView.getAddButton().removeSelectionListener(this);</span>
-<span class="nc" id="L201">			this.breakpointView.setActive(false);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (this.breakpointView.getActive()) {</span>
+<span class="fc" id="L200">			this.breakpointView.getAddButton().removeSelectionListener(this);</span>
+<span class="fc" id="L201">			this.breakpointView.setActive(false);</span>
 		}
-<span class="nc" id="L203">	}</span>
+<span class="fc" id="L203">	}</span>
 	
 	/**
 	 * Reactivate the breakpoint view.
 	 */
 	public void activateBreakpointView() {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (!this.breakpointView.getActive()) {</span>
-<span class="nc" id="L210">			this.breakpointView.getAddButton().addSelectionListener(this);</span>
-<span class="nc" id="L211">			this.breakpointView.setActive(true);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (!this.breakpointView.getActive()) {</span>
+<span class="fc" id="L210">			this.breakpointView.getAddButton().addSelectionListener(this);</span>
+<span class="fc" id="L211">			this.breakpointView.setActive(true);</span>
 		}
-<span class="nc" id="L213">	}</span>
+<span class="fc" id="L213">	}</span>
 	
 	/**
 	 * Return the variable view of this controller.
 	 * @return variable view
 	 */
 	public VariableView getVarView() {
-<span class="nc" id="L220">		return this.varView;</span>
+<span class="fc" id="L220">		return this.varView;</span>
 	}
 	
 	/**
@@ -230,6 +230,6 @@ public class TableViewController implements SelectionListener {
 	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {	
-<span class="nc" id="L233">	}</span>
+<span class="fc" id="L233">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>

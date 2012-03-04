@@ -5,7 +5,7 @@
 \item "Offnen einer neuen Datei
 \begin{itemize}
 \item Erwartetes Ereignis: Der Inhalt des Editors wird ohne zu speichern gel"oscht, Breakpoints werden entfernt und die Konsolen geleert. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
+\item Status: \textcolor{blue}{BEHOBEN} \\
 Breakpoints werden nicht entfernt, Konsole nicht geleert
 \end{itemize}
 \end{enumerate}
@@ -16,33 +16,16 @@ Breakpoints werden nicht entfernt, Konsole nicht geleert
 \item Erwartetes Ereignis: Die Datei wird nicht geladen. 
 \item Status: \textcolor{green}{OK} 
 \end{itemize}
-\item Laden einer Datei, die vom Programm erzeugt wurde
+\item Laden einer Datei, die vom Programm erzeugt wurde oder einer txt-Datei
 \begin{itemize}
 \item Erwartetes Ereignis: Die ausgew"ahlte Datei wird in den Editor geladen. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\item Laden einer reinen Textdatei (zum Beispiel: txt, tex)
-\begin{itemize}
-\item Erwartetes Ereignis: Die ausgew"ahlte Datei wird in den Editor geladen. 
-\item Status: \textcolor{green}{OK}
-\end{itemize}
-\item Laden einer durch Textbearbeitungsprogramme erstellten Textdatei (Getestet: docx, pdf)
-\begin{itemize}
-\item Erwartetes Ereignis: Die Datei wird nicht geladen. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-docx-Dateien werden geladen, Programm h"angt sich auf bei pdf-Dateien
-\end{itemize}
-\item Laden einer Nichttextdatei (zum Beispiel: exe)
+\item Laden einer Datei, die nicht vom Programm erzeugt wurde und keine txt-Datei ist
 \begin{itemize}
 \item Erwartetes Ereignis: Die Datei wird nicht geladen. 
 \item Status: \textcolor{red}{FEHLSCHLAG} \\
 Programm h"angt sich auf
-\end{itemize}
-\item Nachdem eine Datei korrekt geladen wurde
-\begin{itemize}
-\item Erwartetes Ereignis: Der alte Inhalt des Editors wird ohne zu speichern gel"oscht, Breakpoints werden entfernt und die Konsolen geleert. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Breakpoints werden nicht entfernt, Konsole nicht geleert
 \end{itemize}
 \end{enumerate}
 \subsubsection{"`File"' $\rightarrow$ "`Save"'}
@@ -52,27 +35,16 @@ Breakpoints werden nicht entfernt, Konsole nicht geleert
 \item Erwartetes Ereignis: Die Datei wird erzeugt, der Inhalt des Editors darin gespreichert. 
 \item Status: \textcolor{green}{OK} 
 \end{itemize}
-\item Speichern in einer vom Programm erzeugten Datei
+\item Speichern in einer vom Programm erzeugten Datei oder txt-Datei
 \begin{itemize}
 \item Erwartetes Ereignis: Der Inhalt der Datei wird durch den des Editors ersetzt. 
 \item Status: \textcolor{green}{OK} 
 \end{itemize}
-\item Speichern in einer reinen Textdatei
+\item Speichern in einer Datei, die nicht vom Programm erzeugt wurde und keine txt-Datei ist
 \begin{itemize}
-\item Erwartetes Ereignis: Der Inhalt der Datei wird durch den des Editors ersetzt. 
-\item Status: \textcolor{green}{OK} 
-\end{itemize}
-\item Speichern in einer durch Textbearbeitungsprogramme erstellten Textdatei (zum Beispiel: docx, pdf)
-\begin{itemize}
-\item Erwartetes Ereignis: Die Datei wird nicht gespeichert. 
+\item Erwartetes Ereignis: Die Datei wird nicht "uberschrieben. 
 \item Status: \textcolor{red}{FEHLSCHLAG} \\
-Die Datei wird gespeichert.
-\end{itemize}
-\item Speichern in einer Nichttextdatei (zum Beispiel: exe)
-\begin{itemize}
-\item Erwartetes Ereignis: Die Datei wird nicht gespeichert. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Die Datei wird gespeichert.
+Die Datei wird "uberschrieben.
 \end{itemize}
 \end{enumerate}
 \subsubsection{"`File"' $\rightarrow$ "`Exit"'}
@@ -98,8 +70,8 @@ Die Datei wird gespeichert.
 \item R"uckg"angigmachen des zuletzt gel"oschten Zeichen
 \begin{itemize}
 \item Erwartetes Ereignis: Das zuletzt gel"oschte Zeichen wird wieder hergestellt. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Punkt 4 funktioniert bis auf das zuerst gel"oschte Zeichen
+\item Status: \textcolor{blue}{BEHOBEN} \\
+Das zuletzt gel"oschte Zeichen wird nicht wieder hergestellt
 \end{itemize}
 \item Beliebige Wiederholung von Punkt 3
 \begin{itemize}
@@ -131,24 +103,12 @@ Punkt 4 funktioniert bis auf das zuerst gel"oschte Zeichen
 \item Erwartetes Ereignis: Der alte Inhalt des Editors wird wieder hergestellt. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\item Punkt 9 nachdem mehrmals auf "`File"' $\rightarrow$ "`New"' geklickt wurde
-\begin{itemize}
-\item Erwartetes Ereignis: Der alte Inhalt des Editors wird wieder hergestellt. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Das erwartete Ereignis passiert erst nach dem zweiten Undo
-\end{itemize}
 \item R"uckg"angigmachen der Funktion "`File"' $\rightarrow$ "`Load"'
 \begin{itemize}
 \item Erwartetes Ereignis: Der alte Inhalt des Editors wird wieder hergestellt. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\item Punkt 11 nachdem mehrmals "`File"' $\rightarrow$ "`Load"' benutzt wurde
-\begin{itemize}
-\item Erwartetes Ereignis: Der Inhalt der zuletzt geladenen Datei wird im Editor hergestellt. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Der Inhalt vor den Load-Vorg"angen wird nach dem zweiten Undo hergestellt
-\end{itemize}
-\item Undo, obwohl noch keine Aktion aufgef"uhrt wurde
+\item Undo, obwohl noch keine Aktion ausgef"uhrt wurde
 \begin{itemize}
 \item Erwartetes Ereignis: Es passiert nichts. 
 \item Status: \textcolor{green}{OK}
@@ -166,6 +126,11 @@ Der Inhalt vor den Load-Vorg"angen wird nach dem zweiten Undo hergestellt
 \item Erwartetes Ereignis: Die r"uckg"angig gemachten Aktionen werden hergestellt. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
+\item Redo, obwohl noch kein Undo ausgef"uhrt wurde
+\begin{itemize}
+\item Erwartetes Ereignis: Es passiert nichts. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
 \end{enumerate}
 \subsubsection{"`Edit"' $\rightarrow$ "`Cut"'}
 \begin{enumerate}
@@ -177,7 +142,7 @@ Der Inhalt vor den Load-Vorg"angen wird nach dem zweiten Undo hergestellt
 \item Cut ohne markierte Zeichenkette
 \begin{itemize}
 \item Erwartetes Ereignis: Es passiert nichts. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
+\item Status: \textcolor{blue}{BEHOBEN} \\
 Programm st"urzt ab.
 \end{itemize}
 \end{enumerate}
@@ -196,7 +161,7 @@ Programm st"urzt ab.
 \item Copy ohne markierte Zeichenkette
 \begin{itemize}
 \item Erwartetes Ereignis: Es passiert nichts. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
+\item Status: \textcolor{blue}{BEHOBEN} \\
 Programm st"urzt ab.
 \end{itemize}
 \end{enumerate}
@@ -226,10 +191,6 @@ Programm st"urzt ab.
 \item Status: \textcolor{green}{OK}
 \end{itemize}
 \end{enumerate}
-\subsubsection{"`Run"' $\rightarrow$ "`Run"'}
-Siehe Abschnitt 1.4.2
-\subsubsection{"`Run"' $\rightarrow$ "`Single Step"'}
-Siehe Abschnitt 1.4.3
 \subsubsection{"`Run"' $\rightarrow$ "`Random Test"'}
 \begin{enumerate}
 \item "Offnen des Randomtestfensters
@@ -238,8 +199,6 @@ Siehe Abschnitt 1.4.3
 \item Status: \textcolor{green}{OK}
 \end{itemize}
 \end{enumerate}
-\subsubsection{"`Run"' $\rightarrow$ "`Verify"'}
-Siehe Abschnitt 1.4.6
 \subsubsection{"`Help"' $\rightarrow$ "`Help"'}
 \begin{enumerate}
 \item "Offnen des Helpfensters und Anzeigen der Helpdokumentation
@@ -273,7 +232,7 @@ Wenn der Pfad nicht korrekt eingegeben wurde, wird trotzdem die Erfolgsmeldung a
 \end{itemize}
 \item Klick auf "`Close"' Button
 \begin{itemize}
-\item Erwartetes Ereignis: Das Settingsframe wird geschlossen.
+\item Erwartetes Ereignis: Das Settingsfenster wird geschlossen.
 \item Status: \textcolor{green}{OK}
 \end{itemize}
 \item Ausf"uhren von 1, 3 und anschlie"sendes "Offnen des Fensters.
@@ -281,32 +240,9 @@ Wenn der Pfad nicht korrekt eingegeben wurde, wird trotzdem die Erfolgsmeldung a
 \item Erwartetes Ereignis: Die bei 1 eingegebenen neuen Werte stehen immernoch in den entsprechenden Textfeldern.
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\end{enumerate}
-\subsubsection{Randomtestframe}
-\begin{enumerate}
-\item "Offnen bei einem syntaktisch inkorrekten Programm
+\item Ausf"uhren von 2, 3 und anschlie"sendes "Offnen des Fensters.
 \begin{itemize}
-\item Erwartetes Ereignis: Es erscheint die Meldung im Randomtestfenster und in der Errorkonsole, dass das Programm syntaktisch inkorrekt ist.
-\item Status: \textcolor{green}{OK}
-\end{itemize}
-\item "Offnen bei einem Programm ohne Parameter
-\begin{itemize}
-\item Erwartetes Ereignis: Es erscheint die Meldung im Randomtestfenster, dass das Programm keine Parameter hat.
-\item Status: \textcolor{green}{OK}
-\end{itemize}
-\item "Offnen bei einem Programm mit Parameter
-\begin{itemize}
-\item Erwartetes Ereignis: Der Benutzer hat nun die M"oglichkeit, Anzahl der Tests und Werte f"ur die Parameter einzugeben. Werte, die f"ur die Variable nicht sinnvoll sind, werden grau angezeigt und sind nicht editierbar.
-\item Status: \textcolor{green}{OK}
-\end{itemize}
-\item Durchf"uhrung der Tests mit korrekten Eingaben
-\begin{itemize}
-\item Erwartetes Ereignis: Die Tests werden durchgef"uhrt und das Ergebnis wird zusammen mit den zuf"allig ausgew"ahlten Werten in der Misckonsole angezeigt.
-\item Status: \textcolor{green}{OK}
-\end{itemize}
-\item Durchf"uhrung der Tests mit inkorrekten Eingaben
-\begin{itemize}
-\item Erwartetes Ereignis: Falls die Anzahl der Tests eine ung"ultige Eingabe oder kleiner als 1 ist, wird kein Test durchgef"uhrt. Ansonsten werden ung"ultige Werte durch "`0"' bzw. "`false"' ersetzt. Das Ergebnis wird zusammen mit den zuf"allig ausgew"ahlten Werten in der Misckonsole angezeigt.
+\item Erwartetes Ereignis: Die Werte vor der "Anderung stehen immernoch in den entsprechenden Textfeldern.
 \item Status: \textcolor{green}{OK}
 \end{itemize}
 \end{enumerate}
@@ -315,6 +251,11 @@ Wenn der Pfad nicht korrekt eingegeben wurde, wird trotzdem die Erfolgsmeldung a
 \item Ausw"ahlen der einzelnen Abschnitte
 \begin{itemize}
 \item Erwartetes Ereignis: Der ausgew"ahlte Abschnitt wird angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Klick auf "`Close"' Button
+\begin{itemize}
+\item Erwartetes Ereignis: Das Helpfenster wird geschlossen.
 \item Status: \textcolor{green}{OK}
 \end{itemize}
 \end{enumerate}
@@ -332,7 +273,7 @@ Wenn der Pfad nicht korrekt eingegeben wurde, wird trotzdem die Erfolgsmeldung a
 \item Erwartetes Ereignis: Der Inhalt des Editors kann nicht ver"andert werden, solange ein Programm l"auft oder pausiert ist. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\item Syntaxhighlighting
+\item Eingabe von Keywords und Zahlen
 \begin{itemize}
 \item Erwartetes Ereignis: Die Keywords "`int, bool, array, true, false, main, while, if, else, return, assert, assume, ensure, invariant"' und Zahlen werden farbig hervorgehoben. 
 \item Status: \textcolor{green}{OK}
@@ -350,7 +291,7 @@ Wenn der Pfad nicht korrekt eingegeben wurde, wird trotzdem die Erfolgsmeldung a
 \item Entfernen von Statementbreakpoints im idle-Zustand
 \begin{itemize}
 \item Erwartetes Ereignis: Breakpoint wird entfernt.
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
+\item Status: \textcolor{blue}{BEHOBEN} \\
 Breakpoint kann nicht mehr entfernt werden, wenn die Zeile so modifiziert wurde, dass sie keinen Statement mehr enth"ahlt
 \end{itemize}
 \end{enumerate}
@@ -361,12 +302,12 @@ Breakpoint kann nicht mehr entfernt werden, wenn die Zeile so modifiziert wurde,
 \item Erwartetes Ereignis: Globalbreakpoints k"onnen nicht ver"andert werden, solange ein Programm l"auft oder pausiert ist. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\item Einf"ugen und Entfernen von syntaktisch korrekten Globalbreakpoints
+\item Einf"ugen und Entfernen von syntaktisch und semantisch korrekten Zeichenketten, z.B. Identifier, Integer-, Booleanliteral, Arrayzugriff, Funktionsaufruf, arithmetischer oder boolscher Ausdruck
 \begin{itemize}
 \item Erwartetes Ereignis: Der Breakpoint wird eingef"ugt bzw. entfernt. 
 \item Status: \textcolor{green}{OK}
 \end{itemize}
-\item Einf"ugen von syntaktisch inkorrekten Globalbreakpoints
+\item Einf"ugen von syntaktisch oder semantisch inkorrekten Zeichenketten, z.B. Deklaration, Zuweisung, Spezifikation, If-, While-, Return-Anweisung, Ausdruck mit Quantoren
 \begin{itemize}
 \item Erwartetes Ereignis: Der Breakpoint wird nicht eingef"ugt. 
 \item Status: \textcolor{blue}{BEHOBEN} \\
@@ -378,15 +319,216 @@ Einf"ugen nach einem korrekt eingef"ugten Breakpoint bringt das Programm zum Abs
 \item Es wird eine Stringkette eingegeben und nach Hilfe gesucht
 \begin{itemize}
 \item Erwartetes Ereignis: Der zur Stringkette am relevanteste Abschnitt wird in der Helpbox angezeigt. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
+\item Status: \textcolor{blue}{BEHOBEN} \\
 Wenn nach "`else"' gesucht wird, erscheint die Einleitung
 \end{itemize}
 \end{enumerate}
 
-\subsection{Buttons}
-\subsubsection{CheckSyntax}
-\subsubsection{Run}
-\subsubsection{Single Step}
-\subsubsection{Pause}
-\subsubsection{Stop}
-\subsubsection{Validate}
+\subsection{Testprogramme}
+\subsubsection{Leeres Programm}
+Programm mit leerem String
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Fehlermeldung in der Errorkonsole, dass das Programm keine main-Methode besitzt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Die gleiche Fehlermeldung in der Errorkonsole wie in Punkt 1. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Validate
+\begin{itemize}
+\item Erwartetes Ereignis: Es passiert nichts. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Randomtest
+\begin{itemize}
+\item Erwartetes Ereignis: Es erscheint die Meldung, dass das Programm keine korrekte Syntax besitzt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm ohne richtige main-Methode}
+Programm, in dem es keine main-Methode gibt, die main-Methode sich in einem Statementblock befindet oder die main-Methode return-Statement oder R"uckgabewert hat
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Fehlermeldung(en) in der Errorkonsole, dass das Programm keine main-Methode oder Syntaxfehler besitzt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Die gleiche Fehlermeldung in der Errorkonsole wie in Punkt 1. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Validate
+\begin{itemize}
+\item Erwartetes Ereignis: Es passiert nichts. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Randomtest
+\begin{itemize}
+\item Erwartetes Ereignis: Es erscheint die Meldung, dass das Programm keine korrekte Syntax besitzt. 
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Breakpoints}
+\begin{enumerate}
+\item Setzen von Statementbreakpoints an beliebiger Stelle
+\begin{itemize}
+\item Erwartetes Ereignis: Die Programmausf"uhrung wird angehalten, wenn ein Statementbreakpoint getroffen wurde.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Setzen von Globalbreakpoints (aktiviert oder deaktiviert)
+\begin{itemize}
+\item Erwartetes Ereignis: Die Programmausf"uhrung wird angehalten, wenn ein aktiver Globalbreakpoint getroffen wurde.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Randomtests}
+\begin{enumerate}
+\item Ausf"uhrung mit korrekten Eingaben
+\begin{itemize}
+\item Erwartetes Ereignis: Es werden Werte aus den angegeben Intervallen ausgew"ahlt und in der Misckonsole angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Ausf"uhrung mit falschen/leeren Eingaben
+\begin{itemize}
+\item Erwartetes Ereignis: Die Parameter werden alle auf 0 bzw. false gesetzt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Arrays}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Es wird manchmal die ungenaue Fehlermeldung "`AST creation not possible!"'zur"uckgegeben
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms und Erkennung von "Uberschreitung der Arraygrenze.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Funktionen}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms.
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Bei verschachtelten Funktionsaufrufen werden die "au"seren Funktionen "ubersprungen
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von If-Anweisungen}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von While-Schleifen}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Operatoren}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Assertions}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms und Erkennung von Assertionfailures.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Assumptions}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms und Erkennung von Assumptionfailures.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Ensures}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms und Erkennung von Ensurefailures.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Invariants}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms und Erkennung von Invariantfailures.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}
+\subsubsection{Programm zum Testen von Axiomen}
+\begin{enumerate}
+\item Check Syntax
+\begin{itemize}
+\item Erwartetes Ereignis: Syntaxfehler werden korrekt angezeigt.
+\item Status: \textcolor{red}{FEHLSCHLAG} \\
+Es wird manchmal die ungenaue Fehlermeldung "`AST creation not possible!"'zur"uckgegeben
+\end{itemize}
+\item Run/Single Step
+\begin{itemize}
+\item Erwartetes Ereignis: Korrekte Ausf"uhrung des Programms, indem die Axiome ignoriert werden.
+\item Status: \textcolor{green}{OK}
+\end{itemize}
+\end{enumerate}

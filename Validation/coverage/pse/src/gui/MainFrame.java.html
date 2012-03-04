@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">MainFrame.java</span></div><h1>MainFrame.java</h1><pre class="source lang-java linenums">package gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">MainFrame.java</span></div><h1>MainFrame.java</h1><pre class="source lang-java linenums">package gui;
 
 import java.io.IOException;
 
@@ -183,9 +183,9 @@ public class MainFrame extends Frame {
 	 * @param image2 specified icon
 	 */
 	public void switchIcon(Image image, Image image2) {
-<span class="nc" id="L186">		this.runIcon.setImage(image);</span>
-<span class="nc" id="L187">		this.pauseIcon.setImage(image2);</span>
-<span class="nc" id="L188">	}</span>
+<span class="fc" id="L186">		this.runIcon.setImage(image);</span>
+<span class="fc" id="L187">		this.pauseIcon.setImage(image2);</span>
+<span class="fc" id="L188">	}</span>
 
 	public Shell getShell() {
 <span class="fc" id="L191">		return this.shell;</span>
@@ -212,27 +212,27 @@ public class MainFrame extends Frame {
 	}
 
 	public Button getCheckSyntaxButton() {
-<span class="nc" id="L215">		return this.checkSyntaxButton;</span>
+<span class="fc" id="L215">		return this.checkSyntaxButton;</span>
 	}
 
 	public Button getRunButton() {
-<span class="nc" id="L219">		return this.runButton;</span>
+<span class="fc" id="L219">		return this.runButton;</span>
 	}
 
 	public Button getStepButton() {
-<span class="nc" id="L223">		return this.stepButton;</span>
+<span class="fc" id="L223">		return this.stepButton;</span>
 	}
 
 	public Button getValidateButton() {
-<span class="nc" id="L227">		return this.validateButton;</span>
+<span class="fc" id="L227">		return this.validateButton;</span>
 	}
 
 	public Button getPauseButton() {
-<span class="nc" id="L231">		return this.pauseButton;</span>
+<span class="fc" id="L231">		return this.pauseButton;</span>
 	}
 
 	public Button getStopButton() {
-<span class="nc" id="L235">		return this.stopButton;</span>
+<span class="fc" id="L235">		return this.stopButton;</span>
 	}
 
 	public Console[] getConsole() {
@@ -252,25 +252,25 @@ public class MainFrame extends Frame {
 
 	public void openWindow() {
 <span class="fc" id="L254">		shell.open();</span>
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		while (!shell.isDisposed()) {</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		while (!shell.isDisposed()) {</span>
 <span class="fc bfc" id="L256" title="All 2 branches covered.">			if (!display.readAndDispatch()) {</span>
 <span class="fc" id="L257">				display.sleep();</span>
 			}
 		}
 		// Save modified settings
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (Settings.getInstance().settingsChanged()) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (Settings.getInstance().settingsChanged()) {</span>
 			try {
 <span class="nc" id="L263">				Settings.getInstance().saveSettings();</span>
 <span class="nc" id="L264">			} catch (IOException e) {</span>
 				// The default settings will be loaded at the next program start
 			}
 		}
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (clipboard != null) {</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (clipboard != null) {</span>
 <span class="nc" id="L269">			clipboard.dispose();</span>
 		}
-<span class="nc" id="L271">	}</span>
+<span class="fc" id="L271">	}</span>
 
 	private static final String SHELLTITLE = &quot;PSE&quot;;
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>

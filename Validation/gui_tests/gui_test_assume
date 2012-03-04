@@ -1,0 +1,12 @@
+int foo(int a) assume forall x(10, 20) x > a; {
+	return 2 * a;
+}
+
+int foo2(int b) assume exists b(0, 10) b < 0; {
+	return b / 2;
+}
+
+main(int x) assume x > 0; {
+	int y = foo(x);
+	#y = foo2(x);
+}

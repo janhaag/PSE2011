@@ -1,13 +1,17 @@
 int foo() {
-	return 0;
+	return 2;
 }
 
 int foo2(int[][] a) {
 	int i;
 	if (a[0][0] >= a[1][1]) {
-		i = 5;
+		i = 42;
 	}
 	return i;
+}
+
+bool foo3() {
+	return  false;
 }
 
 main(int[][] a) {
@@ -17,6 +21,7 @@ main(int[][] a) {
 	#int[] = array;
 	#int[] b = array[];
 	#bool b[][] = array[2][3];
+	#b[][];
 
 	int[][] b = array[2][2];
 
@@ -24,27 +29,35 @@ main(int[][] a) {
 	#a[][0] = a[][1];
 	#a[[0]]= a[[1]];
 	#a[0][0][0]= a[1][1][1];
-	#a[0][0] = a[1][foo()];
+    #a[0][0] = "§&($"§!";
 
 	#Typecheckertests
 	#a[0][0] = true;
+	#a[0][0] = 5 == 4;
+	#a[0][true] = 5;
+	#a[0][0] = a[1][foo()];
+	#a[0][0] = a[1][foo3()];
 
 	#Interpretertests
 	#a[0][0] = a[1][1];
 	#a[0][0] = b[3];
+	#a[-1][0] = 4;
 
 	int i = length(a);
 	int j = length(a[0]);
 	if (a == b) {
-		a[0][0] = 5;
+		a[0][0] = 10;
 	}
 	else  {
-		a[0][0] = 42;
+		a[0][0] = 20;
 	}
 
-	while (a != b) {
-		a[0][0] = a[0][0] - 1;
+	int k = 0;
+	while (k < length(a[0])) {
+		a[0][k] = 30;
+		k = k + 1;
 	}
 
 	a[0][0] = foo2(a);
+	#a[0][-1] = 40;
 }

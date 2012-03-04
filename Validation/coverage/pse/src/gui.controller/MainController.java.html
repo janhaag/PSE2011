@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">MainController.java</span></div><h1>MainController.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package gui.controller;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">MainController.java</span></div><h1>MainController.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui.controller;</span>
 
 import gui.AboutFrame;
 import gui.Console;
@@ -74,21 +74,21 @@ import org.eclipse.swt.graphics.Point;
 	/**
 	 * Construct a main controller and initializes all other controllers.
 	 */
-<span class="nc" id="L77">	public MainController() {</span>
-<span class="nc" id="L78">		MessageSystem messagesystem = new MessageSystem();</span>
-<span class="nc" id="L79">		this.executionHandler = new ExecutionHandler(messagesystem);</span>
-<span class="nc" id="L80">		Editor editor = new Editor();</span>
-<span class="nc" id="L81">		this.mainframe = new MainFrame(this, editor, messagesystem);</span>
-<span class="nc" id="L82">		this.editorController = new EditorController(editor, this.mainframe.getEditor());</span>
-<span class="nc" id="L83">		this.settingsController = new SettingsController(Settings.getInstance());</span>
-<span class="nc" id="L84">		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());</span>
-<span class="nc" id="L85">		this.parameterContoller = new ParameterController(this.executionHandler, messagesystem);</span>
-<span class="nc" id="L86">		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), </span>
-<span class="nc" id="L87">				this.mainframe.getVarView(), this.executionHandler);</span>
+<span class="fc" id="L77">	public MainController() {</span>
+<span class="fc" id="L78">		MessageSystem messagesystem = new MessageSystem();</span>
+<span class="fc" id="L79">		this.executionHandler = new ExecutionHandler(messagesystem);</span>
+<span class="fc" id="L80">		Editor editor = new Editor();</span>
+<span class="fc" id="L81">		this.mainframe = new MainFrame(this, editor, messagesystem);</span>
+<span class="fc" id="L82">		this.editorController = new EditorController(editor, this.mainframe.getEditor());</span>
+<span class="fc" id="L83">		this.settingsController = new SettingsController(Settings.getInstance());</span>
+<span class="fc" id="L84">		this.helpController = new HelpController(Help.getInstance(), this.mainframe.getHelpBox());</span>
+<span class="fc" id="L85">		this.parameterContoller = new ParameterController(this.executionHandler, messagesystem);</span>
+<span class="fc" id="L86">		this.tableController = new TableViewController(this.mainframe.getBreakpointView(), </span>
+<span class="fc" id="L87">				this.mainframe.getVarView(), this.executionHandler);</span>
 
 		// Has to be the last call in the constructor
-<span class="nc" id="L90">		initMainFrame();</span>
-<span class="nc" id="L91">	}</span>
+<span class="fc" id="L90">		initMainFrame();</span>
+<span class="fc" id="L91">	}</span>
 
 	/**
 	 * Open the main frame.
@@ -99,17 +99,17 @@ import org.eclipse.swt.graphics.Point;
 		 * infinite loop for its window management and we need the instance of
 		 * MainFrame.
 		 */
-<span class="nc" id="L102">		this.mainframe.openWindow();</span>
-<span class="nc" id="L103">	}</span>
+<span class="fc" id="L102">		this.mainframe.openWindow();</span>
+<span class="fc" id="L103">	}</span>
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		//menu bar button events
 <span class="fc bfc" id="L108" title="All 2 branches covered.">		if (e.getSource() == this.mainframe.getMenuBar().getMenuBarItemExit()) {</span>
 			//Save modified settings
-<span class="fc bfc" id="L110" title="All 2 branches covered.">			if(Settings.getInstance().settingsChanged()) {</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if(Settings.getInstance().settingsChanged()) {</span>
 				try {
-<span class="fc" id="L112">					Settings.getInstance().saveSettings();</span>
+<span class="nc" id="L112">					Settings.getInstance().saveSettings();</span>
 <span class="nc" id="L113">				} catch (IOException ioe) {</span>
 					//The default settings will be loaded at the next program start
 				}
@@ -117,7 +117,7 @@ import org.eclipse.swt.graphics.Point;
 <span class="nc" id="L117">			System.exit(0);</span>
 <span class="fc bfc" id="L118" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemLoad()) {</span>
 <span class="fc" id="L119">			FileFrame openFileFrame = new FileFrame(this.mainframe.getShell(), SWT.OPEN);</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (openFileFrame.getChosenFile() != null) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (openFileFrame.getChosenFile() != null) {</span>
 <span class="fc" id="L121">				String fileText = getFileAsString(openFileFrame.getChosenFile());</span>
 <span class="pc bpc" id="L122" title="1 of 2 branches missed.">				if (fileText != null) {</span>
 <span class="fc" id="L123">					this.editorController.getEditor().setSource(fileText);</span>
@@ -131,12 +131,12 @@ import org.eclipse.swt.graphics.Point;
 					//save all lines first, otherwise there will be an exception because of concurrent modification
 <span class="fc" id="L132">					ArrayList&lt;StatementBreakpoint&gt; breakpoints = this.editorController.getEditor().getStatementBreakpoints();</span>
 <span class="fc" id="L133">					int[] lines = new int[breakpoints.size()];</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">					for(int i = 0; i &lt; breakpoints.size(); i++) {</span>
-<span class="nc" id="L135">						lines[i] = breakpoints.get(i).getLine();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">					for(int i = 0; i &lt; breakpoints.size(); i++) {</span>
+<span class="fc" id="L135">						lines[i] = breakpoints.get(i).getLine();</span>
 					}
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">					for(int i = 0; i &lt; lines.length; i++) {</span>
-<span class="nc" id="L138">						this.editorController.getEditor().removeBreakpoint(lines[i]);</span>
-<span class="nc" id="L139">						this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">					for(int i = 0; i &lt; lines.length; i++) {</span>
+<span class="fc" id="L138">						this.editorController.getEditor().removeBreakpoint(lines[i]);</span>
+<span class="fc" id="L139">						this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);</span>
 					}
 					
 					//stop execution
@@ -161,12 +161,12 @@ import org.eclipse.swt.graphics.Point;
 			//save all lines first, otherwise there will be an exception because of concurrent modification
 <span class="fc" id="L162">			ArrayList&lt;StatementBreakpoint&gt; breakpoints = this.editorController.getEditor().getStatementBreakpoints();</span>
 <span class="fc" id="L163">			int[] lines = new int[breakpoints.size()];</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			for(int i = 0; i &lt; breakpoints.size(); i++) {</span>
-<span class="nc" id="L165">				lines[i] = breakpoints.get(i).getLine();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			for(int i = 0; i &lt; breakpoints.size(); i++) {</span>
+<span class="fc" id="L165">				lines[i] = breakpoints.get(i).getLine();</span>
 			}
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">			for(int i = 0; i &lt; lines.length; i++) {</span>
-<span class="nc" id="L168">				this.editorController.getEditor().addBreakpoint(lines[i]);</span>
-<span class="nc" id="L169">				this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			for(int i = 0; i &lt; lines.length; i++) {</span>
+<span class="fc" id="L168">				this.editorController.getEditor().addBreakpoint(lines[i]);</span>
+<span class="fc" id="L169">				this.mainframe.getEditor().setStatementBreakpoint(lines[i], 0);</span>
 			}
 			
 			//stop execution
@@ -189,260 +189,261 @@ import org.eclipse.swt.graphics.Point;
 <span class="fc bfc" id="L189" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCut()) {</span>
 <span class="fc" id="L190">			Point selection = this.mainframe.getEditor().getSelection();</span>
 <span class="fc" id="L191">			String source = this.mainframe.getEditor().getText();</span>
-<span class="fc" id="L192">			String cutSource = source.substring(0, selection.x) + source.substring(selection.y);</span>
-<span class="fc" id="L193">			this.editorController.getEditor().setSource(cutSource);</span>
-<span class="fc" id="L194">			this.mainframe.getEditor().getTextField().setSelection(selection.x);</span>
-			
-<span class="fc" id="L196">			String cut = source.substring(selection.x, selection.y);</span>
-<span class="pc bpc" id="L197" title="2 of 4 branches missed.">			if(cut != null &amp;&amp; cut != &quot;&quot;) {</span>
-<span class="fc" id="L198">				this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});</span>
+
+<span class="fc" id="L193">			String cutSource = source.substring(0, selection.x) + source.substring(selection.y);</span>
+<span class="fc" id="L194">			this.editorController.getEditor().setSource(cutSource);</span>
+<span class="fc" id="L195">			this.mainframe.getEditor().getTextField().setSelection(selection.x);</span>
+
+<span class="fc" id="L197">			String cut = source.substring(selection.x, selection.y);</span>
+<span class="pc bpc" id="L198" title="1 of 4 branches missed.">			if(cut != null &amp;&amp; !cut.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L199">				this.mainframe.getClipboard().setContents(new Object[]{cut}, new Transfer[]{TextTransfer.getInstance()});</span>
 			}
-<span class="fc bfc" id="L200" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {</span>
-<span class="fc" id="L201">			Point selection = this.mainframe.getEditor().getSelection();</span>
-<span class="fc" id="L202">			String source = this.mainframe.getEditor().getText();</span>
-<span class="fc" id="L203">			String copy = source.substring(selection.x, selection.y);</span>
-<span class="pc bpc" id="L204" title="2 of 4 branches missed.">			if(copy != null &amp;&amp; copy != &quot;&quot;) {</span>
-<span class="fc" id="L205">				this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemCopy()) {</span>
+<span class="fc" id="L202">			Point selection = this.mainframe.getEditor().getSelection();</span>
+<span class="fc" id="L203">			String source = this.mainframe.getEditor().getText();</span>
+<span class="fc" id="L204">			String copy = source.substring(selection.x, selection.y);</span>
+<span class="pc bpc" id="L205" title="1 of 4 branches missed.">			if(copy != null &amp;&amp; !copy.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L206">				this.mainframe.getClipboard().setContents(new Object[]{copy}, new Transfer[]{TextTransfer.getInstance()});</span>
 			}
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {</span>
-<span class="fc" id="L208">			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());</span>
-<span class="pc bpc" id="L209" title="2 of 4 branches missed.">			if(paste != null &amp;&amp; !paste.equals(&quot;&quot;)) {</span>
-<span class="fc" id="L210">				Point selection = this.mainframe.getEditor().getSelection();</span>
-<span class="fc" id="L211">				String source = this.mainframe.getEditor().getText();</span>
-<span class="fc" id="L212">				String pastedSource = source.substring(0, selection.x) + paste + source.substring(selection.y); </span>
-<span class="fc" id="L213">				this.editorController.getEditor().setSource(pastedSource);</span>
-<span class="fc" id="L214">				this.mainframe.getEditor().getTextField().setSelection(selection.x + paste.length());</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getMenuBar().getMenuBarItemPaste()) {</span>
+<span class="fc" id="L209">			String paste = (String) this.mainframe.getClipboard().getContents(TextTransfer.getInstance());</span>
+<span class="pc bpc" id="L210" title="2 of 4 branches missed.">			if(paste != null &amp;&amp; !paste.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L211">				Point selection = this.mainframe.getEditor().getSelection();</span>
+<span class="fc" id="L212">				String source = this.mainframe.getEditor().getText();</span>
+<span class="fc" id="L213">				String pastedSource = source.substring(0, selection.x) + paste + source.substring(selection.y); </span>
+<span class="fc" id="L214">				this.editorController.getEditor().setSource(pastedSource);</span>
+<span class="fc" id="L215">				this.mainframe.getEditor().getTextField().setSelection(selection.x + paste.length());</span>
 			}
 			//String pastedSource = source.substring(0, selection.x) + 
 		}
 		//button events
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		else if (e.getSource() == this.mainframe.getRunButton() </span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemRun()) {</span>
-<span class="nc bnc" id="L221" title="All 4 branches missed.">			assert editorController != null;</span>
-<span class="nc" id="L222">			this.executionHandler.setPaused(false);</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (this.executionHandler.getAST() == null) {</span>
-<span class="nc" id="L224">				this.tableController.getVarView().getVarTree().removeAll();</span>
-<span class="nc" id="L225">				this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">				if (this.executionHandler.getAST() != null) {</span>
-<span class="nc" id="L227">					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());</span>
-<span class="nc" id="L228">					parameterContoller.addParameterFrame(parameterframe);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		else if (e.getSource() == this.mainframe.getRunButton() </span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemRun()) {</span>
+<span class="pc bpc" id="L222" title="3 of 4 branches missed.">			assert editorController != null;</span>
+<span class="fc" id="L223">			this.executionHandler.setPaused(false);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (this.executionHandler.getAST() == null) {</span>
+<span class="fc" id="L225">				this.tableController.getVarView().getVarTree().removeAll();</span>
+<span class="fc" id="L226">				this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">				if (this.executionHandler.getAST() != null) {</span>
+<span class="fc" id="L228">					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());</span>
+<span class="fc" id="L229">					parameterContoller.addParameterFrame(parameterframe);</span>
 				} else {
-<span class="nc" id="L230">					return;</span>
+<span class="fc" id="L231">					return;</span>
 				}
 			}			
-<span class="nc" id="L233">			this.runView();</span>
+<span class="fc" id="L234">			this.runView();</span>
 			
 			//Execution
-<span class="nc" id="L236">			new Thread() {</span>
+<span class="fc" id="L237">			new Thread() {</span>
 				public void run() {
-<span class="nc bnc" id="L238" title="All 2 branches missed.">					while (!parameterContoller.getParameterframe().getShell().isDisposed()</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">							&amp;&amp; !(executionHandler.getAST().getMainFunction().getParameters() == null</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">					while (!parameterContoller.getParameterframe().getShell().isDisposed()</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">							&amp;&amp; !(executionHandler.getAST().getMainFunction().getParameters() == null</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {</span>
 						try {
-<span class="nc" id="L242">							sleep(100);</span>
-<span class="nc" id="L243">						} catch (InterruptedException ignored) {</span>
+<span class="fc" id="L243">							sleep(100);</span>
+<span class="nc" id="L244">						} catch (InterruptedException ignored) {</span>
 						}
 					}
-<span class="nc" id="L246">					executionHandler.run(editorController.getEditor().getStatementBreakpoints(),</span>
-<span class="nc" id="L247">							executionHandler.getGlobalBreakpoints());</span>
-<span class="nc" id="L248">					mainframe.getDisplay().asyncExec(new Runnable() {</span>
+<span class="fc" id="L247">					executionHandler.run(editorController.getEditor().getStatementBreakpoints(),</span>
+<span class="fc" id="L248">							executionHandler.getGlobalBreakpoints());</span>
+<span class="fc" id="L249">					mainframe.getDisplay().asyncExec(new Runnable() {</span>
 						public void run() {
-<span class="nc bnc" id="L250" title="All 2 branches missed.">							if (executionHandler.getAssertionFailureMessage() != null) {</span>
-<span class="nc" id="L251">								executionHandler.printAssertionFailureMessage();</span>
-<span class="nc" id="L252">								stopView();</span>
-<span class="nc" id="L253">								return;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">							if (executionHandler.getAssertionFailureMessage() != null) {</span>
+<span class="fc" id="L252">								executionHandler.printAssertionFailureMessage();</span>
+<span class="fc" id="L253">								stopView();</span>
+<span class="fc" id="L254">								return;</span>
 							}
-<span class="nc bnc" id="L255" title="All 2 branches missed.">							if (executionHandler.getPaused()) {</span>
-<span class="nc" id="L256">								pauseView();</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">							if (executionHandler.getPaused()) {</span>
+<span class="fc" id="L257">								pauseView();</span>
 							}
 							else {
-<span class="nc bnc" id="L259" title="All 2 branches missed.">								if (executionHandler.getProgramExecution() != null </span>
-<span class="nc bnc" id="L260" title="All 2 branches missed.">										&amp;&amp; executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {</span>
-<span class="nc" id="L261">									executionHandler.addSuccessMessage(&quot;Program execution successful!&quot;);</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">								if (executionHandler.getProgramExecution() != null </span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">										&amp;&amp; executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {</span>
+<span class="fc" id="L262">									executionHandler.addSuccessMessage(&quot;Program execution successful!&quot;);</span>
 								}
 								else {
-<span class="nc" id="L264">									executionHandler.addSuccessMessage(&quot;stopped execution&quot;);</span>
+<span class="nc" id="L265">									executionHandler.addSuccessMessage(&quot;stopped execution&quot;);</span>
 								}
-<span class="nc" id="L266">								stopView();</span>
+<span class="fc" id="L267">								stopView();</span>
 							}
-<span class="nc" id="L268">						}</span>
+<span class="fc" id="L269">						}</span>
 					});
-<span class="nc" id="L270">				}</span>
-<span class="nc" id="L271">			}.start();</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">		} else if (e.getSource() == this.mainframe.getStepButton() </span>
-<span class="nc bnc" id="L273" title="All 2 branches missed.">				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemStep()) {</span>
+<span class="fc" id="L271">				}</span>
+<span class="fc" id="L272">			}.start();</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">		} else if (e.getSource() == this.mainframe.getStepButton() </span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">				|| e.getSource() == this.mainframe.getMenuBar().getMenuBarItemStep()) {</span>
 			//Functions
-<span class="nc bnc" id="L275" title="All 4 branches missed.">			assert editorController != null;</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">			if (this.executionHandler.getAST() == null) {</span>
-<span class="nc" id="L277">				this.tableController.getVarView().getVarTree().removeAll();</span>
-<span class="nc" id="L278">				this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">				if (this.executionHandler.getAST() != null) {</span>
-<span class="nc" id="L280">					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());</span>
-<span class="nc" id="L281">					this.parameterContoller.addParameterFrame(parameterframe);</span>
+<span class="pc bpc" id="L276" title="3 of 4 branches missed.">			assert editorController != null;</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">			if (this.executionHandler.getAST() == null) {</span>
+<span class="fc" id="L278">				this.tableController.getVarView().getVarTree().removeAll();</span>
+<span class="fc" id="L279">				this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">				if (this.executionHandler.getAST() != null) {</span>
+<span class="fc" id="L281">					ParameterFrame parameterframe = new ParameterFrame(this.mainframe.getShell());</span>
+<span class="fc" id="L282">					this.parameterContoller.addParameterFrame(parameterframe);</span>
 				} else {
-<span class="nc" id="L283">					return;</span>
+<span class="fc" id="L284">					return;</span>
 				}
 			}
 			
 			//Execution
-<span class="nc" id="L288">			new Thread() {</span>
+<span class="fc" id="L289">			new Thread() {</span>
 				public void run() {
-<span class="nc bnc" id="L290" title="All 2 branches missed.">					while (!parameterContoller.getParameterframe().getShell().isDisposed()</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">							&amp;&amp; !(executionHandler.getAST().getMainFunction().getParameters() == null</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">					while (!parameterContoller.getParameterframe().getShell().isDisposed()</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">							&amp;&amp; !(executionHandler.getAST().getMainFunction().getParameters() == null</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">							|| executionHandler.getAST().getMainFunction().getParameters().length == 0)) {</span>
 						try {
-<span class="nc" id="L294">							sleep(100);</span>
-<span class="nc" id="L295">						} catch (InterruptedException ignored) {</span>
+<span class="nc" id="L295">							sleep(100);</span>
+<span class="nc" id="L296">						} catch (InterruptedException ignored) {</span>
 						}
 					}
-<span class="nc" id="L298">					executionHandler.singleStep(editorController.getEditor().getStatementBreakpoints(),</span>
-<span class="nc" id="L299">							executionHandler.getGlobalBreakpoints());</span>
-<span class="nc" id="L300">					mainframe.getDisplay().asyncExec(new Runnable() {</span>
+<span class="fc" id="L299">					executionHandler.singleStep(editorController.getEditor().getStatementBreakpoints(),</span>
+<span class="fc" id="L300">							executionHandler.getGlobalBreakpoints());</span>
+<span class="fc" id="L301">					mainframe.getDisplay().asyncExec(new Runnable() {</span>
 						public void run() {
-<span class="nc" id="L302">							pauseView();</span>
-<span class="nc bnc" id="L303" title="All 2 branches missed.">							if (executionHandler.getAssertionFailureMessage() != null) {</span>
-<span class="nc" id="L304">								executionHandler.printAssertionFailureMessage();</span>
-<span class="nc" id="L305">								stopView();</span>
-<span class="nc" id="L306">								return;</span>
+<span class="fc" id="L303">							pauseView();</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">							if (executionHandler.getAssertionFailureMessage() != null) {</span>
+<span class="nc" id="L305">								executionHandler.printAssertionFailureMessage();</span>
+<span class="nc" id="L306">								stopView();</span>
+<span class="nc" id="L307">								return;</span>
 							}
-<span class="nc" id="L308">							tableController.updateVarView();</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">							if (executionHandler.getProgramExecution() != null</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">									&amp;&amp; executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {</span>
-<span class="nc" id="L311">								stopView();</span>
-<span class="nc" id="L312">								executionHandler.addSuccessMessage(&quot;Program execution successful!&quot;);</span>
+<span class="fc" id="L309">							tableController.updateVarView();</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">							if (executionHandler.getProgramExecution() != null</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">									&amp;&amp; executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() == null) {</span>
+<span class="fc" id="L312">								stopView();</span>
+<span class="fc" id="L313">								executionHandler.addSuccessMessage(&quot;Program execution successful!&quot;);</span>
 							}
-<span class="nc" id="L314">						}</span>
+<span class="fc" id="L315">						}</span>
 					});
-<span class="nc" id="L316">				}</span>
-<span class="nc" id="L317">			}.start();</span>
-<span class="nc bnc" id="L318" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getPauseButton()) {</span>
-<span class="nc" id="L319">			this.executionHandler.setPaused(true);</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getStopButton()) {</span>
-<span class="nc" id="L321">			this.stopView();</span>
-<span class="nc bnc" id="L322" title="All 2 branches missed.">		} else if (e.getSource() == mainframe.getCheckSyntaxButton()) {</span>
+<span class="fc" id="L317">				}</span>
+<span class="fc" id="L318">			}.start();</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getPauseButton()) {</span>
+<span class="fc" id="L320">			this.executionHandler.setPaused(true);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getStopButton()) {</span>
+<span class="fc" id="L322">			this.stopView();</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		} else if (e.getSource() == mainframe.getCheckSyntaxButton()) {</span>
 			//Functions
-<span class="nc bnc" id="L324" title="All 4 branches missed.">			assert editorController != null;</span>
-<span class="nc" id="L325">			this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
-<span class="nc bnc" id="L326" title="All 2 branches missed.">			if (this.executionHandler.getAST() != null) {</span>
-<span class="nc" id="L327">				this.executionHandler.addSuccessMessage(&quot;Syntax is correct!&quot;);</span>
+<span class="pc bpc" id="L325" title="3 of 4 branches missed.">			assert editorController != null;</span>
+<span class="fc" id="L326">			this.executionHandler.parse(this.editorController.getEditor().getSource());</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (this.executionHandler.getAST() != null) {</span>
+<span class="fc" id="L328">				this.executionHandler.addSuccessMessage(&quot;Syntax is correct!&quot;);</span>
 			}
-<span class="nc" id="L329">			this.executionHandler.setAST(null);</span>
-<span class="nc bnc" id="L330" title="All 4 branches missed.">		} else if (e.getSource() == mainframe.getValidateButton() || e.getSource() == mainframe.getMenuBar().getVerItem()) {</span>
-<span class="nc" id="L331">            this.executionHandler.verify(this.editorController.getEditor().getSource());</span>
-<span class="nc" id="L332">			this.executionHandler.setAST(null);</span>
+<span class="fc" id="L330">			this.executionHandler.setAST(null);</span>
+<span class="pc bpc" id="L331" title="3 of 4 branches missed.">		} else if (e.getSource() == mainframe.getValidateButton() || e.getSource() == mainframe.getMenuBar().getVerItem()) {</span>
+<span class="fc" id="L332">            this.executionHandler.verify(this.editorController.getEditor().getSource());</span>
+<span class="fc" id="L333">			this.executionHandler.setAST(null);</span>
 		}
-<span class="fc" id="L334">	}</span>
+<span class="fc" id="L335">	}</span>
 
 	/**
 	 * Update the main frame when changed to running state.
 	 */
 	private void runView() {
 		//Functions
-<span class="nc" id="L341">		this.editorController.removeMark();</span>
+<span class="fc" id="L342">		this.editorController.removeMark();</span>
 		//Images
-<span class="nc" id="L343">		Image image = new Image(this.mainframe.getDisplay(), </span>
-<span class="nc" id="L344">				MainFrame.class.getResourceAsStream(&quot;image/run2.png&quot;));</span>
-<span class="nc" id="L345">		Image image2 = new Image(this.mainframe.getDisplay(),</span>
-<span class="nc" id="L346">				MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
-<span class="nc" id="L347">		this.mainframe.switchIcon(image, image2);</span>
+<span class="fc" id="L344">		Image image = new Image(this.mainframe.getDisplay(), </span>
+<span class="fc" id="L345">				MainFrame.class.getResourceAsStream(&quot;image/run2.png&quot;));</span>
+<span class="fc" id="L346">		Image image2 = new Image(this.mainframe.getDisplay(),</span>
+<span class="fc" id="L347">				MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
+<span class="fc" id="L348">		this.mainframe.switchIcon(image, image2);</span>
 		//(De-)activations
-<span class="nc" id="L349">		this.mainframe.getPauseButton().setEnabled(true);</span>
-<span class="nc" id="L350">		this.mainframe.getStepButton().setEnabled(false);</span>
-<span class="nc" id="L351">		this.mainframe.getStopButton().setEnabled(true);</span>
-<span class="nc" id="L352">		this.mainframe.getCheckSyntaxButton().setEnabled(false);</span>
-<span class="nc" id="L353">		this.tableController.activateVarView();</span>
-<span class="nc" id="L354">		this.tableController.deactivateBreakpointView();</span>
-<span class="nc" id="L355">		this.tableController.getVarView().getVarTree().removeAll();</span>
-<span class="nc" id="L356">		this.editorController.deactivateView();</span>
-<span class="nc" id="L357">	}</span>
+<span class="fc" id="L350">		this.mainframe.getPauseButton().setEnabled(true);</span>
+<span class="fc" id="L351">		this.mainframe.getStepButton().setEnabled(false);</span>
+<span class="fc" id="L352">		this.mainframe.getStopButton().setEnabled(true);</span>
+<span class="fc" id="L353">		this.mainframe.getCheckSyntaxButton().setEnabled(false);</span>
+<span class="fc" id="L354">		this.tableController.activateVarView();</span>
+<span class="fc" id="L355">		this.tableController.deactivateBreakpointView();</span>
+<span class="fc" id="L356">		this.tableController.getVarView().getVarTree().removeAll();</span>
+<span class="fc" id="L357">		this.editorController.deactivateView();</span>
+<span class="fc" id="L358">	}</span>
 	
 	/**
 	 * Update the main frame when changed to paused state.
 	 */
 	private void pauseView() {
 		//Functions
-<span class="nc" id="L364">		this.tableController.updateVarView();</span>
-<span class="nc" id="L365">		this.editorController.removeMark();</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (this.executionHandler.getProgramExecution() != null</span>
-<span class="nc bnc" id="L367" title="All 2 branches missed.">				&amp;&amp; this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() != null) {</span>
-<span class="nc" id="L368">			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();</span>
-<span class="nc" id="L369">			this.editorController.markCurrentLine(line - 1);</span>
+<span class="fc" id="L365">		this.tableController.updateVarView();</span>
+<span class="fc" id="L366">		this.editorController.removeMark();</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">		if (this.executionHandler.getProgramExecution() != null</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">				&amp;&amp; this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement() != null) {</span>
+<span class="fc" id="L369">			int line = this.executionHandler.getProgramExecution().getCurrentState().getCurrentStatement().getPosition().getLine();</span>
+<span class="fc" id="L370">			this.editorController.markCurrentLine(line - 1);</span>
 		}
 		//Images
-<span class="nc" id="L372">		Image image = new Image(this.mainframe.getDisplay(), </span>
-<span class="nc" id="L373">				MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
-<span class="nc" id="L374">		Image image2 = new Image(this.mainframe.getDisplay(),</span>
-<span class="nc" id="L375">				MainFrame.class.getResourceAsStream(&quot;image/pause2.png&quot;));</span>
+<span class="fc" id="L373">		Image image = new Image(this.mainframe.getDisplay(), </span>
+<span class="fc" id="L374">				MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
+<span class="fc" id="L375">		Image image2 = new Image(this.mainframe.getDisplay(),</span>
+<span class="fc" id="L376">				MainFrame.class.getResourceAsStream(&quot;image/pause2.png&quot;));</span>
 		//(De-)activations
-<span class="nc" id="L377">		this.mainframe.switchIcon(image, image2);</span>
-<span class="nc" id="L378">		this.mainframe.getStepButton().setEnabled(true);</span>
-<span class="nc" id="L379">		this.mainframe.getPauseButton().setEnabled(false);</span>
-<span class="nc" id="L380">		this.mainframe.getStopButton().setEnabled(true);</span>
-<span class="nc" id="L381">		this.mainframe.getCheckSyntaxButton().setEnabled(false);</span>
-<span class="nc" id="L382">		this.editorController.deactivateView();</span>
-<span class="nc" id="L383">		this.tableController.activateVarView();</span>
-<span class="nc" id="L384">		this.tableController.deactivateBreakpointView();</span>
-<span class="nc" id="L385">	}</span>
+<span class="fc" id="L378">		this.mainframe.switchIcon(image, image2);</span>
+<span class="fc" id="L379">		this.mainframe.getStepButton().setEnabled(true);</span>
+<span class="fc" id="L380">		this.mainframe.getPauseButton().setEnabled(false);</span>
+<span class="fc" id="L381">		this.mainframe.getStopButton().setEnabled(true);</span>
+<span class="fc" id="L382">		this.mainframe.getCheckSyntaxButton().setEnabled(false);</span>
+<span class="fc" id="L383">		this.editorController.deactivateView();</span>
+<span class="fc" id="L384">		this.tableController.activateVarView();</span>
+<span class="fc" id="L385">		this.tableController.deactivateBreakpointView();</span>
+<span class="fc" id="L386">	}</span>
 	
 	/**
 	 * Update the view when changed to idle state.
 	 */
 	private void stopView() {
 		//Functions
-<span class="nc" id="L392">		this.editorController.removeMark();</span>
-<span class="nc" id="L393">		this.tableController.updateVarView();</span>
-<span class="nc" id="L394">		this.executionHandler.destroyProgramExecution();</span>
-<span class="nc" id="L395">		this.executionHandler.setParameterValues(null);</span>
-<span class="nc" id="L396">		this.executionHandler.setAST(null);</span>
+<span class="fc" id="L393">		this.editorController.removeMark();</span>
+<span class="fc" id="L394">		this.tableController.updateVarView();</span>
+<span class="fc" id="L395">		this.executionHandler.destroyProgramExecution();</span>
+<span class="fc" id="L396">		this.executionHandler.setParameterValues(null);</span>
+<span class="fc" id="L397">		this.executionHandler.setAST(null);</span>
 		//Images
-<span class="nc" id="L398">		Image image = new Image(this.mainframe.getDisplay(), </span>
-<span class="nc" id="L399">				MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
-<span class="nc" id="L400">		Image image2 = new Image(this.mainframe.getDisplay(), </span>
-<span class="nc" id="L401">				MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
-<span class="nc" id="L402">		this.mainframe.switchIcon(image, image2);</span>
+<span class="fc" id="L399">		Image image = new Image(this.mainframe.getDisplay(), </span>
+<span class="fc" id="L400">				MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
+<span class="fc" id="L401">		Image image2 = new Image(this.mainframe.getDisplay(), </span>
+<span class="fc" id="L402">				MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
+<span class="fc" id="L403">		this.mainframe.switchIcon(image, image2);</span>
 		//(De-)activations
-<span class="nc" id="L404">		this.mainframe.getStopButton().setEnabled(false);</span>
-<span class="nc" id="L405">		this.mainframe.getPauseButton().setEnabled(false);</span>
-<span class="nc" id="L406">		this.mainframe.getStepButton().setEnabled(true);</span>
-<span class="nc" id="L407">		this.mainframe.getCheckSyntaxButton().setEnabled(true);</span>
-<span class="nc" id="L408">		this.tableController.deactivateVarView();</span>
-<span class="nc" id="L409">		this.tableController.activateBreakpointView();</span>
-<span class="nc" id="L410">		this.editorController.activateView();</span>
-<span class="nc" id="L411">	}</span>
+<span class="fc" id="L405">		this.mainframe.getStopButton().setEnabled(false);</span>
+<span class="fc" id="L406">		this.mainframe.getPauseButton().setEnabled(false);</span>
+<span class="fc" id="L407">		this.mainframe.getStepButton().setEnabled(true);</span>
+<span class="fc" id="L408">		this.mainframe.getCheckSyntaxButton().setEnabled(true);</span>
+<span class="fc" id="L409">		this.tableController.deactivateVarView();</span>
+<span class="fc" id="L410">		this.tableController.activateBreakpointView();</span>
+<span class="fc" id="L411">		this.editorController.activateView();</span>
+<span class="fc" id="L412">	}</span>
 
 	private static String getFileAsString(File file) {
-<span class="fc" id="L414">		BufferedReader fileReader = null;</span>
+<span class="fc" id="L415">		BufferedReader fileReader = null;</span>
 		try {
-<span class="fc" id="L416">			fileReader = new BufferedReader(new FileReader(file));</span>
-<span class="nc" id="L417">		} catch (FileNotFoundException e1) {</span>
-<span class="nc" id="L418">			e1.printStackTrace();</span>
+<span class="fc" id="L417">			fileReader = new BufferedReader(new FileReader(file));</span>
+<span class="nc" id="L418">		} catch (FileNotFoundException e1) {</span>
+<span class="nc" id="L419">			e1.printStackTrace();</span>
 		}
-<span class="fc" id="L420">		String line = null;</span>
-<span class="fc" id="L421">		String fileText = new String();</span>
+<span class="fc" id="L421">		String line = null;</span>
+<span class="fc" id="L422">		String fileText = new String();</span>
 		try {
-<span class="fc bfc" id="L423" title="All 2 branches covered.">			while ((line = fileReader.readLine()) != null) {</span>
-<span class="fc" id="L424">				fileText += line + '\n';</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">			while ((line = fileReader.readLine()) != null) {</span>
+<span class="fc" id="L425">				fileText += line + '\n';</span>
 			}
-<span class="nc" id="L426">		} catch (IOException e1) {</span>
-<span class="nc" id="L427">			e1.printStackTrace();</span>
+<span class="nc" id="L427">		} catch (IOException e1) {</span>
+<span class="nc" id="L428">			e1.printStackTrace();</span>
 		}
-<span class="fc" id="L429">		return fileText;</span>
+<span class="fc" id="L430">		return fileText;</span>
 	}
 
 	private static void writeStringToFile(String content, File file) {
-<span class="fc" id="L433">		BufferedWriter fileWriter = null;</span>
+<span class="fc" id="L434">		BufferedWriter fileWriter = null;</span>
 		try {
-<span class="fc" id="L435">			fileWriter = new BufferedWriter(new FileWriter(file));</span>
-<span class="fc" id="L436">			fileWriter.write(content);</span>
-<span class="fc" id="L437">			fileWriter.close();</span>
+<span class="fc" id="L436">			fileWriter = new BufferedWriter(new FileWriter(file));</span>
+<span class="fc" id="L437">			fileWriter.write(content);</span>
+<span class="fc" id="L438">			fileWriter.close();</span>
 
-<span class="nc" id="L439">		} catch (IOException e) {</span>
-<span class="nc" id="L440">			e.printStackTrace();</span>
+<span class="nc" id="L440">		} catch (IOException e) {</span>
+<span class="nc" id="L441">			e.printStackTrace();</span>
 		}
-<span class="fc" id="L442">	}</span>
+<span class="fc" id="L443">	}</span>
 
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
-<span class="nc" id="L446">	}</span>
+<span class="nc" id="L447">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>

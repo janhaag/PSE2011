@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>EditorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test</a> &gt; <span class="el_source">EditorTest.java</span></div><h1>EditorTest.java</h1><pre class="source lang-java linenums">package test;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import interpreter.StatementBreakpoint;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import misc.Editor;
+import misc.Keyword;
+
+<span class="fc" id="L16">public class EditorTest {</span>
+	private Editor editorInstance;
+	
+	@Before
+	public void setUp() {
+<span class="fc" id="L21">		this.editorInstance = new Editor();</span>
+<span class="fc" id="L22">	}</span>
+	
+	@Test
+	public void setSource() {
+<span class="fc" id="L26">		this.editorInstance.setSource(&quot;test&quot;);</span>
+<span class="fc" id="L27">		assertEquals(this.editorInstance.getSource(), &quot;test&quot;);</span>
+<span class="fc" id="L28">	}</span>
+	
+	@Test
+	public void detectKeyWords() {
+<span class="fc" id="L32">		this.editorInstance.setSource(</span>
+<span class="fc" id="L33">			&quot;if while true false int bool array else return assert assume axiom ensure &quot;</span>
+			+ &quot;invariant \n forall \r exists \t main&quot;
+		);
+<span class="fc" id="L36">		ArrayList&lt;Keyword&gt; testlist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="fc" id="L37">		testlist.add(new Keyword(0, 2, &quot;0000FF&quot;));</span>
+<span class="fc" id="L38">		testlist.add(new Keyword(3, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L39">		testlist.add(new Keyword(9, 4, &quot;00FF00&quot;));</span>
+<span class="fc" id="L40">		testlist.add(new Keyword(14, 5, &quot;FF0000&quot;));</span>
+<span class="fc" id="L41">		testlist.add(new Keyword(20, 3, &quot;0000FF&quot;));</span>
+<span class="fc" id="L42">		testlist.add(new Keyword(24, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L43">		testlist.add(new Keyword(29, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L44">		testlist.add(new Keyword(35, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L45">		testlist.add(new Keyword(40, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L46">		testlist.add(new Keyword(47, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L47">		testlist.add(new Keyword(54, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L48">		testlist.add(new Keyword(61, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L49">		testlist.add(new Keyword(67, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L50">		testlist.add(new Keyword(74, 9, &quot;0000FF&quot;));</span>
+<span class="fc" id="L51">		testlist.add(new Keyword(86, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L52">		testlist.add(new Keyword(95, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L53">		testlist.add(new Keyword(104, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L54">		assertEquals(testlist.size(), this.editorInstance.getColorArray().size());</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for(int i = 0; i &lt; testlist.size(); i++) {</span>
+<span class="fc" id="L56">			assertEquals(testlist.get(i), this.editorInstance.getColorArray().get(i));</span>
+		}
+<span class="fc" id="L58">	}</span>
+	
+	@Test
+	public void detectNumbers() {
+<span class="fc" id="L62">		this.editorInstance.setSource(</span>
+<span class="fc" id="L63">			&quot;0 =1 2) 3; [4 5]&quot;</span>
+		);
+<span class="fc" id="L65">		ArrayList&lt;Keyword&gt; testlist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="fc" id="L66">		testlist.add(new Keyword(0, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L67">		testlist.add(new Keyword(3, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L68">		testlist.add(new Keyword(5, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L69">		testlist.add(new Keyword(8, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L70">		testlist.add(new Keyword(12, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L71">		testlist.add(new Keyword(14, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L72">		assertEquals(testlist.size(), this.editorInstance.getColorArray().size());</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		for(int i = 0; i &lt; testlist.size(); i++) {</span>
+<span class="fc" id="L74">			assertEquals(testlist.get(i), this.editorInstance.getColorArray().get(i));</span>
+		}
+<span class="fc" id="L76">	}</span>
+	
+	@Test
+	public void removeUnexistingStatementBreakpoint() {
+<span class="fc" id="L80">		assertEquals(0, this.editorInstance.removeBreakpoint(0));</span>
+<span class="fc" id="L81">	}</span>
+	
+	@Test
+	public void addStatementBreakpoint() {
+<span class="fc" id="L85">		this.editorInstance.addBreakpoint(0);</span>
+<span class="fc" id="L86">		ArrayList&lt;StatementBreakpoint&gt; testlist = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="fc" id="L87">		testlist.add(new StatementBreakpoint(0));</span>
+<span class="fc" id="L88">		assertEquals(testlist.size(), this.editorInstance.getStatementBreakpoints().size());</span>
+<span class="fc" id="L89">	}</span>
+	
+	@Test
+	public void removeStatementBreakpoint() {
+<span class="fc" id="L93">		this.editorInstance.addBreakpoint(0);</span>
+<span class="fc" id="L94">		this.editorInstance.addBreakpoint(1);</span>
+<span class="fc" id="L95">		this.editorInstance.removeBreakpoint(1);</span>
+<span class="fc" id="L96">		assertEquals(1, this.editorInstance.getStatementBreakpoints().size());</span>
+<span class="fc" id="L97">	}</span>
+	
+	@Test
+	public void testUndo() {
+<span class="fc" id="L101">		this.editorInstance.undo();</span>
+<span class="fc" id="L102">		this.editorInstance.setSource(&quot;t&quot;);</span>
+<span class="fc" id="L103">		assertEquals(&quot;t&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L104">		this.editorInstance.setSource(&quot;te&quot;);</span>
+<span class="fc" id="L105">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L106">		this.editorInstance.setSource(&quot;tes&quot;);</span>
+<span class="fc" id="L107">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L108">		this.editorInstance.undo();</span>
+<span class="fc" id="L109">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L110">		this.editorInstance.setSource(&quot;tes&quot;);</span>
+<span class="fc" id="L111">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L112">		this.editorInstance.setSource(&quot;test&quot;);</span>
+<span class="fc" id="L113">		assertEquals(&quot;test&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L114">	}</span>
+	
+	@Test
+	public void testRedo() {
+<span class="fc" id="L118">		this.editorInstance.redo();</span>
+<span class="fc" id="L119">		this.editorInstance.setSource(&quot;t&quot;);</span>
+<span class="fc" id="L120">		assertEquals(&quot;t&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L121">		this.editorInstance.setSource(&quot;te&quot;);</span>
+<span class="fc" id="L122">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L123">		this.editorInstance.setSource(&quot;tes&quot;);</span>
+<span class="fc" id="L124">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L125">		this.editorInstance.undo();</span>
+<span class="fc" id="L126">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L127">		this.editorInstance.redo();</span>
+<span class="fc" id="L128">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L129">		this.editorInstance.setSource(&quot;test&quot;);</span>
+<span class="fc" id="L130">		assertEquals(&quot;test&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L131">	}</span>
+	
+	@After
+	public void tearDown() {
+<span class="fc" id="L135">		this.editorInstance = null;</span>
+<span class="fc" id="L136">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VariableView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">VariableView.java</span></div><h1>VariableView.java</h1><pre class="source lang-java linenums">package gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VariableView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">VariableView.java</span></div><h1>VariableView.java</h1><pre class="source lang-java linenums">package gui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -51,24 +51,24 @@ public class VariableView extends Composite {
 	
 	//insert first level tree items
 	public TreeItem addTreeItem(Tree parent, String type, String id, String value) {
-<span class="nc" id="L54">		TreeItem item = new TreeItem(parent, SWT.NONE);</span>
-<span class="nc" id="L55">		item.setText(type);</span>
-<span class="nc" id="L56">		item.setText(1, id);</span>
-<span class="nc" id="L57">		item.setText(2, value);</span>
-<span class="nc" id="L58">		return item;</span>
+<span class="fc" id="L54">		TreeItem item = new TreeItem(parent, SWT.NONE);</span>
+<span class="fc" id="L55">		item.setText(type);</span>
+<span class="fc" id="L56">		item.setText(1, id);</span>
+<span class="fc" id="L57">		item.setText(2, value);</span>
+<span class="fc" id="L58">		return item;</span>
 	}
 	
 	//insert tree items of level 2 and more
 	public TreeItem addTreeItem(TreeItem parent, String type, String id, String value) {
-<span class="nc" id="L63">		TreeItem item = new TreeItem(parent, SWT.NONE);</span>
-<span class="nc" id="L64">		item.setText(type);</span>
-<span class="nc" id="L65">		item.setText(1, id);</span>
-<span class="nc" id="L66">		item.setText(2, value);</span>
-<span class="nc" id="L67">		return item;</span>
+<span class="fc" id="L63">		TreeItem item = new TreeItem(parent, SWT.NONE);</span>
+<span class="fc" id="L64">		item.setText(type);</span>
+<span class="fc" id="L65">		item.setText(1, id);</span>
+<span class="fc" id="L66">		item.setText(2, value);</span>
+<span class="fc" id="L67">		return item;</span>
 	}
 	
 	public Tree getVarTree() {
-<span class="nc" id="L71">		return this.tree;</span>
+<span class="fc" id="L71">		return this.tree;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>
