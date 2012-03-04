@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ExecutionHandler.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">ExecutionHandler.java</span></div><h1>ExecutionHandler.java</h1><pre class="source lang-java linenums">package misc;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ExecutionHandler.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">ExecutionHandler.java</span></div><h1>ExecutionHandler.java</h1><pre class="source lang-java linenums">package misc;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,199 +45,203 @@ public class ExecutionHandler {
 
 	public void parse(String source) {
 <span class="fc" id="L47">		this.messagesystem.clear(MessageCategories.ERROR);</span>
+<span class="fc" id="L48">		this.messagesystem.clear(MessageCategories.VERIFYERROR);</span>
+<span class="fc" id="L49">		this.messagesystem.clear(MessageCategories.MISC);</span>
 		try {
-<span class="fc" id="L49">			this.ast = this.parser.parseProgram(source);</span>
-<span class="nc" id="L50">		} catch (RecognitionException re) {</span>
-<span class="nc" id="L51">			this.messagesystem.addMessage(MessageCategories.ERROR, 0, re.getMessage());</span>
-<span class="nc" id="L52">		} catch(NullPointerException npe) {</span>
-<span class="nc" id="L53">			npe.printStackTrace();</span>
-<span class="nc" id="L54">			this.messagesystem.addMessage(MessageCategories.ERROR, -1, &quot;AST creation not possible!&quot;);</span>
-<span class="nc" id="L55">		} catch(IllegalTypeException ite) {</span>
-<span class="nc" id="L56">			this.messagesystem.addMessage(MessageCategories.ERROR, ite.getErrorPosition().getLine(), ite.getMessage());</span>
-<span class="nc" id="L57">		} catch(FunctionCallNotAllowedException fce) {</span>
-<span class="nc" id="L58">			this.messagesystem.addMessage(MessageCategories.ERROR, fce.getErrorPosition().getLine(), fce.getMessage());</span>
+<span class="fc" id="L51">			this.ast = this.parser.parseProgram(source);</span>
+<span class="nc" id="L52">		} catch (RecognitionException re) {</span>
+<span class="nc" id="L53">			this.messagesystem.addMessage(MessageCategories.ERROR, 0, re.getMessage());</span>
+<span class="fc" id="L54">		} catch(NullPointerException npe) {</span>
+<span class="fc" id="L55">			npe.printStackTrace();</span>
+<span class="fc" id="L56">			this.messagesystem.addMessage(MessageCategories.ERROR, -1, &quot;AST creation not possible!&quot;);</span>
+<span class="fc" id="L57">		} catch(IllegalTypeException ite) {</span>
+<span class="fc" id="L58">			this.messagesystem.addMessage(MessageCategories.ERROR, ite.getErrorPosition().getLine(), ite.getMessage());</span>
+<span class="nc" id="L59">		} catch(FunctionCallNotAllowedException fce) {</span>
+<span class="nc" id="L60">			this.messagesystem.addMessage(MessageCategories.ERROR, fce.getErrorPosition().getLine(), fce.getMessage());</span>
 		}
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		for(String error : parser.getErrors()) {</span>
-<span class="fc" id="L61">			String[] parsedError = parseParserError(error);</span>
-<span class="fc" id="L62">			this.messagesystem.addMessage(MessageCategories.ERROR, Integer.parseInt(parsedError[0]), parsedError[1]);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for(String error : parser.getErrors()) {</span>
+<span class="fc" id="L63">			String[] parsedError = parseParserError(error);</span>
+<span class="fc" id="L64">			this.messagesystem.addMessage(MessageCategories.ERROR, Integer.parseInt(parsedError[0]), parsedError[1]);</span>
 		}
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L66">	}</span>
 	
 	public void run(ArrayList&lt;StatementBreakpoint&gt; sbreakpoints, 
 			ArrayList&lt;GlobalBreakpoint&gt; gbreakpoints) {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (this.ast == null) {</span>
-<span class="nc" id="L69">			return;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (this.ast == null) {</span>
+<span class="nc" id="L71">			return;</span>
 		}
-<span class="fc" id="L71">		boolean finished = false;</span>
-<span class="fc" id="L72">		boolean success = true;</span>
-<span class="pc bpc" id="L73" title="2 of 6 branches missed.">		while (!paused &amp;&amp; !finished &amp;&amp; success) {</span>
-<span class="fc bfc" id="L74" title="All 4 branches covered.">			if (this.execution != null &amp;&amp; this.execution.getCurrentState().getCurrentStatement() == null) {</span>
-<span class="fc" id="L75">				finished = true;</span>
-<span class="fc" id="L76">				break;</span>
+<span class="fc" id="L73">		boolean finished = false;</span>
+<span class="fc" id="L74">		boolean success = true;</span>
+<span class="pc bpc" id="L75" title="1 of 6 branches missed.">		while (!paused &amp;&amp; !finished &amp;&amp; success) {</span>
+<span class="fc bfc" id="L76" title="All 4 branches covered.">			if (this.execution != null &amp;&amp; this.execution.getCurrentState().getCurrentStatement() == null) {</span>
+<span class="fc" id="L77">				finished = true;</span>
+<span class="fc" id="L78">				break;</span>
 			}
-<span class="fc" id="L78">			success = this.singleStep(sbreakpoints, gbreakpoints);</span>
+<span class="fc" id="L80">			success = this.singleStep(sbreakpoints, gbreakpoints);</span>
 			try {
-<span class="fc bfc" id="L80" title="All 4 branches covered.">				if (this.execution != null &amp;&amp; this.execution.getCurrentState().getCurrentStatement() != null</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">						&amp;&amp; this.execution.checkBreakpoints() != null) {</span>
-<span class="nc" id="L82">					paused = true;</span>
+<span class="fc bfc" id="L82" title="All 4 branches covered.">				if (this.execution != null &amp;&amp; this.execution.getCurrentState().getCurrentStatement() != null</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">						&amp;&amp; this.execution.checkBreakpoints() != null) {</span>
+<span class="fc" id="L84">					paused = true;</span>
 				}
 			}
-<span class="nc" id="L85">			catch (FunctionCallNotAllowedException ignored) {</span>
+<span class="nc" id="L87">			catch (FunctionCallNotAllowedException ignored) {</span>
 			}
 		}
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L90">	}</span>
 	
 	public boolean singleStep(ArrayList&lt;StatementBreakpoint&gt; sbreakpoints, 
 			ArrayList&lt;GlobalBreakpoint&gt; gbreakpoints) {
-<span class="fc" id="L92">		boolean success = false;</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (this.ast == null) {</span>
-<span class="nc" id="L94">			return false;</span>
+<span class="fc" id="L94">		boolean success = false;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (this.ast == null) {</span>
+<span class="nc" id="L96">			return false;</span>
 		}
 		try {
-<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (this.execution == null) {</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">				if (sbreakpoints == null) sbreakpoints = new ArrayList&lt;StatementBreakpoint&gt;();</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">				if (gbreakpoints == null) gbreakpoints = new ArrayList&lt;GlobalBreakpoint&gt;();</span>
-<span class="fc" id="L100">				this.execution = new ProgramExecution(this.ast, this.interpreter, </span>
-<span class="fc" id="L101">						sbreakpoints, gbreakpoints, this.parameterValues);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			if (this.execution == null) {</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">				if (sbreakpoints == null) sbreakpoints = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">				if (gbreakpoints == null) gbreakpoints = new ArrayList&lt;GlobalBreakpoint&gt;();</span>
+<span class="fc" id="L102">				this.execution = new ProgramExecution(this.ast, this.interpreter, </span>
+<span class="fc" id="L103">						sbreakpoints, gbreakpoints, this.parameterValues);</span>
 			}
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (this.execution.getCurrentState().getCurrentStatement() != null) {</span>
-<span class="fc" id="L104">				this.interpreter.step(this.execution.getCurrentState());</span>
-<span class="fc" id="L105">				success = true;</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (this.execution.getCurrentState().getCurrentStatement() != null) {</span>
+<span class="fc" id="L106">				this.interpreter.step(this.execution.getCurrentState());</span>
+<span class="fc" id="L107">				success = true;</span>
 			}
 		}
-<span class="fc" id="L108">		catch (AssertionFailureException e) {</span>
-<span class="fc" id="L109">			this.assertionFailureMessage = new String[2];</span>
-<span class="fc" id="L110">			success = false;</span>
-<span class="fc" id="L111">			this.assertionFailureMessage[0] = &quot;&quot; + e.getPosition().getLine();</span>
-<span class="fc" id="L112">			this.assertionFailureMessage[1] = e.getMessage();</span>
-<span class="fc" id="L113">			this.destroyProgramExecution();</span>
+<span class="fc" id="L110">		catch (AssertionFailureException e) {</span>
+<span class="fc" id="L111">			this.assertionFailureMessage = new String[2];</span>
+<span class="fc" id="L112">			success = false;</span>
+<span class="fc" id="L113">			this.assertionFailureMessage[0] = &quot;&quot; + e.getPosition().getLine();</span>
+<span class="fc" id="L114">			this.assertionFailureMessage[1] = e.getMessage();</span>
+<span class="fc" id="L115">			this.destroyProgramExecution();</span>
 	    }
-<span class="fc" id="L115">		return success;</span>
+<span class="fc" id="L117">		return success;</span>
 	}
 	
 	public void verify(String source) {
-<span class="nc" id="L119">        this.messagesystem.clear(MessageCategories.VERIFYERROR);</span>
-<span class="nc" id="L120">		this.parse(source);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if(this.ast == null) {</span>
-<span class="nc" id="L122">			return;</span>
+<span class="fc" id="L121">		this.messagesystem.clear(MessageCategories.ERROR);</span>
+<span class="fc" id="L122">		this.messagesystem.clear(MessageCategories.VERIFYERROR);</span>
+<span class="fc" id="L123">		this.messagesystem.clear(MessageCategories.MISC);</span>
+<span class="fc" id="L124">		this.parse(source);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if(this.ast == null) {</span>
+<span class="fc" id="L126">			return;</span>
         }
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {</span>
-<span class="nc" id="L125">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, </span>
-<span class="nc" id="L126">					&quot;Please specify a path to the verifier in the settings.&quot;);</span>
-<span class="nc" id="L127">			return;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if(!new File(Settings.getInstance().getVerifierPath()).exists()) {</span>
+<span class="nc" id="L129">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, </span>
+<span class="nc" id="L130">					&quot;Please specify a path to the verifier in the settings.&quot;);</span>
+<span class="nc" id="L131">			return;</span>
 		}
-<span class="nc" id="L129">		VerifierInterface verifier = new VerifierInterface(new Z3(</span>
-<span class="nc" id="L130">				Settings.getInstance().getVerifierPath() + &quot; ${FILE} -m&quot;</span>
+<span class="fc" id="L133">		VerifierInterface verifier = new VerifierInterface(new Z3(</span>
+<span class="fc" id="L134">				Settings.getInstance().getVerifierPath() + &quot; ${FILE} -m&quot;</span>
 				));
-<span class="nc" id="L132">		LinkedList&lt;Pair&lt;Boolean, String&gt;&gt; result = new LinkedList&lt;Pair&lt;Boolean, String&gt;&gt;();</span>
-<span class="nc" id="L133">        LinkedList&lt;Pair&lt;KindOfProgram, Position&gt;&gt; descriptions</span>
-<span class="nc" id="L134">                = new LinkedList&lt;Pair&lt;KindOfProgram, Position&gt;&gt;();</span>
+<span class="fc" id="L136">		LinkedList&lt;Pair&lt;Boolean, String&gt;&gt; result = new LinkedList&lt;Pair&lt;Boolean, String&gt;&gt;();</span>
+<span class="fc" id="L137">        LinkedList&lt;Pair&lt;KindOfProgram, Position&gt;&gt; descriptions</span>
+<span class="fc" id="L138">                = new LinkedList&lt;Pair&lt;KindOfProgram, Position&gt;&gt;();</span>
 		try {
-<span class="nc" id="L136">			result = verifier.verify(this.ast);</span>
-<span class="nc" id="L137">            descriptions = verifier.getDescriptions();</span>
-<span class="nc" id="L138">		} catch (IOException e) {</span>
-<span class="nc" id="L139">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, &quot;Please insert a correct path under Edit-&gt;Settings!&quot;);</span>
-<span class="nc" id="L140">		} catch (InterruptedException e) {</span>
-<span class="nc" id="L141">			e.printStackTrace();</span>
-<span class="nc" id="L142">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, e.getMessage());</span>
-<span class="nc" id="L143">		} catch (RecognitionException e) {</span>
-<span class="nc" id="L144">			e.printStackTrace();</span>
-<span class="nc" id="L145">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1 , e.getMessage());</span>
-<span class="nc" id="L146">		} catch(NullPointerException e) {</span>
-<span class="nc" id="L147">			e.printStackTrace();</span>
-<span class="nc" id="L148">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, &quot;Validate failed!&quot;);</span>
+<span class="fc" id="L140">			result = verifier.verify(this.ast);</span>
+<span class="fc" id="L141">            descriptions = verifier.getDescriptions();</span>
+<span class="nc" id="L142">		} catch (IOException e) {</span>
+<span class="nc" id="L143">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, &quot;Please insert a correct path under Edit-&gt;Settings!&quot;);</span>
+<span class="nc" id="L144">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L145">			e.printStackTrace();</span>
+<span class="nc" id="L146">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, e.getMessage());</span>
+<span class="nc" id="L147">		} catch (RecognitionException e) {</span>
+<span class="nc" id="L148">			e.printStackTrace();</span>
+<span class="nc" id="L149">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1 , e.getMessage());</span>
+<span class="nc" id="L150">		} catch(NullPointerException e) {</span>
+<span class="nc" id="L151">			e.printStackTrace();</span>
+<span class="nc" id="L152">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, -1, &quot;Validate failed!&quot;);</span>
 		}
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		for(int i = 0; i &lt; result.size(); i++) {</span>
-<span class="nc" id="L151">            Pair&lt;Boolean, String&gt; entry = result.get(i);</span>
-<span class="nc" id="L152">            Pair&lt;KindOfProgram, Position&gt; description = descriptions.get(i);</span>
-<span class="nc" id="L153">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0,</span>
-<span class="nc" id="L154">					  entry.getValue1().toString() + &quot;; &quot; + entry.getValue2(),</span>
-<span class="nc" id="L155">                    description.getValue1().toString() + &quot;, line &quot; +</span>
-<span class="nc" id="L156">                        description.getValue2().getLine());</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for(int i = 0; i &lt; result.size(); i++) {</span>
+<span class="fc" id="L155">            Pair&lt;Boolean, String&gt; entry = result.get(i);</span>
+<span class="fc" id="L156">            Pair&lt;KindOfProgram, Position&gt; description = descriptions.get(i);</span>
+<span class="fc" id="L157">			this.messagesystem.addMessage(MessageCategories.VERIFYERROR, 0,</span>
+<span class="fc" id="L158">					  entry.getValue1().toString() + &quot;; &quot; + entry.getValue2(),</span>
+<span class="fc" id="L159">                    description.getValue1().toString() + &quot;, line &quot; +</span>
+<span class="fc" id="L160">                        description.getValue2().getLine());</span>
 		}
-<span class="nc" id="L158">	}</span>
+<span class="fc" id="L162">	}</span>
 	
 	private String[] parseParserError(String error) {
-<span class="fc" id="L161">		String[] parsedError = new String[2];</span>
-<span class="fc" id="L162">		Pattern p = Pattern.compile(&quot;^line (\\d+):(\\d+) (.*)$&quot;);</span>
-<span class="fc" id="L163">		Matcher m = p.matcher(error); </span>
-<span class="fc" id="L164">		boolean isvalid = m.matches();</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if(!isvalid) {</span>
-<span class="nc" id="L166">			System.out.println(&quot;ERROR&quot;);</span>
-<span class="nc" id="L167">			return new String[]{&quot;-1&quot;, &quot;ERROR&quot;};</span>
+<span class="fc" id="L165">		String[] parsedError = new String[2];</span>
+<span class="fc" id="L166">		Pattern p = Pattern.compile(&quot;^line (\\d+):(\\d+) (.*)$&quot;);</span>
+<span class="fc" id="L167">		Matcher m = p.matcher(error); </span>
+<span class="fc" id="L168">		boolean isvalid = m.matches();</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if(!isvalid) {</span>
+<span class="nc" id="L170">			System.out.println(&quot;ERROR&quot;);</span>
+<span class="nc" id="L171">			return new String[]{&quot;-1&quot;, &quot;ERROR&quot;};</span>
 		}
-<span class="fc" id="L169">		parsedError[0] = m.group(1);</span>
-<span class="fc" id="L170">		parsedError[1] = m.group(3);</span>
-<span class="fc" id="L171">		return parsedError;</span>
+<span class="fc" id="L173">		parsedError[0] = m.group(1);</span>
+<span class="fc" id="L174">		parsedError[1] = m.group(3);</span>
+<span class="fc" id="L175">		return parsedError;</span>
 	}
 	
 	public void printAssertionFailureMessage() {
 		int position;
 		try {
-<span class="nc" id="L177">			position = Integer.parseInt(this.assertionFailureMessage[0]);</span>
+<span class="fc" id="L181">			position = Integer.parseInt(this.assertionFailureMessage[0]);</span>
 		}
-<span class="nc" id="L179">		catch (NumberFormatException e) {</span>
-<span class="nc" id="L180">			position = 0;</span>
+<span class="nc" id="L183">		catch (NumberFormatException e) {</span>
+<span class="nc" id="L184">			position = 0;</span>
 		}
-<span class="nc" id="L182">		this.messagesystem.addMessage(MessageCategories.ERROR, position, </span>
-<span class="nc" id="L183">				this.assertionFailureMessage[1]);</span>
-<span class="nc" id="L184">		this.assertionFailureMessage = null;</span>
-<span class="nc" id="L185">	}</span>
-	
-	public void clearAssertionFailureMessage() {
+<span class="fc" id="L186">		this.messagesystem.addMessage(MessageCategories.ERROR, position, </span>
+<span class="fc" id="L187">				this.assertionFailureMessage[1]);</span>
 <span class="fc" id="L188">		this.assertionFailureMessage = null;</span>
 <span class="fc" id="L189">	}</span>
 	
-	public void addSuccessMessage(String msg) {
-<span class="nc" id="L192">		this.messagesystem.addMessage(MessageCategories.ERROR, 0, msg);</span>
-<span class="nc" id="L193">	}</span>
+	public void clearAssertionFailureMessage() {
+<span class="fc" id="L192">		this.assertionFailureMessage = null;</span>
+<span class="fc" id="L193">	}</span>
 	
-	public void destroyProgramExecution() {
-<span class="fc" id="L196">		this.execution = null;</span>
+	public void addSuccessMessage(String msg) {
+<span class="fc" id="L196">		this.messagesystem.addMessage(MessageCategories.ERROR, 0, msg);</span>
 <span class="fc" id="L197">	}</span>
 	
-	public void setParameterValues(String[] values) {
-<span class="fc" id="L200">		this.parameterValues = values;</span>
+	public void destroyProgramExecution() {
+<span class="fc" id="L200">		this.execution = null;</span>
 <span class="fc" id="L201">	}</span>
+	
+	public void setParameterValues(String[] values) {
+<span class="fc" id="L204">		this.parameterValues = values;</span>
+<span class="fc" id="L205">	}</span>
 
 	public void setAST(Program ast) {
-<span class="fc" id="L204">		this.ast = ast;</span>
-<span class="fc" id="L205">	}</span>
+<span class="fc" id="L208">		this.ast = ast;</span>
+<span class="fc" id="L209">	}</span>
 	
 	public void setPaused(boolean paused) {
-<span class="nc" id="L208">		this.paused = paused;</span>
-<span class="nc" id="L209">	}</span>
+<span class="fc" id="L212">		this.paused = paused;</span>
+<span class="fc" id="L213">	}</span>
 	
 	public ProgramExecution getProgramExecution() {
-<span class="fc" id="L212">		return this.execution;</span>
+<span class="fc" id="L216">		return this.execution;</span>
 	}
 	
 	public String[] getParameterValues() {
-<span class="nc" id="L216">		return this.parameterValues;</span>
+<span class="nc" id="L220">		return this.parameterValues;</span>
 	}
 	
 	public MessageSystem getMessageSystem() {
-<span class="nc" id="L220">		return this.messagesystem;</span>
+<span class="nc" id="L224">		return this.messagesystem;</span>
 	}
 	
 	public String[] getAssertionFailureMessage() {
-<span class="fc" id="L224">		return this.assertionFailureMessage;</span>
+<span class="fc" id="L228">		return this.assertionFailureMessage;</span>
 	}
 	
 	public Program getAST() {
-<span class="fc" id="L228">		return this.ast;</span>
+<span class="fc" id="L232">		return this.ast;</span>
 	}
 	
 	public ParserInterface getParserInterface() {
-<span class="fc" id="L232">		return this.parser;</span>
+<span class="fc" id="L236">		return this.parser;</span>
 	}
 	
 	public ArrayList&lt;GlobalBreakpoint&gt; getGlobalBreakpoints() {
-<span class="fc" id="L236">		return this.globalBreakpoints;</span>
+<span class="fc" id="L240">		return this.globalBreakpoints;</span>
 	}
 	
 	public boolean getPaused() {
-<span class="nc" id="L240">		return this.paused;</span>
+<span class="fc" id="L244">		return this.paused;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

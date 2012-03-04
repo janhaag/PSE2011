@@ -1,0 +1,21 @@
+int foo (int a) {
+	assert a < 0;
+	return -a;
+}
+
+main(int a, int b) {
+	assert a < 5;
+	a = foo(a);
+	if (a == -3) {
+		assert b > 0;
+	}
+	else {
+		assert b > a;
+	}
+	while (a < b) {
+		assert b != a;
+		assert exists x(0, 10) x == b;
+		assert forall x(-10, 0) x <= a;
+		b = b + 1;
+	}
+} 

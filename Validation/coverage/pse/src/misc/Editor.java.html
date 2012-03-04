@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Editor.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (29.02.2012 22:39:07)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Editor.java</span></div><h1>Editor.java</h1><pre class="source lang-java linenums">package misc;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Editor.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Editor.java</span></div><h1>Editor.java</h1><pre class="source lang-java linenums">package misc;
 
 import interpreter.StatementBreakpoint;
 
@@ -68,46 +68,49 @@ public class Editor {
 	}
 	public void setSource(String source) {
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		if(!this.undoMemento.empty()) {</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			if(!this.undoMemento.peek().getSource().equals(source)) {</span>
+			//if(!this.undoMemento.peek().getSource().equals(source)) {
 <span class="fc" id="L72">				this.undoMemento.push(this.createMemento());</span>
-			}
+			//}
 		} else {
 <span class="fc" id="L75">			this.undoMemento.push(this.createMemento());</span>
 		}
 <span class="fc" id="L77">		this.source = source;</span>
 <span class="fc" id="L78">		findKeywords(source);</span>
-<span class="fc" id="L79">		this.editorview.updateView();</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if(this.editorview != null)</span>
+<span class="fc" id="L80">			this.editorview.updateView();</span>
+<span class="fc" id="L81">	}</span>
 	public void undo() {
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if(!this.undoMemento.empty()) {</span>
-<span class="fc" id="L83">			EditorMemento memento = this.undoMemento.pop();</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			if(!this.redoMemento.empty()) {</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">				if(!this.redoMemento.peek().equals(this.createMemento()))</span>
-<span class="nc" id="L86">					this.redoMemento.push(this.createMemento());</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if(!this.undoMemento.empty()) {</span>
+<span class="fc" id="L84">			EditorMemento memento = this.undoMemento.pop();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if(!this.redoMemento.empty()) {</span>
+				//if(!this.redoMemento.peek().equals(this.createMemento()))
+<span class="fc" id="L87">					this.redoMemento.push(this.createMemento());</span>
 			} else {
-<span class="fc" id="L88">				this.redoMemento.push(this.createMemento());</span>
+<span class="fc" id="L89">				this.redoMemento.push(this.createMemento());</span>
 			}
-<span class="fc" id="L90">			this.source = memento.getSource();</span>
-<span class="fc" id="L91">			findKeywords(source);</span>
-<span class="fc" id="L92">			this.editorview.updateView();</span>
+<span class="fc" id="L91">			this.source = memento.getSource();</span>
+<span class="fc" id="L92">			findKeywords(source);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if(this.editorview != null)</span>
+<span class="fc" id="L94">				this.editorview.updateView();</span>
 		}
-<span class="fc" id="L94">	}</span>
+<span class="fc" id="L96">	}</span>
 	public void redo() {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		if(!this.redoMemento.empty()) {</span>
-<span class="fc" id="L97">			EditorMemento memento = this.redoMemento.pop();</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			if(!this.undoMemento.empty()) {</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">				if(!this.undoMemento.peek().equals(this.createMemento()))</span>
-<span class="fc" id="L100">					this.undoMemento.push(this.createMemento());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if(!this.redoMemento.empty()) {</span>
+<span class="fc" id="L99">			EditorMemento memento = this.redoMemento.pop();</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if(!this.undoMemento.empty()) {</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">				if(!this.undoMemento.peek().equals(this.createMemento()))</span>
+<span class="fc" id="L102">					this.undoMemento.push(this.createMemento());</span>
 			} else {
-<span class="nc" id="L102">				this.undoMemento.push(this.createMemento());</span>
+<span class="nc" id="L104">				this.undoMemento.push(this.createMemento());</span>
 			}
-<span class="fc" id="L104">			this.source = memento.getSource();</span>
-<span class="fc" id="L105">			findKeywords(source);</span>
-<span class="fc" id="L106">			this.editorview.updateView();</span>
+<span class="fc" id="L106">			this.source = memento.getSource();</span>
+<span class="fc" id="L107">			findKeywords(source);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if(this.editorview != null)</span>
+<span class="fc" id="L109">				this.editorview.updateView();</span>
 		}
-<span class="fc" id="L108">	}</span>
+<span class="fc" id="L111">	}</span>
 	private EditorMemento createMemento() {
-<span class="fc" id="L110">		return new EditorMemento(this.source);</span>
+<span class="fc" id="L113">		return new EditorMemento(this.source);</span>
 	}
 	/**
 	 * Find the keywords in the given source and add them to the list of keywords
@@ -116,45 +119,48 @@ public class Editor {
 	 * @param source the text which should be searched
 	 */
 	private void findKeywords(String source) {
-<span class="fc" id="L119">		this.colorArray.clear();</span>
-<span class="fc" id="L120">		int position = 0;</span>
-<span class="fc" id="L121">		String word = &quot;&quot;;</span>
-<span class="fc" id="L122">		ArrayList &lt;Keyword&gt; tmplist = new ArrayList&lt;Keyword&gt;();</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for(int i = 0; i &lt; source.length(); i++) {</span>
-<span class="fc" id="L124">			char currentchar = source.charAt(i);</span>
-<span class="pc bpc" id="L125" title="2 of 8 branches missed.">			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n' || currentchar == '\t') {</span>
-<span class="fc" id="L126">				String[] keywords = word.split(&quot;\\W&quot;);</span>
-<span class="fc" id="L127">				int positionplus = 0;</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">				for(String subword : keywords) {</span>
-<span class="fc" id="L129">					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);</span>
-<span class="fc" id="L130">					positionplus += (subword.length() + 1);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">					if(keyword != null) {</span>
-<span class="fc" id="L132">						this.colorArray.add(keyword);</span>
+<span class="fc" id="L122">		this.colorArray.clear();</span>
+<span class="fc" id="L123">		int position = 0;</span>
+<span class="fc" id="L124">		String word = &quot;&quot;;</span>
+<span class="fc" id="L125">		ArrayList &lt;Keyword&gt; tmplist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for(int i = 0; i &lt; source.length(); i++) {</span>
+<span class="fc" id="L127">			char currentchar = source.charAt(i);</span>
+<span class="fc bfc" id="L128" title="All 8 branches covered.">			if(currentchar == (' ') || currentchar == ('\r') || currentchar == '\n' || currentchar == '\t') {</span>
+<span class="fc" id="L129">				String[] keywords = word.split(&quot;\\W&quot;);</span>
+<span class="fc" id="L130">				int positionplus = 0;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">				for(String subword : keywords) {</span>
+<span class="fc" id="L132">					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);</span>
+<span class="fc" id="L133">					positionplus += (subword.length() + 1);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">					if(keyword != null) {</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">						if(!colorArray.contains(keyword))</span>
+<span class="nc" id="L136">							this.colorArray.add(keyword);</span>
 					}
 				}
-<span class="fc" id="L135">				word = &quot;&quot;;</span>
-<span class="fc" id="L136">				position = i+1;</span>
-<span class="fc" id="L137">				tmplist.clear();</span>
+<span class="fc" id="L139">				word = &quot;&quot;;</span>
+<span class="fc" id="L140">				position = i+1;</span>
+<span class="fc" id="L141">				tmplist.clear();</span>
 			} else {
-<span class="fc" id="L139">				this.colorArray.removeAll(tmplist);</span>
-<span class="fc" id="L140">				word += source.charAt(i);</span>
-<span class="fc" id="L141">				String[] keywords = word.split(&quot;\\W&quot;);</span>
-<span class="fc" id="L142">				int positionplus = 0;</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">				for(String subword : keywords) {</span>
-<span class="fc" id="L144">					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);</span>
-<span class="fc" id="L145">					positionplus += (subword.length() + 1);</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">					if(keyword != null) {</span>
-<span class="fc" id="L147">						this.colorArray.add(keyword);</span>
-<span class="fc" id="L148">						tmplist.add(keyword);</span>
+<span class="fc" id="L143">				this.colorArray.removeAll(tmplist);</span>
+<span class="fc" id="L144">				word += source.charAt(i);</span>
+<span class="fc" id="L145">				String[] keywords = word.split(&quot;\\W&quot;);</span>
+<span class="fc" id="L146">				int positionplus = 0;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">				for(String subword : keywords) {</span>
+<span class="fc" id="L148">					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);</span>
+<span class="fc" id="L149">					positionplus += (subword.length() + 1);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">					if(keyword != null) {</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">						if(!colorArray.contains(keyword))</span>
+<span class="fc" id="L152">							this.colorArray.add(keyword);</span>
+<span class="fc" id="L153">						tmplist.add(keyword);</span>
 					}
 				}
 			}
 		}
-<span class="fc" id="L153">		Keyword keyword = this.addKeyWordColor(position, word);</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if(keyword != null) {</span>
-<span class="fc" id="L155">			this.colorArray.add(keyword);</span>
+<span class="fc" id="L158">		Keyword keyword = this.addKeyWordColor(position, word);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if(keyword != null) {</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">			if(!colorArray.contains(keyword))</span>
+<span class="nc" id="L161">				this.colorArray.add(keyword);</span>
 		}
-<span class="fc" id="L157">	}</span>
+<span class="fc" id="L163">	}</span>
 	/**
 	 * Checks if the given &lt;code&gt;String&lt;/code&gt; is a &quot;keyword&quot; and in case of success
 	 * returns an instance of {@link Keyword}.
@@ -166,64 +172,64 @@ public class Editor {
 	 * @return an instance of {@link Keyword} or &lt;code&gt;null&lt;/code&gt;
 	 */
 	private Keyword addKeyWordColor(int position, String keyword) {
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if(keyword.equals(&quot;if&quot;)) {</span>
-<span class="nc" id="L170">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;while&quot;)) {</span>
-<span class="nc" id="L172">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;true&quot;)) {</span>
-<span class="nc" id="L174">			return new Keyword(position,keyword.length(),&quot;00FF00&quot;);</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;false&quot;)) {</span>
-<span class="nc" id="L176">			return new Keyword(position,keyword.length(),&quot;FF0000&quot;);</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		} else if(keyword.equals(&quot;int&quot;)) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		if(keyword.equals(&quot;if&quot;)) {</span>
+<span class="fc" id="L176">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		} else if(keyword.equals(&quot;while&quot;)) {</span>
 <span class="fc" id="L178">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;bool&quot;)) {</span>
-<span class="nc" id="L180">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        } else if(keyword.equals(&quot;array&quot;)) {</span>
-<span class="nc" id="L182">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;else&quot;)) {</span>
-<span class="nc" id="L184">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;return&quot;)) {</span>
-<span class="nc" id="L186">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;assert&quot;)) {</span>
-<span class="nc" id="L188">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;assume&quot;)) {</span>
-<span class="nc" id="L190">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;axiom&quot;)) {</span>
-<span class="nc" id="L192">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		} else if(keyword.equals(&quot;ensure&quot;)) {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		} else if(keyword.equals(&quot;true&quot;)) {</span>
+<span class="fc" id="L180">			return new Keyword(position,keyword.length(),&quot;00FF00&quot;);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		} else if(keyword.equals(&quot;false&quot;)) {</span>
+<span class="fc" id="L182">			return new Keyword(position,keyword.length(),&quot;FF0000&quot;);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		} else if(keyword.equals(&quot;int&quot;)) {</span>
+<span class="fc" id="L184">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		} else if(keyword.equals(&quot;bool&quot;)) {</span>
+<span class="fc" id="L186">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        } else if(keyword.equals(&quot;array&quot;)) {</span>
+<span class="fc" id="L188">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		} else if(keyword.equals(&quot;else&quot;)) {</span>
+<span class="fc" id="L190">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		} else if(keyword.equals(&quot;return&quot;)) {</span>
+<span class="fc" id="L192">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		} else if(keyword.equals(&quot;assert&quot;)) {</span>
 <span class="fc" id="L194">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;invariant&quot;)) {</span>
-<span class="nc" id="L196">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;forall&quot;)) {</span>
-<span class="nc" id="L198">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		} else if(keyword.equals(&quot;exists&quot;)) {</span>
-<span class="nc" id="L200">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		}else if(keyword.equals(&quot;main&quot;)) {</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		} else if(keyword.equals(&quot;assume&quot;)) {</span>
+<span class="fc" id="L196">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		} else if(keyword.equals(&quot;axiom&quot;)) {</span>
+<span class="fc" id="L198">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		} else if(keyword.equals(&quot;ensure&quot;)) {</span>
+<span class="fc" id="L200">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		} else if(keyword.equals(&quot;invariant&quot;)) {</span>
 <span class="fc" id="L202">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		} else if(keyword.matches(&quot;\\d+&quot;)) {</span>
-<span class="fc" id="L204">			return new Keyword(position,keyword.length(),&quot;FF8000&quot;);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		} else if(keyword.equals(&quot;forall&quot;)) {</span>
+<span class="fc" id="L204">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		} else if(keyword.equals(&quot;exists&quot;)) {</span>
+<span class="fc" id="L206">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		}else if(keyword.equals(&quot;main&quot;)) {</span>
+<span class="fc" id="L208">			return new Keyword(position,keyword.length(),&quot;0000FF&quot;);</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		} else if(keyword.matches(&quot;\\d+&quot;)) {</span>
+<span class="fc" id="L210">			return new Keyword(position,keyword.length(),&quot;FF8000&quot;);</span>
 		}  else {
-<span class="fc" id="L206">			return null;</span>
+<span class="fc" id="L212">			return null;</span>
 		}
 	}
 	
 	public void addBreakpoint(int line) {
-<span class="nc" id="L211">		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);</span>
-<span class="nc" id="L212">		this.statementBreakpoints.add(newStatementBreakpoint);</span>
-<span class="nc" id="L213">	}</span>
+<span class="fc" id="L217">		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);</span>
+<span class="fc" id="L218">		this.statementBreakpoints.add(newStatementBreakpoint);</span>
+<span class="fc" id="L219">	}</span>
 	
 	public int removeBreakpoint(int line) {
-<span class="nc bnc" id="L216" title="All 2 branches missed.">		for (int i = 0; i &lt; this.statementBreakpoints.size(); i++) {</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (this.statementBreakpoints.get(i).getLine() == line) {</span>
-<span class="nc" id="L218">				this.statementBreakpoints.remove(i);</span>
-<span class="nc" id="L219">				return 1;</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		for (int i = 0; i &lt; this.statementBreakpoints.size(); i++) {</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">			if (this.statementBreakpoints.get(i).getLine() == line) {</span>
+<span class="fc" id="L224">				this.statementBreakpoints.remove(i);</span>
+<span class="fc" id="L225">				return 1;</span>
 			}
 		}
-<span class="nc" id="L222">		return 0;</span>
+<span class="fc" id="L228">		return 0;</span>
 	}
 	
 	public ArrayList&lt;StatementBreakpoint&gt; getStatementBreakpoints() {
-<span class="fc" id="L226">		return this.statementBreakpoints;</span>
+<span class="fc" id="L232">		return this.statementBreakpoints;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (29.02.2012 22:39:07)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

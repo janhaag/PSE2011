@@ -1,0 +1,20 @@
+int foo(int a) { 
+	return foo2(a/2);
+}
+
+#int foo(int a) { 
+	#return foo2(a/2);
+#}
+
+int foo2(int a) {
+	return a + 10;
+}
+
+int foo3() {
+	return foo2(foo(2));
+}
+
+main() {
+	int a = foo(2);
+	a = foo3();
+}

@@ -1,0 +1,118 @@
+int foo() {
+	return 42;
+}
+
+int  foo2() {
+	return 41;
+}
+
+bool foo3() {
+	return true;
+}
+
+main() {
+	int a = 2;
+	int b = -5;
+	bool c = true;
+	bool d = false;
+
+	#Parsertests:
+	int i = 10;
+	#i + a;
+	#i - a;
+	#i / a;
+	#i * a;
+	#i % a;
+	#-i;
+	#i == i;
+	#i >= i;
+	#i = i +;
+	#i = i ==;
+	#i = i ++ i;
+	#i = i %% i;
+
+	int x;	
+	#x = true;
+
+	x= a + b;
+	x = b + a;
+	x = a - b;
+	x = b - a;
+	x = a / b;
+	x = b / a;
+	x = a * b;
+	x = b * a;
+	x= a % b;
+	x = b % a;
+	x = - a;
+
+	#x = c + a;
+	#x = c - a;
+	#x = c / a;
+	#x = c * a;
+	#x = c % a;
+
+	#x = c + d;
+	#x = c - d;
+	#x = c * d;
+	#x = c / d;
+	#x = c % d;
+	#x = -c;
+
+	#x = a == b;
+	#x = a != b;
+	#x = a <= b;
+	#x = a < b;
+	#x = a >= b;
+	#x = a > b;
+	#x = a | b;
+	#x = a & b;
+	#x = !a;
+
+	#x = a == c;
+	#x = a != c;
+	#x = a <= c;
+	#x = a < c;
+	#x = a >= c;
+	#x = a > c;
+	#x = a | c;
+	#x = a & c;
+	#x = !c;
+
+	#x = d == c;
+	#x = d != c;
+	#x = d <= c;
+	#x = d < c;
+	#x = d >= c;
+	#x = d > c;
+	#x = d | c;
+	#x = d & c;
+
+	bool y;
+	#y = 5;
+
+	#y= a + b;
+	#y = a - b;
+	#y = a / b;
+	#y = a * b;
+	#y= a % b;
+	#y = - a;
+
+	y = a == b;
+	y = a != b;
+	y = a <= b;
+	y = a < b;
+	y = a >= b;
+	y = a > b;
+
+	#y = a == c;
+	#y = a != c;
+	y = d == c;
+	y = d != c;
+	y = d | c;
+	y = d & c;
+	y = !c;
+
+	y = foo() == foo2();
+	y = foo3();
+}
