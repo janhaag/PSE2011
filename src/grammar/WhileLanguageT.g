@@ -10,11 +10,11 @@ program
         ;
 
 function_declaration
-        : type IDENT '('! parameter_list? ')'! function_body
+        : type IDENT '(' parameter_list? ')' function_body
         ;
 
 main
-        : 'main'^ '('! parameter_list? ')'! main_body
+        : 'main'^ '(' parameter_list? ')' main_body
         ;
 
 parameter_list
@@ -76,7 +76,7 @@ ensure_statement
 
 assignment
         : IDENT '='^ expression ';'!
-        | IDENT ( '['! expression ']'! )+ '='^ expression ';'!
+        | IDENT ( '[' expression ']' )+ '='^ expression ';'!
         ;
 
 variable_declaration
@@ -88,11 +88,11 @@ array_declaration
         ;
 
 array_init
-	: 'array' ( '[' expression ']' )+
+	: 'array'^ ( '['! expression ']'!)+
 	;
 
 if_statement
-        : 'if'^ '('! expression ')'!  if_body ( 'else'^ if_body )?
+        : 'if'^ '('! expression ')'!  if_body ( 'else' if_body )?
         ;
 
 while_statement
