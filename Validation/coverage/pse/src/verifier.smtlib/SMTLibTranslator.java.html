@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SMTLibTranslator.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">verifier.smtlib</a> &gt; <span class="el_source">SMTLibTranslator.java</span></div><h1>SMTLibTranslator.java</h1><pre class="source lang-java linenums">package verifier.smtlib;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SMTLibTranslator.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">verifier.smtlib</a> &gt; <span class="el_source">SMTLibTranslator.java</span></div><h1>SMTLibTranslator.java</h1><pre class="source lang-java linenums">package verifier.smtlib;
 
 import ast.*;
 import misc.Pair;
@@ -82,7 +82,7 @@ import java.util.*;
      * @return list of program descriptions
      */
     public LinkedList&lt;Pair&lt;KindOfProgram, Position&gt;&gt; getDescriptions() {
-<span class="nc" id="L85">        return descriptions;</span>
+<span class="fc" id="L85">        return descriptions;</span>
     }
 
     /**
@@ -278,47 +278,47 @@ import java.util.*;
 
     @Override
     public void visit(Loop loop) {
-<span class="nc" id="L281">        Ensure[] ensures = loop.getPostconditions();</span>
+<span class="fc" id="L281">        Ensure[] ensures = loop.getPostconditions();</span>
         //int depth = upScopeReplacements.size();
         //ensures=&gt;rest
-<span class="nc" id="L284">        LinkedList&lt;S_Expression&gt; program = new LinkedList&lt;S_Expression&gt;();</span>
-<span class="nc" id="L285">        program.add(tempExpr);</span>
-<span class="nc" id="L286">        programs.add(program);</span>
-<span class="nc" id="L287">        descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
-<span class="nc" id="L288">                KindOfProgram.WhileEnsureToRemainingProgram, loop.getPosition()));</span>
+<span class="fc" id="L284">        LinkedList&lt;S_Expression&gt; program = new LinkedList&lt;S_Expression&gt;();</span>
+<span class="fc" id="L285">        program.add(tempExpr);</span>
+<span class="fc" id="L286">        programs.add(program);</span>
+<span class="fc" id="L287">        descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
+<span class="fc" id="L288">                KindOfProgram.WhileEnsureToRemainingProgram, loop.getPosition()));</span>
         //prepareEndedLoop(program);
-<span class="nc bnc" id="L290" title="All 2 branches missed.">        for (Ensure ensure : ensures) {</span>
-<span class="nc" id="L291">            ensure.accept(this);</span>
-<span class="nc" id="L292">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
-<span class="nc" id="L293">                    tempExpr, program.getLast()));</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L291">            ensure.accept(this);</span>
+<span class="fc" id="L292">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
+<span class="fc" id="L293">                    tempExpr, program.getLast()));</span>
         }
-<span class="nc" id="L295">        program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
-<span class="nc" id="L296">                new S_Expression(&quot;not&quot;,</span>
-<span class="nc" id="L297">                        program.getLast())));</span>
+<span class="fc" id="L295">        program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
+<span class="fc" id="L296">                new S_Expression(&quot;not&quot;,</span>
+<span class="fc" id="L297">                        program.getLast())));</span>
         //invariants &amp; !condition =&gt; ensures
-<span class="nc" id="L299">        program = new LinkedList&lt;S_Expression&gt;();</span>
-<span class="nc" id="L300">        programs.add(program);</span>
-<span class="nc" id="L301">        descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
-<span class="nc" id="L302">                KindOfProgram.InvariantAndNotConditionToWhileEnsure, loop.getPosition()));</span>
-<span class="nc" id="L303">        program.add(new Constant(&quot;true&quot;));</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">        for (Ensure ensure : ensures) {</span>
-<span class="nc" id="L305">            ensure.accept(this);</span>
-<span class="nc" id="L306">            program.set(program.size() - 1, new S_Expression(&quot;and&quot;,</span>
-<span class="nc" id="L307">                    tempExpr, program.getLast()));</span>
+<span class="fc" id="L299">        program = new LinkedList&lt;S_Expression&gt;();</span>
+<span class="fc" id="L300">        programs.add(program);</span>
+<span class="fc" id="L301">        descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
+<span class="fc" id="L302">                KindOfProgram.InvariantAndNotConditionToWhileEnsure, loop.getPosition()));</span>
+<span class="fc" id="L303">        program.add(new Constant(&quot;true&quot;));</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L305">            ensure.accept(this);</span>
+<span class="fc" id="L306">            program.set(program.size() - 1, new S_Expression(&quot;and&quot;,</span>
+<span class="fc" id="L307">                    tempExpr, program.getLast()));</span>
         }
-<span class="nc" id="L309">        Invariant[] invariants = loop.getInvariants();</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">        for (Invariant invariant : invariants) {</span>
-<span class="nc" id="L311">            invariant.accept(this);</span>
-<span class="nc" id="L312">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
-<span class="nc" id="L313">                    tempExpr, program.getLast()));</span>
+<span class="fc" id="L309">        Invariant[] invariants = loop.getInvariants();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        for (Invariant invariant : invariants) {</span>
+<span class="fc" id="L311">            invariant.accept(this);</span>
+<span class="fc" id="L312">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
+<span class="fc" id="L313">                    tempExpr, program.getLast()));</span>
         }
-<span class="nc" id="L315">        loop.getCondition().accept(this);</span>
-<span class="nc" id="L316">        program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
-<span class="nc" id="L317">                new S_Expression(&quot;not&quot;,</span>
-<span class="nc" id="L318">                        tempExpr), program.getLast()));</span>
-<span class="nc" id="L319">        program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
-<span class="nc" id="L320">                new S_Expression(&quot;not&quot;,</span>
-<span class="nc" id="L321">                        program.getLast())));</span>
+<span class="fc" id="L315">        loop.getCondition().accept(this);</span>
+<span class="fc" id="L316">        program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
+<span class="fc" id="L317">                new S_Expression(&quot;not&quot;,</span>
+<span class="fc" id="L318">                        tempExpr), program.getLast()));</span>
+<span class="fc" id="L319">        program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
+<span class="fc" id="L320">                new S_Expression(&quot;not&quot;,</span>
+<span class="fc" id="L321">                        program.getLast())));</span>
         //invariants &amp; condition =&gt; invariant
         /*upScopeReplacements = new Stack&lt;HashMap&lt;VarDef, S_Expression&gt;&gt;();
         upScopeExpr = new Stack&lt;S_Expression&gt;();
@@ -326,30 +326,30 @@ import java.util.*;
             upScopeReplacements.add(new HashMap&lt;VarDef, S_Expression&gt;());
             upScopeExpr.add(new Constant(&quot;true&quot;));
         }*/
-<span class="nc" id="L329">        program = new LinkedList&lt;S_Expression&gt;();</span>
-<span class="nc" id="L330">        programs.add(program);</span>
-<span class="nc" id="L331">        descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
-<span class="nc" id="L332">                KindOfProgram.InvariantAndConditionToInvariant, loop.getPosition()));</span>
-<span class="nc" id="L333">        program.add(new Constant(&quot;true&quot;));</span>
-<span class="nc bnc" id="L334" title="All 2 branches missed.">        for (Invariant invariant : invariants) {</span>
-<span class="nc" id="L335">            invariant.accept(this);</span>
-<span class="nc" id="L336">            program.set(program.size() - 1, new S_Expression(&quot;and&quot;,</span>
-<span class="nc" id="L337">                    tempExpr, program.getLast()));</span>
+<span class="fc" id="L329">        program = new LinkedList&lt;S_Expression&gt;();</span>
+<span class="fc" id="L330">        programs.add(program);</span>
+<span class="fc" id="L331">        descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
+<span class="fc" id="L332">                KindOfProgram.InvariantAndConditionToInvariant, loop.getPosition()));</span>
+<span class="fc" id="L333">        program.add(new Constant(&quot;true&quot;));</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">        for (Invariant invariant : invariants) {</span>
+<span class="fc" id="L335">            invariant.accept(this);</span>
+<span class="fc" id="L336">            program.set(program.size() - 1, new S_Expression(&quot;and&quot;,</span>
+<span class="fc" id="L337">                    tempExpr, program.getLast()));</span>
         }
-<span class="nc" id="L339">        tempExpr = program.getLast();</span>
-<span class="nc" id="L340">        loop.getLoopBody().accept(this);</span>
-<span class="nc" id="L341">        program.set(program.size() - 1, tempExpr);</span>
-<span class="nc bnc" id="L342" title="All 2 branches missed.">        for (Invariant invariant : invariants) {</span>
-<span class="nc" id="L343">            invariant.accept(this);</span>
-<span class="nc" id="L344">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
-<span class="nc" id="L345">                    tempExpr, program.getLast()));</span>
+<span class="fc" id="L339">        tempExpr = program.getLast();</span>
+<span class="fc" id="L340">        loop.getLoopBody().accept(this);</span>
+<span class="fc" id="L341">        program.set(program.size() - 1, tempExpr);</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        for (Invariant invariant : invariants) {</span>
+<span class="fc" id="L343">            invariant.accept(this);</span>
+<span class="fc" id="L344">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
+<span class="fc" id="L345">                    tempExpr, program.getLast()));</span>
         }
-<span class="nc" id="L347">        loop.getCondition().accept(this);</span>
-<span class="nc" id="L348">        program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
-<span class="nc" id="L349">                tempExpr, program.getLast()));</span>
-<span class="nc" id="L350">        program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
-<span class="nc" id="L351">                new S_Expression(&quot;not&quot;,</span>
-<span class="nc" id="L352">                        program.getLast())));</span>
+<span class="fc" id="L347">        loop.getCondition().accept(this);</span>
+<span class="fc" id="L348">        program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
+<span class="fc" id="L349">                tempExpr, program.getLast()));</span>
+<span class="fc" id="L350">        program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
+<span class="fc" id="L351">                new S_Expression(&quot;not&quot;,</span>
+<span class="fc" id="L352">                        program.getLast())));</span>
         //pre=&gt;invariants
         /*upScopeReplacements = new Stack&lt;HashMap&lt;VarDef, S_Expression&gt;&gt;();
         upScopeExpr = new Stack&lt;S_Expression&gt;();
@@ -357,16 +357,16 @@ import java.util.*;
             upScopeReplacements.add(new HashMap&lt;VarDef, S_Expression&gt;());
             upScopeExpr.add(new Constant(&quot;true&quot;));
         }*/
-<span class="nc" id="L360">        S_Expression saveTempExpr = new Constant(&quot;true&quot;);</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">        for (Invariant invariant : invariants) {</span>
-<span class="nc" id="L362">            invariant.accept(this);</span>
-<span class="nc" id="L363">            saveTempExpr = new S_Expression(&quot;and&quot;,</span>
-<span class="nc" id="L364">                    tempExpr, saveTempExpr);</span>
+<span class="fc" id="L360">        S_Expression saveTempExpr = new Constant(&quot;true&quot;);</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        for (Invariant invariant : invariants) {</span>
+<span class="fc" id="L362">            invariant.accept(this);</span>
+<span class="fc" id="L363">            saveTempExpr = new S_Expression(&quot;and&quot;,</span>
+<span class="fc" id="L364">                    tempExpr, saveTempExpr);</span>
         }
-<span class="nc" id="L366">        tempExpr = saveTempExpr;</span>
-<span class="nc" id="L367">        change = true;</span>
-<span class="nc" id="L368">        functionsCalled = new ArrayList&lt;FunctionCall&gt;();</span>
-<span class="nc" id="L369">    }</span>
+<span class="fc" id="L366">        tempExpr = saveTempExpr;</span>
+<span class="fc" id="L367">        change = true;</span>
+<span class="fc" id="L368">        functionsCalled = new ArrayList&lt;FunctionCall&gt;();</span>
+<span class="fc" id="L369">    }</span>
 
     @Override
     public void visit(ArrayAssignment arrayAssignment) {
@@ -436,56 +436,56 @@ import java.util.*;
 
     @Override
     public void visit(FunctionCall functionCall) {
-<span class="nc bnc" id="L439" title="All 2 branches missed.">        if (&quot;length&quot;.equals(functionCall.getFunctionIdentifier().getName())) {</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">        if (&quot;length&quot;.equals(functionCall.getFunctionIdentifier().getName())) {</span>
 <span class="nc" id="L440">            tempExpr = new Constant(&quot;5&quot;);</span>
 <span class="nc" id="L441">            return;</span>
         }
-<span class="nc" id="L443">        noOfFuncCall += 1;</span>
-<span class="nc" id="L444">        functionsCalled.add(functionCall);</span>
-<span class="nc" id="L445">        isFunctionCall = true;</span>
-<span class="nc" id="L446">        Statement[] statements = functionCall.getFunction().getFunctionBlock().getStatements();</span>
-<span class="nc" id="L447">        (statements[statements.length - 1]).accept(this);</span>
-<span class="nc" id="L448">        isFunctionCall = false;</span>
-<span class="nc" id="L449">    }</span>
+<span class="fc" id="L443">        noOfFuncCall += 1;</span>
+<span class="fc" id="L444">        functionsCalled.add(functionCall);</span>
+<span class="fc" id="L445">        isFunctionCall = true;</span>
+<span class="fc" id="L446">        Statement[] statements = functionCall.getFunction().getFunctionBlock().getStatements();</span>
+<span class="fc" id="L447">        (statements[statements.length - 1]).accept(this);</span>
+<span class="fc" id="L448">        isFunctionCall = false;</span>
+<span class="fc" id="L449">    }</span>
 
     /**
      * Handles the work needed after a function call.
      * @param functionCall function call that was evaluated
      */
     private void afterFunctionCall(FunctionCall functionCall) {
-<span class="nc" id="L456">        S_Expression saveTempExpr = tempExpr;</span>
-<span class="nc" id="L457">        Ensure[] ensures = functionCall.getFunction().getEnsures();</span>
+<span class="fc" id="L456">        S_Expression saveTempExpr = tempExpr;</span>
+<span class="fc" id="L457">        Ensure[] ensures = functionCall.getFunction().getEnsures();</span>
         //ensures=&gt;rest
-<span class="nc" id="L459">        LinkedList&lt;S_Expression&gt; program = programs.get(programs.size() - 1);</span>
-<span class="nc bnc" id="L460" title="All 2 branches missed.">        for (Ensure ensure : ensures) {</span>
-<span class="nc" id="L461">            isFunctionCall = true;</span>
-<span class="nc" id="L462">            ensure.accept(this);</span>
-<span class="nc" id="L463">            isFunctionCall = false;</span>
-<span class="nc" id="L464">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
-<span class="nc" id="L465">                    tempExpr, program.getLast()));</span>
+<span class="fc" id="L459">        LinkedList&lt;S_Expression&gt; program = programs.get(programs.size() - 1);</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L461">            isFunctionCall = true;</span>
+<span class="fc" id="L462">            ensure.accept(this);</span>
+<span class="fc" id="L463">            isFunctionCall = false;</span>
+<span class="fc" id="L464">            program.set(program.size() - 1, new S_Expression(&quot;=&gt;&quot;,</span>
+<span class="fc" id="L465">                    tempExpr, program.getLast()));</span>
         }
         //pre=&gt;assumptions
-<span class="nc" id="L468">        noOfFuncCall = 0;</span>
-<span class="nc bnc" id="L469" title="All 2 branches missed.">        for (Assumption assumption : functionCall.getFunction().getAssumptions()) {</span>
-<span class="nc" id="L470">            assumption.accept(this);</span>
-<span class="nc" id="L471">            saveTempExpr = new S_Expression(&quot;and&quot;,</span>
-<span class="nc" id="L472">                    tempExpr, saveTempExpr);</span>
+<span class="fc" id="L468">        noOfFuncCall = 0;</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">        for (Assumption assumption : functionCall.getFunction().getAssumptions()) {</span>
+<span class="fc" id="L470">            assumption.accept(this);</span>
+<span class="fc" id="L471">            saveTempExpr = new S_Expression(&quot;and&quot;,</span>
+<span class="fc" id="L472">                    tempExpr, saveTempExpr);</span>
         }
-<span class="nc" id="L474">        FunctionParameter[] parameters = functionCall.getFunction().getParameters();</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">        for (int i = 0; i &lt; functionCall.getParameters().length; i++) {</span>
-<span class="nc" id="L476">            functionCall.getParameters()[i].accept(this);</span>
-<span class="nc" id="L477">            VarDef varDef = new VarDef(parameters[i].getName(),</span>
-<span class="nc" id="L478">                    parameters[i].getType(), 0);</span>
-<span class="nc" id="L479">            saveTempExpr.replace(varDef, tempExpr);</span>
+<span class="fc" id="L474">        FunctionParameter[] parameters = functionCall.getFunction().getParameters();</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        for (int i = 0; i &lt; functionCall.getParameters().length; i++) {</span>
+<span class="fc" id="L476">            functionCall.getParameters()[i].accept(this);</span>
+<span class="fc" id="L477">            VarDef varDef = new VarDef(parameters[i].getName(),</span>
+<span class="fc" id="L478">                    parameters[i].getType(), 0);</span>
+<span class="fc" id="L479">            saveTempExpr.replace(varDef, tempExpr);</span>
         }
-<span class="nc" id="L481">        tempExpr = saveTempExpr;</span>
-<span class="nc" id="L482">    }</span>
+<span class="fc" id="L481">        tempExpr = saveTempExpr;</span>
+<span class="fc" id="L482">    }</span>
 
     @Override
     public void visit(VariableRead variableRead) {
 <span class="fc" id="L486">        String variableName = variableRead.toString();</span>
-<span class="pc bpc" id="L487" title="1 of 2 branches missed.">        if (isFunctionCall) {</span>
-<span class="nc" id="L488">            variableName = variableName + '$' + Integer.toString(noOfFuncCall);</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (isFunctionCall) {</span>
+<span class="fc" id="L488">            variableName = variableName + '$' + Integer.toString(noOfFuncCall);</span>
         }
 <span class="fc" id="L490">        tempExpr = new VarDef(variableName, variableRead.getType(),</span>
 <span class="fc" id="L491">                variableRead.getDepth());</span>
@@ -537,8 +537,8 @@ import java.util.*;
     @Override
     public void visit(Program program) {
 <span class="fc" id="L539">        Function[] functions = program.getFunctions();</span>
-<span class="pc bpc" id="L540" title="1 of 2 branches missed.">        for (Function function : functions) {</span>
-<span class="nc" id="L541">            function.accept(this);</span>
+<span class="fc bfc" id="L540" title="All 2 branches covered.">        for (Function function : functions) {</span>
+<span class="fc" id="L541">            function.accept(this);</span>
         }
 <span class="fc" id="L543">        program.getMainFunction().accept(this);</span>
 <span class="fc" id="L544">    }</span>
@@ -578,15 +578,15 @@ import java.util.*;
 
     @Override
     public void visit(Invariant invariant) {
-<span class="nc" id="L581">        invariant.getExpression().accept(this);</span>
-<span class="nc" id="L582">    }</span>
+<span class="fc" id="L581">        invariant.getExpression().accept(this);</span>
+<span class="fc" id="L582">    }</span>
 
     @Override
     public void visit(ReturnStatement returnStatement) {
-<span class="nc bnc" id="L586" title="All 2 branches missed.">        if (noOfFuncCall &gt; 0) {</span>
-<span class="nc" id="L587">            returnStatement.getReturnValue().accept(this);</span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">        if (noOfFuncCall &gt; 0) {</span>
+<span class="fc" id="L587">            returnStatement.getReturnValue().accept(this);</span>
         }
-<span class="nc" id="L589">    }</span>
+<span class="fc" id="L589">    }</span>
 
     @Override
     public void visit(VariableDeclaration varDec) {
@@ -644,30 +644,30 @@ import java.util.*;
 <span class="fc" id="L644">            functionsCalled = new ArrayList&lt;FunctionCall&gt;();</span>
 <span class="fc" id="L645">            noOfFuncCall = 0;</span>
 <span class="fc" id="L646">            statements[i].accept(this);</span>
-<span class="pc bpc" id="L647" title="1 of 2 branches missed.">            if (!functionsCalled.isEmpty()) {</span>
+<span class="fc bfc" id="L647" title="All 2 branches covered.">            if (!functionsCalled.isEmpty()) {</span>
                 //int depth = upScopeReplacements.size() - 1;
-<span class="nc" id="L649">                LinkedList&lt;S_Expression&gt; program = new LinkedList&lt;S_Expression&gt;();</span>
-<span class="nc" id="L650">                program.add(expression);</span>
-<span class="nc" id="L651">                programs.add(program);</span>
-<span class="nc" id="L652">                descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
-<span class="nc" id="L653">                    KindOfProgram.FunctionEnsureToRemainingProgram,</span>
-<span class="nc" id="L654">                    statements[i].getPosition()));</span>
+<span class="fc" id="L649">                LinkedList&lt;S_Expression&gt; program = new LinkedList&lt;S_Expression&gt;();</span>
+<span class="fc" id="L650">                program.add(expression);</span>
+<span class="fc" id="L651">                programs.add(program);</span>
+<span class="fc" id="L652">                descriptions.add(new Pair&lt;KindOfProgram, Position&gt;(</span>
+<span class="fc" id="L653">                    KindOfProgram.FunctionEnsureToRemainingProgram,</span>
+<span class="fc" id="L654">                    statements[i].getPosition()));</span>
                 //prepareEndedLoop(program);
-<span class="nc" id="L656">                tempExpr = new Constant(&quot;true&quot;);</span>
-<span class="nc bnc" id="L657" title="All 2 branches missed.">                for (int j = 0; j &lt; functionsCalled.size(); j++) {</span>
-<span class="nc" id="L658">                    noOfFuncCall = j + 1;</span>
-<span class="nc" id="L659">                    afterFunctionCall(functionsCalled.get(j));</span>
+<span class="fc" id="L656">                tempExpr = new Constant(&quot;true&quot;);</span>
+<span class="fc bfc" id="L657" title="All 2 branches covered.">                for (int j = 0; j &lt; functionsCalled.size(); j++) {</span>
+<span class="fc" id="L658">                    noOfFuncCall = j + 1;</span>
+<span class="fc" id="L659">                    afterFunctionCall(functionsCalled.get(j));</span>
                 }
-<span class="nc" id="L661">                program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
-<span class="nc" id="L662">                        new S_Expression(&quot;not&quot;,</span>
-<span class="nc" id="L663">                                program.getLast())));</span>
+<span class="fc" id="L661">                program.set(program.size() - 1, new S_Expression(&quot;assert&quot;,</span>
+<span class="fc" id="L662">                        new S_Expression(&quot;not&quot;,</span>
+<span class="fc" id="L663">                                program.getLast())));</span>
                 /*upScopeReplacements = new Stack&lt;HashMap&lt;VarDef, S_Expression&gt;&gt;();
                 upScopeExpr = new Stack&lt;S_Expression&gt;();
                 for (int j = 0; j &lt; depth; j++) {
                     upScopeReplacements.add(new HashMap&lt;VarDef, S_Expression&gt;());
                     upScopeExpr.add(new Constant(&quot;true&quot;));
                 }*/
-<span class="nc" id="L670">                change = true;</span>
+<span class="fc" id="L670">                change = true;</span>
             }
 <span class="fc bfc" id="L672" title="All 2 branches covered.">            if (change) {</span>
 <span class="fc" id="L673">                expression = tempExpr;</span>
@@ -688,4 +688,4 @@ import java.util.*;
 <span class="nc" id="L688">        return name + &quot;#&quot; + tag;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

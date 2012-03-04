@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 22:34:09)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageParser.java</span></div><h1>WhileLanguageParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-03-04 18:48:22
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageParser.java</span></div><h1>WhileLanguageParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-03-04 18:48:22
 
 	package parser;
 	import ast.*;
@@ -1196,8 +1196,8 @@ import java.util.ArrayList;
 <span class="pc bpc" id="L1196" title="1 of 2 branches missed.">            if ( (LA18_0==39) ) {</span>
 <span class="fc" id="L1197">                int LA18_1 = input.LA(2);</span>
 
-<span class="pc bpc" id="L1199" title="1 of 2 branches missed.">                if ( (LA18_1==43) ) {</span>
-<span class="nc" id="L1200">                    alt18=2;</span>
+<span class="fc bfc" id="L1199" title="All 2 branches covered.">                if ( (LA18_1==43) ) {</span>
+<span class="fc" id="L1200">                    alt18=2;</span>
                 }
 <span class="pc bpc" id="L1202" title="10 of 14 branches missed.">                else if ( (LA18_1==BOOL_LITERAL||(LA18_1 &gt;= IDENT &amp;&amp; LA18_1 &lt;= QUANTIFIER)||LA18_1==10||LA18_1==14||LA18_1==17||LA18_1==19) ) {</span>
 <span class="fc" id="L1203">                    alt18=1;</span>
@@ -1217,7 +1217,7 @@ import java.util.ArrayList;
 <span class="nc" id="L1217">                throw nvae;</span>
 
             }
-<span class="pc bpc" id="L1220" title="2 of 3 branches missed.">            switch (alt18) {</span>
+<span class="pc bpc" id="L1220" title="1 of 3 branches missed.">            switch (alt18) {</span>
                 case 1 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:152:11: 'invariant' e1= quantified_expression ';'
                     {
@@ -1239,51 +1239,51 @@ import java.util.ArrayList;
                 case 2 :
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:154:11: 'invariant' '{' (e2= quantified_expression ';' )+ '}'
                     {
-<span class="nc" id="L1242">                    match(input,39,FOLLOW_39_in_invariant_statement859); </span>
+<span class="fc" id="L1242">                    match(input,39,FOLLOW_39_in_invariant_statement859); </span>
 
-<span class="nc" id="L1244">                    match(input,43,FOLLOW_43_in_invariant_statement861); </span>
+<span class="fc" id="L1244">                    match(input,43,FOLLOW_43_in_invariant_statement861); </span>
 
                     // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:154:27: (e2= quantified_expression ';' )+
-<span class="nc" id="L1247">                    int cnt17=0;</span>
+<span class="fc" id="L1247">                    int cnt17=0;</span>
                     loop17:
                     do {
-<span class="nc" id="L1250">                        int alt17=2;</span>
-<span class="nc" id="L1251">                        int LA17_0 = input.LA(1);</span>
+<span class="fc" id="L1250">                        int alt17=2;</span>
+<span class="fc" id="L1251">                        int LA17_0 = input.LA(1);</span>
 
-<span class="nc bnc" id="L1253" title="All 14 branches missed.">                        if ( (LA17_0==BOOL_LITERAL||(LA17_0 &gt;= IDENT &amp;&amp; LA17_0 &lt;= QUANTIFIER)||LA17_0==10||LA17_0==14||LA17_0==17||LA17_0==19) ) {</span>
-<span class="nc" id="L1254">                            alt17=1;</span>
+<span class="pc bpc" id="L1253" title="6 of 14 branches missed.">                        if ( (LA17_0==BOOL_LITERAL||(LA17_0 &gt;= IDENT &amp;&amp; LA17_0 &lt;= QUANTIFIER)||LA17_0==10||LA17_0==14||LA17_0==17||LA17_0==19) ) {</span>
+<span class="fc" id="L1254">                            alt17=1;</span>
                         }
 
 
-<span class="nc bnc" id="L1258" title="All 2 branches missed.">                        switch (alt17) {</span>
+<span class="fc bfc" id="L1258" title="All 2 branches covered.">                        switch (alt17) {</span>
                     	case 1 :
                     	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:154:28: e2= quantified_expression ';'
                     	    {
-<span class="nc" id="L1262">                    	    pushFollow(FOLLOW_quantified_expression_in_invariant_statement866);</span>
-<span class="nc" id="L1263">                    	    e2=quantified_expression();</span>
+<span class="fc" id="L1262">                    	    pushFollow(FOLLOW_quantified_expression_in_invariant_statement866);</span>
+<span class="fc" id="L1263">                    	    e2=quantified_expression();</span>
 
-<span class="nc" id="L1265">                    	    state._fsp--;</span>
+<span class="fc" id="L1265">                    	    state._fsp--;</span>
 
 
-<span class="nc" id="L1268">                    	    match(input,21,FOLLOW_21_in_invariant_statement868); </span>
+<span class="fc" id="L1268">                    	    match(input,21,FOLLOW_21_in_invariant_statement868); </span>
 
-<span class="nc bnc" id="L1270" title="All 2 branches missed.">                    	    if (!error) {</span>
-<span class="nc" id="L1271">                    	                retval.result.add(new Invariant(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), e2));}</span>
+<span class="pc bpc" id="L1270" title="1 of 2 branches missed.">                    	    if (!error) {</span>
+<span class="fc" id="L1271">                    	                retval.result.add(new Invariant(new Position(((Token)retval.start).getLine(), ((Token)retval.start).getCharPositionInLine()), e2));}</span>
 
                     	    }
-<span class="nc" id="L1274">                    	    break;</span>
+<span class="fc" id="L1274">                    	    break;</span>
 
                     	default :
-<span class="nc bnc" id="L1277" title="All 2 branches missed.">                    	    if ( cnt17 &gt;= 1 ) break loop17;</span>
+<span class="pc bpc" id="L1277" title="1 of 2 branches missed.">                    	    if ( cnt17 &gt;= 1 ) break loop17;</span>
 <span class="nc" id="L1278">                                EarlyExitException eee =</span>
 <span class="nc" id="L1279">                                    new EarlyExitException(17, input);</span>
 <span class="nc" id="L1280">                                throw eee;</span>
                         }
-<span class="nc" id="L1282">                        cnt17++;</span>
-<span class="nc" id="L1283">                    } while (true);</span>
+<span class="fc" id="L1282">                        cnt17++;</span>
+<span class="fc" id="L1283">                    } while (true);</span>
 
 
-<span class="nc" id="L1286">                    match(input,45,FOLLOW_45_in_invariant_statement875); </span>
+<span class="fc" id="L1286">                    match(input,45,FOLLOW_45_in_invariant_statement875); </span>
 
                     }
                     break;
@@ -1624,7 +1624,7 @@ import java.util.ArrayList;
 <span class="fc" id="L1624">                        int alt21=2;</span>
 <span class="fc" id="L1625">                        int LA21_0 = input.LA(1);</span>
 
-<span class="pc bpc" id="L1627" title="6 of 14 branches missed.">                        if ( (LA21_0==BOOL_LITERAL||(LA21_0 &gt;= IDENT &amp;&amp; LA21_0 &lt;= QUANTIFIER)||LA21_0==10||LA21_0==14||LA21_0==17||LA21_0==19) ) {</span>
+<span class="pc bpc" id="L1627" title="5 of 14 branches missed.">                        if ( (LA21_0==BOOL_LITERAL||(LA21_0 &gt;= IDENT &amp;&amp; LA21_0 &lt;= QUANTIFIER)||LA21_0==10||LA21_0==14||LA21_0==17||LA21_0==19) ) {</span>
 <span class="fc" id="L1628">                            alt21=1;</span>
                         }
 
@@ -4117,4 +4117,4 @@ import java.util.ArrayList;
 <span class="fc" id="L4117">    public static final BitSet FOLLOW_29_in_type2480 = new BitSet(new long[]{0x0000000010000002L});</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 22:34:09)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>
