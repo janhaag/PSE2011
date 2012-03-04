@@ -1,0 +1,14 @@
+bool foo(int a) {
+	a = a - 1;
+	return true;
+} ensure a > 0; #ensure a <0;
+
+main(int a) {
+	bool b = foo(a);
+	#ensure b;
+	while (a > 0) {
+		b = !b;
+		a = a - 1;
+	} #ensure forall x(-10, 0) x != a;
+		ensure exists x(0, 10) x == a;
+} ensure b; ensure !b;
