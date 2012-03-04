@@ -326,19 +326,18 @@ public class SMTLibTranslator implements ASTVisitor {
             upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
             upScopeExpr.add(new Constant("true"));
         }*/
+        S_Expression saveTempExpr = new Constant("true");
+        for (Invariant invariant : invariants) {
+            invariant.accept(this);
+            saveTempExpr =  new S_Expression("and", tempExpr, saveTempExpr);
+        }
+        tempExpr = saveTempExpr;
+        loop.getLoopBody().accept(this);
         program = new LinkedList<S_Expression>();
         programs.add(program);
         descriptions.add(new Pair<KindOfProgram, Position>(
                 KindOfProgram.InvariantAndConditionToInvariant, loop.getPosition()));
-        program.add(new Constant("true"));
-        for (Invariant invariant : invariants) {
-            invariant.accept(this);
-            program.set(program.size() - 1, new S_Expression("and",
-                    tempExpr, program.getLast()));
-        }
-        tempExpr = program.getLast();
-        loop.getLoopBody().accept(this);
-        program.set(program.size() - 1, tempExpr);
+        program.add(tempExpr);
         for (Invariant invariant : invariants) {
             invariant.accept(this);
             program.set(program.size() - 1, new S_Expression("=>",
@@ -357,7 +356,7 @@ public class SMTLibTranslator implements ASTVisitor {
             upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
             upScopeExpr.add(new Constant("true"));
         }*/
-        S_Expression saveTempExpr = new Constant("true");
+        saveTempExpr = new Constant("true");
         for (Invariant invariant : invariants) {
             invariant.accept(this);
             saveTempExpr = new S_Expression("and",

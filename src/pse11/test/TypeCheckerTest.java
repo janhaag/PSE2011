@@ -699,6 +699,12 @@ public class TypeCheckerTest {
                 "if(true){}else{int[] i=array[1];} i[1]=2;}");
     }
 
+    @Test (expected = IllegalTypeException.class)
+    public void testVarReadInAxiom() throws RecognitionException {
+        parserInterface.parseProgram("axiom i;" +
+                "main() {}");
+    }
+
     @Test (expected = FunctionCallNotAllowedException.class)
     public void testFunctionCallNotAllowed() throws RecognitionException {
         parserInterface.parseProgram("int g(int x){return 0;}" +

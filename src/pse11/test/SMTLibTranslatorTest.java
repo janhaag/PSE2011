@@ -383,4 +383,176 @@ public class SMTLibTranslatorTest {
                 "(not (< i$0 0)) (and (>= i$0 0) true))))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
+
+    @Test
+    public void testSimpleWhile() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){while(true){}}");
+        expected = LOGIC+embed("(assert (not true))")
+                    +embed("(assert (not (=> (not true) true)))")
+                    +embed("(assert (not (=> true true)))")
+                    +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileEnsure() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){while(true){}ensure false;}");
+        expected = LOGIC+embed("(assert (not (=> false true)))")
+                    +embed("(assert (not (=> (not true) (and false true))))")
+                    +embed("(assert (not (=> true true)))")
+                    +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileInvariant() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){while(true)invariant false;{}}");
+        expected = LOGIC+embed("(assert (not true))")
+                    +embed("(assert (not (=> (not true) (=> false true))))")
+                    +embed("(assert (not (=> true (=> false (and false true)))))")
+                    +embed("(assert (not (and true (and false true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileInvariantEnsure() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){while(true)" +
+                "invariant false;{}ensure true;}");
+        expected = LOGIC+embed("(assert (not (=> true true)))")
+                    +embed("(assert (not " +
+                        "(=> (not true) (=> false (and true true)))))")
+                    +embed("(assert (not (=> true (=> false (and false true)))))")
+                    +embed("(assert (not (and true (and false true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileVar() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){int y;while(true){}}ensure y==1;");
+        expected = LOGIC+embed("(declare-fun y$0 () Int)" +
+                        "(assert (not (and (= y$0 1) true)))")
+                    +embed("(assert (not (=> (not true) true)))")
+                    +embed("(assert (not (=> true true)))")
+                    +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileVarInvariant() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){int y;while(true)" +
+                "invariant y>0;{}}ensure y==1;");
+        expected = LOGIC+embed("(declare-fun y$0 () Int)" +
+                        "(assert (not (and (= y$0 1) true)))")
+            +embed("(declare-fun y$0 () Int)(assert (not " +
+                "(=> (not true) (=> (> y$0 0) true))))")
+            +embed("(declare-fun y$0 () Int)(assert (not (=> true " +
+                "(=> (> y$0 0) (and (> y$0 0) true)))))")
+            +embed("(assert (not (and true (and (> 0 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileVarEnsure() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){int y;while(true){}ensure y==1;}" +
+                "ensure y==1;");
+        expected = LOGIC+embed("(declare-fun y$0 () Int)" +
+                        "(assert (not (=> (= y$0 1) (and (= y$0 1) true))))")
+                    +embed("(declare-fun y$0 () Int)(assert (not " +
+                        "(=> (not true) (and (= y$0 1) true))))")
+                    +embed("(assert (not (=> true true)))")
+                    +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileVarEnsureInvar() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){int y;while(true)invariant y>0;" +
+                "{}ensure y==1;}ensure y==1;");
+        expected = LOGIC
+            +embed("(declare-fun y$0 () Int)" +
+                        "(assert (not (=> (= y$0 1) (and (= y$0 1) true))))")
+            +embed("(declare-fun y$0 () Int)(assert (not (=> (not true) " +
+                        "(=> (> y$0 0) (and (= y$0 1) true)))))")
+            +embed("(declare-fun y$0 () Int)(assert (not " +
+                "(=> true (=> (> y$0 0) (and (> y$0 0) true)))))")
+            +embed("(assert (not (and true (and (> 0 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileInvarReplace() throws RecognitionException {
+        p = parserInterface.parseProgram("main()" +
+                "{int y;while(y<0)invariant y>0;{y=y+1;}}");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(declare-fun y$0 () Int)(assert (not " +
+                "(=> (not (< y$0 0)) (=> (> y$0 0) true))))")
+            +embed("(declare-fun y$0 () Int)(assert (not (=> (< y$0 0) " +
+                "(=> (> y$0 0) (and (> (+ y$0 1) 0) true)))))")
+            +embed("(assert (not (and true (and (> 0 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileInvarParam() throws RecognitionException {
+        p = parserInterface.parseProgram("main(int y)" +
+                "{while(y<0)invariant y>0;{y=y+1;}}");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(declare-fun y$0 () Int)(assert (not " +
+                "(=> (not (< y$0 0)) (=> (> y$0 0) true))))")
+            +embed("(declare-fun y$0 () Int)(assert (not (=> (< y$0 0) " +
+                "(=> (> y$0 0) (and (> (+ y$0 1) 0) true)))))")
+            +embed("(declare-fun y$0 () Int)(assert (not " +
+                "(and true (and (> y$0 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileScoping() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){bool y;while(true)invariant y;" +
+                "{y=!y;int y;y=1;}ensure !y;}");
+        expected = LOGIC
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> (not y$0) true)))")
+            +embed("(declare-fun y$0 () Bool)(assert (not " +
+                "(=> (not true) (=> y$0 (and (not y$0) true)))))")
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> true " +
+                "(=> y$0 (and (not y$0) true)))))")
+            +embed("(assert (not (and true (and false true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testTwoWhilesFollowing() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){bool y;while(y)invariant y;" +
+                "{y=!y;}while(!y){y=false;}ensure false;}ensure y;");
+        expected = LOGIC
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> false (and y$0 true))))")
+            +embed("(declare-fun y$0 () Bool)(assert (not " +
+                "(=> (not (not y$0)) (and false true))))")
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> (not y$0) true)))")
+            +embed("(assert (not true))")
+            +embed("(declare-fun y$0 () Bool)(assert (not " +
+                "(=> (not y$0) (=> y$0 true))))")
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> y$0 " +
+                "(=> y$0 (and (not y$0) true)))))")
+            +embed("(assert (not (and true (and false true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testWhileInWhile() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){bool y;while(y)" +
+                "{while(!y){y=false;}}ensure false;}ensure y;");
+        expected = LOGIC
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> false (and y$0 true))))")
+            +embed("(declare-fun y$0 () Bool)(assert (not " +
+                "(=> (not y$0) (and false true))))")
+            +embed("(assert (not true))")
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> (not (not y$0)) true)))")
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> (not y$0) true)))")
+            +embed("(declare-fun y$0 () Bool)(assert (not (=> y$0 true)))")
+            +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
 }

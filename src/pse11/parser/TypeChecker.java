@@ -454,7 +454,9 @@ public class TypeChecker implements ASTVisitor {
     @Override
     public void visit(Axiom axiom) {
         functionCallAllowed = false;
+        currentScope = new Scope(null, null, null);
         axiom.getExpression().accept(this);
+        currentScope = currentScope.getParent();
         functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Expression must have bool type!",
