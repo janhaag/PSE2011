@@ -47,11 +47,11 @@ ite	[String id] returns[String assignment] @init{$assignment = id;}
 	;
 
 function	returns [String assignment]
-	: id1 = IDENT ('!' INT)* {$assignment = id1+ "=";} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+	: id1 = IDENT ('!' INT)* {$assignment = $id1.text + "=";} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
 	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ';';}	
 	;
 functionvalue returns [String assignment]
-	: id1 = IDENT ('!' INT)* {$assignment = id1+'(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+	: id1 = IDENT ('!' INT)* {$assignment = $id1.text + '(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
 	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ')';}	
 	;
 
