@@ -5,7 +5,8 @@
 </head>
 <body>
 <h1>Quantified Expression</h1>
-<p>Quantified expressions can be used to extend assertion conditions. There are two quantifiers available to use: the exists quantifier and the for all quantifier.</p>
+<p>Quantified expressions can be used to extend specifications. There are two quantifiers available to use: the exists quantifier and the for all quantifier.</p>
+<p>Every quantified expression can be substitued by an expression which must not contain a function call.</p>
 <h2>Exists</h2>
 <p>The exists quantifier can be used to check if there is at least one value for an integer variable for which a condition is true.</p>
 <h2>For All</h2>
@@ -17,11 +18,11 @@ If no range is given, a forall quantifier is always evaluated to false and an ex
 <div class="code">
 <span class="code_element">quantifier</span> <span class="code_element">identifier</span>( <span class="code_optional"><span class="code_element">expression</span>, <span class="code_element">expression</span></span> ) <span class="code_element">quantified expression</span>
 </div>
-<p>where <span class="code_inline">quantifier</span> is one of <span class="code_inline">exists</span> or <span class="code_inline">forall</span> and <span class="code_inline">quantified expression</span> can be substituted by an expression</p>
+<p>where <span class="code_inline">quantifier</span> is one of <span class="code_inline">exists</span> or <span class="code_inline">forall</span>.</p>
 <h2>Example</h2>
 <div class="code">
 exists j(0,15) j==5
-forall s() s > 0;
+forall s() s > 0
 </div>
 </body>
 </html>
