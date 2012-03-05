@@ -11,8 +11,11 @@ import interpreter.Value;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import misc.ExecutionHandler;
+import misc.MessageCategories;
 
 import org.antlr.runtime.RecognitionException;
 import org.eclipse.swt.SWT;
@@ -151,7 +154,21 @@ public class TableViewController implements SelectionListener {
 			} catch (RecognitionException ignored) {
 			} catch (NullPointerException ignored) {
 			}
-			if (exp == null) return;
+			if (exp == null) {
+				this.executionHandler.getMessageSystem().clear(MessageCategories.ERROR);
+				String[] error = this.executionHandler.getParserInterface().getErrors();
+				Pattern p = Pattern.compile("^line (\\d+):(\\d+) (.*)$");
+				for (int j = 0; j < error.length; j++) {
+					Matcher m = p.matcher(error[j]); 
+					boolean isvalid = m.matches();
+					if(!isvalid) {
+						System.out.println("ERROR");
+					}
+					String s = m.group(3);
+					this.executionHandler.getMessageSystem().addMessage(MessageCategories.ERROR, 0, s);
+				}
+				return;
+			}
 			for (i = 0; i < this.executionHandler.getGlobalBreakpoints().size(); i++) {
 				if (this.executionHandler.getGlobalBreakpoints().get(i).getExpression().toString().equals(exp.toString())) {
 					break;
