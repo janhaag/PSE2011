@@ -145,6 +145,9 @@ public class Interpreter implements ASTVisitor {
     }
 
     public static BigInteger divide(BigInteger dividend, BigInteger divisor) {
+        if (divisor.equals(BigInteger.ZERO)) {
+            return BigInteger.ZERO;
+        }
         BigInteger result = dividend.divide(divisor);
         if (dividend.signum() == -1 &&
                 !dividend.remainder(divisor).equals(BigInteger.ZERO)) {
@@ -264,6 +267,9 @@ public class Interpreter implements ASTVisitor {
             index.accept(this);
             int pos = ((IntegerValue) tempValue).getValue().intValue();
             Value[] values = ((ArrayValue) value).getValues();
+            if (pos < 0 || pos >= values.length) {
+                pos = 0;
+            }
             value = values[pos];
         }
         tempValue = value;

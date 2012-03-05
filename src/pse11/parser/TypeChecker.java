@@ -501,7 +501,9 @@ public class TypeChecker implements ASTVisitor {
     @Override
     public void visit(ReturnStatement returnStatement) {
         Type currentReturnType = currentFunction.getReturnType();
+        functionCallAllowed = false;
         returnStatement.getReturnValue().accept(this);
+        functionCallAllowed = true;
         if (!currentReturnType.equals(tempType)) {
             throw new IllegalTypeException("Type of returned expression does "
                                 + "not match type that the function returns!",
