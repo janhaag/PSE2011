@@ -620,17 +620,43 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         existsQuantifier.getSubexpression1().accept(this);
-        String variable = "((" + existsQuantifier.getIdentifier().toString()
-                + '$' + existsQuantifier.getDepth() + " Int))";
-        tempExpr = new S_Expression("exists", new Constant(variable), tempExpr);
+        String name = existsQuantifier.getIdentifier().toString();
+        int depth = existsQuantifier.getDepth();
+        String variable = "((" + name + '$' + depth + " Int))";
+        S_Expression saveTempExpr = tempExpr;
+        Range range = existsQuantifier.getRange();
+        if (range != null) {
+            range.getLowerBound().accept(this);
+            saveTempExpr = new S_Expression("and", new S_Expression(
+                    ">=", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+            range.getUpperBound().accept(this);
+            saveTempExpr = new S_Expression("and", new S_Expression(
+                    "<=", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+        }
+        tempExpr = new S_Expression("exists", new Constant(variable), saveTempExpr);
     }
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         forAllQuantifier.getSubexpression1().accept(this);
-        String variable = "((" + forAllQuantifier.getIdentifier().toString()
-                + '$' + forAllQuantifier.getDepth() + " Int))";
-        tempExpr = new S_Expression("forall", new Constant(variable), tempExpr);
+        String name = forAllQuantifier.getIdentifier().toString();
+        int depth = forAllQuantifier.getDepth();
+        String variable = "((" + name + '$' + depth + " Int))";
+        S_Expression saveTempExpr = tempExpr;
+        Range range = forAllQuantifier.getRange();
+        if (range != null) {
+            range.getLowerBound().accept(this);
+            saveTempExpr = new S_Expression("or", new S_Expression(
+                    "<", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+            range.getUpperBound().accept(this);
+            saveTempExpr = new S_Expression("or", new S_Expression(
+                    ">", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+        }
+        tempExpr = new S_Expression("forall", new Constant(variable), saveTempExpr);
     }
 
     @Override

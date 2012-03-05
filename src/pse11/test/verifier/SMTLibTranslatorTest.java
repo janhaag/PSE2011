@@ -253,10 +253,28 @@ public class SMTLibTranslatorTest {
     }
 
     @Test
+    public void testSingleBoundedForAll() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){}ensure forall x(1,2) x==x;");
+        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
+                "(and true (and (forall ((x$1 Int)) " +
+                "(or (> x$1 2) (or (< x$1 1) (= x$1 x$1)))) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
     public void testSingleExists() throws RecognitionException {
         p = parserInterface.parseProgram("main(){}ensure exists x() x==x;");
         expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
                 "(and true (and (exists ((x$1 Int)) (= x$1 x$1)) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testSingleBoundedExists() throws RecognitionException {
+        p = parserInterface.parseProgram("main(){}ensure exists x(1,3) x==x;");
+        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
+                "(and true (and (exists ((x$1 Int)) " +
+                "(and (<= x$1 3) (and (>= x$1 1) (= x$1 x$1)))) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
