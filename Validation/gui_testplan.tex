@@ -23,28 +23,22 @@ Breakpoints werden nicht entfernt, Konsole nicht geleert
 \end{itemize}
 \item Laden einer Datei, die nicht vom Programm erzeugt wurde und keine txt-Datei ist
 \begin{itemize}
-\item Erwartetes Ereignis: Die Datei wird nicht geladen. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Programm h"angt sich auf
+\item Erwartetes Ereignis: Die Datei wird nicht im Filedialog angezeigt. 
+\item Status: \textcolor{blue}{BEHOBEN} \\
+Die Datei wird angezeigt und Programm h"angt sich auf, wenn versucht wird, diese zu laden
 \end{itemize}
 \end{enumerate}
 \subsubsection{"`File"' $\rightarrow$ "`Save"'}
 \begin{enumerate}
 \item Speichern in einer nichtexistenten Datei
 \begin{itemize}
-\item Erwartetes Ereignis: Die Datei wird erzeugt, der Inhalt des Editors darin gespreichert. 
+\item Erwartetes Ereignis: Eine wp-Datei wird erzeugt, der Inhalt des Editors darin gespreichert. 
 \item Status: \textcolor{green}{OK} 
 \end{itemize}
-\item Speichern in einer vom Programm erzeugten Datei oder txt-Datei
+\item Speichern in einer beliebigen Datei
 \begin{itemize}
 \item Erwartetes Ereignis: Der Inhalt der Datei wird durch den des Editors ersetzt. 
 \item Status: \textcolor{green}{OK} 
-\end{itemize}
-\item Speichern in einer Datei, die nicht vom Programm erzeugt wurde und keine txt-Datei ist
-\begin{itemize}
-\item Erwartetes Ereignis: Die Datei wird nicht "uberschrieben. 
-\item Status: \textcolor{red}{FEHLSCHLAG} \\
-Die Datei wird "uberschrieben.
 \end{itemize}
 \end{enumerate}
 \subsubsection{"`File"' $\rightarrow$ "`Exit"'}

@@ -577,6 +577,11 @@ public class TypeCheckerTest {
     }
 
     @Test (expected = IllegalTypeException.class)
+    public void testLengthNoRead() throws RecognitionException {
+        parserInterface.parseProgram("main() {bool i; int g = length(3);}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
     public void testLengthWrongParameterNumber() throws RecognitionException {
         parserInterface.parseProgram("main() {bool i; int g = length(i, i);}");
     }
