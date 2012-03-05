@@ -151,6 +151,7 @@ public class TableViewController implements SelectionListener {
 			Expression exp = null;
 			try {
 				exp = this.executionHandler.getParserInterface().parseExpression(expression);
+				this.executionHandler.getMessageSystem().clear(MessageCategories.ERROR);
 			} catch (RecognitionException ignored) {
 			} catch (NullPointerException ignored) {
 			}
