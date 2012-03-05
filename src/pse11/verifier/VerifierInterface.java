@@ -28,6 +28,14 @@ public class VerifierInterface {
         String verifierResult = verifier.call(ast);
         return verifier.parseVerifierOutput(verifierResult);
     }
+    
+    public final void setTimeout(String timeout) {
+        this.verifier.timeout = timeout;
+    }
+
+    public final void setMemoryLimit(String memoryLimit) {
+        this.verifier.memoryLimit = memoryLimit;
+    }
 
     /**
      * Returns a list of program descriptions.

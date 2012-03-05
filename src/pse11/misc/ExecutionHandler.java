@@ -131,8 +131,10 @@ public class ExecutionHandler {
 			return;
 		}
 		VerifierInterface verifier = new VerifierInterface(new Z3(
-				Settings.getInstance().getVerifierPath() + " ${FILE} -m"
+				Settings.getInstance().getVerifierPath() + " ${FILE} -memory:${MEMORY_LIMIT} -T:${TIMEOUT} -m"
 				));
+		verifier.setMemoryLimit(String.valueOf(Settings.getInstance().getMemoryLimit()));
+		verifier.setTimeout(String.valueOf(Settings.getInstance().getTimeout()));
 		LinkedList<Pair<Boolean, String>> result = new LinkedList<Pair<Boolean, String>>();
         LinkedList<Pair<KindOfProgram, Position>> descriptions
                 = new LinkedList<Pair<KindOfProgram, Position>>();
