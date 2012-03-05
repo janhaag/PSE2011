@@ -49,12 +49,13 @@
 <p>
 When running a program in single step mode, the interpreter stops twice at each division and modulo operator. This is due to an implicit check of a division by zero error.
 </p>
-<p>
-For integers a and b, b not equal to 0, division and modulo is defined to satisfy the formulas <br>
-<span class="code_inline">a = n * (m / n) + m % n</span><br>
+<p>For integers a and b, b not equal to zero, division and modulo is defined to satisfy the formulas <br>
+<span class="code_inline">a = b * (a / b) + a % b</span><br>
 and
-<span class="code_inline">0 <= r <= |n| - 1</span><br>
-where <span class="code_inline">|n|</span> is the absolute value of n.
-</p>
+<span class="code_inline">0 &lt;= a % b &lt;= |n| - 1</span><br>
+where <span class="code_inline">|n|</span> is the absolute value of n.</p>
+<p>For an integer a and a positive integer b, <span class="code_inline">a / b</span> equals the floor of the rational number a / b.<br>
+For an integer a and a negative integer b, <span class="code_inline">a / b</span> equals the ceiling of the rational number a / b.</p>
+<p>For integers a and b not equal to zero, <span class="code_inline">a % b</span> equals <span class="code_inline">a - (a / b) * b</span>.</p>
 </body>
 </html>
