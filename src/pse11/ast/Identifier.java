@@ -15,10 +15,6 @@ public class Identifier {
      * @param name identifier name
      */
     public Identifier(String name) {
-        if (name == null) {
-            throw new
-                 IllegalArgumentException("Parameter name must not be null!");
-        }
         this.name = name;
     }
 

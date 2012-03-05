@@ -23,7 +23,7 @@ public class Axiom extends Specification {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("assume ");
+        StringBuilder sb = new StringBuilder("axiom ");
         sb.append(getExpression().toString());
         sb.append(";\n");
         return sb.toString();
