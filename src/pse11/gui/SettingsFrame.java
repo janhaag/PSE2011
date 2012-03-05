@@ -74,7 +74,7 @@ public class SettingsFrame extends Frame {
 		this.memoryLimitTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);
 		this.memoryLimitTextField.setText(controller.getMemoryLimit());
 		this.memoryLimitTextField.setLayoutData(gData);
-		new Label(settingsGroup, SWT.NONE).setText("KB");
+		new Label(settingsGroup, SWT.NONE).setText("MB");
 		
 		Label templabel = new Label(settingsGroup, SWT.NONE);
 		templabel.setText("Path to the Verifier:");
