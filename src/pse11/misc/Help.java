@@ -20,6 +20,7 @@ public class Help {
 		tableOfContents = new LinkedHashMap<String, String>();
 		tableOfContents.put("Introduction", "index.html");
 		tableOfContents.put("Interpreting", "interpreting.html");
+		tableOfContents.put("Verifying", "verifying.html");
 		tableOfContents.put("Comments", "comments.html");
 		tableOfContents.put("Program", "program.html");
 		tableOfContents.put("Functions", "functions.html");
@@ -84,6 +85,8 @@ public class Help {
 		tags.put("variable", "variables.html");
 		tags.put("array", "variables.html");
 		tags.put("declaration", "variables.html");
+		tags.put("verify", "verifying.html");
+		tags.put("validate", "verifying.html");
 		tags.put("loop", "while.html");
 		tags.put("while", "while.html");
 	}

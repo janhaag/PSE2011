@@ -7,17 +7,17 @@
 <h1>Interpreting a Program</h1>
 <p>Once a program is syntactically correct, it can be interpreted. This is done in 'run' mode or in 'single step' mode.</p>
 <h2>Run</h2>
-<p>When running a program with the 'Run' button, all of its statements will be executed in succession. The execution will stop if any assertion fails and the line and type of the assertion failure will be displayed. A running program can be stopped or paused at any time using the 'Stop' or 'Pause' button.</p>
+<p>When running a program with the 'Run' button, all of its statements will be executed in succession. The execution will stop if the last statement was executed or an assertion fails, which will display the line and type of the assertion failure. A running program can be stopped or paused at any time using the 'Stop' or 'Pause' button.</p>
 <h2>Single Step</h2>
 <p>When running a program with the 'Single Step button', only the next statement will be executed (which is the first statement in the main function if no program is being executed).</p>
 <p>Note that every division and every array access will insert an additional invisible statement just before the statement in which a division or array access is used.</p>
 <h2>Breakpoints</h2>
 <p>Breakpoints provide an additional option to stop a running program. There are two types of breakpoints: global breakpoints and statement breakpoints.</p>
 <h3>Global Breakpoints</h3>
-<p>Global breakpoints can be added to a program by using the input on the right-hand side. To add a breakpoint, enter any expression that can be evaluated to a boolean.</p>
+<p>Global breakpoints can be added to a program by using the input on the right-hand side. To add a breakpoint, enter any expression that can be evaluated to a boolean. Note that the expression must not contain a function call.</p>
 <p>Before any statement is executed, all global breakpoints are checked. If one of them is true, the program execution will pause.</p>
 <h3>Statement Breakpoints</h3>
-<p>Statement breakpoints can be added by double clicking on a line number to the left of a program's code. An active statement breakpoint will be represented by a blue circle at the line number.</p>
+<p>Statement breakpoints can be added by double clicking on a line number to the left of a program's code which contains a statement in that line. An active statement breakpoint will be represented by a blue circle at the line number. To remove a statement breakpoint, double click the blue circle.</p>
 <p>During program execution, if a line with a breakpoint is executed, the program execution will pause before any execution of that line's statements.</p>
 <h2>Parameters of the main function</h2>
 <p>If the main functions has any parameters, a window will prompt for all values of these parameters before beginning an execution of the program.</p>

@@ -25,25 +25,34 @@ block	returns[Pair<Boolean, String> result]
 	 .* {$result = new Pair(true,"unknown");}
 	;
 
-model	returns [String example] @init{$example = "";}
-	:	'(model'
-		('(define-fun' id = IDENT  '('(IDENT '!'  TYPE)*')' TYPE val = value ')'
-       			 {$example += $id.text + "=" + $val.content + "\n";} )*
-		{HashMap m = new HashMap();}
-		('(define-fun'  id = IDENT '(' ')' {$example = $id.text;}
+model	returns [String example] @init{$example = ""; HashMap<String,String> m = new HashMap<String,String>();}
+	:	'(model' (
+		('(define-fun' id = IDENT  '('('('IDENT('!' INT)*  TYPE')')*')' TYPE val = value ')'
+       			 {$example += $id.text + "=" + $val.content + "; ";} )
+	|	('(define-fun'  id = IDENT '(' ')' {$example = $id.text;}
         		'(Array'(TYPE {$example += "[ ]";})+ TYPE  ')'
-		'(' '_' 'as-array'  id2 = (IDENT '!' INT)')'')' {m.put($id2.text,$id.text);}{$example += "\n";})*
-		('(define-fun' id3 = (IDENT '!' INT) '('('('IDENT '!' INT TYPE')')+')' TYPE
-       ( '('ass = ite[(String)m.get($id3.text)] {$example += $ass.assignment;}')')?(v = value{$example +=(String)m.get($id3.text) + "=" + $v.content;})?')')*
+		'(' '_' 'as-array'  id2 = (IDENT ('!' INT)*)')'')' {m.put($id2.text,$id.text);}{$example += "; ";})
+	|	('(define-fun' id3 = IDENT ('!' INT)+ '('('('IDENT ('!' INT)+ TYPE')')+')' TYPE
+       		( '(' {String h = m.get($id3.text); h = (h != null? h : $id3.text);} ass = ite[h] {$example += $ass.assignment;}')' 
+       		| '('function')')?(v = value{$example +=m.get($id3.text) + "=" + $v.content;})?')'))*
 		')'
 	;
 
 ite	[String id] returns[String assignment] @init{$assignment = id;}
-	:	'ite''(''=' IDENT '!' INT i = INT')'  val = value
-        {$assignment = "[" + $i.text + "]" + "=" + $val.content + "\n";}
-        (value | '('as=ite[id]')'{$assignment += $as.assignment;})
+	:	'ite' '(' '=' IDENT '!' INT i = INT')'  val = value
+        {$assignment += "[" + $i.text + "]" + "=" + $val.content;}
+        (v = value {$assignment += " sonst " + $v.content + "; ";} | '('as=ite[id]')'{$assignment += $as.assignment;})
 	|	'ite''(''and'('(''=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')'
-        val=value {$assignment += "=" + $val.content + "\n";}(value | '('as=ite[id]')'{$assignment += as;})
+        val=value {$assignment += "=" + $val.content + "; ";}(value | '('as=ite[id]')'{$assignment += as;})
+	;
+
+function	returns [String assignment]
+	: id1 = IDENT ('!' INT)* {$assignment = id1+ "=";} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ';';}	
+	;
+functionvalue returns [String assignment]
+	: id1 = IDENT ('!' INT)* {$assignment = id1+'(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ')';}	
 	;
 
 value	returns [String content]

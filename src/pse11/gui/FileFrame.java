@@ -19,6 +19,10 @@ public class FileFrame extends Frame implements MiscFrame {
 	 * chosen file for load
 	 */
 	private File chosenFile;
+	/**
+	 * allowed file extensions for source code files
+	 */
+	private static final String[] fileExtensions = new String[]{"*.wp;*.txt"};
 
 	/**
 	 * Construct a file frame with the specified parent shell and 
@@ -33,6 +37,7 @@ public class FileFrame extends Frame implements MiscFrame {
 		
 		FileDialog dlg = new FileDialog(shell, def);
 		dlg.setOverwrite(true);
+		dlg.setFilterExtensions(fileExtensions);
 		fileName = dlg.open();
 		if (fileName != null) {
 			File file = new File(fileName);

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Verifying</title>
+</head>
+<body>
+<h1>Verifying</h1>
+<p>Once a program is syntactically correct, it can be verified by pressing the 'Validate' button.</p>
+<p>Verifying a program will lead to either a verification, meaning all specifications of the program have been formally proven, a counterexample, meaning at least one specification of the program is disproved, or an unknown result, meaning the verifier can't determine if the program can be validated or disproven.</p>
+<h2>Z3</h2>
+<p>By default, the theorem prover Z3, developed at Microsoft Research, will be used. The theorem prover's input will be in SMT-LIB Version 2.</p>
+<p>There are five distinct outputs of proves using Z3 that can be displayed in the 'Tested Contract' column:</p>
+<table border="1">
+	<tr>
+		<td>FunctionAssumeToRemainingProgram</td>
+		<td>For a function, all of it's following proof obligations must be proved using the function's assume specification.</td>
+	</tr>
+	<tr>
+		<td>FunctionEnsureToRemainingProgram</td>
+		<td>For a function call, all following proof obligations must be proved using the called function's ensure specification.</td>
+	</tr>
+	<tr>
+		<td>WhileEnsureToRemainingProgram</td>
+		<td>For a while loop, all following proof obligations must be proved using the while loop's while specification.</td>
+	</tr>
+	<tr>
+		<td>InvariantAndConditionToInvariant</td>
+		<td>For a while loop, the invariant must be proved using the while loop's invariant and it's condition.</td>
+	</tr>
+	<tr>
+		<td>InvariantAndNotConditionToWhileEnsure</td>
+		<td>For a while loop, it's ensure specification must be proved using the while loop's invariant and the negation of it's condition.</td>
+	</tr>
+</table>
+<p>A program can be proven correct if all rows in the 'Verifier' tab contain 'true;' in their 'Result' column.</p>
+<h3>Counterexample Output</h3>
+<p>If the theorem prover was able to find a counterexample, the counterexample will be shown after a 'false;' in the 'Result' column, indicating variable names and their values. If function call's are used, parameters of function calls will be ennumerated starting at 1 for the first function call. The number of the function call is appended to a variable's name seperated by a dollar sign ($).</p>
+</body>
+</html>
