@@ -273,7 +273,9 @@ public class TypeChecker implements ASTVisitor {
                                             functionCall.getPosition());
         }
         for (int i = 0; i < parameters.length; i++) {
+            functionCallAllowed = false;
             parameterExpressions[i].accept(this);
+            functionCallAllowed = true;
             if (!tempType.equals(parameters[i].getType())) {
                 throw new IllegalTypeException("Wrong type used as parameter!",
                                                functionCall.getPosition());
