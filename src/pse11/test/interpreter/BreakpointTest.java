@@ -15,7 +15,7 @@ public class BreakpointTest {
 	
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		this.globalBreakpoint = new GlobalBreakpoint(null);
 		this.statementBreakpoint = new StatementBreakpoint(0);
 	}
@@ -44,7 +44,7 @@ public class BreakpointTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		this.globalBreakpoint = null;
 		this.statementBreakpoint = null;
 	}

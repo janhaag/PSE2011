@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import misc.ExecutionHandler;
 
+import org.antlr.runtime.RecognitionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class ProgramExecutionTest {
 	private ProgramExecution execution;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws RecognitionException {
 		ExecutionHandler executionHandler = new ExecutionHandler(null);
 		Program ast = executionHandler.getParserInterface().parseProgram("main(int a, bool b, int[] c) {int i = 5;}");
 		Interpreter interpreter = new Interpreter();
@@ -77,7 +78,7 @@ public class ProgramExecutionTest {
 	}
 	
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		this.execution = null;
 	}
 
