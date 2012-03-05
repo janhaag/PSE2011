@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TableViewController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">TableViewController.java</span></div><h1>TableViewController.java</h1><pre class="source lang-java linenums">package gui.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TableViewController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">TableViewController.java</span></div><h1>TableViewController.java</h1><pre class="source lang-java linenums">package gui.controller;
 
 import gui.BreakpointView;
 import gui.VariableView;
@@ -50,14 +50,14 @@ public class TableViewController implements SelectionListener {
 	 * @param varView specified view
 	 * @param executionHandler specified model
 	 */
-<span class="nc" id="L53">	public TableViewController(BreakpointView breakpointView, VariableView varView, ExecutionHandler executionHandler) {	</span>
-<span class="nc" id="L54">		this.breakpointView = breakpointView;	</span>
-<span class="nc" id="L55">		this.varView = varView;	</span>
-<span class="nc" id="L56">		this.executionHandler = executionHandler;</span>
+<span class="fc" id="L53">	public TableViewController(BreakpointView breakpointView, VariableView varView, ExecutionHandler executionHandler) {	</span>
+<span class="fc" id="L54">		this.breakpointView = breakpointView;	</span>
+<span class="fc" id="L55">		this.varView = varView;	</span>
+<span class="fc" id="L56">		this.executionHandler = executionHandler;</span>
 		
-<span class="nc" id="L58">		this.breakpointView.getGlobalBreakpoint().addSelectionListener(this);</span>
-<span class="nc" id="L59">		this.breakpointView.getAddButton().addSelectionListener(this);</span>
-<span class="nc" id="L60">	}</span>
+<span class="fc" id="L58">		this.breakpointView.getGlobalBreakpoint().addSelectionListener(this);</span>
+<span class="fc" id="L59">		this.breakpointView.getAddButton().addSelectionListener(this);</span>
+<span class="fc" id="L60">	}</span>
 	
 
 	/**
@@ -149,61 +149,76 @@ public class TableViewController implements SelectionListener {
 			try {
 <span class="nc" id="L150">				exp = this.executionHandler.getParserInterface().parseExpression(expression);</span>
 <span class="nc" id="L151">			} catch (RecognitionException ignored) {</span>
-			}	
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (exp == null) return;</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			for (i = 0; i &lt; this.executionHandler.getGlobalBreakpoints().size(); i++) {</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">				if (this.executionHandler.getGlobalBreakpoints().get(i).getExpression().toString().equals(exp.toString())) {</span>
-<span class="nc" id="L156">					break;</span>
+<span class="nc" id="L152">			} catch (NullPointerException ignored) {</span>
+			}
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (exp == null) return;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			for (i = 0; i &lt; this.executionHandler.getGlobalBreakpoints().size(); i++) {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				if (this.executionHandler.getGlobalBreakpoints().get(i).getExpression().toString().equals(exp.toString())) {</span>
+<span class="nc" id="L157">					break;</span>
 				}
 			}	
-<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (i &gt;= this.executionHandler.getGlobalBreakpoints().size()) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (i &gt;= this.executionHandler.getGlobalBreakpoints().size()) {</span>
 				if (exp != null) {
-<span class="nc" id="L161">					GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(exp);</span>
-<span class="nc" id="L162">					this.executionHandler.getGlobalBreakpoints().add(gBreakpoint);</span>
+<span class="nc" id="L162">					GlobalBreakpoint gBreakpoint = new GlobalBreakpoint(exp);</span>
+<span class="nc" id="L163">					this.executionHandler.getGlobalBreakpoints().add(gBreakpoint);</span>
 				}
 			} else {
-<span class="nc" id="L165">				this.executionHandler.getGlobalBreakpoints().remove(i);</span>
+<span class="nc" id="L166">				this.executionHandler.getGlobalBreakpoints().remove(i);</span>
 			}
-<span class="nc" id="L167">			this.breakpointView.drawGlobalBreakpointItem(this.executionHandler.getGlobalBreakpoints());</span>
-		}	
-<span class="nc" id="L169">	} </span>
+<span class="nc" id="L168">			this.breakpointView.drawGlobalBreakpointItem(this.executionHandler.getGlobalBreakpoints());</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		} else if (e.getSource() == this.breakpointView.getGlobalBreakpoint()) {</span>
+<span class="nc" id="L170">			Table table = this.breakpointView.getGlobalBreakpoint();		</span>
+			int i;
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			for (i = 0; i &lt; table.getItemCount(); i++) {</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (e.item == table.getItem(i)) {</span>
+<span class="nc" id="L174">					this.breakpointView.getAddTextField().setText(table.getItem(i).getText(1));</span>
+				}
+			}	
+		}
+<span class="nc" id="L178">	} </span>
 	
 	/**
 	 * Deactivate the variable view to show execution termination.
 	 */
 	public void deactivateVarView() {
-<span class="nc" id="L175">		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));</span>
-<span class="nc" id="L176">		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));</span>
-<span class="nc" id="L177">	}</span>
+<span class="nc" id="L184">		this.varView.getVarTree().setBackground(new Color(this.varView.getDisplay(), 231, 231, 231));</span>
+<span class="nc" id="L185">		this.varView.getVarTree().setForeground(new Color(this.varView.getDisplay(), 151, 151, 151));</span>
+<span class="nc" id="L186">	}</span>
 	
 	/**
 	 * Reactivate the variable view.
 	 */
 	public void activateVarView() {
-<span class="nc" id="L183">		this.varView.getVarTree().setBackground(null);</span>
-<span class="nc" id="L184">		this.varView.getVarTree().setForeground(null);</span>
-<span class="nc" id="L185">	}</span>
+<span class="nc" id="L192">		this.varView.getVarTree().setBackground(null);</span>
+<span class="nc" id="L193">		this.varView.getVarTree().setForeground(null);</span>
+<span class="nc" id="L194">	}</span>
 	
 	/**
 	 * Deactivate the breakpoint view to avoid invalid changes during program execution.
 	 */
 	public void deactivateBreakpointView() {
-<span class="nc" id="L191">		this.breakpointView.getAddButton().removeSelectionListener(this);</span>
-<span class="nc" id="L192">	}</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (this.breakpointView.getActive()) {</span>
+<span class="nc" id="L201">			this.breakpointView.getAddButton().removeSelectionListener(this);</span>
+<span class="nc" id="L202">			this.breakpointView.setActive(false);</span>
+		}
+<span class="nc" id="L204">	}</span>
 	
 	/**
 	 * Reactivate the breakpoint view.
 	 */
 	public void activateBreakpointView() {
-<span class="nc" id="L198">		this.breakpointView.getAddButton().addSelectionListener(this);</span>
-<span class="nc" id="L199">	}</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (!this.breakpointView.getActive()) {</span>
+<span class="nc" id="L211">			this.breakpointView.getAddButton().addSelectionListener(this);</span>
+<span class="nc" id="L212">			this.breakpointView.setActive(true);</span>
+		}
+<span class="nc" id="L214">	}</span>
 	
 	/**
 	 * Return the variable view of this controller.
 	 * @return variable view
 	 */
 	public VariableView getVarView() {
-<span class="nc" id="L206">		return this.varView;</span>
+<span class="nc" id="L221">		return this.varView;</span>
 	}
 	
 	/**
@@ -211,12 +226,11 @@ public class TableViewController implements SelectionListener {
 	 * @return breakpoint view
 	 */
 	public BreakpointView getBreakpointView() {
-<span class="nc" id="L214">		return this.breakpointView;</span>
+<span class="nc" id="L229">		return this.breakpointView;</span>
 	}
 	
 	@Override
-	public void widgetDefaultSelected(SelectionEvent arg0) {
-		// TODO Auto-generated method stub			
-<span class="nc" id="L220">	}</span>
+	public void widgetDefaultSelected(SelectionEvent arg0) {	
+<span class="nc" id="L234">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

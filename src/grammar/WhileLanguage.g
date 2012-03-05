@@ -360,13 +360,13 @@ mul_expression returns [ Expression ast, LinkedList<Expression> divisors, Linked
         ;
 
 unary_expression returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
-        : '!'  e=parenthesized_expression {if (!error) {
+        : '!'  e=parenthesized_expression {if (!error && $e.ast != null) {
         	$ast = new LogicalExpression(new Position($start.getLine(), $start.getCharPositionInLine()), $e.ast, null, new Negation());
         	$divisors = e.divisors; $arrayIndices = $e.arrayIndices;}}
-        | '-'  e=parenthesized_expression {if (!error) {
+        | '-'  e=parenthesized_expression {if (!error && $e.ast != null) {
         	$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()), $e.ast, null, new UnaryMinus());
         	$divisors = e.divisors; $arrayIndices = $e.arrayIndices;}}
-        | '+'? e=parenthesized_expression {if (!error) {
+        | '+'? e=parenthesized_expression {if (!error && $e.ast != null) {
         	$ast = $e.ast;
         	$divisors = e.divisors;
             $arrayIndices = $e.arrayIndices;}}
@@ -389,10 +389,12 @@ parenthesized_expression returns [ Expression ast, LinkedList<Expression> diviso
 function_call returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
         : IDENT '(' arglist? ')' {if (!error) {
         	Expression[] params = new Expression[0];
-        	if ($arglist.params != null) params = $arglist.params.toArray(new Expression[$arglist.params.size()]);
+            boolean args = false;
+        	if ($arglist.params != null) args = true;
+            if (args) params = $arglist.params.toArray(new Expression[$arglist.params.size()]);
         	$ast = new FunctionCall(new Identifier($IDENT.text), params , new Position($start.getLine(), $start.getCharPositionInLine()));
-        	$divisors = $arglist.divisors;
-            $arrayIndices = $arglist.arrayIndices;}}
+        	$divisors = args ? $arglist.divisors : new LinkedList<Expression>();
+            $arrayIndices = args ? $arglist.arrayIndices : new LinkedList<Pair<ArrayRead, Expression>>();}}
         ;
 
 arglist returns [ LinkedList<Expression> params, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]

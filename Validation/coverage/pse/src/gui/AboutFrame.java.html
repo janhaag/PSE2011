@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AboutFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">AboutFrame.java</span></div><h1>AboutFrame.java</h1><pre class="source lang-java linenums">package gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AboutFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">AboutFrame.java</span></div><h1>AboutFrame.java</h1><pre class="source lang-java linenums">package gui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -23,44 +23,44 @@ public class AboutFrame extends Frame implements MiscFrame {
 	 * Construct an about frame with the specified shell.
 	 * @param parentShell specified shell
 	 */
-<span class="nc" id="L26">	public AboutFrame(Shell parentShell) {		</span>
-<span class="nc" id="L27">		shell = new Shell(parentShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);</span>
-<span class="nc" id="L28">		shell.setSize(350,300);</span>
-<span class="nc" id="L29">		shell.setText(&quot;About&quot;);</span>
+<span class="fc" id="L26">	public AboutFrame(Shell parentShell) {		</span>
+<span class="fc" id="L27">		shell = new Shell(parentShell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);</span>
+<span class="fc" id="L28">		shell.setSize(350,300);</span>
+<span class="fc" id="L29">		shell.setText(&quot;About&quot;);</span>
 		
 		//Set the layout
-<span class="nc" id="L32">		GridLayout gLayout = new GridLayout();</span>
-<span class="nc" id="L33">		gLayout.marginTop = 20;</span>
-<span class="nc" id="L34">		gLayout.marginWidth = 15;</span>
-<span class="nc" id="L35">		shell.setLayout(gLayout);</span>
+<span class="fc" id="L32">		GridLayout gLayout = new GridLayout();</span>
+<span class="fc" id="L33">		gLayout.marginTop = 20;</span>
+<span class="fc" id="L34">		gLayout.marginWidth = 15;</span>
+<span class="fc" id="L35">		shell.setLayout(gLayout);</span>
 		
 		//Add various components
-<span class="nc" id="L38">		GridData gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
-<span class="nc" id="L39">		Label l1 = new Label(this.shell, SWT.NONE);</span>
-<span class="nc" id="L40">		l1.setText(&quot;Praxis der Softwareentwicklung&quot;);</span>
-<span class="nc" id="L41">		l1.setFont(new Font(parentShell.getDisplay(), &quot;&quot;, 16, SWT.BOLD) );</span>
-<span class="nc" id="L42">		l1.setForeground(new Color(parentShell.getDisplay(), 140, 140, 140));</span>
-<span class="nc" id="L43">		l1.setLayoutData(gData);</span>
-<span class="nc" id="L44">		Label l2 = new Label(this.shell, SWT.NONE);</span>
-<span class="nc" id="L45">		l2.setText(&quot;Projekt 3, Gruppe 1&quot;);</span>
-<span class="nc" id="L46">		l2.setFont(new Font(parentShell.getDisplay(), &quot;&quot;, 14, SWT.BOLD) );</span>
-<span class="nc" id="L47">		l2.setForeground(new Color(parentShell.getDisplay(), 140, 140, 140));</span>
-<span class="nc" id="L48">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
-<span class="nc" id="L49">		l2.setLayoutData(gData);		</span>
-<span class="nc" id="L50">		new Label(this.shell, SWT.NONE);</span>
-<span class="nc" id="L51">		Image image = new Image(parentShell.getDisplay(), MainFrame.class.getResourceAsStream(&quot;image/kitlogo.png&quot;));</span>
-<span class="nc" id="L52">		Label l3 = new Label(this.shell, SWT.NONE);</span>
-<span class="nc" id="L53">		l3.setImage(image);</span>
-<span class="nc" id="L54">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
-<span class="nc" id="L55">		l3.setLayoutData(gData);</span>
-<span class="nc" id="L56">		Label l4 = new Label(this.shell, SWT.NONE);</span>
-<span class="nc" id="L57">		l4.setText(&quot;WS 2011/2012&quot;);</span>
-<span class="nc" id="L58">		l4.setForeground(new Color(parentShell.getDisplay(), 140, 140, 140));</span>
-<span class="nc" id="L59">		l4.setFont(new Font(parentShell.getDisplay(), &quot;&quot;, 14, SWT.BOLD ) );</span>
-<span class="nc" id="L60">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
-<span class="nc" id="L61">		l4.setLayoutData(gData);</span>
-<span class="nc" id="L62">		shell.open();</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L38">		GridData gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
+<span class="fc" id="L39">		Label l1 = new Label(this.shell, SWT.NONE);</span>
+<span class="fc" id="L40">		l1.setText(&quot;Praxis der Softwareentwicklung&quot;);</span>
+<span class="fc" id="L41">		l1.setFont(new Font(parentShell.getDisplay(), &quot;&quot;, 16, SWT.BOLD) );</span>
+<span class="fc" id="L42">		l1.setForeground(new Color(parentShell.getDisplay(), 140, 140, 140));</span>
+<span class="fc" id="L43">		l1.setLayoutData(gData);</span>
+<span class="fc" id="L44">		Label l2 = new Label(this.shell, SWT.NONE);</span>
+<span class="fc" id="L45">		l2.setText(&quot;Projekt 3, Gruppe 1&quot;);</span>
+<span class="fc" id="L46">		l2.setFont(new Font(parentShell.getDisplay(), &quot;&quot;, 14, SWT.BOLD) );</span>
+<span class="fc" id="L47">		l2.setForeground(new Color(parentShell.getDisplay(), 140, 140, 140));</span>
+<span class="fc" id="L48">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
+<span class="fc" id="L49">		l2.setLayoutData(gData);		</span>
+<span class="fc" id="L50">		new Label(this.shell, SWT.NONE);</span>
+<span class="fc" id="L51">		Image image = new Image(parentShell.getDisplay(), MainFrame.class.getResourceAsStream(&quot;image/kitlogo.png&quot;));</span>
+<span class="fc" id="L52">		Label l3 = new Label(this.shell, SWT.NONE);</span>
+<span class="fc" id="L53">		l3.setImage(image);</span>
+<span class="fc" id="L54">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
+<span class="fc" id="L55">		l3.setLayoutData(gData);</span>
+<span class="fc" id="L56">		Label l4 = new Label(this.shell, SWT.NONE);</span>
+<span class="fc" id="L57">		l4.setText(&quot;WS 2011/2012&quot;);</span>
+<span class="fc" id="L58">		l4.setForeground(new Color(parentShell.getDisplay(), 140, 140, 140));</span>
+<span class="fc" id="L59">		l4.setFont(new Font(parentShell.getDisplay(), &quot;&quot;, 14, SWT.BOLD ) );</span>
+<span class="fc" id="L60">		gData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);</span>
+<span class="fc" id="L61">		l4.setLayoutData(gData);</span>
+<span class="fc" id="L62">		shell.open();</span>
+<span class="fc" id="L63">	}</span>
 	
 	@Override
 	public Button getSaveButton() {
@@ -75,4 +75,4 @@ public class AboutFrame extends Frame implements MiscFrame {
 <span class="nc" id="L75">		this.shell.close();</span>
 <span class="nc" id="L76">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

@@ -1,0 +1,15 @@
+axiom 1 > 0;
+#axiom i;
+#axiom (a*a+2*a*b+b*b) == (a+b)*(a+b);
+
+bool foo() {
+	#axiom true;
+	return false;
+}
+
+main () {
+	#axiom 5 == 6;
+	if (true) {
+		#axiom 2 > 0;
+	}
+}

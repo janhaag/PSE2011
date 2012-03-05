@@ -47,6 +47,7 @@ public class EditorView extends Composite {
 	 * breakpoint icon
 	 */
 	private Image breakpoint;
+	private boolean active;
 	/**
 	 * max number of lines
 	 */
@@ -64,6 +65,7 @@ public class EditorView extends Composite {
 		this.editor = editor; 
 		this.editor.setView(this);
 		this.parentdisplay = parent.getDisplay();
+		this.active = true;
 		
 		//Set the Layout
 		GridLayout gLayout = new GridLayout();
@@ -245,5 +247,13 @@ public class EditorView extends Composite {
 	 */
 	public StyledText getLineNumbers() {
 		return this.linenumbers;
+	}
+	
+	public boolean isActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

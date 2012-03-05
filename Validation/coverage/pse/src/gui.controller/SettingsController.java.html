@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SettingsController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">SettingsController.java</span></div><h1>SettingsController.java</h1><pre class="source lang-java linenums">package gui.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SettingsController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui.controller</a> &gt; <span class="el_source">SettingsController.java</span></div><h1>SettingsController.java</h1><pre class="source lang-java linenums">package gui.controller;
 
 import java.io.File;
 
@@ -27,16 +27,16 @@ public class SettingsController {
 	 * Construct a settings controller with the specified model.
 	 * @param settings specified model
 	 */
-<span class="nc" id="L30">	public SettingsController(Settings settings) {</span>
-<span class="nc" id="L31">		this.settings = settings;</span>
-<span class="nc" id="L32">	}</span>
+<span class="fc" id="L30">	public SettingsController(Settings settings) {</span>
+<span class="fc" id="L31">		this.settings = settings;</span>
+<span class="fc" id="L32">	}</span>
 	
 	/**
 	 * Return the value of the timeout of the model @see{Settings}.
 	 * @return timeout
 	 */
 	public String getTimeOut() {
-<span class="nc" id="L39">		return Integer.toString(this.settings.getTimeout());</span>
+<span class="fc" id="L39">		return Integer.toString(this.settings.getTimeout());</span>
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class SettingsController {
 	 * @return memory limit
 	 */
 	public String getMemoryLimit() {
-<span class="nc" id="L47">		return Integer.toString(this.settings.getMemoryLimit());</span>
+<span class="fc" id="L47">		return Integer.toString(this.settings.getMemoryLimit());</span>
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class SettingsController {
 	 * @return the absolute path to the verifier
 	 */
 	public String getVerifierPath() {
-<span class="nc" id="L56">		return this.settings.getVerifierPath();</span>
+<span class="fc" id="L56">		return this.settings.getVerifierPath();</span>
 	}
 	
 	/**
@@ -61,55 +61,75 @@ public class SettingsController {
 	 * @param frame specified view
 	 */
 	public void addView(SettingsFrame frame) {
-<span class="nc" id="L64">		this.frame = frame;</span>
-<span class="nc" id="L65">	}</span>
+<span class="fc" id="L64">		this.frame = frame;</span>
+<span class="fc" id="L65">	}</span>
 	
 	/**
 	 * Return a new listener instance to save settings.
 	 * @return listener 
 	 */
 	public SaveSettings getSaveButtonListener() {
-<span class="nc" id="L72">		return new SaveSettings();</span>
+<span class="fc" id="L72">		return new SaveSettings();</span>
+	}
+	
+	/**
+	 * Return a new listener instance to browse the verifier path.
+	 * 
+	 * @return listener
+	 */
+	public BrowseVerifierPath getBrowseButtonListener() {
+<span class="fc" id="L81">		return new BrowseVerifierPath();</span>
 	}
 	
 	/**
 	 * Display error message.
 	 */
 	private void invalidInput() {
-<span class="nc" id="L79">		this.frame.displayMessage(true, &quot;Invalid input.&quot;);</span>
-<span class="nc" id="L80">		this.frame.update();</span>
-<span class="nc" id="L81">	}</span>
+<span class="fc" id="L88">		this.frame.displayMessage(true, &quot;Invalid input.&quot;);</span>
+<span class="fc" id="L89">		this.frame.update();</span>
+<span class="fc" id="L90">	}</span>
 	
-<span class="nc" id="L83">	private class SaveSettings implements SelectionListener {</span>
+<span class="fc" id="L92">	private class SaveSettings implements SelectionListener {</span>
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			int timeout, memorylimit;
 			try {
-<span class="nc" id="L88">				timeout = Integer.parseInt(frame.getTimeoutTextField().getText());</span>
-<span class="nc" id="L89">				memorylimit = Integer.parseInt(frame.getMemoryLimitTextField().getText());</span>
-<span class="nc" id="L90">			} catch(NumberFormatException nfe) {</span>
-<span class="nc" id="L91">				invalidInput();</span>
-<span class="nc" id="L92">				return;</span>
+<span class="fc" id="L97">				timeout = Integer.parseInt(frame.getTimeoutTextField().getText());</span>
+<span class="fc" id="L98">				memorylimit = Integer.parseInt(frame.getMemoryLimitTextField().getText());</span>
+<span class="fc" id="L99">			} catch(NumberFormatException nfe) {</span>
+<span class="fc" id="L100">				invalidInput();</span>
+<span class="fc" id="L101">				return;</span>
 			}
-<span class="nc bnc" id="L94" title="All 4 branches missed.">			if(timeout &lt; 0 || memorylimit &lt; 0) {</span>
-<span class="nc" id="L95">				invalidInput();</span>
-<span class="nc" id="L96">				return;</span>
-			}
-<span class="nc" id="L98">			settings.setTimeout(timeout);</span>
-<span class="nc" id="L99">			settings.setMemoryLimit(memorylimit);</span>
-<span class="nc" id="L100">			String path = frame.getVerifierPathTextField().getText();</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if(new File(path).exists()) {</span>
-<span class="nc" id="L102">				settings.setVerifierPath(frame.getVerifierPathTextField().getText());</span>
-			} else {
+<span class="pc bpc" id="L103" title="2 of 4 branches missed.">			if(timeout &lt; 0 || memorylimit &lt; 0) {</span>
 <span class="nc" id="L104">				invalidInput();</span>
 <span class="nc" id="L105">				return;</span>
 			}
-<span class="nc" id="L107">			frame.displayMessage(false, &quot;Settings saved.&quot;);</span>
-<span class="nc" id="L108">			frame.update();</span>
-<span class="nc" id="L109">		}</span>
+<span class="fc" id="L107">			settings.setTimeout(timeout);</span>
+<span class="fc" id="L108">			settings.setMemoryLimit(memorylimit);</span>
+<span class="fc" id="L109">			String path = frame.getVerifierPathTextField().getText();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if(new File(path).exists()) {</span>
+<span class="fc" id="L111">				settings.setVerifierPath(frame.getVerifierPathTextField().getText());</span>
+			} else {
+<span class="fc" id="L113">				invalidInput();</span>
+<span class="fc" id="L114">				return;</span>
+			}
+<span class="fc" id="L116">			frame.displayMessage(false, &quot;Settings saved.&quot;);</span>
+<span class="fc" id="L117">			frame.update();</span>
+<span class="fc" id="L118">		}</span>
 		@Override
 		public void widgetDefaultSelected(SelectionEvent e) {
-<span class="nc" id="L112">		}</span>
+<span class="nc" id="L121">		}</span>
+	}
+	
+<span class="fc" id="L124">	private class BrowseVerifierPath implements SelectionListener {</span>
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+<span class="fc" id="L127">			frame.openFileDialog();</span>
+<span class="fc" id="L128">		}</span>
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+<span class="nc" id="L132">		}</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

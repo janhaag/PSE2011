@@ -1,0 +1,12 @@
+main(int a, int b, int c) {
+	while (c > 0) {
+		while (a < b) {
+			int i = 10;
+			while (i > 0) {
+				i = i - 1;
+			}
+			b = b - 1;
+		}
+		c = c - 1;
+	}
+}

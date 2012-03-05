@@ -63,16 +63,22 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
      * Deactivate the view to avoid invalid changes during program execution.
      */
     public void deactivateView() {
-    	this.editorframe.getLineNumbers().removeMouseListener(this);
-    	this.editorframe.getTextField().setEditable(false);
+    	if (this.editorframe.isActive()) {
+    		this.editorframe.getLineNumbers().removeMouseListener(this);
+        	this.editorframe.getTextField().setEditable(false);
+        	this.editorframe.setActive(false);
+    	}
     }
     
     /**
      * Reactivate the view.
      */
     public void activateView() {
-    	this.editorframe.getLineNumbers().addMouseListener(this);
-    	this.editorframe.getTextField().setEditable(true);
+    	if (!this.editorframe.isActive()) {
+    		this.editorframe.getLineNumbers().addMouseListener(this);
+        	this.editorframe.getTextField().setEditable(true);
+        	this.editorframe.setActive(true);
+    	}
     }
     
     /**
@@ -120,6 +126,12 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 		if (e.getSource() == this.editorframe.getLineNumbers()) {
 			int offset = this.editorframe.getLineNumbers().getCaretOffset() / 2;
 			int lineCount = this.editorframe.getTextField().getLineCount();
+			int i = this.editor.removeBreakpoint(offset + 1);
+			if (i == 1) {
+				this.editorframe.setStatementBreakpoint(offset + 1, 0);
+				this.editorframe.getTextField().setFocus();
+				return;
+			}
 			if (offset > lineCount - 1 || this.editorframe.getTextField().getLine(offset) == null 
 					|| !(this.editorframe.getTextField().getLine(offset).contains(";")
 							|| this.editorframe.getTextField().getLine(offset).replaceAll(" ", "").contains("if(")
@@ -128,8 +140,8 @@ public class EditorController implements MouseListener, ModifyListener, VerifyLi
 				this.editorframe.getTextField().setFocus();
 				return;
 			} 					
-			int i = this.editor.addBreakpoint(offset + 1); 
-			this.editorframe.setStatementBreakpoint(offset + 1, i);
+			this.editor.addBreakpoint(offset + 1); 
+			this.editorframe.setStatementBreakpoint(offset + 1, 1);
 			this.editorframe.getTextField().setFocus();
 		}			
 	}

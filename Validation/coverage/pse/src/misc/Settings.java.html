@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Settings.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Settings.java</span></div><h1>Settings.java</h1><pre class="source lang-java linenums">package misc;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Settings.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Settings.java</span></div><h1>Settings.java</h1><pre class="source lang-java linenums">package misc;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,7 +18,7 @@ import java.io.Writer;
  * 
  * @version 1.0
  */
-<span class="nc" id="L21">public class Settings {</span>
+<span class="fc" id="L21">public class Settings {</span>
 	/**
 	 * the timeout time of the verifier
 	 */
@@ -43,13 +43,13 @@ import java.io.Writer;
 	/**
 	 * Constructs a new instance of this class.
 	 */
-<span class="nc" id="L46">	private Settings() {</span>
-<span class="nc" id="L47">		this.settingsChanged = false;</span>
-<span class="nc" id="L48">		this.memoryLimit = DEFAULT_MEMORYLIMIT;</span>
-<span class="nc" id="L49">		this.timeout = DEFAULT_TIMEOUT;</span>
-<span class="nc" id="L50">		this.verifierPath = &quot;&quot;;</span>
-<span class="nc" id="L51">		loadSettings();</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L46">	private Settings() {</span>
+<span class="fc" id="L47">		this.settingsChanged = false;</span>
+<span class="fc" id="L48">		this.memoryLimit = DEFAULT_MEMORYLIMIT;</span>
+<span class="fc" id="L49">		this.timeout = DEFAULT_TIMEOUT;</span>
+<span class="fc" id="L50">		this.verifierPath = &quot;&quot;;</span>
+<span class="fc" id="L51">		loadSettings();</span>
+<span class="fc" id="L52">	}</span>
 	/**
 	 * Returns the instance of this class.
 	 * 
@@ -58,7 +58,7 @@ import java.io.Writer;
 	 * @return the instance of this class
 	 */
 	public static Settings getInstance() {
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		return settings == null ? (settings = new Settings()) : settings;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		return settings == null ? (settings = new Settings()) : settings;</span>
 	}
 	/**
 	 * Returns the timeout time for the verifier.
@@ -66,7 +66,7 @@ import java.io.Writer;
 	 * @return the timeout time for the verifier
 	 */
 	public int getTimeout() {
-<span class="nc" id="L69">		return this.timeout;</span>
+<span class="fc" id="L69">		return this.timeout;</span>
 	}
 	/**
 	 * Returns the maximum amount of memory which may be used by the verifier.
@@ -74,7 +74,7 @@ import java.io.Writer;
 	 * @return the maximum amount of memory for the verifier
 	 */
 	public int getMemoryLimit() {
-<span class="nc" id="L77">		return this.memoryLimit;</span>
+<span class="fc" id="L77">		return this.memoryLimit;</span>
 	}
 	/**
 	 * Returns the path to the verifier.
@@ -82,7 +82,7 @@ import java.io.Writer;
 	 * @return the path to the verifier
 	 */
 	public String getVerifierPath() {
-<span class="nc" id="L85">		return this.verifierPath;</span>
+<span class="fc" id="L85">		return this.verifierPath;</span>
 	}
 	/**
 	 * Sets the timeout time to the specified value.
@@ -90,15 +90,15 @@ import java.io.Writer;
 	 * @param timeout the new timeout time
 	 */
 	public void setTimeout(int timeout) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if(timeout &lt; 0) {</span>
-<span class="nc" id="L94">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if(timeout &lt; 0) {</span>
+<span class="fc" id="L94">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
 					+ &quot;The timout of the verifier has to be a positive integer.&quot;);
 		}
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if(this.timeout != timeout) {</span>
-<span class="nc" id="L98">			this.timeout = timeout;</span>
-<span class="nc" id="L99">			this.settingsChanged = true;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if(this.timeout != timeout) {</span>
+<span class="fc" id="L98">			this.timeout = timeout;</span>
+<span class="fc" id="L99">			this.settingsChanged = true;</span>
 		}
-<span class="nc" id="L101">	}</span>
+<span class="fc" id="L101">	}</span>
 	/**
 	 * Sets the maximum amount of memory which may be used by the verifier to the
 	 * specified value.
@@ -106,34 +106,34 @@ import java.io.Writer;
 	 * @param memoryLimit the maximum amount of memory usable by the verifier
 	 */
 	public void setMemoryLimit(int memoryLimit) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if(memoryLimit &lt; 0) {</span>
-<span class="nc" id="L110">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if(memoryLimit &lt; 0) {</span>
+<span class="fc" id="L110">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
 					+ &quot;The memory limit of the verifier has to be a positive integer.&quot;);
 		}
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if(this.memoryLimit != memoryLimit) {</span>
-<span class="nc" id="L114">			this.memoryLimit = memoryLimit;</span>
-<span class="nc" id="L115">			this.settingsChanged = true;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if(this.memoryLimit != memoryLimit) {</span>
+<span class="fc" id="L114">			this.memoryLimit = memoryLimit;</span>
+<span class="fc" id="L115">			this.settingsChanged = true;</span>
 		}
-<span class="nc" id="L117">	}</span>
+<span class="fc" id="L117">	}</span>
 	/**
 	 * Sets the absolute path to the verifier to the specified String.
 	 * 
 	 * @param verifierPath the path to the verifier
 	 */
 	public void setVerifierPath(String verifierPath) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if(verifierPath == null) {</span>
-<span class="nc" id="L125">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if(verifierPath == null) {</span>
+<span class="fc" id="L125">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
 					+ &quot;The path to the verifier must not be null.&quot;);
 		}
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if(!new File(verifierPath).exists()) {</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if(!new File(verifierPath).exists()) {</span>
 <span class="nc" id="L129">			throw new IllegalArgumentException(&quot;Illegal Argument!&quot;</span>
 					+ &quot;The specified path doesn't exist.&quot;);
 		}
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if(!verifierPath.equals(this.verifierPath)) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if(!verifierPath.equals(this.verifierPath)) {</span>
 <span class="nc" id="L133">			this.verifierPath = verifierPath;</span>
 <span class="nc" id="L134">			this.settingsChanged = true;</span>
 		}
-<span class="nc" id="L136">	}</span>
+<span class="fc" id="L136">	}</span>
 	/**
 	 * Returns &lt;code&gt;true&lt;/code&gt; when the settings have been changed and &lt;code&gt;false&lt;/code&gt;
 	 * otherwise.
@@ -141,33 +141,32 @@ import java.io.Writer;
 	 * @return &lt;code&gt;true&lt;/code&gt; when the settings have been changed, &lt;code&gt;false&lt;/code&gt; otherwise
 	 */
 	public boolean settingsChanged() {
-<span class="nc" id="L144">		return this.settingsChanged;</span>
+<span class="fc" id="L144">		return this.settingsChanged;</span>
 	}
 	/**
 	 * Saves the settings in an external file. The settings will not be saved if they
 	 * are unchanged (@see {@link Settings#settingsChanged()}).
 	 */
 	public void saveSettings() throws IOException {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if(USERHOME == null) {</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if(PATH == null) {</span>
 <span class="nc" id="L152">			return;</span>
 		}
-<span class="nc" id="L154">		String path = USERHOME + System.getProperty(&quot;file.separator&quot;) + FILENAME;</span>
-<span class="nc" id="L155">		this.settingsChanged = false;</span>
-<span class="nc" id="L156">		String settingString = this.timeout + System.getProperty(&quot;line.separator&quot;) + this.memoryLimit</span>
-<span class="nc" id="L157">								+ System.getProperty(&quot;line.separator&quot;) + this.verifierPath;</span>
+<span class="fc" id="L154">		this.settingsChanged = false;</span>
+<span class="fc" id="L155">		String settingString = this.timeout + System.getProperty(&quot;line.separator&quot;) + this.memoryLimit</span>
+<span class="fc" id="L156">								+ System.getProperty(&quot;line.separator&quot;) + this.verifierPath;</span>
 
-<span class="nc" id="L159">    	File file = new File(path);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if(!file.exists()) {</span>
-<span class="nc" id="L161">			file.createNewFile();</span>
+<span class="fc" id="L158">    	File file = new File(FILEPATH);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if(!file.exists()) {</span>
+<span class="nc" id="L160">			file.createNewFile();</span>
 		}
 		
-<span class="nc" id="L164">		Writer output = new BufferedWriter(new FileWriter(path));</span>
+<span class="fc" id="L163">		Writer output = new BufferedWriter(new FileWriter(FILEPATH));</span>
 	    try {
-<span class="nc" id="L166">	    	output.write(settingString);</span>
-<span class="nc" id="L167">	    } finally {</span>
-<span class="nc" id="L168">	    	output.close();</span>
-<span class="nc" id="L169">	    }</span>
-<span class="nc" id="L170">	}</span>
+<span class="fc" id="L165">	    	output.write(settingString);</span>
+<span class="nc" id="L166">	    } finally {</span>
+<span class="pc" id="L167">	    	output.close();</span>
+<span class="nc" id="L168">	    }</span>
+<span class="fc" id="L169">	}</span>
 	
 
 	
@@ -175,43 +174,44 @@ import java.io.Writer;
 	 * Loads the settings from an external file.
 	 */
 	private void loadSettings() {
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if(USERHOME == null) {</span>
-<span class="nc" id="L179">			return;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if(PATH == null) {</span>
+<span class="nc" id="L178">			return;</span>
 		}
-<span class="nc" id="L181">    	File file = new File(USERHOME + System.getProperty(&quot;file.separator&quot;) + FILENAME);</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">		if(!file.exists()) {</span>
-<span class="nc" id="L183">			this.settingsChanged = true;</span>
-<span class="nc" id="L184">			return;</span>
+<span class="fc" id="L180">    	File file = new File(FILEPATH);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if(!file.exists()) {</span>
+<span class="nc" id="L182">			this.settingsChanged = true;</span>
+<span class="nc" id="L183">			return;</span>
 		} else {
-<span class="nc" id="L186">			StringBuilder contents = new StringBuilder();</span>
+<span class="fc" id="L185">			StringBuilder contents = new StringBuilder();</span>
 			try {
-<span class="nc" id="L188">				BufferedReader input = new BufferedReader(new FileReader(file));</span>
+<span class="fc" id="L187">				BufferedReader input = new BufferedReader(new FileReader(file));</span>
 				try {
-<span class="nc" id="L190">					String line = null;</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">					while((line = input.readLine()) != null) {</span>
-<span class="nc" id="L192">						contents.append(line);</span>
-<span class="nc" id="L193">						contents.append(System.getProperty(&quot;line.separator&quot;));</span>
+<span class="fc" id="L189">					String line = null;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">					while((line = input.readLine()) != null) {</span>
+<span class="fc" id="L191">						contents.append(line);</span>
+<span class="fc" id="L192">						contents.append(System.getProperty(&quot;line.separator&quot;));</span>
 					}
-<span class="nc" id="L195">				} finally {</span>
-<span class="nc" id="L196">					input.close();</span>
-<span class="nc" id="L197">				}</span>
-<span class="nc" id="L198">			} catch(IOException ioe) {</span>
-<span class="nc" id="L199">				return;</span>
+<span class="nc" id="L194">				} finally {</span>
+<span class="pc" id="L195">					input.close();</span>
+<span class="nc" id="L196">				}</span>
+<span class="nc" id="L197">			} catch(IOException ioe) {</span>
+<span class="nc" id="L198">				return;</span>
 			}
-<span class="nc" id="L201">			String elements[] = contents.toString().split(System.getProperty(&quot;line.separator&quot;));</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">			if(elements.length != 3) {</span>
-<span class="nc" id="L203">				file.delete();</span>
-<span class="nc" id="L204">				return;</span>
+<span class="fc" id="L200">			String elements[] = contents.toString().split(System.getProperty(&quot;line.separator&quot;));</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if(elements.length != 3) {</span>
+<span class="nc" id="L202">				file.delete();</span>
+<span class="nc" id="L203">				return;</span>
 			}
-<span class="nc" id="L206">			this.timeout = Integer.parseInt(elements[0]);</span>
-<span class="nc" id="L207">			this.memoryLimit = Integer.parseInt(elements[1]);</span>
-<span class="nc" id="L208">			this.verifierPath = elements[2];</span>
+<span class="fc" id="L205">			this.timeout = Integer.parseInt(elements[0]);</span>
+<span class="fc" id="L206">			this.memoryLimit = Integer.parseInt(elements[1]);</span>
+<span class="fc" id="L207">			this.verifierPath = elements[2];</span>
 		}
-<span class="nc" id="L210">	}</span>
+<span class="fc" id="L209">	}</span>
 	
 	private static final int DEFAULT_TIMEOUT = 60;
 	private static final int DEFAULT_MEMORYLIMIT = 100;
 	private static final String FILENAME = &quot;.psesettings&quot;;
-<span class="nc" id="L215">	private static final String USERHOME = System.getProperty(&quot;user.home&quot;);</span>
+<span class="fc" id="L214">	private static final String PATH = System.getProperty(&quot;user.home&quot;);</span>
+<span class="fc" id="L215">	private static final String FILEPATH = PATH + System.getProperty(&quot;file.separator&quot;) + FILENAME;</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

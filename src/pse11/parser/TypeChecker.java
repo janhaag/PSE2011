@@ -114,11 +114,6 @@ public class TypeChecker implements ASTVisitor {
         HashMap<Identifier, Value> vars = currentScope.getVariables();
         Identifier identifier = arrayAssignment.getIdentifier();
         Value value = vars.get(identifier);
-        if (value == null) {
-            throw new IllegalTypeException("Variable " + identifier.getName()
-                                           + " was read but not declared!",
-                                           arrayAssignment.getPosition());
-        }
         arrayAssignment.getValue().accept(this);
         Type type = baseType(value.getType(), arrayAssignment.getIndices().length,
                      arrayAssignment.getPosition());
@@ -459,7 +454,9 @@ public class TypeChecker implements ASTVisitor {
     @Override
     public void visit(Axiom axiom) {
         functionCallAllowed = false;
+        currentScope = new Scope(null, null, null);
         axiom.getExpression().accept(this);
+        currentScope = currentScope.getParent();
         functionCallAllowed = true;
         if (!(tempType instanceof BooleanType)) {
             throw new IllegalTypeException("Expression must have bool type!",
@@ -536,6 +533,8 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         currentScope.createVar(varDec.getName(), null, varDec.getType());
+        varDec.setDepth(currentScope.getDepthOfVariable(
+                new Identifier(varDec.getName())));
     }
 
     /**
@@ -565,6 +564,8 @@ public class TypeChecker implements ASTVisitor {
             lengths[i] = 1;
         }
         currentScope.createArray(arrDec.getName(), arrDec.getType(), lengths);
+        arrDec.setDepth(currentScope.getDepthOfVariable(
+                new Identifier(arrDec.getName())));
     }
 
     /**
@@ -585,8 +586,9 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         currentScope = new Scope(currentScope, null, null);
-        currentScope.createVar(existsQuantifier.getIdentifier().getName(),
-                                null, new IntegerType());
+        Identifier ident = existsQuantifier.getIdentifier();
+        currentScope.createVar(ident.getName(), null, new IntegerType());
+        existsQuantifier.setDepth(currentScope.getDepthOfVariable(ident));
         functionCallAllowed = false;
         existsQuantifier.getSubexpression1().accept(this);
         functionCallAllowed = true;
@@ -616,8 +618,9 @@ public class TypeChecker implements ASTVisitor {
             }
         }
         currentScope = new Scope(currentScope, null, null);
-        currentScope.createVar(forAllQuantifier.getIdentifier().getName(),
-                                null, new IntegerType());
+        Identifier ident = forAllQuantifier.getIdentifier();
+        currentScope.createVar(ident.getName(), null, new IntegerType());
+        forAllQuantifier.setDepth(currentScope.getDepthOfVariable(ident));
         functionCallAllowed = false;
         forAllQuantifier.getSubexpression1().accept(this);
         functionCallAllowed = true;

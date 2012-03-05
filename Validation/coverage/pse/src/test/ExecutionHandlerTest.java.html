@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ExecutionHandlerTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test</a> &gt; <span class="el_source">ExecutionHandlerTest.java</span></div><h1>ExecutionHandlerTest.java</h1><pre class="source lang-java linenums">package test;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ExecutionHandlerTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test</a> &gt; <span class="el_source">ExecutionHandlerTest.java</span></div><h1>ExecutionHandlerTest.java</h1><pre class="source lang-java linenums">package test;
 
 import interpreter.GlobalBreakpoint;
 import interpreter.StatementBreakpoint;
@@ -44,90 +44,114 @@ import static org.junit.Assert.*;
 <span class="fc" id="L44">    }</span>
 
     @Test
+    public void testArrayEqual() {
+<span class="fc" id="L48">        executionHandler.parse(&quot;main() {bool[] x = array[3];&quot; +</span>
+                &quot;bool[] y = array[3];} ensure x == y;&quot;);
+<span class="fc" id="L50">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L51">        assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L52">    }</span>
+
+    @Test
+    public void testArrayNotEqualValues() {
+<span class="fc" id="L56">        executionHandler.parse(&quot;main() {bool[] x = array[3];&quot; +</span>
+                &quot;bool[] y = array[3]; y[2] = true;} ensure x != y;&quot;);
+<span class="fc" id="L58">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L59">        assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L60">    }</span>
+
+    @Test
+    public void testArrayNotEqualLength() {
+<span class="fc" id="L64">        executionHandler.parse(&quot;main() {bool[] x = array[3];&quot; +</span>
+                &quot;bool[] y = array[4];} ensure x != y;&quot;);
+<span class="fc" id="L66">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L67">        assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L68">    }</span>
+
+    @Test
     public void testDivision() {
-<span class="fc" id="L48">        executionHandler.parse(&quot;main() {assert 4/2==2; assert 5/3==1;&quot; +</span>
+<span class="fc" id="L72">        executionHandler.parse(&quot;main() {assert 4/2==2; assert 5/3==1;&quot; +</span>
                 &quot;assert (-4)/2==-2; assert (-5)/3==-2;&quot; +
                 &quot;assert 4/(-2)==-2; assert 5/(-3)==-1;&quot; +
                 &quot;assert (-4)/(-2)==2; assert (-5)/(-3)==2;}&quot;);
-<span class="fc" id="L52">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L53">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L54">    }</span>
+<span class="fc" id="L76">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L77">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L78">    }</span>
 
     @Test
     public void testModulo() {
-<span class="fc" id="L58">        executionHandler.parse(&quot;main() {assert 4%2==0; assert 5%3==2;&quot; +</span>
+<span class="fc" id="L82">        executionHandler.parse(&quot;main() {assert 4%2==0; assert 5%3==2;&quot; +</span>
                 &quot;assert (-4)%2==0; assert (-5)%3==1;&quot; +
                 &quot;assert 4%(-2)==0; assert 5%(-3)==2;&quot; +
                 &quot;assert (-4)%(-2)==0; assert (-5)%(-3)==1;}&quot;);
-<span class="fc" id="L62">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L63">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L86">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L87">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L88">    }</span>
 
     @Test
     public void testIf() {
-<span class="fc" id="L68">        executionHandler.parse(&quot;main() {int i; if (i&lt;2)&quot; +</span>
+<span class="fc" id="L92">        executionHandler.parse(&quot;main() {int i; if (i&lt;2)&quot; +</span>
                 &quot;{int i = -1;}}&quot; +
                 &quot;ensure i == 00000;&quot;);
-<span class="fc" id="L71">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L72">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L73">    }</span>
+<span class="fc" id="L95">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L96">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L97">    }</span>
 
     @Test
     public void testIfElse() {
-<span class="fc" id="L77">        executionHandler.parse(&quot;main() {int i; if (i&gt;2) {int i = -1;}&quot; +</span>
+<span class="fc" id="L101">        executionHandler.parse(&quot;main() {int i; if (i&gt;2) {int i = -1;}&quot; +</span>
                 &quot;else {i=2;}}&quot; +
                 &quot;ensure i == 000002;&quot;);
-<span class="fc" id="L80">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L81">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L104">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L105">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L106">    }</span>
 
     @Test
     public void testParams() {
-<span class="fc" id="L86">        executionHandler.parse(&quot;main(int i, int[][] r)&quot; +</span>
+<span class="fc" id="L110">        executionHandler.parse(&quot;main(int i, int[][] r)&quot; +</span>
                 &quot;{int j = 0; while (j &lt; length(r)){i=i+r[j][0]; j=j+1;}}&quot; +
                 &quot;ensure i == 42;&quot;);
-<span class="fc" id="L89">        executionHandler.setParameterValues(</span>
-<span class="fc" id="L90">                new String[]{&quot;2&quot;, &quot;{{20},{11},{9}}&quot;});</span>
-<span class="fc" id="L91">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L92">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L93">    }</span>
+<span class="fc" id="L113">        executionHandler.setParameterValues(</span>
+<span class="fc" id="L114">                new String[]{&quot;2&quot;, &quot;{{20},{11},{9}}&quot;});</span>
+<span class="fc" id="L115">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L116">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L117">    }</span>
 
     @Test
     public void testArraySum() {
-<span class="fc" id="L97">        executionHandler.parse(&quot;int sum(int[] i){int j = 0;int res = 0;&quot; +</span>
+<span class="fc" id="L121">        executionHandler.parse(&quot;int sum(int[] i){int j = 0;int res = 0;&quot; +</span>
                 &quot;while(j&lt;length(i)){res = res+i[j]; j=j+1;} return res;}&quot; +
                 &quot;main() {int[] x = array[3]; x[0]=2;x[1]=-1;x[2]=2;&quot; +
                 &quot;int h = sum(x);} ensure h == 3;&quot;);
-<span class="fc" id="L101">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L102">        assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L103">    }</span>
+<span class="fc" id="L125">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L126">        assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L127">    }</span>
     
     @Test
     public void testEmptyProgramEnsureTrue() {
-<span class="fc" id="L107">        executionHandler.parse(&quot;main(){} ensure true;&quot;);</span>
-<span class="fc" id="L108">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L109">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L131">        executionHandler.parse(&quot;main(){} ensure true;&quot;);</span>
+<span class="fc" id="L132">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L133">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L134">	}</span>
 
     @Test
     public void testAssignmentAndEnsure() {
-<span class="fc" id="L114">        executionHandler.parse(&quot;main() {int x = 1;} ensure x &gt; 0;&quot;);</span>
-<span class="fc" id="L115">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L116">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L117">	}</span>
+<span class="fc" id="L138">        executionHandler.parse(&quot;main() {int x = 1;} ensure x &gt; 0;&quot;);</span>
+<span class="fc" id="L139">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L140">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L141">	}</span>
 
     @Test
     public void testQuantifiers() {
-<span class="fc" id="L121">        executionHandler.parse(&quot;main()&quot; +</span>
+<span class="fc" id="L145">        executionHandler.parse(&quot;main()&quot; +</span>
                 &quot;{int j = 4;}&quot; +
                 &quot;ensure forall x(2,j) exists z(1,2) (j==x+z) | (j==x*z);&quot;);
-<span class="fc" id="L124">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L125">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L126">    }</span>
+<span class="fc" id="L148">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L149">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L150">    }</span>
 
     @Test
     public void testRecursion() {
-<span class="fc" id="L130">        executionHandler.parse(&quot;int rek(int n, int k) assume {n &gt;= k; k &gt;= 0;} {&quot; +</span>
+<span class="fc" id="L154">        executionHandler.parse(&quot;int rek(int n, int k) assume {n &gt;= k; k &gt;= 0;} {&quot; +</span>
                     &quot;int result = 1;&quot; +
                     &quot;if ((n != k) &amp; (k != 0) &amp; (n != 0)) {&quot; +
                             &quot;result = rek(n-1, k-1)+rek(n-1, k);&quot; +
@@ -138,13 +162,13 @@ import static org.junit.Assert.*;
                             &quot;int n=4;int k=2;&quot; +
                             &quot;int f = rek(n,k);&quot; +
                     &quot;} ensure f==6;&quot;);
-<span class="fc" id="L141">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L142">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L143">    }</span>
+<span class="fc" id="L165">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L166">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L167">    }</span>
 
     @Test
     public void testArrays() {
-<span class="fc" id="L147">        executionHandler.parse(&quot;main() {&quot; +</span>
+<span class="fc" id="L171">        executionHandler.parse(&quot;main() {&quot; +</span>
                     &quot;int n = 5; int k = 3; int r = 10;&quot; +
                     &quot;int[][] table = array[n+1][k+1];&quot; +
                     &quot;int i=0; while (i&lt;=n) {&quot; +
@@ -156,134 +180,168 @@ import static org.junit.Assert.*;
                             &quot;j=j+1;&quot; +
                         &quot;}i=i+1;&quot; +
                     &quot;}} ensure table[n][k] == r;&quot;);
-<span class="fc" id="L159">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L160">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L161">    }</span>
+<span class="fc" id="L183">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L184">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L185">    }</span>
 
     @Test
     public void testEmptyProgram() {
-<span class="fc" id="L165">        executionHandler.parse(&quot;main(){}&quot;);</span>
-<span class="fc" id="L166">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L167">		assertNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L168">	}</span>
+<span class="fc" id="L189">        executionHandler.parse(&quot;main(){}&quot;);</span>
+<span class="fc" id="L190">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L191">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L192">	}</span>
+
+    @Test
+    public void testAssumptions() {
+<span class="fc" id="L196">        executionHandler.parse(&quot;main(bool i) assume i; {}&quot;);</span>
+<span class="fc" id="L197">        executionHandler.setParameterValues(</span>
+<span class="fc" id="L198">                new String[]{&quot;true&quot;});</span>
+<span class="fc" id="L199">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L200">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L201">    }</span>
+
+    @Test
+    public void testNegation() {
+<span class="fc" id="L205">        executionHandler.parse(&quot;main(bool i) {}ensure !i;&quot;);</span>
+<span class="fc" id="L206">        executionHandler.setParameterValues(</span>
+<span class="fc" id="L207">                new String[]{&quot;false&quot;});</span>
+<span class="fc" id="L208">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L209">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L210">    }</span>
+
+    @Test
+    public void testEmptyExists() {
+<span class="fc" id="L214">        executionHandler.parse(&quot;main() {}ensure exists h() false;&quot;);</span>
+<span class="fc" id="L215">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L216">		assertNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L217">    }</span>
+
+    @Test
+    public void testAssumptionsFail() {
+<span class="fc" id="L221">        executionHandler.parse(&quot;main(bool i) assume i; {}&quot;);</span>
+<span class="fc" id="L222">        executionHandler.setParameterValues(</span>
+<span class="fc" id="L223">                new String[]{&quot;false&quot;});</span>
+<span class="fc" id="L224">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L225">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L226">    }</span>
 
     @Test
     public void testQuantifierFail() {
-<span class="fc" id="L172">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4;}&quot; +
-                &quot;ensure forall x(2,j) exists z(1,2) (j==x*z);&quot;);
-<span class="fc" id="L175">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L176">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L177">	}</span>
-
-    @Test
-    public void testDivZero() {
-<span class="fc" id="L181">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4; j = j/(j-4);}&quot;);
-<span class="fc" id="L183">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L184">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L185">	}</span>
-
-    @Test
-    public void testArrayLength() {
-<span class="fc" id="L189">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int[][][] j = array[2][0][3];}&quot;);
-<span class="fc" id="L191">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L192">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L193">	}</span>
-
-    @Test
-    public void testArrayIndexRead() {
-<span class="fc" id="L197">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int[][][] j = array[2][1][3]; int i = j[2][0][1];}&quot;);
-<span class="fc" id="L199">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L200">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L201">	}</span>
-
-    @Test
-    public void testArrayIndexAssign() {
-<span class="fc" id="L205">        executionHandler.parse(&quot;main()&quot; +</span>
-        		&quot;{int[][][] j = array[2][1][3]; j[1][-1][1] = 2;}&quot;);
-<span class="fc" id="L207">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L208">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L209">	}</span>
-
-    @Test
-    public void testModuloZero() {
-<span class="fc" id="L213">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 2%0;}&quot;);
-<span class="fc" id="L215">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L216">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L217">	}</span>
-
-    @Test
-    public void testExistsFail() {
-<span class="fc" id="L221">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4;}&quot; +
-                &quot;ensure exists z(1,2) (j==3*z);&quot;);
-<span class="fc" id="L224">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L225">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L226">	}</span>
-
-    @Test
-    public void testForAllFail() {
 <span class="fc" id="L230">        executionHandler.parse(&quot;main()&quot; +</span>
                 &quot;{int j = 4;}&quot; +
-                &quot;ensure forall x() (j==x*2);&quot;);
+                &quot;ensure forall x(2,j) exists z(1,2) (j==x*z);&quot;);
 <span class="fc" id="L233">        executionHandler.run(stmtBps, glblBps);</span>
 <span class="fc" id="L234">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
 <span class="fc" id="L235">	}</span>
 
     @Test
-    public void testEmptySetExistsFail() {
+    public void testDivZero() {
 <span class="fc" id="L239">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4;}&quot; +
-                &quot;ensure exists z(j,2) true;&quot;);
-<span class="fc" id="L242">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L243">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L244">	}</span>
+                &quot;{int j = 4; j = j/(j-4);}&quot;);
+<span class="fc" id="L241">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L242">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L243">	}</span>
 
     @Test
-    public void testInvariantFailMiddle() {
-<span class="fc" id="L248">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4; while (j &lt; 20) invariant j != 15; {j=j+1;}}&quot;);
-<span class="fc" id="L250">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L251">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L252">	}</span>
+    public void testArrayLength() {
+<span class="fc" id="L247">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int[][][] j = array[2][0][3];}&quot;);
+<span class="fc" id="L249">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L250">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L251">	}</span>
 
     @Test
-    public void testInvariantFailBeginning() {
-<span class="fc" id="L256">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4; while (j &lt; 20) invariant j &gt; 4; {j=j+1;}}&quot;);
-<span class="fc" id="L258">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L259">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L260">	}</span>
+    public void testArrayIndexRead() {
+<span class="fc" id="L255">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int[][][] j = array[2][1][3]; int i = j[2][0][1];}&quot;);
+<span class="fc" id="L257">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L258">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L259">	}</span>
 
     @Test
-    public void testInvariantFailEnd() {
-<span class="fc" id="L264">        executionHandler.parse(&quot;main()&quot; +</span>
-                &quot;{int j = 4; while (j &lt; 20) invariant j &lt; 20; {j=j+1;}}&quot;);
-<span class="fc" id="L266">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L267">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L268">	}</span>
+    public void testArrayIndexAssign() {
+<span class="fc" id="L263">        executionHandler.parse(&quot;main()&quot; +</span>
+        		&quot;{int[][][] j = array[2][1][3]; j[1][-1][1] = 2;}&quot;);
+<span class="fc" id="L265">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L266">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L267">	}</span>
 
     @Test
-    public void testEmptyProgramEnsureFalse() {
-<span class="fc" id="L272">        executionHandler.parse(&quot;main(){} ensure false;&quot;);</span>
+    public void testModuloZero() {
+<span class="fc" id="L271">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 2%0;}&quot;);
 <span class="fc" id="L273">        executionHandler.run(stmtBps, glblBps);</span>
 <span class="fc" id="L274">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
 <span class="fc" id="L275">	}</span>
 
     @Test
+    public void testExistsFail() {
+<span class="fc" id="L279">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 4;}&quot; +
+                &quot;ensure exists z(1,2) (j==3*z);&quot;);
+<span class="fc" id="L282">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L283">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L284">	}</span>
+
+    @Test
+    public void testForAllFail() {
+<span class="fc" id="L288">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 4;}&quot; +
+                &quot;ensure forall x() (j==x*2);&quot;);
+<span class="fc" id="L291">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L292">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L293">	}</span>
+
+    @Test
+    public void testEmptySetExistsFail() {
+<span class="fc" id="L297">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 4;}&quot; +
+                &quot;ensure exists z(j,2) true;&quot;);
+<span class="fc" id="L300">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L301">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L302">	}</span>
+
+    @Test
+    public void testInvariantFailMiddle() {
+<span class="fc" id="L306">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 4; while (j &lt; 20) invariant j != 15; {j=j+1;}}&quot;);
+<span class="fc" id="L308">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L309">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L310">	}</span>
+
+    @Test
+    public void testInvariantFailBeginning() {
+<span class="fc" id="L314">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 4; while (j &lt; 20) invariant j &gt; 4; {j=j+1;}}&quot;);
+<span class="fc" id="L316">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L317">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L318">	}</span>
+
+    @Test
+    public void testInvariantFailEnd() {
+<span class="fc" id="L322">        executionHandler.parse(&quot;main()&quot; +</span>
+                &quot;{int j = 4; while (j &lt; 20) invariant j &lt; 20; {j=j+1;}}&quot;);
+<span class="fc" id="L324">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L325">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L326">	}</span>
+
+    @Test
+    public void testEmptyProgramEnsureFalse() {
+<span class="fc" id="L330">        executionHandler.parse(&quot;main(){} ensure false;&quot;);</span>
+<span class="fc" id="L331">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L332">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L333">	}</span>
+
+    @Test
     public void testAssumeFalse() {
-<span class="fc" id="L279">        executionHandler.parse(&quot;main() assume false;{}&quot;);</span>
-<span class="fc" id="L280">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L281">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L282">	}</span>
+<span class="fc" id="L337">        executionHandler.parse(&quot;main() assume false;{}&quot;);</span>
+<span class="fc" id="L338">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L339">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L340">	}</span>
 
     @Test
     public void testRecursionFail() {
-<span class="fc" id="L286">        executionHandler.parse(&quot;int rek(int n, int k) assume {n &gt;= k; k &gt;= 0;} {&quot; +</span>
+<span class="fc" id="L344">        executionHandler.parse(&quot;int rek(int n, int k) assume {n &gt;= k; k &gt;= 0;} {&quot; +</span>
                     &quot;int result = 1;&quot; +
                     &quot;if ((n != k) &amp; (k != 0) &amp; (n != 0)) {&quot; +
                             &quot;result = rek(n-1, k-1)+rek(n-1, k);&quot; +
@@ -294,13 +352,13 @@ import static org.junit.Assert.*;
                             &quot;int n=4;int k=2;&quot; +
                             &quot;int f = rek(n,k);&quot; +
                     &quot;} ensure f==5;&quot;);
-<span class="fc" id="L297">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L298">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L299">	}</span>
+<span class="fc" id="L355">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L356">		assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L357">	}</span>
 
     @Test
     public void testArraysFail() {
-<span class="fc" id="L303">        executionHandler.parse(&quot;main() {&quot; +</span>
+<span class="fc" id="L361">        executionHandler.parse(&quot;main() {&quot; +</span>
                     &quot;int n = 5; int k = 3; int r = 9;&quot; +
                     &quot;int[][] table = array[n+1][k+1];&quot; +
                     &quot;int i=0; while (i&lt;=n) {&quot; +
@@ -312,34 +370,34 @@ import static org.junit.Assert.*;
                             &quot;j=j+1;&quot; +
                         &quot;}i=i+1;&quot; +
                     &quot;}} ensure table[n][k] == r;&quot;);
-<span class="fc" id="L315">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L316">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L317">    }</span>
+<span class="fc" id="L373">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L374">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L375">    }</span>
 
     @Test
     public void testMethodAssumeFail() {
-<span class="fc" id="L321">        executionHandler.parse(&quot;int f(int i) assume i&gt;0;{return 0;}&quot; +</span>
+<span class="fc" id="L379">        executionHandler.parse(&quot;int f(int i) assume i&gt;0;{return 0;}&quot; +</span>
                 &quot;main() {int x = f(-2);} ensure x &gt; 0;&quot;);
-<span class="fc" id="L323">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L324">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L325">    }</span>
+<span class="fc" id="L381">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L382">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L383">    }</span>
     
     @Test
     public void testArrayParameterFail() {
-<span class="fc" id="L329">        executionHandler.parse(&quot;int f(int[] i) assume length(i) &gt; 3;{return 0;}&quot; +</span>
+<span class="fc" id="L387">        executionHandler.parse(&quot;int f(int[] i) assume length(i) &gt; 3;{return 0;}&quot; +</span>
                 &quot;main() {int[] x = array[3]; x[1] = f(x);} ensure x[1] &gt; 0;&quot;);
-<span class="fc" id="L331">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L332">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L333">    }</span>
+<span class="fc" id="L389">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L390">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L391">    }</span>
 
     @Test
     public void testArraySumFail() {
-<span class="fc" id="L337">        executionHandler.parse(&quot;int sum(int[] i){int j = 0;int res = 0;&quot; +</span>
+<span class="fc" id="L395">        executionHandler.parse(&quot;int sum(int[] i){int j = 0;int res = 0;&quot; +</span>
                 &quot;while(j&lt;length(i)){res = res+i[j]; j=j+1;} return res;}&quot; +
                 &quot;main() {int[] x = array[3]; x[0]=2;x[1]=-1;x[2]=2;&quot; +
                 &quot;int h = sum(x);} ensure h &lt; 0;&quot;);
-<span class="fc" id="L341">        executionHandler.run(stmtBps, glblBps);</span>
-<span class="fc" id="L342">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
-<span class="fc" id="L343">    }</span>
+<span class="fc" id="L399">        executionHandler.run(stmtBps, glblBps);</span>
+<span class="fc" id="L400">        assertNotNull(executionHandler.getAssertionFailureMessage());</span>
+<span class="fc" id="L401">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">MainFrame.java</span></div><h1>MainFrame.java</h1><pre class="source lang-java linenums">package gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">MainFrame.java</span></div><h1>MainFrame.java</h1><pre class="source lang-java linenums">package gui;
 
 import java.io.IOException;
 
@@ -44,138 +44,138 @@ public class MainFrame extends Frame {
 	 * @param editor specified model
 	 * @param messagesystem specified model
 	 */
-<span class="nc" id="L47">	public MainFrame(MainController mainController, Editor editor, MessageSystem messagesystem) {</span>
+<span class="fc" id="L47">	public MainFrame(MainController mainController, Editor editor, MessageSystem messagesystem) {</span>
 		// Initialization and Configuration of the window
-<span class="nc" id="L49">		display = new Display();</span>
-<span class="nc" id="L50">		shell = new Shell(display);</span>
-<span class="nc" id="L51">		shell.setSize(950, 650);</span>
-<span class="nc" id="L52">		shell.setText(SHELLTITLE);</span>
+<span class="fc" id="L49">		display = new Display();</span>
+<span class="fc" id="L50">		shell = new Shell(display);</span>
+<span class="fc" id="L51">		shell.setSize(950, 650);</span>
+<span class="fc" id="L52">		shell.setText(SHELLTITLE);</span>
 
 		// Setting layout
-<span class="nc" id="L55">		GridLayout gLayout = new GridLayout();</span>
-<span class="nc" id="L56">		gLayout.numColumns = 4;</span>
-<span class="nc" id="L57">		gLayout.makeColumnsEqualWidth = true;</span>
-<span class="nc" id="L58">		shell.setLayout(gLayout);</span>
+<span class="fc" id="L55">		GridLayout gLayout = new GridLayout();</span>
+<span class="fc" id="L56">		gLayout.numColumns = 4;</span>
+<span class="fc" id="L57">		gLayout.makeColumnsEqualWidth = true;</span>
+<span class="fc" id="L58">		shell.setLayout(gLayout);</span>
 
 		// Adding menu bar
-<span class="nc" id="L61">		menubar = new MenuBar(mainController, shell);</span>
+<span class="fc" id="L61">		menubar = new MenuBar(mainController, shell);</span>
 
-<span class="nc" id="L63">		Composite c1 = new Composite(shell, SWT.NONE);</span>
-<span class="nc" id="L64">		gLayout = new GridLayout();</span>
-<span class="nc" id="L65">		gLayout.numColumns = 20;</span>
-<span class="nc" id="L66">		gLayout.makeColumnsEqualWidth = true;</span>
-<span class="nc" id="L67">		c1.setLayout(gLayout);</span>
-<span class="nc" id="L68">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L69">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L70">		c1.setLayoutData(gData);</span>
+<span class="fc" id="L63">		Composite c1 = new Composite(shell, SWT.NONE);</span>
+<span class="fc" id="L64">		gLayout = new GridLayout();</span>
+<span class="fc" id="L65">		gLayout.numColumns = 20;</span>
+<span class="fc" id="L66">		gLayout.makeColumnsEqualWidth = true;</span>
+<span class="fc" id="L67">		c1.setLayout(gLayout);</span>
+<span class="fc" id="L68">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L69">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L70">		c1.setLayoutData(gData);</span>
 
 		// Adding editor
-<span class="nc" id="L73">		this.editor = new EditorView(c1, SWT.BORDER, editor);</span>
-<span class="nc" id="L74">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L75">		gData.horizontalSpan = 20;</span>
-<span class="nc" id="L76">		this.editor.setLayoutData(gData);</span>
+<span class="fc" id="L73">		this.editor = new EditorView(c1, SWT.BORDER, editor);</span>
+<span class="fc" id="L74">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L75">		gData.horizontalSpan = 20;</span>
+<span class="fc" id="L76">		this.editor.setLayoutData(gData);</span>
 
 		// Adding buttons
-<span class="nc" id="L79">		this.checkSyntaxButton = new Button(c1, SWT.PUSH);</span>
-<span class="nc" id="L80">		this.checkSyntaxButton.setText(&quot;Check Syntax&quot;);</span>
-<span class="nc" id="L81">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L82">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L83">		this.checkSyntaxButton.setLayoutData(gData);</span>
+<span class="fc" id="L79">		this.checkSyntaxButton = new Button(c1, SWT.PUSH);</span>
+<span class="fc" id="L80">		this.checkSyntaxButton.setText(&quot;Check Syntax&quot;);</span>
+<span class="fc" id="L81">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L82">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L83">		this.checkSyntaxButton.setLayoutData(gData);</span>
 
-<span class="nc" id="L85">		this.runButton = new Button(c1, SWT.PUSH);</span>
-<span class="nc" id="L86">		this.runButton.setText(&quot;Run&quot;);</span>
-<span class="nc" id="L87">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L88">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L89">		this.runButton.setLayoutData(gData);</span>
+<span class="fc" id="L85">		this.runButton = new Button(c1, SWT.PUSH);</span>
+<span class="fc" id="L86">		this.runButton.setText(&quot;Run&quot;);</span>
+<span class="fc" id="L87">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L88">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L89">		this.runButton.setLayoutData(gData);</span>
 
-<span class="nc" id="L91">		this.stepButton = new Button(c1, SWT.PUSH);</span>
-<span class="nc" id="L92">		this.stepButton.setText(&quot;Single Step&quot;);</span>
-<span class="nc" id="L93">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L94">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L95">		this.stepButton.setLayoutData(gData);</span>
+<span class="fc" id="L91">		this.stepButton = new Button(c1, SWT.PUSH);</span>
+<span class="fc" id="L92">		this.stepButton.setText(&quot;Single Step&quot;);</span>
+<span class="fc" id="L93">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L94">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L95">		this.stepButton.setLayoutData(gData);</span>
 
-<span class="nc" id="L97">		this.pauseButton = new Button(c1, SWT.PUSH);</span>
-<span class="nc" id="L98">		this.pauseButton.setText(&quot;Pause&quot;);</span>
-<span class="nc" id="L99">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L100">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L101">		this.pauseButton.setLayoutData(gData);</span>
-<span class="nc" id="L102">		this.pauseButton.setEnabled(false);</span>
+<span class="fc" id="L97">		this.pauseButton = new Button(c1, SWT.PUSH);</span>
+<span class="fc" id="L98">		this.pauseButton.setText(&quot;Pause&quot;);</span>
+<span class="fc" id="L99">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L100">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L101">		this.pauseButton.setLayoutData(gData);</span>
+<span class="fc" id="L102">		this.pauseButton.setEnabled(false);</span>
 
-<span class="nc" id="L104">		this.stopButton = new Button(c1, SWT.PUSH);</span>
-<span class="nc" id="L105">		this.stopButton.setText(&quot;Stop&quot;);</span>
-<span class="nc" id="L106">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L107">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L108">		this.stopButton.setLayoutData(gData);</span>
-<span class="nc" id="L109">		this.stopButton.setEnabled(false);</span>
+<span class="fc" id="L104">		this.stopButton = new Button(c1, SWT.PUSH);</span>
+<span class="fc" id="L105">		this.stopButton.setText(&quot;Stop&quot;);</span>
+<span class="fc" id="L106">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L107">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L108">		this.stopButton.setLayoutData(gData);</span>
+<span class="fc" id="L109">		this.stopButton.setEnabled(false);</span>
 
-<span class="nc" id="L111">		this.validateButton = new Button(c1, SWT.PUSH);</span>
-<span class="nc" id="L112">		this.validateButton.setText(&quot;Validate&quot;);</span>
-<span class="nc" id="L113">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L114">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L115">		this.validateButton.setLayoutData(gData);</span>
+<span class="fc" id="L111">		this.validateButton = new Button(c1, SWT.PUSH);</span>
+<span class="fc" id="L112">		this.validateButton.setText(&quot;Validate&quot;);</span>
+<span class="fc" id="L113">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L114">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L115">		this.validateButton.setLayoutData(gData);</span>
 
-<span class="nc" id="L117">		this.checkSyntaxButton.addSelectionListener(mainController);</span>
-<span class="nc" id="L118">		this.runButton.addSelectionListener(mainController);</span>
-<span class="nc" id="L119">		this.stepButton.addSelectionListener(mainController);</span>
-<span class="nc" id="L120">		this.validateButton.addSelectionListener(mainController);</span>
-<span class="nc" id="L121">		this.pauseButton.addSelectionListener(mainController);</span>
-<span class="nc" id="L122">		this.stopButton.addSelectionListener(mainController);</span>
+<span class="fc" id="L117">		this.checkSyntaxButton.addSelectionListener(mainController);</span>
+<span class="fc" id="L118">		this.runButton.addSelectionListener(mainController);</span>
+<span class="fc" id="L119">		this.stepButton.addSelectionListener(mainController);</span>
+<span class="fc" id="L120">		this.validateButton.addSelectionListener(mainController);</span>
+<span class="fc" id="L121">		this.pauseButton.addSelectionListener(mainController);</span>
+<span class="fc" id="L122">		this.stopButton.addSelectionListener(mainController);</span>
 
 		// Adding icons
-<span class="nc" id="L125">		this.pauseIcon = new Label(c1, SWT.NONE);</span>
-<span class="nc" id="L126">		Image image1 = new Image(display, MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
-<span class="nc" id="L127">		this.pauseIcon.setImage(image1);</span>
-<span class="nc" id="L128">		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);</span>
-<span class="nc" id="L129">		this.pauseIcon.setLayoutData(gData);</span>
+<span class="fc" id="L125">		this.pauseIcon = new Label(c1, SWT.NONE);</span>
+<span class="fc" id="L126">		Image image1 = new Image(display, MainFrame.class.getResourceAsStream(&quot;image/pause1.png&quot;));</span>
+<span class="fc" id="L127">		this.pauseIcon.setImage(image1);</span>
+<span class="fc" id="L128">		gData = new GridData(GridData.HORIZONTAL_ALIGN_END);</span>
+<span class="fc" id="L129">		this.pauseIcon.setLayoutData(gData);</span>
 
-<span class="nc" id="L131">		this.runIcon = new Label(c1, SWT.NONE);</span>
-<span class="nc" id="L132">		Image image2 = new Image(display, MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
-<span class="nc" id="L133">		this.runIcon.setImage(image2);</span>
-<span class="nc" id="L134">		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);</span>
-<span class="nc" id="L135">		this.runIcon.setLayoutData(gData);</span>
+<span class="fc" id="L131">		this.runIcon = new Label(c1, SWT.NONE);</span>
+<span class="fc" id="L132">		Image image2 = new Image(display, MainFrame.class.getResourceAsStream(&quot;image/run1.png&quot;));</span>
+<span class="fc" id="L133">		this.runIcon.setImage(image2);</span>
+<span class="fc" id="L134">		gData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);</span>
+<span class="fc" id="L135">		this.runIcon.setLayoutData(gData);</span>
 
 		// Create a composite for variable view and breakpoint view
-<span class="nc" id="L138">		Composite c2 = new Composite(shell, SWT.NONE);</span>
-<span class="nc" id="L139">		gLayout = new GridLayout();</span>
-<span class="nc" id="L140">		c2.setLayout(gLayout);</span>
-<span class="nc" id="L141">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L142">		c2.setLayoutData(gData);</span>
+<span class="fc" id="L138">		Composite c2 = new Composite(shell, SWT.NONE);</span>
+<span class="fc" id="L139">		gLayout = new GridLayout();</span>
+<span class="fc" id="L140">		c2.setLayout(gLayout);</span>
+<span class="fc" id="L141">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L142">		c2.setLayoutData(gData);</span>
 
 		// Adding variable view
-<span class="nc" id="L145">		new Label(c2, SWT.NONE).setText(&quot;Variables&quot;);</span>
-<span class="nc" id="L146">		this.varView = new VariableView(c2, SWT.NONE);</span>
-<span class="nc" id="L147">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L148">		this.varView.setLayoutData(gData);</span>
+<span class="fc" id="L145">		new Label(c2, SWT.NONE).setText(&quot;Variables&quot;);</span>
+<span class="fc" id="L146">		this.varView = new VariableView(c2, SWT.NONE);</span>
+<span class="fc" id="L147">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L148">		this.varView.setLayoutData(gData);</span>
 
 		// Adding breakpoint view
-<span class="nc" id="L151">		new Label(c2, SWT.NONE).setText(&quot;Global Breakpoints&quot;);</span>
-<span class="nc" id="L152">		this.breakpointView = new BreakpointView(c2, SWT.NONE);</span>
-<span class="nc" id="L153">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L154">		this.breakpointView.setLayoutData(gData);</span>
+<span class="fc" id="L151">		new Label(c2, SWT.NONE).setText(&quot;Global Breakpoints&quot;);</span>
+<span class="fc" id="L152">		this.breakpointView = new BreakpointView(c2, SWT.NONE);</span>
+<span class="fc" id="L153">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L154">		this.breakpointView.setLayoutData(gData);</span>
 
 		// Adding consoles
-<span class="nc" id="L157">		this.console = new Console[3];</span>
-<span class="nc" id="L158">		TabFolder tf = new TabFolder(shell, SWT.NONE);</span>
-<span class="nc" id="L159">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="nc" id="L160">		gData = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_FILL);</span>
-<span class="nc" id="L161">		gData.horizontalSpan = 3;</span>
-<span class="nc" id="L162">		tf.setLayoutData(gData);</span>
+<span class="fc" id="L157">		this.console = new Console[3];</span>
+<span class="fc" id="L158">		TabFolder tf = new TabFolder(shell, SWT.NONE);</span>
+<span class="fc" id="L159">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L160">		gData = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_FILL);</span>
+<span class="fc" id="L161">		gData.horizontalSpan = 3;</span>
+<span class="fc" id="L162">		tf.setLayoutData(gData);</span>
 
-<span class="nc" id="L164">		TabItem ti1 = new TabItem(tf, SWT.BORDER);</span>
-<span class="nc" id="L165">		ti1.setText(&quot;Errors&quot;);</span>
-<span class="nc" id="L166">		ti1.setControl(console[0] = new ErrorConsole(tf, SWT.BORDER, messagesystem));</span>
-<span class="nc" id="L167">		TabItem ti2 = new TabItem(tf, SWT.BORDER);</span>
-<span class="nc" id="L168">		ti2.setText(&quot;Verifier&quot;);</span>
-<span class="nc" id="L169">		ti2.setControl(console[1] = new VerifierConsole(tf, SWT.BORDER, messagesystem));</span>
-<span class="nc" id="L170">		TabItem ti3 = new TabItem(tf, SWT.BORDER);</span>
-<span class="nc" id="L171">		ti3.setText(&quot;Misc&quot;);</span>
-<span class="nc" id="L172">		ti3.setControl(console[2] = new MiscConsole(tf, SWT.BORDER, messagesystem));</span>
+<span class="fc" id="L164">		TabItem ti1 = new TabItem(tf, SWT.BORDER);</span>
+<span class="fc" id="L165">		ti1.setText(&quot;Errors&quot;);</span>
+<span class="fc" id="L166">		ti1.setControl(console[0] = new ErrorConsole(tf, SWT.BORDER, messagesystem));</span>
+<span class="fc" id="L167">		TabItem ti2 = new TabItem(tf, SWT.BORDER);</span>
+<span class="fc" id="L168">		ti2.setText(&quot;Verifier&quot;);</span>
+<span class="fc" id="L169">		ti2.setControl(console[1] = new VerifierConsole(tf, SWT.BORDER, messagesystem));</span>
+<span class="fc" id="L170">		TabItem ti3 = new TabItem(tf, SWT.BORDER);</span>
+<span class="fc" id="L171">		ti3.setText(&quot;Misc&quot;);</span>
+<span class="fc" id="L172">		ti3.setControl(console[2] = new MiscConsole(tf, SWT.BORDER, messagesystem));</span>
 
 		// Adding help box
-<span class="nc" id="L175">		help = new HelpBox(shell, SWT.BORDER);</span>
-<span class="nc" id="L176">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
-<span class="nc" id="L177">		help.setLayoutData(gData);</span>
-<span class="nc" id="L178">	}</span>
+<span class="fc" id="L175">		help = new HelpBox(shell, SWT.BORDER);</span>
+<span class="fc" id="L176">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
+<span class="fc" id="L177">		help.setLayoutData(gData);</span>
+<span class="fc" id="L178">	}</span>
 
 	/**
 	 * Set the specified icons.
@@ -183,94 +183,94 @@ public class MainFrame extends Frame {
 	 * @param image2 specified icon
 	 */
 	public void switchIcon(Image image, Image image2) {
-<span class="nc" id="L186">		this.runIcon.setImage(image);</span>
-<span class="nc" id="L187">		this.pauseIcon.setImage(image2);</span>
-<span class="nc" id="L188">	}</span>
+<span class="fc" id="L186">		this.runIcon.setImage(image);</span>
+<span class="fc" id="L187">		this.pauseIcon.setImage(image2);</span>
+<span class="fc" id="L188">	}</span>
 
 	public Shell getShell() {
-<span class="nc" id="L191">		return this.shell;</span>
+<span class="fc" id="L191">		return this.shell;</span>
 	}
 
 	public Display getDisplay() {
-<span class="nc" id="L195">		return this.display;</span>
+<span class="fc" id="L195">		return this.display;</span>
 	}
 
 	public MenuBar getMenuBar() {
-<span class="nc" id="L199">		return this.menubar;</span>
+<span class="fc" id="L199">		return this.menubar;</span>
 	}
 
 	public EditorView getEditor() {
-<span class="nc" id="L203">		return this.editor;</span>
+<span class="fc" id="L203">		return this.editor;</span>
 	}
 
 	public VariableView getVarView() {
-<span class="nc" id="L207">		return this.varView;</span>
+<span class="fc" id="L207">		return this.varView;</span>
 	}
 
 	public BreakpointView getBreakpointView() {
-<span class="nc" id="L211">		return this.breakpointView;</span>
+<span class="fc" id="L211">		return this.breakpointView;</span>
 	}
 
 	public Button getCheckSyntaxButton() {
-<span class="nc" id="L215">		return this.checkSyntaxButton;</span>
+<span class="fc" id="L215">		return this.checkSyntaxButton;</span>
 	}
 
 	public Button getRunButton() {
-<span class="nc" id="L219">		return this.runButton;</span>
+<span class="fc" id="L219">		return this.runButton;</span>
 	}
 
 	public Button getStepButton() {
-<span class="nc" id="L223">		return this.stepButton;</span>
+<span class="fc" id="L223">		return this.stepButton;</span>
 	}
 
 	public Button getValidateButton() {
-<span class="nc" id="L227">		return this.validateButton;</span>
+<span class="fc" id="L227">		return this.validateButton;</span>
 	}
 
 	public Button getPauseButton() {
-<span class="nc" id="L231">		return this.pauseButton;</span>
+<span class="fc" id="L231">		return this.pauseButton;</span>
 	}
 
 	public Button getStopButton() {
-<span class="nc" id="L235">		return this.stopButton;</span>
+<span class="fc" id="L235">		return this.stopButton;</span>
 	}
 
 	public Console[] getConsole() {
-<span class="nc" id="L239">		return this.console;</span>
+<span class="fc" id="L239">		return this.console;</span>
 	}
 
 	public HelpBox getHelpBox() {
-<span class="nc" id="L243">		return this.help;</span>
+<span class="fc" id="L243">		return this.help;</span>
 	}
 	
 	public Clipboard getClipboard() {
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		if(clipboard == null) {</span>
-<span class="nc" id="L248">			this.clipboard = new Clipboard(this.getDisplay());</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		if(clipboard == null) {</span>
+<span class="fc" id="L248">			this.clipboard = new Clipboard(this.getDisplay());</span>
 		}
-<span class="nc" id="L250">		return this.clipboard;</span>
+<span class="fc" id="L250">		return this.clipboard;</span>
 	}
 
 	public void openWindow() {
-<span class="nc" id="L254">		shell.open();</span>
-<span class="nc bnc" id="L255" title="All 2 branches missed.">		while (!shell.isDisposed()) {</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">			if (!display.readAndDispatch()) {</span>
-<span class="nc" id="L257">				display.sleep();</span>
+<span class="fc" id="L254">		shell.open();</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		while (!shell.isDisposed()) {</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">			if (!display.readAndDispatch()) {</span>
+<span class="fc" id="L257">				display.sleep();</span>
 			}
 		}
 		// Save modified settings
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (Settings.getInstance().settingsChanged()) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (Settings.getInstance().settingsChanged()) {</span>
 			try {
 <span class="nc" id="L263">				Settings.getInstance().saveSettings();</span>
 <span class="nc" id="L264">			} catch (IOException e) {</span>
 				// The default settings will be loaded at the next program start
 			}
 		}
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (clipboard != null) {</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (clipboard != null) {</span>
 <span class="nc" id="L269">			clipboard.dispose();</span>
 		}
-<span class="nc" id="L271">	}</span>
+<span class="fc" id="L271">	}</span>
 
 	private static final String SHELLTITLE = &quot;PSE&quot;;
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

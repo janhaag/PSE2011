@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>FunctionCall.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">FunctionCall.java</span></div><h1>FunctionCall.java</h1><pre class="source lang-java linenums">package ast;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>FunctionCall.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">FunctionCall.java</span></div><h1>FunctionCall.java</h1><pre class="source lang-java linenums">package ast;
 
 /**
  * This class symbolizes a function call.
@@ -43,19 +43,15 @@ public class FunctionCall extends Expression {
      * @param function function to be called
      */
     public void setFunction(Function function) {
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (this.function != null) {</span>
-            //function cannot be set again
-<span class="nc" id="L48">            throw new IllegalStateException(&quot;Function may only be set once!&quot;);</span>
-        }
-<span class="fc" id="L50">        this.function = function;</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L46">        this.function = function;</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      * Returns the parameters of this function call.
      * @return function parameters
      */
     public Expression[] getParameters() {
-<span class="fc" id="L58">        return parameters;</span>
+<span class="fc" id="L54">        return parameters;</span>
     }
 
     /**
@@ -63,7 +59,7 @@ public class FunctionCall extends Expression {
      * @return identifier of the function to be called
      */
     public Identifier getFunctionIdentifier() {
-<span class="fc" id="L66">        return functionIdentifier;</span>
+<span class="fc" id="L62">        return functionIdentifier;</span>
     }
 
     /**
@@ -71,21 +67,21 @@ public class FunctionCall extends Expression {
      * @return function to be called
      */
     public Function getFunction() {
-<span class="fc" id="L74">        return function;</span>
+<span class="fc" id="L70">        return function;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L79">        StringBuilder sb = new StringBuilder(&quot;(&quot;);</span>
-<span class="nc" id="L80">        sb.append(functionIdentifier).append('(');</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (parameters.length != 0) {</span>
-<span class="nc" id="L82">            sb.append(parameters[0]);</span>
+<span class="fc" id="L75">        StringBuilder sb = new StringBuilder(&quot;(&quot;);</span>
+<span class="fc" id="L76">        sb.append(functionIdentifier).append('(');</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (parameters.length != 0) {</span>
+<span class="nc" id="L78">            sb.append(parameters[0]);</span>
         }
-<span class="nc bnc" id="L84" title="All 2 branches missed.">        for (int i = 1; i &lt; parameters.length; i++) {</span>
-<span class="nc" id="L85">            sb.append(&quot;, &quot;).append(parameters[i]);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        for (int i = 1; i &lt; parameters.length; i++) {</span>
+<span class="nc" id="L81">            sb.append(&quot;, &quot;).append(parameters[i]);</span>
         }
-<span class="nc" id="L87">        sb.append(&quot;))&quot;);</span>
-<span class="nc" id="L88">        return sb.toString();</span>
+<span class="fc" id="L83">        sb.append(&quot;))&quot;);</span>
+<span class="fc" id="L84">        return sb.toString();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

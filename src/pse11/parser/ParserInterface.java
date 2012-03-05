@@ -43,10 +43,10 @@ public class ParserInterface {
         if (typeChecker == null) {
             typeChecker = new TypeChecker();
         }
-        if (p != null) {
+        if (errors.isEmpty()) {
             typeChecker.checkTypes(p);
         }
-        return p;
+        return errors.isEmpty() ? p : null;
     }
 
     /**
@@ -66,6 +66,6 @@ public class ParserInterface {
         parser.setErrorReporter(errors);
         Expression e = parser.single_expression();
         this.errors = errors.toArray(new String[errors.size()]);
-        return e;
+        return errors.isEmpty() ? e : null;
     }
 }

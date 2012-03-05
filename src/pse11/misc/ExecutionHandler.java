@@ -45,6 +45,8 @@ public class ExecutionHandler {
 
 	public void parse(String source) {
 		this.messagesystem.clear(MessageCategories.ERROR);
+		this.messagesystem.clear(MessageCategories.VERIFYERROR);
+		this.messagesystem.clear(MessageCategories.MISC);
 		try {
 			this.ast = this.parser.parseProgram(source);
 		} catch (RecognitionException re) {
@@ -77,7 +79,8 @@ public class ExecutionHandler {
 			}
 			success = this.singleStep(sbreakpoints, gbreakpoints);
 			try {
-				if (this.execution != null && this.execution.checkBreakpoints() != null) {
+				if (this.execution != null && this.execution.getCurrentState().getCurrentStatement() != null
+						&& this.execution.checkBreakpoints() != null) {
 					paused = true;
 				}
 			}
@@ -115,7 +118,9 @@ public class ExecutionHandler {
 	}
 	
 	public void verify(String source) {
-        this.messagesystem.clear(MessageCategories.VERIFYERROR);
+		this.messagesystem.clear(MessageCategories.ERROR);
+		this.messagesystem.clear(MessageCategories.VERIFYERROR);
+		this.messagesystem.clear(MessageCategories.MISC);
 		this.parse(source);
 		if(this.ast == null) {
 			return;

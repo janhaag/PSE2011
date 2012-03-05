@@ -68,28 +68,30 @@ public class Editor {
 	}
 	public void setSource(String source) {
 		if(!this.undoMemento.empty()) {
-			if(!this.undoMemento.peek().getSource().equals(source)) {
+			//if(!this.undoMemento.peek().getSource().equals(source)) {
 				this.undoMemento.push(this.createMemento());
-			}
+			//}
 		} else {
 			this.undoMemento.push(this.createMemento());
 		}
 		this.source = source;
 		findKeywords(source);
-		this.editorview.updateView();
+		if(this.editorview != null)
+			this.editorview.updateView();
 	}
 	public void undo() {
 		if(!this.undoMemento.empty()) {
 			EditorMemento memento = this.undoMemento.pop();
 			if(!this.redoMemento.empty()) {
-				if(!this.redoMemento.peek().equals(this.createMemento()))
+				//if(!this.redoMemento.peek().equals(this.createMemento()))
 					this.redoMemento.push(this.createMemento());
 			} else {
 				this.redoMemento.push(this.createMemento());
 			}
 			this.source = memento.getSource();
 			findKeywords(source);
-			this.editorview.updateView();
+			if(this.editorview != null)
+				this.editorview.updateView();
 		}
 	}
 	public void redo() {
@@ -103,7 +105,8 @@ public class Editor {
 			}
 			this.source = memento.getSource();
 			findKeywords(source);
-			this.editorview.updateView();
+			if(this.editorview != null)
+				this.editorview.updateView();
 		}
 	}
 	private EditorMemento createMemento() {
@@ -129,7 +132,8 @@ public class Editor {
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
 					positionplus += (subword.length() + 1);
 					if(keyword != null) {
-						this.colorArray.add(keyword);
+						if(!colorArray.contains(keyword))
+							this.colorArray.add(keyword);
 					}
 				}
 				word = "";
@@ -144,7 +148,8 @@ public class Editor {
 					Keyword keyword = this.addKeyWordColor(position+positionplus, subword);
 					positionplus += (subword.length() + 1);
 					if(keyword != null) {
-						this.colorArray.add(keyword);
+						if(!colorArray.contains(keyword))
+							this.colorArray.add(keyword);
 						tmplist.add(keyword);
 					}
 				}
@@ -152,7 +157,8 @@ public class Editor {
 		}
 		Keyword keyword = this.addKeyWordColor(position, word);
 		if(keyword != null) {
-			this.colorArray.add(keyword);
+			if(!colorArray.contains(keyword))
+				this.colorArray.add(keyword);
 		}
 	}
 	/**
@@ -207,16 +213,19 @@ public class Editor {
 		}
 	}
 	
-	public int addBreakpoint(int line) {
+	public void addBreakpoint(int line) {
+		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
+		this.statementBreakpoints.add(newStatementBreakpoint);
+	}
+	
+	public int removeBreakpoint(int line) {
 		for (int i = 0; i < this.statementBreakpoints.size(); i++) {
 			if (this.statementBreakpoints.get(i).getLine() == line) {
 				this.statementBreakpoints.remove(i);
-				return 0;
+				return 1;
 			}
 		}
-		StatementBreakpoint newStatementBreakpoint = new StatementBreakpoint(line);
-		this.statementBreakpoints.add(newStatementBreakpoint);
-		return 1;
+		return 0;
 	}
 	
 	public ArrayList<StatementBreakpoint> getStatementBreakpoints() {

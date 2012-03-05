@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SMTLibTranslatorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test</a> &gt; <span class="el_source">SMTLibTranslatorTest.java</span></div><h1>SMTLibTranslatorTest.java</h1><pre class="source lang-java linenums">package test;
+
+import ast.Program;
+import org.antlr.runtime.RecognitionException;
+import verifier.smtlib.SMTLibTranslator;
+import parser.ParserInterface;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+/**
+ *
+ */
+<span class="fc" id="L15">public class SMTLibTranslatorTest {</span>
+    private SMTLibTranslator translator;
+    private ParserInterface parserInterface;
+    private Program p;
+    private String expected;
+    private static final String LOGIC = &quot;(set-logic AUFNIRA)&quot;;
+    
+    private static String embed(String s) {
+<span class="fc" id="L23">        return &quot;(push)&quot; + s + &quot;(check-sat)(get-model)(pop)&quot;;</span>
+    }
+    
+    @Before
+    public void setUp() {
+<span class="fc" id="L28">        translator = new SMTLibTranslator();</span>
+<span class="fc" id="L29">        parserInterface = new ParserInterface();</span>
+<span class="fc" id="L30">    }</span>
+    
+    @After
+    public void tearDown() {
+<span class="fc" id="L34">        translator = null;</span>
+<span class="fc" id="L35">        parserInterface = null;</span>
+<span class="fc" id="L36">        p = null;</span>
+<span class="fc" id="L37">        expected = null;</span>
+<span class="fc" id="L38">    }</span>
+    
+    @Test
+    public void testEmptyProgram() throws RecognitionException {
+<span class="fc" id="L42">        p = parserInterface.parseProgram(&quot;main(){}&quot;);</span>
+<span class="fc" id="L43">        expected = LOGIC+embed(&quot;(assert (not (and true true)))&quot;);</span>
+<span class="fc" id="L44">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L45">    }</span>
+
+    @Test
+    public void testEmptyProgramEnsureTrue() throws RecognitionException {
+<span class="fc" id="L49">        p = parserInterface.parseProgram(&quot;main(){} ensure true;&quot;);</span>
+<span class="fc" id="L50">        expected = LOGIC+embed(&quot;(assert (not (and true (and true true))))&quot;);</span>
+<span class="fc" id="L51">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L52">    }</span>
+
+    @Test
+    public void testEmptyProgramEnsureFalse() throws RecognitionException {
+<span class="fc" id="L56">        p = parserInterface.parseProgram(&quot;main(){} ensure false;&quot;);</span>
+<span class="fc" id="L57">        expected = LOGIC+embed(&quot;(assert (not (and true (and false true))))&quot;);</span>
+<span class="fc" id="L58">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L59">    }</span>
+
+    @Test
+    public void testEmptyProgramAssumeFalse() throws RecognitionException {
+<span class="fc" id="L63">        p = parserInterface.parseProgram(&quot;main()assume false;{}&quot;);</span>
+<span class="fc" id="L64">        expected = LOGIC+embed(&quot;(assert (not (=&gt; false (and true true))))&quot;);</span>
+<span class="fc" id="L65">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L66">    }</span>
+
+    @Test
+    public void testEmptyProgramAssumeTrue() throws RecognitionException {
+<span class="fc" id="L70">        p = parserInterface.parseProgram(&quot;main()assume true;{}&quot;);</span>
+<span class="fc" id="L71">        expected = LOGIC+embed(&quot;(assert (not (=&gt; true (and true true))))&quot;);</span>
+<span class="fc" id="L72">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L73">    }</span>
+
+    @Test
+    public void testParamAssumeInt() throws RecognitionException {
+<span class="fc" id="L77">        p = parserInterface.parseProgram(&quot;main(int i)assume i&gt;0;{}&quot;);</span>
+<span class="fc" id="L78">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)&quot; +</span>
+                &quot;(assert (not (=&gt; (&gt; i$0 0) (and true true))))&quot;);
+<span class="fc" id="L80">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L81">    }</span>
+
+    @Test
+    public void testParamAssumeBool() throws RecognitionException {
+<span class="fc" id="L85">        p = parserInterface.parseProgram(&quot;main(bool i)assume i;{}&quot;);</span>
+<span class="fc" id="L86">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Bool)&quot; +</span>
+                &quot;(assert (not (=&gt; i$0 (and true true))))&quot;);
+<span class="fc" id="L88">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L89">    }</span>
+
+    @Test
+    public void testParamEnsure() throws RecognitionException {
+<span class="fc" id="L93">        p = parserInterface.parseProgram(&quot;main(int i){}ensure i != 0;&quot;);</span>
+<span class="fc" id="L94">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)&quot; +</span>
+                &quot;(assert (not (and true (and (distinct i$0 0) true))))&quot;);
+<span class="fc" id="L96">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L97">    }</span>
+
+    @Test
+    public void testIntDeclarationReplace() throws RecognitionException {
+<span class="fc" id="L101">        p = parserInterface.parseProgram(&quot;main(){int i=4;}ensure i &gt;= 0;&quot;);</span>
+<span class="fc" id="L102">        expected = LOGIC+embed(&quot;(assert (not (and true (and (&gt;= 4 0) true))))&quot;);</span>
+<span class="fc" id="L103">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L104">    }</span>
+
+    @Test
+    public void testIntZeroDeclarationReplace() throws RecognitionException {
+<span class="fc" id="L108">        p = parserInterface.parseProgram(&quot;main(){int i;}ensure i &lt;= 0;&quot;);</span>
+<span class="fc" id="L109">        expected = LOGIC+embed(&quot;(assert (not (and true (and (&lt;= 0 0) true))))&quot;);</span>
+<span class="fc" id="L110">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L111">    }</span>
+
+    @Test
+    public void testIntNegDeclarationReplace() throws RecognitionException {
+<span class="fc" id="L115">        p = parserInterface.parseProgram(&quot;main(){int i=-4;}ensure i &lt; 0;&quot;);</span>
+<span class="fc" id="L116">        expected = LOGIC+embed(&quot;(assert (not (and true (and (&lt; (- 4) 0) true))))&quot;);</span>
+<span class="fc" id="L117">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L118">    }</span>
+
+    @Test
+    public void testBoolDeclarationReplace() throws RecognitionException {
+<span class="fc" id="L122">        p = parserInterface.parseProgram(&quot;main(){bool i=true;}ensure i==false;&quot;);</span>
+<span class="fc" id="L123">        expected = LOGIC+</span>
+<span class="fc" id="L124">                embed(&quot;(assert (not (and true (and (= true false) true))))&quot;);</span>
+<span class="fc" id="L125">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L126">    }</span>
+
+    @Test
+    public void testBoolFalseDeclarationReplace() throws RecognitionException {
+<span class="fc" id="L130">        p = parserInterface.parseProgram(&quot;main(){bool i;}ensure i;&quot;);</span>
+<span class="fc" id="L131">        expected = LOGIC+embed(&quot;(assert (not (and true (and false true))))&quot;);</span>
+<span class="fc" id="L132">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L133">    }</span>
+
+    @Test
+    public void testBoolNegDeclarationReplace() throws RecognitionException {
+<span class="fc" id="L137">        p = parserInterface.parseProgram(&quot;main(){bool i=!false;}ensure i | true;&quot;);</span>
+<span class="fc" id="L138">        expected = LOGIC+</span>
+<span class="fc" id="L139">                embed(&quot;(assert (not (and true (and (or (not false) true) true))))&quot;);</span>
+<span class="fc" id="L140">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L141">    }</span>
+
+    @Test
+    public void testAdd() throws RecognitionException {
+<span class="fc" id="L145">        p = parserInterface.parseProgram(&quot;main(){int i=2+3;}ensure i == 1;&quot;);</span>
+<span class="fc" id="L146">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (= (+ 2 3) 1) true))))&quot;);
+<span class="fc" id="L148">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L149">    }</span>
+
+    @Test
+    public void testSubtract() throws RecognitionException {
+<span class="fc" id="L153">        p = parserInterface.parseProgram(&quot;main(){int i=2-3;}ensure i == 1;&quot;);</span>
+<span class="fc" id="L154">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (= (- 2 3) 1) true))))&quot;);
+<span class="fc" id="L156">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L157">    }</span>
+
+    @Test
+    public void testMultiplication() throws RecognitionException {
+<span class="fc" id="L161">        p = parserInterface.parseProgram(&quot;main(){int i=2*3;}ensure i == 1;&quot;);</span>
+<span class="fc" id="L162">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (= (* 2 3) 1) true))))&quot;);
+<span class="fc" id="L164">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L165">    }</span>
+
+    @Test
+    public void testDivision() throws RecognitionException {
+<span class="fc" id="L169">        p = parserInterface.parseProgram(&quot;main(){int i=2/3;}ensure i == 1;&quot;);</span>
+<span class="fc" id="L170">        expected = LOGIC+embed(&quot;(assert (not (and true (and (distinct 3 0) &quot; +</span>
+                &quot;(and (= (div 2 3) 1) true)))))&quot;);
+<span class="fc" id="L172">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L173">    }</span>
+
+    @Test
+    public void testModulo() throws RecognitionException {
+<span class="fc" id="L177">        p = parserInterface.parseProgram(&quot;main(){int i=2%3;}ensure i == 1;&quot;);</span>
+<span class="fc" id="L178">        expected = LOGIC+embed(&quot;(assert (not (and true (and (distinct 3 0) &quot; +</span>
+                &quot;(and (= (mod 2 3) 1) true)))))&quot;);
+<span class="fc" id="L180">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L181">    }</span>
+
+    @Test
+    public void testIntNegation() throws RecognitionException {
+<span class="fc" id="L185">        p = parserInterface.parseProgram(&quot;main(){int i=-3;}ensure i == 1;&quot;);</span>
+<span class="fc" id="L186">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (= (- 3) 1) true))))&quot;);
+<span class="fc" id="L188">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L189">    }</span>
+
+    @Test
+    public void testConjunction() throws RecognitionException {
+<span class="fc" id="L193">        p = parserInterface.parseProgram(&quot;main(){bool i=true&amp;false;}ensure i;&quot;);</span>
+<span class="fc" id="L194">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (and true false) true))))&quot;);
+<span class="fc" id="L196">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L197">    }</span>
+
+    @Test
+    public void testDisjunction() throws RecognitionException {
+<span class="fc" id="L201">        p = parserInterface.parseProgram(&quot;main(){bool i=true|false;}ensure i;&quot;);</span>
+<span class="fc" id="L202">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (or true false) true))))&quot;);
+<span class="fc" id="L204">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L205">    }</span>
+
+    @Test
+    public void testBoolNegation() throws RecognitionException {
+<span class="fc" id="L209">        p = parserInterface.parseProgram(&quot;main(){bool i=!false;}ensure i;&quot;);</span>
+<span class="fc" id="L210">        expected = LOGIC+embed(&quot;(assert (not &quot; +</span>
+                     &quot;(and true (and (not false) true))))&quot;);
+<span class="fc" id="L212">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L213">    }</span>
+
+    @Test
+    public void testReplacements() throws RecognitionException {
+<span class="fc" id="L217">        p = parserInterface.parseProgram(&quot;main(){int j = 3; bool i=j&lt;4;&quot; +</span>
+                &quot;bool k = !i; j=2;i=k|(j&lt;2);}ensure k|i;&quot;);
+<span class="fc" id="L219">        expected = LOGIC+embed(&quot;(assert (not (and true &quot; +</span>
+                &quot;(and (or (not (&lt; 3 4)) (or (not (&lt; 3 4)) (&lt; 2 2))) true))))&quot;);
+<span class="fc" id="L221">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L222">    }</span>
+
+    @Test
+    public void testReplacementsParam() throws RecognitionException {
+<span class="fc" id="L226">        p = parserInterface.parseProgram(&quot;main(int j){bool i=j&lt;4;&quot; +</span>
+                &quot;bool k = !i; j=2;i=k|(j&lt;2);}ensure k|i;&quot;);
+<span class="fc" id="L228">        expected = LOGIC+embed(&quot;(declare-fun j$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(and (or (not (&lt; j$0 4)) (or (not (&lt; j$0 4)) (&lt; 2 2))) true))))&quot;);
+<span class="fc" id="L230">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L231">    }</span>
+
+    @Test
+    public void testDoubleAssignment() throws RecognitionException {
+<span class="fc" id="L235">        p = parserInterface.parseProgram(&quot;main(){int j = 3; j=4;}ensure j==4;&quot;);</span>
+<span class="fc" id="L236">        expected = LOGIC+embed(&quot;(assert (not (and true (and (= 4 4) true))))&quot;);</span>
+<span class="fc" id="L237">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L238">    }</span>
+
+    @Test
+    public void testAssignmentSelfRead() throws RecognitionException {
+<span class="fc" id="L242">        p = parserInterface.parseProgram(&quot;main(){int j = 3; j=2*j;}ensure j==6;&quot;);</span>
+<span class="fc" id="L243">        expected = LOGIC+embed(&quot;(assert (not (and true (and (= (* 2 3) 6) true))))&quot;);</span>
+<span class="fc" id="L244">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L245">    }</span>
+
+    @Test
+    public void testSingleForAll() throws RecognitionException {
+<span class="fc" id="L249">        p = parserInterface.parseProgram(&quot;main(){}ensure forall x() x==x;&quot;);</span>
+<span class="fc" id="L250">        expected = LOGIC+embed(&quot;(declare-fun x$1 () Int)(assert (not &quot; +</span>
+                &quot;(and true (and (forall ((x$1 Int)) (= x$1 x$1)) true))))&quot;);
+<span class="fc" id="L252">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L253">    }</span>
+
+    @Test
+    public void testSingleExists() throws RecognitionException {
+<span class="fc" id="L257">        p = parserInterface.parseProgram(&quot;main(){}ensure exists x() x==x;&quot;);</span>
+<span class="fc" id="L258">        expected = LOGIC+embed(&quot;(declare-fun x$1 () Int)(assert (not &quot; +</span>
+                &quot;(and true (and (exists ((x$1 Int)) (= x$1 x$1)) true))))&quot;);
+<span class="fc" id="L260">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L261">    }</span>
+
+    @Test
+    public void testForAllReplacement() throws RecognitionException {
+<span class="fc" id="L265">        p = parserInterface.parseProgram(&quot;main(){int y=1;}ensure forall x() x==x/y;&quot;);</span>
+<span class="fc" id="L266">        expected = LOGIC+embed(&quot;(declare-fun x$1 () Int)(assert (not &quot; +</span>
+                &quot;(and true (and (forall ((x$1 Int)) (and (distinct 1 0) &quot; +
+                &quot;(= x$1 (div x$1 1)))) true))))&quot;);
+<span class="fc" id="L269">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L270">    }</span>
+
+    @Test
+    public void testForAllAssert() throws RecognitionException {
+<span class="fc" id="L274">        p = parserInterface.parseProgram(&quot;main(int y){assert forall x() x==x/y;}&quot;);</span>
+<span class="fc" id="L275">        expected = LOGIC+embed(&quot;(declare-fun x$1 () Int)(declare-fun y$0 () Int)&quot; +</span>
+                &quot;(assert (not (and true (and (forall ((x$1 Int)) &quot; +
+                &quot;(and (distinct y$0 0) (= x$1 (div x$1 y$0)))) true))))&quot;);
+<span class="fc" id="L278">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L279">    }</span>
+
+    @Test
+    public void testForAllExists() throws RecognitionException {
+<span class="fc" id="L283">        p = parserInterface.parseProgram(&quot;main(){}ensure forall x() exists y() x==y;&quot;);</span>
+<span class="fc" id="L284">        expected = LOGIC+embed(&quot;(declare-fun y$2 () Int)(declare-fun x$1 () Int)&quot; +</span>
+                &quot;(assert (not (and true (and (forall ((x$1 Int)) &quot; +
+                &quot;(exists ((y$2 Int)) (= x$1 y$2))) true))))&quot;);
+<span class="fc" id="L287">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L288">    }</span>
+
+    @Test
+    public void testEmptyIf() throws RecognitionException {
+<span class="fc" id="L292">        p = parserInterface.parseProgram(&quot;main(){if(true){}}&quot;);</span>
+<span class="fc" id="L293">        expected = LOGIC+embed(&quot;(assert (not (and true &quot; +</span>
+                &quot;(or (and true true) (and (not true) true)))))&quot;);
+<span class="fc" id="L295">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L296">    }</span>
+
+    @Test
+    public void testIfReplace() throws RecognitionException {
+<span class="fc" id="L300">        p = parserInterface.parseProgram(&quot;main(){int y;if(true){y=1;}}ensure y&lt;2;&quot;);</span>
+<span class="fc" id="L301">        expected = LOGIC+embed(&quot;(assert (not (and true (or (and true &quot; +</span>
+                &quot;(and (&lt; 1 2) true)) (and (not true) (and (&lt; 0 2) true))))))&quot;);
+<span class="fc" id="L303">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L304">    }</span>
+
+    @Test
+    public void testIfElseReplace() throws RecognitionException {
+<span class="fc" id="L308">        p = parserInterface.parseProgram(&quot;main(){int y;&quot; +</span>
+                &quot;if(true){y=1;}else{y=3;}}ensure y&lt;2;&quot;);
+<span class="fc" id="L310">        expected = LOGIC+embed(&quot;(assert (not (and true (or (and true &quot; +</span>
+                &quot;(and (&lt; 1 2) true)) (and (not true) (and (&lt; 3 2) true))))))&quot;);
+<span class="fc" id="L312">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L313">    }</span>
+
+    @Test
+    public void testIfAssert() throws RecognitionException {
+<span class="fc" id="L317">        p = parserInterface.parseProgram(&quot;main(){if(false){assert false;}&quot; +</span>
+                &quot;else{assert true;}}&quot;);
+<span class="fc" id="L319">        expected = LOGIC+embed(&quot;(assert (not (and true (or &quot; +</span>
+                &quot;(and false (and false true)) (and (not false) (and true true))))))&quot;);
+<span class="fc" id="L321">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L322">    }</span>
+
+    @Test
+    public void testIfParam() throws RecognitionException {
+<span class="fc" id="L326">        p = parserInterface.parseProgram(&quot;main(int i){&quot; +</span>
+                &quot;if(i&lt;0){i=-i;}else{}}ensure i&gt;=0;&quot;);
+<span class="fc" id="L328">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(or (and (&lt; i$0 0) (and (&gt;= (- i$0) 0) true)) (and &quot; +
+                &quot;(not (&lt; i$0 0)) (and (&gt;= i$0 0) true))))))&quot;);
+<span class="fc" id="L331">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L332">    }</span>
+
+    @Test
+    public void testTwoIfsFollowing() throws RecognitionException {
+<span class="fc" id="L336">        p = parserInterface.parseProgram(&quot;main(){int y;if(true){}else{y=-y;}&quot; +</span>
+                &quot;if(y&lt;0){}else{y=y+1;}}ensure y&lt;0;&quot;);
+<span class="fc" id="L338">        expected = LOGIC+embed(&quot;(assert (not (and true (or (and true (or &quot; +</span>
+                &quot;(and (&lt; 0 0) (and (&lt; 0 0) true)) (and (not (&lt; 0 0)) (and &quot; +
+                &quot;(&lt; (+ 0 1) 0) true)))) (and (not true) (or (and (&lt; (- 0) 0) &quot; +
+                &quot;(and (&lt; (- 0) 0) true)) (and (not (&lt; (- 0) 0)) &quot; +
+                &quot;(and (&lt; (+ (- 0) 1) 0) true))))))))&quot;);
+<span class="fc" id="L343">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L344">    }</span>
+
+    @Test
+    public void testIfScoping() throws RecognitionException {
+<span class="fc" id="L348">        p = parserInterface.parseProgram(&quot;main(int i){&quot; +</span>
+                &quot;if(i&lt;0){i=-i;int i;i=2;}}ensure i&gt;=0;&quot;);
+<span class="fc" id="L350">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(or (and (&lt; i$0 0) (and (&gt;= (- i$0) 0) true)) (and &quot; +
+                &quot;(not (&lt; i$0 0)) (and (&gt;= i$0 0) true))))))&quot;);
+<span class="fc" id="L353">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L354">    }</span>
+
+    @Test
+    public void testIfScopingIntBool() throws RecognitionException {
+<span class="fc" id="L358">        p = parserInterface.parseProgram(&quot;main(){int i;&quot; +</span>
+                &quot;if(i&lt;0){i=-i;bool i;i=true;}}ensure i&gt;=0;&quot;);
+<span class="fc" id="L360">        expected = LOGIC+embed(&quot;(assert (not (and true &quot; +</span>
+                &quot;(or (and (&lt; 0 0) (and (&gt;= (- 0) 0) true)) (and &quot; +
+                &quot;(not (&lt; 0 0)) (and (&gt;= 0 0) true))))))&quot;);
+<span class="fc" id="L363">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L364">    }</span>
+
+    @Test
+    public void testIfScopingQuantifier() throws RecognitionException {
+<span class="fc" id="L368">        p = parserInterface.parseProgram(&quot;main(int i){int y=i;}&quot; +</span>
+                &quot;ensure forall i() i&gt;=y;&quot;);
+<span class="fc" id="L370">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)(declare-fun i$1 () Int)&quot; +</span>
+                &quot;(assert (not (and true &quot; +
+                &quot;(and (forall ((i$1 Int)) (&gt;= i$1 i$0)) true))))&quot;);
+<span class="fc" id="L373">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L374">    }</span>
+
+    @Test
+    public void testIfInIf() throws RecognitionException {
+<span class="fc" id="L378">        p = parserInterface.parseProgram(&quot;main(int i){if(i&lt;0)&quot; +</span>
+                &quot;{if(i&gt;0){i=-i;}else{i=1;}}else{}}ensure i&gt;=0;&quot;);
+<span class="fc" id="L380">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(or (and (&lt; i$0 0) (or (and (&gt; i$0 0) (and (&gt;= (- i$0) 0) true)) &quot; +
+                &quot;(and (not (&gt; i$0 0)) (and (&gt;= 1 0) true)))) (and &quot; +
+                &quot;(not (&lt; i$0 0)) (and (&gt;= i$0 0) true))))))&quot;);
+<span class="fc" id="L384">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L385">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

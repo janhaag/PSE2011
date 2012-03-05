@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Help.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (26.02.2012 19:54:06)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Help.java</span></div><h1>Help.java</h1><pre class="source lang-java linenums">package misc;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Help.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">misc</a> &gt; <span class="el_source">Help.java</span></div><h1>Help.java</h1><pre class="source lang-java linenums">package misc;
 
 import gui.MainFrame;
 
@@ -15,116 +15,147 @@ public class Help {
 	private Map&lt;String, String&gt; tableOfContents;
 	private Map&lt;String, String&gt; tags;
 
-<span class="nc" id="L18">	private Help() {</span>
+<span class="fc" id="L18">	private Help() {</span>
 		// LinkedHashMap used for ordering
-<span class="nc" id="L20">		tableOfContents = new LinkedHashMap&lt;String, String&gt;();</span>
-<span class="nc" id="L21">		tableOfContents.put(&quot;Introduction&quot;, &quot;index.html&quot;);</span>
-<span class="nc" id="L22">		tableOfContents.put(&quot;Comments&quot;, &quot;comments.html&quot;);</span>
-<span class="nc" id="L23">		tableOfContents.put(&quot;While-Loop&quot;, &quot;while.html&quot;);</span>
-<span class="nc" id="L24">		tableOfContents.put(&quot;If-Statement&quot;, &quot;if.html&quot;);</span>
-<span class="nc" id="L25">		tableOfContents.put(&quot;Assertion&quot;, &quot;assertion.html&quot;);</span>
-<span class="nc" id="L26">		tableOfContents.put(&quot;Quantified Expressions&quot;, &quot;quantified_expression.html&quot;);</span>
-<span class="nc" id="L27">		tableOfContents.put(&quot;Variables&quot;, &quot;variables.html&quot;);</span>
-<span class="nc" id="L28">		tableOfContents.put(&quot;Boolean Operations&quot;, &quot;boolean_ops.html&quot;);</span>
-<span class="nc" id="L29">		tableOfContents.put(&quot;Integer Operations&quot;, &quot;integer_ops.html&quot;);</span>
-<span class="nc" id="L30">		tableOfContents.put(&quot;Functions&quot;, &quot;function.html&quot;);</span>
+<span class="fc" id="L20">		tableOfContents = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L21">		tableOfContents.put(&quot;Introduction&quot;, &quot;index.html&quot;);</span>
+<span class="fc" id="L22">		tableOfContents.put(&quot;Interpreting&quot;, &quot;interpreting.html&quot;);</span>
+<span class="fc" id="L23">		tableOfContents.put(&quot;Comments&quot;, &quot;comments.html&quot;);</span>
+<span class="fc" id="L24">		tableOfContents.put(&quot;Program&quot;, &quot;program.html&quot;);</span>
+<span class="fc" id="L25">		tableOfContents.put(&quot;Functions&quot;, &quot;functions.html&quot;);</span>
+<span class="fc" id="L26">		tableOfContents.put(&quot;Statement&quot;, &quot;statement.html&quot;);</span>
+<span class="fc" id="L27">		tableOfContents.put(&quot;Variables&quot;, &quot;variables.html&quot;);</span>
+<span class="fc" id="L28">		tableOfContents.put(&quot;Assignment&quot;, &quot;assignment.html&quot;);</span>
+<span class="fc" id="L29">		tableOfContents.put(&quot;If Statement&quot;, &quot;if.html&quot;);</span>
+<span class="fc" id="L30">		tableOfContents.put(&quot;While Statement&quot;, &quot;while.html&quot;);</span>
+<span class="fc" id="L31">		tableOfContents.put(&quot;Expression&quot;, &quot;expression.html&quot;);</span>
+<span class="fc" id="L32">		tableOfContents.put(&quot;Identifier&quot;, &quot;identifier.html&quot;);</span>
+<span class="fc" id="L33">		tableOfContents.put(&quot;Literal&quot;, &quot;literal.html&quot;);</span>
+<span class="fc" id="L34">		tableOfContents.put(&quot;Boolean Operations&quot;, &quot;boolean_operations.html&quot;);</span>
+<span class="fc" id="L35">		tableOfContents.put(&quot;Integer Operations&quot;, &quot;integer_operations.html&quot;);</span>
+<span class="fc" id="L36">		tableOfContents.put(&quot;Array Operations&quot;, &quot;array_operations.html&quot;);</span>
+<span class="fc" id="L37">		tableOfContents.put(&quot;Specifications&quot;, &quot;specifications.html&quot;);</span>
+<span class="fc" id="L38">		tableOfContents.put(&quot;Assert&quot;, &quot;assert.html&quot;);</span>
+<span class="fc" id="L39">		tableOfContents.put(&quot;Assume&quot;, &quot;assume.html&quot;);</span>
+<span class="fc" id="L40">		tableOfContents.put(&quot;Ensure&quot;, &quot;ensure.html&quot;);</span>
+<span class="fc" id="L41">		tableOfContents.put(&quot;Invariant&quot;, &quot;invariant.html&quot;);</span>
+<span class="fc" id="L42">		tableOfContents.put(&quot;Axiom&quot;, &quot;axiom.html&quot;);</span>
+<span class="fc" id="L43">		tableOfContents.put(&quot;Quantified Expressions&quot;, &quot;quantified_expression.html&quot;);</span>
 		
 
-<span class="nc" id="L33">		tags = new HashMap&lt;String, String&gt;();</span>
-<span class="nc" id="L34">		tags.put(&quot;help&quot;, &quot;index.html&quot;);</span>
-<span class="nc" id="L35">		tags.put(&quot;loop&quot;, &quot;while.html&quot;);</span>
-<span class="nc" id="L36">		tags.put(&quot;while&quot;, &quot;while.html&quot;);</span>
-<span class="nc" id="L37">		tags.put(&quot;if&quot;, &quot;if.html&quot;);</span>
-<span class="nc" id="L38">		tags.put(&quot;conditional&quot;, &quot;if.html&quot;);</span>
-<span class="nc" id="L39">		tags.put(&quot;assert&quot;, &quot;assertion.html&quot;);</span>
-<span class="nc" id="L40">		tags.put(&quot;ensure&quot;, &quot;assertion.html&quot;);</span>
-<span class="nc" id="L41">		tags.put(&quot;assume&quot;, &quot;assertion.html&quot;);</span>
-<span class="nc" id="L42">		tags.put(&quot;invariant&quot;, &quot;assertion.html&quot;);</span>
-<span class="nc" id="L43">		tags.put(&quot;axiom&quot;, &quot;assertion.html&quot;);</span>
-<span class="nc" id="L44">		tags.put(&quot;vars&quot;, &quot;variables.html&quot;);</span>
-<span class="nc" id="L45">		tags.put(&quot;variable&quot;, &quot;variables.html&quot;);</span>
-<span class="nc" id="L46">		tags.put(&quot;array&quot;, &quot;variables.html&quot;);</span>
-<span class="nc" id="L47">		tags.put(&quot;bool&quot;, &quot;boolean_ops.html&quot;);</span>
-<span class="nc" id="L48">		tags.put(&quot;boolean&quot;, &quot;boolean_ops.html&quot;);</span>
-<span class="nc" id="L49">		tags.put(&quot;logical&quot;, &quot;boolean_ops.html&quot;);</span>
-<span class="nc" id="L50">		tags.put(&quot;int&quot;, &quot;integer_ops.html&quot;);</span>
-<span class="nc" id="L51">		tags.put(&quot;integer&quot;, &quot;integer_ops.html&quot;);</span>
-<span class="nc" id="L52">		tags.put(&quot;function&quot;, &quot;function.html&quot;);</span>
-<span class="nc" id="L53">		tags.put(&quot;return&quot;, &quot;function.html&quot;);</span>
-<span class="nc" id="L54">		tags.put(&quot;quantifier&quot;, &quot;quantified_expression.html&quot;);</span>
-<span class="nc" id="L55">		tags.put(&quot;exists&quot;, &quot;quantified_expression.html&quot;);</span>
-<span class="nc" id="L56">		tags.put(&quot;forall&quot;, &quot;quantified_expression.html&quot;);</span>
-<span class="nc" id="L57">		tags.put(&quot;comment&quot;, &quot;comments.html&quot;);</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L46">		tags = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L47">		tags.put(&quot;length&quot;, &quot;array_operations.html&quot;);</span>
+<span class="fc" id="L48">		tags.put(&quot;assert&quot;, &quot;assert.html&quot;);</span>
+<span class="fc" id="L49">		tags.put(&quot;assertion&quot;, &quot;assert.html&quot;);</span>
+<span class="fc" id="L50">		tags.put(&quot;assign&quot;, &quot;assignment.html&quot;);</span>
+<span class="fc" id="L51">		tags.put(&quot;assignment&quot;, &quot;assignment.html&quot;);</span>
+<span class="fc" id="L52">		tags.put(&quot;write&quot;, &quot;assignment.html&quot;);</span>
+<span class="fc" id="L53">		tags.put(&quot;assume&quot;, &quot;assume.html&quot;);</span>
+<span class="fc" id="L54">		tags.put(&quot;axiom&quot;, &quot;axiom.html&quot;);</span>
+<span class="fc" id="L55">		tags.put(&quot;bool&quot;, &quot;boolean_operations.html&quot;);</span>
+<span class="fc" id="L56">		tags.put(&quot;boolean&quot;, &quot;boolean_operations.html&quot;);</span>
+<span class="fc" id="L57">		tags.put(&quot;logical&quot;, &quot;boolean_operations.html&quot;);</span>
+<span class="fc" id="L58">		tags.put(&quot;comment&quot;, &quot;comments.html&quot;);</span>
+<span class="fc" id="L59">		tags.put(&quot;ensure&quot;, &quot;ensure.html&quot;);</span>
+<span class="fc" id="L60">		tags.put(&quot;expression&quot;, &quot;expression.html&quot;);</span>
+<span class="fc" id="L61">		tags.put(&quot;function&quot;, &quot;functions.html&quot;);</span>
+<span class="fc" id="L62">		tags.put(&quot;main&quot;, &quot;functions.html&quot;);</span>
+<span class="fc" id="L63">		tags.put(&quot;return&quot;, &quot;functions.html&quot;);</span>
+<span class="fc" id="L64">		tags.put(&quot;identifier&quot;, &quot;identifier.html&quot;);</span>
+<span class="fc" id="L65">		tags.put(&quot;name&quot;, &quot;identifier.html&quot;);</span>
+<span class="fc" id="L66">		tags.put(&quot;if&quot;, &quot;if.html&quot;);</span>
+<span class="fc" id="L67">		tags.put(&quot;else&quot;, &quot;if.html&quot;);</span>
+<span class="fc" id="L68">		tags.put(&quot;conditional&quot;, &quot;if.html&quot;);</span>
+<span class="fc" id="L69">		tags.put(&quot;help&quot;, &quot;index.html&quot;);</span>
+<span class="fc" id="L70">		tags.put(&quot;integer&quot;, &quot;integer_operations.html&quot;);</span>
+<span class="fc" id="L71">		tags.put(&quot;division&quot;, &quot;integer_operations.html&quot;);</span>
+<span class="fc" id="L72">		tags.put(&quot;modulo&quot;, &quot;integer_operations.html&quot;);</span>
+<span class="fc" id="L73">		tags.put(&quot;interpret&quot;, &quot;interpreting.html&quot;);</span>
+<span class="fc" id="L74">		tags.put(&quot;run&quot;, &quot;interpreting.html&quot;);</span>
+<span class="fc" id="L75">		tags.put(&quot;invariant&quot;, &quot;invariant.html&quot;);</span>
+<span class="fc" id="L76">		tags.put(&quot;literal&quot;, &quot;literal.html&quot;);</span>
+<span class="fc" id="L77">		tags.put(&quot;constant&quot;, &quot;literal.html&quot;);</span>
+<span class="fc" id="L78">		tags.put(&quot;program&quot;, &quot;program.html&quot;);</span>
+<span class="fc" id="L79">		tags.put(&quot;syntax&quot;, &quot;program.html&quot;);</span>
+<span class="fc" id="L80">		tags.put(&quot;quantifier&quot;, &quot;quantified_expression.html&quot;);</span>
+<span class="fc" id="L81">		tags.put(&quot;exists&quot;, &quot;quantified_expression.html&quot;);</span>
+<span class="fc" id="L82">		tags.put(&quot;forall&quot;, &quot;quantified_expression.html&quot;);</span>
+<span class="fc" id="L83">		tags.put(&quot;statement&quot;, &quot;statement.html&quot;);</span>
+<span class="fc" id="L84">		tags.put(&quot;variable&quot;, &quot;variables.html&quot;);</span>
+<span class="fc" id="L85">		tags.put(&quot;array&quot;, &quot;variables.html&quot;);</span>
+<span class="fc" id="L86">		tags.put(&quot;declaration&quot;, &quot;variables.html&quot;);</span>
+<span class="fc" id="L87">		tags.put(&quot;loop&quot;, &quot;while.html&quot;);</span>
+<span class="fc" id="L88">		tags.put(&quot;while&quot;, &quot;while.html&quot;);</span>
+<span class="fc" id="L89">	}</span>
 
 	public String[] getTableOfContents() {
-<span class="nc" id="L61">		return tableOfContents.keySet().toArray(new String[0]);</span>
+<span class="fc" id="L92">		return tableOfContents.keySet().toArray(new String[0]);</span>
 	}
 
 	public String getHelpByTOC(String tocItem) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (tableOfContents.containsKey(tocItem)) {</span>
-<span class="nc" id="L66">			return loadHelpFile(tableOfContents.get(tocItem));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (tableOfContents.containsKey(tocItem)) {</span>
+<span class="fc" id="L97">			return loadHelpFile(tableOfContents.get(tocItem));</span>
 		} else {
-<span class="nc" id="L68">			return loadHelpFile(&quot;index.html&quot;);</span>
+<span class="nc" id="L99">			return loadHelpFile(&quot;index.html&quot;);</span>
 		}
 	}
 
 	public String getHelpByTag(String tag) {
-<span class="nc" id="L73">		return loadHelpFile(tags.get(tag));</span>
+<span class="fc" id="L104">		return loadHelpFile(tags.get(tag));</span>
 	}
 
 	public String[] getTags() {
-<span class="nc" id="L77">		return tags.keySet().toArray(new String[0]);</span>
+<span class="fc" id="L108">		return tags.keySet().toArray(new String[0]);</span>
 	}
 	
 	private String getFileAsString(String filename) {
-<span class="nc" id="L81">		InputStream in = MainFrame.class.getResourceAsStream(filename);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (in != null) {</span>
-<span class="nc" id="L83">			BufferedReader inReader = new BufferedReader(new InputStreamReader(in));</span>
-<span class="nc" id="L84">			String line = null;</span>
-<span class="nc" id="L85">			String fileText = new String();</span>
+<span class="fc" id="L112">		InputStream in = MainFrame.class.getResourceAsStream(filename);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (in != null) {</span>
+<span class="fc" id="L114">			BufferedReader inReader = new BufferedReader(new InputStreamReader(in));</span>
+<span class="fc" id="L115">			String line = null;</span>
+<span class="fc" id="L116">			String fileText = new String();</span>
 			try {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">				while ((line = inReader.readLine()) != null) {</span>
-<span class="nc" id="L88">					fileText += line;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">				while ((line = inReader.readLine()) != null) {</span>
+<span class="fc" id="L119">					fileText += line + System.getProperty(&quot;line.separator&quot;);</span>
 				}
-<span class="nc" id="L90">			} catch (IOException e) {</span>
-<span class="nc" id="L91">				e.printStackTrace();</span>
+<span class="nc" id="L121">			} catch (IOException e) {</span>
+<span class="nc" id="L122">				e.printStackTrace();</span>
 			}
-<span class="nc" id="L93">			return fileText;</span>
+<span class="fc" id="L124">			return fileText;</span>
 		} else {
-<span class="nc" id="L95">			return null;</span>
+<span class="nc" id="L126">			return null;</span>
 		}
 	}
 
 	private String loadHelpFile(String filename) {
-<span class="nc" id="L100">		String helpText = getFileAsString(&quot;doc/&quot; + filename);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (helpText != null) {</span>
-<span class="nc" id="L102">			return helpText;</span>
+<span class="fc" id="L131">		String helpText = getFileAsString(&quot;doc/&quot; + filename);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (helpText != null) {</span>
+<span class="fc" id="L133">			return helpText;</span>
 		} else {
-<span class="nc" id="L104">			return &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;File not found&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Helpfile not found.&lt;/body&gt;&lt;/html&gt;&quot;;</span>
+<span class="nc" id="L135">			return &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;File not found&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Helpfile not found.&lt;/body&gt;&lt;/html&gt;&quot;;</span>
 		}
 	}
 
 	public String getSmallStyle() {
-<span class="nc" id="L109">		String smallStyle = getFileAsString(&quot;doc/small.css&quot;);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (smallStyle != null) {</span>
-<span class="nc" id="L111">			return smallStyle;</span>
+<span class="fc" id="L140">		String smallStyle = getFileAsString(&quot;doc/small.css&quot;);</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (smallStyle != null) {</span>
+<span class="fc" id="L142">			return smallStyle;</span>
 		} else {
-<span class="nc" id="L113">			return &quot;&quot;;</span>
+<span class="nc" id="L144">			return &quot;&quot;;</span>
 		}
 	}
 	
 	public String getDefaultStyle() {
-<span class="nc" id="L118">		String defaultStyle = getFileAsString(&quot;doc/default.css&quot;);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if(defaultStyle != null) {</span>
-<span class="nc" id="L120">			return defaultStyle;</span>
+<span class="fc" id="L149">		String defaultStyle = getFileAsString(&quot;doc/default.css&quot;);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if(defaultStyle != null) {</span>
+<span class="fc" id="L151">			return defaultStyle;</span>
 		} else {
-<span class="nc" id="L122">			return &quot;&quot;;</span>
+<span class="nc" id="L153">			return &quot;&quot;;</span>
 		}
 	}
 
 	public static Help getInstance() {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		return help == null ? (help = new Help()) : help;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		return help == null ? (help = new Help()) : help;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (26.02.2012 19:54:06)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>

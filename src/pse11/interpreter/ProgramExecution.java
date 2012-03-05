@@ -166,6 +166,8 @@ public class ProgramExecution {
                     return globalBreakpoint;
                 } catch (IllegalTypeException ignored) {
                 } catch (AssertionFailureException ignored) {
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                } catch (ArithmeticException ignored) {
                 }
     		}
         }

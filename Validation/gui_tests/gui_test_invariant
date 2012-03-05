@@ -1,0 +1,13 @@
+main(int i) {
+	int x = i;
+	while (i > 1) invariant x == i; {
+		i = i - 1;
+		x = x - 1;
+	}
+	while ((i > 0) & (i < 9)) invariant exists x(0, 10) x > i; {
+		i = i + 1;
+	}
+	while (i > 0) invariant forall x(0, 10) x > i; {
+		i = i + 1;
+	}
+}
