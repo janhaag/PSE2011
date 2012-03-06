@@ -365,7 +365,7 @@ unary_expression returns [ Expression ast, LinkedList<Expression> divisors, Link
         	$divisors = e.divisors; $arrayIndices = $e.arrayIndices;}}
         | '-'  e=parenthesized_expression {if (!error && $e.ast != null) {
         	$ast = new ArithmeticExpression(new Position($start.getLine(), $start.getCharPositionInLine()), $e.ast, null, new UnaryMinus());
-        	$divisors = e.divisors; $arrayIndices = $e.arrayIndices;}}
+        	$divisors = $e.divisors; $arrayIndices = $e.arrayIndices;}}
         | '+'? e=parenthesized_expression {if (!error && $e.ast != null) {
         	$ast = $e.ast;
         	$divisors = $e.divisors;
