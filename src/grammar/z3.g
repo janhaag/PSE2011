@@ -25,16 +25,17 @@ block	returns[Pair<Boolean, String> result]
 	 .* {$result = new Pair(true,"unknown");}
 	;
 
-model	returns [String example] @init{$example = ""; HashMap<String,String> m = new HashMap<String,String>();}
+model	returns [String example] @init{$example = ""; HashMap<String,String> m = new HashMap<String,String>(); String h; Int i, Int m = 0;}
 	:	'(model' (
 		('(define-fun' id = IDENT  '('('('IDENT('!' INT)*  TYPE')')*')' TYPE val = value ')'
        			 {$example += $id.text + "=" + $val.content + "; ";} )
 	|	('(define-fun'  id = IDENT '(' ')' {$example = $id.text;}
         		'(Array'(TYPE {$example += "[ ]";})+ TYPE  ')'
 		'(' '_' 'as-array'  id2 = (IDENT ('!' INT)*)')'')' {m.put($id2.text,$id.text);}{$example += "; ";})
-	|	('(define-fun' id3 = IDENT ('!' INT)+ '('('('IDENT ('!' INT)+ TYPE')')+')' TYPE {String h = m.get($id3.text); h = (h != null? h : $id3.text);}
+	|	('(define-fun' id3 = IDENT ('!' INT)+ {i = 0;}'('('('IDENT ('!' INT)+ TYPE')'{i++;})*')' TYPE {h = m.get($id3.text);
+		h = (h != null? h : $id3.text); if(i > 1){h += "!" + Integer.toString(m++);}}
        		( '('  ass = ite[h] {$example += $ass.assignment;}')' 
-       		| '('f = function[h] {$example += $f.assignment;}')')?(v = value{$example +=m.get($id3.text) + "=" + $v.content;})?')'))*
+       		| '('f = function[h] {$example += $f.assignment;}')')?(v = value{$example += h + "=" + $v.content;})?')'))*
 		')'
 	;
 
