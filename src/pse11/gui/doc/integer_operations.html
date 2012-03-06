@@ -22,7 +22,7 @@
 	<dd>Returns int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop if possible, the result will be zero otherwise (e.g. for bounds of quantified expressions). See below for an exact definition.</dd>
 	<dt><span class="code_inline">%</span> (modulo)</dt>
 	<dt><span class="code_inline">int1 % int2</span></dt>
-	<dd>Returns the remainder of the division of int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop if possible, the result will be int1 otherwise (the result will be zero otherwise (e.g. for bounds of quantified expressions). See below for an exact definition.</dd>
+	<dd>Returns the remainder of the division of int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop if possible, the result will be int1 otherwise (e.g. for bounds of quantified expressions). See below for an exact definition.</dd>
 	<dt><span class="code_inline">-</span> (negation)</dt>
 	<dt><span class="code_inline">-int1</span></dt>
 	<dd>Returns the negation of the integer.</dd>
@@ -52,8 +52,8 @@ When running a program in single step mode, the interpreter stops twice at each 
 <p>For integers a and b, b not equal to zero, division and modulo is defined to satisfy the formulas <br>
 <span class="code_inline">a = b * (a / b) + a % b</span><br>
 and
-<span class="code_inline">0 &lt;= a % b &lt;= |n| - 1</span><br>
-where <span class="code_inline">|n|</span> is the absolute value of n.</p>
+<span class="code_inline">0 &lt;= a % b &lt;= |b| - 1</span><br>
+where <span class="code_inline">|b|</span> is the absolute value of b.</p>
 <p>For an integer a and a positive integer b, <span class="code_inline">a / b</span> equals the floor of the rational number a / b.<br>
 For an integer a and a negative integer b, <span class="code_inline">a / b</span> equals the ceiling of the rational number a / b.</p>
 <p>For integers a and b not equal to zero, <span class="code_inline">a % b</span> equals <span class="code_inline">a - (a / b) * b</span>.</p>
