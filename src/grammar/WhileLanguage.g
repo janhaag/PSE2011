@@ -245,32 +245,61 @@ return_statement returns [ ReturnStatement ast, LinkedList<Expression> divisors,
 	;
 
 quantified_expression returns [ Expression ast ]
-        : qe_helper[new LinkedList<Expression>(), new LinkedList<Pair<ArrayRead, Expression>>()]
-          { if (!error) $ast = $qe_helper.ast; }
-        ;
-
-qe_helper [ LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ] returns [ Expression ast ]
-       @init {Range r = null;}
-        : QUANTIFIER IDENT '(' (range {if (!error) {
-        		r = new Range($range.e1, $range.e2);
-        		$divisors.addAll($range.divisors);
-                $arrayIndices.addAll($range.arrayIndices);
-        	}})? ')' ex=qe_helper[divisors, arrayIndices] {if (!error) {
-        	if ("forall".equals($QUANTIFIER.text))
-        	    $ast = new ForAllQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
-        				$ex.ast);
-            else $ast = new ExistsQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
-        				$ex.ast);
-        	}}
-        | expression {if (!error) {
-            $divisors.addAll($expression.divisors);
-            $arrayIndices.addAll($expression.arrayIndices);
-            $ast = $expression.ast;
-            for (Expression e : divisors) {
+        : qe_helper
+          { if (!error) {$ast = $qe_helper.ast;
+          for (Expression e : $qe_helper.divisors) {
                 $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), e,
                     new NumericLiteral(e.getPosition(), "0"), new NotEqual()), $ast, new Conjunction());
             }
-            for (Pair<ArrayRead, Expression> p : arrayIndices) {
+          for (Pair<ArrayRead, Expression> p : $qe_helper.arrayIndices) {
+                Expression e = p.getValue2();
+                ArrayRead a = p.getValue1();
+                LogicalExpression lower = new LogicalExpression(e.getPosition(), e,
+                        new NumericLiteral(e.getPosition(), "0"), new GreaterEqual());
+                LogicalExpression upper = new LogicalExpression(e.getPosition(), e,
+                        new FunctionCall(new Identifier("length"), new Expression[] {a},
+                            e.getPosition()), new Less());
+                $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), lower, upper, new Conjunction()),
+                        $ast, new Conjunction());
+          }}}
+        ;
+
+qe_helper returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
+       @init {Range r = null;}
+        : QUANTIFIER IDENT '(' (range {if (!error) {
+        		r = new Range($range.e1, $range.e2);
+            $arrayIndices = $range.arrayIndices;
+            $divisors = $range.divisors;
+        	}})? ')' ex=qe_helper {if (!error) {
+        	if ("forall".equals($QUANTIFIER.text))
+        	    $ast = new ForAllQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
+        				$ex.ast);
+          else $ast = new ExistsQuantifier(new Position($start.getLine(), $start.getCharPositionInLine()), r, new Identifier($IDENT.text),
+        				$ex.ast);
+        	for (Expression e : $ex.divisors) {
+                $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), e,
+                    new NumericLiteral(e.getPosition(), "0"), new NotEqual()), $ast, new Conjunction());
+          }
+          for (Pair<ArrayRead, Expression> p : $ex.arrayIndices) {
+                Expression e = p.getValue2();
+                ArrayRead a = p.getValue1();
+                LogicalExpression lower = new LogicalExpression(e.getPosition(), e,
+                        new NumericLiteral(e.getPosition(), "0"), new GreaterEqual());
+                LogicalExpression upper = new LogicalExpression(e.getPosition(), e,
+                        new FunctionCall(new Identifier("length"), new Expression[] {a},
+                            e.getPosition()), new Less());
+                $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), lower, upper, new Conjunction()),
+                        $ast, new Conjunction());
+          }}}
+        | expression {if (!error) {
+            $divisors = new LinkedList<Expression>();
+            $arrayIndices = new LinkedList<Pair<ArrayRead, Expression>>();
+            $ast = $expression.ast;
+            for (Expression e : $expression.divisors) {
+                $ast = new LogicalExpression(e.getPosition(), new LogicalExpression(e.getPosition(), e,
+                    new NumericLiteral(e.getPosition(), "0"), new NotEqual()), $ast, new Conjunction());
+            }
+            for (Pair<ArrayRead, Expression> p : $expression.arrayIndices) {
                 Expression e = p.getValue2();
                 ArrayRead a = p.getValue1();
                 LogicalExpression lower = new LogicalExpression(e.getPosition(), e,
