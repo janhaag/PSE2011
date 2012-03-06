@@ -56,9 +56,14 @@ public class SMTLibTranslator implements ASTVisitor {
     //private ArrayList<FunctionCall> functionsCalled;
     /**
      * temporarily saves the number of the function call
-     * in the current statement
+     * in the program
      */
-    private int noOfFuncCall = 0;
+    private int noOfFuncCall;
+    /**
+     * temporarily saves the number of the function call
+     * in the program
+     */
+    private int noOfQuantifier;
 
     /**
      * Translates the given AST into a formula
@@ -438,16 +443,16 @@ public class SMTLibTranslator implements ASTVisitor {
         }
         noOfFuncCall += 1;
         Position position = functionCall.getPosition();
-        S_Expression saveTempExpr = tempExpr;
         Function function = functionCall.getFunction();
         for (Ensure ensure : function.getEnsures()) {
             ensure.accept(this);
             replaceInFunctionResult(position, function);
-            saveTempExpr = new S_Expression("=>", tempExpr, saveTempExpr);
+            currentProgram = new S_Expression("=>", tempExpr, currentProgram);
         }
         Statement[] statements = function.getFunctionBlock().getStatements();
         (statements[statements.length - 1]).accept(this);
         replaceInFunctionResult(position, function);
+
     }
 
     private void replaceInFunctionResult(Position position, Function function) {
@@ -624,9 +629,11 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         existsQuantifier.getSubexpression1().accept(this);
+        noOfQuantifier += 1;
         String name = existsQuantifier.getIdentifier().toString();
         int depth = existsQuantifier.getDepth();
-        String variable = "((" + name + '$' + depth + " Int))";
+        VarDef var = quantifierVar(existsQuantifier.getPosition(), name, depth);
+        String variable = "((" + var.toString() + " Int))";
         S_Expression saveTempExpr = tempExpr;
         Range range = existsQuantifier.getRange();
         if (range != null) {
@@ -639,15 +646,18 @@ public class SMTLibTranslator implements ASTVisitor {
                     "<=", new VarDef(name, new IntegerType(), depth), tempExpr
             ), saveTempExpr);
         }
+        saveTempExpr.replace(new VarDef(name, new IntegerType(), depth), var);
         tempExpr = new S_Expression("exists", new Constant(variable), saveTempExpr);
     }
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         forAllQuantifier.getSubexpression1().accept(this);
+        noOfQuantifier += 1;
         String name = forAllQuantifier.getIdentifier().toString();
         int depth = forAllQuantifier.getDepth();
-        String variable = "((" + name + '$' + depth + " Int))";
+        VarDef var = quantifierVar(forAllQuantifier.getPosition(), name, depth);
+        String variable = "((" + var.toString() + " Int))";
         S_Expression saveTempExpr = tempExpr;
         Range range = forAllQuantifier.getRange();
         if (range != null) {
@@ -660,7 +670,14 @@ public class SMTLibTranslator implements ASTVisitor {
                     ">", new VarDef(name, new IntegerType(), depth), tempExpr
             ), saveTempExpr);
         }
+        saveTempExpr.replace(new VarDef(name, new IntegerType(), depth), var);
         tempExpr = new S_Expression("forall", new Constant(variable), saveTempExpr);
+    }
+    
+    private VarDef quantifierVar(Position position, String name, int depth) {
+        String varDefName = "$qvar" + noOfQuantifier + 'l' + position.getLine()
+                    + 'c' + position.getColumn() + '$' + name;
+        return new VarDef(varDefName, new IntegerType(), depth);
     }
 
     @Override

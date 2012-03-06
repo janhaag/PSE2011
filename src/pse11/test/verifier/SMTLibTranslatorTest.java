@@ -247,61 +247,67 @@ public class SMTLibTranslatorTest {
     @Test
     public void testSingleForAll() throws RecognitionException {
         p = parserInterface.parseProgram("main(){}ensure forall x() x==x;");
-        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
-                "(and true (and (forall ((x$1 Int)) (= x$1 x$1)) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c15$x$1 () Int)" +
+                "(assert (not (and true (and (forall (($qvar1l1c15$x$1 Int)) " +
+                "(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
     @Test
     public void testSingleBoundedForAll() throws RecognitionException {
         p = parserInterface.parseProgram("main(){}ensure forall x(1,2) x==x;");
-        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
-                "(and true (and (forall ((x$1 Int)) " +
-                "(or (> x$1 2) (or (< x$1 1) (= x$1 x$1)))) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c15$x$1 () Int)(assert (not " +
+                "(and true (and (forall (($qvar1l1c15$x$1 Int)) " +
+                "(or (> $qvar1l1c15$x$1 2) (or (< $qvar1l1c15$x$1 1) " +
+                "(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)))) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
     @Test
     public void testSingleExists() throws RecognitionException {
         p = parserInterface.parseProgram("main(){}ensure exists x() x==x;");
-        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
-                "(and true (and (exists ((x$1 Int)) (= x$1 x$1)) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c15$x$1 () Int)" +
+                "(assert (not (and true (and (exists (($qvar1l1c15$x$1 Int)) " +
+                "(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
     @Test
     public void testSingleBoundedExists() throws RecognitionException {
         p = parserInterface.parseProgram("main(){}ensure exists x(1,3) x==x;");
-        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
-                "(and true (and (exists ((x$1 Int)) " +
-                "(and (<= x$1 3) (and (>= x$1 1) (= x$1 x$1)))) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c15$x$1 () Int)(assert (not " +
+                "(and true (and (exists (($qvar1l1c15$x$1 Int)) " +
+                "(and (<= $qvar1l1c15$x$1 3) (and (>= $qvar1l1c15$x$1 1) " +
+                "(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)))) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
     @Test
     public void testForAllReplacement() throws RecognitionException {
         p = parserInterface.parseProgram("main(){int y=1;}ensure forall x() x==x/y;");
-        expected = LOGIC+embed("(declare-fun x$1 () Int)(assert (not " +
-                "(and true (and (forall ((x$1 Int)) (and (distinct 1 0) " +
-                "(= x$1 (div x$1 1)))) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c23$x$1 () Int)(assert (not " +
+                "(and true (and (forall (($qvar1l1c23$x$1 Int)) (and (distinct 1 0) " +
+                "(= $qvar1l1c23$x$1 (div $qvar1l1c23$x$1 1)))) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
     @Test
     public void testForAllAssert() throws RecognitionException {
         p = parserInterface.parseProgram("main(int y){assert forall x() x==x/y;}");
-        expected = LOGIC+embed("(declare-fun x$1 () Int)(declare-fun y$0 () Int)" +
-                "(assert (not (and true (and (forall ((x$1 Int)) " +
-                "(and (distinct y$0 0) (= x$1 (div x$1 y$0)))) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c19$x$1 () Int)" +
+                "(declare-fun y$0 () Int)(assert (not (and true (and " +
+                "(forall (($qvar1l1c19$x$1 Int)) (and (distinct y$0 0) " +
+                "(= $qvar1l1c19$x$1 (div $qvar1l1c19$x$1 y$0)))) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
     @Test
     public void testForAllExists() throws RecognitionException {
         p = parserInterface.parseProgram("main(){}ensure forall x() exists y() x==y;");
-        expected = LOGIC+embed("(declare-fun y$2 () Int)(declare-fun x$1 () Int)" +
-                "(assert (not (and true (and (forall ((x$1 Int)) " +
-                "(exists ((y$2 Int)) (= x$1 y$2))) true))))");
+        expected = LOGIC+embed("(declare-fun $qvar1l1c26$y$2 () Int)" +
+                "(declare-fun $qvar2l1c15$x$1 () Int)(assert (not (and true " +
+                "(and (forall (($qvar2l1c15$x$1 Int)) (exists (($qvar1l1c26$y$2 Int))" +
+                " (= $qvar2l1c15$x$1 $qvar1l1c26$y$2))) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
@@ -385,9 +391,9 @@ public class SMTLibTranslatorTest {
     public void testIfScopingQuantifier() throws RecognitionException {
         p = parserInterface.parseProgram("main(int i){int y=i;}" +
                 "ensure forall i() i>=y;");
-        expected = LOGIC+embed("(declare-fun i$0 () Int)(declare-fun i$1 () Int)" +
-                "(assert (not (and true " +
-                "(and (forall ((i$1 Int)) (>= i$1 i$0)) true))))");
+        expected = LOGIC+embed("(declare-fun i$0 () Int)(declare-fun $qvar1l1c28$i$1 () Int)" +
+                "(assert (not (and true (and (forall (($qvar1l1c28$i$1 Int)) " +
+                "(>= $qvar1l1c28$i$1 i$0)) true))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 
@@ -667,12 +673,32 @@ public class SMTLibTranslatorTest {
     }
 
     @Test
-    public void testFuncCallEnsure() throws RecognitionException {
+    public void testFuncCallPseudoEnsure() throws RecognitionException {
         p = parserInterface.parseProgram("int f(){return 0;}ensure true;" +
                 "main(){int y=f();}");
         expected = LOGIC
-            +embed("(assert (not true))")
-            +embed("(assert (not (and true true)))");
+            +embed("(assert (not (and true true)))")
+            +embed("(assert (not (and true (=> true true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallEnsure() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){return 0;}ensure true;" +
+                "main(){int y=f();}ensure y == 0;");
+        expected = LOGIC
+            +embed("(assert (not (and true true)))")
+            +embed("(assert (not (and true (=> true (and (= 0 0) true)))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallEnsureReplace() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){int k=1;return k;}ensure k>0;" +
+                "main(){int y=f();}ensure y == 0;");
+        expected = LOGIC
+            +embed("(assert (not (and (> 1 0) true)))")
+            +embed("(assert (not (and true (=> true (and (= 0 0) true)))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 }
