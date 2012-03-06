@@ -32,8 +32,8 @@ model	returns [String example] @init{$example = ""; HashMap<String,String> m = n
 	|	('(define-fun'  id = IDENT '(' ')' {$example = $id.text;}
         		'(Array'(TYPE {$example += "[ ]";})+ TYPE  ')'
 		'(' '_' 'as-array'  id2 = (IDENT ('!' INT)*)')'')' {m.put($id2.text,$id.text);}{$example += "; ";})
-	|	('(define-fun' id3 = IDENT ('!' INT)+ '('('('IDENT ('!' INT)+ TYPE')')+')' TYPE
-       		( '(' {String h = m.get($id3.text); h = (h != null? h : $id3.text);} ass = ite[h] {$example += $ass.assignment;}')' 
+	|	('(define-fun' id3 = IDENT ('!' INT)+ '('('('IDENT ('!' INT)+ TYPE')')+')' TYPE {String h = m.get($id3.text); h = (h != null? h : $id3.text);}
+       		( '('  ass = ite[h] {$example += $ass.assignment;}')' 
        		| '('f = function[h] {$example += $f.assignment;}')')?(v = value{$example +=m.get($id3.text) + "=" + $v.content;})?')'))*
 		')'
 	;
@@ -50,11 +50,11 @@ ite	[String id] returns[String assignment] @init{$assignment = id;}
 
 function	[String id] returns [String assignment]
 	: id1 = IDENT ('!' INT)* {$assignment = id + '=' + $id1.text;} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
-	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ';';}	
+	| '('f = functionvalue')' {$assignment += '(' +  $f.assignment ')';}) {$assignment += ';';}	
 	;
 functionvalue returns [String assignment]
 	: id1 = IDENT ('!' INT)* {$assignment = $id1.text+'(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
-	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ')';}	
+	| '('f = functionvalue')' {$assignment += $f.assignment + ')';})	
 	;
 
 value	returns [String content]
