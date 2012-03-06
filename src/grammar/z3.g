@@ -34,24 +34,26 @@ model	returns [String example] @init{$example = ""; HashMap<String,String> m = n
 		'(' '_' 'as-array'  id2 = (IDENT ('!' INT)*)')'')' {m.put($id2.text,$id.text);}{$example += "; ";})
 	|	('(define-fun' id3 = IDENT ('!' INT)+ '('('('IDENT ('!' INT)+ TYPE')')+')' TYPE
        		( '(' {String h = m.get($id3.text); h = (h != null? h : $id3.text);} ass = ite[h] {$example += $ass.assignment;}')' 
-       		| '('function')')?(v = value{$example +=m.get($id3.text) + "=" + $v.content;})?')'))*
+       		| '('f = function[h] {$example += $f.assignment;}')')?(v = value{$example +=m.get($id3.text) + "=" + $v.content;})?')'))*
 		')'
 	;
 
 ite	[String id] returns[String assignment] @init{$assignment = id;}
 	:	'ite' '(' '=' IDENT '!' INT i = INT')'  val = value
         {$assignment += "[" + $i.text + "]" + "=" + $val.content;}
-        (v = value {$assignment += " sonst " + $v.content + "; ";} | '('as=ite[id]')'{$assignment += $as.assignment;})
+        (v = value {$assignment += " else " + $v.content + "; ";} | '('as=ite[id]')'{$assignment += $as.assignment;})
 	|	'ite''(''and'('(''=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')'
-        val=value {$assignment += "=" + $val.content + "; ";}(value | '('as=ite[id]')'{$assignment += as;})
+        val=value {$assignment += "=" + $val.content + "; ";}(v = value {$assignment += " else " + $v.content + "; ";}| '('as=ite[id]')'{$assignment += as;})
 	;
 
-function	returns [String assignment]
-	: id1 = IDENT ('!' INT)* {$assignment = $id1.text + "=";} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+
+
+function	[String id] returns [String assignment]
+	: id1 = IDENT ('!' INT)* {$assignment = id + '=' + $id1.text;} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
 	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ';';}	
 	;
 functionvalue returns [String assignment]
-	: id1 = IDENT ('!' INT)* {$assignment = $id1.text + '(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+	: id1 = IDENT ('!' INT)* {$assignment = $id1.text+'(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
 	| '('f = functionvalue')' {$assignment += $f.assignment;}) {$assignment += ')';}	
 	;
 
