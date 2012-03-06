@@ -647,4 +647,32 @@ public class SMTLibTranslatorTest {
                 " (and (not (= 0 0)) (and (= 0 0) true))))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
+    
+    @Test
+    public void testTwoFunctions() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){return 0;}main(){}");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCall() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){return 0;}main(){int y=f();}");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallEnsure() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){return 0;}ensure true;" +
+                "main(){int y=f();}");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
 }

@@ -77,8 +77,8 @@ public class S_Expression {
      * present in the expression.
      * @return declaration of variables still present in the expression
      */
-    public LinkedList<String> getUndefinedVars() {
-        LinkedList<String> result = new LinkedList<String>();
+    public LinkedList<VarDef> getUndefinedVars() {
+        LinkedList<VarDef> result = new LinkedList<VarDef>();
         addVars(result);
         return result;
     }
@@ -87,7 +87,7 @@ public class S_Expression {
      * Adds variable declaration strings to the given list.
      * @param varList list to which the declaration strings are added
      */
-    public void addVars(LinkedList<String> varList) {
+    public void addVars(LinkedList<VarDef> varList) {
         if (subexpressions != null) {
             for (S_Expression expression : subexpressions) {
                 expression.addVars(varList);

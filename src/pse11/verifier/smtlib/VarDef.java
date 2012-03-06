@@ -53,10 +53,22 @@ public class VarDef extends S_Expression {
         return depth;
     }
 
+    public String getFullRepresentation() {
+        return fullRepresentation;
+    }
+
+    public String getIdent() {
+        return ident;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
     @Override
-    public void addVars(LinkedList<String> varList) {
-        if (!varList.contains(fullRepresentation)) {
-            varList.add(fullRepresentation);
+    public void addVars(LinkedList<VarDef> varList) {
+        if (!varList.contains(this)) {
+            varList.add(this);
         }
     }
 
