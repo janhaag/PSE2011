@@ -39,7 +39,7 @@ main() {
 </div>
 <h2>Function Call</h2>
 <p>Functions can be called by their name and the parameters in round brackets, which will execute the function with the specified parameters and return a value. Function calls are expressions.</p>
-<p style="line-height:2em;">Function calls are not allowed to be used in expressions of global breakpoints, <span class="code_element">assume</span>, <span class="code_element">axiom</span>, <span class="code_element">ensure</span>, <span class="code_element">invariant</span>, and in the subexpressions of <span class="code_element">exists</span> and <span class="code_element">forall</span>.
+<p style="line-height:2em;">Function calls are not allowed to be used in expressions of global breakpoints, <span class="code_element">assume</span>, <span class="code_element">axiom</span>, <span class="code_element">ensure</span>, <span class="code_element">invariant</span>, <span class="code_inline">return</span> statements, as parameters of function calls and in the subexpressions of <span class="code_element">exists</span> and <span class="code_element">forall</span>.
 <h3>Syntax</h3>
 <div class="code">
 <span class="code_element">identifier</span> ( <span class="code_optional" style="padding-top:6px"><span class="code_element">expression</span> <span class="code_optional">, <span class="code_element">expression</span><span class="code_mult">*</span></span> </span> )
