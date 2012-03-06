@@ -19,10 +19,10 @@
 	<dd>Returns the product of the two integers.</dd>
 	<dt><span class="code_inline">/</span> (division)</dt>
 	<dt><span class="code_inline">int1 / int2</span></dt>
-	<dd>Returns int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop in this case. See below for an exact definition.</dd>
+	<dd>Returns int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop if possible, the result will be zero otherwise (e.g. for bounds of quantified expressions). See below for an exact definition.</dd>
 	<dt><span class="code_inline">%</span> (modulo)</dt>
 	<dt><span class="code_inline">int1 % int2</span></dt>
-	<dd>Returns the remainder of the division of int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop in this case. See below for an exact definition.</dd>
+	<dd>Returns the remainder of the division of int1 divided by int2. It is implicitly checked whether int2 (the divisor) is zero; execution will stop if possible, the result will be int1 otherwise (the result will be zero otherwise (e.g. for bounds of quantified expressions). See below for an exact definition.</dd>
 	<dt><span class="code_inline">-</span> (negation)</dt>
 	<dt><span class="code_inline">-int1</span></dt>
 	<dd>Returns the negation of the integer.</dd>
