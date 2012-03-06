@@ -449,10 +449,20 @@ public class SMTLibTranslator implements ASTVisitor {
             replaceInFunctionResult(position, function);
             currentProgram = new S_Expression("=>", tempExpr, currentProgram);
         }
+        for (Assumption assume : function.getAssumptions()) {
+            assume.accept(this);
+            replaceInFunctionAssume();
+            currentProgram = new S_Expression("and", tempExpr, currentProgram);
+        }
+        for (int i = 0; i < function.getParameters().length; i++) {
+            functionCall.getParameters()[i].accept(this);
+            FunctionParameter param = function.getParameters()[i];
+            VarDef varDef = new VarDef("$param$" + param.getName(), param.getType(), 0);
+            currentProgram.replace(varDef, tempExpr);
+        }
         Statement[] statements = function.getFunctionBlock().getStatements();
         (statements[statements.length - 1]).accept(this);
-        replaceInFunctionResult(position, function);
-
+        replaceInFunctionResult(position, function);           
     }
 
     private void replaceInFunctionResult(Position position, Function function) {
@@ -460,7 +470,22 @@ public class SMTLibTranslator implements ASTVisitor {
             String newName = "$res" + noOfFuncCall + 'l' + position.getLine()
                     + 'c' + position.getColumn() + '$' + function.getName()
                     + '$' + varDef.getIdent();
-            tempExpr.replace(varDef, new VarDef(newName, varDef.getType(), 0));
+            VarDef newVar = new VarDef(newName, varDef.getType(), 0);
+            tempExpr.replace(varDef, newVar);
+            if (tempExpr.equals(varDef)) {
+                tempExpr = newVar;
+            }
+        }
+    }
+    
+    private void replaceInFunctionAssume() {
+        for (VarDef varDef : tempExpr.getUndefinedVars()) {
+            String newName = "$param$" + varDef.getIdent();
+            VarDef newVar = new VarDef(newName, varDef.getType(), 0);
+            tempExpr.replace(varDef, newVar);
+            if (tempExpr.equals(varDef)) {
+                tempExpr = newVar;
+            }
         }
     }
 

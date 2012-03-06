@@ -698,7 +698,100 @@ public class SMTLibTranslatorTest {
                 "main(){int y=f();}ensure y == 0;");
         expected = LOGIC
             +embed("(assert (not (and (> 1 0) true)))")
-            +embed("(assert (not (and true (=> true (and (= 0 0) true)))))");
+            +embed("(declare-fun $res1l1c50$f$k$0 () Int)(assert (not (and true " +
+                "(=> (> $res1l1c50$f$k$0 0) (and (= $res1l1c50$f$k$0 0) true)))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallTwoEnsure() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){int k=1;return k;}" +
+                "ensure {k > 0; true;}" +
+                "main(){int y=f();}ensure y == 0;");
+        expected = LOGIC
+            +embed("(assert (not (and true (and (> 1 0) true))))")
+            +embed("(declare-fun $res1l1c60$f$k$0 () Int)(assert (not (and true " +
+                "(=> true (=> (> $res1l1c60$f$k$0 0) " +
+                "(and (= $res1l1c60$f$k$0 0) true))))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallEnsureRecursion() throws RecognitionException {
+        p = parserInterface.parseProgram("int rek(int i, int k){\n" +
+                "int result=\nrek(i+1,k);\nreturn result;\n}ensure result > 0;\n" +
+                "main(){}");
+        expected = LOGIC
+            +embed("(declare-fun $res1l3c0$rek$result$0 () Int)" +
+                "(assert (not (=> (> $res1l3c0$rek$result$0 0) " +
+                "(and (> $res1l3c0$rek$result$0 0) true))))")
+            +embed("(assert (not (and true true)))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallSaveOtherVars() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){int k;return k;}" +
+                "main(){int x;int y=\nf();}ensure x*y == 0;");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(declare-fun $res1l2c0$f$k$0 () Int)(assert (not (and true " +
+                "(and (= (* 0 $res1l2c0$f$k$0) 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallExpressionReturn() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(){int k=1;int d=2;return k+d;}" +
+                "main(){int y=\nf();}ensure y == 0;");
+        expected = LOGIC
+            +embed("(assert (not true))")
+            +embed("(declare-fun $res1l2c0$f$d$0 () Int)" +
+                "(declare-fun $res1l2c0$f$k$0 () Int)(assert (not (and true " +
+                "(and (= (+ $res1l2c0$f$k$0 $res1l2c0$f$d$0) 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallAssume() throws RecognitionException {
+        p = parserInterface.parseProgram("int f()assume true;{return 0;}" +
+                "main(){int y=f();}");
+        expected = LOGIC
+            +embed("(assert (not (=> true true)))")
+            +embed("(assert (not (and true (and true true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallAssumeReplace() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(int i)assume i<0;{return 0;}" +
+                "main(){int y=f(3);}");
+        expected = LOGIC
+            +embed("(declare-fun i$0 () Int)(assert (not (=> (< i$0 0) true)))")
+            +embed("(assert (not (and true (and (< 3 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallAssumeReplaceVar() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(bool i)assume i;{return 0;}" +
+                "main(bool d){int y=f(d);}");
+        expected = LOGIC
+            +embed("(declare-fun i$0 () Bool)(assert (not (=> i$0 true)))")
+            +embed("(declare-fun d$0 () Bool)(assert (not (and true (and d$0 true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallAssumeMoreParams() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(bool i, int f)" +
+                "assume {i;i&(f<0);}{return 0;}" +
+                "main(bool d){int y=f(d|false, 5);}");
+        expected = LOGIC
+            +embed("(declare-fun f$0 () Int)(declare-fun i$0 () Bool)" +
+                "(assert (not (=> (and i$0 (< f$0 0)) (=> i$0 true))))")
+            +embed("(declare-fun d$0 () Bool)(assert (not (and true (and " +
+                "(and (or d$0 false) (< 5 0)) (and (or d$0 false) true)))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
 }
