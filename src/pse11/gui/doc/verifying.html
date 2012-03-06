@@ -7,33 +7,44 @@
 <h1>Verifying</h1>
 <p>Once a program is syntactically correct, it can be verified by pressing the 'Validate' button.</p>
 <p>Verifying a program will lead to either a verification, meaning all specifications of the program have been formally proven, a counterexample, meaning at least one specification of the program is disproved, or an unknown result, meaning the verifier can't determine if the program can be validated or disproven.</p>
+<h2>Specifications</h2>
+<p>The proof will be based on the specifications of a program:</p>
+<ul>
+	<li><span class="code_element">assert</span>s have to be proved using statements before them</li>
+	<li><span class="code_element">assume</span>s have to be proved using statements before calling the function of an assume and will be used to prove a function's specifications</li>
+	<li><span class="code_element">ensure</span>s in functions have to be proved using statements in its function up to the function's assume statement</li>
+	<li><span class="code_element">ensure</span>s in while loops have to be proved using statements in the while loop, its invariant and the negation of its condition</li>
+	<li><span class="code_element">invariant</span>s must be proved using the while loop's statements, its invariant and its condition</li>
+	<li><span class="code_element">axiom</span>s will not be proved but instead be used to prove other statements</li>
+</ul>
 <h2>Z3</h2>
 <p>By default, the theorem prover Z3, developed at Microsoft Research, will be used. The theorem prover's input will be in SMT-LIB Version 2.</p>
 <p>There are five distinct outputs of proves using Z3 that can be displayed in the 'Tested Contract' column:</p>
 <table border="1">
 	<tr>
 		<td>FunctionAssumeToRemainingProgram</td>
-		<td>For a function, all of it's following proof obligations must be proved using the function's assume specification.</td>
+		<td>For a function, all of it's following proof obligations must be proved using the function's assume specification. The 'remaining program' will be the next ensure, invariant or assume.</td>
 	</tr>
 	<tr>
 		<td>FunctionEnsureToRemainingProgram</td>
-		<td>For a function call, all following proof obligations must be proved using the called function's ensure specification.</td>
+		<td>For a function call, all following proof obligations must be proved using the called function's ensure specification. The 'remaining program' will be the next ensure, invariant or assume.</td>
 	</tr>
 	<tr>
 		<td>WhileEnsureToRemainingProgram</td>
-		<td>For a while loop, all following proof obligations must be proved using the while loop's while specification.</td>
+		<td>For a while loop, all following proof obligations must be proved using the while loop's while specification. The 'remaining program' will be the next ensure, invariant or assume.</td>
 	</tr>
 	<tr>
 		<td>InvariantAndConditionToInvariant</td>
-		<td>For a while loop, the invariant must be proved using the while loop's invariant and it's condition.</td>
+		<td>For a while loop, the invariant must be proved using the while loop's invariant and its condition.</td>
 	</tr>
 	<tr>
 		<td>InvariantAndNotConditionToWhileEnsure</td>
 		<td>For a while loop, it's ensure specification must be proved using the while loop's invariant and the negation of it's condition.</td>
 	</tr>
 </table>
-<p>A program can be proven correct if all rows in the 'Verifier' tab contain 'true;' in their 'Result' column.</p>
+<p>A program has been proven correct if all rows in the 'Verifier' tab contain 'true;' in their 'Result' column.</p>
 <h3>Counterexample Output</h3>
-<p>If the theorem prover was able to find a counterexample, the counterexample will be shown after a 'false;' in the 'Result' column, indicating variable names and their values. If function call's are used, parameters of function calls will be ennumerated starting at 1 for the first function call. The number of the function call is appended to a variable's name seperated by a dollar sign ($).</p>
+<p>If the theorem prover was able to find a counterexample, the counterexample will be shown after a 'false;' in the 'Result' column, indicating variable names and their values. A variable's name will be appended by a dollar sign ($) and the variable's scope depth, starting at zero, in order to distinguish variable's with the same name.</p>
+<p>If function call's are used, parameters of function calls will be ennumerated starting at 1 for the first function call. The number of the function call is appended to a variable's name seperated by a dollar sign ($). The scope information will be appended afterwards.</p>
 </body>
 </html>

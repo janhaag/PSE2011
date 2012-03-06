@@ -41,24 +41,24 @@ public class SMTLibTranslator implements ASTVisitor {
     /**
      * temporarily saves the number of the current program
      */
-    private int currentProgram;
+    private S_Expression currentProgram;
     /**
      * temporarily saves whether changes to tempExpression should be saved
      */
-    private boolean change;
+    //private boolean change;
     /**
      * temporarily saves whether a function call is evaluated
      */
-    private boolean isFunctionCall;
+    //private boolean isFunctionCall;
     /**
      * temporarily saves the function called in the current statement
      */
-    private ArrayList<FunctionCall> functionsCalled;
+    //private ArrayList<FunctionCall> functionsCalled;
     /**
      * temporarily saves the number of the function call
      * in the current statement
      */
-    private int noOfFuncCall;
+    private int noOfFuncCall = 0;
 
     /**
      * Translates the given AST into a formula
@@ -114,10 +114,10 @@ public class SMTLibTranslator implements ASTVisitor {
      * @param program program to be formed to the final block
      */
     private static void createBlock(LinkedList<S_Expression> program) {
-        LinkedList<String> vars = program.getLast().getUndefinedVars();
-        for (String var : vars) {
+        LinkedList<VarDef> vars = program.getLast().getUndefinedVars();
+        for (VarDef var : vars) {
             program.addFirst(new S_Expression("declare-fun",
-                    new Constant(var)));
+                    new Constant(var.getFullRepresentation())));
         }
         program.addFirst(new Constant("(push)"));
         program.addLast(new Constant("(check-sat)"));
@@ -256,24 +256,24 @@ public class SMTLibTranslator implements ASTVisitor {
                 trueBranch, falseBranch);
         change = true;
         functionsCalled = new ArrayList<FunctionCall>();*/
-        S_Expression saveExpression = tempExpr;
+        S_Expression saveProgram = currentProgram;
         conditional.getCondition().accept(this);
         S_Expression condition = tempExpr;
-        tempExpr = saveExpression.deepCopy();
+        currentProgram = saveProgram.deepCopy();
         conditional.getTrueConditionBody().accept(this);
         S_Expression trueBranch = new S_Expression("and",
-                condition.deepCopy(), tempExpr);
-        tempExpr = saveExpression.deepCopy();
+                condition.deepCopy(), currentProgram);
+        currentProgram = saveProgram.deepCopy();
         if (conditional.getFalseConditionBody() != null) {
             conditional.getFalseConditionBody().accept(this);
         }
         S_Expression falseBranch = new S_Expression("and",
                 new S_Expression("not",
-                        condition), tempExpr);
-        tempExpr = new S_Expression("or",
+                        condition), currentProgram);
+        currentProgram = new S_Expression("or",
                 trueBranch, falseBranch);
-        change = true;
-        functionsCalled = new ArrayList<FunctionCall>();
+        //change = true;
+        //functionsCalled = new ArrayList<FunctionCall>();
     }
 
     @Override
@@ -282,7 +282,7 @@ public class SMTLibTranslator implements ASTVisitor {
         //int depth = upScopeReplacements.size();
         //ensures=>rest
         LinkedList<S_Expression> program = new LinkedList<S_Expression>();
-        program.add(tempExpr);
+        program.add(currentProgram);
         programs.add(program);
         descriptions.add(new Pair<KindOfProgram, Position>(
                 KindOfProgram.WhileEnsureToRemainingProgram, loop.getPosition()));
@@ -326,18 +326,17 @@ public class SMTLibTranslator implements ASTVisitor {
             upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
             upScopeExpr.add(new Constant("true"));
         }*/
-        S_Expression saveTempExpr = new Constant("true");
+        currentProgram = new Constant("true");
         for (Invariant invariant : invariants) {
             invariant.accept(this);
-            saveTempExpr =  new S_Expression("and", tempExpr, saveTempExpr);
+            currentProgram =  new S_Expression("and", tempExpr, currentProgram);
         }
-        tempExpr = saveTempExpr;
         loop.getLoopBody().accept(this);
         program = new LinkedList<S_Expression>();
         programs.add(program);
         descriptions.add(new Pair<KindOfProgram, Position>(
                 KindOfProgram.InvariantAndConditionToInvariant, loop.getPosition()));
-        program.add(tempExpr);
+        program.add(currentProgram);
         for (Invariant invariant : invariants) {
             invariant.accept(this);
             program.set(program.size() - 1, new S_Expression("=>",
@@ -356,15 +355,13 @@ public class SMTLibTranslator implements ASTVisitor {
             upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
             upScopeExpr.add(new Constant("true"));
         }*/
-        saveTempExpr = new Constant("true");
+        currentProgram = new Constant("true");
         for (Invariant invariant : invariants) {
             invariant.accept(this);
-            saveTempExpr = new S_Expression("and",
-                    tempExpr, saveTempExpr);
+            currentProgram = new S_Expression("and",
+                    tempExpr, currentProgram);
         }
-        tempExpr = saveTempExpr;
-        change = true;
-        functionsCalled = new ArrayList<FunctionCall>();
+        //functionsCalled = new ArrayList<FunctionCall>();
     }
 
     @Override
@@ -440,18 +437,32 @@ public class SMTLibTranslator implements ASTVisitor {
             return;
         }
         noOfFuncCall += 1;
-        functionsCalled.add(functionCall);
-        isFunctionCall = true;
-        Statement[] statements = functionCall.getFunction().getFunctionBlock().getStatements();
+        Position position = functionCall.getPosition();
+        S_Expression saveTempExpr = tempExpr;
+        Function function = functionCall.getFunction();
+        for (Ensure ensure : function.getEnsures()) {
+            ensure.accept(this);
+            replaceInFunctionResult(position, function);
+            saveTempExpr = new S_Expression("=>", tempExpr, saveTempExpr);
+        }
+        Statement[] statements = function.getFunctionBlock().getStatements();
         (statements[statements.length - 1]).accept(this);
-        isFunctionCall = false;
+        replaceInFunctionResult(position, function);
+    }
+
+    private void replaceInFunctionResult(Position position, Function function) {
+        for (VarDef varDef : tempExpr.getUndefinedVars()) {
+            String newName = "$res" + noOfFuncCall + 'l' + position.getLine()
+                    + 'c' + position.getColumn() + '$' + function.getName()
+                    + '$' + varDef.getIdent();
+            tempExpr.replace(varDef, new VarDef(newName, varDef.getType(), 0));
+        }
     }
 
     /**
      * Handles the work needed after a function call.
-     * @param functionCall function call that was evaluated
      */
-    private void afterFunctionCall(FunctionCall functionCall) {
+   /* private void afterFunctionCall(FunctionCall functionCall) {
         S_Expression saveTempExpr = tempExpr;
         Ensure[] ensures = functionCall.getFunction().getEnsures();
         //ensures=>rest
@@ -478,14 +489,14 @@ public class SMTLibTranslator implements ASTVisitor {
             saveTempExpr.replace(varDef, tempExpr);
         }
         tempExpr = saveTempExpr;
-    }
+    } */
 
     @Override
     public void visit(VariableRead variableRead) {
         String variableName = variableRead.toString();
-        if (isFunctionCall) {
+        /*if (isFunctionCall) {
             variableName = variableName + '$' + Integer.toString(noOfFuncCall);
-        }
+        }*/
         tempExpr = new VarDef(variableName, variableRead.getType(),
                 variableRead.getDepth());
     }
@@ -507,21 +518,19 @@ public class SMTLibTranslator implements ASTVisitor {
         /*upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
         upScopeReplacements.push(new HashMap<VarDef, S_Expression>());
         upScopeExpr = new Stack<S_Expression>();*/
-        S_Expression saveTempExpression = new Constant("true");
+        currentProgram = new Constant("true");
         Ensure[] ensures = function.getEnsures();
         for (Ensure ensure : ensures) {
             ensure.accept(this);
-            saveTempExpression = new S_Expression("and",
-                    tempExpr, saveTempExpression);
+            currentProgram = new S_Expression("and",
+                    tempExpr, currentProgram);
         }
-        tempExpr = saveTempExpression;
         function.getFunctionBlock().accept(this);
         LinkedList<S_Expression> program = new LinkedList<S_Expression>();
-        program.add(tempExpr);
+        program.add(currentProgram);
         programs.add(program);
         descriptions.add(new Pair<KindOfProgram, Position>(
                 KindOfProgram.FunctionAssumeToRemainingProgram, function.getPosition()));
-        program.set(program.size() - 1, tempExpr);
         Assumption[] assumptions = function.getAssumptions();
         for (Assumption assumption : assumptions) {
             assumption.accept(this);
@@ -544,20 +553,17 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(Assignment assignment) {
-        S_Expression expression = tempExpr;
         assignment.getValue().accept(this);
         VarDef varDef = new VarDef(assignment.getIdentifier().toString(),
                 assignment.getType(), assignment.getDepth());
-        expression.replace(varDef, tempExpr);
+        currentProgram.replace(varDef, tempExpr);
         //replaceInAssignments(upScopeReplacements.lastElement(), varDef, tempExpr);
     }
 
     @Override
     public void visit(Assertion assertion) {
-        S_Expression currentExpr = tempExpr;
         assertion.getExpression().accept(this);
-        tempExpr = new S_Expression("and", tempExpr, currentExpr);
-        change = true;
+        currentProgram = new S_Expression("and", tempExpr, currentProgram);
     }
 
     @Override
@@ -589,7 +595,6 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(VariableDeclaration varDec) {
-        S_Expression expression = tempExpr;
         if (varDec.getValue() != null) {
             varDec.getValue().accept(this);
         } else {
@@ -600,7 +605,7 @@ public class SMTLibTranslator implements ASTVisitor {
             }
         }
         VarDef varDef = new VarDef(varDec.getName(), varDec.getType(), varDec.getDepth());
-        expression.replace(varDef, tempExpr);
+        currentProgram.replace(varDef, tempExpr);
         //replaceInAssignments(upScopeReplacements.lastElement(),
         //        varDef, tempExpr);
         //upScopeReplacements.lastElement().remove(varDef);
@@ -608,10 +613,9 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayDeclaration arrDec) {
-        S_Expression exp = tempExpr;
         String name = getMangledArrayName(arrDec.getName(), true);
         VarDef varDef = new VarDef(name, arrDec.getType(), arrDec.getDepth());
-        exp.replace(varDef, tempExpr);
+        currentProgram.replace(varDef, tempExpr);
         //replaceInAssignments(upScopeReplacements.lastElement(),
         //        varDef, tempExpr);
         //upScopeReplacements.lastElement().remove(varDef);
@@ -620,30 +624,55 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
         existsQuantifier.getSubexpression1().accept(this);
-        String variable = "((" + existsQuantifier.getIdentifier().toString()
-                + '$' + existsQuantifier.getDepth() + " Int))";
-        tempExpr = new S_Expression("exists", new Constant(variable), tempExpr);
+        String name = existsQuantifier.getIdentifier().toString();
+        int depth = existsQuantifier.getDepth();
+        String variable = "((" + name + '$' + depth + " Int))";
+        S_Expression saveTempExpr = tempExpr;
+        Range range = existsQuantifier.getRange();
+        if (range != null) {
+            range.getLowerBound().accept(this);
+            saveTempExpr = new S_Expression("and", new S_Expression(
+                    ">=", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+            range.getUpperBound().accept(this);
+            saveTempExpr = new S_Expression("and", new S_Expression(
+                    "<=", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+        }
+        tempExpr = new S_Expression("exists", new Constant(variable), saveTempExpr);
     }
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
         forAllQuantifier.getSubexpression1().accept(this);
-        String variable = "((" + forAllQuantifier.getIdentifier().toString()
-                + '$' + forAllQuantifier.getDepth() + " Int))";
-        tempExpr = new S_Expression("forall", new Constant(variable), tempExpr);
+        String name = forAllQuantifier.getIdentifier().toString();
+        int depth = forAllQuantifier.getDepth();
+        String variable = "((" + name + '$' + depth + " Int))";
+        S_Expression saveTempExpr = tempExpr;
+        Range range = forAllQuantifier.getRange();
+        if (range != null) {
+            range.getLowerBound().accept(this);
+            saveTempExpr = new S_Expression("or", new S_Expression(
+                    "<", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+            range.getUpperBound().accept(this);
+            saveTempExpr = new S_Expression("or", new S_Expression(
+                    ">", new VarDef(name, new IntegerType(), depth), tempExpr
+            ), saveTempExpr);
+        }
+        tempExpr = new S_Expression("forall", new Constant(variable), saveTempExpr);
     }
 
     @Override
     public void visit(StatementBlock statementBlock) {
-        int saveCurrentProgram = currentProgram;
-        S_Expression expression = tempExpr;
+        //S_Expression expression = tempExpr;
         Statement[] statements = statementBlock.getStatements();
         for (int i = statements.length - 1; i >= 0; i--) {
-            change = false;
-            functionsCalled = new ArrayList<FunctionCall>();
-            noOfFuncCall = 0;
+            //change = false;
+            //functionsCalled = new ArrayList<FunctionCall>();
+            //noOfFuncCall = 0;
             statements[i].accept(this);
-            if (!functionsCalled.isEmpty()) {
+            /*if (!functionsCalled.isEmpty()) {
                 //int depth = upScopeReplacements.size() - 1;
                 LinkedList<S_Expression> program = new LinkedList<S_Expression>();
                 program.add(expression);
@@ -660,21 +689,20 @@ public class SMTLibTranslator implements ASTVisitor {
                 program.set(program.size() - 1, new S_Expression("assert",
                         new S_Expression("not",
                                 program.getLast())));
-                /*upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
+                upScopeReplacements = new Stack<HashMap<VarDef, S_Expression>>();
                 upScopeExpr = new Stack<S_Expression>();
                 for (int j = 0; j < depth; j++) {
                     upScopeReplacements.add(new HashMap<VarDef, S_Expression>());
                     upScopeExpr.add(new Constant("true"));
-                }*/
+                }
                 change = true;
-            }
-            if (change) {
+            }*/
+            /*if (change) {
                 expression = tempExpr;
             }
-            tempExpr = expression;
-            currentProgram = saveCurrentProgram;
+            tempExpr = expression; */
         }
-        functionsCalled = new ArrayList<FunctionCall>();
+        //functionsCalled = new ArrayList<FunctionCall>();
     }
 
     private String getMangledArrayName(String name, boolean replace) {

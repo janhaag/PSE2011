@@ -40,7 +40,7 @@ public class Constant extends S_Expression {
     }
 
     @Override
-    public void addVars(LinkedList<String> varList) {
+    public void addVars(LinkedList<VarDef> varList) {
         //no-op
     }
 }

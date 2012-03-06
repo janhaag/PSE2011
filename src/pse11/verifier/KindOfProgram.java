@@ -13,10 +13,6 @@ public enum KindOfProgram {
          */
         WhileEnsureToRemainingProgram,
         /**
-         * indicates a program to prove that functionEnsure=>rest
-         */
-        FunctionEnsureToRemainingProgram,
-        /**
          * indicates a program to prove that invariant & condition => invariant
          */
         InvariantAndConditionToInvariant,

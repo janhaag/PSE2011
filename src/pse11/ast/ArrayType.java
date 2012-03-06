@@ -18,9 +18,6 @@ public class ArrayType extends Type {
      * @param type base type of the array
      */
     public ArrayType(Type type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Type must not be null!");
-        }
         this.type = type;
     }
 
