@@ -276,7 +276,7 @@ public class InterpreterTest {
 		assertEquals(new IntegerValue("3"), interpreterTempValue.get(interpreter));
 		
 		interpreter.visit(new ArrayRead(null, new Identifier("a"), new Expression[]{new NumericLiteral(null, "5")}));
-		assertEquals(new IntegerValue("0"), interpreterTempValue.get(interpreter));
+		assertEquals(new IntegerValue("-2"), interpreterTempValue.get(interpreter));
 	}
 
 	@Test
