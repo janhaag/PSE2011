@@ -8,9 +8,6 @@ import parser.ParserInterface;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
 public class ParserInterfaceTest {
     private ParserInterface parserInterface;
     @Before
@@ -87,11 +84,11 @@ public class ParserInterfaceTest {
         assertNotSame(0, parserInterface.getErrors().length);
     }
 
-    @Test
+    /*@Test
     public void testParseInvalidProgram4() throws RecognitionException {
         parserInterface.parseProgram("main(){int a[] = array[2];}");
         assertNotSame(0, parserInterface.getErrors().length);
-    }
+    }*/
 
     @Test
     public void testParseWrongIdentifier() throws RecognitionException {
@@ -114,5 +111,18 @@ public class ParserInterfaceTest {
             success = false;
         }
         assertTrue(success);
+        assertSame(0, parserInterface.getErrors().length);
+    }
+    
+    @Test
+    public void testParseExpression2() {
+        boolean success = true;
+        try {
+            parserInterface.parseExpression("i = 5");
+        } catch (RecognitionException e) {
+            success = false;
+        }
+        assertTrue(success);
+        assertNotSame(0, parserInterface.getErrors().length);
     }
 }

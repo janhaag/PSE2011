@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MessageTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.misc</a> &gt; <span class="el_source">MessageTest.java</span></div><h1>MessageTest.java</h1><pre class="source lang-java linenums">package test.misc;
+
+
+import static org.junit.Assert.*;
+
+import gui.Console;
+
+import java.util.ArrayList;
+
+import misc.Message;
+import misc.MessageCategories;
+import misc.MessageSystem;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+<span class="fc" id="L18">public class MessageTest {</span>
+	private Message msg;
+	private Message msg2;
+	private MessageSystem msgsys;
+
+	@Before
+	public void setUp() {
+<span class="fc" id="L25">		this.msg = new Message(MessageCategories.ERROR, 0, &quot;Error&quot;);</span>
+<span class="fc" id="L26">		this.msg2 = new Message(MessageCategories.ERROR, 0, &quot;Error&quot;, &quot;Result&quot;);</span>
+<span class="fc" id="L27">		this.msgsys = new MessageSystem();</span>
+<span class="fc" id="L28">	}</span>
+
+	/* Message tests */
+	@Test
+	public void getCategoriesTest() {
+<span class="fc" id="L33">		assertEquals(MessageCategories.ERROR, this.msg.getCategory());</span>
+<span class="fc" id="L34">	}</span>
+	
+	@Test
+	public void getPositionTest() {
+<span class="fc" id="L38">		assertEquals(0, this.msg.getPosition());</span>
+<span class="fc" id="L39">	}</span>
+	
+	@Test
+	public void getTextTest() {
+<span class="fc" id="L43">		assertEquals(&quot;Error&quot;, this.msg.getText());</span>
+<span class="fc" id="L44">	}</span>
+	
+	@Test
+	public void getResultTest() {
+<span class="fc" id="L48">		assertEquals(&quot;Result&quot;, this.msg2.getResult());</span>
+<span class="fc" id="L49">	}</span>
+	
+	/* MessageSystem tests */
+	@Test
+	public void getConsolesTest() {
+<span class="fc" id="L54">		ArrayList&lt;Console&gt; list = new ArrayList&lt;Console&gt;();</span>
+<span class="fc" id="L55">		assertEquals(list, this.msgsys.getConsoles());</span>
+<span class="fc" id="L56">	}</span>
+	
+	@Test
+	public void getMessagesTest() {
+<span class="fc" id="L60">		ArrayList&lt;Message&gt; list = new ArrayList&lt;Message&gt;();</span>
+<span class="fc" id="L61">		assertEquals(list, this.msgsys.getMessages());</span>
+<span class="fc" id="L62">	}</span>
+	
+	@Test
+	public void addAndRemoveConsoleTest() {
+<span class="fc" id="L66">		this.msgsys.addConsole(null);</span>
+<span class="fc" id="L67">		this.msgsys.removeConsole(null);</span>
+<span class="fc" id="L68">		ArrayList&lt;Console&gt; list = new ArrayList&lt;Console&gt;();</span>
+<span class="fc" id="L69">		assertEquals(list, this.msgsys.getConsoles());</span>
+<span class="fc" id="L70">	}</span>
+	
+	@Test
+	public void addAndClearMessageTest() {
+<span class="fc" id="L74">		this.msgsys.addMessage(MessageCategories.ERROR, 0, &quot;Error&quot;);</span>
+<span class="fc" id="L75">		this.msgsys.addMessage(MessageCategories.MISC, 0, &quot;Error&quot;);</span>
+<span class="fc" id="L76">		this.msgsys.addMessage(MessageCategories.VERIFYERROR, 0, &quot;Error&quot;, &quot;Result&quot;);	</span>
+<span class="fc" id="L77">		assertEquals(3, this.msgsys.getMessages().size());</span>
+<span class="fc" id="L78">		this.msgsys.clear(MessageCategories.ERROR);</span>
+<span class="fc" id="L79">		this.msgsys.clear(MessageCategories.MISC);</span>
+<span class="fc" id="L80">		this.msgsys.clear(MessageCategories.VERIFYERROR);</span>
+<span class="fc" id="L81">		assertEquals(0, this.msgsys.getMessages().size());</span>
+<span class="fc" id="L82">	}</span>
+	
+	@After
+	public void tearDown() {
+<span class="fc" id="L86">		this.msg = null;</span>
+<span class="fc" id="L87">		this.msg2 = null;</span>
+<span class="fc" id="L88">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

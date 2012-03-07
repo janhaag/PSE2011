@@ -218,7 +218,7 @@ public class ExecutionHandlerTest {
     	this.executionHandler.singleStep(null, null);
     	assertNotNull(this.executionHandler.getAssertionFailureMessage());
     	assertNull(this.executionHandler.getProgramExecution()); 	
-    } */
+    }*/
     
     @Test
     public void runTest() {

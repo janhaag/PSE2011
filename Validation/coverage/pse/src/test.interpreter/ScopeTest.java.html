@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ScopeTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.interpreter</a> &gt; <span class="el_source">ScopeTest.java</span></div><h1>ScopeTest.java</h1><pre class="source lang-java linenums">package test.interpreter;
+
+
+import static org.junit.Assert.*;
+
+import interpreter.ArrayValue;
+import interpreter.BooleanValue;
+import interpreter.IntegerValue;
+import interpreter.Scope;
+import interpreter.Value;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import ast.ArrayType;
+import ast.Assignment;
+import ast.BooleanType;
+import ast.Function;
+import ast.FunctionCall;
+import ast.Identifier;
+import ast.IntegerType;
+import ast.Position;
+import ast.StatementBlock;
+
+<span class="fc" id="L30">public class ScopeTest {</span>
+	private Scope scope;
+	private Scope scope2;
+	private Scope scope3;
+
+	@Before
+	public void setUp() {
+<span class="fc" id="L37">		Position pos = new Position(42, 42);</span>
+<span class="fc" id="L38">		Position pos2 = new Position(41, 41);</span>
+<span class="fc" id="L39">		Position pos3 = new Position(40, 40);</span>
+<span class="fc" id="L40">		Assignment[] assignment = {new Assignment(pos, null, new Identifier(&quot;x&quot;))};</span>
+<span class="fc" id="L41">		Assignment[] assignment2 = {};</span>
+<span class="fc" id="L42">		StatementBlock block = new StatementBlock(assignment, pos2);</span>
+<span class="fc" id="L43">		StatementBlock block2 = new StatementBlock(assignment2, pos2);</span>
+<span class="fc" id="L44">		Function func = new Function(pos3, new IntegerType(), &quot;foo&quot;,</span>
+<span class="fc" id="L45">				null, null, null, null);</span>
+<span class="fc" id="L46">		this.scope = new Scope(null, block, func);</span>
+<span class="fc" id="L47">		this.scope2 = new Scope(null, null, null);</span>
+<span class="fc" id="L48">		this.scope2 = new Scope(null, null, func);</span>
+<span class="fc" id="L49">		this.scope2 = new Scope(this.scope, block2, null);</span>
+<span class="fc" id="L50">		this.scope3 = new Scope(this.scope, null, null);</span>
+<span class="fc" id="L51">	}</span>
+
+	@Test
+	public void getVariablesTest() {
+<span class="fc" id="L55">		HashMap&lt;Identifier, Value&gt; map = new HashMap&lt;Identifier, Value&gt;();</span>
+<span class="fc" id="L56">		assertEquals(map, this.scope.getVariables());</span>
+<span class="fc" id="L57">		assertEquals(map, this.scope2.getVariables());</span>
+<span class="fc" id="L58">	}</span>
+	
+	@Test
+	public void getParentTest() {
+<span class="fc" id="L62">		assertEquals(this.scope, this.scope2.getParent());</span>
+<span class="fc" id="L63">	}</span>
+	
+	@Test
+	public void isFunctionScopeTest() {
+<span class="fc" id="L67">		assertTrue(this.scope.isFunctionScope());</span>
+<span class="fc" id="L68">		assertFalse(this.scope2.isFunctionScope());</span>
+<span class="fc" id="L69">	}</span>
+	
+	@Test
+	public void getCurrentFunction() {
+<span class="fc" id="L73">		assertNotNull(this.scope.getCurrentFunction());</span>
+<span class="fc" id="L74">		assertNotNull(this.scope2.getCurrentFunction());</span>
+<span class="fc" id="L75">	}</span>
+	
+	@Test 
+	public void getReturnValuesTest() {
+<span class="fc" id="L79">		IdentityHashMap&lt;FunctionCall, Value&gt; map = new IdentityHashMap&lt;FunctionCall, Value&gt;();</span>
+<span class="fc" id="L80">		assertEquals(map, this.scope.getReturnValues());</span>
+<span class="fc" id="L81">	}</span>
+	
+	@Test
+	public void getNextStatementTest() {
+<span class="fc" id="L85">		assertNotNull(this.scope.getNextStatement());</span>
+<span class="fc" id="L86">		assertNull(this.scope2.getNextStatement());</span>
+<span class="fc" id="L87">	}</span>
+	
+	@Test
+	public void existsInScopeTest() {
+<span class="fc" id="L91">		assertFalse(this.scope.existsInScope(new Identifier(&quot;x&quot;)));</span>
+<span class="fc" id="L92">	}</span>
+	
+	@Test
+	public void createVarTest() {
+<span class="fc" id="L96">		assertNull(this.scope.getVariables().get(new Identifier(&quot;i&quot;)));</span>
+<span class="fc" id="L97">		assertNull(this.scope.getVariables().get(new Identifier(&quot;j&quot;)));</span>
+<span class="fc" id="L98">		this.scope.createVar(&quot;i&quot;, &quot;42&quot;, new IntegerType());</span>
+<span class="fc" id="L99">		this.scope.createVar(&quot;j&quot;, &quot;true&quot;, new BooleanType());</span>
+<span class="fc" id="L100">		assertNotNull(this.scope.getVariables().get(new Identifier(&quot;i&quot;)));</span>
+<span class="fc" id="L101">		assertNotNull(this.scope.getVariables().get(new Identifier(&quot;j&quot;)));</span>
+<span class="fc" id="L102">	}</span>
+	
+	@Test
+	public void getDepthOfVariableTest() {
+<span class="fc" id="L106">		this.scope.createVar(&quot;i&quot;, &quot;42&quot;, new IntegerType());</span>
+<span class="fc" id="L107">		assertEquals(0, this.scope.getDepthOfVariable(new Identifier(&quot;i&quot;)));</span>
+<span class="fc" id="L108">		assertEquals(0, this.scope2.getDepthOfVariable(new Identifier(&quot;i&quot;)));</span>
+<span class="fc" id="L109">		this.scope3.createVar(&quot;i&quot;, &quot;42&quot;, new IntegerType());</span>
+<span class="fc" id="L110">		assertEquals(1, this.scope3.getDepthOfVariable(new Identifier(&quot;i&quot;)));</span>
+<span class="fc" id="L111">	}</span>
+	
+	@Test
+	public void setVarTest() {
+<span class="fc" id="L115">		this.scope.createVar(&quot;i&quot;, &quot;42&quot;, new IntegerType());</span>
+<span class="fc" id="L116">		this.scope.createVar(&quot;j&quot;, &quot;false&quot;, new BooleanType());</span>
+<span class="fc" id="L117">		this.scope.setVar(&quot;i&quot;, &quot;32&quot;);</span>
+<span class="fc" id="L118">		this.scope.setVar(&quot;j&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L119">		assertEquals(new IntegerValue(&quot;32&quot;), this.scope.getVariables().get(new Identifier(&quot;i&quot;)));</span>
+<span class="fc" id="L120">		assertEquals(new BooleanValue(&quot;true&quot;), this.scope.getVariables().get(new Identifier(&quot;j&quot;)));</span>
+<span class="fc" id="L121">	}</span>
+	
+	@Test
+	public void createArrayTest() {
+<span class="fc" id="L125">		int[] length = {2};</span>
+<span class="fc" id="L126">		this.scope.createArray(&quot;a&quot;, new ArrayType(new IntegerType()), length);</span>
+<span class="fc" id="L127">		assertNotNull(this.scope.getVariables().get(new Identifier(&quot;a&quot;)));</span>
+<span class="fc" id="L128">	}</span>
+	
+	@Test
+	public void setArrayTest() {
+<span class="fc" id="L132">		ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L133">		list.add(0);</span>
+<span class="fc" id="L134">		int[] length = {2};</span>
+<span class="fc" id="L135">		this.scope.createArray(&quot;a&quot;, new ArrayType(new IntegerType()), length);</span>
+<span class="fc" id="L136">		this.scope.setArray(&quot;b&quot;, &quot;5&quot;, list);</span>
+<span class="fc" id="L137">		this.scope.setArray(&quot;a&quot;, &quot;5&quot;, list);</span>
+<span class="fc" id="L138">		assertEquals(new IntegerValue(&quot;5&quot;), ((ArrayValue) this.scope.getVariables().get(new Identifier(&quot;a&quot;))).getValues()[0]);</span>
+<span class="fc" id="L139">	}</span>
+	
+	@Test
+	public void getCurrentStatementTest() {
+<span class="fc" id="L143">		assertNull(this.scope.getCurrentStatement());</span>
+<span class="fc" id="L144">	}</span>
+	
+	@Test
+	public void createAndClearFunctionResultTest() {
+<span class="fc" id="L148">		FunctionCall funcCall = new FunctionCall(null, null, null);</span>
+<span class="fc" id="L149">		this.scope.createFunctionResult(funcCall, new IntegerValue(&quot;42&quot;));</span>
+<span class="fc" id="L150">		assertNotNull(this.scope.getReturnValues().get(funcCall));</span>
+<span class="fc" id="L151">		this.scope.clearFunctionResults();</span>
+<span class="fc" id="L152">		assertNull(this.scope.getReturnValues().get(funcCall));</span>
+<span class="fc" id="L153">	}</span>
+	
+	
+	@After
+	public void tearDown() {
+<span class="fc" id="L158">		this.scope = null;</span>
+<span class="fc" id="L159">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

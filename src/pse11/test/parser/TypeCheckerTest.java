@@ -12,9 +12,6 @@ import parser.TypeChecker;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
 public class TypeCheckerTest {
     private ParserInterface parserInterface;
     private TypeChecker typeChecker;

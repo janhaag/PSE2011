@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageLexer.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageLexer.java</span></div><h1>WhileLanguageLexer.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-03-04 18:48:22
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageLexer.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageLexer.java</span></div><h1>WhileLanguageLexer.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-03-07 01:54:13
 
 	package parser;
     import java.util.LinkedList;
@@ -877,10 +877,10 @@ import java.util.ArrayList;
         try {
 <span class="fc" id="L878">            int _type = INT_LITERAL;</span>
 <span class="fc" id="L879">            int _channel = DEFAULT_TOKEN_CHANNEL;</span>
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:437:14: ( ( '0' .. '9' )+ )
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:437:16: ( '0' .. '9' )+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:466:14: ( ( '0' .. '9' )+ )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:466:16: ( '0' .. '9' )+
             {
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:437:16: ( '0' .. '9' )+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:466:16: ( '0' .. '9' )+
 <span class="fc" id="L884">            int cnt1=0;</span>
             loop1:
             do {
@@ -935,7 +935,7 @@ import java.util.ArrayList;
         try {
 <span class="fc" id="L936">            int _type = BOOL_LITERAL;</span>
 <span class="fc" id="L937">            int _channel = DEFAULT_TOKEN_CHANNEL;</span>
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:438:14: ( 'true' | 'false' )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:467:14: ( 'true' | 'false' )
 <span class="fc" id="L939">            int alt2=2;</span>
 <span class="fc" id="L940">            int LA2_0 = input.LA(1);</span>
 
@@ -954,7 +954,7 @@ import java.util.ArrayList;
             }
 <span class="pc bpc" id="L955" title="1 of 3 branches missed.">            switch (alt2) {</span>
                 case 1 :
-                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:438:16: 'true'
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:467:16: 'true'
                     {
 <span class="fc" id="L959">                    match(&quot;true&quot;); </span>
 
@@ -963,7 +963,7 @@ import java.util.ArrayList;
                     }
 <span class="fc" id="L964">                    break;</span>
                 case 2 :
-                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:438:25: 'false'
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:467:25: 'false'
                     {
 <span class="fc" id="L968">                    match(&quot;false&quot;); </span>
 
@@ -987,7 +987,7 @@ import java.util.ArrayList;
         try {
 <span class="fc" id="L988">            int _type = QUANTIFIER;</span>
 <span class="fc" id="L989">            int _channel = DEFAULT_TOKEN_CHANNEL;</span>
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:440:9: ( 'forall' | 'exists' )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:469:9: ( 'forall' | 'exists' )
 <span class="fc" id="L991">            int alt3=2;</span>
 <span class="fc" id="L992">            int LA3_0 = input.LA(1);</span>
 
@@ -1006,7 +1006,7 @@ import java.util.ArrayList;
             }
 <span class="pc bpc" id="L1007" title="1 of 3 branches missed.">            switch (alt3) {</span>
                 case 1 :
-                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:440:11: 'forall'
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:469:11: 'forall'
                     {
 <span class="fc" id="L1011">                    match(&quot;forall&quot;); </span>
 
@@ -1015,7 +1015,7 @@ import java.util.ArrayList;
                     }
 <span class="fc" id="L1016">                    break;</span>
                 case 2 :
-                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:441:11: 'exists'
+                    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:470:11: 'exists'
                     {
 <span class="fc" id="L1020">                    match(&quot;exists&quot;); </span>
 
@@ -1039,12 +1039,12 @@ import java.util.ArrayList;
         try {
 <span class="fc" id="L1040">            int _type = COMMENT;</span>
 <span class="fc" id="L1041">            int _channel = DEFAULT_TOKEN_CHANNEL;</span>
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:443:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:443:16: '#' ( . )* ( '\\n' | '\\r' )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:472:14: ( '#' ( . )* ( '\\n' | '\\r' ) )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:472:16: '#' ( . )* ( '\\n' | '\\r' )
             {
 <span class="fc" id="L1045">            match('#'); </span>
 
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:443:20: ( . )*
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:472:20: ( . )*
             loop4:
             do {
 <span class="fc" id="L1050">                int alt4=2;</span>
@@ -1060,7 +1060,7 @@ import java.util.ArrayList;
 
 <span class="fc bfc" id="L1061" title="All 2 branches covered.">                switch (alt4) {</span>
             	case 1 :
-            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:443:20: .
+            	    // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:472:20: .
             	    {
 <span class="fc" id="L1065">            	    matchAny(); </span>
 
@@ -1101,10 +1101,10 @@ import java.util.ArrayList;
         try {
 <span class="fc" id="L1102">            int _type = WS;</span>
 <span class="fc" id="L1103">            int _channel = DEFAULT_TOKEN_CHANNEL;</span>
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:444:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:444:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:473:14: ( ( '\\n' | '\\r' | ' ' | '\\t' )+ )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:473:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
             {
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:444:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:473:16: ( '\\n' | '\\r' | ' ' | '\\t' )+
 <span class="fc" id="L1108">            int cnt5=0;</span>
             loop5:
             do {
@@ -1161,8 +1161,8 @@ import java.util.ArrayList;
         try {
 <span class="fc" id="L1162">            int _type = IDENT;</span>
 <span class="fc" id="L1163">            int _channel = DEFAULT_TOKEN_CHANNEL;</span>
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:445:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:445:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:474:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:474:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
 <span class="pc bpc" id="L1167" title="3 of 10 branches missed.">            if ( (input.LA(1) &gt;= 'A' &amp;&amp; input.LA(1) &lt;= 'Z')||input.LA(1)=='_'||(input.LA(1) &gt;= 'a' &amp;&amp; input.LA(1) &lt;= 'z') ) {</span>
 <span class="fc" id="L1168">                input.consume();</span>
@@ -1174,7 +1174,7 @@ import java.util.ArrayList;
             }
 
 
-            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:445:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g:474:44: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop6:
             do {
 <span class="fc" id="L1180">                int alt6=2;</span>
@@ -1770,4 +1770,4 @@ import java.util.ArrayList;
  
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SettingsFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">SettingsFrame.java</span></div><h1>SettingsFrame.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SettingsFrame.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">SettingsFrame.java</span></div><h1>SettingsFrame.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui;</span>
 
 import gui.controller.SettingsController;
 
@@ -24,9 +24,9 @@ public class SettingsFrame extends Frame {
 	private Button closeButton;
 	private Button browseButton;
 	private Label errorLabel;
-	
+
 	/**
-	 * Construct a settings frame with the specified parent shell and 
+	 * Construct a settings frame with the specified parent shell and
 	 * controller.
 	 * @param parentShell specified shell
 	 * @param controller specified controller
@@ -34,12 +34,12 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L34">	public SettingsFrame(Shell parentShell, SettingsController controller) {</span>
 <span class="fc" id="L35">		this.controller = controller;</span>
 <span class="fc" id="L36">		this.controller.addView(this);</span>
-		
+
 <span class="fc" id="L38">		this.shell = new Shell(parentShell, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);</span>
 		//Please mind &gt;all&lt; components before resizing the view
 <span class="fc" id="L40">		this.shell.setSize(340,300);</span>
 <span class="fc" id="L41">		this.shell.setText(&quot;Settings&quot;);</span>
-		
+
 		//Setting layout
 <span class="fc" id="L44">		GridLayout gLayout = new GridLayout();</span>
 <span class="fc" id="L45">		gLayout.numColumns = 2;</span>
@@ -48,7 +48,7 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L48">		gLayout.marginLeft = 20;</span>
 <span class="fc" id="L49">		gLayout.marginRight = 20;</span>
 <span class="fc" id="L50">		this.shell.setLayout(gLayout);</span>
-		
+
 		//Add the group
 <span class="fc" id="L53">		final Group settingsGroup = new Group(this.shell, SWT.SHADOW_ETCHED_IN);</span>
 <span class="fc" id="L54">		settingsGroup.setText(&quot;Settings for Z3&quot;);</span>
@@ -62,20 +62,20 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L62">		GridData gData = new GridData(GridData.FILL_HORIZONTAL);</span>
 <span class="fc" id="L63">		gData.horizontalSpan = 2;</span>
 <span class="fc" id="L64">		settingsGroup.setLayoutData(gData);</span>
-		
+
 <span class="fc" id="L66">		new Label(settingsGroup, SWT.NONE).setText(&quot;Timeout:&quot;);</span>
 <span class="fc" id="L67">		this.timeoutTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);</span>
 <span class="fc" id="L68">		this.timeoutTextField.setText(controller.getTimeOut());</span>
 <span class="fc" id="L69">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
 <span class="fc" id="L70">		this.timeoutTextField.setLayoutData(gData);</span>
 <span class="fc" id="L71">		new Label(settingsGroup, SWT.NONE).setText(&quot;sec&quot;);</span>
-		
+
 <span class="fc" id="L73">		new Label(settingsGroup, SWT.NONE).setText(&quot;Memory limit:&quot;);</span>
 <span class="fc" id="L74">		this.memoryLimitTextField = new Text(settingsGroup, SWT.SINGLE | SWT.RIGHT);</span>
 <span class="fc" id="L75">		this.memoryLimitTextField.setText(controller.getMemoryLimit());</span>
 <span class="fc" id="L76">		this.memoryLimitTextField.setLayoutData(gData);</span>
-<span class="fc" id="L77">		new Label(settingsGroup, SWT.NONE).setText(&quot;KB&quot;);</span>
-		
+<span class="fc" id="L77">		new Label(settingsGroup, SWT.NONE).setText(&quot;MB&quot;);</span>
+
 <span class="fc" id="L79">		Label templabel = new Label(settingsGroup, SWT.NONE);</span>
 <span class="fc" id="L80">		templabel.setText(&quot;Path to the Verifier:&quot;);</span>
 <span class="fc" id="L81">		gData = new GridData(GridData.FILL_HORIZONTAL);</span>
@@ -91,7 +91,7 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L91">		gData = new GridData();</span>
 <span class="fc" id="L92">		gData.horizontalSpan = 3;</span>
 <span class="fc" id="L93">		this.browseButton.setLayoutData(gData);</span>
-		
+
 		//Add buttons
 <span class="fc" id="L96">		final Composite buttoncomposite = new Composite(this.shell, SWT.NONE);</span>
 <span class="fc" id="L97">		final GridLayout buttonlayout = new GridLayout();</span>
@@ -105,7 +105,7 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L105">		gData.verticalSpan = 10;</span>
 <span class="fc" id="L106">		gData.horizontalSpan = 2;</span>
 <span class="fc" id="L107">		buttoncomposite.setLayoutData(gData);</span>
-		
+
 		//Add label for error message
 <span class="fc" id="L110">		this.errorLabel = new Label(this.shell, SWT.BORDER | SWT.BORDER_DOT);</span>
 <span class="fc" id="L111">		this.errorLabel.setForeground(new Color(this.shell.getDisplay(), new RGB(0, 0, 0)));</span>
@@ -115,7 +115,7 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L115">		gData.minimumHeight = 100;</span>
 <span class="fc" id="L116">		this.errorLabel.setLayoutData(gData);</span>
 <span class="fc" id="L117">		this.errorLabel.setVisible(false);</span>
-		
+
 		//Add event listeners
 <span class="fc" id="L120">		this.saveButton.addSelectionListener(this.controller.getSaveButtonListener());</span>
 <span class="fc" id="L121">		this.browseButton.addSelectionListener(this.controller.getBrowseButtonListener());</span>
@@ -124,7 +124,7 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L124">				close();</span>
 <span class="fc" id="L125">			}</span>
 		});
-	    
+
 <span class="fc" id="L128">		this.shell.open();</span>
 <span class="fc" id="L129">	}</span>
 	public void close() {
@@ -152,26 +152,26 @@ public class SettingsFrame extends Frame {
 <span class="fc" id="L152">	}</span>
 	public void displayMessage(boolean error, String msg) {
 <span class="fc" id="L154">		this.errorLabel.setText(msg);</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if(error) {</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if(error) {</span>
 <span class="fc" id="L156">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(255, 0, 0)));</span>
 		} else {
-<span class="fc" id="L158">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(0, 255, 0)));</span>
+<span class="nc" id="L158">			this.errorLabel.setBackground(new Color(this.shell.getDisplay(), new RGB(0, 255, 0)));</span>
 		}
 <span class="fc" id="L160">		this.errorLabel.setVisible(true);</span>
 <span class="fc" id="L161">	}</span>
 	public void hideMessage() {
-<span class="nc" id="L163">		this.errorLabel.setVisible(false);</span>
-<span class="nc" id="L164">	}</span>
+<span class="fc" id="L163">		this.errorLabel.setVisible(false);</span>
+<span class="fc" id="L164">	}</span>
 	public void openFileDialog() {
 <span class="fc" id="L166">		FileDialog fd = new FileDialog(this.shell, SWT.OPEN);</span>
 <span class="fc" id="L167">		fd.setText(&quot;Choose verifier path&quot;);</span>
-<span class="fc" id="L168">		String[] filterExt = {&quot;*.*&quot;, &quot;.exe&quot;};</span>
+<span class="fc" id="L168">		String[] filterExt = {&quot;*&quot;, &quot;*.*&quot;, &quot;.exe&quot;};</span>
 <span class="fc" id="L169">		fd.setFilterExtensions(filterExt);</span>
 <span class="fc" id="L170">		String selected = null;</span>
 <span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if((selected = fd.open()) != null) {</span>
-<span class="nc" id="L172">			this.verifierPathTextField.setText(selected);</span>
-<span class="nc" id="L173">			this.hideMessage();</span>
+<span class="fc" id="L172">			this.verifierPathTextField.setText(selected);</span>
+<span class="fc" id="L173">			this.hideMessage();</span>
 		}
 <span class="fc" id="L175">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
