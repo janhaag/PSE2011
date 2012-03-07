@@ -32,6 +32,7 @@ public class SMTLibTranslator implements ASTVisitor {
      * temporarily saves the number of the current program
      */
     private S_Expression currentProgram;
+    private LinkedList<S_Expression> functionAssumes = new LinkedList<S_Expression>();
 
     /**
      * Translates the given AST into a formula
@@ -175,6 +176,7 @@ public class SMTLibTranslator implements ASTVisitor {
             program.set(program.size() - 1, new S_Expression("=>",
                     tempExpr, program.getLast()));
         }
+        functionAssumes = new LinkedList<S_Expression>();
         loop.getCondition().accept(this);
         program.set(program.size() - 1, new S_Expression("=>",
                 new S_Expression("not",
@@ -188,6 +190,9 @@ public class SMTLibTranslator implements ASTVisitor {
             invariant.accept(this);
             currentProgram =  new S_Expression("and", tempExpr, currentProgram);
         }
+        for (S_Expression assume : functionAssumes) {
+            currentProgram = new S_Expression("and", assume, currentProgram);
+        }
         loop.getLoopBody().accept(this);
         program = new LinkedList<S_Expression>();
         programs.add(program);
@@ -199,6 +204,7 @@ public class SMTLibTranslator implements ASTVisitor {
             program.set(program.size() - 1, new S_Expression("=>",
                     tempExpr, program.getLast()));
         }
+        functionAssumes = new LinkedList<S_Expression>();
         loop.getCondition().accept(this);
         program.set(program.size() - 1, new S_Expression("=>",
                 tempExpr, program.getLast()));
@@ -328,13 +334,19 @@ public class SMTLibTranslator implements ASTVisitor {
         for (Assumption assume : function.getAssumptions()) {
             assume.accept(this);
             replaceInFunctionAssume();
-            currentProgram = new S_Expression("and", tempExpr, currentProgram);
+            functionAssumes.add(tempExpr);
         }
         for (int i = 0; i < function.getParameters().length; i++) {
             functionCall.getParameters()[i].accept(this);
             FunctionParameter param = function.getParameters()[i];
             VarDef varDef = new VarDef("$param$" + param.getName(), param.getType(), 0);
-            currentProgram.replace(varDef, tempExpr);
+            for (int j = 0; j < functionAssumes.size(); j++) {
+                S_Expression assume = functionAssumes.get(j);
+                assume.replace(varDef, tempExpr);
+                if (assume.equals(varDef)) {
+                    functionAssumes.set(j, tempExpr);
+                }
+            }
         }
         Statement[] statements = function.getFunctionBlock().getStatements();
         (statements[statements.length - 1]).accept(this);
@@ -549,7 +561,11 @@ public class SMTLibTranslator implements ASTVisitor {
     public void visit(StatementBlock statementBlock) {
         Statement[] statements = statementBlock.getStatements();
         for (int i = statements.length - 1; i >= 0; i--) {
+            functionAssumes = new LinkedList<S_Expression>();
             statements[i].accept(this);
+            for (S_Expression assume : functionAssumes) {
+                currentProgram = new S_Expression("and", assume, currentProgram);
+            }
         }
     }
 

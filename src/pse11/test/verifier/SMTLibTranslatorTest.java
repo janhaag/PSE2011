@@ -794,4 +794,27 @@ public class SMTLibTranslatorTest {
                 "(and (or d$0 false) (< 5 0)) (and (or d$0 false) true)))))");
         assertEquals(expected, translator.getWPTree(p).toString());
     }
+
+    @Test
+    public void testFuncCallSameParam() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(int f)assume {f<0;}{return 1;}" +
+                "main(){int y;y=f(y);}ensure y>0;");
+        expected = LOGIC
+            +embed("(declare-fun f$0 () Int)(assert (not (=> (< f$0 0) true)))")
+            +embed("(assert (not (and true (and (< 0 0) (and (> 1 0) true)))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
+
+    @Test
+    public void testFuncCallLoopCondition() throws RecognitionException {
+        p = parserInterface.parseProgram("int f(int f)assume f<0;{return 1;}" +
+                "main(){int y;while(f(y)<0){}}ensure y>0;");
+        expected = LOGIC
+            +embed("(declare-fun f$0 () Int)(assert (not (=> (< f$0 0) true)))")
+            +embed("(declare-fun y$0 () Int)(assert (not (and (> y$0 0) true)))")
+            +embed("(assert (not (=> (not (< 1 0)) true)))")
+            +embed("(declare-fun y$0 () Int)(assert (not (=> (< 1 0) (and (< y$0 0) true))))")
+            +embed("(assert (not (and true (and (< 0 0) true))))");
+        assertEquals(expected, translator.getWPTree(p).toString());
+    }
 }
