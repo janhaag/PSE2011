@@ -30,11 +30,11 @@ public class VerifierInterface {
     }
     
     public final void setTimeout(String timeout) {
-        this.verifier.timeout = timeout;
+        this.verifier.setTimeout(timeout);
     }
 
     public final void setMemoryLimit(String memoryLimit) {
-        this.verifier.memoryLimit = memoryLimit;
+        this.verifier.setMemoryLimit(memoryLimit);
     }
 
     /**

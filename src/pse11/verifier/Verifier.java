@@ -90,10 +90,10 @@ public abstract class Verifier {
                 file = File.createTempFile("PSE11", fileExtension);
                 file.deleteOnExit();
                 template[i] = file.getAbsolutePath();
-            } else if ("${MEMORY_LIMIT}".equals(template[i])) {
-                template[i] = memoryLimit;
-            } else if ("${TIMEOUT}".equals(template[i])) {
-                template[i] = timeout;
+            } else if (template[i].contains("${MEMORY_LIMIT}")) {
+            	template[i] = template[i].replace("${MEMORY_LIMIT}", memoryLimit);
+            } else if (template[i].contains("${TIMEOUT}")) {
+                template[i] = template[i].replace("${TIMEOUT}", timeout);
             }
             result.append(template[i]).append(' ');
         }

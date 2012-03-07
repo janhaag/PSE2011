@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Interpreter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">Interpreter.java</span></div><h1>Interpreter.java</h1><pre class="source lang-java linenums">package interpreter;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Interpreter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">Interpreter.java</span></div><h1>Interpreter.java</h1><pre class="source lang-java linenums">package interpreter;
 
 import ast.*;
 
@@ -145,163 +145,169 @@ import java.util.Arrays;
 <span class="fc" id="L145">    }</span>
 
     public static BigInteger divide(BigInteger dividend, BigInteger divisor) {
-<span class="fc" id="L148">        BigInteger result = dividend.divide(divisor);</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (dividend.signum() == -1 &amp;&amp;</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">                !dividend.remainder(divisor).equals(BigInteger.ZERO)) {</span>
-<span class="fc" id="L151">            result = result.subtract(</span>
-<span class="fc" id="L152">                    new BigInteger(divisor.signum(), new byte[]{1}));</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (divisor.equals(BigInteger.ZERO)) {</span>
+<span class="nc" id="L149">            return BigInteger.ZERO;</span>
         }
-<span class="fc" id="L154">        return result;</span>
+<span class="fc" id="L151">        BigInteger result = dividend.divide(divisor);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (dividend.signum() == -1 &amp;&amp;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">                !dividend.remainder(divisor).equals(BigInteger.ZERO)) {</span>
+<span class="fc" id="L154">            result = result.subtract(</span>
+<span class="fc" id="L155">                    new BigInteger(divisor.signum(), new byte[]{1}));</span>
+        }
+<span class="fc" id="L157">        return result;</span>
     }
 
     @Override
     public void visit(NumericLiteral number) {
-<span class="fc" id="L159">        tempValue = number.getValue();</span>
-<span class="fc" id="L160">    }</span>
+<span class="fc" id="L162">        tempValue = number.getValue();</span>
+<span class="fc" id="L163">    }</span>
 
     @Override
     public void visit(LogicalExpression logicalExpression) {
-<span class="fc" id="L164">        logicalExpression.getSubexpression1().accept(this);</span>
-<span class="fc" id="L165">        LogicalOperator operator = logicalExpression.getLogicalOperator();</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (operator instanceof BinaryOperator) {</span>
-<span class="fc" id="L167">            Value tempValue1 = tempValue;</span>
-<span class="fc" id="L168">            logicalExpression.getSubexpression2().accept(this);</span>
-<span class="fc" id="L169">            Value tempValue2 = tempValue;</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (operator instanceof Disjunction) {</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">                boolean newValue = ((BooleanValue) tempValue1).getValue()</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">                        || ((BooleanValue) tempValue2).getValue();</span>
-<span class="fc" id="L173">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc" id="L167">        logicalExpression.getSubexpression1().accept(this);</span>
+<span class="fc" id="L168">        LogicalOperator operator = logicalExpression.getLogicalOperator();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (operator instanceof BinaryOperator) {</span>
+<span class="fc" id="L170">            Value tempValue1 = tempValue;</span>
+<span class="fc" id="L171">            logicalExpression.getSubexpression2().accept(this);</span>
+<span class="fc" id="L172">            Value tempValue2 = tempValue;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            if (operator instanceof Disjunction) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                boolean newValue = ((BooleanValue) tempValue1).getValue()</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                        || ((BooleanValue) tempValue2).getValue();</span>
+<span class="fc" id="L176">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L175" title="All 2 branches covered.">            if (operator instanceof Conjunction) {</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">                boolean newValue = ((BooleanValue) tempValue1).getValue()</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">                        &amp;&amp; ((BooleanValue) tempValue2).getValue();</span>
-<span class="fc" id="L178">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            if (operator instanceof Conjunction) {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                boolean newValue = ((BooleanValue) tempValue1).getValue()</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">                        &amp;&amp; ((BooleanValue) tempValue2).getValue();</span>
+<span class="fc" id="L181">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L180" title="All 2 branches covered.">            if (operator instanceof Greater) {</span>
-<span class="fc" id="L181">                boolean newValue =</span>
-<span class="fc" id="L182">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">                            &gt; ((IntegerValue) tempValue2).getValue().intValue();</span>
-<span class="fc" id="L184">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">            if (operator instanceof Greater) {</span>
+<span class="fc" id="L184">                boolean newValue =</span>
+<span class="fc" id="L185">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">                            &gt; ((IntegerValue) tempValue2).getValue().intValue();</span>
+<span class="fc" id="L187">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L186" title="All 2 branches covered.">            if (operator instanceof GreaterEqual) {</span>
-<span class="fc" id="L187">                boolean newValue =</span>
-<span class="fc" id="L188">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">                           &gt;= ((IntegerValue) tempValue2).getValue().intValue();</span>
-<span class="fc" id="L190">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">            if (operator instanceof GreaterEqual) {</span>
+<span class="fc" id="L190">                boolean newValue =</span>
+<span class="fc" id="L191">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                           &gt;= ((IntegerValue) tempValue2).getValue().intValue();</span>
+<span class="fc" id="L193">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L192" title="All 2 branches covered.">            if (operator instanceof Less) {</span>
-<span class="fc" id="L193">                boolean newValue =</span>
-<span class="fc" id="L194">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">                            &lt; ((IntegerValue) tempValue2).getValue().intValue();</span>
-<span class="fc" id="L196">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            if (operator instanceof Less) {</span>
+<span class="fc" id="L196">                boolean newValue =</span>
+<span class="fc" id="L197">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                            &lt; ((IntegerValue) tempValue2).getValue().intValue();</span>
+<span class="fc" id="L199">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L198" title="All 2 branches covered.">            if (operator instanceof LessEqual) {</span>
-<span class="fc" id="L199">                boolean newValue =</span>
-<span class="fc" id="L200">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">                           &lt;= ((IntegerValue) tempValue2).getValue().intValue();</span>
-<span class="fc" id="L202">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            if (operator instanceof LessEqual) {</span>
+<span class="fc" id="L202">                boolean newValue =</span>
+<span class="fc" id="L203">                        ((IntegerValue) tempValue1).getValue().intValue()</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                           &lt;= ((IntegerValue) tempValue2).getValue().intValue();</span>
+<span class="fc" id="L205">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L204" title="All 2 branches covered.">            if (operator instanceof Equal) {</span>
-<span class="fc" id="L205">                boolean newValue = tempValue1.equals(tempValue2);</span>
-<span class="fc" id="L206">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (operator instanceof Equal) {</span>
+<span class="fc" id="L208">                boolean newValue = tempValue1.equals(tempValue2);</span>
+<span class="fc" id="L209">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
-<span class="fc bfc" id="L208" title="All 2 branches covered.">            if (operator instanceof NotEqual) {</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">                boolean newValue = !tempValue1.equals(tempValue2);</span>
-<span class="fc" id="L210">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">            if (operator instanceof NotEqual) {</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">                boolean newValue = !tempValue1.equals(tempValue2);</span>
+<span class="fc" id="L213">                tempValue = new BooleanValue(Boolean.toString(newValue));</span>
             }
         } else {
             //Negation
-<span class="fc bfc" id="L214" title="All 2 branches covered.">            boolean newValue = !((BooleanValue) tempValue).getValue();</span>
-<span class="fc" id="L215">            tempValue = new BooleanValue(Boolean.toString(newValue));</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">            boolean newValue = !((BooleanValue) tempValue).getValue();</span>
+<span class="fc" id="L218">            tempValue = new BooleanValue(Boolean.toString(newValue));</span>
         }
-<span class="fc" id="L217">    }</span>
+<span class="fc" id="L220">    }</span>
 
     @Override
     public void visit(BooleanLiteral bool) {
-<span class="fc" id="L221">        tempValue = bool.getValue();</span>
-<span class="fc" id="L222">    }</span>
+<span class="fc" id="L224">        tempValue = bool.getValue();</span>
+<span class="fc" id="L225">    }</span>
 
     @Override
     public void visit(FunctionCall functionCall) {
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (&quot;length&quot;.equals(functionCall.getFunctionIdentifier().toString())) {</span>
-<span class="fc" id="L227">            functionCall.getParameters()[0].accept(this);</span>
-<span class="fc" id="L228">            int arrayLength = ((ArrayValue) tempValue).getValues().length;</span>
-<span class="fc" id="L229">            tempValue = new IntegerValue(Integer.toString(arrayLength));</span>
-<span class="fc" id="L230">            return;</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (&quot;length&quot;.equals(functionCall.getFunctionIdentifier().toString())) {</span>
+<span class="fc" id="L230">            functionCall.getParameters()[0].accept(this);</span>
+<span class="fc" id="L231">            int arrayLength = ((ArrayValue) tempValue).getValues().length;</span>
+<span class="fc" id="L232">            tempValue = new IntegerValue(Integer.toString(arrayLength));</span>
+<span class="fc" id="L233">            return;</span>
         }
-<span class="fc" id="L232">        Value value = currentState.getReturnValues().get(functionCall);</span>
-<span class="fc bfc" id="L233" title="All 4 branches covered.">        if (value == null &amp;&amp; returnValue != null) {</span>
-<span class="fc" id="L234">            currentState.createFunctionResult(functionCall, returnValue);</span>
-<span class="fc" id="L235">            value = returnValue;</span>
-<span class="fc" id="L236">            returnValue = null;</span>
+<span class="fc" id="L235">        Value value = currentState.getReturnValues().get(functionCall);</span>
+<span class="fc bfc" id="L236" title="All 4 branches covered.">        if (value == null &amp;&amp; returnValue != null) {</span>
+<span class="fc" id="L237">            currentState.createFunctionResult(functionCall, returnValue);</span>
+<span class="fc" id="L238">            value = returnValue;</span>
+<span class="fc" id="L239">            returnValue = null;</span>
         }
-<span class="fc bfc" id="L238" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        if (value == null) {</span>
             //result not calculated yet
-<span class="fc" id="L240">            Expression[] parameterExpressions = functionCall.getParameters();</span>
-<span class="fc" id="L241">            parameters = new Value[parameterExpressions.length];</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">            for (int i = 0; i &lt; parameters.length; i++) {</span>
-<span class="fc" id="L243">                parameterExpressions[i].accept(this);</span>
-<span class="fc" id="L244">                parameters[i] = tempValue;</span>
+<span class="fc" id="L243">            Expression[] parameterExpressions = functionCall.getParameters();</span>
+<span class="fc" id="L244">            parameters = new Value[parameterExpressions.length];</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">            for (int i = 0; i &lt; parameters.length; i++) {</span>
+<span class="fc" id="L246">                parameterExpressions[i].accept(this);</span>
+<span class="fc" id="L247">                parameters[i] = tempValue;</span>
             }
-<span class="fc" id="L246">            functionCall.getFunction().accept(this);</span>
+<span class="fc" id="L249">            functionCall.getFunction().accept(this);</span>
             //statement must be started again
-<span class="fc" id="L248">            throw new StopStatementException();</span>
+<span class="fc" id="L251">            throw new StopStatementException();</span>
         } else {
-<span class="fc" id="L250">            tempValue = value;</span>
+<span class="fc" id="L253">            tempValue = value;</span>
         }
-<span class="fc" id="L252">    }</span>
+<span class="fc" id="L255">    }</span>
 
     @Override
     public void visit(VariableRead variableRead) {
-<span class="fc" id="L256">        tempValue = currentState.getVariables().get(variableRead.getVariable());</span>
-<span class="fc" id="L257">    }</span>
+<span class="fc" id="L259">        tempValue = currentState.getVariables().get(variableRead.getVariable());</span>
+<span class="fc" id="L260">    }</span>
 
     @Override
     public void visit(ArrayRead arrayRead) {
-<span class="fc" id="L261">        Value value = currentState.getVariables().get(arrayRead.getVariable());</span>
-<span class="fc" id="L262">        Expression[] indices = arrayRead.getIndices();</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        for (Expression index : indices) {</span>
-<span class="fc" id="L264">            index.accept(this);</span>
-<span class="fc" id="L265">            int pos = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L266">            Value[] values = ((ArrayValue) value).getValues();</span>
-<span class="fc" id="L267">            value = values[pos];</span>
+<span class="fc" id="L264">        Value value = currentState.getVariables().get(arrayRead.getVariable());</span>
+<span class="fc" id="L265">        Expression[] indices = arrayRead.getIndices();</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        for (Expression index : indices) {</span>
+<span class="fc" id="L267">            index.accept(this);</span>
+<span class="fc" id="L268">            int pos = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L269">            Value[] values = ((ArrayValue) value).getValues();</span>
+<span class="pc bpc" id="L270" title="2 of 4 branches missed.">            if (pos &lt; 0 || pos &gt;= values.length) {</span>
+<span class="nc" id="L271">                pos = 0;</span>
+            }
+<span class="fc" id="L273">            value = values[pos];</span>
         }
-<span class="fc" id="L269">        tempValue = value;</span>
-<span class="fc" id="L270">    }</span>
+<span class="fc" id="L275">        tempValue = value;</span>
+<span class="fc" id="L276">    }</span>
 
     @Override
     public void visit(Function function) {
-<span class="fc" id="L274">        currentState.createScope(function.getFunctionBlock(), function);</span>
-<span class="fc" id="L275">        FunctionParameter[] params = function.getParameters();</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">        for (int i = 0; i &lt; params.length; i++) {</span>
-<span class="fc" id="L277">            Value value = parameters[i];</span>
-<span class="fc" id="L278">            String varName = params[i].getName();</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">            if (value instanceof ArrayValue) {</span>
-<span class="fc" id="L280">                int depth = 0;</span>
-<span class="fc bfc" id="L281" title="All 2 branches covered.">                for (Type temp = value.getType(); temp instanceof ArrayType;</span>
-<span class="fc" id="L282">                     temp = ((ArrayType) temp).getType()) {</span>
-<span class="fc" id="L283">                    depth += 1;</span>
+<span class="fc" id="L280">        currentState.createScope(function.getFunctionBlock(), function);</span>
+<span class="fc" id="L281">        FunctionParameter[] params = function.getParameters();</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        for (int i = 0; i &lt; params.length; i++) {</span>
+<span class="fc" id="L283">            Value value = parameters[i];</span>
+<span class="fc" id="L284">            String varName = params[i].getName();</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            if (value instanceof ArrayValue) {</span>
+<span class="fc" id="L286">                int depth = 0;</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">                for (Type temp = value.getType(); temp instanceof ArrayType;</span>
+<span class="fc" id="L288">                     temp = ((ArrayType) temp).getType()) {</span>
+<span class="fc" id="L289">                    depth += 1;</span>
                 }
-<span class="fc" id="L285">                int[] lengths = new int[depth];</span>
-<span class="fc" id="L286">                depth = 0;</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">                for (Value temp = value; temp instanceof ArrayValue;</span>
-<span class="fc" id="L288">                     temp = ((ArrayValue) temp).getValues()[0]) {</span>
-<span class="fc" id="L289">                    lengths[depth] = ((ArrayValue) temp).getValues().length;</span>
-<span class="fc" id="L290">                    depth += 1;</span>
+<span class="fc" id="L291">                int[] lengths = new int[depth];</span>
+<span class="fc" id="L292">                depth = 0;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">                for (Value temp = value; temp instanceof ArrayValue;</span>
+<span class="fc" id="L294">                     temp = ((ArrayValue) temp).getValues()[0]) {</span>
+<span class="fc" id="L295">                    lengths[depth] = ((ArrayValue) temp).getValues().length;</span>
+<span class="fc" id="L296">                    depth += 1;</span>
                 }
-<span class="fc" id="L292">                currentState.createArray(varName, value.getType(), lengths);</span>
-<span class="fc" id="L293">                copyArray(varName, value, depth);</span>
+<span class="fc" id="L298">                currentState.createArray(varName, value.getType(), lengths);</span>
+<span class="fc" id="L299">                copyArray(varName, value, depth);</span>
             } else {
-<span class="fc" id="L295">                currentState.createVar(varName, value.toString(),</span>
-<span class="fc" id="L296">                                       value.getType());</span>
+<span class="fc" id="L301">                currentState.createVar(varName, value.toString(),</span>
+<span class="fc" id="L302">                                       value.getType());</span>
             }
         }
-<span class="fc" id="L299">        Assumption[] assumptions = function.getAssumptions();</span>
-<span class="fc bfc" id="L300" title="All 2 branches covered.">        for (Assumption assumption : assumptions) {</span>
-<span class="fc" id="L301">            assumption.accept(this);</span>
+<span class="fc" id="L305">        Assumption[] assumptions = function.getAssumptions();</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        for (Assumption assumption : assumptions) {</span>
+<span class="fc" id="L307">            assumption.accept(this);</span>
         }
-<span class="fc" id="L303">        adjustStatement();</span>
-<span class="fc" id="L304">    }</span>
+<span class="fc" id="L309">        adjustStatement();</span>
+<span class="fc" id="L310">    }</span>
 
     /**
      * Copies an array in case of a method call.
@@ -310,9 +316,9 @@ import java.util.Arrays;
      * @param maxDepth depth of the array
      */
     private void copyArray(String varName, Value value, int maxDepth) {
-<span class="fc" id="L313">        Integer[] counters = new Integer[maxDepth];</span>
-<span class="fc" id="L314">        helpArrayCopy(varName, value, counters, 0);</span>
-<span class="fc" id="L315">    }</span>
+<span class="fc" id="L319">        Integer[] counters = new Integer[maxDepth];</span>
+<span class="fc" id="L320">        helpArrayCopy(varName, value, counters, 0);</span>
+<span class="fc" id="L321">    }</span>
 
     /**
      *
@@ -323,187 +329,187 @@ import java.util.Arrays;
      */
     private void helpArrayCopy(String varName, Value value,
                                Integer[] counters, int depth) {
-<span class="fc bfc" id="L326" title="All 2 branches covered.">        if (value instanceof ArrayValue) {</span>
-<span class="fc" id="L327">            int length = ((ArrayValue) value).getValues().length;</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">            for (int i = 0; i &lt; length; i++) {</span>
-<span class="fc" id="L329">                counters[depth] = i;</span>
-<span class="fc" id="L330">                helpArrayCopy(varName, ((ArrayValue) value).getValues()[i],</span>
-<span class="fc" id="L331">                        counters, depth + 1);</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (value instanceof ArrayValue) {</span>
+<span class="fc" id="L333">            int length = ((ArrayValue) value).getValues().length;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">            for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L335">                counters[depth] = i;</span>
+<span class="fc" id="L336">                helpArrayCopy(varName, ((ArrayValue) value).getValues()[i],</span>
+<span class="fc" id="L337">                        counters, depth + 1);</span>
             }
         } else {
-<span class="fc" id="L334">            currentState.setArray(varName, value.toString(),</span>
-<span class="fc" id="L335">                    Arrays.asList(counters));</span>
+<span class="fc" id="L340">            currentState.setArray(varName, value.toString(),</span>
+<span class="fc" id="L341">                    Arrays.asList(counters));</span>
         }
-<span class="fc" id="L337">    }</span>
+<span class="fc" id="L343">    }</span>
 
     @Override
     public void visit(Program program) {
         //no-op
-<span class="nc" id="L342">    }</span>
+<span class="nc" id="L348">    }</span>
 
     @Override
     public void visit(Assignment assignment) {
-<span class="fc" id="L346">        assignment.getValue().accept(this);</span>
-<span class="fc" id="L347">        currentState.setVar(assignment.getIdentifier().getName(),</span>
-<span class="fc" id="L348">                tempValue.toString());</span>
-<span class="fc" id="L349">        adjustStatement();</span>
-<span class="fc" id="L350">    }</span>
+<span class="fc" id="L352">        assignment.getValue().accept(this);</span>
+<span class="fc" id="L353">        currentState.setVar(assignment.getIdentifier().getName(),</span>
+<span class="fc" id="L354">                tempValue.toString());</span>
+<span class="fc" id="L355">        adjustStatement();</span>
+<span class="fc" id="L356">    }</span>
 
     @Override
     public void visit(Assertion assertion) {
-<span class="fc" id="L354">        assertion.getExpression().accept(this);</span>
-<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
-<span class="fc" id="L356">            throw new AssertionFailureException(&quot;Assertion failed!&quot;,</span>
-<span class="fc" id="L357">                                                assertion.getPosition());</span>
+<span class="fc" id="L360">        assertion.getExpression().accept(this);</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L362">            throw new AssertionFailureException(&quot;Assertion failed!&quot;,</span>
+<span class="fc" id="L363">                                                assertion.getPosition());</span>
         }
-<span class="fc" id="L359">        adjustStatement();</span>
-<span class="fc" id="L360">    }</span>
+<span class="fc" id="L365">        adjustStatement();</span>
+<span class="fc" id="L366">    }</span>
 
     @Override
     public void visit(Assumption assumption) {
-<span class="fc" id="L364">        assumption.getExpression().accept(this);</span>
-<span class="fc bfc" id="L365" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
-<span class="fc" id="L366">            throw new AssertionFailureException(&quot;Assumption failed!&quot;,</span>
-<span class="fc" id="L367">                                                assumption.getPosition());</span>
+<span class="fc" id="L370">        assumption.getExpression().accept(this);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L372">            throw new AssertionFailureException(&quot;Assumption failed!&quot;,</span>
+<span class="fc" id="L373">                                                assumption.getPosition());</span>
         }
-<span class="fc" id="L369">    }</span>
+<span class="fc" id="L375">    }</span>
 
     @Override
     public void visit(Axiom axiom) {
         //not needed in interpreter
-<span class="nc" id="L374">    }</span>
+<span class="nc" id="L380">    }</span>
 
     @Override
     public void visit(Ensure ensure) {
-<span class="fc" id="L378">        ensure.getExpression().accept(this);</span>
-<span class="fc bfc" id="L379" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
-<span class="fc" id="L380">            throw new AssertionFailureException(&quot;Ensure failed!&quot;,</span>
-<span class="fc" id="L381">                                                ensure.getPosition());</span>
+<span class="fc" id="L384">        ensure.getExpression().accept(this);</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L386">            throw new AssertionFailureException(&quot;Ensure failed!&quot;,</span>
+<span class="fc" id="L387">                                                ensure.getPosition());</span>
         }
-<span class="fc" id="L383">    }</span>
+<span class="fc" id="L389">    }</span>
 
     @Override
     public void visit(Invariant invariant) {
-<span class="fc" id="L387">        invariant.getExpression().accept(this);</span>
-<span class="fc bfc" id="L388" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
-<span class="fc" id="L389">            throw new AssertionFailureException(&quot;Invariant failed!&quot;,</span>
-<span class="fc" id="L390">                                                invariant.getPosition());</span>
+<span class="fc" id="L393">        invariant.getExpression().accept(this);</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        if (!((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L395">            throw new AssertionFailureException(&quot;Invariant failed!&quot;,</span>
+<span class="fc" id="L396">                                                invariant.getPosition());</span>
         }
-<span class="fc" id="L392">    }</span>
+<span class="fc" id="L398">    }</span>
 
     @Override
     public void visit(ReturnStatement returnStatement) {
-<span class="fc" id="L396">        returnStatement.getReturnValue().accept(this);</span>
-<span class="fc" id="L397">        returnValue = tempValue;</span>
-<span class="fc" id="L398">        adjustStatement();</span>
-<span class="fc" id="L399">    }</span>
+<span class="fc" id="L402">        returnStatement.getReturnValue().accept(this);</span>
+<span class="fc" id="L403">        returnValue = tempValue;</span>
+<span class="fc" id="L404">        adjustStatement();</span>
+<span class="fc" id="L405">    }</span>
 
     @Override
     public void visit(VariableDeclaration varDec) {
-<span class="fc bfc" id="L403" title="All 2 branches covered.">        if (varDec.getValue() == null) {</span>
-<span class="fc" id="L404">            currentState.createVar(varDec.getName(), null, varDec.getType());</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">        if (varDec.getValue() == null) {</span>
+<span class="fc" id="L410">            currentState.createVar(varDec.getName(), null, varDec.getType());</span>
         } else {
-<span class="fc" id="L406">            varDec.getValue().accept(this);</span>
-<span class="fc" id="L407">            currentState.createVar(varDec.getName(),</span>
-<span class="fc" id="L408">                        tempValue.toString(), varDec.getType());</span>
+<span class="fc" id="L412">            varDec.getValue().accept(this);</span>
+<span class="fc" id="L413">            currentState.createVar(varDec.getName(),</span>
+<span class="fc" id="L414">                        tempValue.toString(), varDec.getType());</span>
         }
-<span class="fc" id="L410">        adjustStatement();</span>
-<span class="fc" id="L411">    }</span>
+<span class="fc" id="L416">        adjustStatement();</span>
+<span class="fc" id="L417">    }</span>
 
     @Override
     public void visit(ArrayDeclaration arrDec) {
-<span class="fc" id="L415">        Expression[] indices = arrDec.getIndices();</span>
-<span class="fc" id="L416">        int[] lengths = new int[indices.length];</span>
-<span class="fc bfc" id="L417" title="All 2 branches covered.">        for (int i = 0; i &lt; indices.length; i++) {</span>
-<span class="fc" id="L418">            indices[i].accept(this);</span>
-<span class="fc" id="L419">            lengths[i] = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L421">        Expression[] indices = arrDec.getIndices();</span>
+<span class="fc" id="L422">        int[] lengths = new int[indices.length];</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        for (int i = 0; i &lt; indices.length; i++) {</span>
+<span class="fc" id="L424">            indices[i].accept(this);</span>
+<span class="fc" id="L425">            lengths[i] = ((IntegerValue) tempValue).getValue().intValue();</span>
         }
-<span class="fc" id="L421">        currentState.createArray(arrDec.getName(), arrDec.getType(), lengths);</span>
-<span class="fc" id="L422">        adjustStatement();</span>
-<span class="fc" id="L423">    }</span>
+<span class="fc" id="L427">        currentState.createArray(arrDec.getName(), arrDec.getType(), lengths);</span>
+<span class="fc" id="L428">        adjustStatement();</span>
+<span class="fc" id="L429">    }</span>
 
     @Override
     public void visit(ExistsQuantifier existsQuantifier) {
-<span class="fc" id="L427">        Range range = existsQuantifier.getRange();</span>
-<span class="fc bfc" id="L428" title="All 2 branches covered.">        if (range != null) {</span>
-<span class="fc" id="L429">            range.getLowerBound().accept(this);</span>
-<span class="fc" id="L430">            int lower = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L431">            range.getUpperBound().accept(this);</span>
-<span class="fc" id="L432">            int upper = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L433">            currentState.createScope(null, null);</span>
-<span class="fc" id="L434">            String varName = existsQuantifier.getIdentifier().toString();</span>
-<span class="fc" id="L435">            currentState.createVar(varName, null, new IntegerType());</span>
-<span class="fc" id="L436">            boolean satisfied = false;</span>
-<span class="fc bfc" id="L437" title="All 2 branches covered.">            for (int i = lower; i &lt;= upper; i++) {</span>
-<span class="fc" id="L438">                currentState.setVar(varName, Integer.toString(i));</span>
-<span class="fc" id="L439">                existsQuantifier.getSubexpression1().accept(this);</span>
-<span class="fc bfc" id="L440" title="All 2 branches covered.">                if (((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L433">        Range range = existsQuantifier.getRange();</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">        if (range != null) {</span>
+<span class="fc" id="L435">            range.getLowerBound().accept(this);</span>
+<span class="fc" id="L436">            int lower = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L437">            range.getUpperBound().accept(this);</span>
+<span class="fc" id="L438">            int upper = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L439">            currentState.createScope(null, null);</span>
+<span class="fc" id="L440">            String varName = existsQuantifier.getIdentifier().toString();</span>
+<span class="fc" id="L441">            currentState.createVar(varName, null, new IntegerType());</span>
+<span class="fc" id="L442">            boolean satisfied = false;</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">            for (int i = lower; i &lt;= upper; i++) {</span>
+<span class="fc" id="L444">                currentState.setVar(varName, Integer.toString(i));</span>
+<span class="fc" id="L445">                existsQuantifier.getSubexpression1().accept(this);</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">                if (((BooleanValue) tempValue).getValue()) {</span>
                     //found a satisfying value
-<span class="fc" id="L442">                    satisfied = true;</span>
+<span class="fc" id="L448">                    satisfied = true;</span>
                 }
             }
-<span class="fc" id="L445">            tempValue = new BooleanValue(Boolean.toString(satisfied));</span>
-<span class="fc" id="L446">            currentState.destroyScope();</span>
+<span class="fc" id="L451">            tempValue = new BooleanValue(Boolean.toString(satisfied));</span>
+<span class="fc" id="L452">            currentState.destroyScope();</span>
         } else {
-<span class="fc" id="L448">            tempValue = new BooleanValue(&quot;true&quot;);</span>
+<span class="fc" id="L454">            tempValue = new BooleanValue(&quot;true&quot;);</span>
         }
-<span class="fc" id="L450">    }</span>
+<span class="fc" id="L456">    }</span>
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
-<span class="fc" id="L454">        Range range = forAllQuantifier.getRange();</span>
-<span class="fc bfc" id="L455" title="All 2 branches covered.">        if (range != null) {</span>
-<span class="fc" id="L456">            range.getLowerBound().accept(this);</span>
-<span class="fc" id="L457">            int lower = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L458">            range.getUpperBound().accept(this);</span>
-<span class="fc" id="L459">            int upper = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L460">            currentState.createScope(null, null);</span>
-<span class="fc" id="L461">            String varName = forAllQuantifier.getIdentifier().toString();</span>
-<span class="fc" id="L462">            currentState.createVar(varName, null, new IntegerType());</span>
-<span class="fc" id="L463">            boolean valid = true;</span>
-<span class="fc bfc" id="L464" title="All 2 branches covered.">            for (int i = lower; i &lt;= upper; i++) {</span>
-<span class="fc" id="L465">                currentState.setVar(varName, Integer.toString(i));</span>
-<span class="fc" id="L466">                forAllQuantifier.getSubexpression1().accept(this);</span>
-<span class="fc bfc" id="L467" title="All 2 branches covered.">                if (!((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L460">        Range range = forAllQuantifier.getRange();</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        if (range != null) {</span>
+<span class="fc" id="L462">            range.getLowerBound().accept(this);</span>
+<span class="fc" id="L463">            int lower = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L464">            range.getUpperBound().accept(this);</span>
+<span class="fc" id="L465">            int upper = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L466">            currentState.createScope(null, null);</span>
+<span class="fc" id="L467">            String varName = forAllQuantifier.getIdentifier().toString();</span>
+<span class="fc" id="L468">            currentState.createVar(varName, null, new IntegerType());</span>
+<span class="fc" id="L469">            boolean valid = true;</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">            for (int i = lower; i &lt;= upper; i++) {</span>
+<span class="fc" id="L471">                currentState.setVar(varName, Integer.toString(i));</span>
+<span class="fc" id="L472">                forAllQuantifier.getSubexpression1().accept(this);</span>
+<span class="fc bfc" id="L473" title="All 2 branches covered.">                if (!((BooleanValue) tempValue).getValue()) {</span>
                     //found a counterexample
-<span class="fc" id="L469">                    valid = false;</span>
+<span class="fc" id="L475">                    valid = false;</span>
                 }
             }
-<span class="fc" id="L472">            tempValue = new BooleanValue(Boolean.toString(valid));</span>
-<span class="fc" id="L473">            currentState.destroyScope();</span>
+<span class="fc" id="L478">            tempValue = new BooleanValue(Boolean.toString(valid));</span>
+<span class="fc" id="L479">            currentState.destroyScope();</span>
         } else {
-<span class="fc" id="L475">            tempValue = new BooleanValue(&quot;false&quot;);</span>
+<span class="fc" id="L481">            tempValue = new BooleanValue(&quot;false&quot;);</span>
         }
-<span class="fc" id="L477">    }</span>
+<span class="fc" id="L483">    }</span>
 
     @Override
     public void visit(StatementBlock statementBlock) {
         //not needed
-<span class="nc" id="L482">    }</span>
+<span class="nc" id="L488">    }</span>
 
     /**
      * Adjust the statement at the end of a step.
      */
     private void adjustStatement() {
-<span class="fc" id="L488">        Function currentFunction = currentState.getCurrentFunction();</span>
-<span class="fc" id="L489">        currentState.adjustStatement();</span>
-<span class="fc bfc" id="L490" title="All 2 branches covered.">        if (currentState.getCurrentStatement() == null) {</span>
-<span class="fc bfc" id="L491" title="All 2 branches covered.">            if (currentState.isFunctionScope()) {</span>
-<span class="fc" id="L492">                Ensure[] ensures = currentFunction.getEnsures();</span>
+<span class="fc" id="L494">        Function currentFunction = currentState.getCurrentFunction();</span>
+<span class="fc" id="L495">        currentState.adjustStatement();</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">        if (currentState.getCurrentStatement() == null) {</span>
+<span class="fc bfc" id="L497" title="All 2 branches covered.">            if (currentState.isFunctionScope()) {</span>
+<span class="fc" id="L498">                Ensure[] ensures = currentFunction.getEnsures();</span>
                 try {
-<span class="fc bfc" id="L494" title="All 2 branches covered.">                    for (Ensure ensure : ensures) {</span>
-<span class="fc" id="L495">                        ensure.accept(this);</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">                    for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L501">                        ensure.accept(this);</span>
                     }
-<span class="fc" id="L497">                } finally {</span>
-<span class="fc" id="L498">                    currentState.destroyScope();</span>
-<span class="fc" id="L499">                }</span>
+<span class="fc" id="L503">                } finally {</span>
+<span class="fc" id="L504">                    currentState.destroyScope();</span>
+<span class="fc" id="L505">                }</span>
             } else {
-<span class="fc" id="L501">                currentState.destroyScope();</span>
-<span class="fc bfc" id="L502" title="All 2 branches covered.">                if (currentState.getCurrentStatement() instanceof Conditional) {</span>
-<span class="fc" id="L503">                    adjustStatement();</span>
+<span class="fc" id="L507">                currentState.destroyScope();</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">                if (currentState.getCurrentStatement() instanceof Conditional) {</span>
+<span class="fc" id="L509">                    adjustStatement();</span>
                 }
             }
         }
-<span class="fc" id="L507">    }</span>
+<span class="fc" id="L513">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

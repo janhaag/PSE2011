@@ -333,11 +333,15 @@ public class TypeChecker implements ASTVisitor {
         currentFunction = function;
         currentScope = new Scope(null, function.getFunctionBlock(), function);
         if (currentFunction.getReturnType() instanceof ArrayType) {
-            throw new IllegalTypeException("Functions must not return arrays.",
+            throw new IllegalTypeException("Functions must not return arrays!",
                                            function.getPosition());
         }
         FunctionParameter[] params = function.getParameters();
         for (FunctionParameter param : params) {
+            if (currentScope.existsInScope(new Identifier(param.getName()))) {
+                throw new IllegalTypeException("Parameter name already in use!",
+                                           function.getPosition());
+            }
             if (param.getType() instanceof ArrayType) {
                 int dimension = 0;
                 for (Type type = param.getType(); type instanceof ArrayType;

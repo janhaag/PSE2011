@@ -12,9 +12,6 @@ import parser.TypeChecker;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
 public class TypeCheckerTest {
     private ParserInterface parserInterface;
     private TypeChecker typeChecker;
@@ -708,6 +705,11 @@ public class TypeCheckerTest {
     public void testVarReadInAxiom() throws RecognitionException {
         parserInterface.parseProgram("axiom i;" +
                 "main() {}");
+    }
+
+    @Test (expected = IllegalTypeException.class)
+    public void testDuplicateParamName() throws RecognitionException {
+        parserInterface.parseProgram("main(int i, bool i) {}");
     }
 
     @Test (expected = FunctionCallNotAllowedException.class)

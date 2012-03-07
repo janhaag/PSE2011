@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Function.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (04.03.2012 23:49:19)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">Function.java</span></div><h1>Function.java</h1><pre class="source lang-java linenums">package ast;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Function.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ast</a> &gt; <span class="el_source">Function.java</span></div><h1>Function.java</h1><pre class="source lang-java linenums">package ast;
 
 /**
  * This class represents a function; it may be the main function.
@@ -110,26 +110,26 @@ public class Function extends ASTRoot {
 
     @Override
     public String toString() {
-<span class="nc" id="L113">        StringBuilder sb = new StringBuilder(&quot;&quot;);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (returnType != null) {</span>
-<span class="nc" id="L115">            sb.append(returnType).append(' ');</span>
+<span class="fc" id="L113">        StringBuilder sb = new StringBuilder(&quot;&quot;);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (returnType != null) {</span>
+<span class="fc" id="L115">            sb.append(returnType).append(' ');</span>
         }
-<span class="nc" id="L117">        sb.append(name).append('(');</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (parameters.length != 0) {</span>
-<span class="nc" id="L119">            sb.append(parameters[0]);</span>
+<span class="fc" id="L117">        sb.append(name).append('(');</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (parameters.length != 0) {</span>
+<span class="fc" id="L119">            sb.append(parameters[0]);</span>
         }
-<span class="nc bnc" id="L121" title="All 2 branches missed.">        for (int i = 1; i &lt; parameters.length; i++) {</span>
-<span class="nc" id="L122">            sb.append(&quot;, &quot;).append(parameters[i]);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (int i = 1; i &lt; parameters.length; i++) {</span>
+<span class="fc" id="L122">            sb.append(&quot;, &quot;).append(parameters[i]);</span>
         }
-<span class="nc" id="L124">        sb.append(&quot;) {\n&quot;);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">        for (Assumption assumption : assumptions) {</span>
-<span class="nc" id="L126">            sb.append(assumption);</span>
+<span class="fc" id="L124">        sb.append(&quot;) {\n&quot;);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        for (Assumption assumption : assumptions) {</span>
+<span class="fc" id="L126">            sb.append(assumption);</span>
         }
-<span class="nc" id="L128">        sb.append(functionBody);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">        for (Ensure ensure : ensures) {</span>
-<span class="nc" id="L130">            sb.append(ensure);</span>
+<span class="fc" id="L128">        sb.append(functionBody);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L130">            sb.append(ensure);</span>
         }
-<span class="nc" id="L132">        return sb.append('}').toString();</span>
+<span class="fc" id="L132">        return sb.append('}').toString();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (04.03.2012 23:49:19)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

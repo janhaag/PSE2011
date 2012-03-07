@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ProgramExecutionTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.interpreter</a> &gt; <span class="el_source">ProgramExecutionTest.java</span></div><h1>ProgramExecutionTest.java</h1><pre class="source lang-java linenums">package test.interpreter;
+
+
+import static org.junit.Assert.*;
+
+import interpreter.ArrayValue;
+import interpreter.BooleanValue;
+import interpreter.GlobalBreakpoint;
+import interpreter.IntegerValue;
+import interpreter.Interpreter;
+import interpreter.ProgramExecution;
+import interpreter.StatementBreakpoint;
+import interpreter.Value;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import misc.ExecutionHandler;
+
+import org.antlr.runtime.RecognitionException;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import ast.ArrayType;
+import ast.Expression;
+import ast.Identifier;
+import ast.IntegerType;
+import ast.Program;
+
+<span class="fc" id="L31">public class ProgramExecutionTest {</span>
+	private ProgramExecution execution;
+
+	@Before
+	public void setUp() throws RecognitionException {
+<span class="fc" id="L36">		ExecutionHandler executionHandler = new ExecutionHandler(null);</span>
+<span class="fc" id="L37">		Program ast = executionHandler.getParserInterface().parseProgram(&quot;main(int a, bool b, int[] c) {}&quot;);</span>
+<span class="fc" id="L38">		Interpreter interpreter = new Interpreter();</span>
+<span class="fc" id="L39">		String[] parameter = {&quot;5&quot;, &quot;false&quot;, &quot;{2,3,4}&quot;};</span>
+<span class="fc" id="L40">		ArrayList&lt;StatementBreakpoint&gt; statement = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="fc" id="L41">		ArrayList&lt;GlobalBreakpoint&gt; global = new ArrayList&lt;GlobalBreakpoint&gt;();</span>
+<span class="fc" id="L42">		this.execution = new ProgramExecution(ast, interpreter, statement, global, null);</span>
+<span class="fc" id="L43">		this.execution = new ProgramExecution(ast, interpreter, statement, global, parameter);</span>
+<span class="fc" id="L44">	}</span>
+	
+	@Test
+	public void getCurrentStateTest() {
+<span class="fc" id="L48">		assertNotNull(this.execution.getCurrentState());</span>
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	public void getStatementBreakpointTest() {
+<span class="fc" id="L53">		ArrayList&lt;StatementBreakpoint&gt; list = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="fc" id="L54">		assertEquals(list, this.execution.getStatementBreakpoints());</span>
+<span class="fc" id="L55">	}</span>
+	
+	@Test
+	public void getGlobalBreakpointTest() {
+<span class="fc" id="L59">		ArrayList&lt;GlobalBreakpoint&gt; list = new ArrayList&lt;GlobalBreakpoint&gt;();</span>
+<span class="fc" id="L60">		assertEquals(list, this.execution.getGlobalBreakpoints());</span>
+<span class="fc" id="L61">	}</span>
+	
+	@Test
+	public void setStatementBreakpointTest() {
+<span class="fc" id="L65">		ArrayList&lt;StatementBreakpoint&gt; list = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="fc" id="L66">		StatementBreakpoint sbreakpoint = new StatementBreakpoint(0);</span>
+<span class="fc" id="L67">		list.add(sbreakpoint);</span>
+<span class="fc" id="L68">		this.execution.setStatementBreakpoints(list);</span>
+<span class="fc" id="L69">		assertEquals(sbreakpoint, this.execution.getStatementBreakpoints().get(0));</span>
+<span class="fc" id="L70">	}</span>
+	
+	@Test
+	public void setGlobalBreakpointTest() {
+<span class="fc" id="L74">		ArrayList&lt;GlobalBreakpoint&gt; list = new ArrayList&lt;GlobalBreakpoint&gt;();</span>
+<span class="fc" id="L75">		GlobalBreakpoint gbreakpoint = new GlobalBreakpoint(null);</span>
+<span class="fc" id="L76">		list.add(gbreakpoint);</span>
+<span class="fc" id="L77">		this.execution.setGlobalBreakpoints(list);</span>
+<span class="fc" id="L78">		assertEquals(gbreakpoint, this.execution.getGlobalBreakpoints().get(0));</span>
+<span class="fc" id="L79">	}</span>
+	
+	@Test
+	public void getVariablesTest() {
+<span class="fc" id="L83">		HashMap&lt;Identifier, Value&gt; map = new HashMap&lt;Identifier, Value&gt;();</span>
+<span class="fc" id="L84">		map.put(new Identifier(&quot;a&quot;), new IntegerValue(&quot;5&quot;));</span>
+<span class="fc" id="L85">		map.put(new Identifier(&quot;b&quot;), new BooleanValue(&quot;false&quot;));</span>
+<span class="fc" id="L86">		int[] length = {3};</span>
+<span class="fc" id="L87">		ArrayValue value = new ArrayValue(new ArrayType(new IntegerType()), length);</span>
+<span class="fc" id="L88">		ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L89">		list.add(0);</span>
+<span class="fc" id="L90">		value.setValue(&quot;2&quot;, list);</span>
+<span class="fc" id="L91">		ArrayList&lt;Integer&gt; list2 = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L92">		list2.add(1);</span>
+<span class="fc" id="L93">		value.setValue(&quot;3&quot;, list2);</span>
+<span class="fc" id="L94">		ArrayList&lt;Integer&gt; list3 = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L95">		list3.add(2);</span>
+<span class="fc" id="L96">		value.setValue(&quot;4&quot;, list3);</span>
+<span class="fc" id="L97">		map.put(new Identifier(&quot;c&quot;), value);</span>
+<span class="fc" id="L98">		assertEquals(map, this.execution.getVariables());</span>
+<span class="fc" id="L99">	}</span>
+
+	@Test
+	public void checkBreakpointTest() {
+<span class="fc" id="L103">		this.execution.getStatementBreakpoints().add(new StatementBreakpoint(1));</span>
+<span class="fc" id="L104">		assertEquals(1, ((StatementBreakpoint) this.execution.checkBreakpoints()).getLine());</span>
+<span class="fc" id="L105">		this.execution.getStatementBreakpoints().remove(0);</span>
+		
+<span class="fc" id="L107">		ExecutionHandler handler = new ExecutionHandler(null);</span>
+		Expression exp;
+		try {
+<span class="fc" id="L110">			exp = handler.getParserInterface().parseExpression(&quot;a == 42&quot;);</span>
+<span class="fc" id="L111">			this.execution.getGlobalBreakpoints().add(new GlobalBreakpoint(exp));</span>
+<span class="fc" id="L112">			this.execution.getCurrentState().createVar(&quot;a&quot;, &quot;42&quot;, new IntegerType());</span>
+<span class="fc" id="L113">			assertEquals(exp, ((GlobalBreakpoint) this.execution.checkBreakpoints()).getExpression());</span>
+<span class="nc" id="L114">		} catch (RecognitionException e) {</span>
+		}	
+<span class="fc" id="L116">	} </span>
+	
+	@After
+	public void tearDown() {
+<span class="fc" id="L120">		this.execution = null;</span>
+<span class="fc" id="L121">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

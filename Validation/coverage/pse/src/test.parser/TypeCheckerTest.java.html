@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TypeCheckerTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.parser</a> &gt; <span class="el_source">TypeCheckerTest.java</span></div><h1>TypeCheckerTest.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package test.parser;</span>
+
+import ast.*;
+import org.antlr.runtime.RecognitionException;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import parser.FunctionCallNotAllowedException;
+import parser.IllegalTypeException;
+import parser.ParserInterface;
+import parser.TypeChecker;
+
+import static org.junit.Assert.*;
+
+<span class="fc" id="L15">public class TypeCheckerTest {</span>
+    private ParserInterface parserInterface;
+    private TypeChecker typeChecker;
+    private Program program;
+<span class="fc" id="L19">    private final Position p = new Position();</span>
+
+    @Before
+    public void setUp() {
+<span class="fc" id="L23">        parserInterface = new ParserInterface();</span>
+<span class="fc" id="L24">        typeChecker = new TypeChecker();</span>
+<span class="fc" id="L25">    }</span>
+
+    @After
+    public void tearDown() {
+<span class="fc" id="L29">        parserInterface = null;</span>
+<span class="fc" id="L30">        typeChecker = null;</span>
+<span class="fc" id="L31">    }</span>
+
+    @Test
+    public void testCorrectAssume() {
+<span class="fc" id="L35">        program = new Program(p, new Function[0], new Function(</span>
+<span class="fc" id="L36">                p, null, &quot;main&quot;, new FunctionParameter[0], new StatementBlock(</span>
+<span class="fc" id="L37">                    new Statement[0], p), new Assumption[]{</span>
+<span class="fc" id="L38">                        new Assumption(p, new BooleanLiteral(p, &quot;true&quot;))},</span>
+<span class="fc" id="L39">                    new Ensure[0]),</span>
+<span class="fc" id="L40">                new Axiom[0]);</span>
+<span class="fc" id="L41">        boolean success = true;</span>
+        try {
+<span class="fc" id="L43">            typeChecker.checkTypes(program);</span>
+<span class="nc" id="L44">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L45">            success = false;</span>
+        }
+<span class="fc" id="L47">        assertTrue(success);</span>
+<span class="fc" id="L48">    }</span>
+
+    @Test
+    public void testCorrectNegation() {
+<span class="fc" id="L52">        program = new Program(p, new Function[0], new Function(</span>
+<span class="fc" id="L53">                p, null, &quot;main&quot;, new FunctionParameter[0], new StatementBlock(</span>
+<span class="fc" id="L54">                    new Statement[]{new VariableDeclaration(</span>
+                            p, &quot;i&quot;, new LogicalExpression(
+<span class="fc" id="L56">                            p, new BooleanLiteral(p, &quot;true&quot;), null, new Negation()</span>
+
+<span class="fc" id="L58">                    ), new BooleanType()</span>
+<span class="fc" id="L59">                    )}, p), new Assumption[0],</span>
+<span class="fc" id="L60">                    new Ensure[0]),</span>
+<span class="fc" id="L61">                new Axiom[0]);</span>
+<span class="fc" id="L62">        boolean success = true;</span>
+        try {
+<span class="fc" id="L64">            typeChecker.checkTypes(program);</span>
+<span class="nc" id="L65">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L66">            success = false;</span>
+        }
+<span class="fc" id="L68">        assertTrue(success);</span>
+<span class="fc" id="L69">    }</span>
+
+    @Test
+    public void testCorrectFunctions() {
+<span class="fc" id="L73">        boolean success = true;</span>
+        try {
+<span class="fc" id="L75">            parserInterface.parseProgram(&quot;int f(){return 0;}&quot; +</span>
+                    &quot;int g(){return 0;}&quot; +
+                    &quot;int h(){return 0;}&quot; +
+                    &quot;int i(){return 0;}&quot; +
+                    &quot;main(){}&quot;);
+<span class="nc" id="L80">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L81">            success = false;</span>
+<span class="nc" id="L82">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L83">            success = false;</span>
+        }
+<span class="fc" id="L85">        assertTrue(success);</span>
+<span class="fc" id="L86">    }</span>
+
+    @Test
+    public void testCorrectAssertFuncCall() {
+<span class="fc" id="L90">        boolean success = true;</span>
+        try {
+<span class="fc" id="L92">            parserInterface.parseProgram(&quot;bool f(){return true;}&quot; +</span>
+                    &quot;main(){assert f();}&quot;);
+<span class="nc" id="L94">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L95">            success = false;</span>
+<span class="nc" id="L96">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L97">            success = false;</span>
+        }
+<span class="fc" id="L99">        assertTrue(success);</span>
+<span class="fc" id="L100">    }</span>
+
+    @Test
+    public void testCorrectFunctionEnsures() {
+<span class="fc" id="L104">        boolean success = true;</span>
+        try {
+<span class="fc" id="L106">            parserInterface.parseProgram(&quot;int f(){return 0;}&quot; +</span>
+                    &quot;ensure{true;false;}&quot; +
+                    &quot;main(){}&quot;);
+<span class="nc" id="L109">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L110">            success = false;</span>
+<span class="nc" id="L111">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L112">            success = false;</span>
+        }
+<span class="fc" id="L114">        assertTrue(success);</span>
+<span class="fc" id="L115">    }</span>
+
+    @Test
+    public void testCorrectEnsure() {
+<span class="fc" id="L119">        boolean success = true;</span>
+        try {
+<span class="fc" id="L121">            parserInterface.parseProgram(&quot;main(){} ensure false;&quot;);</span>
+<span class="nc" id="L122">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L123">            success = false;</span>
+<span class="nc" id="L124">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L125">            success = false;</span>
+        }
+<span class="fc" id="L127">        assertTrue(success);</span>
+<span class="fc" id="L128">    }</span>
+
+    @Test
+    public void testCorrectInvariant() {
+<span class="fc" id="L132">        boolean success = true;</span>
+        try {
+<span class="fc" id="L134">            parserInterface.parseProgram(&quot;main(){&quot; +</span>
+                    &quot;while(true)invariant true;{}}&quot;);
+<span class="nc" id="L136">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L137">            success = false;</span>
+<span class="nc" id="L138">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L139">            success = false;</span>
+        }
+<span class="fc" id="L141">        assertTrue(success);</span>
+<span class="fc" id="L142">    }</span>
+
+    @Test
+    public void testCorrectAxiom() {
+<span class="fc" id="L146">        boolean success = true;</span>
+        try {
+<span class="fc" id="L148">            parserInterface.parseProgram(&quot;axiom false; main(){}&quot;);</span>
+<span class="nc" id="L149">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L150">            success = false;</span>
+<span class="nc" id="L151">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L152">            success = false;</span>
+        }
+<span class="fc" id="L154">        assertTrue(success);</span>
+<span class="fc" id="L155">    }</span>
+
+    @Test
+    public void testCorrectAssert() {
+<span class="fc" id="L159">        boolean success = true;</span>
+        try {
+<span class="fc" id="L161">            parserInterface.parseProgram(&quot;main(){assert true;}&quot;);</span>
+<span class="nc" id="L162">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L163">            success = false;</span>
+<span class="nc" id="L164">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L165">            success = false;</span>
+        }
+<span class="fc" id="L167">        assertTrue(success);</span>
+<span class="fc" id="L168">    }</span>
+
+    @Test
+    public void testCorrectLength() {
+<span class="fc" id="L172">        boolean success = true;</span>
+        try {
+<span class="fc" id="L174">            parserInterface.parseProgram(&quot;main() {int[] s = array[2];}&quot; +</span>
+                    &quot;ensure length(s)!=1;&quot;);
+<span class="nc" id="L176">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L177">            success = false;</span>
+<span class="nc" id="L178">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L179">            success = false;</span>
+        }
+<span class="fc" id="L181">        assertTrue(success);</span>
+<span class="fc" id="L182">    }</span>
+
+    @Test
+    public void testCorrectFuncCall() {
+<span class="fc" id="L186">        boolean success = true;</span>
+        try {
+<span class="fc" id="L188">            parserInterface.parseProgram(&quot;int m(int a, bool c)&quot; +</span>
+                    &quot;{return 2;}&quot; +
+                    &quot;main() {int w = m(2,true);}&quot;);
+<span class="nc" id="L191">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L192">            success = false;</span>
+<span class="nc" id="L193">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L194">            success = false;</span>
+        }
+<span class="fc" id="L196">        assertTrue(success);</span>
+<span class="fc" id="L197">    }</span>
+
+    @Test
+    public void testCorrectArrayFuncCall() {
+<span class="fc" id="L201">        boolean success = true;</span>
+        try {
+<span class="fc" id="L203">            parserInterface.parseProgram(&quot;int m(int[][] d)&quot; +</span>
+                    &quot;{return 2;}&quot; +
+                    &quot;main() {int[][][] s = array[2][1][2]; int w = m(s[0]); }&quot;);
+<span class="nc" id="L206">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L207">            success = false;</span>
+<span class="nc" id="L208">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L209">            success = false;</span>
+        }
+<span class="fc" id="L211">        assertTrue(success);</span>
+<span class="fc" id="L212">    }</span>
+
+    @Test
+    public void testCorrectLengthSubArray() {
+<span class="fc" id="L216">        boolean success = true;</span>
+        try {
+<span class="fc" id="L218">            parserInterface.parseProgram(&quot;main() {&quot; +</span>
+                    &quot;int[][][] s = array[2][1][2];} ensure length(s[1])!=1;&quot;);
+<span class="nc" id="L220">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L221">            success = false;</span>
+<span class="nc" id="L222">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L223">            success = false;</span>
+        }
+<span class="fc" id="L225">        assertTrue(success);</span>
+<span class="fc" id="L226">    }</span>
+
+    @Test
+    public void testCorrectQuantifier() {
+<span class="fc" id="L230">        boolean success = true;</span>
+        try {
+<span class="fc" id="L232">            parserInterface.parseProgram(&quot;main() {int a; int b = 7;&quot; +</span>
+                    &quot;} ensure exists x(a,b) x != 2;&quot;);
+<span class="nc" id="L234">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L235">            success = false;</span>
+<span class="nc" id="L236">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L237">            success = false;</span>
+        }
+<span class="fc" id="L239">        assertTrue(success);</span>
+<span class="fc" id="L240">    }</span>
+
+    @Test
+    public void testCorrectIf() {
+<span class="fc" id="L244">        boolean success = true;</span>
+        try {
+<span class="fc" id="L246">            parserInterface.parseProgram(&quot;main(){if (true) {}}&quot;);</span>
+<span class="nc" id="L247">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L248">            success = false;</span>
+<span class="nc" id="L249">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L250">            success = false;</span>
+        }
+<span class="fc" id="L252">        assertTrue(success);</span>
+<span class="fc" id="L253">    }</span>
+
+    @Test
+    public void testCorrectWhile() {
+<span class="fc" id="L257">        boolean success = true;</span>
+        try {
+<span class="fc" id="L259">            parserInterface.parseProgram(&quot;main(){bool c; while (c) {}}&quot;);</span>
+<span class="nc" id="L260">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L261">            success = false;</span>
+<span class="nc" id="L262">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L263">            success = false;</span>
+        }
+<span class="fc" id="L265">        assertTrue(success);</span>
+<span class="fc" id="L266">    }</span>
+
+    @Test
+    public void testCorrectArrayRead() {
+<span class="fc" id="L270">        boolean success = true;</span>
+        try {
+<span class="fc" id="L272">            parserInterface.parseProgram(&quot;main(){&quot; +</span>
+                    &quot;int[][] s = array[2][1]; int a = 1;&quot; +
+                    &quot;a = s[s[1][1]][a];&quot; +
+                    &quot;} ensure length(s)!=1;&quot;);
+<span class="nc" id="L276">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L277">            success = false;</span>
+<span class="nc" id="L278">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L279">            success = false;</span>
+        }
+<span class="fc" id="L281">        assertTrue(success);</span>
+<span class="fc" id="L282">    }</span>
+
+    @Test
+    public void testCorrectArrayAssign() {
+<span class="fc" id="L286">        boolean success = true;</span>
+        try {
+<span class="fc" id="L288">            parserInterface.parseProgram(&quot;main() {int a;&quot; +</span>
+                    &quot;int[][][] s = array[2][1][2];&quot; +
+                    &quot;s[1][1][a] = 2;}&quot;);
+<span class="nc" id="L291">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L292">            success = false;</span>
+<span class="nc" id="L293">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L294">            success = false;</span>
+        }
+<span class="fc" id="L296">        assertTrue(success);</span>
+<span class="fc" id="L297">    }</span>
+
+    @Test
+    public void testCorrectEqualBasicTypes() {
+<span class="fc" id="L301">        boolean success = true;</span>
+        try {
+<span class="fc" id="L303">            parserInterface.parseProgram(&quot;main() {&quot; +</span>
+                    &quot;bool c; int a; int b; c = c == (a==b);}&quot;);
+<span class="nc" id="L305">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L306">            success = false;</span>
+<span class="nc" id="L307">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L308">            success = false;</span>
+        }
+<span class="fc" id="L310">        assertTrue(success);</span>
+<span class="fc" id="L311">    }</span>
+
+    @Test
+    public void testCorrectEqualArrays() {
+<span class="fc" id="L315">        boolean success = true;</span>
+        try {
+<span class="fc" id="L317">            parserInterface.parseProgram(&quot;main() {&quot; +</span>
+                    &quot;int[] a = array[0]; int[] b = array[0]; bool c = a==b;}&quot;);
+<span class="nc" id="L319">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L320">            success = false;</span>
+<span class="nc" id="L321">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L322">            success = false;</span>
+        }
+<span class="fc" id="L324">        assertTrue(success);</span>
+<span class="fc" id="L325">    }</span>
+
+    @Test
+    public void testCorrectNotEqualBasicTypes() {
+<span class="fc" id="L329">        boolean success = true;</span>
+        try {
+<span class="fc" id="L331">            parserInterface.parseProgram(&quot;main() {&quot; +</span>
+                    &quot;bool c; int a; int b; c = c != (a!=b);}&quot;);
+<span class="nc" id="L333">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L334">            success = false;</span>
+<span class="nc" id="L335">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L336">            success = false;</span>
+        }
+<span class="fc" id="L338">        assertTrue(success);</span>
+<span class="fc" id="L339">    }</span>
+
+    @Test
+    public void testCorrectNotEqualArrays() {
+<span class="fc" id="L343">        boolean success = true;</span>
+        try {
+<span class="fc" id="L345">            parserInterface.parseProgram(&quot;main() {&quot; +</span>
+                    &quot;int[] a = array[0]; int[] b = array[0]; bool c = a!=b;}&quot;);
+<span class="nc" id="L347">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L348">            success = false;</span>
+<span class="nc" id="L349">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L350">            success = false;</span>
+        }
+<span class="fc" id="L352">        assertTrue(success);</span>
+<span class="fc" id="L353">    }</span>
+
+    @Test
+    public void testCorrectLess() {
+<span class="fc" id="L357">        boolean success = true;</span>
+        try {
+<span class="fc" id="L359">            parserInterface.parseProgram(&quot;main() {bool a = 2&lt;2;}&quot;);</span>
+<span class="nc" id="L360">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L361">            success = false;</span>
+<span class="nc" id="L362">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L363">            success = false;</span>
+        }
+<span class="fc" id="L365">        assertTrue(success);</span>
+<span class="fc" id="L366">    }</span>
+
+    @Test
+    public void testCorrectOr() {
+<span class="fc" id="L370">        boolean success = true;</span>
+        try {
+<span class="fc" id="L372">            parserInterface.parseProgram(&quot;main() {bool c = true | false;}&quot;);</span>
+<span class="nc" id="L373">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L374">            success = false;</span>
+<span class="nc" id="L375">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L376">            success = false;</span>
+        }
+<span class="fc" id="L378">        assertTrue(success);</span>
+<span class="fc" id="L379">    }</span>
+
+    @Test
+    public void testCorrectExistsDivZero() throws RecognitionException {
+<span class="fc" id="L383">        boolean success = true;</span>
+        try {
+<span class="fc" id="L385">            parserInterface.parseProgram(&quot;main() {} ensure exists x(1,2) 1/x==0;&quot;);</span>
+<span class="nc" id="L386">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L387">            success = false;</span>
+<span class="nc" id="L388">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L389">            success = false;</span>
+        }
+<span class="fc" id="L391">        assertTrue(success);</span>
+<span class="fc" id="L392">    }</span>
+
+    @Test
+    public void testCorrectExistsUnbounded() throws RecognitionException {
+<span class="fc" id="L396">        boolean success = true;</span>
+        try {
+<span class="fc" id="L398">            parserInterface.parseProgram(&quot;main() {} ensure exists x() true;&quot;);</span>
+<span class="nc" id="L399">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L400">            success = false;</span>
+<span class="nc" id="L401">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L402">            success = false;</span>
+        }
+<span class="fc" id="L404">        assertTrue(success);</span>
+<span class="fc" id="L405">    }</span>
+
+    @Test
+    public void testCorrectForAllUnbounded() throws RecognitionException {
+<span class="fc" id="L409">        boolean success = true;</span>
+        try {
+<span class="fc" id="L411">            parserInterface.parseProgram(&quot;main() {} ensure forall x() true;&quot;);</span>
+<span class="nc" id="L412">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L413">            success = false;</span>
+<span class="nc" id="L414">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L415">            success = false;</span>
+        }
+<span class="fc" id="L417">        assertTrue(success);</span>
+<span class="fc" id="L418">    }</span>
+
+    @Test
+    public void testCorrectScoping() throws RecognitionException {
+<span class="fc" id="L422">        boolean success = true;</span>
+        try {
+<span class="fc" id="L424">            parserInterface.parseProgram(&quot;main() {bool i;if(i){&quot; +</span>
+                    &quot;i=true;int i;i=9;}i=false;}&quot;);
+<span class="nc" id="L426">        } catch (RecognitionException e) {</span>
+<span class="nc" id="L427">            success = false;</span>
+<span class="nc" id="L428">        } catch (IllegalTypeException e) {</span>
+<span class="nc" id="L429">            success = false;</span>
+        }
+<span class="fc" id="L431">        assertTrue(success);</span>
+<span class="fc" id="L432">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWhileConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L436">        parserInterface.parseProgram(&quot;main() {int c; while (c){}}&quot;);</span>
+<span class="nc" id="L437">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testIfConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L441">        parserInterface.parseProgram(&quot;main() {int c; if (c){}}&quot;);</span>
+<span class="nc" id="L442">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssertConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L446">        parserInterface.parseProgram(&quot;main() {assert 1;}&quot;);</span>
+<span class="nc" id="L447">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testInvariantConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L451">        parserInterface.parseProgram(&quot;main() {while(true)invariant 1;{}}&quot;);</span>
+<span class="nc" id="L452">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssumeConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L456">        parserInterface.parseProgram(&quot;main() assume 1;{}&quot;);</span>
+<span class="nc" id="L457">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAxiomConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L461">        parserInterface.parseProgram(&quot;axiom 1; main() {}&quot;);</span>
+<span class="nc" id="L462">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testEnsureConditionNotBoolean() throws RecognitionException {
+<span class="nc" id="L466">        parserInterface.parseProgram(&quot;main() {}ensure 1;&quot;);</span>
+<span class="nc" id="L467">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testBooleanOnIntegerOperator() throws RecognitionException {
+<span class="nc" id="L471">        parserInterface.parseProgram(&quot;main() {int i = 1*true;}&quot;);</span>
+<span class="nc" id="L472">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testBooleanOnIntegerOperator2() throws RecognitionException {
+<span class="nc" id="L476">        parserInterface.parseProgram(&quot;main() {int i = true*1;}&quot;);</span>
+<span class="nc" id="L477">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testIntegerOnBooleanOperator() throws RecognitionException {
+<span class="nc" id="L481">        parserInterface.parseProgram(&quot;main() {int i = 1|true;}&quot;);</span>
+<span class="nc" id="L482">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testIntegerOnBooleanOperator2() throws RecognitionException {
+<span class="nc" id="L486">        parserInterface.parseProgram(&quot;main() {int i = true|1;}&quot;);</span>
+<span class="nc" id="L487">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongMinus() throws RecognitionException {
+<span class="nc" id="L491">        parserInterface.parseProgram(&quot;main() {int i = -true;}&quot;);</span>
+<span class="nc" id="L492">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongNegation() throws RecognitionException {
+<span class="nc" id="L496">        parserInterface.parseProgram(&quot;main() {int i = !1;}&quot;);</span>
+<span class="nc" id="L497">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssignBooleanToInteger() throws RecognitionException {
+<span class="nc" id="L501">        parserInterface.parseProgram(&quot;main() {int i = true;}&quot;);</span>
+<span class="nc" id="L502">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssignBooleanToInteger2() throws RecognitionException {
+<span class="nc" id="L506">        parserInterface.parseProgram(&quot;main() {int i = 1; i = true;}&quot;);</span>
+<span class="nc" id="L507">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testAssignIntegerToBoolean() throws RecognitionException {
+<span class="nc" id="L511">        parserInterface.parseProgram(&quot;main() {bool i = 42;}&quot;);</span>
+<span class="nc" id="L512">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testEqualsDifferentTypes() throws RecognitionException {
+<span class="nc" id="L516">        parserInterface.parseProgram(&quot;main() {int[][] c = array[3][2];&quot; +</span>
+                &quot;int[] d = array[2]; bool i = c==d;}&quot;);
+<span class="nc" id="L518">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotCorrectlyDeclared1() throws RecognitionException {
+<span class="nc" id="L522">        parserInterface.parseProgram(&quot;main() {bool[] i;}&quot;);</span>
+<span class="nc" id="L523">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotCorrectlyDeclared2() throws RecognitionException {
+<span class="nc" id="L527">        parserInterface.parseProgram(&quot;main() {bool[] i = array[true];}&quot;);</span>
+<span class="nc" id="L528">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotCorrectlyDeclared3() throws RecognitionException {
+<span class="nc" id="L532">        parserInterface.parseProgram(&quot;main() {bool[] i = array[2][3];}&quot;);</span>
+<span class="nc" id="L533">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotCorrectlyDeclared4() throws RecognitionException {
+<span class="nc" id="L537">        parserInterface.parseProgram(&quot;main() {bool[][] i = array[2];}&quot;);</span>
+<span class="nc" id="L538">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testVariableDeclaredAsArray() throws RecognitionException {
+<span class="nc" id="L542">        parserInterface.parseProgram(&quot;main() {bool i = array[6];}&quot;);</span>
+<span class="nc" id="L543">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotFullyIndexed() throws RecognitionException {
+<span class="nc" id="L547">        parserInterface.parseProgram(&quot;main() {bool[][] i = array[6][1];i[1]=true;}&quot;);</span>
+<span class="nc" id="L548">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testIllegalNumberOfParameters() throws RecognitionException {
+<span class="nc" id="L552">        parserInterface.parseProgram(&quot;bool f(){return true;}&quot; +</span>
+                                    &quot;main() {bool i = f(true);}&quot;);
+<span class="nc" id="L554">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testVariableAlreadyDeclared() throws RecognitionException {
+<span class="nc" id="L558">        parserInterface.parseProgram(&quot;main() {bool i; bool i;}&quot;);</span>
+<span class="nc" id="L559">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayAlreadyDeclared() throws RecognitionException {
+<span class="nc" id="L563">        parserInterface.parseProgram(&quot;main() {bool i; bool[] i = array[7];}&quot;);</span>
+<span class="nc" id="L564">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayWrongBaseType() throws RecognitionException {
+<span class="nc" id="L568">        parserInterface.parseProgram(&quot;main() {bool[] i = array[7];i[1]=1;}&quot;);</span>
+<span class="nc" id="L569">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testLengthNoArray() throws RecognitionException {
+<span class="nc" id="L573">        parserInterface.parseProgram(&quot;main() {bool i; int g = length(i);}&quot;);</span>
+<span class="nc" id="L574">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testLengthNoRead() throws RecognitionException {
+<span class="nc" id="L578">        parserInterface.parseProgram(&quot;main() {bool i; int g = length(3);}&quot;);</span>
+<span class="nc" id="L579">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testLengthWrongParameterNumber() throws RecognitionException {
+<span class="nc" id="L583">        parserInterface.parseProgram(&quot;main() {bool i; int g = length(i, i);}&quot;);</span>
+<span class="nc" id="L584">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongArrayIndexType1() throws RecognitionException {
+<span class="nc" id="L588">        parserInterface.parseProgram(&quot;main() {bool[] i = array[true];}&quot;);</span>
+<span class="nc" id="L589">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongArrayIndexType2() throws RecognitionException {
+<span class="nc" id="L593">        parserInterface.parseProgram(&quot;main() {bool[] i = array[7];&quot; +</span>
+                                     &quot;i[true] = true;}&quot;);
+<span class="nc" id="L595">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongArrayIndexType3() throws RecognitionException {
+<span class="nc" id="L599">        parserInterface.parseProgram(&quot;main() {bool[] i = array[7];&quot; +</span>
+                                     &quot;bool j = i[i];}&quot;);
+<span class="nc" id="L601">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongArrayIndexNumber1() throws RecognitionException {
+<span class="nc" id="L605">        parserInterface.parseProgram(&quot;main() {bool[] i = array[7];&quot; +</span>
+                                     &quot;assert i[5][6];}&quot;);
+<span class="nc" id="L607">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongArrayIndexNumber2() throws RecognitionException {
+<span class="nc" id="L611">        parserInterface.parseProgram(&quot;main() {bool[] i = array[7];&quot; +</span>
+                                     &quot;i[5][6] = true;}&quot;);
+<span class="nc" id="L613">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongArrayIndexNumber3() throws RecognitionException {
+<span class="nc" id="L617">        parserInterface.parseProgram(&quot;main() {bool[] i = array[5];&quot; +</span>
+                                     &quot;i = true;}&quot;);
+<span class="nc" id="L619">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongExistsRange1() throws RecognitionException {
+<span class="nc" id="L623">        parserInterface.parseProgram(&quot;main() {}ensure exists x(true,2) true;&quot;);</span>
+<span class="nc" id="L624">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongExistsRange2() throws RecognitionException {
+<span class="nc" id="L628">        parserInterface.parseProgram(&quot;main() {}ensure exists x(2,true) true;&quot;);</span>
+<span class="nc" id="L629">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongExistsExpr() throws RecognitionException {
+<span class="nc" id="L633">        parserInterface.parseProgram(&quot;main() {} ensure exists x(2, 3) 1;&quot;);</span>
+<span class="nc" id="L634">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongForAllRange1() throws RecognitionException {
+<span class="nc" id="L638">        parserInterface.parseProgram(&quot;main() {}ensure forall x(true,2) true;&quot;);</span>
+<span class="nc" id="L639">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongForAllRange2() throws RecognitionException {
+<span class="nc" id="L643">        parserInterface.parseProgram(&quot;main() {}ensure forall x(2,true) true;&quot;);</span>
+<span class="nc" id="L644">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongForAllExpr() throws RecognitionException {
+<span class="nc" id="L648">        parserInterface.parseProgram(&quot;main() {} ensure forall x(2, 3) 1;&quot;);</span>
+<span class="nc" id="L649">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testNoSuchFunction() throws RecognitionException {
+<span class="nc" id="L653">        parserInterface.parseProgram(&quot;main() {int i = f(a);}&quot;);</span>
+<span class="nc" id="L654">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testFunctionOverloaded() throws RecognitionException {
+<span class="nc" id="L658">        parserInterface.parseProgram(&quot;int f(){return 0;}&quot; +</span>
+                    &quot;int f(){return 0;}&quot; +
+                    &quot;main(){}&quot;);
+<span class="nc" id="L661">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongParamType() throws RecognitionException {
+<span class="nc" id="L665">        parserInterface.parseProgram(&quot;int f(bool a){return 0;}main() {int i = f(1);}&quot;);</span>
+<span class="nc" id="L666">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayReturn() throws RecognitionException {
+<span class="nc" id="L670">        parserInterface.parseProgram(&quot;int[] f(){return 0;}main() {}&quot;);</span>
+<span class="nc" id="L671">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongReturn() throws RecognitionException {
+<span class="nc" id="L675">        parserInterface.parseProgram(&quot;int f(){return true;}main() {}&quot;);</span>
+<span class="nc" id="L676">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testVarNotDeclared() throws RecognitionException {
+<span class="nc" id="L680">        parserInterface.parseProgram(&quot;main() {int i = w;}&quot;);</span>
+<span class="nc" id="L681">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testArrayNotDeclared() throws RecognitionException {
+<span class="nc" id="L685">        parserInterface.parseProgram(&quot;main() {int i = w[1];}&quot;);</span>
+<span class="nc" id="L686">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongScoping1() throws RecognitionException {
+<span class="nc" id="L690">        parserInterface.parseProgram(&quot;main() {if(true){}else{int i;} i=2;}&quot;);</span>
+<span class="nc" id="L691">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongScoping2() throws RecognitionException {
+<span class="nc" id="L695">        parserInterface.parseProgram(&quot;main() {bool i;if(i){int i;i=true;}}&quot;);</span>
+<span class="nc" id="L696">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testWrongScoping3() throws RecognitionException {
+<span class="nc" id="L700">        parserInterface.parseProgram(&quot;main() {&quot; +</span>
+                &quot;if(true){}else{int[] i=array[1];} i[1]=2;}&quot;);
+<span class="nc" id="L702">    }</span>
+
+    @Test (expected = IllegalTypeException.class)
+    public void testVarReadInAxiom() throws RecognitionException {
+<span class="nc" id="L706">        parserInterface.parseProgram(&quot;axiom i;&quot; +</span>
+                &quot;main() {}&quot;);
+<span class="nc" id="L708">    }</span>
+
+    @Test (expected = FunctionCallNotAllowedException.class)
+    public void testFunctionCallNotAllowed() throws RecognitionException {
+<span class="nc" id="L712">        parserInterface.parseProgram(&quot;int g(int x){return 0;}&quot; +</span>
+                &quot;main() {} ensure g(1);&quot;);
+<span class="nc" id="L714">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

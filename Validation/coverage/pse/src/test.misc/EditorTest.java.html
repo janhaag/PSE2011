@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>EditorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.misc</a> &gt; <span class="el_source">EditorTest.java</span></div><h1>EditorTest.java</h1><pre class="source lang-java linenums">package test.misc;
+
+import static org.junit.Assert.*;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
+import interpreter.StatementBreakpoint;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import misc.Editor;
+import misc.EditorMemento;
+import misc.Keyword;
+
+<span class="fc" id="L19">public class EditorTest {</span>
+	private Editor editorInstance;
+	private EditorMemento memento;
+	
+	@Before
+	public void setUp() {
+<span class="fc" id="L25">		this.editorInstance = new Editor();</span>
+<span class="fc" id="L26">		this.memento = new EditorMemento(&quot;main&quot;);</span>
+<span class="fc" id="L27">	}</span>
+	
+	/* Editor tests */
+	@Test
+	public void testSetSource() {
+<span class="fc" id="L32">		this.editorInstance.setSource(&quot;test&quot;);</span>
+<span class="fc" id="L33">		assertEquals(this.editorInstance.getSource(), &quot;test&quot;);</span>
+<span class="fc" id="L34">	}</span>
+	
+	@Test
+	public void testKeyWordDetection() throws IllegalArgumentException, 
+												IllegalAccessException, 
+												InvocationTargetException, 
+												SecurityException, 
+												NoSuchMethodException {
+<span class="fc" id="L42">		String testsource = &quot;if while true false int bool array else return assert assume axiom ensure &quot;</span>
+			+ &quot;invariant \n forall \r exists \t main&quot;;
+		
+<span class="fc" id="L45">		Method findKeyWordsMethod = Editor.class.getDeclaredMethod(&quot;findKeywords&quot;, new Class[]{String.class});</span>
+<span class="fc" id="L46">		findKeyWordsMethod.setAccessible(true);</span>
+<span class="fc" id="L47">		findKeyWordsMethod.invoke(this.editorInstance, testsource);</span>
+
+<span class="fc" id="L49">		ArrayList&lt;Keyword&gt; testlist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="fc" id="L50">		testlist.add(new Keyword(0, 2, &quot;0000FF&quot;));</span>
+<span class="fc" id="L51">		testlist.add(new Keyword(3, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L52">		testlist.add(new Keyword(9, 4, &quot;00FF00&quot;));</span>
+<span class="fc" id="L53">		testlist.add(new Keyword(14, 5, &quot;FF0000&quot;));</span>
+<span class="fc" id="L54">		testlist.add(new Keyword(20, 3, &quot;0000FF&quot;));</span>
+<span class="fc" id="L55">		testlist.add(new Keyword(24, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L56">		testlist.add(new Keyword(29, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L57">		testlist.add(new Keyword(35, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L58">		testlist.add(new Keyword(40, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L59">		testlist.add(new Keyword(47, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L60">		testlist.add(new Keyword(54, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L61">		testlist.add(new Keyword(61, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L62">		testlist.add(new Keyword(67, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L63">		testlist.add(new Keyword(74, 9, &quot;0000FF&quot;));</span>
+<span class="fc" id="L64">		testlist.add(new Keyword(86, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L65">		testlist.add(new Keyword(95, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L66">		testlist.add(new Keyword(104, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L67">		assertEquals(testlist.size(), this.editorInstance.getColorArray().size());</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		for(int i = 0; i &lt; testlist.size(); i++) {</span>
+<span class="fc" id="L69">			assertEquals(testlist.get(i), this.editorInstance.getColorArray().get(i));</span>
+		}
+<span class="fc" id="L71">	}</span>
+	
+	@Test
+	public void testNumberDetection() throws IllegalArgumentException, 
+												IllegalAccessException, 
+												InvocationTargetException, 
+												SecurityException, 
+												NoSuchMethodException {
+<span class="fc" id="L79">		String testsource = &quot;0 =1 2) 3; [4 5]&quot;;</span>
+		
+<span class="fc" id="L81">		Method findKeyWordsMethod = Editor.class.getDeclaredMethod(&quot;findKeywords&quot;, new Class[]{String.class});</span>
+<span class="fc" id="L82">		findKeyWordsMethod.setAccessible(true);</span>
+<span class="fc" id="L83">		findKeyWordsMethod.invoke(this.editorInstance, testsource);</span>
+	
+<span class="fc" id="L85">		ArrayList&lt;Keyword&gt; testlist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="fc" id="L86">		testlist.add(new Keyword(0, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L87">		testlist.add(new Keyword(3, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L88">		testlist.add(new Keyword(5, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L89">		testlist.add(new Keyword(8, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L90">		testlist.add(new Keyword(12, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L91">		testlist.add(new Keyword(14, 1, &quot;FF8000&quot;));</span>
+<span class="fc" id="L92">		assertEquals(testlist.size(), this.editorInstance.getColorArray().size());</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		for(int i = 0; i &lt; testlist.size(); i++) {</span>
+<span class="fc" id="L94">			assertEquals(testlist.get(i), this.editorInstance.getColorArray().get(i));</span>
+		}
+<span class="fc" id="L96">	}</span>
+	
+	@Test
+	public void testSetSourceWithKeywords() {
+<span class="fc" id="L100">		this.editorInstance.setSource(&quot;if while true false int bool array else return assert assume axiom ensure &quot;</span>
+			+ &quot;invariant \n forall \r exists \t main&quot;);
+<span class="fc" id="L102">		ArrayList&lt;Keyword&gt; testlist = new ArrayList&lt;Keyword&gt;();</span>
+<span class="fc" id="L103">		testlist.add(new Keyword(0, 2, &quot;0000FF&quot;));</span>
+<span class="fc" id="L104">		testlist.add(new Keyword(3, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L105">		testlist.add(new Keyword(9, 4, &quot;00FF00&quot;));</span>
+<span class="fc" id="L106">		testlist.add(new Keyword(14, 5, &quot;FF0000&quot;));</span>
+<span class="fc" id="L107">		testlist.add(new Keyword(20, 3, &quot;0000FF&quot;));</span>
+<span class="fc" id="L108">		testlist.add(new Keyword(24, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L109">		testlist.add(new Keyword(29, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L110">		testlist.add(new Keyword(35, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L111">		testlist.add(new Keyword(40, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L112">		testlist.add(new Keyword(47, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L113">		testlist.add(new Keyword(54, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L114">		testlist.add(new Keyword(61, 5, &quot;0000FF&quot;));</span>
+<span class="fc" id="L115">		testlist.add(new Keyword(67, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L116">		testlist.add(new Keyword(74, 9, &quot;0000FF&quot;));</span>
+<span class="fc" id="L117">		testlist.add(new Keyword(86, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L118">		testlist.add(new Keyword(95, 6, &quot;0000FF&quot;));</span>
+<span class="fc" id="L119">		testlist.add(new Keyword(104, 4, &quot;0000FF&quot;));</span>
+<span class="fc" id="L120">		assertEquals(testlist.size(), this.editorInstance.getColorArray().size());</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for(int i = 0; i &lt; testlist.size(); i++) {</span>
+<span class="fc" id="L122">			assertEquals(testlist.get(i), this.editorInstance.getColorArray().get(i));</span>
+		}
+<span class="fc" id="L124">	}</span>
+	
+	@Test
+	public void removeUnexistingStatementBreakpoint() {
+<span class="fc" id="L128">		assertEquals(0, this.editorInstance.removeBreakpoint(0));</span>
+<span class="fc" id="L129">	}</span>
+	
+	@Test
+	public void addStatementBreakpoint() {
+<span class="fc" id="L133">		this.editorInstance.addBreakpoint(0);</span>
+<span class="fc" id="L134">		ArrayList&lt;StatementBreakpoint&gt; testlist = new ArrayList&lt;StatementBreakpoint&gt;();</span>
+<span class="fc" id="L135">		testlist.add(new StatementBreakpoint(0));</span>
+<span class="fc" id="L136">		assertEquals(testlist.size(), this.editorInstance.getStatementBreakpoints().size());</span>
+<span class="fc" id="L137">	}</span>
+	
+	@Test
+	public void removeStatementBreakpoint() {
+<span class="fc" id="L141">		this.editorInstance.addBreakpoint(0);</span>
+<span class="fc" id="L142">		this.editorInstance.addBreakpoint(1);</span>
+<span class="fc" id="L143">		this.editorInstance.removeBreakpoint(1);</span>
+<span class="fc" id="L144">		assertEquals(1, this.editorInstance.getStatementBreakpoints().size());</span>
+<span class="fc" id="L145">	}</span>
+	
+	@Test
+	public void testUndo() {
+<span class="fc" id="L149">		this.editorInstance.undo();</span>
+<span class="fc" id="L150">		this.editorInstance.setSource(&quot;t&quot;);</span>
+<span class="fc" id="L151">		assertEquals(&quot;t&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L152">		this.editorInstance.setSource(&quot;te&quot;);</span>
+<span class="fc" id="L153">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L154">		this.editorInstance.setSource(&quot;tes&quot;);</span>
+<span class="fc" id="L155">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L156">		this.editorInstance.undo();</span>
+<span class="fc" id="L157">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L158">		this.editorInstance.setSource(&quot;tes&quot;);</span>
+<span class="fc" id="L159">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L160">		this.editorInstance.setSource(&quot;test&quot;);</span>
+<span class="fc" id="L161">		assertEquals(&quot;test&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L162">	}</span>
+	
+	@Test
+	public void testRedo() {
+<span class="fc" id="L166">		this.editorInstance.redo();</span>
+<span class="fc" id="L167">		this.editorInstance.setSource(&quot;t&quot;);</span>
+<span class="fc" id="L168">		assertEquals(&quot;t&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L169">		this.editorInstance.setSource(&quot;te&quot;);</span>
+<span class="fc" id="L170">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L171">		this.editorInstance.setSource(&quot;tes&quot;);</span>
+<span class="fc" id="L172">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L173">		this.editorInstance.undo();</span>
+<span class="fc" id="L174">		assertEquals(&quot;te&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L175">		this.editorInstance.redo();</span>
+<span class="fc" id="L176">		assertEquals(&quot;tes&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L177">		this.editorInstance.setSource(&quot;test&quot;);</span>
+<span class="fc" id="L178">		assertEquals(&quot;test&quot;, this.editorInstance.getSource());</span>
+<span class="fc" id="L179">	}</span>
+	
+	@Test
+	public void setAndGetViewTest() {
+<span class="fc" id="L183">		this.editorInstance.setView(null);</span>
+<span class="fc" id="L184">		assertNull(this.editorInstance.getView());</span>
+<span class="fc" id="L185">	}</span>
+	
+	/* EditorMemento tests */
+	@Test
+	public void mementoGetSourceTest() {
+<span class="fc" id="L190">		assertEquals(&quot;main&quot;, this.memento.getSource());</span>
+<span class="fc" id="L191">	}</span>
+	
+	@Test
+	public void mementoEqualsTest() {
+<span class="fc" id="L195">		assertFalse(this.memento.equals(5));</span>
+<span class="fc" id="L196">		assertTrue(this.memento.equals(this.memento));</span>
+<span class="fc" id="L197">	}</span>
+	
+	@After
+	public void tearDown() {
+<span class="fc" id="L201">		this.editorInstance = null;</span>
+<span class="fc" id="L202">		this.memento = null;</span>
+<span class="fc" id="L203">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>

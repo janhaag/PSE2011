@@ -9,7 +9,7 @@
 <p>Verifying a program will lead to either a verification, meaning all specifications of the program have been formally proven, a counterexample, meaning at least one specification of the program is disproved, or an unknown result, meaning the verifier can't determine if the program can be validated or disproven.</p>
 <h2>Specifications</h2>
 <p>The proof will be based on the specifications of a program:</p>
-<ul>
+<ul style="line-height:1.6em;">
 	<li><span class="code_element">assert</span>s have to be proved using statements before them</li>
 	<li><span class="code_element">assume</span>s have to be proved using statements before calling the function of an assume and will be used to prove a function's specifications</li>
 	<li><span class="code_element">ensure</span>s in functions have to be proved using statements in its function up to the function's assume statement</li>
@@ -26,10 +26,6 @@
 		<td>For a function, all of it's following proof obligations must be proved using the function's assume specification. The 'remaining program' will be the next ensure, invariant or assume.</td>
 	</tr>
 	<tr>
-		<td>FunctionEnsureToRemainingProgram</td>
-		<td>For a function call, all following proof obligations must be proved using the called function's ensure specification. The 'remaining program' will be the next ensure, invariant or assume.</td>
-	</tr>
-	<tr>
 		<td>WhileEnsureToRemainingProgram</td>
 		<td>For a while loop, all following proof obligations must be proved using the while loop's while specification. The 'remaining program' will be the next ensure, invariant or assume.</td>
 	</tr>
@@ -44,7 +40,10 @@
 </table>
 <p>A program has been proven correct if all rows in the 'Verifier' tab contain 'true;' in their 'Result' column.</p>
 <h3>Counterexample Output</h3>
-<p>If the theorem prover was able to find a counterexample, the counterexample will be shown after a 'false;' in the 'Result' column, indicating variable names and their values. A variable's name will be appended by a dollar sign ($) and the variable's scope depth, starting at zero, in order to distinguish variable's with the same name.</p>
-<p>If function call's are used, parameters of function calls will be ennumerated starting at 1 for the first function call. The number of the function call is appended to a variable's name seperated by a dollar sign ($). The scope information will be appended afterwards.</p>
+<p>If the theorem prover was able to find a counterexample, the counterexample will be shown after a 'false;' in the 'Result' column, indicating variable names and their values. A variable's name will be appended by a dollar sign ($) and the variable's scope depth, starting at zero, in order to distinguish variables with the same name.</p>
+<p>If function calls are used, variables in return statements will be formatted specially. The description will begin with a dollar sign ($) and the string 'res', followed by the number of the function call, counting down starting at the total number of function calls. After that, a 'l' followed by the line and a 'c' followed by the column of the function call is appended. The special formatting ends with a dollar sign ($) and the called function's name, followed by another dollar sign and the variable's name. The scope information will be appended afterwards.<br>
+A concise description would be as follows: $res <span class="code_inline">functionCallNumber</span> l <span class="code_inline">line</span> c <span class="code_inline">column</span> $ <span class="code_inline">functionName</span> $ <span class="code_inline">variableName</span> $ <span class="code_inline">scope</span></p>
+<p>For quantified expressions, a quantified variable will be formatted starting with a dollar sign ($) followed by 'qvar' followed by a number that is specific to that quantified expression. Similar to function calls, a 'l' followed by the line and a 'c' followed by the column of the quantified expression is appended. The special formatting ends with another dollar sign ($) and the variable's name. The scope information will be appended afterwards.<br>
+A concise description would be as follows: $qvar <span class="code_inline">quantifiedExpressionNumber</span> l <span class="code_inline">line</span> c <span class="code_inline">column</span> $ <span class="code_inline">variableName</span> $ <span class="code_inline">scope</span>
 </body>
 </html>

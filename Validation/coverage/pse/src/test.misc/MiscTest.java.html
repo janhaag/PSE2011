@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MiscTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.misc</a> &gt; <span class="el_source">MiscTest.java</span></div><h1>MiscTest.java</h1><pre class="source lang-java linenums">package test.misc;
+
+
+import static org.junit.Assert.*;
+
+import misc.Keyword;
+import misc.Pair;
+
+import org.eclipse.swt.graphics.RGB;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+<span class="fc" id="L14">public class MiscTest {</span>
+	private Keyword key;
+	private Pair pair;
+
+	@Before
+	public void setUp() {
+		try {
+<span class="nc" id="L21">			this.key = new Keyword(0, -10, null);</span>
+		}
+<span class="fc" id="L23">		catch (IllegalArgumentException expected) {</span>
+		}
+<span class="fc" id="L25">		this.key = new Keyword(0, 5, &quot;FFFFFF&quot;);</span>
+<span class="fc" id="L26">		this.pair = new Pair(3, 5);</span>
+<span class="fc" id="L27">	}</span>
+	
+	/* Keyword tests */
+	@Test
+	public void getStartTest() {
+<span class="fc" id="L32">		assertEquals(0, this.key.getStart());</span>
+<span class="fc" id="L33">	}</span>
+	
+	@Test
+	public void getLengthTest() {
+<span class="fc" id="L37">		assertEquals(5, this.key.getLength());</span>
+<span class="fc" id="L38">	}</span>
+	
+	@Test
+	public void getColorTest() {
+<span class="fc" id="L42">		RGB rgb = new RGB(255, 255, 255);</span>
+<span class="fc" id="L43">		assertEquals(rgb, this.key.getColor());</span>
+<span class="fc" id="L44">	}</span>
+
+	@Test
+	public void equalsTest() {
+<span class="fc" id="L48">		assertFalse(this.key.equals(&quot;hallo&quot;));</span>
+<span class="fc" id="L49">		assertTrue(this.key.equals(this.key));</span>
+<span class="fc" id="L50">		Keyword key2 = new Keyword(5, 10, &quot;FFFFFF&quot;);</span>
+<span class="fc" id="L51">		assertFalse(this.key.equals(key2));</span>
+<span class="fc" id="L52">		Keyword key3 = new Keyword(0, 10, &quot;FFFFFF&quot;);</span>
+<span class="fc" id="L53">		assertFalse(this.key.equals(key3));</span>
+<span class="fc" id="L54">		Keyword key4 = new Keyword(0, 5, &quot;000000&quot;);</span>
+<span class="fc" id="L55">		assertFalse(this.key.equals(key4));</span>
+<span class="fc" id="L56">	}</span>
+	
+	/* Pair tests */
+	@Test
+	public void getValue1Test() {
+<span class="fc" id="L61">		assertEquals(3, this.pair.getValue1());</span>
+<span class="fc" id="L62">	}</span>
+	
+	@Test
+	public void getValue2Test() {
+<span class="fc" id="L66">		assertEquals(5, this.pair.getValue2());</span>
+<span class="fc" id="L67">	}</span>
+	
+	@After
+	public void tearDown() {
+<span class="fc" id="L71">		this.key = null;</span>
+<span class="fc" id="L72">		this.pair = null;</span>
+<span class="fc" id="L73">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
