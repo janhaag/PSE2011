@@ -85,4 +85,8 @@ public class MessageSystem {
 		this.messages.removeAll(delMessages);
 		this.notifyConsoles();
 	}
+	
+	public ArrayList<Message> getMessages() {
+		return this.messages;
+	}
 }

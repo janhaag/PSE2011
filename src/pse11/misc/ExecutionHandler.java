@@ -198,6 +198,12 @@ public class ExecutionHandler {
 		this.messagesystem.addMessage(MessageCategories.ERROR, 0, msg);
 	}
 	
+	public void addAssertionFailureMessage(String pos, String msg) {
+		this.assertionFailureMessage = new String[2];
+		this.assertionFailureMessage[0] = pos;
+		this.assertionFailureMessage[1] = msg;
+	}
+	
 	public void destroyProgramExecution() {
 		this.execution = null;
 	}
