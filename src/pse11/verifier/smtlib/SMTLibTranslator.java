@@ -460,7 +460,20 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(FunctionCall functionCall) {
         if ("length".equals(functionCall.getFunctionIdentifier().getName())) {
-            tempExpr = new Constant("10");
+            StringBuilder name = new StringBuilder("$length$");
+            if (functionCall.getParameters()[0] instanceof ArrayRead) {
+                ArrayRead param = (ArrayRead) functionCall.getParameters()[0];
+                name.append(param.getVariable().getName()).append("$");
+                Expression[] indices = param.getIndices();
+                for (int i = 0; i < indices.length; i++) {
+                    name.append('*');
+                }
+                tempExpr = new VarDef(name.toString(), new IntegerType(), 0);
+            } else {
+                VariableRead param = (VariableRead) functionCall.getParameters()[0];
+                name.append(param.getVariable().getName()).append("$");
+                tempExpr = new VarDef(name.toString(), new IntegerType(), 0);
+            }
             return;
         }
         noOfFuncCall += 1;
@@ -675,6 +688,17 @@ public class SMTLibTranslator implements ASTVisitor {
         VarDef varDef = new VarDef(arrDec.getName(), arrDec.getType(), arrDec.getDepth());
         for (S_Expression fun : arrays) fun.replace(varDef, tempExpr);
         currentProgram.replace(varDef, tempExpr);
+        StringBuilder lname_orig = new StringBuilder("$length$").append(name).append('$');
+        StringBuilder lname_sub = new StringBuilder("$length" + var.toString());
+        for (Expression idx : arrDec.getIndices()) {
+            idx.accept(this);
+            arrays.add(new S_Expression("define-fun", new Constant(lname_sub.toString()),
+                        new Constant("() Int"), tempExpr));
+            varDef = new VarDef(lname_orig.toString(), new IntegerType(), 0);
+            currentProgram.replace(varDef, new Constant(lname_sub.toString()));
+            lname_orig.append('*');
+            lname_sub.append('*');
+        }
     }
 
     @Override
