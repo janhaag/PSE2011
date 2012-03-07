@@ -1,0 +1,12 @@
+int f(int k) assume k > 0;{
+	return k+2;
+} ensure k + 2 > 2;
+
+main(int i) assume i != 0;{
+	int y = i;	#Bug-workaround
+	if (i > 0) {
+		i = f(y);
+	} else {
+		i = f(-y);
+	}
+} ensure i > 2;
