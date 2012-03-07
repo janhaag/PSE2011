@@ -79,6 +79,8 @@ public class SettingsTest {
 		this.settingsInstance.setTimeout(0);
 		assertTrue(this.settingsInstance.settingsChanged());
 		assertEquals(this.settingsInstance.getTimeout(), 0);
+		this.settingsInstance.setTimeout(0);
+		assertEquals(this.settingsInstance.getTimeout(), 0);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -102,6 +104,8 @@ public class SettingsTest {
 		assertFalse(this.settingsInstance.settingsChanged());
 		this.settingsInstance.setMemoryLimit(0);
 		assertTrue(this.settingsInstance.settingsChanged());
+		assertEquals(this.settingsInstance.getMemoryLimit(), 0);
+		this.settingsInstance.setMemoryLimit(0);
 		assertEquals(this.settingsInstance.getMemoryLimit(), 0);
 	}
 	

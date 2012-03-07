@@ -60,6 +60,9 @@ public class Editor {
 	public void setView(EditorView view) {
 		this.editorview = view;
 	}
+	public EditorView getView() {
+		return this.editorview;
+	}
 	public ArrayList<Keyword> getColorArray() {
 		return this.colorArray;
 	}
