@@ -29,7 +29,8 @@ public class Z3 extends Verifier {
      * @see Verifier#translate(ASTRoot)
      */
     protected String translate(ASTRoot ast) {
-        return translator.getWPTree(ast).toString();
+    	String r = translator.getWPTree(ast).toString();
+        return r;
     }
 
     /**

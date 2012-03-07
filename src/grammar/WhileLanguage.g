@@ -265,7 +265,7 @@ quantified_expression returns [ Expression ast ]
         ;
 
 qe_helper returns [ Expression ast, LinkedList<Expression> divisors, LinkedList<Pair<ArrayRead, Expression>> arrayIndices ]
-       @init {Range r = null;}
+       @init {Range r = null; $divisors = new LinkedList<Expression>(); $arrayIndices = new LinkedList<Pair<ArrayRead, Expression>>();}
         : QUANTIFIER IDENT '(' (range {if (!error) {
         		r = new Range($range.e1, $range.e2);
             $arrayIndices = $range.arrayIndices;
