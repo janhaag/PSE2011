@@ -688,16 +688,12 @@ public class SMTLibTranslator implements ASTVisitor {
         VarDef varDef = new VarDef(arrDec.getName(), arrDec.getType(), arrDec.getDepth());
         for (S_Expression fun : arrays) fun.replace(varDef, tempExpr);
         currentProgram.replace(varDef, tempExpr);
-        StringBuilder lname_orig = new StringBuilder("$length$").append(name).append('$');
-        StringBuilder lname_sub = new StringBuilder("$length" + var.toString());
+        StringBuilder lname = new StringBuilder("$length$").append(name).append('$');
         for (Expression idx : arrDec.getIndices()) {
             idx.accept(this);
-            arrays.add(new S_Expression("define-fun", new Constant(lname_sub.toString()),
-                        new Constant("() Int"), tempExpr));
-            varDef = new VarDef(lname_orig.toString(), new IntegerType(), 0);
-            currentProgram.replace(varDef, new Constant(lname_sub.toString()));
-            lname_orig.append('*');
-            lname_sub.append('*');
+            varDef = new VarDef(lname.toString(), new IntegerType(), 0);
+            currentProgram.replace(varDef, tempExpr);
+            lname.append('*');
         }
     }
 
