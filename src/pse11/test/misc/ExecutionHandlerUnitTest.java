@@ -129,7 +129,7 @@ public class ExecutionHandlerUnitTest {
     	
     	/* incorrect syntax */
     	this.executionHandler.setAST(null);
-    	this.executionHandler.parse("main() {int i = §!§$}");
+    	this.executionHandler.parse("main() {int i = $!$$}");
     	assertNull(this.executionHandler.getAST()); 
     	
     	/* wrong types */

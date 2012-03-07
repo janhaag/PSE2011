@@ -47,6 +47,14 @@ public abstract class Verifier {
         return readVerifierOutput(verifierProcess.getInputStream());
     }
 
+    public final String getTimeout() {
+        return timeout;
+    }
+
+    public final String getMemoryLimit() {
+        return memoryLimit;
+    }
+
     public final void setTimeout(String timeout) {
         this.timeout = timeout;
     }
