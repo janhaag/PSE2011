@@ -1,0 +1,14 @@
+main(int x, int y) assume {x>0;y>0;}
+{
+	int sum;
+	int a = x;
+	int b = y;
+	while (a != 0) invariant {a>= 0;x*y == a*b + sum; }
+	{
+		if (a % 2 == 1) {
+			sum = sum + b;
+		}
+		a = a / 2;
+		b = b * 2;
+	} ensure sum == x*y;
+} ensure sum == x*y;
