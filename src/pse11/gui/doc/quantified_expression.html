@@ -13,7 +13,7 @@
 <p>The for all quantifier can be used to check if all values for an integer variable match a condition.</p>
 <h2>Range</h2>
 <p>Both quantifiers can optionally be supplemented with a range in which the value of the variable has to be in to match the condition.
-If no range is given, a forall quantifier is always evaluated to false and an exists quantifier is always evaluated to true during runtime.</p>
+If no range is given, an implicit assertion will fail during runtime.</p>
 <h2>Syntax</h2>
 <div class="code">
 <span class="code_element">quantifier</span> <span class="code_element">identifier</span>( <span class="code_optional"><span class="code_element">expression</span>, <span class="code_element">expression</span></span> ) <span class="code_element">quantified expression</span>
