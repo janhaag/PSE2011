@@ -36,6 +36,14 @@ public class State {
         currentScope = new Scope(null, main.getFunctionBlock(), main);
         adjustStatement();
     }
+    
+    /**
+     * Empty constructor.
+     * Required for testing purposes.
+     */
+    @SuppressWarnings("unused")
+	private State() {
+    }
 
     /**
      * Destroys the currently most inner scope.
