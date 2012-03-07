@@ -707,6 +707,11 @@ public class TypeCheckerTest {
                 "main() {}");
     }
 
+    @Test (expected = IllegalTypeException.class)
+    public void testDuplicateParamName() throws RecognitionException {
+        parserInterface.parseProgram("main(int i, bool i) {}");
+    }
+
     @Test (expected = FunctionCallNotAllowedException.class)
     public void testFunctionCallNotAllowed() throws RecognitionException {
         parserInterface.parseProgram("int g(int x){return 0;}" +
