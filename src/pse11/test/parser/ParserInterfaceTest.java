@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 public class ParserInterfaceTest {
     private ParserInterface parserInterface;
+    
     @Before
     public void setUp() {
         parserInterface = new ParserInterface();
