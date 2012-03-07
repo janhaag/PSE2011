@@ -12,6 +12,9 @@ grammar z3;
     package verifier.smtlib.z3;
 }
 
+@members {
+	HashMap<String,String> m = new HashMap<String,String>();
+}
 start	returns[LinkedList<Pair<Boolean,String>> list] @init{list = new LinkedList<Pair<Boolean,String>>();}
 	:(pair = block{$list.add($pair.result);})+
 	;
@@ -25,15 +28,15 @@ block	returns[Pair<Boolean, String> result]
 	 .* {$result = new Pair(true,"unknown");}
 	;
 
-model	returns [String example] @init{$example = ""; HashMap<String,String> m = new HashMap<String,String>(); String h; int i; int man = 0;}
+model	returns [String example] @init{$example = "";  String h; int i; int man = 0;}
 	:	'(model' (
 		('(define-fun' id = IDENT  '('('('IDENT('!' INT)*  TYPE')')*')' TYPE val = value ')'
        			 {$example += $id.text + "=" + $val.content + "; ";} )
 	|	('(define-fun'  id = IDENT '(' ')' {$example = $id.text;}
         		'(Array'(TYPE {$example += "[ ]";})+ TYPE  ')'
 		'(' '_' 'as-array'  id2 = (IDENT ('!' INT)*)')'')' {m.put($id2.text,$id.text);}{$example += "; ";})
-	|	('(define-fun' id3 = IDENT ('!' INT)+ {i = 0;}'('('('IDENT ('!' INT)+ TYPE')'{i++;})*')' TYPE {h = m.get($id3.text);
-		h = (h != null? h : $id3.text); if(i > 1){h += "!" + Integer.toString(man++);}}
+	|	('(define-fun' id3 = IDENT {i = 0;} ('!' INT{i++;})+'('('('IDENT ('!' INT)+ TYPE')')*')' TYPE {h = m.get($id3.text);
+		h = (h != null? h : $id3.text); if(i > 1){h += "!" + Integer.toString(man++); m.put($id3.text, h);}}
        		( '('  ass = ite[h] {$example += $ass.assignment;}')' 
        		| '('f = function[h] {$example += $f.assignment;}')')?(v = value{$example += h + "=" + $v.content;})?')'))*
 		')'
@@ -41,21 +44,25 @@ model	returns [String example] @init{$example = ""; HashMap<String,String> m = n
 
 ite	[String id] returns[String assignment] @init{$assignment = id;}
 	:	'ite' '(' '=' IDENT '!' INT i = INT')'  val = value
-        {$assignment += "[" + $i.text + "]" + "=" + $val.content;}
-        (v = value {$assignment += " else " + $v.content + "; ";} | '('as=ite[id]')'{$assignment += $as.assignment;})
-	|	'ite''(''and'('(''=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')'
-        val=value {$assignment += "=" + $val.content + "; ";}(v = value {$assignment += " else " + $v.content + "; ";}| '('as=ite[id]')'{$assignment += as;})
+        	{$assignment += "[" + $i.text + "]" + "=" + $val.content;}
+        	(v = value {$assignment += " else " + $v.content + "; ";} | '('as=ite[id]')'{$assignment += $as.assignment;})
+	|	'ite' '(' 'and'('(''=' IDENT '!' INT i = INT')'{$assignment += "["+$i.text+"]";})+')'
+        	val = value {$assignment += "=" + $val.content + "; ";}(v = value {$assignment += " else " + $v.content + "; ";}| '('as=ite[id]')'{$assignment += as;})
 	;
 
 
 
-function	[String id] returns [String assignment]
-	: id1 = IDENT ('!' INT)* {$assignment = id + '=' + $id1.text;} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
-	| '('f = functionvalue')' {$assignment += '(' + $f.assignment + ')';}) {$assignment += ';';}	
+function	[String id] returns [String assignment] @init{int i;}
+	: {i=0;} id1 = IDENT ('!' INT{i++;})*  {if(i > 1) {$assignment = m.get($id1.text);} else{ $assignment = $id1.text;}}
+	  (val = value {$assignment += $val.content;} 
+	| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
+	| '('f = functionvalue')' {$assignment += "(" + $f.assignment + ")";}) {$assignment += "; ";}	
 	;
-functionvalue returns [String assignment]
-	: id1 = IDENT ('!' INT)* {$assignment = $id1.text+'(';} (val = value {$assignment += $val.content;}| id2 = IDENT{$assignment += $id2.text;} ('!' INT)* 
-	| '('f = functionvalue')' {$assignment += $f.assignment + ')';})	
+functionvalue returns [String assignment] @init{int i;}
+	: {i=0;} id1 = IDENT ('!' INT{i++;})* {if(i > 1) {$assignment = m.get($id1.text);} else{ $assignment = $id1.text;}}
+	 (val = value {$assignment += '('+ $val.content + ')';}
+	| id2 = IDENT{$assignment +='(' + $id2.text + ')';} ('!' INT)* 
+	| '('f = functionvalue')' {$assignment +='(' + $f.assignment + ")";})	
 	;
 
 value	returns [String content]
@@ -84,5 +91,5 @@ WS  :   ( ' '
     ;
 
 
-IDENT:	('a'..'z'|'A'..'Z'|'_'|'#'|'$') ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|'#'|'$')*
+IDENT:	('a'..'z'|'A'..'Z'|'_'|'#'|'$') ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|'#'|'$'|'*')*
     ;
