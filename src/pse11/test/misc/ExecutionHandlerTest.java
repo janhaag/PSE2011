@@ -438,7 +438,7 @@ public class ExecutionHandlerTest {
     public void testEmptyExists() {
         executionHandler.parse("main() {}ensure exists h() false;");
         executionHandler.run(null, null);
-		assertNull(executionHandler.getAssertionFailureMessage());
+		assertNotNull(executionHandler.getAssertionFailureMessage());
     }
 
     @Test

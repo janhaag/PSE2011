@@ -451,7 +451,9 @@ public class Interpreter implements ASTVisitor {
             tempValue = new BooleanValue(Boolean.toString(satisfied));
             currentState.destroyScope();
         } else {
-            tempValue = new BooleanValue("true");
+            throw new AssertionFailureException("Cannot evaluate unbounded " +
+                    "quantified expression - please check Z3 to get a result.",
+                    existsQuantifier.getPosition());
         }
     }
 
@@ -478,7 +480,9 @@ public class Interpreter implements ASTVisitor {
             tempValue = new BooleanValue(Boolean.toString(valid));
             currentState.destroyScope();
         } else {
-            tempValue = new BooleanValue("false");
+            throw new AssertionFailureException("Cannot evaluate unbounded " +
+                    "quantified expression - please check Z3 to get a result.",
+                    forAllQuantifier.getPosition());
         }
     }
 
