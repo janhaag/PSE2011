@@ -1,6 +1,8 @@
 package test.ast;
 
 import static org.junit.Assert.*;
+import interpreter.BooleanValue;
+import interpreter.IntegerValue;
 
 import org.junit.Test;
 
@@ -29,6 +31,20 @@ public class ASTUnitTest {
 	}
 	
 	@Test
+	public void testSimpleProgram2() {
+		Position pos = new Position(1, 0);
+    	VariableDeclaration[] dec = {new VariableDeclaration(pos, "x", null, new IntegerType())};
+    	StatementBlock block = new StatementBlock(dec, pos);
+    	Program ast = new Program(pos, new Function[0], new Function(
+                pos, null, "main", new FunctionParameter[0], block, new Assumption[0],
+                new Ensure[0]), new Axiom[] {new Axiom(POSITION, STANDARDCONDITION)});
+    	assertEquals(0, ast.getFunctions().length);
+    	assertEquals(1, ast.getAxioms().length);
+    	assertNotNull(ast.getMainFunction());
+    	assertEquals("axiom (testvar >= 42);\nmain() {\nint x;\n}", ast.toString());
+	}
+	
+	@Test
 	public void testLoop() {
 		LogicalExpression testCondition = new LogicalExpression(POSITION, new VariableRead(POSITION, new Identifier("testvar")), new NumericLiteral(POSITION, "42"), new GreaterEqual());
 		Statement[] loopStatements = new Statement[2];
@@ -49,6 +65,10 @@ public class ASTUnitTest {
 			+"}\n"
 			+"ensure testvar;\nensure testvar;\n";
 		assertEquals(testString, testLoop.toString());
+		assertEquals(2, testLoop.getInvariants().length);
+		assertEquals(2, testLoop.getPostconditions().length);
+		assertEquals(testCondition, testLoop.getCondition());
+		assertEquals(loopBlock, testLoop.getLoopBody());
 	}
 	
 	@Test
@@ -62,6 +82,9 @@ public class ASTUnitTest {
 			+"} else {\n"
 			+"}\n";
 		assertEquals(testString, testConditional.toString());
+		assertEquals(STANDARDCONDITION, testConditional.getCondition());
+		assertEquals(trueCondition, testConditional.getTrueConditionBody());
+		assertEquals(falseCondition, testConditional.getFalseConditionBody());
 	}
 	
 	@Test
@@ -125,6 +148,10 @@ public class ASTUnitTest {
 		for(int i = 0; i < functionParameters.length; i++) {
 			assertEquals(functionParameters[i], testFunction.getParameters()[i]);
 		}
+		Function func = new Function(POSITION, null, "f",
+				null, null, null, null);
+		testFunction.setFunction(func);
+		assertEquals(func, testFunction.getFunction());
 	}
 	
 	@Test
@@ -169,6 +196,9 @@ public class ASTUnitTest {
 		assertEquals("(exists testExistsQuantifier() (testvar >= 42))", testExists.toString());
 		testExists = new ExistsQuantifier(POSITION, testRange, new Identifier("testExistsQuantifier"), STANDARDCONDITION);
 		assertEquals("(exists testExistsQuantifier(testvar, testvar) (testvar >= 42))", testExists.toString());
+		
+		testExists.setDepth(2);
+		assertEquals(2, testExists.getDepth());
 	}
 	
 	@Test
@@ -255,6 +285,14 @@ public class ASTUnitTest {
 		assertEquals(multi, testExpression.getArithmeticOperator());
 		testExpression = new ArithmeticExpression(POSITION, STANDARDEXPRESSION, STANDARDEXPRESSION, new UnaryMinus());
 		assertEquals("(- testvar)", testExpression.toString());
+		Greater gr = new Greater();
+		LogicalExpression testExpression2 = new LogicalExpression(POSITION, STANDARDEXPRESSION, STANDARDEXPRESSION, gr);
+		assertEquals(STANDARDEXPRESSION, testExpression2.getSubexpression1());
+		assertEquals(STANDARDEXPRESSION, testExpression2.getSubexpression2());
+		assertEquals(gr, testExpression2.getLogicalOperator());
+		Negation neg = new Negation();
+		LogicalExpression testExpression3 = new LogicalExpression(POSITION, STANDARDEXPRESSION, null, neg);
+		assertEquals("(! testvar)", testExpression3.toString());
 	}
 	
 	@Test
@@ -266,6 +304,61 @@ public class ASTUnitTest {
 		assertEquals(1, testAssignment.getDepth());
 		testAssignment.setType(new IntegerType());
 		assertEquals(new IntegerType(), testAssignment.getType());
+	}
+	
+	@Test
+	public void testVariableRead() {
+		VariableRead varRead = new VariableRead(POSITION, new Identifier("x"));
+		assertEquals("x", varRead.getVariable().toString());
+		varRead.setDepth(5);
+		assertEquals(5, varRead.getDepth());
+		IntegerType type = new IntegerType();
+		varRead.setType(type);
+		assertEquals(type, varRead.getType());
+	}
+	
+	@Test
+	public void testVariableDeclaration() {
+		IntegerType type = new IntegerType(); 
+		VariableDeclaration varDec = new VariableDeclaration(POSITION,
+				"x", STANDARDEXPRESSION, type);
+		assertEquals(type, varDec.getType());
+		assertEquals(STANDARDEXPRESSION, varDec.getValue());
+		assertEquals("x", varDec.getName());
+		varDec.setDepth(3);
+		assertEquals(3, varDec.getDepth());
+		VariableDeclaration varDec2 = new VariableDeclaration(POSITION,
+				"x", null, type);
+		assertEquals("int x;\n", varDec2.toString());
+	}
+	
+	@Test
+	public void testStatementBlock() {
+		Statement[] statements = new Statement[2];
+		statements[0] = STANDARDSTATEMENT;
+		statements[1] = STANDARDSTATEMENT;
+		StatementBlock block = new StatementBlock(statements, POSITION);
+		assertNotNull(block.getIterator());
+		assertEquals(2, block.getStatements().length);
+	}
+	
+	@Test
+	public void testIdentifier() {
+		Identifier id = new Identifier("x");
+		assertEquals("x", id.getName());
+		assertTrue(id.equals(id));
+		assertFalse(id.equals(null));
+		assertFalse(id.equals("x"));
+		assertTrue(id.equals(new Identifier("x")));
+		assertEquals(120, id.hashCode());
+	}
+	
+	@Test
+	public void testLiteral() {
+		BooleanLiteral bool = new BooleanLiteral(POSITION, "true");
+		assertEquals(new BooleanValue("true"), bool.getValue());
+		NumericLiteral num = new NumericLiteral(POSITION, "2");
+		assertEquals(new IntegerValue("2"), num.getValue());
 	}
 	
 	private static final Position POSITION = new Position(0,0);
