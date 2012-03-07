@@ -31,7 +31,7 @@ public class S_Expression {
      */
     @Override
     public String toString() {
-        StringBuilder output = new StringBuilder('(' + op);
+        StringBuilder output = new StringBuilder().append('(').append(op);
         for (S_Expression subexpression : subexpressions) {
             output.append(' ').append(subexpression.toString());
         }

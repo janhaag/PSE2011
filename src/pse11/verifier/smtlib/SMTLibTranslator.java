@@ -31,9 +31,9 @@ public class SMTLibTranslator implements ASTVisitor {
      */
     //private Stack<S_Expression> upScopeExpr;
     /**
-     * Maps Array Names to tags
+     * Keeps track of all arrays that need to be defined.
      */
-    private HashMap<String, Integer> arrays;
+    private static LinkedList<S_Expression> arrays;
     /**
      * temporarily saves the current expression
      */
@@ -75,7 +75,7 @@ public class SMTLibTranslator implements ASTVisitor {
     public WPProgram getWPTree(ASTRoot ast) {
         programs = new ArrayList<LinkedList<S_Expression>>();
         descriptions = new LinkedList<Pair<KindOfProgram, Position>>();
-        arrays = new HashMap<String, Integer>();
+        arrays = new LinkedList<S_Expression>();
         ast.accept(this);
         LinkedList<S_Expression> result = prepareFinalProgram(programs);
         int size = result.size();
@@ -109,6 +109,7 @@ public class SMTLibTranslator implements ASTVisitor {
                 result.add(j.next());
             }
         }
+        for (S_Expression array : arrays) result.addFirst(array);
         result.addFirst(new S_Expression("set-logic",
                 new Constant("AUFNIRA")));
         return result;
@@ -158,11 +159,13 @@ public class SMTLibTranslator implements ASTVisitor {
         else {
             Type t = type;
             StringBuilder result = new StringBuilder().append("(");
+            int n = 0;
             while (t instanceof ArrayType) {
                 t = ((ArrayType) t).getType();
-                result.append("Int ");
+                result.append("(p").append(n).append(' ').append("Int)");
+                n += 1;
             }
-            result.append(getTypeString(t)).append(")");
+            result.append(")").append(getTypeString(t));
             return result.toString();
         }
     }
@@ -371,11 +374,30 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayAssignment arrayAssignment) {
-        String oldName = getMangledArrayName(arrayAssignment.getIdentifier().getName(), false);
-        String name = getMangledArrayName(arrayAssignment.getIdentifier().getName(), true);
-        tempExpr = new S_Expression("define-function", new Constant(name),
-                new Constant(getTypeString(arrayAssignment.getType())),
-                new S_Expression("ite"));
+        arrayAssignment.getValue().accept(this);
+        String name = arrayAssignment.getIdentifier().getName();
+        int depth = arrayAssignment.getDepth();
+        VarDef var = arrayVar(arrayAssignment.getPosition(), name, arrayAssignment.getType(), depth);
+        String variable = var.toString() + " " + getTypeString(arrayAssignment.getType());
+        Expression[] indices = arrayAssignment.getIndices();
+        S_Expression[] idx = new S_Expression[indices.length + 1];
+        S_Expression[] checks = new S_Expression[indices.length];
+        idx[0] = new VarDef(arrayAssignment.getIdentifier().getName(), arrayAssignment.getType(),
+                    arrayAssignment.getDepth());
+        for (int i = 0; i < indices.length; i++) {
+            indices[i].accept(this);
+            idx[i + 1] = new Constant("p" + i);
+            checks[i] = new S_Expression("=", new Constant("p" + i), tempExpr);
+        }
+        arrayAssignment.getValue().accept(this);
+        VarDef varDef = new VarDef(arrayAssignment.getIdentifier().getName(),
+                arrayAssignment.getType(), arrayAssignment.getDepth());
+        currentProgram.replace(varDef, new Constant(var.toString()));
+        for (S_Expression fun : arrays) fun.replace(varDef, new Constant(var.toString()));
+        S_Expression defun = new S_Expression("define-fun", new Constant(variable),
+                   new S_Expression("ite", new S_Expression("and", checks),
+                       tempExpr, new S_Expression("", idx)));
+        arrays.add(defun);
     }
 
     @Override
@@ -438,7 +460,7 @@ public class SMTLibTranslator implements ASTVisitor {
     @Override
     public void visit(FunctionCall functionCall) {
         if ("length".equals(functionCall.getFunctionIdentifier().getName())) {
-            tempExpr = new Constant("5");
+            tempExpr = new Constant("10");
             return;
         }
         noOfFuncCall += 1;
@@ -462,7 +484,7 @@ public class SMTLibTranslator implements ASTVisitor {
         }
         Statement[] statements = function.getFunctionBlock().getStatements();
         (statements[statements.length - 1]).accept(this);
-        replaceInFunctionResult(position, function);           
+        replaceInFunctionResult(position, function);
     }
 
     private void replaceInFunctionResult(Position position, Function function) {
@@ -477,7 +499,7 @@ public class SMTLibTranslator implements ASTVisitor {
             }
         }
     }
-    
+
     private void replaceInFunctionAssume() {
         for (VarDef varDef : tempExpr.getUndefinedVars()) {
             String newName = "$param$" + varDef.getIdent();
@@ -533,14 +555,15 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayRead arrayRead) {
-        String name = getMangledArrayName(arrayRead.getVariable().getName(), true);
         Expression[] indices = arrayRead.getIndices();
-        S_Expression[] idx = new S_Expression[indices.length];
+        S_Expression[] idx = new S_Expression[indices.length + 1];
+        idx[0] = new VarDef(arrayRead.getVariable().getName(), arrayRead.getType(),
+                    arrayRead.getDepth());
         for (int i = 0; i < indices.length; i++) {
             indices[i].accept(this);
-            idx[i] = tempExpr;
+            idx[i + 1] = tempExpr;
         }
-        tempExpr = new S_Expression (name, new S_Expression("", idx));
+        tempExpr = new S_Expression("", idx);
     }
 
     @Override
@@ -643,12 +666,15 @@ public class SMTLibTranslator implements ASTVisitor {
 
     @Override
     public void visit(ArrayDeclaration arrDec) {
-        String name = getMangledArrayName(arrDec.getName(), true);
-        VarDef varDef = new VarDef(name, arrDec.getType(), arrDec.getDepth());
+        String name = arrDec.getName();
+        int depth = arrDec.getDepth();
+        VarDef var = arrayVar(arrDec.getPosition(), name, arrDec.getType(), depth);
+        String variable = var.toString() + " " + getTypeString(arrDec.getType());
+        arrays.add(new S_Expression("define-fun", new Constant(variable), new Constant("0")));
+        tempExpr = new Constant(var.toString());
+        VarDef varDef = new VarDef(arrDec.getName(), arrDec.getType(), arrDec.getDepth());
+        for (S_Expression fun : arrays) fun.replace(varDef, tempExpr);
         currentProgram.replace(varDef, tempExpr);
-        //replaceInAssignments(upScopeReplacements.lastElement(),
-        //        varDef, tempExpr);
-        //upScopeReplacements.lastElement().remove(varDef);
     }
 
     @Override
@@ -698,7 +724,7 @@ public class SMTLibTranslator implements ASTVisitor {
         saveTempExpr.replace(new VarDef(name, new IntegerType(), depth), var);
         tempExpr = new S_Expression("forall", new Constant(variable), saveTempExpr);
     }
-    
+
     private VarDef quantifierVar(Position position, String name, int depth) {
         String varDefName = "$qvar" + noOfQuantifier + 'l' + position.getLine()
                     + 'c' + position.getColumn() + '$' + name;
@@ -747,13 +773,9 @@ public class SMTLibTranslator implements ASTVisitor {
         //functionsCalled = new ArrayList<FunctionCall>();
     }
 
-    private String getMangledArrayName(String name, boolean replace) {
-        Integer tag = arrays.get(name);
-        if (tag != null && replace) tag = arrays.put(name, tag + 1);
-        else {
-            arrays.put(name, 0);
-            tag = 0;
-        }
-        return name + "#" + tag;
+    private VarDef arrayVar(Position position, String name, Type t, int depth) {
+        String varDefName = "$array@" + 'l' + position.getLine()
+                    + 'c' + position.getColumn() + '$' + name;
+        return new VarDef(varDefName, t, depth);
     }
 }
