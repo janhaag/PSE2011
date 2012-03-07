@@ -89,4 +89,8 @@ public class MessageSystem {
 	public ArrayList<Message> getMessages() {
 		return this.messages;
 	}
+	
+	public ArrayList<Console> getConsoles() {
+		return this.consoles;
+	}
 }

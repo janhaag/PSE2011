@@ -13,16 +13,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import misc.Editor;
+import misc.EditorMemento;
 import misc.Keyword;
 
 public class EditorTest {
 	private Editor editorInstance;
+	private EditorMemento memento;
 	
 	@Before
 	public void setUp() {
 		this.editorInstance = new Editor();
+		this.memento = new EditorMemento("main");
 	}
 	
+	/* Editor tests */
 	@Test
 	public void testSetSource() {
 		this.editorInstance.setSource("test");
@@ -174,8 +178,27 @@ public class EditorTest {
 		assertEquals("test", this.editorInstance.getSource());
 	}
 	
+	@Test
+	public void setAndGetViewTest() {
+		this.editorInstance.setView(null);
+		assertNull(this.editorInstance.getView());
+	}
+	
+	/* EditorMemento tests */
+	@Test
+	public void mementoGetSourceTest() {
+		assertEquals("main", this.memento.getSource());
+	}
+	
+	@Test
+	public void mementoEqualsTest() {
+		assertFalse(this.memento.equals(5));
+		assertTrue(this.memento.equals(this.memento));
+	}
+	
 	@After
 	public void tearDown() {
 		this.editorInstance = null;
+		this.memento = null;
 	}
 }
