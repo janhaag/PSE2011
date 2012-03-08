@@ -1,5 +1,8 @@
 package gui;
 
+import misc.Editor;
+import misc.Keyword;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.Bullet;
 import org.eclipse.swt.custom.PaintObjectEvent;
@@ -11,15 +14,18 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.GlyphMetrics;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ScrollBar;
-
-import misc.Editor;
-import misc.Keyword;
 
 /**
  * This class represents the editor of the main frame. It displays
@@ -48,10 +54,16 @@ public class EditorView extends Composite {
 	 */
 	private Image breakpoint;
 	private boolean active;
+	
 	/**
-	 * max number of lines
+	 * initial max number of lines
 	 */
-	private static final int MAX_LINES = 500;
+	private static final int INITIAL_MAX_LINES = 100;
+	
+	/**
+	 * dynamic max number of lines adjusted to match content
+	 */
+	private int currentMaxLines = INITIAL_MAX_LINES;
 	
 	/**
 	 * Construct an editor with the specified parent composite, definitions 
@@ -81,15 +93,16 @@ public class EditorView extends Composite {
 		this.linenumbers = new StyledText(sc1, SWT.MULTI | SWT.WRAP);	
 		sc1.getVerticalBar().setEnabled(false);
 		sc1.getHorizontalBar().setEnabled(false);
-		this.linenumbers.setSize(35, 7500);
+		//some pixels buffer, otherwise scrolling will not match at max lines; additional buffer for scrollbar of editor
+		this.linenumbers.setSize(35, this.linenumbers.getLineHeight() * INITIAL_MAX_LINES + 20 + sc1.getHorizontalBar().getSize().y);
 		
 		String s = "";
-		for (int i = 0; i < MAX_LINES - 1; i++) {
+		for (int i = 0; i < currentMaxLines - 1; i++) {
 			s += " \n";
 		}
 		this.linenumbers.setText(s);
 		
-		for (int i = 0; i < MAX_LINES; i++) {		
+		for (int i = 0; i < currentMaxLines; i++) {		
 			StyleRange style = new StyleRange();
 			style.metrics = new GlyphMetrics(0, 0, 25);
 			Bullet b = new Bullet(ST.BULLET_TEXT, style);
@@ -115,7 +128,7 @@ public class EditorView extends Composite {
 		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.V_SCROLL | SWT.H_SCROLL);
 		this.textfield = new StyledText(sc2, SWT.NONE);
 		this.textfield.setLeftMargin(5);
-		this.textfield.setSize(1200, 7500);
+		this.textfield.setSize(1200, this.linenumbers.getLineHeight() * INITIAL_MAX_LINES + 20);
 		this.textfield.setFocus();
 		sc2.setContent(this.textfield);
 		
@@ -128,13 +141,14 @@ public class EditorView extends Composite {
 		sc2.setLayoutData(gData);
 		
 		//Simultaneous scrolling of the text fields
-		final ScrollBar vBar1 = sc1.getVerticalBar();
+		/*final ScrollBar vBar1 = sc1.getVerticalBar();*/
 		final ScrollBar vBar2 = sc2.getVerticalBar();
+		sc2.getVerticalBar().setIncrement(this.linenumbers.getLineHeight());
 		SelectionListener listener = new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				int x =  sc1.getOrigin().x;
-				int y =  vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) 
-						/ Math.max(1, vBar2.getMaximum() - vBar2.getThumb());
+				int y = sc2.getOrigin().y;// vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) 
+						// / Math.max(1, vBar2.getMaximum() - vBar2.getThumb());
 				sc1.setOrigin (x, y);
 			}
 		};
@@ -164,6 +178,9 @@ public class EditorView extends Composite {
 		if(!this.textfield.getText().equals(this.editor.getSource())) {
 			this.textfield.setText(editor.getSource());
 		}
+		
+		resizeView();
+		
 		//Syntax highlighting
 		textfield.setStyleRange(null);
 		for(Keyword word : this.editor.getColorArray()) {
@@ -173,6 +190,44 @@ public class EditorView extends Composite {
 			stylerange.fontStyle = SWT.BOLD;
 			stylerange.foreground = new Color(this.textfield.getDisplay(), word.getColor());
 			textfield.setStyleRange(stylerange);
+		}
+	}
+	
+	/**
+	 * Resize view to match current number of lines in editor.
+	 */
+	private void resizeView() {
+		if(this.textfield.getText().split("\\n").length + 1 > currentMaxLines) {
+			//double size of contents and expand line numbers
+			int j = currentMaxLines;
+			currentMaxLines *= 2;
+			this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y * 2);
+			this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y * 2);
+			String s = this.linenumbers.getText();
+			for (; j < currentMaxLines; j++) {
+				s += " \n";
+			}
+			this.linenumbers.setText(s);
+			for (int i = 0; i < currentMaxLines; i++) {		
+				StyleRange style = new StyleRange();
+				style.metrics = new GlyphMetrics(0, 0, 25);
+				Bullet b = new Bullet(ST.BULLET_TEXT, style);
+				if (i < 9) {
+					b.text = "   " + (i + 1) + " ";
+				}
+				else if (i < 99) {
+					b.text = "  " + (i + 1) + " ";
+				}
+				else {
+					b.text = (i + 1) + " ";
+				}
+				this.linenumbers.setLineBullet(i, 1, b);
+			}
+		} else if(this.textfield.getText().split("\\n").length < currentMaxLines / 4 && currentMaxLines / 2 >= INITIAL_MAX_LINES) {
+			//halve size of contents, ignore line numbers deleting
+			currentMaxLines /= 2;
+			this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y / 2);
+			this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y / 2);
 		}
 	}
 	
