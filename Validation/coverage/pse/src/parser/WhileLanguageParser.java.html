@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageParser.java</span></div><h1>WhileLanguageParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-03-07 01:54:13
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WhileLanguageParser.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">parser</a> &gt; <span class="el_source">WhileLanguageParser.java</span></div><h1>WhileLanguageParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.4 C:\\Users\\Lin\\Git\\PSE2011\\src\\grammar\\WhileLanguage.g 2012-03-08 01:54:55
 
 	package parser;
 	import ast.*;
@@ -1648,10 +1648,10 @@ import java.util.ArrayList;
 <span class="fc" id="L1648">                    	    break;</span>
 
                     	default :
-<span class="pc bpc" id="L1651" title="1 of 2 branches missed.">                    	    if ( cnt21 &gt;= 1 ) break loop21;</span>
-<span class="nc" id="L1652">                                EarlyExitException eee =</span>
-<span class="nc" id="L1653">                                    new EarlyExitException(21, input);</span>
-<span class="nc" id="L1654">                                throw eee;</span>
+<span class="fc bfc" id="L1651" title="All 2 branches covered.">                    	    if ( cnt21 &gt;= 1 ) break loop21;</span>
+<span class="fc" id="L1652">                                EarlyExitException eee =</span>
+<span class="fc" id="L1653">                                    new EarlyExitException(21, input);</span>
+<span class="fc" id="L1654">                                throw eee;</span>
                         }
 <span class="fc" id="L1656">                        cnt21++;</span>
 <span class="fc" id="L1657">                    } while (true);</span>
@@ -1667,9 +1667,9 @@ import java.util.ArrayList;
 
 
         }
-<span class="nc" id="L1670">        catch (RecognitionException re) {</span>
-<span class="nc" id="L1671">            reportError(re);</span>
-<span class="nc" id="L1672">            recover(input,re);</span>
+<span class="fc" id="L1670">        catch (RecognitionException re) {</span>
+<span class="fc" id="L1671">            reportError(re);</span>
+<span class="fc" id="L1672">            recover(input,re);</span>
         }
 
         finally {
@@ -4148,4 +4148,4 @@ import java.util.ArrayList;
 <span class="fc" id="L4148">    public static final BitSet FOLLOW_29_in_type2476 = new BitSet(new long[]{0x0000000010000002L});</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

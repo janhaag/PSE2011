@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SMTLibTranslatorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.verifier</a> &gt; <span class="el_source">SMTLibTranslatorTest.java</span></div><h1>SMTLibTranslatorTest.java</h1><pre class="source lang-java linenums">package test.verifier;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SMTLibTranslatorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.verifier</a> &gt; <span class="el_source">SMTLibTranslatorTest.java</span></div><h1>SMTLibTranslatorTest.java</h1><pre class="source lang-java linenums">package test.verifier;
 
 import ast.Program;
 import org.antlr.runtime.RecognitionException;
@@ -247,67 +247,67 @@ import static org.junit.Assert.*;
     @Test
     public void testSingleForAll() throws RecognitionException {
 <span class="fc" id="L249">        p = parserInterface.parseProgram(&quot;main(){}ensure forall x() x==x;&quot;);</span>
-<span class="fc" id="L250">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c15$x$1 () Int)&quot; +</span>
-                &quot;(assert (not (and true (and (forall (($qvar1l1c15$x$1 Int)) &quot; +
-                &quot;(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)) true))))&quot;);
+<span class="fc" id="L250">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;x&gt;@L1C15$1 () Int)&quot; +</span>
+                &quot;(assert (not (and true (and (forall ((qvar&lt;x&gt;@L1C15$1 Int)) &quot; +
+                &quot;(= qvar&lt;x&gt;@L1C15$1 qvar&lt;x&gt;@L1C15$1)) true))))&quot;);
 <span class="fc" id="L253">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L254">    }</span>
 
     @Test
     public void testSingleBoundedForAll() throws RecognitionException {
 <span class="fc" id="L258">        p = parserInterface.parseProgram(&quot;main(){}ensure forall x(1,2) x==x;&quot;);</span>
-<span class="fc" id="L259">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c15$x$1 () Int)(assert (not &quot; +</span>
-                &quot;(and true (and (forall (($qvar1l1c15$x$1 Int)) &quot; +
-                &quot;(or (&gt; $qvar1l1c15$x$1 2) (or (&lt; $qvar1l1c15$x$1 1) &quot; +
-                &quot;(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)))) true))))&quot;);
+<span class="fc" id="L259">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;x&gt;@L1C15$1 () Int)(assert (not &quot; +</span>
+                &quot;(and true (and (forall ((qvar&lt;x&gt;@L1C15$1 Int)) &quot; +
+                &quot;(or (&gt; qvar&lt;x&gt;@L1C15$1 2) (or (&lt; qvar&lt;x&gt;@L1C15$1 1) &quot; +
+                &quot;(= qvar&lt;x&gt;@L1C15$1 qvar&lt;x&gt;@L1C15$1)))) true))))&quot;);
 <span class="fc" id="L263">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L264">    }</span>
 
     @Test
     public void testSingleExists() throws RecognitionException {
 <span class="fc" id="L268">        p = parserInterface.parseProgram(&quot;main(){}ensure exists x() x==x;&quot;);</span>
-<span class="fc" id="L269">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c15$x$1 () Int)&quot; +</span>
-                &quot;(assert (not (and true (and (exists (($qvar1l1c15$x$1 Int)) &quot; +
-                &quot;(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)) true))))&quot;);
+<span class="fc" id="L269">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;x&gt;@L1C15$1 () Int)&quot; +</span>
+                &quot;(assert (not (and true (and (exists ((qvar&lt;x&gt;@L1C15$1 Int)) &quot; +
+                &quot;(= qvar&lt;x&gt;@L1C15$1 qvar&lt;x&gt;@L1C15$1)) true))))&quot;);
 <span class="fc" id="L272">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L273">    }</span>
 
     @Test
     public void testSingleBoundedExists() throws RecognitionException {
 <span class="fc" id="L277">        p = parserInterface.parseProgram(&quot;main(){}ensure exists x(1,3) x==x;&quot;);</span>
-<span class="fc" id="L278">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c15$x$1 () Int)(assert (not &quot; +</span>
-                &quot;(and true (and (exists (($qvar1l1c15$x$1 Int)) &quot; +
-                &quot;(and (&lt;= $qvar1l1c15$x$1 3) (and (&gt;= $qvar1l1c15$x$1 1) &quot; +
-                &quot;(= $qvar1l1c15$x$1 $qvar1l1c15$x$1)))) true))))&quot;);
+<span class="fc" id="L278">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;x&gt;@L1C15$1 () Int)(assert (not &quot; +</span>
+                &quot;(and true (and (exists ((qvar&lt;x&gt;@L1C15$1 Int)) &quot; +
+                &quot;(and (&lt;= qvar&lt;x&gt;@L1C15$1 3) (and (&gt;= qvar&lt;x&gt;@L1C15$1 1) &quot; +
+                &quot;(= qvar&lt;x&gt;@L1C15$1 qvar&lt;x&gt;@L1C15$1)))) true))))&quot;);
 <span class="fc" id="L282">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L283">    }</span>
 
     @Test
     public void testForAllReplacement() throws RecognitionException {
 <span class="fc" id="L287">        p = parserInterface.parseProgram(&quot;main(){int y=1;}ensure forall x() x==x/y;&quot;);</span>
-<span class="fc" id="L288">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c23$x$1 () Int)(assert (not &quot; +</span>
-                &quot;(and true (and (forall (($qvar1l1c23$x$1 Int)) (and (distinct 1 0) &quot; +
-                &quot;(= $qvar1l1c23$x$1 (div $qvar1l1c23$x$1 1)))) true))))&quot;);
+<span class="fc" id="L288">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;x&gt;@L1C23$1 () Int)(assert (not &quot; +</span>
+                &quot;(and true (and (forall ((qvar&lt;x&gt;@L1C23$1 Int)) (and (distinct 1 0) &quot; +
+                &quot;(= qvar&lt;x&gt;@L1C23$1 (div qvar&lt;x&gt;@L1C23$1 1)))) true))))&quot;);
 <span class="fc" id="L291">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L292">    }</span>
 
     @Test
     public void testForAllAssert() throws RecognitionException {
 <span class="fc" id="L296">        p = parserInterface.parseProgram(&quot;main(int y){assert forall x() x==x/y;}&quot;);</span>
-<span class="fc" id="L297">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c19$x$1 () Int)&quot; +</span>
+<span class="fc" id="L297">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;x&gt;@L1C19$1 () Int)&quot; +</span>
                 &quot;(declare-fun y$0 () Int)(assert (not (and true (and &quot; +
-                &quot;(forall (($qvar1l1c19$x$1 Int)) (and (distinct y$0 0) &quot; +
-                &quot;(= $qvar1l1c19$x$1 (div $qvar1l1c19$x$1 y$0)))) true))))&quot;);
+                &quot;(forall ((qvar&lt;x&gt;@L1C19$1 Int)) (and (distinct y$0 0) &quot; +
+                &quot;(= qvar&lt;x&gt;@L1C19$1 (div qvar&lt;x&gt;@L1C19$1 y$0)))) true))))&quot;);
 <span class="fc" id="L301">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L302">    }</span>
 
     @Test
     public void testForAllExists() throws RecognitionException {
 <span class="fc" id="L306">        p = parserInterface.parseProgram(&quot;main(){}ensure forall x() exists y() x==y;&quot;);</span>
-<span class="fc" id="L307">        expected = LOGIC+embed(&quot;(declare-fun $qvar1l1c26$y$2 () Int)&quot; +</span>
-                &quot;(declare-fun $qvar2l1c15$x$1 () Int)(assert (not (and true &quot; +
-                &quot;(and (forall (($qvar2l1c15$x$1 Int)) (exists (($qvar1l1c26$y$2 Int))&quot; +
-                &quot; (= $qvar2l1c15$x$1 $qvar1l1c26$y$2))) true))))&quot;);
+<span class="fc" id="L307">        expected = LOGIC+embed(&quot;(declare-fun qvar&lt;y&gt;@L1C26$2 () Int)&quot; +</span>
+                &quot;(declare-fun qvar&lt;x&gt;@L1C15$1 () Int)(assert (not (and true &quot; +
+                &quot;(and (forall ((qvar&lt;x&gt;@L1C15$1 Int)) (exists ((qvar&lt;y&gt;@L1C26$2 Int))&quot; +
+                &quot; (= qvar&lt;x&gt;@L1C15$1 qvar&lt;y&gt;@L1C26$2))) true))))&quot;);
 <span class="fc" id="L311">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L312">    }</span>
 
@@ -391,9 +391,9 @@ import static org.junit.Assert.*;
     public void testIfScopingQuantifier() throws RecognitionException {
 <span class="fc" id="L392">        p = parserInterface.parseProgram(&quot;main(int i){int y=i;}&quot; +</span>
                 &quot;ensure forall i() i&gt;=y;&quot;);
-<span class="fc" id="L394">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)(declare-fun $qvar1l1c28$i$1 () Int)&quot; +</span>
-                &quot;(assert (not (and true (and (forall (($qvar1l1c28$i$1 Int)) &quot; +
-                &quot;(&gt;= $qvar1l1c28$i$1 i$0)) true))))&quot;);
+<span class="fc" id="L394">        expected = LOGIC+embed(&quot;(declare-fun i$0 () Int)(declare-fun qvar&lt;i&gt;@L1C28$1 () Int)&quot; +</span>
+                &quot;(assert (not (and true (and (forall ((qvar&lt;i&gt;@L1C28$1 Int)) &quot; +
+                &quot;(&gt;= qvar&lt;i&gt;@L1C28$1 i$0)) true))))&quot;);
 <span class="fc" id="L397">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L398">    }</span>
 
@@ -698,8 +698,8 @@ import static org.junit.Assert.*;
                 &quot;main(){int y=f();}ensure y == 0;&quot;);
 <span class="fc" id="L699">        expected = LOGIC</span>
 <span class="fc" id="L700">            +embed(&quot;(assert (not (and (&gt; 1 0) true)))&quot;)</span>
-<span class="fc" id="L701">            +embed(&quot;(declare-fun $res1l1c50$f$k$0 () Int)(assert (not (and true &quot; +</span>
-                &quot;(=&gt; (&gt; $res1l1c50$f$k$0 0) (and (= $res1l1c50$f$k$0 0) true)))))&quot;);
+<span class="fc" id="L701">            +embed(&quot;(declare-fun res&lt;f&gt;@L1C50$k$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(=&gt; (&gt; res&lt;f&gt;@L1C50$k$0 0) (and (= res&lt;f&gt;@L1C50$k$0 0) true)))))&quot;);
 <span class="fc" id="L703">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L704">    }</span>
 
@@ -710,9 +710,9 @@ import static org.junit.Assert.*;
                 &quot;main(){int y=f();}ensure y == 0;&quot;);
 <span class="fc" id="L711">        expected = LOGIC</span>
 <span class="fc" id="L712">            +embed(&quot;(assert (not (and true (and (&gt; 1 0) true))))&quot;)</span>
-<span class="fc" id="L713">            +embed(&quot;(declare-fun $res1l1c60$f$k$0 () Int)(assert (not (and true &quot; +</span>
-                &quot;(=&gt; true (=&gt; (&gt; $res1l1c60$f$k$0 0) &quot; +
-                &quot;(and (= $res1l1c60$f$k$0 0) true))))))&quot;);
+<span class="fc" id="L713">            +embed(&quot;(declare-fun res&lt;f&gt;@L1C60$k$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(=&gt; true (=&gt; (&gt; res&lt;f&gt;@L1C60$k$0 0) &quot; +
+                &quot;(and (= res&lt;f&gt;@L1C60$k$0 0) true))))))&quot;);
 <span class="fc" id="L716">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L717">    }</span>
 
@@ -722,9 +722,9 @@ import static org.junit.Assert.*;
                 &quot;int result=\nrek(i+1,k);\nreturn result;\n}ensure result &gt; 0;\n&quot; +
                 &quot;main(){}&quot;);
 <span class="fc" id="L724">        expected = LOGIC</span>
-<span class="fc" id="L725">            +embed(&quot;(declare-fun $res1l3c0$rek$result$0 () Int)&quot; +</span>
-                &quot;(assert (not (=&gt; (&gt; $res1l3c0$rek$result$0 0) &quot; +
-                &quot;(and (&gt; $res1l3c0$rek$result$0 0) true))))&quot;)
+<span class="fc" id="L725">            +embed(&quot;(declare-fun res&lt;rek&gt;@L3C0$result$0 () Int)&quot; +</span>
+                &quot;(assert (not (=&gt; (&gt; res&lt;rek&gt;@L3C0$result$0 0) &quot; +
+                &quot;(and (&gt; res&lt;rek&gt;@L3C0$result$0 0) true))))&quot;)
 <span class="fc" id="L728">            +embed(&quot;(assert (not (and true true)))&quot;);</span>
 <span class="fc" id="L729">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L730">    }</span>
@@ -735,8 +735,8 @@ import static org.junit.Assert.*;
                 &quot;main(){int x;int y=\nf();}ensure x*y == 0;&quot;);
 <span class="fc" id="L736">        expected = LOGIC</span>
 <span class="fc" id="L737">            +embed(&quot;(assert (not true))&quot;)</span>
-<span class="fc" id="L738">            +embed(&quot;(declare-fun $res1l2c0$f$k$0 () Int)(assert (not (and true &quot; +</span>
-                &quot;(and (= (* 0 $res1l2c0$f$k$0) 0) true))))&quot;);
+<span class="fc" id="L738">            +embed(&quot;(declare-fun res&lt;f&gt;@L2C0$k$0 () Int)(assert (not (and true &quot; +</span>
+                &quot;(and (= (* 0 res&lt;f&gt;@L2C0$k$0) 0) true))))&quot;);
 <span class="fc" id="L740">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L741">    }</span>
 
@@ -746,9 +746,9 @@ import static org.junit.Assert.*;
                 &quot;main(){int y=\nf();}ensure y == 0;&quot;);
 <span class="fc" id="L747">        expected = LOGIC</span>
 <span class="fc" id="L748">            +embed(&quot;(assert (not true))&quot;)</span>
-<span class="fc" id="L749">            +embed(&quot;(declare-fun $res1l2c0$f$d$0 () Int)&quot; +</span>
-                &quot;(declare-fun $res1l2c0$f$k$0 () Int)(assert (not (and true &quot; +
-                &quot;(and (= (+ $res1l2c0$f$k$0 $res1l2c0$f$d$0) 0) true))))&quot;);
+<span class="fc" id="L749">            +embed(&quot;(declare-fun res&lt;f&gt;@L2C0$d$0 () Int)&quot; +</span>
+                &quot;(declare-fun res&lt;f&gt;@L2C0$k$0 () Int)(assert (not (and true &quot; +
+                &quot;(and (= (+ res&lt;f&gt;@L2C0$k$0 res&lt;f&gt;@L2C0$d$0) 0) true))))&quot;);
 <span class="fc" id="L752">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L753">    }</span>
 
@@ -794,5 +794,28 @@ import static org.junit.Assert.*;
                 &quot;(and (or d$0 false) (&lt; 5 0)) (and (or d$0 false) true)))))&quot;);
 <span class="fc" id="L795">        assertEquals(expected, translator.getWPTree(p).toString());</span>
 <span class="fc" id="L796">    }</span>
+
+    @Test
+    public void testFuncCallSameParam() throws RecognitionException {
+<span class="fc" id="L800">        p = parserInterface.parseProgram(&quot;int f(int f)assume {f&lt;0;}{return 1;}&quot; +</span>
+                &quot;main(){int y;y=f(y);}ensure y&gt;0;&quot;);
+<span class="fc" id="L802">        expected = LOGIC</span>
+<span class="fc" id="L803">            +embed(&quot;(declare-fun f$0 () Int)(assert (not (=&gt; (&lt; f$0 0) true)))&quot;)</span>
+<span class="fc" id="L804">            +embed(&quot;(assert (not (and true (and (&lt; 0 0) (and (&gt; 1 0) true)))))&quot;);</span>
+<span class="fc" id="L805">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L806">    }</span>
+
+    @Test
+    public void testFuncCallLoopCondition() throws RecognitionException {
+<span class="fc" id="L810">        p = parserInterface.parseProgram(&quot;int f(int f)assume f&lt;0;{return 1;}&quot; +</span>
+                &quot;main(){int y;while(f(y)&lt;0){}}ensure y&gt;0;&quot;);
+<span class="fc" id="L812">        expected = LOGIC</span>
+<span class="fc" id="L813">            +embed(&quot;(declare-fun f$0 () Int)(assert (not (=&gt; (&lt; f$0 0) true)))&quot;)</span>
+<span class="fc" id="L814">            +embed(&quot;(declare-fun y$0 () Int)(assert (not (and (&gt; y$0 0) true)))&quot;)</span>
+<span class="fc" id="L815">            +embed(&quot;(assert (not (=&gt; (not (&lt; 1 0)) true)))&quot;)</span>
+<span class="fc" id="L816">            +embed(&quot;(declare-fun y$0 () Int)(assert (not (=&gt; (&lt; 1 0) (and (&lt; y$0 0) true))))&quot;)</span>
+<span class="fc" id="L817">            +embed(&quot;(assert (not (and true (and (&lt; 0 0) true))))&quot;);</span>
+<span class="fc" id="L818">        assertEquals(expected, translator.getWPTree(p).toString());</span>
+<span class="fc" id="L819">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

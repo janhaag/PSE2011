@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ASTUnitTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.ast</a> &gt; <span class="el_source">ASTUnitTest.java</span></div><h1>ASTUnitTest.java</h1><pre class="source lang-java linenums">package test.ast;
+
+import static org.junit.Assert.*;
+import interpreter.BooleanValue;
+import interpreter.IntegerValue;
+
+import org.junit.Test;
+
+import ast.*;
+
+<span class="fc" id="L11">public class ASTUnitTest {	</span>
+	
+	@Test
+	public void testSimpleProgram() {
+<span class="fc" id="L15">		Statement[] mainStatements = new Statement[1];</span>
+<span class="fc" id="L16">		mainStatements[0] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L17">		StatementBlock mainBody = new StatementBlock(mainStatements, POSITION);</span>
+<span class="fc" id="L18">		FunctionParameter[] mainParameters = new FunctionParameter[0];</span>
+<span class="fc" id="L19">		Assumption[] mainAssumptions = new Assumption[0];</span>
+<span class="fc" id="L20">		Ensure[] mainEnsures = new Ensure[0];</span>
+<span class="fc" id="L21">		Function mainFunction = new Function(POSITION, new IntegerType(), &quot;main&quot;, mainParameters, mainBody, mainAssumptions, mainEnsures);</span>
+<span class="fc" id="L22">		Axiom[] mainAxioms = new Axiom[0];</span>
+<span class="fc" id="L23">		Function[] functions = new Function[0];</span>
+<span class="fc" id="L24">		Program testProgram = new Program(POSITION, functions, mainFunction, mainAxioms);</span>
+<span class="fc" id="L25">		String testString = &quot;int main() &quot;</span>
+			+&quot;{\n&quot;
+			+&quot;int testvar = 0;\n&quot;
+			+&quot;}&quot;;
+<span class="fc" id="L29">		assertEquals(testString, testProgram.toString());</span>
+<span class="fc" id="L30">		assertEquals(POSITION, testProgram.getPosition());</span>
+<span class="fc" id="L31">	}</span>
+	
+	@Test
+	public void testSimpleProgram2() {
+<span class="fc" id="L35">		Position pos = new Position(1, 0);</span>
+<span class="fc" id="L36">    	VariableDeclaration[] dec = {new VariableDeclaration(pos, &quot;x&quot;, null, new IntegerType())};</span>
+<span class="fc" id="L37">    	StatementBlock block = new StatementBlock(dec, pos);</span>
+<span class="fc" id="L38">    	Program ast = new Program(pos, new Function[0], new Function(</span>
+<span class="fc" id="L39">                pos, null, &quot;main&quot;, new FunctionParameter[0], block, new Assumption[0],</span>
+<span class="fc" id="L40">                new Ensure[0]), new Axiom[] {new Axiom(POSITION, STANDARDCONDITION)});</span>
+<span class="fc" id="L41">    	assertEquals(0, ast.getFunctions().length);</span>
+<span class="fc" id="L42">    	assertEquals(1, ast.getAxioms().length);</span>
+<span class="fc" id="L43">    	assertNotNull(ast.getMainFunction());</span>
+<span class="fc" id="L44">    	assertEquals(&quot;axiom (testvar &gt;= 42);\nmain() {\nint x;\n}&quot;, ast.toString());</span>
+<span class="fc" id="L45">	}</span>
+	
+	@Test
+	public void testLoop() {
+<span class="fc" id="L49">		LogicalExpression testCondition = new LogicalExpression(POSITION, new VariableRead(POSITION, new Identifier(&quot;testvar&quot;)), new NumericLiteral(POSITION, &quot;42&quot;), new GreaterEqual());</span>
+<span class="fc" id="L50">		Statement[] loopStatements = new Statement[2];</span>
+<span class="fc" id="L51">		loopStatements[0] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L52">		loopStatements[1] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L53">		StatementBlock loopBlock = new StatementBlock(loopStatements, POSITION);</span>
+<span class="fc" id="L54">		Invariant[] loopInvariants = new Invariant[2];</span>
+<span class="fc" id="L55">		loopInvariants[0] = new Invariant(POSITION, STANDARDEXPRESSION);</span>
+<span class="fc" id="L56">		loopInvariants[1] = new Invariant(POSITION, STANDARDEXPRESSION);</span>
+<span class="fc" id="L57">		Ensure[] loopPostconditions = new Ensure[2];</span>
+<span class="fc" id="L58">		loopPostconditions[0] = new Ensure(POSITION, STANDARDEXPRESSION);</span>
+<span class="fc" id="L59">		loopPostconditions[1] = new Ensure(POSITION, STANDARDEXPRESSION);</span>
+<span class="fc" id="L60">		Loop testLoop = new Loop(POSITION, testCondition, loopBlock, loopInvariants, loopPostconditions);</span>
+<span class="fc" id="L61">		String testString = &quot;while ((testvar &gt;= 42))\n&quot;</span>
+			+&quot;invariant testvar;\ninvariant testvar;\n&quot;
+			+&quot;{\n&quot;
+			+&quot;int testvar = 0;\nint testvar = 0;\n&quot;
+			+&quot;}\n&quot;
+			+&quot;ensure testvar;\nensure testvar;\n&quot;;
+<span class="fc" id="L67">		assertEquals(testString, testLoop.toString());</span>
+<span class="fc" id="L68">		assertEquals(2, testLoop.getInvariants().length);</span>
+<span class="fc" id="L69">		assertEquals(2, testLoop.getPostconditions().length);</span>
+<span class="fc" id="L70">		assertEquals(testCondition, testLoop.getCondition());</span>
+<span class="fc" id="L71">		assertEquals(loopBlock, testLoop.getLoopBody());</span>
+<span class="fc" id="L72">	}</span>
+	
+	@Test
+	public void testConditional() {
+<span class="fc" id="L76">		Statement[] trueStatements = new Statement[0];</span>
+<span class="fc" id="L77">		Statement[] falseStatements = new Statement[0];</span>
+<span class="fc" id="L78">		StatementBlock trueCondition = new StatementBlock(trueStatements, POSITION);</span>
+<span class="fc" id="L79">		StatementBlock falseCondition = new StatementBlock(falseStatements, POSITION);</span>
+<span class="fc" id="L80">		Conditional testConditional = new Conditional(POSITION, STANDARDCONDITION, trueCondition, falseCondition);</span>
+<span class="fc" id="L81">		String testString = &quot;if ((testvar &gt;= 42)) {\n&quot;</span>
+			+&quot;} else {\n&quot;
+			+&quot;}\n&quot;;
+<span class="fc" id="L84">		assertEquals(testString, testConditional.toString());</span>
+<span class="fc" id="L85">		assertEquals(STANDARDCONDITION, testConditional.getCondition());</span>
+<span class="fc" id="L86">		assertEquals(trueCondition, testConditional.getTrueConditionBody());</span>
+<span class="fc" id="L87">		assertEquals(falseCondition, testConditional.getFalseConditionBody());</span>
+<span class="fc" id="L88">	}</span>
+	
+	@Test
+	public void testCharacters() {
+<span class="fc" id="L92">		assertEquals(&quot;&gt;&quot;, new Greater().toString());</span>
+<span class="fc" id="L93">		assertEquals(&quot;&lt;&quot;, new Less().toString());</span>
+<span class="fc" id="L94">		assertEquals(&quot;+&quot;, new Addition().toString());</span>
+<span class="fc" id="L95">		assertEquals(&quot;*&quot;, new Multiplication().toString());</span>
+<span class="fc" id="L96">		assertEquals(&quot;-&quot;, new Subtraction().toString());</span>
+<span class="fc" id="L97">		assertEquals(&quot;/&quot;, new Division().toString());</span>
+<span class="fc" id="L98">		assertEquals(&quot;%&quot;, new Modulo().toString());</span>
+<span class="fc" id="L99">		assertEquals(&quot;!&quot;, new Negation().toString());</span>
+<span class="fc" id="L100">		assertEquals(&quot;!=&quot;, new NotEqual().toString());</span>
+<span class="fc" id="L101">		assertEquals(&quot;-&quot;, new UnaryMinus().toString());</span>
+<span class="fc" id="L102">		assertEquals(&quot;==&quot;, new Equal().toString());</span>
+<span class="fc" id="L103">		assertEquals(&quot;&lt;=&quot;, new LessEqual().toString());</span>
+<span class="fc" id="L104">		assertEquals(&quot;|&quot;, new Disjunction().toString());</span>
+<span class="fc" id="L105">		assertEquals(&quot;&amp;&quot;, new Conjunction().toString());</span>
+<span class="fc" id="L106">	}</span>
+	
+	@Test
+	public void testTypes() {
+<span class="fc" id="L110">		IntegerType intTest = new IntegerType();</span>
+<span class="fc" id="L111">		assertEquals(&quot;int&quot;, intTest.toString());</span>
+<span class="fc" id="L112">		assertTrue(intTest.equals(new IntegerType()));</span>
+<span class="fc" id="L113">		BooleanType boolTest = new BooleanType();</span>
+<span class="fc" id="L114">		assertEquals(&quot;bool&quot;, boolTest.toString());</span>
+<span class="fc" id="L115">		assertTrue(boolTest.equals(new BooleanType()));</span>
+<span class="fc" id="L116">		ArrayType arrayTest = new ArrayType(intTest);</span>
+<span class="fc" id="L117">		assertEquals(intTest, arrayTest.getType());</span>
+<span class="fc" id="L118">		assertTrue(arrayTest.equals(arrayTest));</span>
+<span class="fc" id="L119">		assertFalse(arrayTest.equals(null));</span>
+<span class="fc" id="L120">		assertFalse(arrayTest.equals(intTest));</span>
+<span class="fc" id="L121">		assertTrue(arrayTest.equals(new ArrayType(new IntegerType())));</span>
+<span class="fc" id="L122">		assertFalse(arrayTest.equals(new ArrayType(new BooleanType())));</span>
+<span class="fc" id="L123">		assertEquals(&quot;int[]&quot;, arrayTest.toString());</span>
+<span class="fc" id="L124">	}</span>
+	
+	@Test
+	public void testPositions() {
+<span class="fc" id="L128">		Position positionTest = new Position(4, 2);</span>
+<span class="fc" id="L129">		assertEquals(4, positionTest.getLine());</span>
+<span class="fc" id="L130">		assertEquals(2, positionTest.getColumn());</span>
+<span class="fc" id="L131">		assertEquals(0, new Position().getLine());</span>
+<span class="fc" id="L132">		assertEquals(0, new Position().getColumn());</span>
+<span class="fc" id="L133">	}</span>
+	
+	@Test
+	public void testFunctionCall() {
+<span class="fc" id="L137">		Expression[] functionParameters = new Expression[2];</span>
+<span class="fc" id="L138">		functionParameters[0] = STANDARDEXPRESSION;</span>
+<span class="fc" id="L139">		functionParameters[1] = STANDARDEXPRESSION;</span>
+<span class="fc" id="L140">		FunctionCall testFunction = new FunctionCall(new Identifier(&quot;testFunction&quot;), new Expression[0], POSITION);</span>
+<span class="fc" id="L141">		String testString = &quot;(testFunction())&quot;;</span>
+<span class="fc" id="L142">		assertEquals(testString, testFunction.toString());</span>
+<span class="fc" id="L143">		testFunction = new FunctionCall(new Identifier(&quot;testFunction&quot;), functionParameters, POSITION);</span>
+<span class="fc" id="L144">		testString = &quot;(testFunction(testvar, testvar))&quot;;</span>
+<span class="fc" id="L145">		assertEquals(testString, testFunction.toString());</span>
+<span class="fc" id="L146">		assertEquals(new Identifier(&quot;testFunction&quot;), testFunction.getFunctionIdentifier());</span>
+<span class="fc" id="L147">		assertEquals(functionParameters.length, testFunction.getParameters().length);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for(int i = 0; i &lt; functionParameters.length; i++) {</span>
+<span class="fc" id="L149">			assertEquals(functionParameters[i], testFunction.getParameters()[i]);</span>
+		}
+<span class="fc" id="L151">		Function func = new Function(POSITION, null, &quot;f&quot;,</span>
+<span class="fc" id="L152">				null, null, null, null);</span>
+<span class="fc" id="L153">		testFunction.setFunction(func);</span>
+<span class="fc" id="L154">		assertEquals(func, testFunction.getFunction());</span>
+<span class="fc" id="L155">	}</span>
+	
+	@Test
+	public void testArrays() {
+<span class="fc" id="L159">		Expression[] testIndices = new Expression[2];</span>
+<span class="fc" id="L160">		testIndices[0] = STANDARDEXPRESSION;</span>
+<span class="fc" id="L161">		testIndices[1] = STANDARDEXPRESSION;</span>
+<span class="fc" id="L162">		ArrayAssignment testAssignment = new ArrayAssignment(POSITION, STANDARDEXPRESSION, new Identifier(&quot;testvar&quot;), testIndices);</span>
+<span class="fc" id="L163">		assertEquals(&quot;testvar[testvar][testvar] = testvar;\n&quot;, testAssignment.toString());</span>
+<span class="fc" id="L164">		assertEquals(testIndices.length, testAssignment.getIndices().length);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for(int i = 0; i &lt; testIndices.length; i++) {</span>
+<span class="fc" id="L166">			assertEquals(testIndices[i], testAssignment.getIndices()[i]);</span>
+		}
+		
+<span class="fc" id="L169">		ArrayDeclaration testDeclaration = new ArrayDeclaration(POSITION, &quot;testvar&quot;, new IntegerType(), testIndices);</span>
+<span class="fc" id="L170">		assertEquals(&quot;int testvar[testvar][testvar];\n&quot;, testDeclaration.toString());</span>
+<span class="fc" id="L171">		assertEquals(testIndices.length, testDeclaration.getIndices().length);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		for(int i = 0; i &lt; testIndices.length; i++) {</span>
+<span class="fc" id="L173">			assertEquals(testIndices[i], testDeclaration.getIndices()[i]);</span>
+		}
+		
+<span class="fc" id="L176">		ArrayRead testRead = new ArrayRead(POSITION, new Identifier(&quot;testvar&quot;), testIndices);</span>
+<span class="fc" id="L177">		assertEquals(&quot;testvar[testvar][testvar]&quot;, testRead.toString());</span>
+<span class="fc" id="L178">		assertEquals(testIndices.length, testRead.getIndices().length);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		for(int i = 0; i &lt; testIndices.length; i++) {</span>
+<span class="fc" id="L180">			assertEquals(testIndices[i], testRead.getIndices()[i]);</span>
+		}
+<span class="fc" id="L182">	}</span>
+	
+	@Test
+	public void testQuantifiers() {
+<span class="fc" id="L186">		Range testRange = new Range(STANDARDEXPRESSION, STANDARDEXPRESSION);</span>
+<span class="fc" id="L187">		assertEquals(STANDARDEXPRESSION, testRange.getUpperBound());</span>
+<span class="fc" id="L188">		assertEquals(STANDARDEXPRESSION, testRange.getLowerBound());</span>
+		
+<span class="fc" id="L190">		ForAllQuantifier testForAll = new ForAllQuantifier(POSITION, null, new Identifier(&quot;testQuantifier&quot;), STANDARDCONDITION);</span>
+<span class="fc" id="L191">		assertEquals(&quot;(forall testQuantifier() (testvar &gt;= 42))&quot;, testForAll.toString());</span>
+<span class="fc" id="L192">		testForAll = new ForAllQuantifier(POSITION, testRange, new Identifier(&quot;testQuantifier&quot;), STANDARDCONDITION);</span>
+<span class="fc" id="L193">		assertEquals(&quot;(forall testQuantifier(testvar, testvar) (testvar &gt;= 42))&quot;, testForAll.toString());</span>
+		
+<span class="fc" id="L195">		ExistsQuantifier testExists = new ExistsQuantifier(POSITION, null, new Identifier(&quot;testExistsQuantifier&quot;), STANDARDCONDITION);</span>
+<span class="fc" id="L196">		assertEquals(&quot;(exists testExistsQuantifier() (testvar &gt;= 42))&quot;, testExists.toString());</span>
+<span class="fc" id="L197">		testExists = new ExistsQuantifier(POSITION, testRange, new Identifier(&quot;testExistsQuantifier&quot;), STANDARDCONDITION);</span>
+<span class="fc" id="L198">		assertEquals(&quot;(exists testExistsQuantifier(testvar, testvar) (testvar &gt;= 42))&quot;, testExists.toString());</span>
+		
+<span class="fc" id="L200">		testExists.setDepth(2);</span>
+<span class="fc" id="L201">		assertEquals(2, testExists.getDepth());</span>
+<span class="fc" id="L202">	}</span>
+	
+	@Test
+	public void testFunction() {
+<span class="fc" id="L206">		FunctionParameter[] parameters = new FunctionParameter[2];</span>
+<span class="fc" id="L207">		parameters[0] = new FunctionParameter(&quot;parameter1&quot;, new IntegerType());</span>
+<span class="fc" id="L208">		assertEquals(&quot;parameter1&quot;, parameters[0].getName());</span>
+<span class="fc" id="L209">		assertEquals(new IntegerType(), parameters[0].getType());</span>
+<span class="fc" id="L210">		parameters[1] = new FunctionParameter(&quot;parameter2&quot;, new BooleanType());</span>
+<span class="fc" id="L211">		Statement[] statements = new Statement[3];</span>
+<span class="fc" id="L212">		statements[0] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L213">		statements[1] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L214">		statements[2] = new ReturnStatement(POSITION, STANDARDEXPRESSION);</span>
+<span class="fc" id="L215">		assertEquals(STANDARDEXPRESSION, ((ReturnStatement) statements[2]).getReturnValue());</span>
+<span class="fc" id="L216">		StatementBlock body = new StatementBlock(statements, POSITION);</span>
+<span class="fc" id="L217">		Assumption[] assumptions = new Assumption[2];</span>
+<span class="fc" id="L218">		assumptions[0] = new Assumption(POSITION, STANDARDCONDITION);</span>
+<span class="fc" id="L219">		assumptions[1] = new Assumption(POSITION, STANDARDCONDITION);</span>
+<span class="fc" id="L220">		Ensure[] ensures = new Ensure[2];</span>
+<span class="fc" id="L221">		ensures[0] = new Ensure(POSITION, STANDARDCONDITION);</span>
+<span class="fc" id="L222">		ensures[1] = new Ensure(POSITION, STANDARDCONDITION);</span>
+<span class="fc" id="L223">		Function testFunction = new Function(POSITION, null, &quot;testFunction&quot;,</span>
+<span class="fc" id="L224">				parameters, body, assumptions, ensures);</span>
+<span class="fc" id="L225">		String testString = &quot;testFunction(int parameter1, bool parameter2) {\n&quot;</span>
+			+&quot;assume (testvar &gt;= 42);\nassume (testvar &gt;= 42);\n&quot;
+			+&quot;int testvar = 0;\nint testvar = 0;\n&quot;
+			+&quot;return testvar;\n&quot;
+			+&quot;ensure (testvar &gt;= 42);\nensure (testvar &gt;= 42);\n&quot;
+			+&quot;}&quot;;
+<span class="fc" id="L231">		assertEquals(testString, testFunction.toString());</span>
+<span class="fc" id="L232">		assertEquals(&quot;testFunction&quot;, testFunction.getName());</span>
+<span class="fc" id="L233">		assertEquals(body, testFunction.getFunctionBlock());</span>
+<span class="fc" id="L234">		assertEquals(parameters.length, testFunction.getParameters().length);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		for(int i = 0; i &lt; parameters.length; i++) {</span>
+<span class="fc" id="L236">			assertEquals(parameters[i], testFunction.getParameters()[i]);</span>
+		}
+<span class="fc" id="L238">		assertNull(testFunction.getReturnType());</span>
+<span class="fc" id="L239">		assertEquals(assumptions.length, testFunction.getAssumptions().length);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		for(int i = 0; i &lt; assumptions.length; i++) {</span>
+<span class="fc" id="L241">			assertEquals(assumptions[i], testFunction.getAssumptions()[i]);</span>
+		}
+<span class="fc" id="L243">		assertEquals(ensures.length, testFunction.getEnsures().length);</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		for(int i = 0; i &lt; ensures.length; i++) {</span>
+<span class="fc" id="L245">			assertEquals(ensures[i], testFunction.getEnsures()[i]);</span>
+		}
+<span class="fc" id="L247">		testFunction = new Function(POSITION, new IntegerType(), &quot;testFunction&quot;,</span>
+<span class="fc" id="L248">				parameters, body, assumptions, ensures);</span>
+<span class="fc" id="L249">		testString = &quot;int testFunction(int parameter1, bool parameter2) {\n&quot;</span>
+			+&quot;assume (testvar &gt;= 42);\nassume (testvar &gt;= 42);\n&quot;
+			+&quot;int testvar = 0;\nint testvar = 0;\nreturn testvar;\n&quot;
+			+&quot;ensure (testvar &gt;= 42);\nensure (testvar &gt;= 42);\n&quot;
+			+&quot;}&quot;;
+<span class="fc" id="L254">		assertEquals(testString, testFunction.toString());</span>
+<span class="fc" id="L255">		assertEquals(new IntegerType(), testFunction.getReturnType());</span>
+<span class="fc" id="L256">	}</span>
+	
+	@Test
+	public void testAssertion() {
+<span class="fc" id="L260">		Assertion testAssertion = new Assertion(POSITION, STANDARDCONDITION);</span>
+<span class="fc" id="L261">		assertEquals(&quot;assert (testvar &gt;= 42);\n&quot;, testAssertion.toString());</span>
+<span class="fc" id="L262">	}</span>
+	
+	@Test
+	public void testAxiom() {
+<span class="fc" id="L266">		Axiom testAxiom = new Axiom(POSITION, STANDARDCONDITION);</span>
+<span class="fc" id="L267">		assertEquals(&quot;axiom (testvar &gt;= 42);\n&quot;, testAxiom.toString());</span>
+<span class="fc" id="L268">	}</span>
+	
+	@Test
+	public void testLiterals() {
+<span class="fc" id="L272">		BooleanLiteral testBoolean = new BooleanLiteral(POSITION, &quot;true&quot;);</span>
+<span class="fc" id="L273">		assertEquals(&quot;true&quot;, testBoolean.toString());</span>
+<span class="fc" id="L274">		NumericLiteral testInteger = new NumericLiteral(POSITION, &quot;1&quot;);</span>
+<span class="fc" id="L275">		assertEquals(&quot;1&quot;, testInteger.toString());</span>
+<span class="fc" id="L276">	}</span>
+	
+	@Test
+	public void testExpression() {
+<span class="fc" id="L280">		Multiplication multi = new Multiplication();</span>
+<span class="fc" id="L281">		ArithmeticExpression testExpression = new ArithmeticExpression(POSITION, STANDARDEXPRESSION, STANDARDEXPRESSION, multi);</span>
+<span class="fc" id="L282">		assertEquals(&quot;(testvar * testvar)&quot;, testExpression.toString());</span>
+<span class="fc" id="L283">		assertEquals(STANDARDEXPRESSION, testExpression.getSubexpression1());</span>
+<span class="fc" id="L284">		assertEquals(STANDARDEXPRESSION, testExpression.getSubexpression2());</span>
+<span class="fc" id="L285">		assertEquals(multi, testExpression.getArithmeticOperator());</span>
+<span class="fc" id="L286">		testExpression = new ArithmeticExpression(POSITION, STANDARDEXPRESSION, STANDARDEXPRESSION, new UnaryMinus());</span>
+<span class="fc" id="L287">		assertEquals(&quot;(- testvar)&quot;, testExpression.toString());</span>
+<span class="fc" id="L288">		Greater gr = new Greater();</span>
+<span class="fc" id="L289">		LogicalExpression testExpression2 = new LogicalExpression(POSITION, STANDARDEXPRESSION, STANDARDEXPRESSION, gr);</span>
+<span class="fc" id="L290">		assertEquals(STANDARDEXPRESSION, testExpression2.getSubexpression1());</span>
+<span class="fc" id="L291">		assertEquals(STANDARDEXPRESSION, testExpression2.getSubexpression2());</span>
+<span class="fc" id="L292">		assertEquals(gr, testExpression2.getLogicalOperator());</span>
+<span class="fc" id="L293">		Negation neg = new Negation();</span>
+<span class="fc" id="L294">		LogicalExpression testExpression3 = new LogicalExpression(POSITION, STANDARDEXPRESSION, null, neg);</span>
+<span class="fc" id="L295">		assertEquals(&quot;(! testvar)&quot;, testExpression3.toString());</span>
+<span class="fc" id="L296">	}</span>
+	
+	@Test
+	public void testAssignment() {
+<span class="fc" id="L300">		Assignment testAssignment = new Assignment(POSITION, STANDARDEXPRESSION, new Identifier(&quot;var&quot;));</span>
+<span class="fc" id="L301">		assertEquals(&quot;var = testvar;\n&quot;, testAssignment.toString());</span>
+<span class="fc" id="L302">		assertEquals(0, testAssignment.getDepth());</span>
+<span class="fc" id="L303">		testAssignment.setDepth(1);</span>
+<span class="fc" id="L304">		assertEquals(1, testAssignment.getDepth());</span>
+<span class="fc" id="L305">		testAssignment.setType(new IntegerType());</span>
+<span class="fc" id="L306">		assertEquals(new IntegerType(), testAssignment.getType());</span>
+<span class="fc" id="L307">	}</span>
+	
+	@Test
+	public void testVariableRead() {
+<span class="fc" id="L311">		VariableRead varRead = new VariableRead(POSITION, new Identifier(&quot;x&quot;));</span>
+<span class="fc" id="L312">		assertEquals(&quot;x&quot;, varRead.getVariable().toString());</span>
+<span class="fc" id="L313">		varRead.setDepth(5);</span>
+<span class="fc" id="L314">		assertEquals(5, varRead.getDepth());</span>
+<span class="fc" id="L315">		IntegerType type = new IntegerType();</span>
+<span class="fc" id="L316">		varRead.setType(type);</span>
+<span class="fc" id="L317">		assertEquals(type, varRead.getType());</span>
+<span class="fc" id="L318">	}</span>
+	
+	@Test
+	public void testVariableDeclaration() {
+<span class="fc" id="L322">		IntegerType type = new IntegerType(); </span>
+<span class="fc" id="L323">		VariableDeclaration varDec = new VariableDeclaration(POSITION,</span>
+<span class="fc" id="L324">				&quot;x&quot;, STANDARDEXPRESSION, type);</span>
+<span class="fc" id="L325">		assertEquals(type, varDec.getType());</span>
+<span class="fc" id="L326">		assertEquals(STANDARDEXPRESSION, varDec.getValue());</span>
+<span class="fc" id="L327">		assertEquals(&quot;x&quot;, varDec.getName());</span>
+<span class="fc" id="L328">		varDec.setDepth(3);</span>
+<span class="fc" id="L329">		assertEquals(3, varDec.getDepth());</span>
+<span class="fc" id="L330">		VariableDeclaration varDec2 = new VariableDeclaration(POSITION,</span>
+<span class="fc" id="L331">				&quot;x&quot;, null, type);</span>
+<span class="fc" id="L332">		assertEquals(&quot;int x;\n&quot;, varDec2.toString());</span>
+<span class="fc" id="L333">	}</span>
+	
+	@Test
+	public void testStatementBlock() {
+<span class="fc" id="L337">		Statement[] statements = new Statement[2];</span>
+<span class="fc" id="L338">		statements[0] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L339">		statements[1] = STANDARDSTATEMENT;</span>
+<span class="fc" id="L340">		StatementBlock block = new StatementBlock(statements, POSITION);</span>
+<span class="fc" id="L341">		assertNotNull(block.getIterator());</span>
+<span class="fc" id="L342">		assertEquals(2, block.getStatements().length);</span>
+<span class="fc" id="L343">	}</span>
+	
+	@Test
+	public void testIdentifier() {
+<span class="fc" id="L347">		Identifier id = new Identifier(&quot;x&quot;);</span>
+<span class="fc" id="L348">		assertEquals(&quot;x&quot;, id.getName());</span>
+<span class="fc" id="L349">		assertTrue(id.equals(id));</span>
+<span class="fc" id="L350">		assertFalse(id.equals(null));</span>
+<span class="fc" id="L351">		assertFalse(id.equals(&quot;x&quot;));</span>
+<span class="fc" id="L352">		assertTrue(id.equals(new Identifier(&quot;x&quot;)));</span>
+<span class="fc" id="L353">		assertEquals(120, id.hashCode());</span>
+<span class="fc" id="L354">	}</span>
+	
+	@Test
+	public void testLiteral() {
+<span class="fc" id="L358">		BooleanLiteral bool = new BooleanLiteral(POSITION, &quot;true&quot;);</span>
+<span class="fc" id="L359">		assertEquals(new BooleanValue(&quot;true&quot;), bool.getValue());</span>
+<span class="fc" id="L360">		NumericLiteral num = new NumericLiteral(POSITION, &quot;2&quot;);</span>
+<span class="fc" id="L361">		assertEquals(new IntegerValue(&quot;2&quot;), num.getValue());</span>
+<span class="fc" id="L362">	}</span>
+	
+<span class="fc" id="L364">	private static final Position POSITION = new Position(0,0);</span>
+<span class="fc" id="L365">	private static final Statement STANDARDSTATEMENT = new VariableDeclaration(POSITION, &quot;testvar&quot;, new NumericLiteral(new Position(0, 0), &quot;0&quot;), new IntegerType());</span>
+<span class="fc" id="L366">	private static final Expression STANDARDEXPRESSION = new VariableRead(POSITION, new Identifier(&quot;testvar&quot;));</span>
+<span class="fc" id="L367">	private static final LogicalExpression STANDARDCONDITION = new LogicalExpression(POSITION, new VariableRead(POSITION, new Identifier(&quot;testvar&quot;)), new NumericLiteral(POSITION, &quot;42&quot;), new GreaterEqual());</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>
