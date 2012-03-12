@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>HelpTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.misc</a> &gt; <span class="el_source">HelpTest.java</span></div><h1>HelpTest.java</h1><pre class="source lang-java linenums">package test.misc;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+
+import misc.Help;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+<span class="fc" id="L17">public class HelpTest {</span>
+	private Help helpInstance;
+
+	@BeforeClass
+	public static void init() {
+<span class="fc" id="L22">		assertNotNull(Help.getInstance());</span>
+<span class="fc" id="L23">		assertSame(Help.getInstance(), Help.getInstance());</span>
+<span class="fc" id="L24">	}</span>
+	
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L28">		helpInstance = Help.getInstance();</span>
+<span class="fc" id="L29">	}</span>
+
+	@Test
+	public void testGetTableOfContents() {
+<span class="fc" id="L33">		String[] expectedTOC = new String[]{&quot;Introduction&quot;, &quot;Interpreting&quot;, &quot;Verifying&quot;, &quot;Comments&quot;, &quot;Program&quot;, &quot;Functions&quot;, &quot;Statement&quot;, &quot;Variables&quot;, &quot;Assignment&quot;, &quot;If Statement&quot;, &quot;While Statement&quot;, &quot;Expression&quot;, &quot;Identifier&quot;, &quot;Literal&quot;, &quot;Boolean Operations&quot;, &quot;Integer Operations&quot;, &quot;Array Operations&quot;, &quot;Specifications&quot;, &quot;Assert&quot;, &quot;Assume&quot;, &quot;Ensure&quot;, &quot;Invariant&quot;, &quot;Axiom&quot;, &quot;Quantified Expressions&quot;};</span>
+<span class="fc" id="L34">		assertArrayEquals(expectedTOC, helpInstance.getTableOfContents());</span>
+<span class="fc" id="L35">	}</span>
+
+	@Test
+	public void testGetHelpByTOC() {
+<span class="fc" id="L39">		assertNotNull(helpInstance.getHelpByTOC(&quot;Introduction&quot;));</span>
+<span class="fc" id="L40">		assertNotNull(helpInstance.getHelpByTOC(&quot;Quantified Expressions&quot;));</span>
+<span class="fc" id="L41">		assertNotNull(helpInstance.getHelpByTOC(&quot;foo&quot;));</span>
+<span class="fc" id="L42">	}</span>
+
+	@Test
+	public void testGetHelpByTag() {
+<span class="fc" id="L46">		assertEquals(helpInstance.getHelpByTOC(&quot;Introduction&quot;), helpInstance.getHelpByTag(&quot;help&quot;));</span>
+<span class="fc" id="L47">		assertEquals(helpInstance.getHelpByTOC(&quot;Interpreting&quot;), helpInstance.getHelpByTag(&quot;run&quot;));</span>
+<span class="fc" id="L48">		assertEquals(helpInstance.getHelpByTOC(&quot;If Statement&quot;), helpInstance.getHelpByTag(&quot;if&quot;));</span>
+<span class="fc" id="L49">		String expectedFileNotFound = &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;File not found&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Helpfile not found.&lt;/body&gt;&lt;/html&gt;&quot;;</span>
+<span class="fc" id="L50">		assertEquals(expectedFileNotFound, helpInstance.getHelpByTag(&quot;foo&quot;));</span>
+<span class="fc" id="L51">	}</span>
+
+	@Test
+	public void testGetTags() {
+<span class="fc" id="L55">		String[] expectedTags = new String[]{&quot;expression&quot;, &quot;assign&quot;, &quot;verify&quot;, &quot;interpret&quot;, &quot;run&quot;, &quot;validate&quot;, &quot;while&quot;, &quot;function&quot;, &quot;quantifier&quot;, &quot;invariant&quot;, &quot;help&quot;, &quot;division&quot;, &quot;if&quot;, &quot;name&quot;, &quot;loop&quot;, &quot;write&quot;, &quot;length&quot;, &quot;boolean&quot;, &quot;ensure&quot;, &quot;else&quot;, &quot;declaration&quot;, &quot;constant&quot;, &quot;integer&quot;, &quot;return&quot;, &quot;forall&quot;, &quot;assertion&quot;, &quot;main&quot;, &quot;statement&quot;, &quot;syntax&quot;, &quot;assignment&quot;, &quot;logical&quot;, &quot;program&quot;, &quot;exists&quot;, &quot;modulo&quot;, &quot;assert&quot;, &quot;conditional&quot;, &quot;bool&quot;, &quot;assume&quot;, &quot;comment&quot;, &quot;axiom&quot;, &quot;variable&quot;, &quot;identifier&quot;, &quot;array&quot;, &quot;literal&quot;};</span>
+<span class="fc" id="L56">		assertEquals(expectedTags.length, helpInstance.getTags().length);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for(int i = 0; i &lt; expectedTags.length; i++) {</span>
+<span class="fc" id="L58">			assertTrue(Arrays.asList(helpInstance.getTags()).contains(expectedTags[i]));</span>
+		}
+<span class="fc" id="L60">	}</span>
+
+	@Test
+	public void testGetSmallStyle() {
+<span class="fc" id="L64">		assertNotNull(helpInstance.getSmallStyle());</span>
+<span class="fc" id="L65">	}</span>
+
+	@Test
+	public void testGetDefaultStyle() {
+<span class="fc" id="L69">		assertNotNull(helpInstance.getDefaultStyle());</span>
+<span class="fc" id="L70">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

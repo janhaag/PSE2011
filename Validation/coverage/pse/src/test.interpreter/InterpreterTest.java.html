@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>InterpreterTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">test.interpreter</a> &gt; <span class="el_source">InterpreterTest.java</span></div><h1>InterpreterTest.java</h1><pre class="source lang-java linenums">package test.interpreter;
+
+import static org.junit.Assert.*;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import interpreter.*;
+import ast.*;
+
+<span class="fc" id="L18">public class InterpreterTest {</span>
+	private Interpreter interpreter;
+	private static Field interpreterState;
+	private static Field interpreterTempValue;
+	private static Field stateStatement;
+	private static Field stateScope;
+	private static Constructor&lt;State&gt; stateConstructor;
+
+	@BeforeClass
+	public static void init() throws SecurityException, NoSuchFieldException, NoSuchMethodException {
+<span class="fc" id="L28">		interpreterState = Interpreter.class.getDeclaredField(&quot;currentState&quot;);</span>
+<span class="fc" id="L29">		interpreterState.setAccessible(true);</span>
+<span class="fc" id="L30">		interpreterTempValue = Interpreter.class.getDeclaredField(&quot;tempValue&quot;);</span>
+<span class="fc" id="L31">		interpreterTempValue.setAccessible(true);</span>
+<span class="fc" id="L32">		stateScope = State.class.getDeclaredField(&quot;currentScope&quot;);</span>
+<span class="fc" id="L33">		stateScope.setAccessible(true);</span>
+<span class="fc" id="L34">		stateConstructor = State.class.getDeclaredConstructor(new Class[] {});</span>
+<span class="fc" id="L35">		stateConstructor.setAccessible(true);</span>
+<span class="fc" id="L36">		stateStatement = State.class.getDeclaredField(&quot;currentStatement&quot;);</span>
+<span class="fc" id="L37">		stateStatement.setAccessible(true);</span>
+<span class="fc" id="L38">	}</span>
+
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L42">		interpreter = new Interpreter();</span>
+<span class="fc" id="L43">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L47">	}</span>
+
+	private Scope createEmptyScope() {
+<span class="fc" id="L50">		return new Scope(null, new StatementBlock(new Statement[] {}, null), new Function(null, null, null, null, null,</span>
+<span class="fc" id="L51">				null, new Ensure[] {}));</span>
+	}
+
+	private State createEmptyState() throws IllegalArgumentException, InstantiationException, IllegalAccessException,
+			InvocationTargetException {
+<span class="fc" id="L56">		State emptyState = stateConstructor.newInstance(new Object[] {});</span>
+<span class="fc" id="L57">		stateScope.set(emptyState, createEmptyScope());</span>
+<span class="fc" id="L58">		return emptyState;</span>
+	}
+
+	@Test
+	public void testVisitConditionalTrueBranch() throws IllegalArgumentException, IllegalAccessException,
+			InstantiationException, InvocationTargetException {
+<span class="fc" id="L64">		State s = createEmptyState();</span>
+<span class="fc" id="L65">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L66">		Statement trueStatement = new Assertion(null, null);</span>
+<span class="fc" id="L67">		Statement falseStatement = new Assertion(null, null);</span>
+
+		// check if true branch is entered
+<span class="fc" id="L70">		interpreter</span>
+<span class="fc" id="L71">				.visit(new Conditional(null, new BooleanLiteral(null, &quot;true&quot;), new StatementBlock(</span>
+<span class="fc" id="L72">						new Statement[] { trueStatement }, null), new StatementBlock(</span>
+<span class="fc" id="L73">						new Statement[] { falseStatement }, null)));</span>
+<span class="fc" id="L74">		assertSame(trueStatement, s.getCurrentStatement());</span>
+<span class="fc" id="L75">	}</span>
+
+	@Test
+	public void testVisitConditionalFalseBranch() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L80">		State s = createEmptyState();</span>
+<span class="fc" id="L81">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L82">		Statement trueStatement = new Assertion(null, null);</span>
+<span class="fc" id="L83">		Statement falseStatement = new Assertion(null, null);</span>
+
+		// check if false branch is entered
+<span class="fc" id="L86">		interpreter</span>
+<span class="fc" id="L87">				.visit(new Conditional(null, new BooleanLiteral(null, &quot;false&quot;), new StatementBlock(</span>
+<span class="fc" id="L88">						new Statement[] { trueStatement }, null), new StatementBlock(</span>
+<span class="fc" id="L89">						new Statement[] { falseStatement }, null)));</span>
+<span class="fc" id="L90">		assertSame(falseStatement, s.getCurrentStatement());</span>
+<span class="fc" id="L91">	}</span>
+
+	@Test
+	public void testVisitLoopBody() throws IllegalArgumentException, IllegalAccessException, InstantiationException,
+			InvocationTargetException {
+<span class="fc" id="L96">		State s = createEmptyState();</span>
+<span class="fc" id="L97">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L98">		Statement loopBodyStatement = new Assertion(null, null);</span>
+
+		// check if loop body is entered if condition is true
+<span class="fc" id="L101">		Loop infiniteLoop = new Loop(null, new BooleanLiteral(null, &quot;true&quot;), new StatementBlock(</span>
+<span class="fc" id="L102">				new Statement[] { loopBodyStatement }, null), new Invariant[] {}, new Ensure[] {});</span>
+<span class="fc" id="L103">		interpreter.visit(infiniteLoop);</span>
+<span class="fc" id="L104">		assertSame(loopBodyStatement, s.getCurrentStatement());</span>
+<span class="fc" id="L105">	}</span>
+
+	@Test
+	public void testVisitLoopAfterBody() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L110">		State s = createEmptyState();</span>
+<span class="fc" id="L111">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L112">		Statement loopBodyStatement = new Assertion(null, null);</span>
+
+		// check if loop body is not entered if condition is false
+<span class="fc" id="L115">		Loop skipLoop = new Loop(null, new BooleanLiteral(null, &quot;false&quot;), new StatementBlock(</span>
+<span class="fc" id="L116">				new Statement[] { loopBodyStatement }, null), new Invariant[] {}, new Ensure[] {});</span>
+<span class="fc" id="L117">		interpreter.visit(skipLoop);</span>
+<span class="fc" id="L118">		assertNotSame(loopBodyStatement, s.getCurrentStatement());</span>
+<span class="fc" id="L119">	}</span>
+
+	@Test
+	public void testVisitArrayAssignment() throws IllegalArgumentException, IllegalAccessException,
+			InstantiationException, InvocationTargetException {
+<span class="fc" id="L124">		State s = createEmptyState();</span>
+<span class="fc" id="L125">		s.createArray(&quot;a&quot;, new ArrayType(new IntegerType()), new int[] { 3 });</span>
+<span class="fc" id="L126">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L127">		interpreter.visit(new ArrayAssignment(null, new NumericLiteral(null, &quot;7&quot;), new Identifier(&quot;a&quot;),</span>
+<span class="fc" id="L128">				new Expression[] { new NumericLiteral(null, &quot;1&quot;) }));</span>
+<span class="fc" id="L129">		Value v = ((ArrayValue) ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;a&quot;)));</span>
+<span class="fc" id="L130">		ArrayValue expected = new ArrayValue(new ArrayType(new IntegerType()), new int[] { 3 });</span>
+<span class="fc" id="L131">		expected.setValue(&quot;7&quot;, Arrays.asList(new Integer[] { 1 }));</span>
+<span class="fc" id="L132">		assertEquals(expected, v);</span>
+<span class="fc" id="L133">	}</span>
+
+	@Test
+	public void testVisitArithmeticExpression() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L138">		State s = createEmptyState();</span>
+<span class="fc" id="L139">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L140">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;2&quot;),</span>
+<span class="fc" id="L141">				new Addition()));</span>
+<span class="fc" id="L142">		assertEquals(new IntegerValue(&quot;7&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L144">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;2&quot;),</span>
+<span class="fc" id="L145">				new Subtraction()));</span>
+<span class="fc" id="L146">		assertEquals(new IntegerValue(&quot;3&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L148">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;2&quot;),</span>
+<span class="fc" id="L149">				new Multiplication()));</span>
+<span class="fc" id="L150">		assertEquals(new IntegerValue(&quot;10&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L152">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;2&quot;),</span>
+<span class="fc" id="L153">				new Division()));</span>
+<span class="fc" id="L154">		assertEquals(new IntegerValue(&quot;2&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L156">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;-2&quot;),</span>
+<span class="fc" id="L157">				new Division()));</span>
+<span class="fc" id="L158">		assertEquals(new IntegerValue(&quot;-2&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L160">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;-5&quot;), new NumericLiteral(null, &quot;2&quot;),</span>
+<span class="fc" id="L161">				new Division()));</span>
+<span class="fc" id="L162">		assertEquals(new IntegerValue(&quot;-3&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L164">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;0&quot;),</span>
+<span class="fc" id="L165">				new Division()));</span>
+<span class="fc" id="L166">		assertEquals(new IntegerValue(&quot;0&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L168">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;2&quot;),</span>
+<span class="fc" id="L169">				new Modulo()));</span>
+<span class="fc" id="L170">		assertEquals(new IntegerValue(&quot;1&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L172">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;0&quot;),</span>
+<span class="fc" id="L173">				new Modulo()));</span>
+<span class="fc" id="L174">		assertEquals(new IntegerValue(&quot;5&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L176">		interpreter.visit(new ArithmeticExpression(null, new NumericLiteral(null, &quot;5&quot;), null, new UnaryMinus()));</span>
+<span class="fc" id="L177">		assertEquals(new IntegerValue(&quot;-5&quot;), interpreterTempValue.get(interpreter));</span>
+<span class="fc" id="L178">	}</span>
+
+	@Test
+	public void testVisitNumericLiteral() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L183">		State s = createEmptyState();</span>
+<span class="fc" id="L184">		interpreterState.set(interpreter, s);</span>
+
+<span class="fc" id="L186">		interpreter.visit(new NumericLiteral(null, &quot;0&quot;));</span>
+<span class="fc" id="L187">		assertEquals(new IntegerValue(&quot;0&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L189">		interpreter.visit(new NumericLiteral(null, &quot;-10&quot;));</span>
+<span class="fc" id="L190">		assertEquals(new IntegerValue(&quot;-10&quot;), interpreterTempValue.get(interpreter));</span>
+<span class="fc" id="L191">	}</span>
+
+	@Test
+	public void testVisitLogicalOperation() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L196">		State s = createEmptyState();</span>
+<span class="fc" id="L197">		interpreterState.set(interpreter, s);</span>
+
+<span class="fc" id="L199">		interpreter.visit(new LogicalExpression(null, new BooleanLiteral(null, &quot;false&quot;), new BooleanLiteral(null,</span>
+<span class="fc" id="L200">				&quot;true&quot;), new Disjunction()));</span>
+<span class="fc" id="L201">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L203">		interpreter.visit(new LogicalExpression(null, new BooleanLiteral(null, &quot;false&quot;), new BooleanLiteral(null,</span>
+<span class="fc" id="L204">				&quot;true&quot;), new Conjunction()));</span>
+<span class="fc" id="L205">		assertEquals(new BooleanValue(&quot;false&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L207">		interpreter.visit(new LogicalExpression(null, new BooleanLiteral(null, &quot;false&quot;), null, new Negation()));</span>
+<span class="fc" id="L208">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L210">		interpreter.visit(new LogicalExpression(null, new BooleanLiteral(null, &quot;false&quot;), new BooleanLiteral(null,</span>
+<span class="fc" id="L211">				&quot;false&quot;), new Equal()));</span>
+<span class="fc" id="L212">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L214">		interpreter.visit(new LogicalExpression(null, new BooleanLiteral(null, &quot;false&quot;), new BooleanLiteral(null,</span>
+<span class="fc" id="L215">				&quot;false&quot;), new NotEqual()));</span>
+<span class="fc" id="L216">		assertEquals(new BooleanValue(&quot;false&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L218">		interpreter.visit(new LogicalExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;5&quot;),</span>
+<span class="fc" id="L219">				new Equal()));</span>
+<span class="fc" id="L220">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L222">		interpreter.visit(new LogicalExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;5&quot;),</span>
+<span class="fc" id="L223">				new NotEqual()));</span>
+<span class="fc" id="L224">		assertEquals(new BooleanValue(&quot;false&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L226">		interpreter.visit(new LogicalExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;5&quot;),</span>
+<span class="fc" id="L227">				new Less()));</span>
+<span class="fc" id="L228">		assertEquals(new BooleanValue(&quot;false&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L230">		interpreter.visit(new LogicalExpression(null, new NumericLiteral(null, &quot;3&quot;), new NumericLiteral(null, &quot;5&quot;),</span>
+<span class="fc" id="L231">				new LessEqual()));</span>
+<span class="fc" id="L232">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L234">		interpreter.visit(new LogicalExpression(null, new NumericLiteral(null, &quot;3&quot;), new NumericLiteral(null, &quot;5&quot;),</span>
+<span class="fc" id="L235">				new Greater()));</span>
+<span class="fc" id="L236">		assertEquals(new BooleanValue(&quot;false&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L238">		interpreter.visit(new LogicalExpression(null, new NumericLiteral(null, &quot;5&quot;), new NumericLiteral(null, &quot;5&quot;),</span>
+<span class="fc" id="L239">				new GreaterEqual()));</span>
+<span class="fc" id="L240">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+<span class="fc" id="L241">	}</span>
+
+	@Test
+	public void testVisitBooleanLiteral() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L246">		State s = createEmptyState();</span>
+<span class="fc" id="L247">		interpreterState.set(interpreter, s);</span>
+
+<span class="fc" id="L249">		interpreter.visit(new BooleanLiteral(null, &quot;true&quot;));</span>
+<span class="fc" id="L250">		assertEquals(new BooleanValue(&quot;true&quot;), interpreterTempValue.get(interpreter));</span>
+
+<span class="fc" id="L252">		interpreter.visit(new BooleanLiteral(null, &quot;false&quot;));</span>
+<span class="fc" id="L253">		assertEquals(new BooleanValue(&quot;false&quot;), interpreterTempValue.get(interpreter));</span>
+<span class="fc" id="L254">	}</span>
+
+	@Test
+	public void testVisitVariableRead() throws IllegalArgumentException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L259">		State s = createEmptyState();</span>
+<span class="fc" id="L260">		s.createVar(&quot;x&quot;, &quot;4&quot;, new IntegerType());</span>
+<span class="fc" id="L261">		interpreterState.set(interpreter, s);</span>
+
+<span class="fc" id="L263">		interpreter.visit(new VariableRead(null, new Identifier(&quot;x&quot;)));</span>
+<span class="fc" id="L264">		assertEquals(new IntegerValue(&quot;4&quot;), interpreterTempValue.get(interpreter));</span>
+<span class="fc" id="L265">	}</span>
+
+	@Test
+	public void testVisitArrayRead() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L269">		State s = createEmptyState();</span>
+<span class="fc" id="L270">		s.createArray(&quot;a&quot;, new ArrayType(new IntegerType()), new int[] { 4 });</span>
+<span class="fc" id="L271">		s.setArray(&quot;a&quot;, &quot;-2&quot;, Arrays.asList(new Integer[]{ 0 }));</span>
+<span class="fc" id="L272">		s.setArray(&quot;a&quot;, &quot;3&quot;, Arrays.asList(new Integer[]{ 3 }));</span>
+<span class="fc" id="L273">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L275">		interpreter.visit(new ArrayRead(null, new Identifier(&quot;a&quot;), new Expression[]{new NumericLiteral(null, &quot;3&quot;)}));</span>
+<span class="fc" id="L276">		assertEquals(new IntegerValue(&quot;3&quot;), interpreterTempValue.get(interpreter));</span>
+		
+<span class="fc" id="L278">		interpreter.visit(new ArrayRead(null, new Identifier(&quot;a&quot;), new Expression[]{new NumericLiteral(null, &quot;5&quot;)}));</span>
+<span class="fc" id="L279">		assertEquals(new IntegerValue(&quot;-2&quot;), interpreterTempValue.get(interpreter));</span>
+<span class="fc" id="L280">	}</span>
+
+	@Test
+	public void testVisitAssignment() throws IllegalArgumentException, IllegalAccessException, InstantiationException,
+			InvocationTargetException {
+<span class="fc" id="L285">		State s = createEmptyState();</span>
+<span class="fc" id="L286">		s.createVar(&quot;x&quot;, &quot;0&quot;, new IntegerType());</span>
+<span class="fc" id="L287">		interpreterState.set(interpreter, s);</span>
+<span class="fc" id="L288">		interpreter.visit(new Assignment(null, new NumericLiteral(null, &quot;7&quot;), new Identifier(&quot;x&quot;)));</span>
+<span class="fc" id="L289">		Value v = ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;x&quot;));</span>
+<span class="fc" id="L290">		assertEquals(new IntegerValue(&quot;7&quot;), v);</span>
+<span class="fc" id="L291">	}</span>
+	
+	@Test
+	public void testVisitAssertionNoFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L295">		State s = createEmptyState();</span>
+<span class="fc" id="L296">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L298">		interpreter.visit(new Assertion(null, new BooleanLiteral(null, &quot;true&quot;)));</span>
+<span class="fc" id="L299">	}</span>
+	
+	@Test(expected=AssertionFailureException.class)
+	public void testVisitAssertionFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="nc" id="L303">		State s = createEmptyState();</span>
+<span class="nc" id="L304">		interpreterState.set(interpreter, s);</span>
+		
+<span class="nc" id="L306">		interpreter.visit(new Assertion(null, new BooleanLiteral(null, &quot;false&quot;)));</span>
+<span class="nc" id="L307">	}</span>
+
+	@Test
+	public void testVisitAssumptionNoFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L311">		State s = createEmptyState();</span>
+<span class="fc" id="L312">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L314">		interpreter.visit(new Assumption(null, new BooleanLiteral(null, &quot;true&quot;)));</span>
+<span class="fc" id="L315">	}</span>
+	
+	@Test(expected=AssertionFailureException.class)
+	public void testVisitAssumptionFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="nc" id="L319">		State s = createEmptyState();</span>
+<span class="nc" id="L320">		interpreterState.set(interpreter, s);</span>
+		
+<span class="nc" id="L322">		interpreter.visit(new Assumption(null, new BooleanLiteral(null, &quot;false&quot;)));</span>
+<span class="nc" id="L323">	}</span>
+	
+	@Test
+	public void testVisitAxiom() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L327">		State s = createEmptyState();</span>
+<span class="fc" id="L328">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L330">		interpreter.visit(new Axiom(null, new BooleanLiteral(null, &quot;true&quot;)));</span>
+<span class="fc" id="L331">		interpreter.visit(new Axiom(null, new BooleanLiteral(null, &quot;false&quot;)));</span>
+<span class="fc" id="L332">	}</span>
+	
+	@Test
+	public void testVisitEnsureNoFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L336">		State s = createEmptyState();</span>
+<span class="fc" id="L337">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L339">		interpreter.visit(new Ensure(null, new BooleanLiteral(null, &quot;true&quot;)));</span>
+<span class="fc" id="L340">	}</span>
+	
+	@Test(expected=AssertionFailureException.class)
+	public void testVisitEnsureFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="nc" id="L344">		State s = createEmptyState();</span>
+<span class="nc" id="L345">		interpreterState.set(interpreter, s);</span>
+		
+<span class="nc" id="L347">		interpreter.visit(new Ensure(null, new BooleanLiteral(null, &quot;false&quot;)));</span>
+<span class="nc" id="L348">	}</span>
+	
+	@Test
+	public void testVisitInvariantNoFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L352">		State s = createEmptyState();</span>
+<span class="fc" id="L353">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L355">		interpreter.visit(new Invariant(null, new BooleanLiteral(null, &quot;true&quot;)));</span>
+<span class="fc" id="L356">	}</span>
+	
+	@Test(expected=AssertionFailureException.class)
+	public void testVisitInvariantFail() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="nc" id="L360">		State s = createEmptyState();</span>
+<span class="nc" id="L361">		interpreterState.set(interpreter, s);</span>
+		
+<span class="nc" id="L363">		interpreter.visit(new Invariant(null, new BooleanLiteral(null, &quot;false&quot;)));</span>
+<span class="nc" id="L364">	}</span>
+	
+	@Test
+	public void testVisitVariableDeclaration() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L368">		State s = createEmptyState();</span>
+<span class="fc" id="L369">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L371">		interpreter.visit(new VariableDeclaration(null, &quot;x&quot;, new NumericLiteral(null, &quot;3&quot;), new IntegerType()));</span>
+<span class="fc" id="L372">		Value expected = ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;x&quot;));</span>
+<span class="fc" id="L373">		assertEquals(new IntegerValue(&quot;3&quot;), expected);</span>
+		
+
+<span class="fc" id="L376">		interpreter.visit(new VariableDeclaration(null, &quot;y&quot;, null, new IntegerType()));</span>
+<span class="fc" id="L377">		expected = ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;y&quot;));</span>
+<span class="fc" id="L378">		assertEquals(new IntegerValue(&quot;0&quot;), expected);</span>
+
+<span class="fc" id="L380">		interpreter.visit(new VariableDeclaration(null, &quot;r&quot;, new BooleanLiteral(null, &quot;true&quot;), new BooleanType()));</span>
+<span class="fc" id="L381">		expected = ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;r&quot;));</span>
+<span class="fc" id="L382">		assertEquals(new BooleanValue(&quot;true&quot;), expected);</span>
+		
+<span class="fc" id="L384">		interpreter.visit(new VariableDeclaration(null, &quot;s&quot;, null, new BooleanType()));</span>
+<span class="fc" id="L385">		expected = ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;s&quot;));</span>
+<span class="fc" id="L386">		assertEquals(new BooleanValue(&quot;false&quot;), expected);</span>
+<span class="fc" id="L387">	}</span>
+	
+	@Test
+	public void testVisitArrayDeclaration() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+<span class="fc" id="L391">		State s = createEmptyState();</span>
+<span class="fc" id="L392">		interpreterState.set(interpreter, s);</span>
+		
+<span class="fc" id="L394">		interpreter.visit(new ArrayDeclaration(null, &quot;a&quot;, new ArrayType(new IntegerType()), new Expression[]{new NumericLiteral(null, &quot;4&quot;)}));</span>
+<span class="fc" id="L395">		Value aValue = ((ArrayValue) ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;a&quot;)));</span>
+<span class="fc" id="L396">		ArrayValue aExpected = new ArrayValue(new ArrayType(new IntegerType()), new int[] { 4 });</span>
+<span class="fc" id="L397">		assertEquals(aExpected, aValue);</span>
+		
+<span class="fc" id="L399">		interpreter.visit(new ArrayDeclaration(null, &quot;b&quot;, new ArrayType(new BooleanType()), new Expression[]{new NumericLiteral(null, &quot;4&quot;)}));</span>
+<span class="fc" id="L400">		Value bValue = ((ArrayValue) ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;b&quot;)));</span>
+<span class="fc" id="L401">		ArrayValue bExpected = new ArrayValue(new ArrayType(new BooleanType()), new int[] { 4 });</span>
+<span class="fc" id="L402">		assertEquals(bExpected, bValue);</span>
+<span class="fc" id="L403">		assertFalse(bValue.equals(aExpected));</span>
+		
+<span class="fc" id="L405">		interpreter.visit(new ArrayDeclaration(null, &quot;c&quot;, new ArrayType(new ArrayType(new IntegerType())), new Expression[]{new NumericLiteral(null, &quot;4&quot;), new NumericLiteral(null, &quot;7&quot;)}));</span>
+<span class="fc" id="L406">		Value cValue = ((ArrayValue) ((State) interpreterState.get(interpreter)).getVariables().get(new Identifier(&quot;c&quot;)));</span>
+<span class="fc" id="L407">		ArrayValue cExpected = new ArrayValue(new ArrayType(new ArrayType(new IntegerType())), new int[] { 4, 7 });</span>
+<span class="fc" id="L408">		assertEquals(cExpected, cValue);</span>
+<span class="fc" id="L409">		assertFalse(cValue.equals(aExpected));</span>
+<span class="fc" id="L410">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

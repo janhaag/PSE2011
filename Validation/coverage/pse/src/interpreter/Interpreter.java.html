@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Interpreter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">Interpreter.java</span></div><h1>Interpreter.java</h1><pre class="source lang-java linenums">package interpreter;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Interpreter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">Interpreter.java</span></div><h1>Interpreter.java</h1><pre class="source lang-java linenums">package interpreter;
 
 import ast.*;
 
@@ -145,8 +145,8 @@ import java.util.Arrays;
 <span class="fc" id="L145">    }</span>
 
     public static BigInteger divide(BigInteger dividend, BigInteger divisor) {
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (divisor.equals(BigInteger.ZERO)) {</span>
-<span class="nc" id="L149">            return BigInteger.ZERO;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (divisor.equals(BigInteger.ZERO)) {</span>
+<span class="fc" id="L149">            return BigInteger.ZERO;</span>
         }
 <span class="fc" id="L151">        BigInteger result = dividend.divide(divisor);</span>
 <span class="fc bfc" id="L152" title="All 2 branches covered.">        if (dividend.signum() == -1 &amp;&amp;</span>
@@ -267,8 +267,8 @@ import java.util.Arrays;
 <span class="fc" id="L267">            index.accept(this);</span>
 <span class="fc" id="L268">            int pos = ((IntegerValue) tempValue).getValue().intValue();</span>
 <span class="fc" id="L269">            Value[] values = ((ArrayValue) value).getValues();</span>
-<span class="pc bpc" id="L270" title="2 of 4 branches missed.">            if (pos &lt; 0 || pos &gt;= values.length) {</span>
-<span class="nc" id="L271">                pos = 0;</span>
+<span class="pc bpc" id="L270" title="1 of 4 branches missed.">            if (pos &lt; 0 || pos &gt;= values.length) {</span>
+<span class="fc" id="L271">                pos = 0;</span>
             }
 <span class="fc" id="L273">            value = values[pos];</span>
         }
@@ -377,7 +377,7 @@ import java.util.Arrays;
     @Override
     public void visit(Axiom axiom) {
         //not needed in interpreter
-<span class="nc" id="L380">    }</span>
+<span class="fc" id="L380">    }</span>
 
     @Override
     public void visit(Ensure ensure) {
@@ -451,65 +451,69 @@ import java.util.Arrays;
 <span class="fc" id="L451">            tempValue = new BooleanValue(Boolean.toString(satisfied));</span>
 <span class="fc" id="L452">            currentState.destroyScope();</span>
         } else {
-<span class="fc" id="L454">            tempValue = new BooleanValue(&quot;true&quot;);</span>
+<span class="fc" id="L454">            throw new AssertionFailureException(&quot;Cannot evaluate unbounded &quot; +</span>
+                    &quot;quantified expression - please check Z3 to get a result.&quot;,
+<span class="fc" id="L456">                    existsQuantifier.getPosition());</span>
         }
-<span class="fc" id="L456">    }</span>
+<span class="fc" id="L458">    }</span>
 
     @Override
     public void visit(ForAllQuantifier forAllQuantifier) {
-<span class="fc" id="L460">        Range range = forAllQuantifier.getRange();</span>
-<span class="fc bfc" id="L461" title="All 2 branches covered.">        if (range != null) {</span>
-<span class="fc" id="L462">            range.getLowerBound().accept(this);</span>
-<span class="fc" id="L463">            int lower = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L464">            range.getUpperBound().accept(this);</span>
-<span class="fc" id="L465">            int upper = ((IntegerValue) tempValue).getValue().intValue();</span>
-<span class="fc" id="L466">            currentState.createScope(null, null);</span>
-<span class="fc" id="L467">            String varName = forAllQuantifier.getIdentifier().toString();</span>
-<span class="fc" id="L468">            currentState.createVar(varName, null, new IntegerType());</span>
-<span class="fc" id="L469">            boolean valid = true;</span>
-<span class="fc bfc" id="L470" title="All 2 branches covered.">            for (int i = lower; i &lt;= upper; i++) {</span>
-<span class="fc" id="L471">                currentState.setVar(varName, Integer.toString(i));</span>
-<span class="fc" id="L472">                forAllQuantifier.getSubexpression1().accept(this);</span>
-<span class="fc bfc" id="L473" title="All 2 branches covered.">                if (!((BooleanValue) tempValue).getValue()) {</span>
+<span class="fc" id="L462">        Range range = forAllQuantifier.getRange();</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">        if (range != null) {</span>
+<span class="fc" id="L464">            range.getLowerBound().accept(this);</span>
+<span class="fc" id="L465">            int lower = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L466">            range.getUpperBound().accept(this);</span>
+<span class="fc" id="L467">            int upper = ((IntegerValue) tempValue).getValue().intValue();</span>
+<span class="fc" id="L468">            currentState.createScope(null, null);</span>
+<span class="fc" id="L469">            String varName = forAllQuantifier.getIdentifier().toString();</span>
+<span class="fc" id="L470">            currentState.createVar(varName, null, new IntegerType());</span>
+<span class="fc" id="L471">            boolean valid = true;</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">            for (int i = lower; i &lt;= upper; i++) {</span>
+<span class="fc" id="L473">                currentState.setVar(varName, Integer.toString(i));</span>
+<span class="fc" id="L474">                forAllQuantifier.getSubexpression1().accept(this);</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">                if (!((BooleanValue) tempValue).getValue()) {</span>
                     //found a counterexample
-<span class="fc" id="L475">                    valid = false;</span>
+<span class="fc" id="L477">                    valid = false;</span>
                 }
             }
-<span class="fc" id="L478">            tempValue = new BooleanValue(Boolean.toString(valid));</span>
-<span class="fc" id="L479">            currentState.destroyScope();</span>
+<span class="fc" id="L480">            tempValue = new BooleanValue(Boolean.toString(valid));</span>
+<span class="fc" id="L481">            currentState.destroyScope();</span>
         } else {
-<span class="fc" id="L481">            tempValue = new BooleanValue(&quot;false&quot;);</span>
+<span class="fc" id="L483">            throw new AssertionFailureException(&quot;Cannot evaluate unbounded &quot; +</span>
+                    &quot;quantified expression - please check Z3 to get a result.&quot;,
+<span class="fc" id="L485">                    forAllQuantifier.getPosition());</span>
         }
-<span class="fc" id="L483">    }</span>
+<span class="fc" id="L487">    }</span>
 
     @Override
     public void visit(StatementBlock statementBlock) {
         //not needed
-<span class="nc" id="L488">    }</span>
+<span class="nc" id="L492">    }</span>
 
     /**
      * Adjust the statement at the end of a step.
      */
     private void adjustStatement() {
-<span class="fc" id="L494">        Function currentFunction = currentState.getCurrentFunction();</span>
-<span class="fc" id="L495">        currentState.adjustStatement();</span>
-<span class="fc bfc" id="L496" title="All 2 branches covered.">        if (currentState.getCurrentStatement() == null) {</span>
-<span class="fc bfc" id="L497" title="All 2 branches covered.">            if (currentState.isFunctionScope()) {</span>
-<span class="fc" id="L498">                Ensure[] ensures = currentFunction.getEnsures();</span>
+<span class="fc" id="L498">        Function currentFunction = currentState.getCurrentFunction();</span>
+<span class="fc" id="L499">        currentState.adjustStatement();</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">        if (currentState.getCurrentStatement() == null) {</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">            if (currentState.isFunctionScope()) {</span>
+<span class="fc" id="L502">                Ensure[] ensures = currentFunction.getEnsures();</span>
                 try {
-<span class="fc bfc" id="L500" title="All 2 branches covered.">                    for (Ensure ensure : ensures) {</span>
-<span class="fc" id="L501">                        ensure.accept(this);</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">                    for (Ensure ensure : ensures) {</span>
+<span class="fc" id="L505">                        ensure.accept(this);</span>
                     }
-<span class="fc" id="L503">                } finally {</span>
-<span class="fc" id="L504">                    currentState.destroyScope();</span>
-<span class="fc" id="L505">                }</span>
+<span class="fc" id="L507">                } finally {</span>
+<span class="fc" id="L508">                    currentState.destroyScope();</span>
+<span class="fc" id="L509">                }</span>
             } else {
-<span class="fc" id="L507">                currentState.destroyScope();</span>
-<span class="fc bfc" id="L508" title="All 2 branches covered.">                if (currentState.getCurrentStatement() instanceof Conditional) {</span>
-<span class="fc" id="L509">                    adjustStatement();</span>
+<span class="fc" id="L511">                currentState.destroyScope();</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">                if (currentState.getCurrentStatement() instanceof Conditional) {</span>
+<span class="fc" id="L513">                    adjustStatement();</span>
                 }
             }
         }
-<span class="fc" id="L513">    }</span>
+<span class="fc" id="L517">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

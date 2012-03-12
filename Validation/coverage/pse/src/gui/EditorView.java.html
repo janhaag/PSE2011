@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>EditorView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">EditorView.java</span></div><h1>EditorView.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>EditorView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">gui</a> &gt; <span class="el_source">EditorView.java</span></div><h1>EditorView.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package gui;</span>
+
+import misc.Editor;
+import misc.Keyword;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.Bullet;
@@ -11,15 +14,18 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.GlyphMetrics;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ScrollBar;
-
-import misc.Editor;
-import misc.Keyword;
 
 /**
  * This class represents the editor of the main frame. It displays
@@ -48,10 +54,16 @@ public class EditorView extends Composite {
 	 */
 	private Image breakpoint;
 	private boolean active;
+	
 	/**
-	 * max number of lines
+	 * initial max number of lines
 	 */
-	private static final int MAX_LINES = 500;
+	private static final int INITIAL_MAX_LINES = 100;
+	
+	/**
+	 * dynamic max number of lines adjusted to match content
+	 */
+<span class="fc" id="L66">	private int currentMaxLines = INITIAL_MAX_LINES;</span>
 	
 	/**
 	 * Construct an editor with the specified parent composite, definitions 
@@ -61,120 +73,163 @@ public class EditorView extends Composite {
 	 * @param editor specified model
 	 */
 	public EditorView(Composite parent, int def, Editor editor) {
-<span class="fc" id="L64">		super(parent, def);</span>
-<span class="fc" id="L65">		this.editor = editor; </span>
-<span class="fc" id="L66">		this.editor.setView(this);</span>
-<span class="fc" id="L67">		this.parentdisplay = parent.getDisplay();</span>
-<span class="fc" id="L68">		this.active = true;</span>
+<span class="fc" id="L76">		super(parent, def);</span>
+<span class="fc" id="L77">		this.editor = editor; </span>
+<span class="fc" id="L78">		this.editor.setView(this);</span>
+<span class="fc" id="L79">		this.parentdisplay = parent.getDisplay();</span>
+<span class="fc" id="L80">		this.active = true;</span>
 		
 		//Set the Layout
-<span class="fc" id="L71">		GridLayout gLayout = new GridLayout();</span>
-<span class="fc" id="L72">		gLayout.numColumns = 35;</span>
-<span class="fc" id="L73">		gLayout.makeColumnsEqualWidth = true;</span>
-<span class="fc" id="L74">		this.setLayout(gLayout);</span>
-<span class="fc" id="L75">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="fc" id="L76">		this.setLayoutData(gData);</span>
+<span class="fc" id="L83">		GridLayout gLayout = new GridLayout();</span>
+<span class="fc" id="L84">		gLayout.numColumns = 35;</span>
+<span class="fc" id="L85">		gLayout.makeColumnsEqualWidth = true;</span>
+<span class="fc" id="L86">		this.setLayout(gLayout);</span>
+<span class="fc" id="L87">		GridData gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L88">		this.setLayoutData(gData);</span>
 		
 		//Add text field for line numbers
-<span class="fc" id="L79">		final ScrolledComposite sc1 = new ScrolledComposite (this, SWT.V_SCROLL </span>
+<span class="fc" id="L91">		final ScrolledComposite sc1 = new ScrolledComposite (this, SWT.V_SCROLL </span>
 				| SWT.H_SCROLL | SWT.RIGHT_TO_LEFT);
-<span class="fc" id="L81">		this.linenumbers = new StyledText(sc1, SWT.MULTI | SWT.WRAP);	</span>
-<span class="fc" id="L82">		sc1.getVerticalBar().setEnabled(false);</span>
-<span class="fc" id="L83">		sc1.getHorizontalBar().setEnabled(false);</span>
-<span class="fc" id="L84">		this.linenumbers.setSize(35, 7500);</span>
+<span class="fc" id="L93">		this.linenumbers = new StyledText(sc1, SWT.MULTI | SWT.WRAP);	</span>
+<span class="fc" id="L94">		sc1.getVerticalBar().setEnabled(false);</span>
+<span class="fc" id="L95">		sc1.getHorizontalBar().setEnabled(false);</span>
+		//some pixels buffer, otherwise scrolling will not match at max lines; additional buffer for scrollbar of editor
+<span class="fc" id="L97">		this.linenumbers.setSize(35, this.linenumbers.getLineHeight() * INITIAL_MAX_LINES + 20 + sc1.getHorizontalBar().getSize().y);</span>
 		
-<span class="fc" id="L86">		String s = &quot;&quot;;</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (int i = 0; i &lt; MAX_LINES - 1; i++) {</span>
-<span class="fc" id="L88">			s += &quot; \n&quot;;</span>
+<span class="fc" id="L99">		String s = &quot;&quot;;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (int i = 0; i &lt; currentMaxLines - 1; i++) {</span>
+<span class="fc" id="L101">			s += &quot; \n&quot;;</span>
 		}
-<span class="fc" id="L90">		this.linenumbers.setText(s);</span>
+<span class="fc" id="L103">		this.linenumbers.setText(s);</span>
 		
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (int i = 0; i &lt; MAX_LINES; i++) {		</span>
-<span class="fc" id="L93">			StyleRange style = new StyleRange();</span>
-<span class="fc" id="L94">			style.metrics = new GlyphMetrics(0, 0, 25);</span>
-<span class="fc" id="L95">			Bullet b = new Bullet(ST.BULLET_TEXT, style);</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (i &lt; 9) {</span>
-<span class="fc" id="L97">				b.text = &quot;   &quot; + (i + 1) + &quot; &quot;;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (int i = 0; i &lt; currentMaxLines; i++) {		</span>
+<span class="fc" id="L106">			StyleRange style = new StyleRange();</span>
+<span class="fc" id="L107">			style.metrics = new GlyphMetrics(0, 0, 25);</span>
+<span class="fc" id="L108">			Bullet b = new Bullet(ST.BULLET_TEXT, style);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (i &lt; 9) {</span>
+<span class="fc" id="L110">				b.text = &quot;   &quot; + (i + 1) + &quot; &quot;;</span>
 			}
-<span class="fc bfc" id="L99" title="All 2 branches covered.">			else if (i &lt; 99) {</span>
-<span class="fc" id="L100">				b.text = &quot;  &quot; + (i + 1) + &quot; &quot;;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			else if (i &lt; 99) {</span>
+<span class="fc" id="L113">				b.text = &quot;  &quot; + (i + 1) + &quot; &quot;;</span>
 			}
 			else {
-<span class="fc" id="L103">				b.text = (i + 1) + &quot; &quot;;</span>
+<span class="fc" id="L116">				b.text = (i + 1) + &quot; &quot;;</span>
 			}
-<span class="fc" id="L105">			this.linenumbers.setLineBullet(i, 1, b);</span>
+<span class="fc" id="L118">			this.linenumbers.setLineBullet(i, 1, b);</span>
 		}
 		
-<span class="fc" id="L108">		this.linenumbers.setEditable(false);</span>
-<span class="fc" id="L109">		this.linenumbers.setDoubleClickEnabled(false);</span>
-<span class="fc" id="L110">		this.linenumbers.setBackground(new Color(this.getDisplay(), 211, 211, 211));</span>
-<span class="fc" id="L111">		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));</span>
-<span class="fc" id="L112">		sc1.setContent(this.linenumbers);</span>
+<span class="fc" id="L121">		this.linenumbers.setEditable(false);</span>
+<span class="fc" id="L122">		this.linenumbers.setDoubleClickEnabled(false);</span>
+<span class="fc" id="L123">		this.linenumbers.setBackground(new Color(this.getDisplay(), 211, 211, 211));</span>
+<span class="fc" id="L124">		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));</span>
+<span class="fc" id="L125">		sc1.setContent(this.linenumbers);</span>
 		
 		//Add text field for program code
-<span class="fc" id="L115">		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.V_SCROLL | SWT.H_SCROLL);</span>
-<span class="fc" id="L116">		this.textfield = new StyledText(sc2, SWT.NONE);</span>
-<span class="fc" id="L117">		this.textfield.setLeftMargin(5);</span>
-<span class="fc" id="L118">		this.textfield.setSize(1200, 7500);</span>
-<span class="fc" id="L119">		this.textfield.setFocus();</span>
-<span class="fc" id="L120">		sc2.setContent(this.textfield);</span>
+<span class="fc" id="L128">		final ScrolledComposite sc2 = new ScrolledComposite (this, SWT.V_SCROLL | SWT.H_SCROLL);</span>
+<span class="fc" id="L129">		this.textfield = new StyledText(sc2, SWT.NONE);</span>
+<span class="fc" id="L130">		this.textfield.setLeftMargin(5);</span>
+<span class="fc" id="L131">		this.textfield.setSize(1200, this.linenumbers.getLineHeight() * INITIAL_MAX_LINES + 20);</span>
+<span class="fc" id="L132">		this.textfield.setFocus();</span>
+<span class="fc" id="L133">		sc2.setContent(this.textfield);</span>
 		
 		//Position the text fields
-<span class="fc" id="L123">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="fc" id="L124">		gData.horizontalSpan= 3;</span>
-<span class="fc" id="L125">		sc1.setLayoutData(gData);</span>
-<span class="fc" id="L126">		gData = new GridData(GridData.FILL_BOTH);</span>
-<span class="fc" id="L127">		gData.horizontalSpan= 32;</span>
-<span class="fc" id="L128">		sc2.setLayoutData(gData);</span>
+<span class="fc" id="L136">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L137">		gData.horizontalSpan= 3;</span>
+<span class="fc" id="L138">		sc1.setLayoutData(gData);</span>
+<span class="fc" id="L139">		gData = new GridData(GridData.FILL_BOTH);</span>
+<span class="fc" id="L140">		gData.horizontalSpan= 32;</span>
+<span class="fc" id="L141">		sc2.setLayoutData(gData);</span>
 		
 		//Simultaneous scrolling of the text fields
-<span class="fc" id="L131">		final ScrollBar vBar1 = sc1.getVerticalBar();</span>
-<span class="fc" id="L132">		final ScrollBar vBar2 = sc2.getVerticalBar();</span>
-<span class="fc" id="L133">		SelectionListener listener = new SelectionAdapter () {</span>
+		/*final ScrollBar vBar1 = sc1.getVerticalBar();*/
+<span class="fc" id="L145">		final ScrollBar vBar2 = sc2.getVerticalBar();</span>
+<span class="fc" id="L146">		sc2.getVerticalBar().setIncrement(this.linenumbers.getLineHeight());</span>
+<span class="fc" id="L147">		SelectionListener listener = new SelectionAdapter () {</span>
 			public void widgetSelected (SelectionEvent e) {
-<span class="fc" id="L135">				int x =  sc1.getOrigin().x;</span>
-<span class="fc" id="L136">				int y =  vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) </span>
-<span class="fc" id="L137">						/ Math.max(1, vBar2.getMaximum() - vBar2.getThumb());</span>
-<span class="fc" id="L138">				sc1.setOrigin (x, y);</span>
-<span class="fc" id="L139">			}</span>
+<span class="fc" id="L149">				int x =  sc1.getOrigin().x;</span>
+<span class="fc" id="L150">				int y = sc2.getOrigin().y;// vBar2.getSelection() * (vBar1.getMaximum() - vBar1.getThumb()) </span>
+						// / Math.max(1, vBar2.getMaximum() - vBar2.getThumb());
+<span class="fc" id="L152">				sc1.setOrigin (x, y);</span>
+<span class="fc" id="L153">			}</span>
 		};
-<span class="fc" id="L141">		vBar2.addSelectionListener(listener); </span>
+<span class="fc" id="L155">		vBar2.addSelectionListener(listener); </span>
 		
 		//Add breakpoint icon
-<span class="fc" id="L144">		this.breakpoint = new Image(parentdisplay, </span>
-<span class="fc" id="L145">				MainFrame.class.getResourceAsStream(&quot;image/breakpoint.png&quot;)); 		</span>
-<span class="fc" id="L146">		this.linenumbers.addPaintObjectListener(new PaintObjectListener() {</span>
+<span class="fc" id="L158">		this.breakpoint = new Image(parentdisplay, </span>
+<span class="fc" id="L159">				MainFrame.class.getResourceAsStream(&quot;image/breakpoint.png&quot;)); 		</span>
+<span class="fc" id="L160">		this.linenumbers.addPaintObjectListener(new PaintObjectListener() {</span>
 	        public void paintObject(PaintObjectEvent event) {
-<span class="fc" id="L148">	          GC gc = event.gc;</span>
-<span class="fc" id="L149">	          StyleRange style = event.style;</span>
-<span class="fc" id="L150">              int x = event.x;</span>
-<span class="fc" id="L151">              int y = event.y + event.ascent - style.metrics.ascent;</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">              if ((Image)event.style.data != null) {</span>
-<span class="fc" id="L153">            	  gc.drawImage((Image)event.style.data, x, y);</span>
+<span class="fc" id="L162">	          GC gc = event.gc;</span>
+<span class="fc" id="L163">	          StyleRange style = event.style;</span>
+<span class="fc" id="L164">              int x = event.x;</span>
+<span class="fc" id="L165">              int y = event.y + event.ascent - style.metrics.ascent;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">              if ((Image)event.style.data != null) {</span>
+<span class="fc" id="L167">            	  gc.drawImage((Image)event.style.data, x, y);</span>
               }
-<span class="fc" id="L155">	        }</span>
+<span class="fc" id="L169">	        }</span>
 	      }); 
-<span class="fc" id="L157">	}</span>
+<span class="fc" id="L171">	}</span>
 	
 	/**
 	 * Update the view for undo/redo and syntax highlighting.
 	 */
 	public void updateView() {
 		//Source updates (necessary because of undo/redo functions)
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		if(!this.textfield.getText().equals(this.editor.getSource())) {</span>
-<span class="fc" id="L165">			this.textfield.setText(editor.getSource());</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if(!this.textfield.getText().equals(this.editor.getSource())) {</span>
+<span class="fc" id="L179">			this.textfield.setText(editor.getSource());</span>
 		}
+		
+<span class="fc" id="L182">		resizeView();</span>
+		
 		//Syntax highlighting
-<span class="fc" id="L168">		textfield.setStyleRange(null);</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		for(Keyword word : this.editor.getColorArray()) {</span>
-<span class="fc" id="L170">			StyleRange stylerange = new StyleRange();</span>
-<span class="fc" id="L171">			stylerange.start = word.getStart();</span>
-<span class="fc" id="L172">			stylerange.length = word.getLength();</span>
-<span class="fc" id="L173">			stylerange.fontStyle = SWT.BOLD;</span>
-<span class="fc" id="L174">			stylerange.foreground = new Color(this.textfield.getDisplay(), word.getColor());</span>
-<span class="fc" id="L175">			textfield.setStyleRange(stylerange);</span>
+<span class="fc" id="L185">		textfield.setStyleRange(null);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		for(Keyword word : this.editor.getColorArray()) {</span>
+<span class="fc" id="L187">			StyleRange stylerange = new StyleRange();</span>
+<span class="fc" id="L188">			stylerange.start = word.getStart();</span>
+<span class="fc" id="L189">			stylerange.length = word.getLength();</span>
+<span class="fc" id="L190">			stylerange.fontStyle = SWT.BOLD;</span>
+<span class="fc" id="L191">			stylerange.foreground = new Color(this.textfield.getDisplay(), word.getColor());</span>
+<span class="fc" id="L192">			textfield.setStyleRange(stylerange);</span>
 		}
-<span class="fc" id="L177">	}</span>
+<span class="fc" id="L194">	}</span>
+	
+	/**
+	 * Resize view to match current number of lines in editor.
+	 */
+	private void resizeView() {
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if(this.textfield.getText().split(&quot;\\n&quot;).length + 1 &gt; currentMaxLines) {</span>
+			//double size of contents and expand line numbers
+<span class="fc" id="L202">			int j = currentMaxLines;</span>
+<span class="fc" id="L203">			currentMaxLines *= 2;</span>
+<span class="fc" id="L204">			this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y * 2);</span>
+<span class="fc" id="L205">			this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y * 2);</span>
+<span class="fc" id="L206">			String s = this.linenumbers.getText();</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">			for (; j &lt; currentMaxLines; j++) {</span>
+<span class="fc" id="L208">				s += &quot; \n&quot;;</span>
+			}
+<span class="fc" id="L210">			this.linenumbers.setText(s);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">			for (int i = 0; i &lt; currentMaxLines; i++) {		</span>
+<span class="fc" id="L212">				StyleRange style = new StyleRange();</span>
+<span class="fc" id="L213">				style.metrics = new GlyphMetrics(0, 0, 25);</span>
+<span class="fc" id="L214">				Bullet b = new Bullet(ST.BULLET_TEXT, style);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">				if (i &lt; 9) {</span>
+<span class="fc" id="L216">					b.text = &quot;   &quot; + (i + 1) + &quot; &quot;;</span>
+				}
+<span class="fc bfc" id="L218" title="All 2 branches covered.">				else if (i &lt; 99) {</span>
+<span class="fc" id="L219">					b.text = &quot;  &quot; + (i + 1) + &quot; &quot;;</span>
+				}
+				else {
+<span class="fc" id="L222">					b.text = (i + 1) + &quot; &quot;;</span>
+				}
+<span class="fc" id="L224">				this.linenumbers.setLineBullet(i, 1, b);</span>
+			}
+<span class="pc bpc" id="L226" title="2 of 4 branches missed.">		} else if(this.textfield.getText().split(&quot;\\n&quot;).length &lt; currentMaxLines / 4 &amp;&amp; currentMaxLines / 2 &gt;= INITIAL_MAX_LINES) {</span>
+			//halve size of contents, ignore line numbers deleting
+<span class="nc" id="L228">			currentMaxLines /= 2;</span>
+<span class="nc" id="L229">			this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y / 2);</span>
+<span class="nc" id="L230">			this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y / 2);</span>
+		}
+<span class="fc" id="L232">	}</span>
 	
 	/**
 	 * Draw the breakpoint icon in the specified line if set = 1,
@@ -183,38 +238,38 @@ public class EditorView extends Composite {
 	 * @param set if the breakpoint is already set
 	 */
 	public void setStatementBreakpoint(int line, int set) {	
-<span class="fc" id="L186">		StyleRange style = new StyleRange();</span>
-<span class="fc" id="L187">		style.start = line * 2 - 2;</span>
-<span class="fc" id="L188">		style.length = 1;</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">		if (set == 1) {</span>
-<span class="fc" id="L190">			style.data = this.breakpoint;</span>
+<span class="fc" id="L241">		StyleRange style = new StyleRange();</span>
+<span class="fc" id="L242">		style.start = line * 2 - 2;</span>
+<span class="fc" id="L243">		style.length = 1;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		if (set == 1) {</span>
+<span class="fc" id="L245">			style.data = this.breakpoint;</span>
 		}
-<span class="fc" id="L192">		Rectangle rect = this.breakpoint.getBounds();</span>
-<span class="fc" id="L193">		style.metrics = new GlyphMetrics(rect.height, 0, rect.width);		</span>
-<span class="fc" id="L194">		this.linenumbers.setStyleRange(style);</span>
-<span class="fc" id="L195">	}</span>
+<span class="fc" id="L247">		Rectangle rect = this.breakpoint.getBounds();</span>
+<span class="fc" id="L248">		style.metrics = new GlyphMetrics(rect.height, 0, rect.width);		</span>
+<span class="fc" id="L249">		this.linenumbers.setStyleRange(style);</span>
+<span class="fc" id="L250">	}</span>
 	
 	/**
 	 * Highlight the specified line with another background color.
 	 * @param line specified line
 	 */
 	public void markLine(int line) {
-<span class="fc" id="L202">		this.textfield.setLineBackground(line, 1, new Color(this.parentdisplay, 249, 250, 158));</span>
-<span class="fc" id="L203">	}</span>
+<span class="fc" id="L257">		this.textfield.setLineBackground(line, 1, new Color(this.parentdisplay, 249, 250, 158));</span>
+<span class="fc" id="L258">	}</span>
 	
 	/**
 	 * Remove all line highlighting.
 	 */
 	public void removeAllLineBackground() {
-<span class="fc" id="L209">		this.textfield.setLineBackground(0, this.textfield.getLineCount(), null);</span>
-<span class="fc" id="L210">	}</span>
+<span class="fc" id="L264">		this.textfield.setLineBackground(0, this.textfield.getLineCount(), null);</span>
+<span class="fc" id="L265">	}</span>
 	
 	/**
 	 * Return the content of the editor text field.
 	 * @return editor text
 	 */
 	public String getText() {
-<span class="fc" id="L217">		return this.textfield.getText();</span>
+<span class="fc" id="L272">		return this.textfield.getText();</span>
 	}
 	
 	/**
@@ -222,15 +277,15 @@ public class EditorView extends Composite {
 	 * @param text text to be set
 	 */
 	public void setText(String text) {
-<span class="nc" id="L225">		this.textfield.setText(text);</span>
-<span class="nc" id="L226">	}</span>
+<span class="nc" id="L280">		this.textfield.setText(text);</span>
+<span class="nc" id="L281">	}</span>
 	
 	/**
 	 * Return the selection of the editor text field.
 	 * @return selection of the text field
 	 */
 	public Point getSelection() {
-<span class="fc" id="L233">		return this.textfield.getSelection();</span>
+<span class="nc" id="L288">		return this.textfield.getSelection();</span>
 	}
 	
 	/**
@@ -238,7 +293,7 @@ public class EditorView extends Composite {
 	 * @return editor text field
 	 */
 	public StyledText getTextField() {
-<span class="fc" id="L241">		return this.textfield;</span>
+<span class="fc" id="L296">		return this.textfield;</span>
 	}
 	
 	/**
@@ -246,15 +301,15 @@ public class EditorView extends Composite {
 	 * @return line numbers text field
 	 */
 	public StyledText getLineNumbers() {
-<span class="fc" id="L249">		return this.linenumbers;</span>
+<span class="fc" id="L304">		return this.linenumbers;</span>
 	}
 	
 	public boolean isActive() {
-<span class="fc" id="L253">		return this.active;</span>
+<span class="fc" id="L308">		return this.active;</span>
 	}
 	
 	public void setActive(boolean active) {
-<span class="fc" id="L257">		this.active = active;</span>
-<span class="fc" id="L258">	}</span>
+<span class="fc" id="L312">		this.active = active;</span>
+<span class="fc" id="L313">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

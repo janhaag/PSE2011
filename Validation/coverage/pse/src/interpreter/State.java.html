@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>State.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Coverage (07.03.2012 11:56:57)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">State.java</span></div><h1>State.java</h1><pre class="source lang-java linenums">package interpreter;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>State.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (08.03.2012 02:43:23)</a> &gt; <a href="../../index.html" class="el_group">pse</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">interpreter</a> &gt; <span class="el_source">State.java</span></div><h1>State.java</h1><pre class="source lang-java linenums">package interpreter;
 
 import ast.*;
 
@@ -36,16 +36,24 @@ public class State {
 <span class="fc" id="L36">        currentScope = new Scope(null, main.getFunctionBlock(), main);</span>
 <span class="fc" id="L37">        adjustStatement();</span>
 <span class="fc" id="L38">    }</span>
+    
+    /**
+     * Empty constructor.
+     * Required for testing purposes.
+     */
+    @SuppressWarnings(&quot;unused&quot;)
+<span class="fc" id="L45">	private State() {</span>
+<span class="fc" id="L46">    }</span>
 
     /**
      * Destroys the currently most inner scope.
      */
     public void destroyScope() {
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (currentScope.getParent() != null) {</span>
-<span class="fc" id="L45">            currentScope = currentScope.getParent();</span>
-<span class="fc" id="L46">            currentStatement = currentScope.getCurrentStatement();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (currentScope.getParent() != null) {</span>
+<span class="fc" id="L53">            currentScope = currentScope.getParent();</span>
+<span class="fc" id="L54">            currentStatement = currentScope.getCurrentStatement();</span>
         }
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L56">    }</span>
 
     /**
      * Creates a new scope with the given parameters. The old scope
@@ -56,8 +64,8 @@ public class State {
      */
     public void createScope(StatementBlock statementBlock,
                             Function currentFunction) {
-<span class="fc" id="L59">        currentScope = new Scope(currentScope, statementBlock, currentFunction);</span>
-<span class="fc" id="L60">    }</span>
+<span class="fc" id="L67">        currentScope = new Scope(currentScope, statementBlock, currentFunction);</span>
+<span class="fc" id="L68">    }</span>
 
     /**
      * Changes the value of a variable.
@@ -65,8 +73,8 @@ public class State {
      * @param value new value (as String)
      */
     public void setVar(String name, String value) {
-<span class="fc" id="L68">        currentScope.setVar(name, value);</span>
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L76">        currentScope.setVar(name, value);</span>
+<span class="fc" id="L77">    }</span>
 
     /**
      * Changes the value of an array element.
@@ -76,8 +84,8 @@ public class State {
      */
     public void setArray(String name, String value,
                          List&lt;Integer&gt; indexes) {
-<span class="fc" id="L79">        currentScope.setArray(name, value, indexes);</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L87">        currentScope.setArray(name, value, indexes);</span>
+<span class="fc" id="L88">    }</span>
 
     /**
      * Creates a new variable with the given values.
@@ -86,8 +94,8 @@ public class State {
      * @param typeOfValue type of the variable
      */
     public void createVar(String name, String value, Type typeOfValue) {
-<span class="fc" id="L89">        currentScope.createVar(name, value, typeOfValue);</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L97">        currentScope.createVar(name, value, typeOfValue);</span>
+<span class="fc" id="L98">    }</span>
 
     /**
      * Creates a new array and initializes all its elements to the
@@ -97,8 +105,8 @@ public class State {
      * @param lengths length of the different array dimensions
      */
     public void createArray(String name, Type typeOfValue, int[] lengths) {
-<span class="fc" id="L100">        currentScope.createArray(name, typeOfValue, lengths);</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L108">        currentScope.createArray(name, typeOfValue, lengths);</span>
+<span class="fc" id="L109">    }</span>
 
     /**
      * Returns a map of all variables and their values
@@ -106,7 +114,7 @@ public class State {
      * @return map of all saved variables and their values
      */
     public HashMap&lt;Identifier, Value&gt; getVariables() {
-<span class="fc" id="L109">        return currentScope.getVariables();</span>
+<span class="fc" id="L117">        return currentScope.getVariables();</span>
     }
 
     /**
@@ -114,7 +122,7 @@ public class State {
      * @return current scope
      */
     public Scope getCurrentScope() {
-<span class="fc" id="L117">        return currentScope;</span>
+<span class="fc" id="L125">        return currentScope;</span>
     }
 
     /**
@@ -122,7 +130,7 @@ public class State {
      * @return current statement
      */
     public Statement getCurrentStatement() {
-<span class="fc" id="L125">        return currentStatement;</span>
+<span class="fc" id="L133">        return currentStatement;</span>
     }
 
     /**
@@ -131,9 +139,9 @@ public class State {
      * not a function scope.
      */
     public void adjustStatement() {
-<span class="fc" id="L134">        currentScope.clearFunctionResults();</span>
-<span class="fc" id="L135">        currentStatement = currentScope.getNextStatement();</span>
-<span class="fc" id="L136">    }</span>
+<span class="fc" id="L142">        currentScope.clearFunctionResults();</span>
+<span class="fc" id="L143">        currentStatement = currentScope.getNextStatement();</span>
+<span class="fc" id="L144">    }</span>
 
     /**
      * Returns the function associated with the current scope.
@@ -141,7 +149,7 @@ public class State {
      * @return function associated with the current scope
      */
     public Function getCurrentFunction() {
-<span class="fc" id="L144">        return currentScope.getCurrentFunction();</span>
+<span class="fc" id="L152">        return currentScope.getCurrentFunction();</span>
     }
 
     /**
@@ -149,7 +157,7 @@ public class State {
      * @return whether the current scope is a function scope
      */
     public boolean isFunctionScope() {
-<span class="fc" id="L152">        return currentScope.isFunctionScope();</span>
+<span class="fc" id="L160">        return currentScope.isFunctionScope();</span>
     }
 
     /**
@@ -157,7 +165,7 @@ public class State {
      * @return results of function calls
      */
     public IdentityHashMap&lt;FunctionCall, Value&gt; getReturnValues() {
-<span class="fc" id="L160">        return currentScope.getReturnValues();</span>
+<span class="fc" id="L168">        return currentScope.getReturnValues();</span>
     }
 
     /**
@@ -167,7 +175,7 @@ public class State {
      */
     public void createFunctionResult(FunctionCall functionCall,
                                      Value returnValue) {
-<span class="fc" id="L170">        currentScope.createFunctionResult(functionCall, returnValue);</span>
-<span class="fc" id="L171">    }</span>
+<span class="fc" id="L178">        currentScope.createFunctionResult(functionCall, returnValue);</span>
+<span class="fc" id="L179">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Coverage (07.03.2012 11:56:57)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.6.201201232323</span>Merged (08.03.2012 02:43:23)</div></body></html>

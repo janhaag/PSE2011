@@ -45,5 +45,94 @@ WS 2011/2012
 \tableofcontents
 \newpage
 
+\section{Gesamt"uberdeckung}
+Eine "Ubersicht der erreichten Anweisungs- und Zweig"uberdeckung aus den Unit-, System- und Integrationstests. Details sind im "Uberdeckungsbericht zu finden. \\[0.5cm]
+\begin{tabular}{|p{3cm}|p{1.5cm}|p{2.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|p{1.5cm}|}
+\hline
+& \multicolumn{3}{c|}{Anweisung} & \multicolumn{3}{c|}{Zweig} \\ 
+\hline
+Paket&Cov.&Gesamt-&nicht&Cov.&Gesamt-&nicht\\
+&&anzahl&"uberdeckt&&anzahl&"uberdeckt \\\hline
+AST&100\%&1639&0&100\%&154&0 \\\hline
+Parser&92\%&13733&1069&69\%&1432&439 \\\hline
+Interpreter&100\%&2445&12&98\%&272&6 \\\hline
+Verifier&85\%&328&48&94\%&16&1 \\\hline
+SMTLib&99\%&2744&27&96\%&138&5 \\\hline
+Z3&56\%&5026&2217&42\%&632&367 \\\hline
+GUI&97\%&4193&138&79\%&112&23 \\\hline
+GUI-Controller&98\%&3378&60&87\%&336&43 \\\hline
+Misc&92\%&2549&200&89\%&206&22 \\\hline
+Insgesamt&91\%&47521&4498&72\%&3228&908 \\\hline
+\end{tabular}
+
+\section{Ergebnisse der Tests}
+Als Bugtracker haben wir Git benutzt, indem f"ur jeden Bug ein neuer Issue ge"offnet wird. Insgesamt wurden 112 Bugs gefunden. Davon sind 107 bereits behoben und 5 offen, die aus zeitlichen Gr"unden nicht mehr bearbeitet werden konnten. \\[0.5cm]
+Die Verteilung sieht wie folgt aus: \\[0.2cm]
+\includegraphics[width=18cm]{images/closed} \\
+Und die Verteilung der noch offenen Issues: \\
+\includegraphics[width=15cm]{images/open}
+
+\section{Testszenarien aus dem Pflichtenheft}
+Alle Testf"alle aus dem Pflichtenheft konnten erfolgreich durchgef"uhrt werden. Dabei gab es allerdings zwei kleine "Anderungen: 
+\begin{itemize}
+\item Das Schl"usselwort \texttt{require} wurde in \texttt{assume} umbenannt.
+\item Wir haben uns gegen Laufzeitfehler entschieden und stattdessen Assertions bei Division durch 0 und Arrayzugriffen eingef"ugt, weswegen die erwarteten Laufzeitfehler aus dem Pflichtenheft durch Assertionfailures ersetzt wurden .
+\end{itemize}
+
+\section{Kompatibilit"atstests}
+Wir haben das Programm auf den folgenden Betriebssystemen getestet und haben keine Kompatibilit"atsprobleme entdeckt:
+\begin{itemize}
+\item Windows 7
+\item Windows XP
+\item Linux
+\item Mac OS
+\end{itemize}
+
+\section{Performancetests}
+Die folgenden Tests haben wir durchgef"uhrt:
+\begin{itemize}
+\item Langes flaches Program mit Zuweisungen
+\begin{itemize}
+\item Laden: 10,02s
+\item Ausf"uhren: 0,336s
+\end{itemize}
+\item Langes verschachteltes Program
+\begin{itemize}
+\item Laden: 9,45s
+\item Ausf"uhren: 0,4s
+\end{itemize}
+\item Langes Program mit komplizierten Berechnungen
+\begin{itemize}
+\item Laden: 458,2s
+\item Ausf"uhren: 3,45s
+\end{itemize}
+\item Z"ahlschleife \\[0.2cm]
+\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+Anzahl Durchl"aufe&Ben"otigte Zeit&Java Vergleich \\\hline
+100&$<$500ms&1.500ns\\\hline
+1.000&$<$1s&6.000ns\\\hline
+10.000&$<$1s&12.000ns\\\hline
+100.000&$<$1s&90.000ns\\\hline
+1.000.000&4s&0,8ms\\\hline
+10.000.000&35s&8ms\\\hline
+100.000.000&6min&76ms\\\hline
+\end{tabular}
+\\[0.2cm]
+Ungef"ahr um Faktor 5000 langsamer als JVM
+\item Russische Multiplikation
+\begin{itemize}
+\item Verifizieren: 0,15s
+\end{itemize}
+\item Einfaches Program mit Funktionsaufruf
+\begin{itemize}
+\item Verifizieren: 0,08s
+\end{itemize}
+\item Kleines Program mit Ergebnis "`unknown"'
+\begin{itemize}
+\item Verifizieren: 24,58s
+\end{itemize}
+\end{itemize}
+
 \input{gui_testplan.tex}
 \end{document}
