@@ -1,9 +1,9 @@
 main(int n) assume n>=0; {
 	int sum = 0;
 	int i = 0;
-	while (i <= n) invariant {i <= n + 1; sum == i*(i-1)/2;}
+	while (i < n) invariant {i <= n; sum == i*(i+1)/2;}
 	{
-		sum = sum + i;
 		i = i + 1;
+		sum = sum + i;
 	} ensure sum == n*(n+1)/2;
 } ensure sum == n*(n+1)/2;
