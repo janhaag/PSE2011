@@ -1,0 +1,16 @@
+main(int n, int k) {
+	int[][] table = array[n+1][k+1];
+	int i=0;
+	while (i<=n) {
+		int j=0;
+		while ((j<=i) & (j <= k)) {
+			if ((i == j) | (i == 0) | (j == 0)) {
+				table[i][j] = 1;
+			} else {
+				table[i][j] = table[i-1][j-1]+table[i-1][j];
+			}
+			j=j+1;
+		}
+		i=i+1;
+	}
+}

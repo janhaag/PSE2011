@@ -1,0 +1,13 @@
+int rek(int n, int k) {
+	int result;
+	if ((n == k) | (k == 0) | (n == 0)) {
+		result = 1;
+	} else {
+		result = rek(n-1, k-1) + rek(n-1, k);
+	}
+	return result;
+}
+
+main(int n, int k) {
+	int f = rek(n,k);
+}

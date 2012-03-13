@@ -197,38 +197,44 @@ public class EditorView extends Composite {
 	 * Resize view to match current number of lines in editor.
 	 */
 	private void resizeView() {
-		if(this.textfield.getText().split("\\n").length + 1 > currentMaxLines) {
-			//double size of contents and expand line numbers
-			int j = currentMaxLines;
-			currentMaxLines *= 2;
-			this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y * 2);
-			this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y * 2);
-			String s = this.linenumbers.getText();
-			for (; j < currentMaxLines; j++) {
-				s += " \n";
+		boolean resized;
+		do {
+			resized = false;
+			if(this.textfield.getText().split("\\n").length + 1 > currentMaxLines) {
+				//double size of contents and expand line numbers
+				int j = currentMaxLines;
+				currentMaxLines *= 2;
+				this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y * 2);
+				this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y * 2);
+				String s = this.linenumbers.getText();
+				for (; j < currentMaxLines; j++) {
+					s += " \n";
+				}
+				this.linenumbers.setText(s);
+				for (int i = 0; i < currentMaxLines; i++) {		
+					StyleRange style = new StyleRange();
+					style.metrics = new GlyphMetrics(0, 0, 25);
+					Bullet b = new Bullet(ST.BULLET_TEXT, style);
+					if (i < 9) {
+						b.text = "   " + (i + 1) + " ";
+					}
+					else if (i < 99) {
+						b.text = "  " + (i + 1) + " ";
+					}
+					else {
+						b.text = (i + 1) + " ";
+					}
+					this.linenumbers.setLineBullet(i, 1, b);
+				}
+				resized = true;
+			} else if(this.textfield.getText().split("\\n").length < currentMaxLines / 4 && currentMaxLines / 2 >= INITIAL_MAX_LINES) {
+				//halve size of contents, ignore line numbers deleting
+				currentMaxLines /= 2;
+				this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y / 2);
+				this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y / 2);
+				resized = true;
 			}
-			this.linenumbers.setText(s);
-			for (int i = 0; i < currentMaxLines; i++) {		
-				StyleRange style = new StyleRange();
-				style.metrics = new GlyphMetrics(0, 0, 25);
-				Bullet b = new Bullet(ST.BULLET_TEXT, style);
-				if (i < 9) {
-					b.text = "   " + (i + 1) + " ";
-				}
-				else if (i < 99) {
-					b.text = "  " + (i + 1) + " ";
-				}
-				else {
-					b.text = (i + 1) + " ";
-				}
-				this.linenumbers.setLineBullet(i, 1, b);
-			}
-		} else if(this.textfield.getText().split("\\n").length < currentMaxLines / 4 && currentMaxLines / 2 >= INITIAL_MAX_LINES) {
-			//halve size of contents, ignore line numbers deleting
-			currentMaxLines /= 2;
-			this.textfield.setSize(this.textfield.getSize().x, this.textfield.getSize().y / 2);
-			this.linenumbers.setSize(this.linenumbers.getSize().x, this.linenumbers.getSize().y / 2);
-		}
+		} while (resized);
 	}
 	
 	/**
