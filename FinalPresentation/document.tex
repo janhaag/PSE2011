@@ -26,14 +26,14 @@
 \begin{frame}
 \frametitle{Aufgabenstellung: Parser und Interpreter}
 \begin{center}
-\includegraphics[scale=0.43]{images/ParserInterpreter.png}
+\includegraphics[scale=2.5]{images/ParserInterpreter.png}
 \end{center}
 \end{frame}
 
 \begin{frame}
 \frametitle{Aufgabenstellung: Formale Verifikation}
 \begin{center}
-\includegraphics[scale=0.43]{images/SMTLibTranslator.png}
+\includegraphics[scale=2.5]{images/SMTLibTranslator.png}
 \end{center}
 \end{frame}
 
@@ -149,6 +149,61 @@ $\Rightarrow$ & Lizensierung unter BSD Lizenz
 \begin{frame}
 \frametitle{Tool Demonstration}
 TODO: Bild
+\end{frame}
+
+\section{Soll / Haben}
+\begin{frame}
+\frametitle{Soll / Haben}
+\end{frame}
+
+
+\section{Qualit\"atssicherung}
+\begin{frame}
+\frametitle{Qualit\"atssicherung}
+Werkzeuge:
+\begin{itemize}
+\item GitHub Bugtracker
+\item JUnit
+\item GUI-Testplan
+\end{itemize}
+\vspace{1\baselineskip}
+Probleme:
+\begin{itemize}
+\item Klare Abgrenzung der einzelnen Module zum Teil schwierig
+\item Testen von generiertem Code nur teilweise möglich
+\end{itemize}
+\vspace{1\baselineskip}
+\begin{tabular}{p{1mm}p{10.9cm}}
+$\Rightarrow$ & 108 gefundene Bugs\\
+$\Rightarrow$ & Code Coverage: ca. 90 \%
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verteilung der Bugs auf die Module}
+TODO: Graphik
+\end{frame}
+
+\section{Herausforderungen \& Erfahrungen}
+\begin{frame}
+\frametitle{Herausforderungen \& Erfahrungen}
+\begin{itemize}
+\item Herausforderungen
+\begin{itemize}
+\item Grammatikerstellung für Parser erfordert Behandlung vieler
+Spezialfälle
+\item Themengebiet der formalen Verifikation sehr abstrakt / komplex
+\item In manchen Phasen hoher Zeitdruck
+\end{itemize}
+\item Erfahrungen
+\begin{itemize}
+\item Fehler / ungelöste Probleme des Entwurfs wirken sich sehr stark
+auf die Implementierung aus
+\item Zeitplanung
+\item Beteiligung/Engagement schwankt zwischen wenig und viel
+\item Qualitätssicherung bringt mehr Fehler zum Vorschein als erwartet
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \end{document}
