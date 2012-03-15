@@ -11,11 +11,15 @@ import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.GlyphMetrics;
 import org.eclipse.swt.graphics.Image;
@@ -66,6 +70,11 @@ public class EditorView extends Composite {
 	private int currentMaxLines = INITIAL_MAX_LINES;
 	
 	/**
+	 * font height for editor and line numbers
+	 */
+	private static final int FONT_HEIGHT = 8;
+	
+	/**
 	 * Construct an editor with the specified parent composite, definitions 
 	 * of its style and model.
 	 * @param parent specified composite
@@ -86,7 +95,6 @@ public class EditorView extends Composite {
 		this.setLayout(gLayout);
 		GridData gData = new GridData(GridData.FILL_BOTH);
 		this.setLayoutData(gData);
-		
 		//Add text field for line numbers
 		final ScrolledComposite sc1 = new ScrolledComposite (this, SWT.V_SCROLL 
 				| SWT.H_SCROLL | SWT.RIGHT_TO_LEFT);
@@ -122,6 +130,19 @@ public class EditorView extends Composite {
 		this.linenumbers.setDoubleClickEnabled(false);
 		this.linenumbers.setBackground(new Color(this.getDisplay(), 211, 211, 211));
 		this.linenumbers.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
+		FontData[] linenumbersFontData = this.linenumbers.getFont().getFontData();
+		for(FontData fd : linenumbersFontData) {
+			fd.setHeight(FONT_HEIGHT);
+		}
+		final Font resizedLinenumbersFont = new Font(linenumbers.getDisplay(), linenumbersFontData);
+		linenumbers.addDisposeListener(new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				resizedLinenumbersFont.dispose();
+			}
+		});
+		this.linenumbers.setFont(resizedLinenumbersFont);
 		sc1.setContent(this.linenumbers);
 		
 		//Add text field for program code
@@ -130,6 +151,19 @@ public class EditorView extends Composite {
 		this.textfield.setLeftMargin(5);
 		this.textfield.setSize(1200, this.linenumbers.getLineHeight() * INITIAL_MAX_LINES + 20);
 		this.textfield.setFocus();
+		FontData[] editorFontData = this.textfield.getFont().getFontData();
+		for(FontData fd : editorFontData) {
+			fd.setHeight(FONT_HEIGHT);
+		}
+		final Font resizedEditorFont = new Font(textfield.getDisplay(), editorFontData);
+		textfield.addDisposeListener(new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				resizedEditorFont.dispose();
+			}
+		});
+		this.textfield.setFont(resizedEditorFont);
 		sc2.setContent(this.textfield);
 		
 		//Position the text fields
